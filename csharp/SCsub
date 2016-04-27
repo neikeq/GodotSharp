@@ -1,0 +1,10 @@
+Import('env')
+
+env.add_source_files(env.modules_sources,"*.cpp")
+env.ParseConfig("pkg-config --cflags --libs mono-2")
+env.ParseConfig("pkg-config --cflags --libs glib-2.0")
+
+env.Append(LINKFLAGS="-rdynamic")
+
+Export('env')
+
