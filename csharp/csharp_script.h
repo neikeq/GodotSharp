@@ -1,4 +1,4 @@
-/**********************************************************************************/
+﻿/**********************************************************************************/
 /* csharp_script.h                                                                */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
@@ -143,19 +143,16 @@ friend class CSharpInstance;
 	static CSharpLanguage *singleton;
 
 	MonoDomain *domain;
-	MonoAssembly *assembly;
+	MonoAssembly *game_assembly;
 
-	MonoDomain *cs_domain;
-	MonoAssembly *cs_assembly;
+	MonoAssembly *engine_assembly;
 
 	bool cleaned_mono_jit;
 
 public:
 	MonoDomain *get_domain() const { return domain; }
-	MonoAssembly *get_assembly() const { return assembly; }
-
-	MonoDomain *get_cs_domain() const { return cs_domain; }
-	MonoAssembly *get_cs_assembly() const { return cs_assembly; }
+	MonoAssembly *get_game_assembly() const { return game_assembly; }
+	MonoAssembly *get_engine_assembly() const { return engine_assembly; }
 
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
 

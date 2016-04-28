@@ -1,4 +1,4 @@
-/**********************************************************************************/
+﻿/**********************************************************************************/
 /* csharp_script.cpp                                                              */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
@@ -28,6 +28,7 @@
 
 #include <mono/metadata/debug-helpers.h>
 #include <mono/metadata/tokentype.h>
+#include <mono/metadata/threads.h>
 
 #include "mono_utils.h"
 #include "os/file_access.h"
@@ -63,21 +64,25 @@ void CSharpLanguage::init()
 
 	mono_config_parse(NULL);
 	domain = mono_jit_init_version("GodotEngineMono", "v4.0.30319");
-	cs_domain = mono_domain_create();
 
 	ERR_EXPLAIN("Mono: Could not initialize domain");
 	ERR_FAIL_COND(!domain);
 
 #ifdef DEBUG_ENABLED
-	assembly = mono_domain_assembly_open(domain, "bin/Debug/GameAssembly.dll");
-	cs_assembly = mono_domain_assembly_open(domain, "bin/Debug/Assembly-CSharp.dll");
+	String game_assembly_path = "bin/Debug/GameAssembly.dll";
+	String engine_assembly_path = "bin/Debug/Assembly-CSharp.dll";
 #else
-	assembly = mono_domain_assembly_open(domain, "bin/Release/GameAssembly.dll");
-	cs_assembly = mono_domain_assembly_open(domain, "bin/Debug/Assembly-CSharp.dll");
+	String game_assembly_path = "bin/Release/GameAssembly.dll";
+	String engine_assembly_path = "bin/Release/Assembly-CSharp.dll";
 #endif
 
-	ERR_FAIL_COND(!assembly);
-	ERR_FAIL_COND(!cs_assembly);
+	engine_assembly = mono_domain_assembly_open(domain, engine_assembly_path.utf8());
+	ERR_FAIL_COND(!engine_assembly);
+	game_assembly = mono_domain_assembly_open(domain, game_assembly_path.utf8());
+	ERR_FAIL_COND(!game_assembly);
+
+	mono_assembly_set_main(game_assembly);
+	mono_thread_set_main(mono_thread_current());
 
 	register_mono_internal_calls();
 }
@@ -333,7 +338,7 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 {
 	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
 	if (field) {
-		MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_assembly());
+		MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_game_assembly());
 		MonoClass *variant_class = mono_class_from_name(image, "GodotEngine", "Variant");
 		MonoObject* managed_variant = variant_to_mono_object(variant_class, &p_value);
 		void *value = &managed_variant;
@@ -405,7 +410,7 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
 
 		if (method) {
-			MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_cs_assembly());
+			MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_engine_assembly());
 			MonoClass *helper_class = mono_class_from_name(image, "GodotEngine", "InternalHelpers");
 			ERR_FAIL_COND_V(!helper_class, Variant());
 			MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCall", 3);
@@ -452,7 +457,7 @@ Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p
 		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
 
 		if (method) {
-			MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_assembly());
+			MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_game_assembly());
 			MonoClass *helper_class = mono_class_from_name(image, "GodotEngine", "InternalHelpers");
 			ERR_FAIL_COND_V(!helper_class, Variant());
 			MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCall", 3);
@@ -582,7 +587,7 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
 
 		if (method) {
-			MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_assembly());
+			MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_game_assembly());
 			MonoClass *helper_class = mono_class_from_name(image, "GodotEngine", "InternalHelpers");
 			ERR_FAIL_COND_V(!helper_class, Variant());
 			MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCall", 3);
@@ -730,7 +735,7 @@ void CSharpScript::set_source_code(const String &p_code)
 
 Error CSharpScript::reload()
 {
-	MonoAssembly *assembly = CSharpLanguage::get_singleton()->get_assembly();
+	MonoAssembly *assembly = CSharpLanguage::get_singleton()->get_game_assembly();
 
 	if (assembly) {
 		MonoImage *image = mono_assembly_get_image(assembly);

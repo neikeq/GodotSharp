@@ -8,4 +8,3 @@ def can_build(platform):
 
 def configure(env):
 	call(['./generate.py'], cwd='modules/csharp/bindings/')
-

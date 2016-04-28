@@ -54,9 +54,19 @@ if not os.path.exists(CPP_OUT):
 call([SWIG] + OPTIONS + ['-outdir', CS_OUT, '-o', CPP_OUT + '/' + WRAPPER_FILE, FILE])
 
 with open(CPP_OUT + '/' + WRAPPER_FILE, 'r+') as f:
-    data = f.read()
-    output = data.replace("delete arg1;", "memdelete(arg1);")
-    # TODO Replace `new <Type>();` with `memnew(<Type>)` and `new <Type>(arg1)` with `memnew(<Type>(arg1))` (may pass more arguments)
+    output_lines = []
+    for line_idx, line in enumerate(f.read().splitlines()):
+        output_line = line
+        if line.find('delete ') > -1 and line.endswith(';'):
+            output_line = line.replace('delete ', 'memdelete(')[:-1] + ');'
+        elif line.find('new ') > -1 and line.endswith(';'):
+            output_line = line.replace('new ', 'memnew(')[:-1] + ');'
+        elif line_idx < 50:
+            output_line = line.replace('delete ptr;', 'memdelete(ptr);') \
+                .replace('delete oldptr;', 'memdelete(oldptr);') \
+                .replace('new T(t)', 'memnew(T(t))')
+        output_lines.append(output_line)
     f.seek(0)
-    f.write(output)
+    for line in output_lines:
+        f.write(line + '\n')
     f.truncate()

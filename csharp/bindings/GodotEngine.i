@@ -11,7 +11,8 @@
 #include "scene/2d/sprite.h"
 %}
 
-typedef String StringName;
+%typemap(out) SWIGTYPE
+%{ $result = memnew($1_ltype((const $1_ltype &)$1)); %}
 
 %typemap(csout, excode=SWIGEXCODE) Object* {
     global::System.IntPtr cPtr = $imcall;
