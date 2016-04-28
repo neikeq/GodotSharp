@@ -40,26 +40,30 @@ public class Variant : global::System.IDisposable {
 
   // Implicit conversions
   
-  public static implicit operator float(Variant v)
-  {
-    return v.operator_to_float();
+  public static implicit operator float(Variant from) {
+    return from.operator_to_float();
   }
   
-  public static implicit operator Object(Variant v)
-  {
-    return v.operator_to_Object();
+  public static implicit operator Object(Variant from) {
+    return from.operator_to_Object();
   }
   
-  public static implicit operator Node(Variant v)
-  {
-    return v.operator_to_Node();
+  public static implicit operator Node(Variant from) {
+    return from.operator_to_Node();
   }
+  
+  /*public static implicit operator Control(Variant from) {
+    return from.operator_to_Control();
+  }*/
   
   // Implicit constructors
   
-  public static implicit operator Variant(Object o)
-  {
-    return new Variant(o);
+  public static implicit operator Variant(float from) {
+    return new Variant(from);
+  }
+  
+  public static implicit operator Variant(Object from) {
+    return new Variant(from);
   }
   
   public float operator_to_float() {
@@ -89,6 +93,9 @@ public class Variant : global::System.IDisposable {
   }
 
   public Variant(Object p_object) : this(GodotEnginePINVOKE.new_Variant__SWIG_1(Object.getCPtr(p_object)), true) {
+  }
+
+  public Variant(float p_float) : this(GodotEnginePINVOKE.new_Variant__SWIG_2(p_float), true) {
   }
 
 }

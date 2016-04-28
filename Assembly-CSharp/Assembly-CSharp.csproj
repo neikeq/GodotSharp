@@ -32,19 +32,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="InternalHelpers.cs" />
     <Compile Include="generated\CanvasItem.cs" />
     <Compile Include="generated\GodotEngine.cs" />
     <Compile Include="generated\GodotEnginePINVOKE.cs" />
     <Compile Include="generated\Node.cs" />
     <Compile Include="generated\Node2D.cs" />
     <Compile Include="generated\Object.cs" />
-    <Compile Include="generated\SWIGTYPE_p_StringName.cs" />
-    <Compile Include="generated\SWIGTYPE_p_Variant__CallError.cs" />
-    <Compile Include="generated\SWIGTYPE_p_p_Variant.cs" />
+    <Compile Include="generated\SWIGTYPE_p_Array.cs" />
     <Compile Include="generated\Sprite.cs" />
     <Compile Include="generated\Variant.cs" />
     <Compile Include="generated\Vector2.cs" />
-    <Compile Include="InternalHelpers.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
