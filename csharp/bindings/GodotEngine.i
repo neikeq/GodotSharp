@@ -11,6 +11,8 @@
 #include "scene/2d/sprite.h"
 %}
 
+typedef String StringName;
+
 %typemap(csout, excode=SWIGEXCODE) Object* {
     global::System.IntPtr cPtr = $imcall;
     $csclassname ret = InternalHelpers.GetManagedObjectFor(cPtr);
@@ -46,4 +48,3 @@
 %include mNode2D.i
 %include mSprite.i
 %include mVector2.i
-

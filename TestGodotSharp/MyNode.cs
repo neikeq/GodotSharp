@@ -19,8 +19,8 @@ public class MyNode : Node2D
 		Console.WriteLine (delta);
 		translate (new Vector2 (2, 1.2f));
 
-		// Test calling GDScript from C#. Not working yet.
-		//get_node ("Sprite").call ("print_num", 9999998);
+		// Test calling GDScript from C#
+		get_node ("Sprite").call ("print_num", 9999998);
 
 		// Test unmanaged node to existing managed object
 		MyNode node = get_node (".") as MyNode;
