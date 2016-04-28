@@ -52,3 +52,11 @@ if not os.path.exists(CPP_OUT):
     os.makedirs(CPP_OUT)
 
 call([SWIG] + OPTIONS + ['-outdir', CS_OUT, '-o', CPP_OUT + '/' + WRAPPER_FILE, FILE])
+
+with open(CPP_OUT + '/' + WRAPPER_FILE, 'r+') as f:
+    data = f.read()
+    output = data.replace("delete arg1;", "memdelete(arg1);")
+    # TODO Replace `new <Type>();` with `memnew(<Type>)` and `new <Type>(arg1)` with `memnew(<Type>(arg1))` (may pass more arguments)
+    f.seek(0)
+    f.write(output)
+    f.truncate()
