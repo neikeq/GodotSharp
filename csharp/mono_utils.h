@@ -55,8 +55,7 @@ MonoObject *variant_to_mono_object(MonoClass* vclass, const Variant* p_var)
 
 MonoArray *vargs_to_mono_array(const Variant **p_args, int p_argc)
 {
-	MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_engine_assembly());
-	MonoClass *variant_class = mono_class_from_name(image, "GodotEngine", "Variant");
+	MonoClass *variant_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "Variant");
 	MonoArray *result = mono_array_new(CSharpLanguage::get_singleton()->get_domain(), variant_class, p_argc);
 
 	for (int i = 0; i < p_argc; i++)
@@ -85,8 +84,7 @@ void mono_void_call(MonoClass *clazz, MonoObject *mono_object, const StringName 
 		return;
 
 	if (p_argcount > 0) {
-		MonoImage *image = mono_assembly_get_image(CSharpLanguage::get_singleton()->get_engine_assembly());
-		MonoClass *helper_class = mono_class_from_name(image, "GodotEngine", "InternalHelpers");
+		MonoClass *helper_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "InternalHelpers");
 		ERR_FAIL_COND(!helper_class);
 		MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCallExpectVoid", 3);
 		ERR_FAIL_COND(!variant_call);

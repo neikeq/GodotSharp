@@ -143,16 +143,14 @@ friend class CSharpInstance;
 	static CSharpLanguage *singleton;
 
 	MonoDomain *domain;
-	MonoAssembly *game_assembly;
 
-	MonoAssembly *engine_assembly;
-
-	bool cleaned_mono_jit;
+	MonoImage *game_image;
+	MonoImage *engine_image;
 
 public:
 	MonoDomain *get_domain() const { return domain; }
-	MonoAssembly *get_game_assembly() const { return game_assembly; }
-	MonoAssembly *get_engine_assembly() const { return engine_assembly; }
+	MonoImage *get_game_image() const { return game_image; }
+	MonoImage *get_engine_image() const { return engine_image; }
 
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
 
