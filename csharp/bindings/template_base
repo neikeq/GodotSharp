@@ -1,0 +1,44 @@
+/* m%%TypeName%%.i */
+%module m%%TypeName%%
+
+%%Definitions%%
+%typemap(csbody) %%TypeName%% %{
+%%CSMembers%%
+  private global::System.Runtime.InteropServices.HandleRef swigCPtr;
+  protected bool swigCMemOwn;
+  
+  internal $csclassname(global::System.IntPtr cPtr, bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+  
+  protected $csclassname(bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;
+  }
+  
+  internal void internal_init(global::System.IntPtr cPtr) {
+    swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
+  }
+  
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr($csclassname obj) {
+    return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
+  }
+%}
+
+%typemap(cscode) %%TypeName%% %{
+%%CSCode%%
+%}
+
+%typemap(csconstruct, excode=SWIGEXCODE) %%TypeName%% %{: this(%%MemOwn%%) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init($imcall);
+    }$excode
+  }
+%}
+
+%nodefaultdtor %%TypeName%%;
+
+class %%TypeName%% {
+public:
+%%ClassPublicMembers%%
+};

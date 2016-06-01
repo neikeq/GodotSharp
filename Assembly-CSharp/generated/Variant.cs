@@ -52,13 +52,17 @@ public class Variant : global::System.IDisposable {
     return from.operator_to_Node();
   }
   
-  /*public static implicit operator Control(Variant from) {
+  public static implicit operator Control(Variant from) {
     return from.operator_to_Control();
-  }*/
+  }
   
   // Implicit constructors
   
   public static implicit operator Variant(float from) {
+    return new Variant(from);
+  }
+  
+  public static implicit operator Variant(string from) {
     return new Variant(from);
   }
   
@@ -68,6 +72,11 @@ public class Variant : global::System.IDisposable {
   
   public float operator_to_float() {
     float ret = GodotEnginePINVOKE.Variant_operator_to_float(swigCPtr);
+    return ret;
+  }
+
+  public string operator_to_String() {
+    string ret = GodotEnginePINVOKE.Variant_operator_to_String(swigCPtr);
     return ret;
   }
 
@@ -89,13 +98,26 @@ public class Variant : global::System.IDisposable {
     return ret;
   }
 
+  public Control operator_to_Control() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Control(swigCPtr);
+    Control ret = InternalHelpers.GetManagedObjectFor(cPtr) as Control;
+    if (ret == null) {
+      ret = new Control(cPtr, false);
+    }
+    return ret;
+  }
+
   public Variant() : this(GodotEnginePINVOKE.new_Variant__SWIG_0(), true) {
   }
 
-  public Variant(Object p_object) : this(GodotEnginePINVOKE.new_Variant__SWIG_1(Object.getCPtr(p_object)), true) {
+  public Variant(float p_float) : this(GodotEnginePINVOKE.new_Variant__SWIG_1(p_float), true) {
   }
 
-  public Variant(float p_float) : this(GodotEnginePINVOKE.new_Variant__SWIG_2(p_float), true) {
+  public Variant(string p_string) : this(GodotEnginePINVOKE.new_Variant__SWIG_2(p_string), true) {
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Object p_object) : this(GodotEnginePINVOKE.new_Variant__SWIG_3(Object.getCPtr(p_object)), true) {
   }
 
 }

@@ -1,4 +1,4 @@
-﻿/**********************************************************************************/
+/**********************************************************************************/
 /* csharp_script.h                                                                */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
@@ -191,6 +191,12 @@ public:
 	/* TODO */ virtual void debug_get_globals(List<String> *p_locals, List<Variant> *p_values, int p_max_subitems, int p_max_depth) {}
 	/* TODO */ virtual String debug_parse_stack_level_expression(int p_level, const String &p_expression, int p_max_subitems, int p_max_depth) { return ""; }
 	/* TODO */ virtual Vector<StackInfo> debug_get_current_stack_info() { return Vector<StackInfo>(); }
+
+	/* PROFILING FUNCTIONS */
+	/* TODO */ virtual void profiling_start() {}
+	/* TODO */ virtual void profiling_stop() {}
+	/* TODO */ virtual int profiling_get_accumulated_data(ProfilingInfo *p_info_arr, int p_info_max) { return 0; }
+	/* TODO */ virtual int profiling_get_frame_data(ProfilingInfo *p_info_arr, int p_info_max) { return 0; }
 
 	/* TODO? */ // virtual void frame();
 

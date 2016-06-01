@@ -4,14 +4,13 @@ using System.Runtime.CompilerServices;
 
 namespace GodotEngine
 {
-	public class InternalHelpers
+	internal class InternalHelpers
 	{
 		[MethodImplAttribute (MethodImplOptions.InternalCall)]
-		public extern static Object GetManagedObjectFor (IntPtr obj);
-
+		internal extern static Object GetManagedObjectFor (IntPtr obj);
 
 		// TODO Move this to C++
-		public static global::System.Runtime.InteropServices.HandleRef VariantCall (object instance, MethodInfo methodInfo, Variant[] vargs)
+		internal static global::System.Runtime.InteropServices.HandleRef VariantCall (object instance, MethodInfo methodInfo, Variant[] vargs)
 		{
 			object[] args = new object[vargs.Length];
 
@@ -32,7 +31,7 @@ namespace GodotEngine
 		}
 
 		// TODO Move this to C++
-		public static void VariantCallExpectVoid (object instance, MethodInfo methodInfo, Variant[] vargs)
+		internal static void VariantCallExpectVoid (object instance, MethodInfo methodInfo, Variant[] vargs)
 		{
 			object[] args = new object[vargs.Length];
 

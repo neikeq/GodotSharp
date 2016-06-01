@@ -1,4 +1,4 @@
-﻿/**********************************************************************************/
+/**********************************************************************************/
 /* csharp_script.cpp                                                              */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
@@ -35,6 +35,10 @@
 #include "os/os.h"
 #include "os/thread.h"
 
+#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
+#include "cs_bindings_generator.h"
+#endif
+
 CSharpLanguage *CSharpLanguage::singleton = NULL;
 
 String CSharpLanguage::get_name() const
@@ -60,6 +64,18 @@ Error CSharpLanguage::execute_file(const String &p_path)
 
 void CSharpLanguage::init()
 {
+#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
+	List<String> args = OS::get_singleton()->get_cmdline_args();
+	List<String>::Element *E = args.find("-csintf");
+	if (E) {
+		if (E->next()) {
+			generate_cs_interfaces(E->next()->get());
+		} else {
+			OS::get_singleton()->printerr("csintf: The path to the output directory was not specified.");
+		}
+	}
+#endif
+
 	print_line("Initializing mono...");
 
 	mono_config_parse(NULL);
@@ -327,7 +343,7 @@ CSharpLanguage::~CSharpLanguage()
 void CSharpInstance::_ml_call_reversed(MonoClass *clazz, const StringName &p_method, const Variant **p_args, int p_argcount)
 {
 	MonoClass *base = mono_class_get_parent(clazz);
-	if (base)
+	if (base && base != script->native)
 		_ml_call_reversed(base,p_method,p_args,p_argcount);
 
 	mono_void_call(clazz, mono_object, p_method, p_args, p_argcount);
@@ -347,6 +363,8 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 		void *value = &managed_variant;
 		mono_field_set_value(mono_object, field, value);
 	}
+
+	// TODO MUST BE MULTILEVEL
 
 	Variant name = p_name;
 	const Variant *args[2] = { &name, &p_value };
@@ -368,6 +386,8 @@ bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const
 		r_ret = value;
 		return true*/
 	}
+
+	// TODO MUST BE MULTILEVEL
 
 	Variant name = p_name;
 	const Variant *args[1] = { &name };
@@ -391,7 +411,7 @@ bool CSharpInstance::has_method(const StringName &p_method) const
 	while (top) {
 		MonoMethod *m = NULL;
 		void *iter = NULL;
-		while ((m = mono_class_get_methods (top, &iter))) {
+		while ((m = mono_class_get_methods(top, &iter))) {
 			if (mono_method_get_name(m) == p_method)
 				return true;
 		}
@@ -440,6 +460,8 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 		}
 
 		top = mono_class_get_parent(top);
+		if (top == script->native)
+			break;
 	}
 
 	r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
@@ -486,6 +508,8 @@ Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p
 		}
 
 		top = mono_class_get_parent(top);
+		if (top == script->native)
+			break;
 	}
 
 	r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
@@ -500,6 +524,8 @@ void CSharpInstance::call_multilevel(const StringName &p_method, const Variant *
 		while (top) {
 			mono_void_call(top, mono_object, p_method, p_args, p_argcount);
 			top = mono_class_get_parent(top);
+			if (top == script->native)
+				break;
 		}
 	}
 }
@@ -614,6 +640,8 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 		}
 
 		top = mono_class_get_parent(top);
+		if (top == native)
+			break;
 	}
 
 	// No static method found. Try regular instance calls
@@ -688,15 +716,12 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 
 	if (native) {
 		// Initialize pointers in the native base classes before constructing the object
-		MonoMethodDesc *desc = mono_method_desc_new (":internal_init(intptr,bool)", FALSE);
-		MonoMethod *native_base_init = mono_method_desc_search_in_class (desc, native);
+		MonoMethodDesc *desc = mono_method_desc_new (":internal_init(intptr)", FALSE);
+		MonoMethod *native_base_init = mono_method_desc_search_in_class(desc, native);
 		mono_method_desc_free (desc);
 
-		bool memown = false;
-
-		void *args [2];
+		void *args [1];
 		args [0] = &p_this;
-		args [1] = &memown;
 		mono_runtime_invoke (native_base_init, mono_object, args, NULL);
 	}
 

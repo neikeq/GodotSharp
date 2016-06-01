@@ -9,14 +9,17 @@
 namespace GodotEngine {
 
 public class Node2D : CanvasItem {
+
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
   internal Node2D(global::System.IntPtr cPtr, bool cMemoryOwn) : base(GodotEnginePINVOKE.Node2D_SWIGUpcast(cPtr), cMemoryOwn) {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }  
   
-  new internal void internal_init(global::System.IntPtr cPtr, bool cMemoryOwn) {
-    base.internal_init(GodotEnginePINVOKE.Node2D_SWIGUpcast(cPtr), cMemoryOwn);
+  protected Node2D(bool cMemoryOwn) : base(cMemoryOwn) {}
+  
+  new internal void internal_init(global::System.IntPtr cPtr) {
+    base.internal_init(GodotEnginePINVOKE.Node2D_SWIGUpcast(cPtr));
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
   
@@ -24,16 +27,12 @@ public class Node2D : CanvasItem {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~Node2D() {
-    Dispose();
-  }
-
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          GodotEnginePINVOKE.delete_Node2D(swigCPtr);
+          throw new global::System.MethodAccessException("C++ destructor does not have public access");
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -42,14 +41,143 @@ public class Node2D : CanvasItem {
     }
   }
 
-  public void translate(Vector2 p_amount) {
-    GodotEnginePINVOKE.Node2D_translate(swigCPtr, Vector2.getCPtr(p_amount));
+
+
+  public void set_pos(Vector2 pos) {
+    GodotEnginePINVOKE.Node2D_set_pos(swigCPtr, Vector2.getCPtr(pos));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public Node2D() {
+  public void set_rot(float radians) {
+    GodotEnginePINVOKE.Node2D_set_rot(swigCPtr, radians);
+  }
+
+  public void set_rotd(float degrees) {
+    GodotEnginePINVOKE.Node2D_set_rotd(swigCPtr, degrees);
+  }
+
+  public void set_scale(Vector2 scale) {
+    GodotEnginePINVOKE.Node2D_set_scale(swigCPtr, Vector2.getCPtr(scale));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Vector2 get_pos() {
+    Vector2 ret = new Vector2(GodotEnginePINVOKE.Node2D_get_pos(swigCPtr), true);
+    return ret;
+  }
+
+  public float get_rot() {
+    float ret = GodotEnginePINVOKE.Node2D_get_rot(swigCPtr);
+    return ret;
+  }
+
+  public float get_rotd() {
+    float ret = GodotEnginePINVOKE.Node2D_get_rotd(swigCPtr);
+    return ret;
+  }
+
+  public Vector2 get_scale() {
+    Vector2 ret = new Vector2(GodotEnginePINVOKE.Node2D_get_scale(swigCPtr), true);
+    return ret;
+  }
+
+  public void rotate(float radians) {
+    GodotEnginePINVOKE.Node2D_rotate(swigCPtr, radians);
+  }
+
+  public void move_local_x(float delta, bool scaled) {
+    GodotEnginePINVOKE.Node2D_move_local_x__SWIG_0(swigCPtr, delta, scaled);
+  }
+
+  public void move_local_x(float delta) {
+    GodotEnginePINVOKE.Node2D_move_local_x__SWIG_1(swigCPtr, delta);
+  }
+
+  public void move_local_y(float delta, bool scaled) {
+    GodotEnginePINVOKE.Node2D_move_local_y__SWIG_0(swigCPtr, delta, scaled);
+  }
+
+  public void move_local_y(float delta) {
+    GodotEnginePINVOKE.Node2D_move_local_y__SWIG_1(swigCPtr, delta);
+  }
+
+  public void translate(Vector2 offset) {
+    GodotEnginePINVOKE.Node2D_translate(swigCPtr, Vector2.getCPtr(offset));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void global_translate(Vector2 offset) {
+    GodotEnginePINVOKE.Node2D_global_translate(swigCPtr, Vector2.getCPtr(offset));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void scale(Vector2 ratio) {
+    GodotEnginePINVOKE.Node2D_scale(swigCPtr, Vector2.getCPtr(ratio));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void set_global_pos(Vector2 pos) {
+    GodotEnginePINVOKE.Node2D_set_global_pos(swigCPtr, Vector2.getCPtr(pos));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Vector2 get_global_pos() {
+    Vector2 ret = new Vector2(GodotEnginePINVOKE.Node2D_get_global_pos(swigCPtr), true);
+    return ret;
+  }
+
+  public void set_transform(SWIGTYPE_p_Matrix32 xform) {
+    GodotEnginePINVOKE.Node2D_set_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(xform));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void set_global_transform(SWIGTYPE_p_Matrix32 xform) {
+    GodotEnginePINVOKE.Node2D_set_global_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(xform));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void look_at(Vector2 point) {
+    GodotEnginePINVOKE.Node2D_look_at(swigCPtr, Vector2.getCPtr(point));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public float get_angle_to(Vector2 point) {
+    float ret = GodotEnginePINVOKE.Node2D_get_angle_to(swigCPtr, Vector2.getCPtr(point));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void set_z(int z) {
+    GodotEnginePINVOKE.Node2D_set_z(swigCPtr, z);
+  }
+
+  public int get_z() {
+    int ret = GodotEnginePINVOKE.Node2D_get_z(swigCPtr);
+    return ret;
+  }
+
+  public void set_z_as_relative(bool enable) {
+    GodotEnginePINVOKE.Node2D_set_z_as_relative(swigCPtr, enable);
+  }
+
+  public bool is_z_relative() {
+    bool ret = GodotEnginePINVOKE.Node2D_is_z_relative(swigCPtr);
+    return ret;
+  }
+
+  public void edit_set_pivot(Vector2 pivot) {
+    GodotEnginePINVOKE.Node2D_edit_set_pivot(swigCPtr, Vector2.getCPtr(pivot));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_Matrix32 get_relative_transform_to_parent(Object parent) {
+    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.Node2D_get_relative_transform_to_parent(swigCPtr, Object.getCPtr(parent)), true);
+    return ret;
+  }
+
+  public Node2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Node2D(), false);
+      internal_init(GodotEnginePINVOKE.new_Node2D());
     }
   }
 

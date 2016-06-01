@@ -1,5 +1,4 @@
-// Clone of swig's wstring.i
-// Adapted for godot strings
+// Copy of swig's wstring.i, adapted for Godot's String
 
 %include <wchar_t.i>
 
@@ -8,28 +7,28 @@
 class String;
 
 // String
-%typemap(ctype, out="void *") String "wchar_t *"
-%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPWStr)]") String "string"
+%typemap(ctype, out="void *") String "char *"
+%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]") String "string"
 %typemap(cstype) String "string"
 %typemap(csdirectorin) String "$iminput"
 %typemap(csdirectorout) String "$cscall"
 
-%typemap(in, canthrow=1) String 
+%typemap(in, canthrow=1) String
 %{ if (!$input) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return $null;
   }
-  $1.assign($input); %}
-%typemap(out) String %{ $result = SWIG_csharp_wstring_callback($1.utf8()); %}
+  $1 = $input; %}
+%typemap(out) String %{ $result = SWIG_csharp_wstring_callback($1.c_str()); %}
 
-%typemap(directorout, canthrow=1) String 
+%typemap(directorout, canthrow=1) String
 %{ if (!$input) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return $null;
    }
    $result = $input; %}
 
-%typemap(directorin) String %{ $input = SWIG_csharp_wstring_callback($1.utf8()); %}
+%typemap(directorin) String %{ $input = SWIG_csharp_wstring_callback($1.c_str()); %}
 
 %typemap(csin) String "$csinput"
 %typemap(csout, excode=SWIGEXCODE) String {
@@ -37,16 +36,16 @@ class String;
     return ret;
   }
 
-%typemap(typecheck) String = wchar_t *;
+%typemap(typecheck) String = char *;
 
 %typemap(throws, canthrow=1) String
 %{ String message = $1;
-   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, message.utf8());
+   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, message.c_str());
    return $null; %}
 
 // const String &
-%typemap(ctype, out="void *") const String & "wchar_t *"
-%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPWStr)]") const String & "string"  
+%typemap(ctype, out="void *") const String & "char *"
+%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]") const String & "string"
 %typemap(cstype) const String & "string"
 
 %typemap(csdirectorin) const String & "$iminput"
@@ -59,7 +58,7 @@ class String;
    }
    String $1_str = $input;
    $1 = &$1_str; %}
-%typemap(out) const String & %{ $result = SWIG_csharp_wstring_callback($1->utf8()); %}
+%typemap(out) const String & %{ $result = SWIG_csharp_wstring_callback($1->c_str()); %}
 
 %typemap(csin) const String & "$csinput"
 %typemap(csout, excode=SWIGEXCODE) const String & {
@@ -77,7 +76,7 @@ class String;
    $1_str = $input;
    $result = &$1_str; %}
 
-%typemap(directorin) const String & %{ $input = SWIG_csharp_wstring_callback($1.utf8()); %}
+%typemap(directorin) const String & %{ $input = SWIG_csharp_wstring_callback($1.c_str()); %}
 
 %typemap(csvarin, excode=SWIGEXCODE2) const String & %{
     set {
@@ -89,10 +88,9 @@ class String;
       return ret;
     } %}
 
-%typemap(typecheck) const String & = wchar_t *;
+%typemap(typecheck) const String & = char *;
 
 %typemap(throws, canthrow=1) const String &
 %{ String message  = $1;
-   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, message.utf8());
+   SWIG_CSharpSetPendingException(SWIG_CSharpApplicationException, message.c_str());
    return $null; %}
-

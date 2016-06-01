@@ -9,6 +9,12 @@
 namespace GodotEngine {
 
 public class Object : global::System.IDisposable {
+  public static readonly int NOTIFICATION_POSTINITIALIZE = 0;
+  public static readonly int NOTIFICATION_PREDELETE = 1;
+  public static readonly int CONNECT_DEFERRED = 1;
+  public static readonly int CONNECT_PERSIST = 2;
+  public static readonly int CONNECT_ONESHOT = 4;
+
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   protected bool swigCMemOwn;
   
@@ -17,8 +23,11 @@ public class Object : global::System.IDisposable {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
   
-  internal void internal_init(global::System.IntPtr cPtr, bool cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
+  protected Object(bool cMemoryOwn) {
+    swigCMemOwn = cMemoryOwn;  	
+  }
+  
+  internal void internal_init(global::System.IntPtr cPtr) {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
   
@@ -26,21 +35,252 @@ public class Object : global::System.IDisposable {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
-  ~Object() {
-    Dispose();
-  }
-
   public virtual void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          GodotEnginePINVOKE.delete_Object(swigCPtr);
+          throw new global::System.MethodAccessException("C++ destructor does not have public access");
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
       global::System.GC.SuppressFinalize(this);
     }
+  }
+
+
+
+  public void _get(string property) {
+    GodotEnginePINVOKE.Object__get(swigCPtr, property);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_Array _get_property_list() {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Object__get_property_list(swigCPtr), true);
+    return ret;
+  }
+
+  public void _init() {
+    GodotEnginePINVOKE.Object__init(swigCPtr);
+  }
+
+  public void _notification(int what) {
+    GodotEnginePINVOKE.Object__notification(swigCPtr, what);
+  }
+
+  public void _set(string property, Variant value) {
+    GodotEnginePINVOKE.Object__set(swigCPtr, property, Variant.getCPtr(value));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void free() {
+    GodotEnginePINVOKE.Object_free(swigCPtr);
+  }
+
+  public string get_type() {
+    string ret = GodotEnginePINVOKE.Object_get_type(swigCPtr);
+    return ret;
+  }
+
+  public bool is_type(string type) {
+    bool ret = GodotEnginePINVOKE.Object_is_type(swigCPtr, type);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void set(string property, Variant value) {
+    GodotEnginePINVOKE.Object_set(swigCPtr, property, Variant.getCPtr(value));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void get(string property) {
+    GodotEnginePINVOKE.Object_get(swigCPtr, property);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_Array get_property_list() {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Object_get_property_list(swigCPtr), true);
+    return ret;
+  }
+
+  public SWIGTYPE_p_Array get_method_list() {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Object_get_method_list(swigCPtr), true);
+    return ret;
+  }
+
+  public void notification(int what, bool reversed) {
+    GodotEnginePINVOKE.Object_notification__SWIG_0(swigCPtr, what, reversed);
+  }
+
+  public void notification(int what) {
+    GodotEnginePINVOKE.Object_notification__SWIG_1(swigCPtr, what);
+  }
+
+  public int get_instance_ID() {
+    int ret = GodotEnginePINVOKE.Object_get_instance_ID(swigCPtr);
+    return ret;
+  }
+
+  public void set_script(SWIGTYPE_p_RefT_Script_t script) {
+    GodotEnginePINVOKE.Object_set_script(swigCPtr, SWIGTYPE_p_RefT_Script_t.getCPtr(script));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_RefT_Script_t get_script() {
+    SWIGTYPE_p_RefT_Script_t ret = new SWIGTYPE_p_RefT_Script_t(GodotEnginePINVOKE.Object_get_script(swigCPtr), true);
+    return ret;
+  }
+
+  public void set_meta(string name, Variant value) {
+    GodotEnginePINVOKE.Object_set_meta(swigCPtr, name, Variant.getCPtr(value));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void get_meta(string name) {
+    GodotEnginePINVOKE.Object_get_meta(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public bool has_meta(string name) {
+    bool ret = GodotEnginePINVOKE.Object_has_meta(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public SWIGTYPE_p_StringArray get_meta_list() {
+    SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.Object_get_meta_list(swigCPtr), true);
+    return ret;
+  }
+
+  public void add_user_signal(string signal, SWIGTYPE_p_Array arguments_) {
+    GodotEnginePINVOKE.Object_add_user_signal__SWIG_0(swigCPtr, signal, SWIGTYPE_p_Array.getCPtr(arguments_));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_user_signal(string signal) {
+    GodotEnginePINVOKE.Object_add_user_signal__SWIG_1(swigCPtr, signal);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public bool has_user_signal(string signal) {
+    bool ret = GodotEnginePINVOKE.Object_has_user_signal(swigCPtr, signal);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void emit_signal(string signal, Variant arg0_, Variant arg1_, Variant arg2_, Variant arg3_, Variant arg4_) {
+    GodotEnginePINVOKE.Object_emit_signal__SWIG_0(swigCPtr, signal, Variant.getCPtr(arg0_), Variant.getCPtr(arg1_), Variant.getCPtr(arg2_), Variant.getCPtr(arg3_), Variant.getCPtr(arg4_));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void emit_signal(string signal, Variant arg0_, Variant arg1_, Variant arg2_, Variant arg3_) {
+    GodotEnginePINVOKE.Object_emit_signal__SWIG_1(swigCPtr, signal, Variant.getCPtr(arg0_), Variant.getCPtr(arg1_), Variant.getCPtr(arg2_), Variant.getCPtr(arg3_));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void emit_signal(string signal, Variant arg0_, Variant arg1_, Variant arg2_) {
+    GodotEnginePINVOKE.Object_emit_signal__SWIG_2(swigCPtr, signal, Variant.getCPtr(arg0_), Variant.getCPtr(arg1_), Variant.getCPtr(arg2_));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void emit_signal(string signal, Variant arg0_, Variant arg1_) {
+    GodotEnginePINVOKE.Object_emit_signal__SWIG_3(swigCPtr, signal, Variant.getCPtr(arg0_), Variant.getCPtr(arg1_));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void emit_signal(string signal, Variant arg0_) {
+    GodotEnginePINVOKE.Object_emit_signal__SWIG_4(swigCPtr, signal, Variant.getCPtr(arg0_));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void emit_signal(string signal) {
+    GodotEnginePINVOKE.Object_emit_signal__SWIG_5(swigCPtr, signal);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public bool has_method(string method) {
+    bool ret = GodotEnginePINVOKE.Object_has_method(swigCPtr, method);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public SWIGTYPE_p_Array get_signal_list() {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Object_get_signal_list(swigCPtr), true);
+    return ret;
+  }
+
+  public SWIGTYPE_p_Array get_signal_connection_list(string signal) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Object_get_signal_connection_list(swigCPtr, signal), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public int connect(string signal, Object target, string method, SWIGTYPE_p_Array binds, int flags) {
+    int ret = GodotEnginePINVOKE.Object_connect__SWIG_0(swigCPtr, signal, Object.getCPtr(target), method, SWIGTYPE_p_Array.getCPtr(binds), flags);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public int connect(string signal, Object target, string method, SWIGTYPE_p_Array binds) {
+    int ret = GodotEnginePINVOKE.Object_connect__SWIG_1(swigCPtr, signal, Object.getCPtr(target), method, SWIGTYPE_p_Array.getCPtr(binds));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public int connect(string signal, Object target, string method) {
+    int ret = GodotEnginePINVOKE.Object_connect__SWIG_2(swigCPtr, signal, Object.getCPtr(target), method);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void disconnect(string signal, Object target, string method) {
+    GodotEnginePINVOKE.Object_disconnect(swigCPtr, signal, Object.getCPtr(target), method);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public bool is_connected(string signal, Object target, string method) {
+    bool ret = GodotEnginePINVOKE.Object_is_connected(swigCPtr, signal, Object.getCPtr(target), method);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void set_block_signals(bool enable) {
+    GodotEnginePINVOKE.Object_set_block_signals(swigCPtr, enable);
+  }
+
+  public bool is_blocking_signals() {
+    bool ret = GodotEnginePINVOKE.Object_is_blocking_signals(swigCPtr);
+    return ret;
+  }
+
+  public void set_message_translation(bool enable) {
+    GodotEnginePINVOKE.Object_set_message_translation(swigCPtr, enable);
+  }
+
+  public bool can_translate_messages() {
+    bool ret = GodotEnginePINVOKE.Object_can_translate_messages(swigCPtr);
+    return ret;
+  }
+
+  public void property_list_changed_notify() {
+    GodotEnginePINVOKE.Object_property_list_changed_notify(swigCPtr);
+  }
+
+  public string XL_MESSAGE(string message) {
+    string ret = GodotEnginePINVOKE.Object_XL_MESSAGE(swigCPtr, message);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public string tr(string message) {
+    string ret = GodotEnginePINVOKE.Object_tr(swigCPtr, message);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool is_queued_for_deletion() {
+    bool ret = GodotEnginePINVOKE.Object_is_queued_for_deletion(swigCPtr);
+    return ret;
   }
 
   public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4, Variant p_arg5) {
@@ -115,9 +355,9 @@ public class Object : global::System.IDisposable {
     return ret;
   }
 
-  public Object() {
+  public Object() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Object(), false);
+      internal_init(GodotEnginePINVOKE.new_Object());
     }
   }
 

@@ -1,3 +1,46 @@
+// Copy of swig's wchar.i
+
+#if !defined(SWIG_CSHARP_NO_WSTRING_HELPER)
+#if !defined(SWIG_CSHARP_WSTRING_HELPER_)
+#define SWIG_CSHARP_WSTRING_HELPER_
+%insert(runtime) %{
+/* Callback for returning strings to C# without leaking memory */
+typedef void * (SWIGSTDCALL* SWIG_CSharpWStringHelperCallback)(const wchar_t *);
+static SWIG_CSharpWStringHelperCallback SWIG_csharp_wstring_callback = NULL;
+%}
+
+%pragma(csharp) imclasscode=%{
+  protected class SWIGWStringHelper {
+
+    public delegate string SWIGWStringDelegate(global::System.IntPtr message);
+    static SWIGWStringDelegate wstringDelegate = new SWIGWStringDelegate(CreateWString);
+
+    [global::System.Runtime.InteropServices.DllImport("$dllimport", EntryPoint="SWIGRegisterWStringCallback_$module")]
+    public static extern void SWIGRegisterWStringCallback_$module(SWIGWStringDelegate wstringDelegate);
+
+    static string CreateWString([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]global::System.IntPtr cString) {
+      return global::System.Runtime.InteropServices.Marshal.PtrToStringUni(cString);
+    }
+
+    static SWIGWStringHelper() {
+      SWIGRegisterWStringCallback_$module(wstringDelegate);
+    }
+  }
+
+  static protected SWIGWStringHelper swigWStringHelper = new SWIGWStringHelper();
+%}
+
+%insert(runtime) %{
+#ifdef __cplusplus
+extern "C"
+#endif
+SWIGEXPORT void SWIGSTDCALL SWIGRegisterWStringCallback_$module(SWIG_CSharpWStringHelperCallback callback) {
+  SWIG_csharp_wstring_callback = callback;
+}
+%}
+#endif // SWIG_CSHARP_WSTRING_HELPER_
+#endif // SWIG_CSHARP_NO_WSTRING_HELPER
+
 // wchar_t
 %typemap(ctype) wchar_t "wchar_t"
 %typemap(imtype) wchar_t "char"
@@ -25,7 +68,7 @@
 
 // wchar_t *
 %typemap(ctype) wchar_t * "wchar_t *"
-%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPWStr)]", out="global::System.IntPtr" ) wchar_t * "string"
+%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]", out="global::System.IntPtr" ) wchar_t * "string"
 %typemap(cstype) wchar_t * "string"
 
 %typemap(csin) wchar_t * "$csinput"

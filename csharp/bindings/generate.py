@@ -38,35 +38,33 @@ FILE = 'GodotEngine.i'
 
 OPTIONS = ['-c++', '-csharp', '-dllimport', '__Internal', '-namespace', 'GodotEngine']
 
-if os.path.isdir(CPP_OUT):
-    remove_file_if_exists(CPP_OUT + '/' + WRAPPER_FILE)
-else:
-    make_dir(CPP_OUT)
+if not os.path.isdir(CPP_OUT):
+	make_dir(CPP_OUT)
 
 if os.path.isdir(CS_OUT):
-    clean_dir(CS_OUT, ['.cs'])
+	clean_dir(CS_OUT, ['.cs'])
 else:
-    make_dir(CS_OUT)
+	make_dir(CS_OUT)
 
 if not os.path.exists(CPP_OUT):
-    os.makedirs(CPP_OUT)
+	os.makedirs(CPP_OUT)
 
 call([SWIG] + OPTIONS + ['-outdir', CS_OUT, '-o', CPP_OUT + '/' + WRAPPER_FILE, FILE])
 
 with open(CPP_OUT + '/' + WRAPPER_FILE, 'r+') as f:
-    output_lines = []
-    for line_idx, line in enumerate(f.read().splitlines()):
-        output_line = line
-        if line.find('delete ') > -1 and line.endswith(';'):
-            output_line = line.replace('delete ', 'memdelete(')[:-1] + ');'
-        elif line.find('new ') > -1 and line.endswith(';'):
-            output_line = line.replace('new ', 'memnew(')[:-1] + ');'
-        elif line_idx < 50:
-            output_line = line.replace('delete ptr;', 'memdelete(ptr);') \
-                .replace('delete oldptr;', 'memdelete(oldptr);') \
-                .replace('new T(t)', 'memnew(T(t))')
-        output_lines.append(output_line)
-    f.seek(0)
-    for line in output_lines:
-        f.write(line + '\n')
-    f.truncate()
+	output_lines = []
+	for line_idx, line in enumerate(f.read().splitlines()):
+	    output_line = line
+	    if line.find('delete ') > -1 and line.endswith(';'):
+	        output_line = line.replace('delete ', 'memdelete(')[:-1] + ');'
+	    elif line.find('new ') > -1 and line.endswith(';'):
+	        output_line = line.replace('new ', 'memnew(')[:-1] + ');'
+	    elif line_idx < 50:
+	        output_line = line.replace('delete ptr;', 'memdelete(ptr);') \
+	            .replace('delete oldptr;', 'memdelete(oldptr);') \
+	            .replace('new T(t)', 'memnew(T(t))')
+	    output_lines.append(output_line)
+	f.seek(0)
+	for line in output_lines:
+	    f.write(line + '\n')
+	f.truncate()
