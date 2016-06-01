@@ -49,7 +49,7 @@ public class MultiMeshInstance : GeometryInstance {
 
   public Object get_multimesh() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MultiMeshInstance_get_multimesh(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -59,6 +59,7 @@ public class MultiMeshInstance : GeometryInstance {
   public MultiMeshInstance() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_MultiMeshInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -31,6 +31,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) SamplePlayer2D %{: this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

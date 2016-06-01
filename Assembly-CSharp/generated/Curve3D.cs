@@ -173,6 +173,7 @@ public class Curve3D : Resource {
   public Curve3D() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Curve3D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

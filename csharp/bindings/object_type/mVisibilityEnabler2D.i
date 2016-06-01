@@ -36,6 +36,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) VisibilityEnabler2D %{: this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

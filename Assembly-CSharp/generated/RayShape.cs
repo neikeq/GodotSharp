@@ -55,6 +55,7 @@ public class RayShape : Shape {
   public RayShape() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_RayShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

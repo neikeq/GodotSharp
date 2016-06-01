@@ -56,6 +56,7 @@ public class RemoteTransform2D : Node2D {
   public RemoteTransform2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_RemoteTransform2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

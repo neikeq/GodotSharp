@@ -46,6 +46,7 @@ public class TestCube : GeometryInstance {
   public TestCube() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_TestCube());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

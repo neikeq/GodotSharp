@@ -224,6 +224,7 @@ public class RigidBody : PhysicsBody {
   public RigidBody() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_RigidBody());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

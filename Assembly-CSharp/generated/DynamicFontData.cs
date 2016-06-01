@@ -46,6 +46,7 @@ public class DynamicFontData : Resource {
   public DynamicFontData() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_DynamicFontData());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

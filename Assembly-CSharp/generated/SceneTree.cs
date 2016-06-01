@@ -119,7 +119,7 @@ public class SceneTree : MainLoop {
 
   public Object get_edited_scene_root() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_edited_scene_root(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -198,7 +198,7 @@ public class SceneTree : MainLoop {
 
   public Node get_current_scene() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_current_scene(swigCPtr);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -225,6 +225,7 @@ public class SceneTree : MainLoop {
   public SceneTree() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SceneTree());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

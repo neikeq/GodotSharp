@@ -49,7 +49,7 @@ public class TouchScreenButton : Node2D {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TouchScreenButton_get_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -62,7 +62,7 @@ public class TouchScreenButton : Node2D {
 
   public Object get_texture_pressed() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TouchScreenButton_get_texture_pressed(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -75,7 +75,7 @@ public class TouchScreenButton : Node2D {
 
   public Object get_bitmask() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TouchScreenButton_get_bitmask(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -118,6 +118,7 @@ public class TouchScreenButton : Node2D {
   public TouchScreenButton() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_TouchScreenButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -194,7 +194,7 @@ public class Theme : Resource {
 
   public Object get_default_font() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Theme_get_default_font(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -214,6 +214,7 @@ public class Theme : Resource {
   public Theme() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Theme());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

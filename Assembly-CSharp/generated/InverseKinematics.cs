@@ -92,6 +92,7 @@ public class InverseKinematics : Spatial {
   public InverseKinematics() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_InverseKinematics());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

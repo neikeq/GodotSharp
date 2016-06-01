@@ -72,6 +72,7 @@ public class ButtonGroup : BoxContainer {
   public ButtonGroup() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ButtonGroup());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

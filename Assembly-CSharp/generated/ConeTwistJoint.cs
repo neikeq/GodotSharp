@@ -61,6 +61,7 @@ public class ConeTwistJoint : Joint {
   public ConeTwistJoint() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ConeTwistJoint());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

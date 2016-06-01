@@ -55,7 +55,7 @@ public class TextureProgress : Range {
 
   public Object get_under_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureProgress_get_under_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -68,7 +68,7 @@ public class TextureProgress : Range {
 
   public Object get_progress_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureProgress_get_progress_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -81,7 +81,7 @@ public class TextureProgress : Range {
 
   public Object get_over_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureProgress_get_over_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -128,6 +128,7 @@ public class TextureProgress : Range {
   public TextureProgress() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_TextureProgress());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

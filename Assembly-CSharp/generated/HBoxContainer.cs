@@ -46,6 +46,7 @@ public class HBoxContainer : BoxContainer {
   public HBoxContainer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_HBoxContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -119,6 +119,7 @@ public class Generic6DOFJoint : Joint {
   public Generic6DOFJoint() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Generic6DOFJoint());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

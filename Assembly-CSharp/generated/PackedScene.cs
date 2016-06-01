@@ -50,7 +50,7 @@ public class PackedScene : Resource {
 
   public Node instance(bool gen_edit_state) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PackedScene_instance__SWIG_0(swigCPtr, gen_edit_state);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -59,7 +59,7 @@ public class PackedScene : Resource {
 
   public Node instance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PackedScene_instance__SWIG_1(swigCPtr);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -79,6 +79,7 @@ public class PackedScene : Resource {
   public PackedScene() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PackedScene());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

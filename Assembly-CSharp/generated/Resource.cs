@@ -79,7 +79,7 @@ public class Resource : Reference {
 
   public Object get_import_metadata() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_get_import_metadata(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -88,7 +88,7 @@ public class Resource : Reference {
 
   public Object duplicate(bool subresources) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_duplicate__SWIG_0(swigCPtr, subresources);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -97,7 +97,7 @@ public class Resource : Reference {
 
   public Object duplicate() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_duplicate__SWIG_1(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -107,6 +107,7 @@ public class Resource : Reference {
   public Resource() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Resource());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -100,6 +100,7 @@ public class EditorImportPlugin : Reference {
   public EditorImportPlugin() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorImportPlugin());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

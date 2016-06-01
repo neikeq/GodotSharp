@@ -80,6 +80,7 @@ public class StreamPeerTCP : StreamPeer {
   public StreamPeerTCP() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_StreamPeerTCP());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

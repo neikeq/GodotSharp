@@ -32,6 +32,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) ImageTexture %{: this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

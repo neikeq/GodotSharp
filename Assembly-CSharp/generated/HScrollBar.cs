@@ -46,6 +46,7 @@ public class HScrollBar : ScrollBar {
   public HScrollBar() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_HScrollBar());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

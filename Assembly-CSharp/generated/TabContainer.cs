@@ -59,7 +59,7 @@ public class TabContainer : Control {
 
   public Control get_current_tab_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_current_tab_control(swigCPtr);
-    Control ret = InternalHelpers.GetManagedObjectFor(cPtr) as Control;
+    Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     if (ret == null) {
       ret = new Control(cPtr, false);
     }
@@ -68,7 +68,7 @@ public class TabContainer : Control {
 
   public Control get_tab_control(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_tab_control(swigCPtr, idx);
-    Control ret = InternalHelpers.GetManagedObjectFor(cPtr) as Control;
+    Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     if (ret == null) {
       ret = new Control(cPtr, false);
     }
@@ -126,6 +126,7 @@ public class TabContainer : Control {
   public TabContainer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_TabContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -45,7 +45,7 @@ public class WeakRef : Reference {
 
   public Object get_ref() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.WeakRef_get_ref(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -55,6 +55,7 @@ public class WeakRef : Reference {
   public WeakRef() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_WeakRef());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

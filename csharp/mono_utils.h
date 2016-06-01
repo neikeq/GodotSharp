@@ -112,25 +112,43 @@ void mono_void_call(MonoClass *clazz, MonoObject *mono_object, const StringName 
 	}
 }
 
-MonoObject *mono_object_from_object(void *jarg1)
+MonoObject *unmanaged_get_managed(void *unmanaged)
 {
-	Object *arg1 = (Object *) jarg1;
+	Object *object = (Object *) unmanaged;
 
-	if (arg1) {
-		ScriptInstance *script_instance = arg1->get_script_instance();
+	if (object) {
+		ScriptInstance *script_instance = object->get_script_instance();
 		if (script_instance) {
-			CSharpInstance *cs_instance = static_cast<CSharpInstance*>(script_instance);
-			if (cs_instance)
+			CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>(script_instance);
+			if (cs_instance) {
 				return cs_instance->get_mono_object();
+			} else {
+				return NULL;
+			}
 		}
+
+		Ref<CSharpGCHandle> gchandle = object->get_meta("__mono_gchandle__");
+		if (gchandle.is_valid())
+			return gchandle->get_object();
 	}
 
 	return NULL;
 }
 
+void tie_managed_to_unmanaged(MonoObject* managed, void *unmanaged)
+{
+	Object *object = (Object *) unmanaged;
+
+	if (object) {
+		Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(managed)));
+		object->set_meta("__mono_gchandle__", gchandle);
+	}
+}
+
 void register_mono_internal_calls()
 {
-	mono_add_internal_call("GodotEngine.InternalHelpers::GetManagedObjectFor(intptr)", (void*)mono_object_from_object);
+	mono_add_internal_call("GodotEngine.InternalHelpers::UnmanagedGetManaged(intptr)", (void*)unmanaged_get_managed);
+	mono_add_internal_call("GodotEngine.InternalHelpers::TieManagedToUnmanaged(object, intptr)", (void*)tie_managed_to_unmanaged);
 }
 
 #endif // MONO_UTILS_H

@@ -46,6 +46,7 @@ public class CanvasItemShaderGraph : ShaderGraph {
   public CanvasItemShaderGraph() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CanvasItemShaderGraph());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

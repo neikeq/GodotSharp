@@ -49,7 +49,7 @@ public class CollisionShape2D : Node2D {
 
   public Object get_shape() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.CollisionShape2D_get_shape(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -73,6 +73,7 @@ public class CollisionShape2D : Node2D {
   public CollisionShape2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CollisionShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

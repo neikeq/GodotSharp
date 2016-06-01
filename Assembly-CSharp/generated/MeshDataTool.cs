@@ -226,7 +226,7 @@ public class MeshDataTool : Reference {
 
   public Object get_material() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshDataTool_get_material(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -236,6 +236,7 @@ public class MeshDataTool : Reference {
   public MeshDataTool() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_MeshDataTool());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

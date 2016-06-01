@@ -83,6 +83,7 @@ public class StreamPeerSSL : StreamPeer {
   public StreamPeerSSL() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_StreamPeerSSL());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -46,6 +46,7 @@ public class StyleBoxEmpty : StyleBox {
   public StyleBoxEmpty() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_StyleBoxEmpty());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

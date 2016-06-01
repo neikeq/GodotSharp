@@ -52,6 +52,7 @@ public class EditorExportPlugin : Reference {
   public EditorExportPlugin() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorExportPlugin());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

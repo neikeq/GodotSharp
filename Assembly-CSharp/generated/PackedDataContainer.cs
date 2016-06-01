@@ -57,6 +57,7 @@ public class PackedDataContainer : Resource {
   public PackedDataContainer() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PackedDataContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

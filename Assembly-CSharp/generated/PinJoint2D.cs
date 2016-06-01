@@ -55,6 +55,7 @@ public class PinJoint2D : Joint2D {
   public PinJoint2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PinJoint2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

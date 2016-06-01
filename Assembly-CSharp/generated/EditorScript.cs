@@ -53,7 +53,7 @@ public class EditorScript : Reference {
 
   public Object get_scene() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorScript_get_scene(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -63,6 +63,7 @@ public class EditorScript : Reference {
   public EditorScript() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorScript());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

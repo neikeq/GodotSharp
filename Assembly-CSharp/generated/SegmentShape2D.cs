@@ -66,6 +66,7 @@ public class SegmentShape2D : Shape2D {
   public SegmentShape2D() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SegmentShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -46,6 +46,7 @@ public class VideoStreamTheora : VideoStream {
   public VideoStreamTheora() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VideoStreamTheora());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

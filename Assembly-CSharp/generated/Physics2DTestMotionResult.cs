@@ -80,7 +80,7 @@ public class Physics2DTestMotionResult : Reference {
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collider(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -95,6 +95,7 @@ public class Physics2DTestMotionResult : Reference {
   public Physics2DTestMotionResult() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Physics2DTestMotionResult());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

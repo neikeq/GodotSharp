@@ -154,7 +154,7 @@ public class RichTextLabel : Control {
 
   public Object get_v_scroll() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.RichTextLabel_get_v_scroll(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -231,6 +231,7 @@ public class RichTextLabel : Control {
   public RichTextLabel() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_RichTextLabel());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

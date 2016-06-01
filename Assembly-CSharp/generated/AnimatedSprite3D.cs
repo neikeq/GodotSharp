@@ -65,6 +65,7 @@ public class AnimatedSprite3D : SpriteBase3D {
   public AnimatedSprite3D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AnimatedSprite3D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

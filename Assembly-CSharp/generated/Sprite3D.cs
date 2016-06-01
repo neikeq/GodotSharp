@@ -102,6 +102,7 @@ public class Sprite3D : SpriteBase3D {
   public Sprite3D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Sprite3D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -149,6 +149,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) PhysicsServer %{: this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

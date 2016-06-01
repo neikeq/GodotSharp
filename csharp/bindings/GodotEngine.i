@@ -253,7 +253,7 @@ typedef DVector<uint8_t> RawArray;
 
 %typemap(csout, excode=SWIGEXCODE) Object* {
     global::System.IntPtr cPtr = $imcall;
-    $csclassname ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new $csclassname(cPtr, false);
     }$excode
@@ -262,7 +262,7 @@ typedef DVector<uint8_t> RawArray;
 
 %typemap(csout, excode=SWIGEXCODE) Node* {
     global::System.IntPtr cPtr = $imcall;
-    $csclassname ret = InternalHelpers.GetManagedObjectFor(cPtr) as $csclassname;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;
     if (ret == null) {
       ret = new $csclassname(cPtr, false);
     }$excode
@@ -271,7 +271,7 @@ typedef DVector<uint8_t> RawArray;
 
 %typemap(csout, excode=SWIGEXCODE) Control* {
     global::System.IntPtr cPtr = $imcall;
-    $csclassname ret = InternalHelpers.GetManagedObjectFor(cPtr) as $csclassname;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;
     if (ret == null) {
       ret = new $csclassname(cPtr, false);
     }$excode

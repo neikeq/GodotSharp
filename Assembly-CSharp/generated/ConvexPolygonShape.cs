@@ -56,6 +56,7 @@ public class ConvexPolygonShape : Shape {
   public ConvexPolygonShape() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ConvexPolygonShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

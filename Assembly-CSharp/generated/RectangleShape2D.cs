@@ -56,6 +56,7 @@ public class RectangleShape2D : Shape2D {
   public RectangleShape2D() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_RectangleShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

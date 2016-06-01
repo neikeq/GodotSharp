@@ -355,7 +355,7 @@ public class CanvasItem : Node {
 
   public Object get_world_2d() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.CanvasItem_get_world_2d(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }

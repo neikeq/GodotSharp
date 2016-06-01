@@ -46,6 +46,7 @@ public class AudioStreamSpeex : AudioStream {
   public AudioStreamSpeex() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AudioStreamSpeex());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

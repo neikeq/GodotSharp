@@ -89,7 +89,7 @@ public class Polygon2D : Node2D {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Polygon2D_get_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -156,6 +156,7 @@ public class Polygon2D : Node2D {
   public Polygon2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Polygon2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

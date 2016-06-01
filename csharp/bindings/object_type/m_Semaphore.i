@@ -30,6 +30,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) _Semaphore %{: this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

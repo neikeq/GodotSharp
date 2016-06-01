@@ -75,6 +75,7 @@ public class NavigationMesh : Resource {
   public NavigationMesh() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_NavigationMesh());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -46,6 +46,7 @@ public class ReferenceFrame : Control {
   public ReferenceFrame() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ReferenceFrame());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

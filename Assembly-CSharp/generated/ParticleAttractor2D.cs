@@ -101,6 +101,7 @@ public class ParticleAttractor2D : Node2D {
   public ParticleAttractor2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ParticleAttractor2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

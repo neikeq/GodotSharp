@@ -61,7 +61,7 @@ public class TCP_Server : Reference {
 
   public Object take_connection() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TCP_Server_take_connection(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -75,6 +75,7 @@ public class TCP_Server : Reference {
   public TCP_Server() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_TCP_Server());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

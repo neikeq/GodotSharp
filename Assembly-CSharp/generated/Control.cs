@@ -95,7 +95,7 @@ public class Control : CanvasItem {
 
   public Object get_drag_data(Vector2 pos) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_drag_data(swigCPtr, Vector2.getCPtr(pos));
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -281,7 +281,7 @@ public class Control : CanvasItem {
 
   public Control get_focus_owner() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_focus_owner(swigCPtr);
-    Control ret = InternalHelpers.GetManagedObjectFor(cPtr) as Control;
+    Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     if (ret == null) {
       ret = new Control(cPtr, false);
     }
@@ -417,7 +417,7 @@ public class Control : CanvasItem {
 
   public Control get_parent_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_parent_control(swigCPtr);
-    Control ret = InternalHelpers.GetManagedObjectFor(cPtr) as Control;
+    Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     if (ret == null) {
       ret = new Control(cPtr, false);
     }
@@ -513,6 +513,7 @@ public class Control : CanvasItem {
   public Control() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Control());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

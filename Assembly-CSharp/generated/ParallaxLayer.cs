@@ -66,6 +66,7 @@ public class ParallaxLayer : Node2D {
   public ParallaxLayer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ParallaxLayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

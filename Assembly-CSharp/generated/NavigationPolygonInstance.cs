@@ -65,6 +65,7 @@ public class NavigationPolygonInstance : Node2D {
   public NavigationPolygonInstance() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_NavigationPolygonInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

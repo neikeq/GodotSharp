@@ -373,7 +373,7 @@ public class OS : Object {
 
   public Object get_main_loop() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.OS_get_main_loop(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }

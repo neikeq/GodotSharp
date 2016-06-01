@@ -65,6 +65,7 @@ public class LightOccluder2D : Node2D {
   public LightOccluder2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_LightOccluder2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

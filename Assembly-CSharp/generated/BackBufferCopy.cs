@@ -68,6 +68,7 @@ public class BackBufferCopy : Node2D {
   public BackBufferCopy() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_BackBufferCopy());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

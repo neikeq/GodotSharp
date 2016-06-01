@@ -46,6 +46,7 @@ public class EventStreamChibi : EventStream {
   public EventStreamChibi() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EventStreamChibi());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

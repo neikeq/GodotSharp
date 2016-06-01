@@ -56,6 +56,7 @@ public class WorldEnvironment : Spatial {
   public WorldEnvironment() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_WorldEnvironment());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

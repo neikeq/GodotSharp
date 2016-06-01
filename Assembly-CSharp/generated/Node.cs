@@ -128,7 +128,7 @@ public class Node : Object {
 
   public Node get_child(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_child(swigCPtr, idx);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -143,7 +143,7 @@ public class Node : Object {
 
   public Node get_node(NodePath path) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_node(swigCPtr, NodePath.getCPtr(path));
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -153,7 +153,7 @@ public class Node : Object {
 
   public Node get_parent() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_parent(swigCPtr);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -162,7 +162,7 @@ public class Node : Object {
 
   public Node find_node(string mask, bool recursive, bool owned) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_find_node__SWIG_0(swigCPtr, mask, recursive, owned);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -172,7 +172,7 @@ public class Node : Object {
 
   public Node find_node(string mask, bool recursive) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_find_node__SWIG_1(swigCPtr, mask, recursive);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -182,7 +182,7 @@ public class Node : Object {
 
   public Node find_node(string mask) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_find_node__SWIG_2(swigCPtr, mask);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -267,7 +267,7 @@ public class Node : Object {
 
   public Node get_owner() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_owner(swigCPtr);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -387,7 +387,7 @@ public class Node : Object {
 
   public Node duplicate(bool use_instancing) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_duplicate__SWIG_0(swigCPtr, use_instancing);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -396,7 +396,7 @@ public class Node : Object {
 
   public Node duplicate() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_duplicate__SWIG_1(swigCPtr);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -422,7 +422,7 @@ public class Node : Object {
 
   public Object get_viewport() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_viewport(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -436,6 +436,7 @@ public class Node : Object {
   public Node() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Node());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

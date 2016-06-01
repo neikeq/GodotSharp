@@ -100,6 +100,7 @@ public class SpatialSamplePlayer : SpatialPlayer {
   public SpatialSamplePlayer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SpatialSamplePlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -69,7 +69,7 @@ public class RayCast : Spatial {
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.RayCast_get_collider(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -134,6 +134,7 @@ public class RayCast : Spatial {
   public RayCast() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_RayCast());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

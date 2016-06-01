@@ -156,6 +156,7 @@ public class SurfaceTool : Reference {
   public SurfaceTool() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SurfaceTool());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

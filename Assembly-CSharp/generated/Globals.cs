@@ -112,7 +112,7 @@ public class Globals : Object {
 
   public Object get_singleton(string name) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Globals_get_singleton(swigCPtr, name);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }

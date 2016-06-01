@@ -136,6 +136,7 @@ public class VehicleWheel : Spatial {
   public VehicleWheel() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VehicleWheel());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

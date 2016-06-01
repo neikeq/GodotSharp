@@ -46,6 +46,7 @@ public class AudioStreamMPC : AudioStream {
   public AudioStreamMPC() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AudioStreamMPC());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

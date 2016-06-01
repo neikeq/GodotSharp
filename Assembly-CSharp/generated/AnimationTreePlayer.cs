@@ -396,6 +396,7 @@ public class AnimationTreePlayer : Node {
   public AnimationTreePlayer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AnimationTreePlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

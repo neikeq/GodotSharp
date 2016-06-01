@@ -160,6 +160,7 @@ public class SpatialStreamPlayer : SpatialPlayer {
   public SpatialStreamPlayer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SpatialStreamPlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

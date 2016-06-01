@@ -61,6 +61,7 @@ public class ConvexPolygonShape2D : Shape2D {
   public ConvexPolygonShape2D() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ConvexPolygonShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

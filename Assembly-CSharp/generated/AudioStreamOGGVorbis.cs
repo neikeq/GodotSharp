@@ -46,6 +46,7 @@ public class AudioStreamOGGVorbis : AudioStream {
   public AudioStreamOGGVorbis() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AudioStreamOGGVorbis());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

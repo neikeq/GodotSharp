@@ -84,6 +84,7 @@ public class CollisionPolygon : Spatial {
   public CollisionPolygon() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CollisionPolygon());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

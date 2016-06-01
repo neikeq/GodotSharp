@@ -46,6 +46,7 @@ public class CanvasItemShader : Shader {
   public CanvasItemShader() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CanvasItemShader());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -76,6 +76,7 @@ public class AtlasTexture : Texture {
   public AtlasTexture() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AtlasTexture());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

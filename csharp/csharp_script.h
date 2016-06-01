@@ -44,6 +44,20 @@ class CSharpLanguage;
 // TODO Cache stuff
 // TODO Describe "stuff" :P
 
+class CSharpGCHandle : public Reference
+{
+	OBJ_TYPE(CSharpGCHandle, Reference);
+
+	uint32_t handle;
+
+public:
+	MonoObject* get_object() { return mono_gchandle_get_target(handle); }
+
+	CSharpGCHandle(uint32_t p_handle) { handle = p_handle; }
+	CSharpGCHandle(MonoObject* p_object) { handle = mono_gchandle_new(p_object, FALSE); }
+	~CSharpGCHandle() { mono_gchandle_free(handle); }
+};
+
 class CSharpScript : public Script
 {
 	OBJ_TYPE(CSharpScript,Script)
@@ -106,13 +120,13 @@ friend class CSharpScript;
 friend class CSharpLanguage;
 	Object *owner;
 	Ref<CSharpScript> script;
-	MonoObject *mono_object;
+	Ref<CSharpGCHandle> gchandle;
 	bool base_ref;
 
 	void _ml_call_reversed(MonoClass *clazz,const StringName& p_method,const Variant** p_args,int p_argcount);
 
 public:
-	MonoObject *get_mono_object() const;
+	MonoObject *get_mono_object();
 
 	virtual bool set(const StringName &p_name, const Variant &p_value);
 	virtual bool get(const StringName &p_name, Variant &r_ret) const;
@@ -122,7 +136,6 @@ public:
 	/* TODO */ virtual void get_method_list(List<MethodInfo> *p_list) const {}
 	virtual bool has_method(const StringName &p_method) const;
 	virtual Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
-	virtual Variant call_const(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) const;
 	virtual void call_multilevel(const StringName &p_method, const Variant **p_args, int p_argcount);
 	virtual void call_multilevel_reversed(const StringName &p_method, const Variant **p_args, int p_argcount);
 

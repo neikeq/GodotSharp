@@ -133,6 +133,7 @@ public class EditorSpatialGizmo : SpatialGizmo {
   public EditorSpatialGizmo() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorSpatialGizmo());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

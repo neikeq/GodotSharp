@@ -50,6 +50,7 @@ public class EditorScenePostImport : Reference {
   public EditorScenePostImport() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorScenePostImport());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

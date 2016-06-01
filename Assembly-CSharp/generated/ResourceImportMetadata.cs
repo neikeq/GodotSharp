@@ -100,6 +100,7 @@ public class ResourceImportMetadata : Reference {
   public ResourceImportMetadata() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ResourceImportMetadata());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

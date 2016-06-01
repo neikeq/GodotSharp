@@ -7,7 +7,10 @@ namespace GodotEngine
 	internal class InternalHelpers
 	{
 		[MethodImplAttribute (MethodImplOptions.InternalCall)]
-		internal extern static Object GetManagedObjectFor (IntPtr obj);
+		internal extern static Object UnmanagedGetManaged (IntPtr unmanaged);
+
+		[MethodImplAttribute (MethodImplOptions.InternalCall)]
+		internal extern static Object TieManagedToUnmanaged (object managed, IntPtr unmanaged);
 
 		// TODO Move this to C++
 		internal static global::System.Runtime.InteropServices.HandleRef VariantCall (object instance, MethodInfo methodInfo, Variant[] vargs)

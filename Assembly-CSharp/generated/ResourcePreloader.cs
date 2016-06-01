@@ -66,7 +66,7 @@ public class ResourcePreloader : Node {
 
   public Object get_resource(string name) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourcePreloader_get_resource(swigCPtr, name);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -82,6 +82,7 @@ public class ResourcePreloader : Node {
   public ResourcePreloader() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ResourcePreloader());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

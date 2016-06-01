@@ -104,7 +104,7 @@ public class SpriteFrames : Resource {
 
   public Object get_frame(string anim, int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SpriteFrames_get_frame(swigCPtr, anim, idx);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -134,6 +134,7 @@ public class SpriteFrames : Resource {
   public SpriteFrames() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SpriteFrames());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

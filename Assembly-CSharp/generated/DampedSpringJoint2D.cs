@@ -82,6 +82,7 @@ public class DampedSpringJoint2D : Joint2D {
   public DampedSpringJoint2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_DampedSpringJoint2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

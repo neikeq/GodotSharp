@@ -63,6 +63,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) Control %{: this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

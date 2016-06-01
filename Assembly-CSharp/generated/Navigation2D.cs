@@ -84,7 +84,7 @@ public class Navigation2D : Node2D {
 
   public Object get_closest_point_owner(Vector2 to_point) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation2D_get_closest_point_owner(swigCPtr, Vector2.getCPtr(to_point));
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -95,6 +95,7 @@ public class Navigation2D : Node2D {
   public Navigation2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Navigation2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

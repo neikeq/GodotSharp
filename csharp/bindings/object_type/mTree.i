@@ -35,6 +35,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) Tree %{: this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

@@ -90,6 +90,7 @@ public class SampleLibrary : Resource {
   public SampleLibrary() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SampleLibrary());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

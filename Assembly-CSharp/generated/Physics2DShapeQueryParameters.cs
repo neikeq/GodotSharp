@@ -118,6 +118,7 @@ public class Physics2DShapeQueryParameters : Reference {
   public Physics2DShapeQueryParameters() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Physics2DShapeQueryParameters());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

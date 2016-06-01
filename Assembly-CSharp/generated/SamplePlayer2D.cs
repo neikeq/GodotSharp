@@ -109,6 +109,7 @@ public class SamplePlayer2D : SoundPlayer2D {
   public SamplePlayer2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_SamplePlayer2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

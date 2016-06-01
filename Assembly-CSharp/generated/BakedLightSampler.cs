@@ -69,6 +69,7 @@ public class BakedLightSampler : VisualInstance {
   public BakedLightSampler() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_BakedLightSampler());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

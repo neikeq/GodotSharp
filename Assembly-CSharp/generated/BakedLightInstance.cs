@@ -49,7 +49,7 @@ public class BakedLightInstance : VisualInstance {
 
   public Object get_baked_light() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.BakedLightInstance_get_baked_light(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -64,6 +64,7 @@ public class BakedLightInstance : VisualInstance {
   public BakedLightInstance() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_BakedLightInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

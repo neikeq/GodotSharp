@@ -53,7 +53,7 @@ public class CollisionShape : Spatial {
 
   public Object get_shape() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.CollisionShape_get_shape(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -81,6 +81,7 @@ public class CollisionShape : Spatial {
   public CollisionShape() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CollisionShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -61,6 +61,7 @@ public class VisibilityNotifier : Spatial {
   public VisibilityNotifier() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VisibilityNotifier());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

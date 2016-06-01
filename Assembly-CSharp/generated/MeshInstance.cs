@@ -79,6 +79,7 @@ public class MeshInstance : GeometryInstance {
   public MeshInstance() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_MeshInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

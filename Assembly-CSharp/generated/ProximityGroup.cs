@@ -70,6 +70,7 @@ public class ProximityGroup : Spatial {
   public ProximityGroup() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ProximityGroup());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

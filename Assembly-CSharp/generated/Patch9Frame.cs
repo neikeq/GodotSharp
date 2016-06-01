@@ -49,7 +49,7 @@ public class Patch9Frame : Control {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Patch9Frame_get_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -87,6 +87,7 @@ public class Patch9Frame : Control {
   public Patch9Frame() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Patch9Frame());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

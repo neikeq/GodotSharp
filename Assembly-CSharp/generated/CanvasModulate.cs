@@ -56,6 +56,7 @@ public class CanvasModulate : Node2D {
   public CanvasModulate() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CanvasModulate());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

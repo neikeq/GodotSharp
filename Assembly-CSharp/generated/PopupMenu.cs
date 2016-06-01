@@ -163,7 +163,7 @@ public class PopupMenu : Popup {
 
   public Object get_item_icon(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PopupMenu_get_item_icon(swigCPtr, idx);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -234,6 +234,7 @@ public class PopupMenu : Popup {
   public PopupMenu() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PopupMenu());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

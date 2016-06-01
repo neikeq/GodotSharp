@@ -29,6 +29,7 @@
 %typemap(csconstruct, excode=SWIGEXCODE) EditorSelection %{: this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init($imcall);
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }$excode
   }
 %}

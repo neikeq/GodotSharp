@@ -54,7 +54,7 @@ public class TextureFrame : Control {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureFrame_get_texture(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -92,6 +92,7 @@ public class TextureFrame : Control {
   public TextureFrame() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_TextureFrame());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

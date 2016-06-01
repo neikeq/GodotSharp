@@ -71,6 +71,7 @@ public class DirectionalLight : Light {
   public DirectionalLight() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_DirectionalLight());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

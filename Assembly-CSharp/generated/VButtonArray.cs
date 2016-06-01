@@ -46,6 +46,7 @@ public class VButtonArray : ButtonArray {
   public VButtonArray() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VButtonArray());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

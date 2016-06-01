@@ -58,6 +58,7 @@ public class VisibilityEnabler : VisibilityNotifier {
   public VisibilityEnabler() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VisibilityEnabler());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

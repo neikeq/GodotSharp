@@ -74,6 +74,7 @@ public class StyleBoxImageMask : StyleBox {
   public StyleBoxImageMask() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_StyleBoxImageMask());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -346,12 +346,12 @@ void CSharpInstance::_ml_call_reversed(MonoClass *clazz, const StringName &p_met
 	if (base && base != script->native)
 		_ml_call_reversed(base,p_method,p_args,p_argcount);
 
-	mono_void_call(clazz, mono_object, p_method, p_args, p_argcount);
+	mono_void_call(clazz, get_mono_object(), p_method, p_args, p_argcount);
 }
 
-MonoObject *CSharpInstance::get_mono_object() const
+MonoObject *CSharpInstance::get_mono_object()
 {
-	return mono_object;
+	return gchandle->get_object();
 }
 
 bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
@@ -361,7 +361,7 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 		MonoClass *variant_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "Variant");
 		MonoObject* managed_variant = variant_to_mono_object(variant_class, &p_value);
 		void *value = &managed_variant;
-		mono_field_set_value(mono_object, field, value);
+		mono_field_set_value(get_mono_object(), field, value);
 	}
 
 	// TODO MUST BE MULTILEVEL
@@ -376,6 +376,7 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 	return false;
 }
 
+// Nothing we can do as long as this method is const :(
 bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const
 {
 	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
@@ -389,14 +390,14 @@ bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const
 
 	// TODO MUST BE MULTILEVEL
 
-	Variant name = p_name;
+	/*Variant name = p_name;
 	const Variant *args[1] = { &name };
 	Variant::CallError err;
-	Variant ret = call_const("_get", (const Variant**)args, 1, err);
+	Variant ret = call("_get", (const Variant**)args, 1, err);
 	if (err.error == Variant::CallError::CALL_OK && ret.get_type() != Variant::NIL) {
 		r_ret = ret;
 		return true;
-	}
+	}*/
 
 	return false;
 }
@@ -442,55 +443,7 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 			MonoArray* v = vargs_to_mono_array(p_args, p_argcount);
 
 			void *args [3];
-			args[0] = mono_object;
-			args[1] = mrm;
-			args[2] = v;
-
-			MonoObject *exc = NULL;
-			MonoObject *result = mono_runtime_invoke(variant_call, NULL, args, &exc);
-
-			if (exc) {
-				mono_print_unhandled_exception(exc);
-				return Variant();
-			} else if (result) {
-				return *(Variant*) mono_object_unbox(result);
-			} else { // return type is void?
-				return Variant();
-			}
-		}
-
-		top = mono_class_get_parent(top);
-		if (top == script->native)
-			break;
-	}
-
-	r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
-	return Variant();
-}
-
-// Duplicate of virtual method `call`, but this one is const.
-// Needed for being called from virtual method `get` which is also const :|
-Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) const
-{
-	if (!script.ptr())
-		return Variant();
-
-	MonoClass *top = script->script_class;
-
-	while (top) {
-		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
-
-		if (method) {
-			MonoClass *helper_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "InternalHelpers");
-			ERR_FAIL_COND_V(!helper_class, Variant());
-			MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCall", 3);
-			ERR_FAIL_COND_V(!variant_call, Variant());
-
-			MonoReflectionMethod *mrm = mono_method_get_object(CSharpLanguage::get_singleton()->get_domain(), method, top);
-			MonoArray* v = vargs_to_mono_array(p_args, p_argcount);
-
-			void *args [3];
-			args[0] = mono_object;
+			args[0] = get_mono_object();
 			args[1] = mrm;
 			args[2] = v;
 
@@ -522,7 +475,7 @@ void CSharpInstance::call_multilevel(const StringName &p_method, const Variant *
 		MonoClass *top = script->script_class;
 
 		while (top) {
-			mono_void_call(top, mono_object, p_method, p_args, p_argcount);
+			mono_void_call(top, get_mono_object(), p_method, p_args, p_argcount);
 			top = mono_class_get_parent(top);
 			if (top == script->native)
 				break;
@@ -712,7 +665,6 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 	}
 
 	instances.insert(instance->owner);
-	instance->mono_object = mono_object;
 
 	if (native) {
 		// Initialize pointers in the native base classes before constructing the object
@@ -721,12 +673,16 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 		mono_method_desc_free (desc);
 
 		void *args [1];
-		args [0] = &p_this;
-		mono_runtime_invoke (native_base_init, mono_object, args, NULL);
+		args [0] = &instance->owner;
+		mono_runtime_invoke(native_base_init, mono_object, args, NULL);
 	}
 
 	// Call default constructor if any
 	mono_runtime_object_init(mono_object);
+
+	// Tie managed to unmanaged
+	instance->gchandle = Ref<CSharpGCHandle>(memnew(CSharpGCHandle(mono_object)));
+	instance->owner->set_meta("__mono_gchandle__", instance->gchandle);
 
 	/* STEP 3, PARTY */
 

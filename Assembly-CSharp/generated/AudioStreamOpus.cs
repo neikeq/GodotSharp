@@ -46,6 +46,7 @@ public class AudioStreamOpus : AudioStream {
   public AudioStreamOpus() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AudioStreamOpus());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

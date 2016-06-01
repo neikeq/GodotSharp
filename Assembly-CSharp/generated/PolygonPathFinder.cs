@@ -89,6 +89,7 @@ public class PolygonPathFinder : Resource {
   public PolygonPathFinder() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PolygonPathFinder());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

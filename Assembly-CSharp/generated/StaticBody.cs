@@ -84,6 +84,7 @@ public class StaticBody : PhysicsBody {
   public StaticBody() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_StaticBody());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

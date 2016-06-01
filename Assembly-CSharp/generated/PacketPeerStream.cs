@@ -51,6 +51,7 @@ public class PacketPeerStream : PacketPeer {
   public PacketPeerStream() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PacketPeerStream());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

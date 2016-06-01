@@ -46,6 +46,7 @@ public class BoneAttachment : Spatial {
   public BoneAttachment() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_BoneAttachment());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -46,6 +46,7 @@ public class VScrollBar : ScrollBar {
   public VScrollBar() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VScrollBar());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

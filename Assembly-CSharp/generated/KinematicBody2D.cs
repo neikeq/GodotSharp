@@ -92,7 +92,7 @@ public class KinematicBody2D : PhysicsBody2D {
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.KinematicBody2D_get_collider(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -121,6 +121,7 @@ public class KinematicBody2D : PhysicsBody2D {
   public KinematicBody2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_KinematicBody2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

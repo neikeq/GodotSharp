@@ -83,6 +83,7 @@ public class StyleBoxTexture : StyleBox {
   public StyleBoxTexture() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_StyleBoxTexture());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

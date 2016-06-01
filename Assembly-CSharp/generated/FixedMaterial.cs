@@ -132,6 +132,7 @@ public class FixedMaterial : Material {
   public FixedMaterial() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_FixedMaterial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

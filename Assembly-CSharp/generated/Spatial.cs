@@ -109,7 +109,7 @@ public class Spatial : Node {
 
   public Object get_parent_spatial() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Spatial_get_parent_spatial(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -232,6 +232,7 @@ public class Spatial : Node {
   public Spatial() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_Spatial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

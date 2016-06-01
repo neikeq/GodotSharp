@@ -78,6 +78,7 @@ public class CanvasItemMaterial : Resource {
   public CanvasItemMaterial() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_CanvasItemMaterial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

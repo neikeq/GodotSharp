@@ -140,6 +140,7 @@ public class AnimatedSprite : Node2D {
   public AnimatedSprite() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_AnimatedSprite());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

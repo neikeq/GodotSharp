@@ -79,6 +79,7 @@ public class ColorPicker : BoxContainer {
   public ColorPicker() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ColorPicker());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -67,6 +67,7 @@ public class ShaderMaterial : Material {
   public ShaderMaterial() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ShaderMaterial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

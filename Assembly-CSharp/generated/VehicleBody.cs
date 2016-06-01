@@ -96,6 +96,7 @@ public class VehicleBody : PhysicsBody {
   public VehicleBody() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VehicleBody());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

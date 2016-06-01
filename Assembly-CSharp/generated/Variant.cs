@@ -82,7 +82,7 @@ public class Variant : global::System.IDisposable {
 
   public Object operator_to_Object() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Object(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -91,7 +91,7 @@ public class Variant : global::System.IDisposable {
 
   public Node operator_to_Node() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Node(swigCPtr);
-    Node ret = InternalHelpers.GetManagedObjectFor(cPtr) as Node;
+    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (ret == null) {
       ret = new Node(cPtr, false);
     }
@@ -100,7 +100,7 @@ public class Variant : global::System.IDisposable {
 
   public Control operator_to_Control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Control(swigCPtr);
-    Control ret = InternalHelpers.GetManagedObjectFor(cPtr) as Control;
+    Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     if (ret == null) {
       ret = new Control(cPtr, false);
     }

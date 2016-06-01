@@ -52,6 +52,7 @@ public class ConfirmationDialog : AcceptDialog {
   public ConfirmationDialog() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ConfirmationDialog());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

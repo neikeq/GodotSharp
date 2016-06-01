@@ -61,6 +61,7 @@ public class VisibilityNotifier2D : Node2D {
   public VisibilityNotifier2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_VisibilityNotifier2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

@@ -78,6 +78,7 @@ public class InterpolatedCamera : Camera {
   public InterpolatedCamera() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_InterpolatedCamera());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

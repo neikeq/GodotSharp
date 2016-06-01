@@ -85,6 +85,7 @@ public class ViewportSprite : Node2D {
   public ViewportSprite() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_ViewportSprite());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 

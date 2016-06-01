@@ -120,7 +120,7 @@ public class BitmapFont : Font {
 
   public Object get_fallback() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.BitmapFont_get_fallback(swigCPtr);
-    Object ret = InternalHelpers.GetManagedObjectFor(cPtr);
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
     if (ret == null) {
       ret = new Object(cPtr, false);
     }
@@ -130,6 +130,7 @@ public class BitmapFont : Font {
   public BitmapFont() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_BitmapFont());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
   }
 
