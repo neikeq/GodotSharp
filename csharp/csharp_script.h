@@ -111,6 +111,8 @@ public:
 
 	String get_script_name() const;
 
+	/* TODO */ Error reload(bool p_keep_state) { return FAILED; }
+
 	CSharpScript();
 };
 
@@ -216,11 +218,15 @@ public:
 	/* TODO? */ virtual void get_public_functions(List<MethodInfo> *p_functions) const {}
 	/* TODO? */ virtual void get_public_constants(List<Pair<String, Variant> > *p_constants) const {}
 
+	/* TODO */ void reload_all_scripts() {}
+
 	/* LOADER FUNCTIONS */
 	virtual void get_recognized_extensions(List<String> *p_extensions) const;
 
 	CSharpLanguage();
 	~CSharpLanguage();
+
+	// ScriptLanguage interface
 };
 
 
