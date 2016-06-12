@@ -72,12 +72,12 @@ public class BitmapFont : Font {
   }
 
   public void add_char(int character, int texture, SWIGTYPE_p_Rect2 rect, Vector2 align, float advance) {
-    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_0(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect), Vector2.getCPtr(align), advance);
+    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_0(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect), ref align, advance);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_char(int character, int texture, SWIGTYPE_p_Rect2 rect, Vector2 align) {
-    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_1(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect), Vector2.getCPtr(align));
+    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_1(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect), ref align);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -97,14 +97,14 @@ public class BitmapFont : Font {
   }
 
   public Vector2 get_char_size(int char_, int next) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.BitmapFont_get_char_size__SWIG_0(swigCPtr, char_, next), true);
+    Vector2 ret = GodotEnginePINVOKE.BitmapFont_get_char_size__SWIG_0(swigCPtr, char_, next);
     return ret;
-  }
+}
 
   public Vector2 get_char_size(int char_) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.BitmapFont_get_char_size__SWIG_1(swigCPtr, char_), true);
+    Vector2 ret = GodotEnginePINVOKE.BitmapFont_get_char_size__SWIG_1(swigCPtr, char_);
     return ret;
-  }
+}
 
   public void set_distance_field_hint(bool enable) {
     GodotEnginePINVOKE.BitmapFont_set_distance_field_hint(swigCPtr, enable);
@@ -120,10 +120,9 @@ public class BitmapFont : Font {
 
   public Object get_fallback() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.BitmapFont_get_fallback(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

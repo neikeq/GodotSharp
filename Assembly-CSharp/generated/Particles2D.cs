@@ -164,14 +164,14 @@ public class Particles2D : Node2D {
   }
 
   public void set_emissor_offset(Vector2 offset) {
-    GodotEnginePINVOKE.Particles2D_set_emissor_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Particles2D_set_emissor_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_emissor_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Particles2D_get_emissor_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Particles2D_get_emissor_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_flip_h(bool enable) {
     GodotEnginePINVOKE.Particles2D_set_flip_h(swigCPtr, enable);
@@ -210,14 +210,14 @@ public class Particles2D : Node2D {
   }
 
   public void set_emission_half_extents(Vector2 extents) {
-    GodotEnginePINVOKE.Particles2D_set_emission_half_extents(swigCPtr, Vector2.getCPtr(extents));
+    GodotEnginePINVOKE.Particles2D_set_emission_half_extents(swigCPtr, ref extents);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_emission_half_extents() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Particles2D_get_emission_half_extents(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Particles2D_get_emission_half_extents(swigCPtr);
     return ret;
-  }
+}
 
   public void set_color_phases(int phases) {
     GodotEnginePINVOKE.Particles2D_set_color_phases(swigCPtr, phases);
@@ -265,14 +265,14 @@ public class Particles2D : Node2D {
   }
 
   public void set_initial_velocity(Vector2 velocity) {
-    GodotEnginePINVOKE.Particles2D_set_initial_velocity(swigCPtr, Vector2.getCPtr(velocity));
+    GodotEnginePINVOKE.Particles2D_set_initial_velocity(swigCPtr, ref velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_initial_velocity() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Particles2D_get_initial_velocity(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Particles2D_get_initial_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public void set_explosiveness(float amount) {
     GodotEnginePINVOKE.Particles2D_set_explosiveness(swigCPtr, amount);

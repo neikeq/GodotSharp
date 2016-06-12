@@ -81,14 +81,14 @@ public class PhysicsBody2D : CollisionObject2D {
   }
 
   public void set_one_way_collision_direction(Vector2 dir) {
-    GodotEnginePINVOKE.PhysicsBody2D_set_one_way_collision_direction(swigCPtr, Vector2.getCPtr(dir));
+    GodotEnginePINVOKE.PhysicsBody2D_set_one_way_collision_direction(swigCPtr, ref dir);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_one_way_collision_direction() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.PhysicsBody2D_get_one_way_collision_direction(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.PhysicsBody2D_get_one_way_collision_direction(swigCPtr);
     return ret;
-  }
+}
 
   public void set_one_way_collision_max_depth(float depth) {
     GodotEnginePINVOKE.PhysicsBody2D_set_one_way_collision_max_depth(swigCPtr, depth);

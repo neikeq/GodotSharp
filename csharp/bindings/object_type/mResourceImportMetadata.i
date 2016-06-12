@@ -69,6 +69,12 @@ public:
     }
   }
   %extend {
+    void set_source_md5(int idx, const String& md5) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_source_md5", idx, md5);
+    }
+  }
+  %extend {
     void remove_source(int idx) {
   Object* self_obj = static_cast<Object*>($self);
   self_obj->call("remove_source", idx);

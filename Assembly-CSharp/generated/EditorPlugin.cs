@@ -175,10 +175,9 @@ public class EditorPlugin : Node {
 
   public Control get_base_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorPlugin_get_base_control(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
-    if (ret == null) {
-      ret = new Control(cPtr, false);
-    }
     return ret;
   }
 

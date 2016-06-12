@@ -9,6 +9,7 @@
 namespace GodotEngine {
 
 public class ResourceLoader : Object {
+  private static ResourceLoader instance;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -38,6 +39,15 @@ public class ResourceLoader : Object {
       }
       global::System.GC.SuppressFinalize(this);
       base.Dispose();
+    }
+  }
+
+  public static ResourceLoader Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
     }
   }
 
@@ -99,6 +109,12 @@ public class ResourceLoader : Object {
   public bool has(string path) {
     bool ret = GodotEnginePINVOKE.ResourceLoader_has(swigCPtr, path);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  private static ResourceLoader SingletonGetInstance() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_SingletonGetInstance();
+    ResourceLoader ret = (cPtr == global::System.IntPtr.Zero) ? null : new ResourceLoader(cPtr, false);
     return ret;
   }
 

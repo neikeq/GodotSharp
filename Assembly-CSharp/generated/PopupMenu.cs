@@ -113,6 +113,46 @@ public class PopupMenu : Popup {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public void add_icon_shortcut(Object texture, SWIGTYPE_p_RefT_ShortCut_t shortcut, int id) {
+    GodotEnginePINVOKE.PopupMenu_add_icon_shortcut__SWIG_0(swigCPtr, Object.getCPtr(texture), SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut), id);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_icon_shortcut(Object texture, SWIGTYPE_p_RefT_ShortCut_t shortcut) {
+    GodotEnginePINVOKE.PopupMenu_add_icon_shortcut__SWIG_1(swigCPtr, Object.getCPtr(texture), SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_shortcut(SWIGTYPE_p_RefT_ShortCut_t shortcut, int id) {
+    GodotEnginePINVOKE.PopupMenu_add_shortcut__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut), id);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_shortcut(SWIGTYPE_p_RefT_ShortCut_t shortcut) {
+    GodotEnginePINVOKE.PopupMenu_add_shortcut__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_icon_check_shortcut(Object texture, SWIGTYPE_p_RefT_ShortCut_t shortcut, int id) {
+    GodotEnginePINVOKE.PopupMenu_add_icon_check_shortcut__SWIG_0(swigCPtr, Object.getCPtr(texture), SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut), id);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_icon_check_shortcut(Object texture, SWIGTYPE_p_RefT_ShortCut_t shortcut) {
+    GodotEnginePINVOKE.PopupMenu_add_icon_check_shortcut__SWIG_1(swigCPtr, Object.getCPtr(texture), SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_check_shortcut(SWIGTYPE_p_RefT_ShortCut_t shortcut, int id) {
+    GodotEnginePINVOKE.PopupMenu_add_check_shortcut__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut), id);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void add_check_shortcut(SWIGTYPE_p_RefT_ShortCut_t shortcut) {
+    GodotEnginePINVOKE.PopupMenu_add_check_shortcut__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public void set_item_text(int idx, string text) {
     GodotEnginePINVOKE.PopupMenu_set_item_text(swigCPtr, idx, text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -139,6 +179,11 @@ public class PopupMenu : Popup {
     GodotEnginePINVOKE.PopupMenu_set_item_disabled(swigCPtr, idx, disabled);
   }
 
+  public void set_item_shortcut(int idx, SWIGTYPE_p_RefT_ShortCut_t shortcut) {
+    GodotEnginePINVOKE.PopupMenu_set_item_shortcut(swigCPtr, idx, SWIGTYPE_p_RefT_ShortCut_t.getCPtr(shortcut));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public void set_item_submenu(int idx, string submenu) {
     GodotEnginePINVOKE.PopupMenu_set_item_submenu(swigCPtr, idx, submenu);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -163,10 +208,9 @@ public class PopupMenu : Popup {
 
   public Object get_item_icon(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PopupMenu_get_item_icon(swigCPtr, idx);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -176,6 +220,11 @@ public class PopupMenu : Popup {
 
   public int get_item_accelerator(int idx) {
     int ret = GodotEnginePINVOKE.PopupMenu_get_item_accelerator(swigCPtr, idx);
+    return ret;
+  }
+
+  public SWIGTYPE_p_RefT_ShortCut_t get_item_shortcut(int idx) {
+    SWIGTYPE_p_RefT_ShortCut_t ret = new SWIGTYPE_p_RefT_ShortCut_t(GodotEnginePINVOKE.PopupMenu_get_item_shortcut(swigCPtr, idx), true);
     return ret;
   }
 

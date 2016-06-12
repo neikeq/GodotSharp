@@ -75,6 +75,18 @@ public:
     }
   }
   %extend {
+    void set_region_rect(const Rect2& region) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_region_rect", region);
+    }
+  }
+  %extend {
+    Rect2 get_region_rect() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_region_rect");
+    }
+  }
+  %extend {
     void set_draw_center(bool enable) {
   Object* self_obj = static_cast<Object*>($self);
   self_obj->call("set_draw_center", enable);

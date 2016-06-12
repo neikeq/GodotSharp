@@ -8,6 +8,8 @@
   public static readonly int STRETCH_TILE = 2;
   public static readonly int STRETCH_KEEP = 3;
   public static readonly int STRETCH_KEEP_CENTERED = 4;
+  public static readonly int STRETCH_KEEP_ASPECT = 5;
+  public static readonly int STRETCH_KEEP_ASPECT_CENTERED = 6;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   

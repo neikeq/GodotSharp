@@ -90,7 +90,7 @@ public class BakedLight : Resource {
   }
 
   public void add_lightmap(SWIGTYPE_p_RefT_Texture_t texture, Vector2 gen_size) {
-    GodotEnginePINVOKE.BakedLight_add_lightmap(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), Vector2.getCPtr(gen_size));
+    GodotEnginePINVOKE.BakedLight_add_lightmap(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), ref gen_size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

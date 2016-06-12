@@ -53,14 +53,14 @@ public class RayCast2D : Node2D {
   }
 
   public void set_cast_to(Vector2 local_point) {
-    GodotEnginePINVOKE.RayCast2D_set_cast_to(swigCPtr, Vector2.getCPtr(local_point));
+    GodotEnginePINVOKE.RayCast2D_set_cast_to(swigCPtr, ref local_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_cast_to() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.RayCast2D_get_cast_to(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.RayCast2D_get_cast_to(swigCPtr);
     return ret;
-  }
+}
 
   public bool is_colliding() {
     bool ret = GodotEnginePINVOKE.RayCast2D_is_colliding(swigCPtr);
@@ -69,10 +69,9 @@ public class RayCast2D : Node2D {
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.RayCast2D_get_collider(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -82,14 +81,14 @@ public class RayCast2D : Node2D {
   }
 
   public Vector2 get_collision_point() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.RayCast2D_get_collision_point(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.RayCast2D_get_collision_point(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_collision_normal() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.RayCast2D_get_collision_normal(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.RayCast2D_get_collision_normal(swigCPtr);
     return ret;
-  }
+}
 
   public void add_exception_rid(SWIGTYPE_p_RID rid) {
     GodotEnginePINVOKE.RayCast2D_add_exception_rid(swigCPtr, SWIGTYPE_p_RID.getCPtr(rid));

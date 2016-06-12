@@ -215,20 +215,35 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_delete_NodePath")]
   public static extern void delete_NodePath(global::System.Runtime.InteropServices.HandleRef jarg1);
 
-  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Vector2__SWIG_0")]
-  public static extern global::System.IntPtr new_Vector2__SWIG_0();
-
-  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Vector2__SWIG_1")]
-  public static extern global::System.IntPtr new_Vector2__SWIG_1(float jarg1, float jarg2);
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Vector2")]
+  public static extern global::System.IntPtr new_Vector2();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_delete_Vector2")]
   public static extern void delete_Vector2(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Matrix32")]
+  public static extern global::System.IntPtr new_Matrix32();
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_delete_Matrix32")]
+  public static extern void delete_Matrix32(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_bool")]
+  public static extern bool Variant_operator_to_bool(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_int")]
+  public static extern int Variant_operator_to_int(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_float")]
   public static extern float Variant_operator_to_float(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_String")]
   public static extern string Variant_operator_to_String(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_Vector2")]
+  public static extern Vector2 Variant_operator_to_Vector2(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_Matrix32")]
+  public static extern Matrix32.Internal Variant_operator_to_Matrix32(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Variant_operator_to_Object")]
   public static extern global::System.IntPtr Variant_operator_to_Object(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -243,13 +258,25 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_Variant__SWIG_0();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_1")]
-  public static extern global::System.IntPtr new_Variant__SWIG_1(float jarg1);
+  public static extern global::System.IntPtr new_Variant__SWIG_1(bool jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_2")]
-  public static extern global::System.IntPtr new_Variant__SWIG_2([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg1);
+  public static extern global::System.IntPtr new_Variant__SWIG_2(int jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_3")]
-  public static extern global::System.IntPtr new_Variant__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern global::System.IntPtr new_Variant__SWIG_3(float jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_4")]
+  public static extern global::System.IntPtr new_Variant__SWIG_4([global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_5")]
+  public static extern global::System.IntPtr new_Variant__SWIG_5(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_6")]
+  public static extern global::System.IntPtr new_Variant__SWIG_6(ref Matrix32.Internal jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Variant__SWIG_7")]
+  public static extern global::System.IntPtr new_Variant__SWIG_7(ref Vector2 jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_delete_Variant")]
   public static extern void delete_Variant(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -462,7 +489,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Performance_SingletonGetInstance();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_total_gravity")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_total_gravity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DDirectBodyState_get_total_gravity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_total_linear_damp")]
   public static extern float Physics2DDirectBodyState_get_total_linear_damp(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -477,10 +504,10 @@ class GodotEnginePINVOKE {
   public static extern float Physics2DDirectBodyState_get_inverse_inertia(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_set_linear_velocity")]
-  public static extern void Physics2DDirectBodyState_set_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Physics2DDirectBodyState_set_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_linear_velocity")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DDirectBodyState_get_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_set_angular_velocity")]
   public static extern void Physics2DDirectBodyState_set_angular_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -489,10 +516,10 @@ class GodotEnginePINVOKE {
   public static extern float Physics2DDirectBodyState_get_angular_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_set_transform")]
-  public static extern void Physics2DDirectBodyState_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Physics2DDirectBodyState_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_transform")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal Physics2DDirectBodyState_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_set_sleep_state")]
   public static extern void Physics2DDirectBodyState_set_sleep_state(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -504,10 +531,10 @@ class GodotEnginePINVOKE {
   public static extern int Physics2DDirectBodyState_get_contact_count(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_contact_local_pos")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_contact_local_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Physics2DDirectBodyState_get_contact_local_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_contact_local_normal")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_contact_local_normal(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Physics2DDirectBodyState_get_contact_local_normal(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_contact_local_shape")]
   public static extern int Physics2DDirectBodyState_get_contact_local_shape(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -516,7 +543,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Physics2DDirectBodyState_get_contact_collider(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_contact_collider_pos")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_contact_collider_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Physics2DDirectBodyState_get_contact_collider_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_contact_collider_id")]
   public static extern int Physics2DDirectBodyState_get_contact_collider_id(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -531,7 +558,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Physics2DDirectBodyState_get_contact_collider_shape_metadata(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_contact_collider_velocity_at_pos")]
-  public static extern global::System.IntPtr Physics2DDirectBodyState_get_contact_collider_velocity_at_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Physics2DDirectBodyState_get_contact_collider_velocity_at_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectBodyState_get_step")]
   public static extern float Physics2DDirectBodyState_get_step(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -543,31 +570,31 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Physics2DDirectBodyState_get_space_state(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_point__SWIG_0")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5, int jarg6);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5, int jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_point__SWIG_1")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_point__SWIG_2")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_point__SWIG_3")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_point__SWIG_4")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_4(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_point__SWIG_4(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_ray__SWIG_0")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5, int jarg6);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5, int jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_ray__SWIG_1")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_ray__SWIG_2")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_ray__SWIG_3")]
-  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_ray__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DDirectSpaceState_intersect_shape__SWIG_0")]
   public static extern global::System.IntPtr Physics2DDirectSpaceState_intersect_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
@@ -633,7 +660,7 @@ class GodotEnginePINVOKE {
   public static extern int Physics2DServer_area_get_space_override_mode(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_add_shape__SWIG_0")]
-  public static extern void Physics2DServer_area_add_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Physics2DServer_area_add_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_add_shape__SWIG_1")]
   public static extern void Physics2DServer_area_add_shape__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -642,7 +669,7 @@ class GodotEnginePINVOKE {
   public static extern void Physics2DServer_area_set_shape(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_set_shape_transform")]
-  public static extern void Physics2DServer_area_set_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Physics2DServer_area_set_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_get_shape_count")]
   public static extern int Physics2DServer_area_get_shape_count(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -651,7 +678,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Physics2DServer_area_get_shape(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_get_shape_transform")]
-  public static extern global::System.IntPtr Physics2DServer_area_get_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+  public static extern Matrix32.Internal Physics2DServer_area_get_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_remove_shape")]
   public static extern void Physics2DServer_area_remove_shape(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
@@ -669,13 +696,13 @@ class GodotEnginePINVOKE {
   public static extern void Physics2DServer_area_set_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_set_transform")]
-  public static extern void Physics2DServer_area_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Physics2DServer_area_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_get_param")]
   public static extern void Physics2DServer_area_get_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_get_transform")]
-  public static extern global::System.IntPtr Physics2DServer_area_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Matrix32.Internal Physics2DServer_area_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_area_attach_object_instance_ID")]
   public static extern void Physics2DServer_area_attach_object_instance_ID(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
@@ -708,7 +735,7 @@ class GodotEnginePINVOKE {
   public static extern int Physics2DServer_body_get_mode(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_add_shape__SWIG_0")]
-  public static extern void Physics2DServer_body_add_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Physics2DServer_body_add_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_add_shape__SWIG_1")]
   public static extern void Physics2DServer_body_add_shape__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -717,7 +744,7 @@ class GodotEnginePINVOKE {
   public static extern void Physics2DServer_body_set_shape(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_set_shape_transform")]
-  public static extern void Physics2DServer_body_set_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Physics2DServer_body_set_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_set_shape_metadata")]
   public static extern void Physics2DServer_body_set_shape_metadata(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
@@ -729,7 +756,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Physics2DServer_body_get_shape(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_get_shape_transform")]
-  public static extern global::System.IntPtr Physics2DServer_body_get_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+  public static extern Matrix32.Internal Physics2DServer_body_get_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_get_shape_metadata")]
   public static extern void Physics2DServer_body_get_shape_metadata(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
@@ -783,13 +810,13 @@ class GodotEnginePINVOKE {
   public static extern void Physics2DServer_body_get_state(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_apply_impulse")]
-  public static extern void Physics2DServer_body_apply_impulse(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Physics2DServer_body_apply_impulse(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_add_force")]
-  public static extern void Physics2DServer_body_add_force(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Physics2DServer_body_add_force(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_set_axis_velocity")]
-  public static extern void Physics2DServer_body_set_axis_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Physics2DServer_body_set_axis_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_add_collision_exception")]
   public static extern void Physics2DServer_body_add_collision_exception(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -804,10 +831,10 @@ class GodotEnginePINVOKE {
   public static extern int Physics2DServer_body_get_max_contacts_reported(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_set_one_way_collision_direction")]
-  public static extern void Physics2DServer_body_set_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Physics2DServer_body_set_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_get_one_way_collision_direction")]
-  public static extern global::System.IntPtr Physics2DServer_body_get_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 Physics2DServer_body_get_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_set_one_way_collision_max_depth")]
   public static extern void Physics2DServer_body_set_one_way_collision_max_depth(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, float jarg3);
@@ -828,13 +855,13 @@ class GodotEnginePINVOKE {
   public static extern void Physics2DServer_body_set_force_integration_callback__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_test_motion__SWIG_0")]
-  public static extern bool Physics2DServer_body_test_motion__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, float jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern bool Physics2DServer_body_test_motion__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, float jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_test_motion__SWIG_1")]
-  public static extern bool Physics2DServer_body_test_motion__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, float jarg4);
+  public static extern bool Physics2DServer_body_test_motion__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, float jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_body_test_motion__SWIG_2")]
-  public static extern bool Physics2DServer_body_test_motion__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern bool Physics2DServer_body_test_motion__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_joint_set_param")]
   public static extern void Physics2DServer_joint_set_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, float jarg4);
@@ -843,25 +870,25 @@ class GodotEnginePINVOKE {
   public static extern float Physics2DServer_joint_get_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_pin_joint_create__SWIG_0")]
-  public static extern global::System.IntPtr Physics2DServer_pin_joint_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern global::System.IntPtr Physics2DServer_pin_joint_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_pin_joint_create__SWIG_1")]
-  public static extern global::System.IntPtr Physics2DServer_pin_joint_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern global::System.IntPtr Physics2DServer_pin_joint_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_groove_joint_create__SWIG_0")]
-  public static extern global::System.IntPtr Physics2DServer_groove_joint_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
+  public static extern global::System.IntPtr Physics2DServer_groove_joint_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_groove_joint_create__SWIG_1")]
-  public static extern global::System.IntPtr Physics2DServer_groove_joint_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern global::System.IntPtr Physics2DServer_groove_joint_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_groove_joint_create__SWIG_2")]
-  public static extern global::System.IntPtr Physics2DServer_groove_joint_create__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern global::System.IntPtr Physics2DServer_groove_joint_create__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_damped_spring_joint_create__SWIG_0")]
-  public static extern global::System.IntPtr Physics2DServer_damped_spring_joint_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern global::System.IntPtr Physics2DServer_damped_spring_joint_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_damped_spring_joint_create__SWIG_1")]
-  public static extern global::System.IntPtr Physics2DServer_damped_spring_joint_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern global::System.IntPtr Physics2DServer_damped_spring_joint_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DServer_damped_string_joint_set_param")]
   public static extern void Physics2DServer_damped_string_joint_set_param(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, float jarg4);
@@ -1418,6 +1445,9 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceImportMetadata_get_source_md5")]
   public static extern string ResourceImportMetadata_get_source_md5(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceImportMetadata_set_source_md5")]
+  public static extern void ResourceImportMetadata_set_source_md5(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceImportMetadata_remove_source")]
   public static extern void ResourceImportMetadata_remove_source(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
@@ -1619,8 +1649,11 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Script_set_source_code")]
   public static extern void Script_set_source_code(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Script_reload")]
-  public static extern int Script_reload(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Script_reload__SWIG_0")]
+  public static extern int Script_reload__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Script_reload__SWIG_1")]
+  public static extern int Script_reload__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Shader_get_mode")]
   public static extern int Shader_get_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -1659,10 +1692,10 @@ class GodotEnginePINVOKE {
   public static extern void ShaderGraph_node_remove(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShaderGraph_node_set_pos")]
-  public static extern void ShaderGraph_node_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void ShaderGraph_node_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShaderGraph_node_get_pos")]
-  public static extern global::System.IntPtr ShaderGraph_node_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+  public static extern Vector2 ShaderGraph_node_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShaderGraph_node_get_type")]
   public static extern int ShaderGraph_node_get_type(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
@@ -1845,16 +1878,34 @@ class GodotEnginePINVOKE {
   public static extern float Shape2D_get_custom_solver_bias(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Shape2D_collide")]
-  public static extern bool Shape2D_collide(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern bool Shape2D_collide(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Shape2D_collide_with_motion")]
-  public static extern bool Shape2D_collide_with_motion(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
+  public static extern bool Shape2D_collide_with_motion(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, ref Matrix32.Internal jarg5, ref Vector2 jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Shape2D_collide_and_get_contacts")]
-  public static extern global::System.IntPtr Shape2D_collide_and_get_contacts(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern global::System.IntPtr Shape2D_collide_and_get_contacts(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Shape2D_collide_with_motion_and_get_contacts")]
-  public static extern global::System.IntPtr Shape2D_collide_with_motion_and_get_contacts(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
+  public static extern global::System.IntPtr Shape2D_collide_with_motion_and_get_contacts(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, ref Matrix32.Internal jarg5, ref Vector2 jarg6);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShortCut_set_shortcut")]
+  public static extern void ShortCut_set_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShortCut_get_shortcut")]
+  public static extern global::System.IntPtr ShortCut_get_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShortCut_is_valid")]
+  public static extern bool ShortCut_is_valid(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShortCut_is_shortcut")]
+  public static extern bool ShortCut_is_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShortCut_get_as_text")]
+  public static extern string ShortCut_get_as_text(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_ShortCut")]
+  public static extern global::System.IntPtr new_ShortCut();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SpatialSound2DServer_SingletonGetInstance")]
   public static extern global::System.IntPtr SpatialSound2DServer_SingletonGetInstance();
@@ -2061,7 +2112,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_StreamPeerTCP();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBox_test_mask")]
-  public static extern bool StyleBox_test_mask(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern bool StyleBox_test_mask(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBox_set_default_margin")]
   public static extern void StyleBox_set_default_margin(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, float jarg3);
@@ -2073,13 +2124,13 @@ class GodotEnginePINVOKE {
   public static extern float StyleBox_get_margin(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBox_get_minimum_size")]
-  public static extern global::System.IntPtr StyleBox_get_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 StyleBox_get_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBox_get_center_size")]
-  public static extern global::System.IntPtr StyleBox_get_center_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 StyleBox_get_center_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBox_get_offset")]
-  public static extern global::System.IntPtr StyleBox_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 StyleBox_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBox_draw")]
   public static extern void StyleBox_draw(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -2165,6 +2216,12 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBoxTexture_get_expand_margin_size")]
   public static extern float StyleBoxTexture_get_expand_margin_size(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBoxTexture_set_region_rect")]
+  public static extern void StyleBoxTexture_set_region_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBoxTexture_get_region_rect")]
+  public static extern global::System.IntPtr StyleBoxTexture_get_region_rect(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StyleBoxTexture_set_draw_center")]
   public static extern void StyleBoxTexture_set_draw_center(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
@@ -2190,10 +2247,10 @@ class GodotEnginePINVOKE {
   public static extern void SurfaceTool_add_tangent(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SurfaceTool_add_uv")]
-  public static extern void SurfaceTool_add_uv(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void SurfaceTool_add_uv(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SurfaceTool_add_uv2")]
-  public static extern void SurfaceTool_add_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void SurfaceTool_add_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SurfaceTool_add_bones")]
   public static extern void SurfaceTool_add_bones(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -2271,7 +2328,7 @@ class GodotEnginePINVOKE {
   public static extern int Texture_get_height(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Texture_get_size")]
-  public static extern global::System.IntPtr Texture_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Texture_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Texture_get_rid")]
   public static extern global::System.IntPtr Texture_get_rid(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -2286,13 +2343,13 @@ class GodotEnginePINVOKE {
   public static extern int Texture_get_flags(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Texture_draw__SWIG_0")]
-  public static extern void Texture_draw__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, bool jarg5);
+  public static extern void Texture_draw__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, bool jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Texture_draw__SWIG_1")]
-  public static extern void Texture_draw__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Texture_draw__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Texture_draw__SWIG_2")]
-  public static extern void Texture_draw__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Texture_draw__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Texture_draw_rect__SWIG_0")]
   public static extern void Texture_draw_rect__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, bool jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, bool jarg6);
@@ -2427,16 +2484,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr TileSet_tile_get_material(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_set_texture_offset")]
-  public static extern void TileSet_tile_set_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void TileSet_tile_set_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_get_texture_offset")]
-  public static extern global::System.IntPtr TileSet_tile_get_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 TileSet_tile_get_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_set_shape_offset")]
-  public static extern void TileSet_tile_set_shape_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void TileSet_tile_set_shape_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_get_shape_offset")]
-  public static extern global::System.IntPtr TileSet_tile_get_shape_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 TileSet_tile_get_shape_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_set_region")]
   public static extern void TileSet_tile_set_region(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -2463,10 +2520,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr TileSet_tile_get_navigation_polygon(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_set_navigation_polygon_offset")]
-  public static extern void TileSet_tile_set_navigation_polygon_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void TileSet_tile_set_navigation_polygon_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_get_navigation_polygon_offset")]
-  public static extern global::System.IntPtr TileSet_tile_get_navigation_polygon_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 TileSet_tile_get_navigation_polygon_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_set_light_occluder")]
   public static extern void TileSet_tile_set_light_occluder(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -2475,10 +2532,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr TileSet_tile_get_light_occluder(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_set_occluder_offset")]
-  public static extern void TileSet_tile_set_occluder_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void TileSet_tile_set_occluder_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_tile_get_occluder_offset")]
-  public static extern global::System.IntPtr TileSet_tile_get_occluder_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 TileSet_tile_get_occluder_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileSet_remove_tile")]
   public static extern void TileSet_remove_tile(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -3111,7 +3168,7 @@ class GodotEnginePINVOKE {
   public static extern void VisualServer_viewport_remove_canvas(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_viewport_set_global_canvas_transform")]
-  public static extern void VisualServer_viewport_set_global_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void VisualServer_viewport_set_global_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_scenario_create")]
   public static extern global::System.IntPtr VisualServer_scenario_create(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3189,7 +3246,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr VisualServer_canvas_item_get_parent(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_set_transform")]
-  public static extern void VisualServer_canvas_item_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void VisualServer_canvas_item_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_set_custom_rect")]
   public static extern void VisualServer_canvas_item_set_custom_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
@@ -3213,10 +3270,10 @@ class GodotEnginePINVOKE {
   public static extern void VisualServer_canvas_item_set_z(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_add_line__SWIG_0")]
-  public static extern void VisualServer_canvas_item_add_line__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, float jarg6);
+  public static extern void VisualServer_canvas_item_add_line__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, ref Vector2 jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, float jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_add_line__SWIG_1")]
-  public static extern void VisualServer_canvas_item_add_line__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void VisualServer_canvas_item_add_line__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, ref Vector2 jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_add_rect")]
   public static extern void VisualServer_canvas_item_add_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
@@ -3240,16 +3297,16 @@ class GodotEnginePINVOKE {
   public static extern void VisualServer_canvas_item_add_texture_rect_region__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_add_style_box__SWIG_0")]
-  public static extern void VisualServer_canvas_item_add_style_box__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
+  public static extern void VisualServer_canvas_item_add_style_box__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6, global::System.Runtime.InteropServices.HandleRef jarg7);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_add_style_box__SWIG_1")]
-  public static extern void VisualServer_canvas_item_add_style_box__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void VisualServer_canvas_item_add_style_box__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_add_circle")]
-  public static extern void VisualServer_canvas_item_add_circle(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, float jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void VisualServer_canvas_item_add_circle(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, float jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_viewport_set_canvas_transform")]
-  public static extern void VisualServer_viewport_set_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void VisualServer_viewport_set_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, ref Matrix32.Internal jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_canvas_item_clear")]
   public static extern void VisualServer_canvas_item_clear(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -3261,13 +3318,13 @@ class GodotEnginePINVOKE {
   public static extern void VisualServer_cursor_set_rotation(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_cursor_set_texture")]
-  public static extern void VisualServer_cursor_set_texture(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
+  public static extern void VisualServer_cursor_set_texture(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, int jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_cursor_set_visible")]
   public static extern void VisualServer_cursor_set_visible(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_cursor_set_pos")]
-  public static extern void VisualServer_cursor_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+  public static extern void VisualServer_cursor_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_VisualServer_black_bars_set_margins")]
   public static extern void VisualServer_black_bars_set_margins(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, int jarg4, int jarg5);
@@ -3594,13 +3651,13 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Geometry_build_capsule_planes__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, float jarg3, int jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_segment_intersects_circle")]
-  public static extern float Geometry_segment_intersects_circle(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, float jarg5);
+  public static extern float Geometry_segment_intersects_circle(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, float jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_segment_intersects_segment_2d")]
-  public static extern void Geometry_segment_intersects_segment_2d(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void Geometry_segment_intersects_segment_2d(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, ref Vector2 jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_get_closest_points_between_segments_2d")]
-  public static extern global::System.IntPtr Geometry_get_closest_points_between_segments_2d(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern global::System.IntPtr Geometry_get_closest_points_between_segments_2d(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, ref Vector2 jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_get_closest_points_between_segments")]
   public static extern global::System.IntPtr Geometry_get_closest_points_between_segments(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
@@ -3627,13 +3684,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Geometry_segment_intersects_convex(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_point_is_inside_triangle")]
-  public static extern bool Geometry_point_is_inside_triangle(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern bool Geometry_point_is_inside_triangle(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, ref Vector2 jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_triangulate_polygon")]
   public static extern global::System.IntPtr Geometry_triangulate_polygon(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_make_atlas")]
   public static extern global::System.IntPtr Geometry_make_atlas(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Geometry_SingletonGetInstance")]
+  public static extern global::System.IntPtr Geometry_SingletonGetInstance();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Marshalls_variant_to_base64")]
   public static extern string Marshalls_variant_to_base64(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -3652,6 +3712,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Marshalls_base64_to_utf8")]
   public static extern string Marshalls_base64_to_utf8(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Marshalls_SingletonGetInstance")]
+  public static extern global::System.IntPtr Marshalls_SingletonGetInstance();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Mutex__lock")]
   public static extern void Mutex__lock(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -3672,16 +3735,16 @@ class GodotEnginePINVOKE {
   public static extern string OS_get_clipboard(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_video_mode__SWIG_0")]
-  public static extern void OS_set_video_mode__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3, bool jarg4, int jarg5);
+  public static extern void OS_set_video_mode__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, bool jarg3, bool jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_video_mode__SWIG_1")]
-  public static extern void OS_set_video_mode__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3, bool jarg4);
+  public static extern void OS_set_video_mode__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, bool jarg3, bool jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_video_mode_size__SWIG_0")]
-  public static extern global::System.IntPtr OS_get_video_mode_size__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 OS_get_video_mode_size__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_video_mode_size__SWIG_1")]
-  public static extern global::System.IntPtr OS_get_video_mode_size__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 OS_get_video_mode_size__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_is_video_mode_fullscreen__SWIG_0")]
   public static extern bool OS_is_video_mode_fullscreen__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -3711,16 +3774,16 @@ class GodotEnginePINVOKE {
   public static extern void OS_set_current_screen(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_screen_position__SWIG_0")]
-  public static extern global::System.IntPtr OS_get_screen_position__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 OS_get_screen_position__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_screen_position__SWIG_1")]
-  public static extern global::System.IntPtr OS_get_screen_position__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 OS_get_screen_position__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_screen_size__SWIG_0")]
-  public static extern global::System.IntPtr OS_get_screen_size__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 OS_get_screen_size__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_screen_size__SWIG_1")]
-  public static extern global::System.IntPtr OS_get_screen_size__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 OS_get_screen_size__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_screen_dpi__SWIG_0")]
   public static extern int OS_get_screen_dpi__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -3729,16 +3792,16 @@ class GodotEnginePINVOKE {
   public static extern int OS_get_screen_dpi__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_window_position")]
-  public static extern global::System.IntPtr OS_get_window_position(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 OS_get_window_position(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_window_position")]
-  public static extern void OS_set_window_position(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void OS_set_window_position(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_get_window_size")]
-  public static extern global::System.IntPtr OS_get_window_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 OS_get_window_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_window_size")]
-  public static extern void OS_set_window_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void OS_set_window_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_window_fullscreen")]
   public static extern void OS_set_window_fullscreen(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -4004,6 +4067,15 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_thread_name")]
   public static extern int OS_set_thread_name(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_set_use_vsync")]
+  public static extern void OS_set_use_vsync(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_is_vsnc_enabled")]
+  public static extern bool OS_is_vsnc_enabled(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_OS_SingletonGetInstance")]
+  public static extern global::System.IntPtr OS_SingletonGetInstance();
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceLoader_load_interactive__SWIG_0")]
   public static extern global::System.IntPtr ResourceLoader_load_interactive__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
 
@@ -4034,6 +4106,9 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceLoader_has")]
   public static extern bool ResourceLoader_has(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceLoader_SingletonGetInstance")]
+  public static extern global::System.IntPtr ResourceLoader_SingletonGetInstance();
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceSaver_save__SWIG_0")]
   public static extern int ResourceSaver_save__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
 
@@ -4042,6 +4117,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceSaver_get_recognized_extensions")]
   public static extern global::System.IntPtr ResourceSaver_get_recognized_extensions(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ResourceSaver_SingletonGetInstance")]
+  public static extern global::System.IntPtr ResourceSaver_SingletonGetInstance();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Semaphore_wait")]
   public static extern int Semaphore_wait(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -4440,7 +4518,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr BakedLight_get_sampler_octree(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BakedLight_add_lightmap")]
-  public static extern void BakedLight_add_lightmap(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void BakedLight_add_lightmap(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BakedLight_erase_lightmap")]
   public static extern void BakedLight_erase_lightmap(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -4566,16 +4644,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_BakedLight();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitMap_create")]
-  public static extern void BitMap_create(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void BitMap_create(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitMap_create_from_image_alpha")]
   public static extern void BitMap_create_from_image_alpha(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitMap_set_bit")]
-  public static extern void BitMap_set_bit(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);
+  public static extern void BitMap_set_bit(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, bool jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitMap_get_bit")]
-  public static extern bool BitMap_get_bit(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern bool BitMap_get_bit(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitMap_set_bit_rect")]
   public static extern void BitMap_set_bit_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);
@@ -4584,7 +4662,7 @@ class GodotEnginePINVOKE {
   public static extern int BitMap_get_true_bit_count(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitMap_get_size")]
-  public static extern global::System.IntPtr BitMap_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 BitMap_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_BitMap")]
   public static extern global::System.IntPtr new_BitMap();
@@ -4815,43 +4893,43 @@ class GodotEnginePINVOKE {
   public static extern int Curve2D_get_point_count(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_add_point__SWIG_0")]
-  public static extern void Curve2D_add_point__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, int jarg5);
+  public static extern void Curve2D_add_point__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_add_point__SWIG_1")]
-  public static extern void Curve2D_add_point__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Curve2D_add_point__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_add_point__SWIG_2")]
-  public static extern void Curve2D_add_point__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Curve2D_add_point__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_add_point__SWIG_3")]
-  public static extern void Curve2D_add_point__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Curve2D_add_point__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_set_point_pos")]
-  public static extern void Curve2D_set_point_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Curve2D_set_point_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_get_point_pos")]
-  public static extern global::System.IntPtr Curve2D_get_point_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Curve2D_get_point_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_set_point_in")]
-  public static extern void Curve2D_set_point_in(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Curve2D_set_point_in(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_get_point_in")]
-  public static extern global::System.IntPtr Curve2D_get_point_in(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Curve2D_get_point_in(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_set_point_out")]
-  public static extern void Curve2D_set_point_out(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Curve2D_set_point_out(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_get_point_out")]
-  public static extern global::System.IntPtr Curve2D_get_point_out(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 Curve2D_get_point_out(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_remove_point")]
   public static extern void Curve2D_remove_point(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_interpolate")]
-  public static extern global::System.IntPtr Curve2D_interpolate(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, float jarg3);
+  public static extern Vector2 Curve2D_interpolate(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, float jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_interpolatef")]
-  public static extern global::System.IntPtr Curve2D_interpolatef(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+  public static extern Vector2 Curve2D_interpolatef(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_set_bake_interval")]
   public static extern void Curve2D_set_bake_interval(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -4863,10 +4941,10 @@ class GodotEnginePINVOKE {
   public static extern float Curve2D_get_baked_length(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_interpolate_baked__SWIG_0")]
-  public static extern global::System.IntPtr Curve2D_interpolate_baked__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, bool jarg3);
+  public static extern Vector2 Curve2D_interpolate_baked__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, bool jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_interpolate_baked__SWIG_1")]
-  public static extern global::System.IntPtr Curve2D_interpolate_baked__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+  public static extern Vector2 Curve2D_interpolate_baked__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Curve2D_get_baked_points")]
   public static extern global::System.IntPtr Curve2D_get_baked_points(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -5076,7 +5154,7 @@ class GodotEnginePINVOKE {
   public static extern void EditorSpatialGizmo_redraw(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_EditorSpatialGizmo_set_handle")]
-  public static extern void EditorSpatialGizmo_set_handle(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void EditorSpatialGizmo_set_handle(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_EditorSpatialGizmo_add_lines__SWIG_0")]
   public static extern void EditorSpatialGizmo_add_lines__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, bool jarg4);
@@ -5151,13 +5229,13 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_EventStreamChibi();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_draw__SWIG_0")]
-  public static extern void Font_draw__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, int jarg6);
+  public static extern void Font_draw__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, int jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_draw__SWIG_1")]
-  public static extern void Font_draw__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void Font_draw__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_draw__SWIG_2")]
-  public static extern void Font_draw__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4);
+  public static extern void Font_draw__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_get_ascent")]
   public static extern float Font_get_ascent(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -5172,16 +5250,16 @@ class GodotEnginePINVOKE {
   public static extern bool Font_is_distance_field_hint(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_get_string_size")]
-  public static extern global::System.IntPtr Font_get_string_size(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+  public static extern Vector2 Font_get_string_size(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_draw_char__SWIG_0")]
-  public static extern float Font_draw_char__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4, int jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
+  public static extern float Font_draw_char__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, int jarg4, int jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_draw_char__SWIG_1")]
-  public static extern float Font_draw_char__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4, int jarg5);
+  public static extern float Font_draw_char__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, int jarg4, int jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Font_draw_char__SWIG_2")]
-  public static extern float Font_draw_char__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
+  public static extern float Font_draw_char__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, int jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_FuncRef_call_func__SWIG_0")]
   public static extern void FuncRef_call_func__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, global::System.Runtime.InteropServices.HandleRef jarg6, global::System.Runtime.InteropServices.HandleRef jarg7, global::System.Runtime.InteropServices.HandleRef jarg8, global::System.Runtime.InteropServices.HandleRef jarg9, global::System.Runtime.InteropServices.HandleRef jarg10, global::System.Runtime.InteropServices.HandleRef jarg11);
@@ -5430,7 +5508,7 @@ class GodotEnginePINVOKE {
   public static extern void ImageTexture_shrink_x2_and_keep_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ImageTexture_set_size_override")]
-  public static extern void ImageTexture_set_size_override(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ImageTexture_set_size_override(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_ImageTexture")]
   public static extern global::System.IntPtr new_ImageTexture();
@@ -5475,7 +5553,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Input_get_magnetometer(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Input_get_mouse_speed")]
-  public static extern global::System.IntPtr Input_get_mouse_speed(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Input_get_mouse_speed(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Input_get_mouse_button_mask")]
   public static extern int Input_get_mouse_button_mask(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -5487,7 +5565,7 @@ class GodotEnginePINVOKE {
   public static extern int Input_get_mouse_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Input_warp_mouse_pos")]
-  public static extern void Input_warp_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Input_warp_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Input_action_press")]
   public static extern void Input_action_press(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
@@ -5496,7 +5574,7 @@ class GodotEnginePINVOKE {
   public static extern void Input_action_release(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Input_set_custom_mouse_cursor__SWIG_0")]
-  public static extern void Input_set_custom_mouse_cursor__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Input_set_custom_mouse_cursor__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Input_set_custom_mouse_cursor__SWIG_1")]
   public static extern void Input_set_custom_mouse_cursor__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -5512,6 +5590,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_InputMap_get_action_from_id")]
   public static extern string InputMap_get_action_from_id(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_InputMap_get_actions")]
+  public static extern global::System.IntPtr InputMap_get_actions(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_InputMap_add_action")]
   public static extern void InputMap_add_action(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
@@ -5541,16 +5622,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr InputMap_SingletonGetInstance();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_add_piece")]
-  public static extern int LargeTexture_add_piece(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern int LargeTexture_add_piece(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_set_piece_offset")]
-  public static extern void LargeTexture_set_piece_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void LargeTexture_set_piece_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_set_piece_texture")]
   public static extern void LargeTexture_set_piece_texture(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_set_size")]
-  public static extern void LargeTexture_set_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void LargeTexture_set_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_clear")]
   public static extern void LargeTexture_clear(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -5559,7 +5640,7 @@ class GodotEnginePINVOKE {
   public static extern int LargeTexture_get_piece_count(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_get_piece_offset")]
-  public static extern global::System.IntPtr LargeTexture_get_piece_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 LargeTexture_get_piece_offset(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LargeTexture_get_piece_texture")]
   public static extern global::System.IntPtr LargeTexture_get_piece_texture(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -5568,10 +5649,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_LargeTexture();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineShape2D_set_normal")]
-  public static extern void LineShape2D_set_normal(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void LineShape2D_set_normal(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineShape2D_get_normal")]
-  public static extern global::System.IntPtr LineShape2D_get_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 LineShape2D_get_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineShape2D_set_d")]
   public static extern void LineShape2D_set_d(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -5766,16 +5847,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr MeshDataTool_get_vertex_tangent(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshDataTool_set_vertex_uv")]
-  public static extern void MeshDataTool_set_vertex_uv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void MeshDataTool_set_vertex_uv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshDataTool_get_vertex_uv")]
-  public static extern global::System.IntPtr MeshDataTool_get_vertex_uv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 MeshDataTool_get_vertex_uv(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshDataTool_set_vertex_uv2")]
-  public static extern void MeshDataTool_set_vertex_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void MeshDataTool_set_vertex_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshDataTool_get_vertex_uv2")]
-  public static extern global::System.IntPtr MeshDataTool_get_vertex_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 MeshDataTool_get_vertex_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshDataTool_set_vertex_color")]
   public static extern void MeshDataTool_set_vertex_color(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
@@ -6333,16 +6414,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Physics2DShapeQueryParameters_get_shape_rid(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DShapeQueryParameters_set_transform")]
-  public static extern void Physics2DShapeQueryParameters_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Physics2DShapeQueryParameters_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DShapeQueryParameters_get_transform")]
-  public static extern global::System.IntPtr Physics2DShapeQueryParameters_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal Physics2DShapeQueryParameters_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DShapeQueryParameters_set_motion")]
-  public static extern void Physics2DShapeQueryParameters_set_motion(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Physics2DShapeQueryParameters_set_motion(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DShapeQueryParameters_get_motion")]
-  public static extern global::System.IntPtr Physics2DShapeQueryParameters_get_motion(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DShapeQueryParameters_get_motion(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DShapeQueryParameters_set_margin")]
   public static extern void Physics2DShapeQueryParameters_set_margin(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -6387,19 +6468,19 @@ class GodotEnginePINVOKE {
   public static extern int Physics2DShapeQueryResult_get_result_object_shape(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DTestMotionResult_get_motion")]
-  public static extern global::System.IntPtr Physics2DTestMotionResult_get_motion(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DTestMotionResult_get_motion(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DTestMotionResult_get_motion_remainder")]
-  public static extern global::System.IntPtr Physics2DTestMotionResult_get_motion_remainder(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DTestMotionResult_get_motion_remainder(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DTestMotionResult_get_collision_point")]
-  public static extern global::System.IntPtr Physics2DTestMotionResult_get_collision_point(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DTestMotionResult_get_collision_point(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DTestMotionResult_get_collision_normal")]
-  public static extern global::System.IntPtr Physics2DTestMotionResult_get_collision_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DTestMotionResult_get_collision_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DTestMotionResult_get_collider_velocity")]
-  public static extern global::System.IntPtr Physics2DTestMotionResult_get_collider_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Physics2DTestMotionResult_get_collider_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Physics2DTestMotionResult_get_collider_id")]
   public static extern int Physics2DTestMotionResult_get_collider_id(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -6486,16 +6567,16 @@ class GodotEnginePINVOKE {
   public static extern void PolygonPathFinder_setup(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PolygonPathFinder_find_path")]
-  public static extern global::System.IntPtr PolygonPathFinder_find_path(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern global::System.IntPtr PolygonPathFinder_find_path(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PolygonPathFinder_get_intersections")]
-  public static extern global::System.IntPtr PolygonPathFinder_get_intersections(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern global::System.IntPtr PolygonPathFinder_get_intersections(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PolygonPathFinder_get_closest_point")]
-  public static extern global::System.IntPtr PolygonPathFinder_get_closest_point(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 PolygonPathFinder_get_closest_point(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PolygonPathFinder_is_point_inside")]
-  public static extern bool PolygonPathFinder_is_point_inside(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern bool PolygonPathFinder_is_point_inside(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PolygonPathFinder_set_point_penalty")]
   public static extern void PolygonPathFinder_set_point_penalty(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, float jarg3);
@@ -6528,10 +6609,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_RayShape2D();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RectangleShape2D_set_extents")]
-  public static extern void RectangleShape2D_set_extents(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void RectangleShape2D_set_extents(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RectangleShape2D_get_extents")]
-  public static extern global::System.IntPtr RectangleShape2D_get_extents(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 RectangleShape2D_get_extents(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_RectangleShape2D")]
   public static extern global::System.IntPtr new_RectangleShape2D();
@@ -6795,7 +6876,7 @@ class GodotEnginePINVOKE {
   public static extern void SceneTree_quit(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SceneTree_set_screen_stretch")]
-  public static extern void SceneTree_set_screen_stretch(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void SceneTree_set_screen_stretch(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SceneTree_queue_delete")]
   public static extern void SceneTree_queue_delete(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -6837,16 +6918,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_SceneTree();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SegmentShape2D_set_a")]
-  public static extern void SegmentShape2D_set_a(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void SegmentShape2D_set_a(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SegmentShape2D_get_a")]
-  public static extern global::System.IntPtr SegmentShape2D_get_a(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 SegmentShape2D_get_a(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SegmentShape2D_set_b")]
-  public static extern void SegmentShape2D_set_b(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void SegmentShape2D_set_b(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SegmentShape2D_get_b")]
-  public static extern global::System.IntPtr SegmentShape2D_get_b(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 SegmentShape2D_get_b(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_SegmentShape2D")]
   public static extern global::System.IntPtr new_SegmentShape2D();
@@ -7461,19 +7542,19 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Viewport_find_world(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_set_canvas_transform")]
-  public static extern void Viewport_set_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Viewport_set_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_get_canvas_transform")]
-  public static extern global::System.IntPtr Viewport_get_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal Viewport_get_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_set_global_canvas_transform")]
-  public static extern void Viewport_set_global_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Viewport_set_global_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_get_global_canvas_transform")]
-  public static extern global::System.IntPtr Viewport_get_global_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal Viewport_get_global_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_get_final_transform")]
-  public static extern global::System.IntPtr Viewport_get_final_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal Viewport_get_final_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_get_visible_rect")]
   public static extern global::System.IntPtr Viewport_get_visible_rect(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -7485,16 +7566,16 @@ class GodotEnginePINVOKE {
   public static extern bool Viewport_has_transparent_background(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_set_size_override__SWIG_0")]
-  public static extern void Viewport_set_size_override__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void Viewport_set_size_override__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, ref Vector2 jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_set_size_override__SWIG_1")]
-  public static extern void Viewport_set_size_override__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Viewport_set_size_override__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_set_size_override__SWIG_2")]
   public static extern void Viewport_set_size_override__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_get_size_override")]
-  public static extern global::System.IntPtr Viewport_get_size_override(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Viewport_get_size_override(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_is_size_override_enabled")]
   public static extern bool Viewport_is_size_override_enabled(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -7596,10 +7677,10 @@ class GodotEnginePINVOKE {
   public static extern void Viewport_set_render_target_to_screen_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_get_mouse_pos")]
-  public static extern global::System.IntPtr Viewport_get_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Viewport_get_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_warp_mouse")]
-  public static extern void Viewport_warp_mouse(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Viewport_warp_mouse(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Viewport_gui_has_modal_stack")]
   public static extern bool Viewport_gui_has_modal_stack(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -7884,10 +7965,10 @@ class GodotEnginePINVOKE {
   public static extern float AnimationTreePlayer_blend3_node_get_amount(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimationTreePlayer_blend4_node_set_amount")]
-  public static extern void AnimationTreePlayer_blend4_node_set_amount(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void AnimationTreePlayer_blend4_node_set_amount(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimationTreePlayer_blend4_node_get_amount")]
-  public static extern global::System.IntPtr AnimationTreePlayer_blend4_node_get_amount(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+  public static extern Vector2 AnimationTreePlayer_blend4_node_get_amount(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimationTreePlayer_timescale_node_set_scale")]
   public static extern void AnimationTreePlayer_timescale_node_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, float jarg3);
@@ -7926,10 +8007,10 @@ class GodotEnginePINVOKE {
   public static extern int AnimationTreePlayer_transition_node_get_current(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimationTreePlayer_node_set_pos")]
-  public static extern void AnimationTreePlayer_node_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void AnimationTreePlayer_node_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimationTreePlayer_node_get_pos")]
-  public static extern global::System.IntPtr AnimationTreePlayer_node_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+  public static extern Vector2 AnimationTreePlayer_node_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimationTreePlayer_remove_node")]
   public static extern void AnimationTreePlayer_remove_node(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
@@ -8028,10 +8109,10 @@ class GodotEnginePINVOKE {
   public static extern void BitmapFont_add_texture(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitmapFont_add_char__SWIG_0")]
-  public static extern void BitmapFont_add_char__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, float jarg6);
+  public static extern void BitmapFont_add_char__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, ref Vector2 jarg5, float jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitmapFont_add_char__SWIG_1")]
-  public static extern void BitmapFont_add_char__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void BitmapFont_add_char__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, ref Vector2 jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitmapFont_add_char__SWIG_2")]
   public static extern void BitmapFont_add_char__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
@@ -8043,10 +8124,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr BitmapFont_get_texture(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitmapFont_get_char_size__SWIG_0")]
-  public static extern global::System.IntPtr BitmapFont_get_char_size__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
+  public static extern Vector2 BitmapFont_get_char_size__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitmapFont_get_char_size__SWIG_1")]
-  public static extern global::System.IntPtr BitmapFont_get_char_size__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 BitmapFont_get_char_size__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BitmapFont_set_distance_field_hint")]
   public static extern void BitmapFont_set_distance_field_hint(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -8067,22 +8148,22 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_BoneAttachment();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_project_ray_normal")]
-  public static extern global::System.IntPtr Camera_project_ray_normal(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Camera_project_ray_normal(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_project_local_ray_normal")]
-  public static extern global::System.IntPtr Camera_project_local_ray_normal(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Camera_project_local_ray_normal(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_project_ray_origin")]
-  public static extern global::System.IntPtr Camera_project_ray_origin(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Camera_project_ray_origin(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_unproject_position")]
-  public static extern global::System.IntPtr Camera_unproject_position(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 Camera_unproject_position(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_is_position_behind")]
   public static extern bool Camera_is_position_behind(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_project_position")]
-  public static extern global::System.IntPtr Camera_project_position(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Camera_project_position(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera_set_perspective")]
   public static extern void Camera_set_perspective(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2, float jarg3, float jarg4);
@@ -8214,22 +8295,22 @@ class GodotEnginePINVOKE {
   public static extern bool CanvasItem_is_draw_behind_parent_enabled(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_line__SWIG_0")]
-  public static extern void CanvasItem_draw_line__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, float jarg5);
+  public static extern void CanvasItem_draw_line__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4, float jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_line__SWIG_1")]
-  public static extern void CanvasItem_draw_line__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void CanvasItem_draw_line__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_rect")]
   public static extern void CanvasItem_draw_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_circle")]
-  public static extern void CanvasItem_draw_circle(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, float jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void CanvasItem_draw_circle(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, float jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_texture__SWIG_0")]
-  public static extern void CanvasItem_draw_texture__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void CanvasItem_draw_texture__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_texture__SWIG_1")]
-  public static extern void CanvasItem_draw_texture__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void CanvasItem_draw_texture__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_texture_rect__SWIG_0")]
   public static extern void CanvasItem_draw_texture_rect__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, bool jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, bool jarg6);
@@ -8280,46 +8361,46 @@ class GodotEnginePINVOKE {
   public static extern void CanvasItem_draw_colored_polygon__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_string__SWIG_0")]
-  public static extern void CanvasItem_draw_string__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, int jarg6);
+  public static extern void CanvasItem_draw_string__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5, int jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_string__SWIG_1")]
-  public static extern void CanvasItem_draw_string__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
+  public static extern void CanvasItem_draw_string__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, global::System.Runtime.InteropServices.HandleRef jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_string__SWIG_2")]
-  public static extern void CanvasItem_draw_string__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4);
+  public static extern void CanvasItem_draw_string__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_char__SWIG_0")]
-  public static extern float CanvasItem_draw_char__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
+  public static extern float CanvasItem_draw_char__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg5, global::System.Runtime.InteropServices.HandleRef jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_char__SWIG_1")]
-  public static extern float CanvasItem_draw_char__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg5);
+  public static extern float CanvasItem_draw_char__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Vector2 jarg3, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg4, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_draw_set_transform")]
-  public static extern void CanvasItem_draw_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, float jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern void CanvasItem_draw_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, float jarg3, ref Vector2 jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_transform")]
-  public static extern global::System.IntPtr CanvasItem_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal CanvasItem_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_global_transform")]
-  public static extern global::System.IntPtr CanvasItem_get_global_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal CanvasItem_get_global_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_global_transform_with_canvas")]
-  public static extern global::System.IntPtr CanvasItem_get_global_transform_with_canvas(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal CanvasItem_get_global_transform_with_canvas(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_viewport_transform")]
-  public static extern global::System.IntPtr CanvasItem_get_viewport_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal CanvasItem_get_viewport_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_viewport_rect")]
   public static extern global::System.IntPtr CanvasItem_get_viewport_rect(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_canvas_transform")]
-  public static extern global::System.IntPtr CanvasItem_get_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal CanvasItem_get_canvas_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_local_mouse_pos")]
-  public static extern global::System.IntPtr CanvasItem_get_local_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 CanvasItem_get_local_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_global_mouse_pos")]
-  public static extern global::System.IntPtr CanvasItem_get_global_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 CanvasItem_get_global_mouse_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_get_canvas")]
   public static extern global::System.IntPtr CanvasItem_get_canvas(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8349,16 +8430,16 @@ class GodotEnginePINVOKE {
   public static extern int CanvasLayer_get_layer(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_set_transform")]
-  public static extern void CanvasLayer_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void CanvasLayer_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_get_transform")]
-  public static extern global::System.IntPtr CanvasLayer_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal CanvasLayer_get_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_set_offset")]
-  public static extern void CanvasLayer_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void CanvasLayer_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_get_offset")]
-  public static extern global::System.IntPtr CanvasLayer_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 CanvasLayer_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_set_rotation")]
   public static extern void CanvasLayer_set_rotation(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -8373,10 +8454,10 @@ class GodotEnginePINVOKE {
   public static extern float CanvasLayer_get_rotationd(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_set_scale")]
-  public static extern void CanvasLayer_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void CanvasLayer_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_get_scale")]
-  public static extern global::System.IntPtr CanvasLayer_get_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 CanvasLayer_get_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasLayer_get_world_2d")]
   public static extern global::System.IntPtr CanvasLayer_get_world_2d(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8493,22 +8574,22 @@ class GodotEnginePINVOKE {
   public static extern void Control__input_event(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_can_drop_data")]
-  public static extern bool Control_can_drop_data(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern bool Control_can_drop_data(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_drop_data")]
-  public static extern void Control_drop_data(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Control_drop_data(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_drag_data")]
-  public static extern global::System.IntPtr Control_get_drag_data(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Control_get_drag_data(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_minimum_size")]
-  public static extern global::System.IntPtr Control_get_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_accept_event")]
   public static extern void Control_accept_event(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_combined_minimum_size")]
-  public static extern global::System.IntPtr Control_get_combined_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_combined_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_anchor__SWIG_0")]
   public static extern void Control_set_anchor__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, bool jarg4);
@@ -8526,22 +8607,22 @@ class GodotEnginePINVOKE {
   public static extern void Control_set_anchor_and_margin(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, float jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_begin")]
-  public static extern void Control_set_begin(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_begin(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_end")]
-  public static extern void Control_set_end(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_end(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_pos")]
-  public static extern void Control_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_size")]
-  public static extern void Control_set_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_custom_minimum_size")]
-  public static extern void Control_set_custom_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_custom_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_global_pos")]
-  public static extern void Control_set_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_rotation")]
   public static extern void Control_set_rotation(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -8550,22 +8631,22 @@ class GodotEnginePINVOKE {
   public static extern void Control_set_rotation_deg(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_scale")]
-  public static extern void Control_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_margin")]
   public static extern float Control_get_margin(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_begin")]
-  public static extern global::System.IntPtr Control_get_begin(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_begin(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_end")]
-  public static extern global::System.IntPtr Control_get_end(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_end(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_pos")]
-  public static extern global::System.IntPtr Control_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_size")]
-  public static extern global::System.IntPtr Control_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_rotation")]
   public static extern float Control_get_rotation(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8574,16 +8655,16 @@ class GodotEnginePINVOKE {
   public static extern float Control_get_rotation_deg(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_scale")]
-  public static extern global::System.IntPtr Control_get_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_custom_minimum_size")]
-  public static extern global::System.IntPtr Control_get_custom_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_custom_minimum_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_parent_area_size")]
-  public static extern global::System.IntPtr Control_get_parent_area_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_parent_area_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_global_pos")]
-  public static extern global::System.IntPtr Control_get_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Control_get_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_rect")]
   public static extern global::System.IntPtr Control_get_rect(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8605,6 +8686,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_set_focus_mode")]
   public static extern void Control_set_focus_mode(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_focus_mode")]
+  public static extern int Control_get_focus_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_focus")]
   public static extern bool Control_has_focus(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8690,6 +8774,51 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_constant__SWIG_1")]
   public static extern int Control_get_constant__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_icon_override")]
+  public static extern bool Control_has_icon_override(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_stylebox_override")]
+  public static extern bool Control_has_stylebox_override(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_font_override")]
+  public static extern bool Control_has_font_override(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_color_override")]
+  public static extern bool Control_has_color_override(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_constant_override")]
+  public static extern bool Control_has_constant_override(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_icon__SWIG_0")]
+  public static extern bool Control_has_icon__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_icon__SWIG_1")]
+  public static extern bool Control_has_icon__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_stylebox__SWIG_0")]
+  public static extern bool Control_has_stylebox__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_stylebox__SWIG_1")]
+  public static extern bool Control_has_stylebox__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_font__SWIG_0")]
+  public static extern bool Control_has_font__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_font__SWIG_1")]
+  public static extern bool Control_has_font__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_color__SWIG_0")]
+  public static extern bool Control_has_color__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_color__SWIG_1")]
+  public static extern bool Control_has_color__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_constant__SWIG_0")]
+  public static extern bool Control_has_constant__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_has_constant__SWIG_1")]
+  public static extern bool Control_has_constant__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_parent_control")]
   public static extern global::System.IntPtr Control_get_parent_control(global::System.Runtime.InteropServices.HandleRef jarg1);
 
@@ -8697,7 +8826,7 @@ class GodotEnginePINVOKE {
   public static extern void Control_set_tooltip(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_tooltip__SWIG_0")]
-  public static extern string Control_get_tooltip__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern string Control_get_tooltip__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_tooltip__SWIG_1")]
   public static extern string Control_get_tooltip__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8709,7 +8838,7 @@ class GodotEnginePINVOKE {
   public static extern int Control_get_default_cursor_shape(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_cursor_shape__SWIG_0")]
-  public static extern int Control_get_cursor_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern int Control_get_cursor_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_get_cursor_shape__SWIG_1")]
   public static extern int Control_get_cursor_shape__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -8745,7 +8874,10 @@ class GodotEnginePINVOKE {
   public static extern void Control_set_drag_preview(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_warp_mouse")]
-  public static extern void Control_warp_mouse(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Control_warp_mouse(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Control_minimum_size_changed")]
+  public static extern void Control_minimum_size_changed(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Control")]
   public static extern global::System.IntPtr new_Control();
@@ -9051,7 +9183,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr GraphEdit_get_connection_list(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphEdit_get_scroll_ofs")]
-  public static extern global::System.IntPtr GraphEdit_get_scroll_ofs(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 GraphEdit_get_scroll_ofs(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphEdit_set_zoom")]
   public static extern void GraphEdit_set_zoom(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -9249,10 +9381,10 @@ class GodotEnginePINVOKE {
   public static extern void ImmediateGeometry_set_color(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ImmediateGeometry_set_uv")]
-  public static extern void ImmediateGeometry_set_uv(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ImmediateGeometry_set_uv(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ImmediateGeometry_set_uv2")]
-  public static extern void ImmediateGeometry_set_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ImmediateGeometry_set_uv2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ImmediateGeometry_add_vertex")]
   public static extern void ImmediateGeometry_add_vertex(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -9459,16 +9591,16 @@ class GodotEnginePINVOKE {
   public static extern int ItemList_get_icon_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_set_min_icon_size")]
-  public static extern void ItemList_set_min_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ItemList_set_min_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_get_min_icon_size")]
-  public static extern global::System.IntPtr ItemList_get_min_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ItemList_get_min_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_set_max_icon_size")]
-  public static extern void ItemList_set_max_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ItemList_set_max_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_get_max_icon_size")]
-  public static extern global::System.IntPtr ItemList_get_max_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ItemList_get_max_icon_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_set_icon_scale")]
   public static extern void ItemList_set_icon_scale(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -9483,10 +9615,10 @@ class GodotEnginePINVOKE {
   public static extern bool ItemList_get_allow_rmb_select(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_get_item_at_pos__SWIG_0")]
-  public static extern int ItemList_get_item_at_pos__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);
+  public static extern int ItemList_get_item_at_pos__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, bool jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_get_item_at_pos__SWIG_1")]
-  public static extern int ItemList_get_item_at_pos__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern int ItemList_get_item_at_pos__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ItemList_ensure_current_is_visible")]
   public static extern void ItemList_ensure_current_is_visible(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -9701,6 +9833,21 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_LineEdit")]
   public static extern global::System.IntPtr new_LineEdit();
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Listener_make_current")]
+  public static extern void Listener_make_current(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Listener_clear_current")]
+  public static extern void Listener_clear_current(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Listener_is_current")]
+  public static extern bool Listener_is_current(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Listener_get_listener_transform")]
+  public static extern global::System.IntPtr Listener_get_listener_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Listener")]
+  public static extern global::System.IntPtr new_Listener();
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshInstance_set_mesh")]
   public static extern void MeshInstance_set_mesh(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
@@ -9792,7 +9939,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_NavigationMeshInstance();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_pos")]
-  public static extern void Node2D_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_set_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_rot")]
   public static extern void Node2D_set_rot(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -9801,10 +9948,10 @@ class GodotEnginePINVOKE {
   public static extern void Node2D_set_rotd(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_scale")]
-  public static extern void Node2D_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_set_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_get_pos")]
-  public static extern global::System.IntPtr Node2D_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Node2D_get_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_get_rot")]
   public static extern float Node2D_get_rot(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -9813,7 +9960,7 @@ class GodotEnginePINVOKE {
   public static extern float Node2D_get_rotd(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_get_scale")]
-  public static extern global::System.IntPtr Node2D_get_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Node2D_get_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_rotate")]
   public static extern void Node2D_rotate(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -9831,31 +9978,31 @@ class GodotEnginePINVOKE {
   public static extern void Node2D_move_local_y__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_translate")]
-  public static extern void Node2D_translate(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_translate(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_global_translate")]
-  public static extern void Node2D_global_translate(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_global_translate(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_scale")]
-  public static extern void Node2D_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_global_pos")]
-  public static extern void Node2D_set_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_set_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_get_global_pos")]
-  public static extern global::System.IntPtr Node2D_get_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Node2D_get_global_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_transform")]
-  public static extern void Node2D_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_global_transform")]
-  public static extern void Node2D_set_global_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_set_global_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_look_at")]
-  public static extern void Node2D_look_at(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_look_at(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_get_angle_to")]
-  public static extern float Node2D_get_angle_to(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern float Node2D_get_angle_to(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_set_z")]
   public static extern void Node2D_set_z(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -9870,10 +10017,10 @@ class GodotEnginePINVOKE {
   public static extern bool Node2D_is_z_relative(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_edit_set_pivot")]
-  public static extern void Node2D_edit_set_pivot(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Node2D_edit_set_pivot(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Node2D_get_relative_transform_to_parent")]
-  public static extern global::System.IntPtr Node2D_get_relative_transform_to_parent(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Matrix32.Internal Node2D_get_relative_transform_to_parent(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Node2D")]
   public static extern global::System.IntPtr new_Node2D();
@@ -9885,34 +10032,34 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_Panel();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_set_scroll_offset")]
-  public static extern void ParallaxBackground_set_scroll_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxBackground_set_scroll_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_get_scroll_offset")]
-  public static extern global::System.IntPtr ParallaxBackground_get_scroll_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxBackground_get_scroll_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_set_scroll_base_offset")]
-  public static extern void ParallaxBackground_set_scroll_base_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxBackground_set_scroll_base_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_get_scroll_base_offset")]
-  public static extern global::System.IntPtr ParallaxBackground_get_scroll_base_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxBackground_get_scroll_base_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_set_scroll_base_scale")]
-  public static extern void ParallaxBackground_set_scroll_base_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxBackground_set_scroll_base_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_get_scroll_base_scale")]
-  public static extern global::System.IntPtr ParallaxBackground_get_scroll_base_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxBackground_get_scroll_base_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_set_limit_begin")]
-  public static extern void ParallaxBackground_set_limit_begin(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxBackground_set_limit_begin(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_get_limit_begin")]
-  public static extern global::System.IntPtr ParallaxBackground_get_limit_begin(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxBackground_get_limit_begin(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_set_limit_end")]
-  public static extern void ParallaxBackground_set_limit_end(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxBackground_set_limit_end(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_get_limit_end")]
-  public static extern global::System.IntPtr ParallaxBackground_get_limit_end(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxBackground_get_limit_end(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxBackground_set_ignore_camera_zoom")]
   public static extern void ParallaxBackground_set_ignore_camera_zoom(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -9924,16 +10071,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_ParallaxBackground();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxLayer_set_motion_scale")]
-  public static extern void ParallaxLayer_set_motion_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxLayer_set_motion_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxLayer_get_motion_scale")]
-  public static extern global::System.IntPtr ParallaxLayer_get_motion_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxLayer_get_motion_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxLayer_set_mirroring")]
-  public static extern void ParallaxLayer_set_mirroring(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ParallaxLayer_set_mirroring(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ParallaxLayer_get_mirroring")]
-  public static extern global::System.IntPtr ParallaxLayer_get_mirroring(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ParallaxLayer_get_mirroring(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_ParallaxLayer")]
   public static extern global::System.IntPtr new_ParallaxLayer();
@@ -10143,10 +10290,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Particles2D_get_color_ramp(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_set_emissor_offset")]
-  public static extern void Particles2D_set_emissor_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Particles2D_set_emissor_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_get_emissor_offset")]
-  public static extern global::System.IntPtr Particles2D_get_emissor_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Particles2D_get_emissor_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_set_flip_h")]
   public static extern void Particles2D_set_flip_h(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -10173,10 +10320,10 @@ class GodotEnginePINVOKE {
   public static extern int Particles2D_get_v_frames(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_set_emission_half_extents")]
-  public static extern void Particles2D_set_emission_half_extents(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Particles2D_set_emission_half_extents(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_get_emission_half_extents")]
-  public static extern global::System.IntPtr Particles2D_get_emission_half_extents(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Particles2D_get_emission_half_extents(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_set_color_phases")]
   public static extern void Particles2D_set_color_phases(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -10209,10 +10356,10 @@ class GodotEnginePINVOKE {
   public static extern bool Particles2D_is_using_local_space(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_set_initial_velocity")]
-  public static extern void Particles2D_set_initial_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Particles2D_set_initial_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_get_initial_velocity")]
-  public static extern global::System.IntPtr Particles2D_get_initial_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Particles2D_get_initial_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Particles2D_set_explosiveness")]
   public static extern void Particles2D_set_explosiveness(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -10246,6 +10393,12 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Patch9Frame_get_patch_margin")]
   public static extern int Patch9Frame_get_patch_margin(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Patch9Frame_set_region_rect")]
+  public static extern void Patch9Frame_set_region_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Patch9Frame_get_region_rect")]
+  public static extern global::System.IntPtr Patch9Frame_get_region_rect(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Patch9Frame_set_draw_center")]
   public static extern void Patch9Frame_set_draw_center(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -10434,10 +10587,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Polygon2D_get_texture(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_set_texture_offset")]
-  public static extern void Polygon2D_set_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Polygon2D_set_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_get_texture_offset")]
-  public static extern global::System.IntPtr Polygon2D_get_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Polygon2D_get_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_set_texture_rotation")]
   public static extern void Polygon2D_set_texture_rotation(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -10446,10 +10599,10 @@ class GodotEnginePINVOKE {
   public static extern float Polygon2D_get_texture_rotation(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_set_texture_scale")]
-  public static extern void Polygon2D_set_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Polygon2D_set_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_get_texture_scale")]
-  public static extern global::System.IntPtr Polygon2D_get_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Polygon2D_get_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_set_invert")]
   public static extern void Polygon2D_set_invert(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -10464,16 +10617,16 @@ class GodotEnginePINVOKE {
   public static extern float Polygon2D_get_invert_border(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_set_offset")]
-  public static extern void Polygon2D_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Polygon2D_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Polygon2D_get_offset")]
-  public static extern global::System.IntPtr Polygon2D_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Polygon2D_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Polygon2D")]
   public static extern global::System.IntPtr new_Polygon2D();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Popup_popup_centered__SWIG_0")]
-  public static extern void Popup_popup_centered__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Popup_popup_centered__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Popup_popup_centered__SWIG_1")]
   public static extern void Popup_popup_centered__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -10485,7 +10638,7 @@ class GodotEnginePINVOKE {
   public static extern void Popup_popup_centered_ratio__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Popup_popup_centered_minsize__SWIG_0")]
-  public static extern void Popup_popup_centered_minsize__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Popup_popup_centered_minsize__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Popup_popup_centered_minsize__SWIG_1")]
   public static extern void Popup_popup_centered_minsize__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -10547,6 +10700,30 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_submenu_item__SWIG_1")]
   public static extern void PopupMenu_add_submenu_item__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_icon_shortcut__SWIG_0")]
+  public static extern void PopupMenu_add_icon_shortcut__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_icon_shortcut__SWIG_1")]
+  public static extern void PopupMenu_add_icon_shortcut__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_shortcut__SWIG_0")]
+  public static extern void PopupMenu_add_shortcut__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_shortcut__SWIG_1")]
+  public static extern void PopupMenu_add_shortcut__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_icon_check_shortcut__SWIG_0")]
+  public static extern void PopupMenu_add_icon_check_shortcut__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_icon_check_shortcut__SWIG_1")]
+  public static extern void PopupMenu_add_icon_check_shortcut__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_check_shortcut__SWIG_0")]
+  public static extern void PopupMenu_add_check_shortcut__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_add_check_shortcut__SWIG_1")]
+  public static extern void PopupMenu_add_check_shortcut__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_set_item_text")]
   public static extern void PopupMenu_set_item_text(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
 
@@ -10564,6 +10741,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_set_item_disabled")]
   public static extern void PopupMenu_set_item_disabled(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, bool jarg3);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_set_item_shortcut")]
+  public static extern void PopupMenu_set_item_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_set_item_submenu")]
   public static extern void PopupMenu_set_item_submenu(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg3);
@@ -10588,6 +10768,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_get_item_accelerator")]
   public static extern int PopupMenu_get_item_accelerator(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_get_item_shortcut")]
+  public static extern global::System.IntPtr PopupMenu_get_item_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PopupMenu_get_item_submenu")]
   public static extern string PopupMenu_get_item_submenu(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -10692,10 +10875,10 @@ class GodotEnginePINVOKE {
   public static extern int Quad_get_axis(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Quad_set_size")]
-  public static extern void Quad_set_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Quad_set_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Quad_get_size")]
-  public static extern global::System.IntPtr Quad_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Quad_get_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Quad_set_centered")]
   public static extern void Quad_set_centered(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -10704,10 +10887,10 @@ class GodotEnginePINVOKE {
   public static extern bool Quad_is_centered(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Quad_set_offset")]
-  public static extern void Quad_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Quad_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Quad_get_offset")]
-  public static extern global::System.IntPtr Quad_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Quad_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Quad")]
   public static extern global::System.IntPtr new_Quad();
@@ -10839,10 +11022,10 @@ class GodotEnginePINVOKE {
   public static extern bool RayCast2D_is_enabled(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RayCast2D_set_cast_to")]
-  public static extern void RayCast2D_set_cast_to(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void RayCast2D_set_cast_to(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RayCast2D_get_cast_to")]
-  public static extern global::System.IntPtr RayCast2D_get_cast_to(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 RayCast2D_get_cast_to(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RayCast2D_is_colliding")]
   public static extern bool RayCast2D_is_colliding(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -10854,10 +11037,10 @@ class GodotEnginePINVOKE {
   public static extern int RayCast2D_get_collider_shape(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RayCast2D_get_collision_point")]
-  public static extern global::System.IntPtr RayCast2D_get_collision_point(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 RayCast2D_get_collision_point(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RayCast2D_get_collision_normal")]
-  public static extern global::System.IntPtr RayCast2D_get_collision_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 RayCast2D_get_collision_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RayCast2D_add_exception_rid")]
   public static extern void RayCast2D_add_exception_rid(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -11289,10 +11472,10 @@ class GodotEnginePINVOKE {
   public static extern bool Sprite_is_centered(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Sprite_set_offset")]
-  public static extern void Sprite_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Sprite_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Sprite_get_offset")]
-  public static extern global::System.IntPtr Sprite_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Sprite_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Sprite_set_flip_h")]
   public static extern void Sprite_set_flip_h(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -11352,10 +11535,10 @@ class GodotEnginePINVOKE {
   public static extern bool SpriteBase3D_is_centered(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SpriteBase3D_set_offset")]
-  public static extern void SpriteBase3D_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void SpriteBase3D_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SpriteBase3D_get_offset")]
-  public static extern global::System.IntPtr SpriteBase3D_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 SpriteBase3D_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SpriteBase3D_set_flip_h")]
   public static extern void SpriteBase3D_set_flip_h(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -11718,10 +11901,10 @@ class GodotEnginePINVOKE {
   public static extern float TextureProgress_get_radial_initial_angle(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureProgress_set_radial_center_offset")]
-  public static extern void TextureProgress_set_radial_center_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void TextureProgress_set_radial_center_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureProgress_get_radial_center_offset")]
-  public static extern global::System.IntPtr TextureProgress_get_radial_center_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 TextureProgress_get_radial_center_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureProgress_set_fill_degrees")]
   public static extern void TextureProgress_set_fill_degrees(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -11751,16 +11934,16 @@ class GodotEnginePINVOKE {
   public static extern int TileMap_get_half_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_custom_transform")]
-  public static extern void TileMap_set_custom_transform(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void TileMap_set_custom_transform(global::System.Runtime.InteropServices.HandleRef jarg1, ref Matrix32.Internal jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_get_custom_transform")]
-  public static extern global::System.IntPtr TileMap_get_custom_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Matrix32.Internal TileMap_get_custom_transform(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_cell_size")]
-  public static extern void TileMap_set_cell_size(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void TileMap_set_cell_size(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_get_cell_size")]
-  public static extern global::System.IntPtr TileMap_get_cell_size(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 TileMap_get_cell_size(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_quadrant_size")]
   public static extern void TileMap_set_quadrant_size(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -11841,22 +12024,22 @@ class GodotEnginePINVOKE {
   public static extern void TileMap_set_cell__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3, int jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_cellv__SWIG_0")]
-  public static extern void TileMap_set_cellv__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, bool jarg4, bool jarg5, bool jarg6);
+  public static extern void TileMap_set_cellv__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3, bool jarg4, bool jarg5, bool jarg6);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_cellv__SWIG_1")]
-  public static extern void TileMap_set_cellv__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, bool jarg4, bool jarg5);
+  public static extern void TileMap_set_cellv__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3, bool jarg4, bool jarg5);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_cellv__SWIG_2")]
-  public static extern void TileMap_set_cellv__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3, bool jarg4);
+  public static extern void TileMap_set_cellv__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3, bool jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_set_cellv__SWIG_3")]
-  public static extern void TileMap_set_cellv__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, int jarg3);
+  public static extern void TileMap_set_cellv__SWIG_3(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_get_cell")]
   public static extern int TileMap_get_cell(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_get_cellv")]
-  public static extern int TileMap_get_cellv(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern int TileMap_get_cellv(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_is_cell_x_flipped")]
   public static extern bool TileMap_is_cell_x_flipped(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, int jarg3);
@@ -11874,13 +12057,13 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr TileMap_get_used_cells(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_map_to_world__SWIG_0")]
-  public static extern global::System.IntPtr TileMap_map_to_world__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, bool jarg3);
+  public static extern Vector2 TileMap_map_to_world__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, bool jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_map_to_world__SWIG_1")]
-  public static extern global::System.IntPtr TileMap_map_to_world__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 TileMap_map_to_world__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TileMap_world_to_map")]
-  public static extern global::System.IntPtr TileMap_world_to_map(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 TileMap_world_to_map(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_TileMap")]
   public static extern global::System.IntPtr new_TileMap();
@@ -11988,10 +12171,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Tree_get_item_area_rect__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Tree_get_item_at_pos")]
-  public static extern global::System.IntPtr Tree_get_item_at_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Tree_get_item_at_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Tree_get_column_at_pos")]
-  public static extern int Tree_get_column_at_pos(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern int Tree_get_column_at_pos(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Tree_ensure_cursor_is_visible")]
   public static extern void Tree_ensure_cursor_is_visible(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -12009,7 +12192,7 @@ class GodotEnginePINVOKE {
   public static extern string Tree_get_column_title(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Tree_get_scroll")]
-  public static extern global::System.IntPtr Tree_get_scroll(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Tree_get_scroll(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Tree_set_hide_folding")]
   public static extern void Tree_set_hide_folding(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -12165,10 +12348,10 @@ class GodotEnginePINVOKE {
   public static extern bool ViewportSprite_is_centered(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ViewportSprite_set_offset")]
-  public static extern void ViewportSprite_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void ViewportSprite_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ViewportSprite_get_offset")]
-  public static extern global::System.IntPtr ViewportSprite_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 ViewportSprite_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ViewportSprite_set_modulate")]
   public static extern void ViewportSprite_set_modulate(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -12288,10 +12471,10 @@ class GodotEnginePINVOKE {
   public static extern bool AnimatedSprite_is_centered(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite_set_offset")]
-  public static extern void AnimatedSprite_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void AnimatedSprite_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite_get_offset")]
-  public static extern global::System.IntPtr AnimatedSprite_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 AnimatedSprite_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite_set_flip_h")]
   public static extern void AnimatedSprite_set_flip_h(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -12325,6 +12508,24 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_get_sprite_frames")]
   public static extern global::System.IntPtr AnimatedSprite3D_get_sprite_frames(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_set_animation")]
+  public static extern void AnimatedSprite3D_set_animation(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_get_animation")]
+  public static extern string AnimatedSprite3D_get_animation(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_play__SWIG_0")]
+  public static extern void AnimatedSprite3D_play__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_play__SWIG_1")]
+  public static extern void AnimatedSprite3D_play__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_stop")]
+  public static extern void AnimatedSprite3D_stop(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_is_playing")]
+  public static extern bool AnimatedSprite3D_is_playing(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_AnimatedSprite3D_set_frame")]
   public static extern void AnimatedSprite3D_set_frame(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -12485,6 +12686,18 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BaseButton_get_draw_mode")]
   public static extern int BaseButton_get_draw_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
 
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BaseButton_set_enabled_focus_mode")]
+  public static extern void BaseButton_set_enabled_focus_mode(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BaseButton_get_enabled_focus_mode")]
+  public static extern int BaseButton_get_enabled_focus_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BaseButton_set_shortcut")]
+  public static extern void BaseButton_set_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_BaseButton_get_shortcut")]
+  public static extern global::System.IntPtr BaseButton_get_shortcut(global::System.Runtime.InteropServices.HandleRef jarg1);
+
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Button_set_text")]
   public static extern void Button_set_text(global::System.Runtime.InteropServices.HandleRef jarg1, [global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]string jarg2);
 
@@ -12558,10 +12771,10 @@ class GodotEnginePINVOKE {
   public static extern void ButtonArray_clear(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_set_offset")]
-  public static extern void Camera2D_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Camera2D_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_get_offset")]
-  public static extern global::System.IntPtr Camera2D_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Camera2D_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_set_anchor_mode")]
   public static extern void Camera2D_set_anchor_mode(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -12621,16 +12834,16 @@ class GodotEnginePINVOKE {
   public static extern float Camera2D_get_drag_margin(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_get_camera_pos")]
-  public static extern global::System.IntPtr Camera2D_get_camera_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Camera2D_get_camera_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_get_camera_screen_center")]
-  public static extern global::System.IntPtr Camera2D_get_camera_screen_center(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Camera2D_get_camera_screen_center(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_set_zoom")]
-  public static extern void Camera2D_set_zoom(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Camera2D_set_zoom(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_get_zoom")]
-  public static extern global::System.IntPtr Camera2D_get_zoom(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Camera2D_get_zoom(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Camera2D_set_follow_smoothing")]
   public static extern void Camera2D_set_follow_smoothing(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -12669,7 +12882,7 @@ class GodotEnginePINVOKE {
   public static extern void CollisionObject2D__input_event(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, int jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CollisionObject2D_add_shape__SWIG_0")]
-  public static extern void CollisionObject2D_add_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void CollisionObject2D_add_shape__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CollisionObject2D_add_shape__SWIG_1")]
   public static extern void CollisionObject2D_add_shape__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -12681,7 +12894,7 @@ class GodotEnginePINVOKE {
   public static extern void CollisionObject2D_set_shape(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CollisionObject2D_set_shape_transform")]
-  public static extern void CollisionObject2D_set_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void CollisionObject2D_set_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CollisionObject2D_set_shape_as_trigger")]
   public static extern void CollisionObject2D_set_shape_as_trigger(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, bool jarg3);
@@ -12690,7 +12903,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr CollisionObject2D_get_shape(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CollisionObject2D_get_shape_transform")]
-  public static extern global::System.IntPtr CollisionObject2D_get_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Matrix32.Internal CollisionObject2D_get_shape_transform(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CollisionObject2D_is_shape_set_as_trigger")]
   public static extern bool CollisionObject2D_is_shape_set_as_trigger(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -12990,10 +13203,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr GraphNode_get_slot_color_right(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_set_offset")]
-  public static extern void GraphNode_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void GraphNode_set_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_get_offset")]
-  public static extern global::System.IntPtr GraphNode_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 GraphNode_get_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_get_connection_output_count")]
   public static extern int GraphNode_get_connection_output_count(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -13002,7 +13215,7 @@ class GodotEnginePINVOKE {
   public static extern int GraphNode_get_connection_input_count(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_get_connection_output_pos")]
-  public static extern global::System.IntPtr GraphNode_get_connection_output_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 GraphNode_get_connection_output_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_get_connection_output_type")]
   public static extern int GraphNode_get_connection_output_type(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -13011,7 +13224,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr GraphNode_get_connection_output_color(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_get_connection_input_pos")]
-  public static extern global::System.IntPtr GraphNode_get_connection_input_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
+  public static extern Vector2 GraphNode_get_connection_input_pos(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_GraphNode_get_connection_input_type")]
   public static extern int GraphNode_get_connection_input_type(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
@@ -13161,10 +13374,10 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr Light2D_get_texture(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Light2D_set_texture_offset")]
-  public static extern void Light2D_set_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Light2D_set_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Light2D_get_texture_offset")]
-  public static extern global::System.IntPtr Light2D_get_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Light2D_get_texture_offset(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Light2D_set_color")]
   public static extern void Light2D_set_color(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -13299,28 +13512,28 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_MenuButton();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_navpoly_create__SWIG_0")]
-  public static extern int Navigation2D_navpoly_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern int Navigation2D_navpoly_create__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Matrix32.Internal jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_navpoly_create__SWIG_1")]
-  public static extern int Navigation2D_navpoly_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern int Navigation2D_navpoly_create__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_navpoly_set_transform")]
-  public static extern void Navigation2D_navpoly_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void Navigation2D_navpoly_set_transform(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2, ref Matrix32.Internal jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_navpoly_remove")]
   public static extern void Navigation2D_navpoly_remove(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_get_simple_path__SWIG_0")]
-  public static extern global::System.IntPtr Navigation2D_get_simple_path__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3, bool jarg4);
+  public static extern global::System.IntPtr Navigation2D_get_simple_path__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3, bool jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_get_simple_path__SWIG_1")]
-  public static extern global::System.IntPtr Navigation2D_get_simple_path__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern global::System.IntPtr Navigation2D_get_simple_path__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_get_closest_point")]
-  public static extern global::System.IntPtr Navigation2D_get_closest_point(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 Navigation2D_get_closest_point(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Navigation2D_get_closest_point_owner")]
-  public static extern global::System.IntPtr Navigation2D_get_closest_point_owner(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern global::System.IntPtr Navigation2D_get_closest_point_owner(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_new_Navigation2D")]
   public static extern global::System.IntPtr new_Navigation2D();
@@ -13434,10 +13647,10 @@ class GodotEnginePINVOKE {
   public static extern bool PhysicsBody2D_get_layer_mask_bit(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PhysicsBody2D_set_one_way_collision_direction")]
-  public static extern void PhysicsBody2D_set_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void PhysicsBody2D_set_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PhysicsBody2D_get_one_way_collision_direction")]
-  public static extern global::System.IntPtr PhysicsBody2D_get_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 PhysicsBody2D_get_one_way_collision_direction(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_PhysicsBody2D_set_one_way_collision_max_depth")]
   public static extern void PhysicsBody2D_set_one_way_collision_max_depth(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -13527,10 +13740,10 @@ class GodotEnginePINVOKE {
   public static extern float RigidBody2D_get_angular_damp(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_set_linear_velocity")]
-  public static extern void RigidBody2D_set_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void RigidBody2D_set_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_get_linear_velocity")]
-  public static extern global::System.IntPtr RigidBody2D_get_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 RigidBody2D_get_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_set_angular_velocity")]
   public static extern void RigidBody2D_set_angular_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -13563,16 +13776,16 @@ class GodotEnginePINVOKE {
   public static extern int RigidBody2D_get_continuous_collision_detection_mode(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_set_axis_velocity")]
-  public static extern void RigidBody2D_set_axis_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void RigidBody2D_set_axis_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_apply_impulse")]
-  public static extern void RigidBody2D_apply_impulse(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void RigidBody2D_apply_impulse(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_set_applied_force")]
-  public static extern void RigidBody2D_set_applied_force(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void RigidBody2D_set_applied_force(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_get_applied_force")]
-  public static extern global::System.IntPtr RigidBody2D_get_applied_force(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 RigidBody2D_get_applied_force(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_set_applied_torque")]
   public static extern void RigidBody2D_set_applied_torque(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -13581,7 +13794,7 @@ class GodotEnginePINVOKE {
   public static extern float RigidBody2D_get_applied_torque(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_add_force")]
-  public static extern void RigidBody2D_add_force(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, global::System.Runtime.InteropServices.HandleRef jarg3);
+  public static extern void RigidBody2D_add_force(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, ref Vector2 jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_set_sleeping")]
   public static extern void RigidBody2D_set_sleeping(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
@@ -13596,13 +13809,13 @@ class GodotEnginePINVOKE {
   public static extern bool RigidBody2D_is_able_to_sleep(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_test_motion__SWIG_0")]
-  public static extern bool RigidBody2D_test_motion__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, float jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
+  public static extern bool RigidBody2D_test_motion__SWIG_0(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, float jarg3, global::System.Runtime.InteropServices.HandleRef jarg4);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_test_motion__SWIG_1")]
-  public static extern bool RigidBody2D_test_motion__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2, float jarg3);
+  public static extern bool RigidBody2D_test_motion__SWIG_1(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2, float jarg3);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_test_motion__SWIG_2")]
-  public static extern bool RigidBody2D_test_motion__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern bool RigidBody2D_test_motion__SWIG_2(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_RigidBody2D_get_colliding_bodies")]
   public static extern global::System.IntPtr RigidBody2D_get_colliding_bodies(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -13737,13 +13950,13 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_Sprite3D();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StaticBody2D_set_constant_linear_velocity")]
-  public static extern void StaticBody2D_set_constant_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void StaticBody2D_set_constant_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StaticBody2D_set_constant_angular_velocity")]
   public static extern void StaticBody2D_set_constant_angular_velocity(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StaticBody2D_get_constant_linear_velocity")]
-  public static extern global::System.IntPtr StaticBody2D_get_constant_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 StaticBody2D_get_constant_linear_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_StaticBody2D_get_constant_angular_velocity")]
   public static extern float StaticBody2D_get_constant_angular_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -13782,7 +13995,7 @@ class GodotEnginePINVOKE {
   public static extern void TextureButton_set_click_mask(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureButton_set_texture_scale")]
-  public static extern void TextureButton_set_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void TextureButton_set_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureButton_set_modulate")]
   public static extern void TextureButton_set_modulate(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -13806,7 +14019,7 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr TextureButton_get_click_mask(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureButton_get_texture_scale")]
-  public static extern global::System.IntPtr TextureButton_get_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 TextureButton_get_texture_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_TextureButton_get_modulate")]
   public static extern global::System.IntPtr TextureButton_get_modulate(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -13851,10 +14064,10 @@ class GodotEnginePINVOKE {
   public static extern float Area2D_get_gravity_distance_scale(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Area2D_set_gravity_vector")]
-  public static extern void Area2D_set_gravity_vector(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern void Area2D_set_gravity_vector(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Area2D_get_gravity_vector")]
-  public static extern global::System.IntPtr Area2D_get_gravity_vector(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 Area2D_get_gravity_vector(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Area2D_set_gravity")]
   public static extern void Area2D_set_gravity(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
@@ -14040,16 +14253,16 @@ class GodotEnginePINVOKE {
   public static extern global::System.IntPtr new_HSplitContainer();
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_move")]
-  public static extern global::System.IntPtr KinematicBody2D_move(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 KinematicBody2D_move(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_move_to")]
-  public static extern global::System.IntPtr KinematicBody2D_move_to(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern Vector2 KinematicBody2D_move_to(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_test_move")]
-  public static extern bool KinematicBody2D_test_move(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
+  public static extern bool KinematicBody2D_test_move(global::System.Runtime.InteropServices.HandleRef jarg1, ref Vector2 jarg2);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_get_travel")]
-  public static extern global::System.IntPtr KinematicBody2D_get_travel(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 KinematicBody2D_get_travel(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_revert_motion")]
   public static extern void KinematicBody2D_revert_motion(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -14058,13 +14271,13 @@ class GodotEnginePINVOKE {
   public static extern bool KinematicBody2D_is_colliding(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_get_collision_pos")]
-  public static extern global::System.IntPtr KinematicBody2D_get_collision_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 KinematicBody2D_get_collision_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_get_collision_normal")]
-  public static extern global::System.IntPtr KinematicBody2D_get_collision_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 KinematicBody2D_get_collision_normal(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_get_collider_velocity")]
-  public static extern global::System.IntPtr KinematicBody2D_get_collider_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
+  public static extern Vector2 KinematicBody2D_get_collider_velocity(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_KinematicBody2D_get_collider")]
   public static extern global::System.IntPtr KinematicBody2D_get_collider(global::System.Runtime.InteropServices.HandleRef jarg1);
@@ -14164,6 +14377,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Shape2D_SWIGUpcast")]
   public static extern global::System.IntPtr Shape2D_SWIGUpcast(global::System.IntPtr jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_ShortCut_SWIGUpcast")]
+  public static extern global::System.IntPtr ShortCut_SWIGUpcast(global::System.IntPtr jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_SpatialGizmo_SWIGUpcast")]
   public static extern global::System.IntPtr SpatialGizmo_SWIGUpcast(global::System.IntPtr jarg1);
@@ -14686,6 +14902,9 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_SWIGUpcast")]
   public static extern global::System.IntPtr LineEdit_SWIGUpcast(global::System.IntPtr jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_Listener_SWIGUpcast")]
+  public static extern global::System.IntPtr Listener_SWIGUpcast(global::System.IntPtr jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_MeshInstance_SWIGUpcast")]
   public static extern global::System.IntPtr MeshInstance_SWIGUpcast(global::System.IntPtr jarg1);

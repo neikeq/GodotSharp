@@ -45,17 +45,17 @@ public class Font : Resource {
 
 
   public void draw(SWIGTYPE_p_RID canvas_item, Vector2 pos, string arg2, SWIGTYPE_p_Color modulate, int clip_w) {
-    GodotEnginePINVOKE.Font_draw__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), arg2, SWIGTYPE_p_Color.getCPtr(modulate), clip_w);
+    GodotEnginePINVOKE.Font_draw__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, arg2, SWIGTYPE_p_Color.getCPtr(modulate), clip_w);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw(SWIGTYPE_p_RID canvas_item, Vector2 pos, string arg2, SWIGTYPE_p_Color modulate) {
-    GodotEnginePINVOKE.Font_draw__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), arg2, SWIGTYPE_p_Color.getCPtr(modulate));
+    GodotEnginePINVOKE.Font_draw__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, arg2, SWIGTYPE_p_Color.getCPtr(modulate));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw(SWIGTYPE_p_RID canvas_item, Vector2 pos, string arg2) {
-    GodotEnginePINVOKE.Font_draw__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), arg2);
+    GodotEnginePINVOKE.Font_draw__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, arg2);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -80,25 +80,25 @@ public class Font : Resource {
   }
 
   public Vector2 get_string_size(string arg0) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Font_get_string_size(swigCPtr, arg0), true);
+    Vector2 ret = GodotEnginePINVOKE.Font_get_string_size(swigCPtr, arg0);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public float draw_char(SWIGTYPE_p_RID canvas_item, Vector2 pos, int char_, int next, SWIGTYPE_p_Color modulate) {
-    float ret = GodotEnginePINVOKE.Font_draw_char__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), char_, next, SWIGTYPE_p_Color.getCPtr(modulate));
+    float ret = GodotEnginePINVOKE.Font_draw_char__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, char_, next, SWIGTYPE_p_Color.getCPtr(modulate));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public float draw_char(SWIGTYPE_p_RID canvas_item, Vector2 pos, int char_, int next) {
-    float ret = GodotEnginePINVOKE.Font_draw_char__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), char_, next);
+    float ret = GodotEnginePINVOKE.Font_draw_char__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, char_, next);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public float draw_char(SWIGTYPE_p_RID canvas_item, Vector2 pos, int char_) {
-    float ret = GodotEnginePINVOKE.Font_draw_char__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), char_);
+    float ret = GodotEnginePINVOKE.Font_draw_char__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, char_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

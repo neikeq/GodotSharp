@@ -69,8 +69,13 @@ public class Script : Resource {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public int reload(bool keep_state) {
+    int ret = GodotEnginePINVOKE.Script_reload__SWIG_0(swigCPtr, keep_state);
+    return ret;
+  }
+
   public int reload() {
-    int ret = GodotEnginePINVOKE.Script_reload(swigCPtr);
+    int ret = GodotEnginePINVOKE.Script_reload__SWIG_1(swigCPtr);
     return ret;
   }
 

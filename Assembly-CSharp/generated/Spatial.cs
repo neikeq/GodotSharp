@@ -109,10 +109,9 @@ public class Spatial : Node {
 
   public Object get_parent_spatial() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Spatial_get_parent_spatial(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

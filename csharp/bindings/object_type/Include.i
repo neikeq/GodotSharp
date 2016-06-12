@@ -27,6 +27,7 @@
 %include mShaderGraph.i
 %include mShape.i
 %include mShape2D.i
+%include mShortCut.i
 %include mSpatialGizmo.i
 %include mSpatialSound2DServer.i
 %include mSpatialSound2DServerSW.i
@@ -201,6 +202,7 @@
 %include mLabel.i
 %include mLight.i
 %include mLineEdit.i
+%include mListener.i
 %include mMeshInstance.i
 %include mMultiMeshInstance.i
 %include mNavigation.i

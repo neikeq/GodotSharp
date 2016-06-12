@@ -2,9 +2,12 @@
 %module m_ResourceSaver
 
 %rename(ResourceSaver) _ResourceSaver;
+%csmethodmodifiers _ResourceSaver::_ResourceSaver "private"
+%csmethodmodifiers _ResourceSaver::SingletonGetInstance "private"
 %nodefaultctor _ResourceSaver;
 
 %typemap(csbody_derived) _ResourceSaver %{
+  private static $csclassname instance;
   public static readonly int FLAG_RELATIVE_PATHS = 1;
   public static readonly int FLAG_BUNDLE_RESOURCES = 2;
   public static readonly int FLAG_CHANGE_PATH = 4;
@@ -31,6 +34,15 @@
 %}
 
 %typemap(cscode) _ResourceSaver %{
+  public static $csclassname Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal $csclassname() {}
 
 %}
@@ -58,6 +70,9 @@ public:
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_recognized_extensions", type);
     }
+  }
+  %extend {
+    static _ResourceSaver* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("ResourceSaver")->cast_to<_ResourceSaver>(); }
   }
 
 };

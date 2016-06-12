@@ -74,7 +74,7 @@ public class TextureButton : BaseButton {
   }
 
   public void set_texture_scale(Vector2 scale) {
-    GodotEnginePINVOKE.TextureButton_set_texture_scale(swigCPtr, Vector2.getCPtr(scale));
+    GodotEnginePINVOKE.TextureButton_set_texture_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -114,9 +114,9 @@ public class TextureButton : BaseButton {
   }
 
   public Vector2 get_texture_scale() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.TextureButton_get_texture_scale(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.TextureButton_get_texture_scale(swigCPtr);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Color get_modulate() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.TextureButton_get_modulate(swigCPtr), true);

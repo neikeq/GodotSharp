@@ -253,34 +253,32 @@ typedef DVector<uint8_t> RawArray;
 
 %typemap(csout, excode=SWIGEXCODE) Object* {
     global::System.IntPtr cPtr = $imcall;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new $csclassname(cPtr, false);
-    }$excode
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
     return ret;
   }
 
 %typemap(csout, excode=SWIGEXCODE) Node* {
     global::System.IntPtr cPtr = $imcall;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;
-    if (ret == null) {
-      ret = new $csclassname(cPtr, false);
-    }$excode
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
     return ret;
   }
 
 %typemap(csout, excode=SWIGEXCODE) Control* {
     global::System.IntPtr cPtr = $imcall;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;
-    if (ret == null) {
-      ret = new $csclassname(cPtr, false);
-    }$excode
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
     return ret;
   }
 
 %include mString.i
 %include mNodePath.i
 %include mVector2.i
+%include mMatrix32.i
 %include mVariant.i
 
 %include "object_type/Include.i"

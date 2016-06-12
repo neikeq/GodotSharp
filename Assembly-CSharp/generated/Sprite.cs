@@ -63,14 +63,14 @@ public class Sprite : Node2D {
   }
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.Sprite_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Sprite_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Sprite_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Sprite_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_flip_h(bool flip_h) {
     GodotEnginePINVOKE.Sprite_set_flip_h(swigCPtr, flip_h);

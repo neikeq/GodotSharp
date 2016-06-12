@@ -124,9 +124,9 @@ public class Input : Object {
   }
 
   public Vector2 get_mouse_speed() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Input_get_mouse_speed(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Input_get_mouse_speed(swigCPtr);
     return ret;
-  }
+}
 
   public int get_mouse_button_mask() {
     int ret = GodotEnginePINVOKE.Input_get_mouse_button_mask(swigCPtr);
@@ -143,7 +143,7 @@ public class Input : Object {
   }
 
   public void warp_mouse_pos(Vector2 to) {
-    GodotEnginePINVOKE.Input_warp_mouse_pos(swigCPtr, Vector2.getCPtr(to));
+    GodotEnginePINVOKE.Input_warp_mouse_pos(swigCPtr, ref to);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -158,7 +158,7 @@ public class Input : Object {
   }
 
   public void set_custom_mouse_cursor(SWIGTYPE_p_RefT_Texture_t image, Vector2 hotspot) {
-    GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(image), Vector2.getCPtr(hotspot));
+    GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(image), ref hotspot);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

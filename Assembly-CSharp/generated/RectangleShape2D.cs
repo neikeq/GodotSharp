@@ -44,14 +44,14 @@ public class RectangleShape2D : Shape2D {
 
 
   public void set_extents(Vector2 extents) {
-    GodotEnginePINVOKE.RectangleShape2D_set_extents(swigCPtr, Vector2.getCPtr(extents));
+    GodotEnginePINVOKE.RectangleShape2D_set_extents(swigCPtr, ref extents);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_extents() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.RectangleShape2D_get_extents(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.RectangleShape2D_get_extents(swigCPtr);
     return ret;
-  }
+}
 
   public RectangleShape2D() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

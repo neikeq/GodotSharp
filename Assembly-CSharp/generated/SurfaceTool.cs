@@ -68,12 +68,12 @@ public class SurfaceTool : Reference {
   }
 
   public void add_uv(Vector2 uv) {
-    GodotEnginePINVOKE.SurfaceTool_add_uv(swigCPtr, Vector2.getCPtr(uv));
+    GodotEnginePINVOKE.SurfaceTool_add_uv(swigCPtr, ref uv);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_uv2(Vector2 uv2) {
-    GodotEnginePINVOKE.SurfaceTool_add_uv2(swigCPtr, Vector2.getCPtr(uv2));
+    GodotEnginePINVOKE.SurfaceTool_add_uv2(swigCPtr, ref uv2);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

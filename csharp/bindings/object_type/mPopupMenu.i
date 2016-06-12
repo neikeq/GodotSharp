@@ -69,6 +69,30 @@ public:
     }
   }
   %extend {
+    void add_icon_shortcut(Object* texture, Ref<ShortCut> shortcut, int id = -1) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("add_icon_shortcut", texture, shortcut, id);
+    }
+  }
+  %extend {
+    void add_shortcut(Ref<ShortCut> shortcut, int id = -1) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("add_shortcut", shortcut, id);
+    }
+  }
+  %extend {
+    void add_icon_check_shortcut(Object* texture, Ref<ShortCut> shortcut, int id = -1) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("add_icon_check_shortcut", texture, shortcut, id);
+    }
+  }
+  %extend {
+    void add_check_shortcut(Ref<ShortCut> shortcut, int id = -1) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("add_check_shortcut", shortcut, id);
+    }
+  }
+  %extend {
     void set_item_text(int idx, const String& text) {
   Object* self_obj = static_cast<Object*>($self);
   self_obj->call("set_item_text", idx, text);
@@ -102,6 +126,12 @@ public:
     void set_item_disabled(int idx, bool disabled) {
   Object* self_obj = static_cast<Object*>($self);
   self_obj->call("set_item_disabled", idx, disabled);
+    }
+  }
+  %extend {
+    void set_item_shortcut(int idx, Ref<ShortCut> shortcut) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_item_shortcut", idx, shortcut);
     }
   }
   %extend {
@@ -150,6 +180,12 @@ public:
     int get_item_accelerator(int idx) {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_item_accelerator", idx);
+    }
+  }
+  %extend {
+    Ref<ShortCut> get_item_shortcut(int idx) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_item_shortcut", idx).operator Object *()->cast_to<ShortCut>();
     }
   }
   %extend {

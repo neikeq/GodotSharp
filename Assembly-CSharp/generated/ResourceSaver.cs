@@ -9,6 +9,7 @@
 namespace GodotEngine {
 
 public class ResourceSaver : Object {
+  private static ResourceSaver instance;
   public static readonly int FLAG_RELATIVE_PATHS = 1;
   public static readonly int FLAG_BUNDLE_RESOURCES = 2;
   public static readonly int FLAG_CHANGE_PATH = 4;
@@ -47,6 +48,15 @@ public class ResourceSaver : Object {
     }
   }
 
+  public static ResourceSaver Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal ResourceSaver() {}
 
 
@@ -64,6 +74,12 @@ public class ResourceSaver : Object {
 
   public SWIGTYPE_p_StringArray get_recognized_extensions(Object type) {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.ResourceSaver_get_recognized_extensions(swigCPtr, Object.getCPtr(type)), true);
+    return ret;
+  }
+
+  private static ResourceSaver SingletonGetInstance() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceSaver_SingletonGetInstance();
+    ResourceSaver ret = (cPtr == global::System.IntPtr.Zero) ? null : new ResourceSaver(cPtr, false);
     return ret;
   }
 

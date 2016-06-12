@@ -53,14 +53,14 @@ public class Quad : GeometryInstance {
   }
 
   public void set_size(Vector2 size) {
-    GodotEnginePINVOKE.Quad_set_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.Quad_set_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Quad_get_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Quad_get_size(swigCPtr);
     return ret;
-  }
+}
 
   public void set_centered(bool centered) {
     GodotEnginePINVOKE.Quad_set_centered(swigCPtr, centered);
@@ -72,14 +72,14 @@ public class Quad : GeometryInstance {
   }
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.Quad_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Quad_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Quad_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Quad_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public Quad() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

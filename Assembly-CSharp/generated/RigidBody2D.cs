@@ -136,14 +136,14 @@ public class RigidBody2D : PhysicsBody2D {
   }
 
   public void set_linear_velocity(Vector2 linear_velocity) {
-    GodotEnginePINVOKE.RigidBody2D_set_linear_velocity(swigCPtr, Vector2.getCPtr(linear_velocity));
+    GodotEnginePINVOKE.RigidBody2D_set_linear_velocity(swigCPtr, ref linear_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_linear_velocity() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.RigidBody2D_get_linear_velocity(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.RigidBody2D_get_linear_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public void set_angular_velocity(float angular_velocity) {
     GodotEnginePINVOKE.RigidBody2D_set_angular_velocity(swigCPtr, angular_velocity);
@@ -191,24 +191,24 @@ public class RigidBody2D : PhysicsBody2D {
   }
 
   public void set_axis_velocity(Vector2 axis_velocity) {
-    GodotEnginePINVOKE.RigidBody2D_set_axis_velocity(swigCPtr, Vector2.getCPtr(axis_velocity));
+    GodotEnginePINVOKE.RigidBody2D_set_axis_velocity(swigCPtr, ref axis_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void apply_impulse(Vector2 offset, Vector2 impulse) {
-    GodotEnginePINVOKE.RigidBody2D_apply_impulse(swigCPtr, Vector2.getCPtr(offset), Vector2.getCPtr(impulse));
+    GodotEnginePINVOKE.RigidBody2D_apply_impulse(swigCPtr, ref offset, ref impulse);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_applied_force(Vector2 force) {
-    GodotEnginePINVOKE.RigidBody2D_set_applied_force(swigCPtr, Vector2.getCPtr(force));
+    GodotEnginePINVOKE.RigidBody2D_set_applied_force(swigCPtr, ref force);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_applied_force() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.RigidBody2D_get_applied_force(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.RigidBody2D_get_applied_force(swigCPtr);
     return ret;
-  }
+}
 
   public void set_applied_torque(float torque) {
     GodotEnginePINVOKE.RigidBody2D_set_applied_torque(swigCPtr, torque);
@@ -220,7 +220,7 @@ public class RigidBody2D : PhysicsBody2D {
   }
 
   public void add_force(Vector2 offset, Vector2 force) {
-    GodotEnginePINVOKE.RigidBody2D_add_force(swigCPtr, Vector2.getCPtr(offset), Vector2.getCPtr(force));
+    GodotEnginePINVOKE.RigidBody2D_add_force(swigCPtr, ref offset, ref force);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -243,19 +243,19 @@ public class RigidBody2D : PhysicsBody2D {
   }
 
   public bool test_motion(Vector2 motion, float margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t result) {
-    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_0(swigCPtr, Vector2.getCPtr(motion), margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t.getCPtr(result));
+    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_0(swigCPtr, ref motion, margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t.getCPtr(result));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public bool test_motion(Vector2 motion, float margin) {
-    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_1(swigCPtr, Vector2.getCPtr(motion), margin);
+    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_1(swigCPtr, ref motion, margin);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public bool test_motion(Vector2 motion) {
-    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_2(swigCPtr, Vector2.getCPtr(motion));
+    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_2(swigCPtr, ref motion);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

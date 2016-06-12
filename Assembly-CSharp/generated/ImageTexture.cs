@@ -119,7 +119,7 @@ public class ImageTexture : Texture {
   }
 
   public void set_size_override(Vector2 size) {
-    GodotEnginePINVOKE.ImageTexture_set_size_override(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.ImageTexture_set_size_override(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

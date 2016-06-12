@@ -9,6 +9,7 @@
 namespace GodotEngine {
 
 public class Marshalls : Reference {
+  private static Marshalls instance;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -38,6 +39,15 @@ public class Marshalls : Reference {
       }
       global::System.GC.SuppressFinalize(this);
       base.Dispose();
+    }
+  }
+
+  public static Marshalls Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
     }
   }
 
@@ -77,6 +87,12 @@ public class Marshalls : Reference {
   public string base64_to_utf8(string base64_str) {
     string ret = GodotEnginePINVOKE.Marshalls_base64_to_utf8(swigCPtr, base64_str);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  private static Marshalls SingletonGetInstance() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Marshalls_SingletonGetInstance();
+    Marshalls ret = (cPtr == global::System.IntPtr.Zero) ? null : new Marshalls(cPtr, false);
     return ret;
   }
 

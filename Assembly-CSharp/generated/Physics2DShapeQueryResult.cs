@@ -61,10 +61,9 @@ public class Physics2DShapeQueryResult : Reference {
 
   public Object get_result_object(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DShapeQueryResult_get_result_object(swigCPtr, idx);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

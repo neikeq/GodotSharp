@@ -83,39 +83,38 @@ public class Control : CanvasItem {
   }
 
   public bool can_drop_data(Vector2 pos, Variant data) {
-    bool ret = GodotEnginePINVOKE.Control_can_drop_data(swigCPtr, Vector2.getCPtr(pos), Variant.getCPtr(data));
+    bool ret = GodotEnginePINVOKE.Control_can_drop_data(swigCPtr, ref pos, Variant.getCPtr(data));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public void drop_data(Vector2 pos, Variant data) {
-    GodotEnginePINVOKE.Control_drop_data(swigCPtr, Vector2.getCPtr(pos), Variant.getCPtr(data));
+    GodotEnginePINVOKE.Control_drop_data(swigCPtr, ref pos, Variant.getCPtr(data));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Object get_drag_data(Vector2 pos) {
-    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_drag_data(swigCPtr, Vector2.getCPtr(pos));
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_drag_data(swigCPtr, ref pos);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Vector2 get_minimum_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_minimum_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_minimum_size(swigCPtr);
     return ret;
-  }
+}
 
   public void accept_event() {
     GodotEnginePINVOKE.Control_accept_event(swigCPtr);
   }
 
   public Vector2 get_combined_minimum_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_combined_minimum_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_combined_minimum_size(swigCPtr);
     return ret;
-  }
+}
 
   public void set_anchor(int margin, int anchor_mode, bool keep_margin) {
     GodotEnginePINVOKE.Control_set_anchor__SWIG_0(swigCPtr, margin, anchor_mode, keep_margin);
@@ -139,32 +138,32 @@ public class Control : CanvasItem {
   }
 
   public void set_begin(Vector2 pos) {
-    GodotEnginePINVOKE.Control_set_begin(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Control_set_begin(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_end(Vector2 pos) {
-    GodotEnginePINVOKE.Control_set_end(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Control_set_end(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_pos(Vector2 pos) {
-    GodotEnginePINVOKE.Control_set_pos(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Control_set_pos(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_size(Vector2 size) {
-    GodotEnginePINVOKE.Control_set_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.Control_set_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_custom_minimum_size(Vector2 size) {
-    GodotEnginePINVOKE.Control_set_custom_minimum_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.Control_set_custom_minimum_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_global_pos(Vector2 pos) {
-    GodotEnginePINVOKE.Control_set_global_pos(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Control_set_global_pos(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -177,7 +176,7 @@ public class Control : CanvasItem {
   }
 
   public void set_scale(Vector2 scale) {
-    GodotEnginePINVOKE.Control_set_scale(swigCPtr, Vector2.getCPtr(scale));
+    GodotEnginePINVOKE.Control_set_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -187,24 +186,24 @@ public class Control : CanvasItem {
   }
 
   public Vector2 get_begin() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_begin(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_begin(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_end() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_end(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_end(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_pos(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_size(swigCPtr);
     return ret;
-  }
+}
 
   public float get_rotation() {
     float ret = GodotEnginePINVOKE.Control_get_rotation(swigCPtr);
@@ -217,24 +216,24 @@ public class Control : CanvasItem {
   }
 
   public Vector2 get_scale() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_scale(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_scale(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_custom_minimum_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_custom_minimum_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_custom_minimum_size(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_parent_area_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_parent_area_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_parent_area_size(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_global_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Control_get_global_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Control_get_global_pos(swigCPtr);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Rect2 get_rect() {
     SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Control_get_rect(swigCPtr), true);
@@ -266,6 +265,11 @@ public class Control : CanvasItem {
     GodotEnginePINVOKE.Control_set_focus_mode(swigCPtr, mode);
   }
 
+  public int get_focus_mode() {
+    int ret = GodotEnginePINVOKE.Control_get_focus_mode(swigCPtr);
+    return ret;
+  }
+
   public bool has_focus() {
     bool ret = GodotEnginePINVOKE.Control_has_focus(swigCPtr);
     return ret;
@@ -281,10 +285,9 @@ public class Control : CanvasItem {
 
   public Control get_focus_owner() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_focus_owner(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
-    if (ret == null) {
-      ret = new Control(cPtr, false);
-    }
     return ret;
   }
 
@@ -415,12 +418,101 @@ public class Control : CanvasItem {
     return ret;
   }
 
+  public bool has_icon_override(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_icon_override(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_stylebox_override(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_stylebox_override(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_font_override(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_font_override(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_color_override(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_color_override(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_constant_override(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_constant_override(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_icon(string name, string type) {
+    bool ret = GodotEnginePINVOKE.Control_has_icon__SWIG_0(swigCPtr, name, type);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_icon(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_icon__SWIG_1(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_stylebox(string name, string type) {
+    bool ret = GodotEnginePINVOKE.Control_has_stylebox__SWIG_0(swigCPtr, name, type);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_stylebox(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_stylebox__SWIG_1(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_font(string name, string type) {
+    bool ret = GodotEnginePINVOKE.Control_has_font__SWIG_0(swigCPtr, name, type);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_font(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_font__SWIG_1(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_color(string name, string type) {
+    bool ret = GodotEnginePINVOKE.Control_has_color__SWIG_0(swigCPtr, name, type);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_color(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_color__SWIG_1(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_constant(string name, string type) {
+    bool ret = GodotEnginePINVOKE.Control_has_constant__SWIG_0(swigCPtr, name, type);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public bool has_constant(string name) {
+    bool ret = GodotEnginePINVOKE.Control_has_constant__SWIG_1(swigCPtr, name);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
   public Control get_parent_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_parent_control(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
-    if (ret == null) {
-      ret = new Control(cPtr, false);
-    }
     return ret;
   }
 
@@ -430,7 +522,7 @@ public class Control : CanvasItem {
   }
 
   public string get_tooltip(Vector2 atpos) {
-    string ret = GodotEnginePINVOKE.Control_get_tooltip__SWIG_0(swigCPtr, Vector2.getCPtr(atpos));
+    string ret = GodotEnginePINVOKE.Control_get_tooltip__SWIG_0(swigCPtr, ref atpos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -450,7 +542,7 @@ public class Control : CanvasItem {
   }
 
   public int get_cursor_shape(Vector2 pos) {
-    int ret = GodotEnginePINVOKE.Control_get_cursor_shape__SWIG_0(swigCPtr, Vector2.getCPtr(pos));
+    int ret = GodotEnginePINVOKE.Control_get_cursor_shape__SWIG_0(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -506,8 +598,12 @@ public class Control : CanvasItem {
   }
 
   public void warp_mouse(Vector2 to_pos) {
-    GodotEnginePINVOKE.Control_warp_mouse(swigCPtr, Vector2.getCPtr(to_pos));
+    GodotEnginePINVOKE.Control_warp_mouse(swigCPtr, ref to_pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void minimum_size_changed() {
+    GodotEnginePINVOKE.Control_minimum_size_changed(swigCPtr);
   }
 
   public Control() : this(false) {

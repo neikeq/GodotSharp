@@ -46,10 +46,9 @@ public class ResourceInteractiveLoader : Reference {
 
   public Object get_resource() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceInteractiveLoader_get_resource(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

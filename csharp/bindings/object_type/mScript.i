@@ -71,9 +71,9 @@ public:
     }
   }
   %extend {
-    int reload() {
+    int reload(bool keep_state = false) {
   Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("reload");
+  return self_obj->call("reload", keep_state);
     }
   }
 

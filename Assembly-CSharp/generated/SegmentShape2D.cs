@@ -44,24 +44,24 @@ public class SegmentShape2D : Shape2D {
 
 
   public void set_a(Vector2 a) {
-    GodotEnginePINVOKE.SegmentShape2D_set_a(swigCPtr, Vector2.getCPtr(a));
+    GodotEnginePINVOKE.SegmentShape2D_set_a(swigCPtr, ref a);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_a() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.SegmentShape2D_get_a(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.SegmentShape2D_get_a(swigCPtr);
     return ret;
-  }
+}
 
   public void set_b(Vector2 b) {
-    GodotEnginePINVOKE.SegmentShape2D_set_b(swigCPtr, Vector2.getCPtr(b));
+    GodotEnginePINVOKE.SegmentShape2D_set_b(swigCPtr, ref b);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_b() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.SegmentShape2D_get_b(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.SegmentShape2D_get_b(swigCPtr);
     return ret;
-  }
+}
 
   public SegmentShape2D() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

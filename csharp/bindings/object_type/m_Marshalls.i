@@ -2,9 +2,12 @@
 %module m_Marshalls
 
 %rename(Marshalls) _Marshalls;
+%csmethodmodifiers _Marshalls::_Marshalls "private"
+%csmethodmodifiers _Marshalls::SingletonGetInstance "private"
 %nodefaultctor _Marshalls;
 
 %typemap(csbody_derived) _Marshalls %{
+  private static $csclassname instance;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -25,6 +28,15 @@
 %}
 
 %typemap(cscode) _Marshalls %{
+  public static $csclassname Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal $csclassname() {}
 
 %}
@@ -76,6 +88,9 @@ public:
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("base64_to_utf8", base64_str);
     }
+  }
+  %extend {
+    static _Marshalls* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Marshalls")->cast_to<_Marshalls>(); }
   }
 
 };

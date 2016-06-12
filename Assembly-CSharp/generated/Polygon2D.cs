@@ -89,22 +89,21 @@ public class Polygon2D : Node2D {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Polygon2D_get_texture(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
   public void set_texture_offset(Vector2 texture_offset) {
-    GodotEnginePINVOKE.Polygon2D_set_texture_offset(swigCPtr, Vector2.getCPtr(texture_offset));
+    GodotEnginePINVOKE.Polygon2D_set_texture_offset(swigCPtr, ref texture_offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_texture_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Polygon2D_get_texture_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Polygon2D_get_texture_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_texture_rotation(float texture_rotation) {
     GodotEnginePINVOKE.Polygon2D_set_texture_rotation(swigCPtr, texture_rotation);
@@ -116,14 +115,14 @@ public class Polygon2D : Node2D {
   }
 
   public void set_texture_scale(Vector2 texture_scale) {
-    GodotEnginePINVOKE.Polygon2D_set_texture_scale(swigCPtr, Vector2.getCPtr(texture_scale));
+    GodotEnginePINVOKE.Polygon2D_set_texture_scale(swigCPtr, ref texture_scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_texture_scale() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Polygon2D_get_texture_scale(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Polygon2D_get_texture_scale(swigCPtr);
     return ret;
-  }
+}
 
   public void set_invert(bool invert) {
     GodotEnginePINVOKE.Polygon2D_set_invert(swigCPtr, invert);
@@ -144,14 +143,14 @@ public class Polygon2D : Node2D {
   }
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.Polygon2D_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Polygon2D_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Polygon2D_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Polygon2D_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public Polygon2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

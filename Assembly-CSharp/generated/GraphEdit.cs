@@ -66,9 +66,9 @@ public class GraphEdit : Control {
   }
 
   public Vector2 get_scroll_ofs() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.GraphEdit_get_scroll_ofs(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.GraphEdit_get_scroll_ofs(swigCPtr);
     return ret;
-  }
+}
 
   public void set_zoom(float p_zoom) {
     GodotEnginePINVOKE.GraphEdit_set_zoom(swigCPtr, p_zoom);

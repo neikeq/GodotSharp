@@ -45,7 +45,7 @@ public class StyleBox : Resource {
 
 
   public bool test_mask(Vector2 point, SWIGTYPE_p_Rect2 rect) {
-    bool ret = GodotEnginePINVOKE.StyleBox_test_mask(swigCPtr, Vector2.getCPtr(point), SWIGTYPE_p_Rect2.getCPtr(rect));
+    bool ret = GodotEnginePINVOKE.StyleBox_test_mask(swigCPtr, ref point, SWIGTYPE_p_Rect2.getCPtr(rect));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -65,19 +65,19 @@ public class StyleBox : Resource {
   }
 
   public Vector2 get_minimum_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.StyleBox_get_minimum_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.StyleBox_get_minimum_size(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_center_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.StyleBox_get_center_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.StyleBox_get_center_size(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.StyleBox_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.StyleBox_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void draw(SWIGTYPE_p_RID canvas_item, SWIGTYPE_p_Rect2 rect) {
     GodotEnginePINVOKE.StyleBox_draw(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), SWIGTYPE_p_Rect2.getCPtr(rect));

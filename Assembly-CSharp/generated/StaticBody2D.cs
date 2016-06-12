@@ -44,7 +44,7 @@ public class StaticBody2D : PhysicsBody2D {
 
 
   public void set_constant_linear_velocity(Vector2 vel) {
-    GodotEnginePINVOKE.StaticBody2D_set_constant_linear_velocity(swigCPtr, Vector2.getCPtr(vel));
+    GodotEnginePINVOKE.StaticBody2D_set_constant_linear_velocity(swigCPtr, ref vel);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -53,9 +53,9 @@ public class StaticBody2D : PhysicsBody2D {
   }
 
   public Vector2 get_constant_linear_velocity() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.StaticBody2D_get_constant_linear_velocity(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.StaticBody2D_get_constant_linear_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public float get_constant_angular_velocity() {
     float ret = GodotEnginePINVOKE.StaticBody2D_get_constant_angular_velocity(swigCPtr);

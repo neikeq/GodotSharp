@@ -44,54 +44,54 @@ public class ParallaxBackground : CanvasLayer {
 
 
   public void set_scroll_offset(Vector2 ofs) {
-    GodotEnginePINVOKE.ParallaxBackground_set_scroll_offset(swigCPtr, Vector2.getCPtr(ofs));
+    GodotEnginePINVOKE.ParallaxBackground_set_scroll_offset(swigCPtr, ref ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_scroll_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ParallaxBackground_get_scroll_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ParallaxBackground_get_scroll_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_scroll_base_offset(Vector2 ofs) {
-    GodotEnginePINVOKE.ParallaxBackground_set_scroll_base_offset(swigCPtr, Vector2.getCPtr(ofs));
+    GodotEnginePINVOKE.ParallaxBackground_set_scroll_base_offset(swigCPtr, ref ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_scroll_base_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ParallaxBackground_get_scroll_base_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ParallaxBackground_get_scroll_base_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_scroll_base_scale(Vector2 scale) {
-    GodotEnginePINVOKE.ParallaxBackground_set_scroll_base_scale(swigCPtr, Vector2.getCPtr(scale));
+    GodotEnginePINVOKE.ParallaxBackground_set_scroll_base_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_scroll_base_scale() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ParallaxBackground_get_scroll_base_scale(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ParallaxBackground_get_scroll_base_scale(swigCPtr);
     return ret;
-  }
+}
 
   public void set_limit_begin(Vector2 ofs) {
-    GodotEnginePINVOKE.ParallaxBackground_set_limit_begin(swigCPtr, Vector2.getCPtr(ofs));
+    GodotEnginePINVOKE.ParallaxBackground_set_limit_begin(swigCPtr, ref ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_limit_begin() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ParallaxBackground_get_limit_begin(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ParallaxBackground_get_limit_begin(swigCPtr);
     return ret;
-  }
+}
 
   public void set_limit_end(Vector2 ofs) {
-    GodotEnginePINVOKE.ParallaxBackground_set_limit_end(swigCPtr, Vector2.getCPtr(ofs));
+    GodotEnginePINVOKE.ParallaxBackground_set_limit_end(swigCPtr, ref ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_limit_end() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ParallaxBackground_get_limit_end(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ParallaxBackground_get_limit_end(swigCPtr);
     return ret;
-  }
+}
 
   public void set_ignore_camera_zoom(bool ignore) {
     GodotEnginePINVOKE.ParallaxBackground_set_ignore_camera_zoom(swigCPtr, ignore);

@@ -46,14 +46,14 @@ public class Camera2D : Node2D {
 
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.Camera2D_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Camera2D_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Camera2D_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Camera2D_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_anchor_mode(int anchor_mode) {
     GodotEnginePINVOKE.Camera2D_set_anchor_mode(swigCPtr, anchor_mode);
@@ -141,24 +141,24 @@ public class Camera2D : Node2D {
   }
 
   public Vector2 get_camera_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Camera2D_get_camera_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Camera2D_get_camera_pos(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_camera_screen_center() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Camera2D_get_camera_screen_center(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Camera2D_get_camera_screen_center(swigCPtr);
     return ret;
-  }
+}
 
   public void set_zoom(Vector2 zoom) {
-    GodotEnginePINVOKE.Camera2D_set_zoom(swigCPtr, Vector2.getCPtr(zoom));
+    GodotEnginePINVOKE.Camera2D_set_zoom(swigCPtr, ref zoom);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_zoom() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Camera2D_get_zoom(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Camera2D_get_zoom(swigCPtr);
     return ret;
-  }
+}
 
   public void set_follow_smoothing(float follow_smoothing) {
     GodotEnginePINVOKE.Camera2D_set_follow_smoothing(swigCPtr, follow_smoothing);

@@ -44,7 +44,7 @@ public class Node2D : CanvasItem {
 
 
   public void set_pos(Vector2 pos) {
-    GodotEnginePINVOKE.Node2D_set_pos(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Node2D_set_pos(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -57,14 +57,14 @@ public class Node2D : CanvasItem {
   }
 
   public void set_scale(Vector2 scale) {
-    GodotEnginePINVOKE.Node2D_set_scale(swigCPtr, Vector2.getCPtr(scale));
+    GodotEnginePINVOKE.Node2D_set_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Node2D_get_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Node2D_get_pos(swigCPtr);
     return ret;
-  }
+}
 
   public float get_rot() {
     float ret = GodotEnginePINVOKE.Node2D_get_rot(swigCPtr);
@@ -77,9 +77,9 @@ public class Node2D : CanvasItem {
   }
 
   public Vector2 get_scale() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Node2D_get_scale(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Node2D_get_scale(swigCPtr);
     return ret;
-  }
+}
 
   public void rotate(float radians) {
     GodotEnginePINVOKE.Node2D_rotate(swigCPtr, radians);
@@ -102,47 +102,47 @@ public class Node2D : CanvasItem {
   }
 
   public void translate(Vector2 offset) {
-    GodotEnginePINVOKE.Node2D_translate(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Node2D_translate(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void global_translate(Vector2 offset) {
-    GodotEnginePINVOKE.Node2D_global_translate(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.Node2D_global_translate(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void scale(Vector2 ratio) {
-    GodotEnginePINVOKE.Node2D_scale(swigCPtr, Vector2.getCPtr(ratio));
+    GodotEnginePINVOKE.Node2D_scale(swigCPtr, ref ratio);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_global_pos(Vector2 pos) {
-    GodotEnginePINVOKE.Node2D_set_global_pos(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Node2D_set_global_pos(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_global_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Node2D_get_global_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Node2D_get_global_pos(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_transform(SWIGTYPE_p_Matrix32 xform) {
-    GodotEnginePINVOKE.Node2D_set_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(xform));
+  public void set_transform(Matrix32 xform) {
+    GodotEnginePINVOKE.Node2D_set_transform(swigCPtr, ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_global_transform(SWIGTYPE_p_Matrix32 xform) {
-    GodotEnginePINVOKE.Node2D_set_global_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(xform));
+  public void set_global_transform(Matrix32 xform) {
+    GodotEnginePINVOKE.Node2D_set_global_transform(swigCPtr, ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void look_at(Vector2 point) {
-    GodotEnginePINVOKE.Node2D_look_at(swigCPtr, Vector2.getCPtr(point));
+    GodotEnginePINVOKE.Node2D_look_at(swigCPtr, ref point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public float get_angle_to(Vector2 point) {
-    float ret = GodotEnginePINVOKE.Node2D_get_angle_to(swigCPtr, Vector2.getCPtr(point));
+    float ret = GodotEnginePINVOKE.Node2D_get_angle_to(swigCPtr, ref point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -166,14 +166,14 @@ public class Node2D : CanvasItem {
   }
 
   public void edit_set_pivot(Vector2 pivot) {
-    GodotEnginePINVOKE.Node2D_edit_set_pivot(swigCPtr, Vector2.getCPtr(pivot));
+    GodotEnginePINVOKE.Node2D_edit_set_pivot(swigCPtr, ref pivot);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_relative_transform_to_parent(Object parent) {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.Node2D_get_relative_transform_to_parent(swigCPtr, Object.getCPtr(parent)), true);
+  public Matrix32 get_relative_transform_to_parent(Object parent) {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Node2D_get_relative_transform_to_parent(swigCPtr, Object.getCPtr(parent)));
     return ret;
-  }
+}
 
   public Node2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

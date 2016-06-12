@@ -49,10 +49,9 @@ public class NavigationMeshInstance : Spatial {
 
   public Object get_navigation_mesh() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.NavigationMeshInstance_get_navigation_mesh(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

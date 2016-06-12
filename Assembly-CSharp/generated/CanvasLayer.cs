@@ -52,25 +52,25 @@ public class CanvasLayer : Node {
     return ret;
   }
 
-  public void set_transform(SWIGTYPE_p_Matrix32 transform) {
-    GodotEnginePINVOKE.CanvasLayer_set_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(transform));
+  public void set_transform(Matrix32 transform) {
+    GodotEnginePINVOKE.CanvasLayer_set_transform(swigCPtr, ref transform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CanvasLayer_get_transform(swigCPtr), true);
+  public Matrix32 get_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasLayer_get_transform(swigCPtr));
     return ret;
-  }
+}
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.CanvasLayer_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.CanvasLayer_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.CanvasLayer_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.CanvasLayer_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_rotation(float radians) {
     GodotEnginePINVOKE.CanvasLayer_set_rotation(swigCPtr, radians);
@@ -91,14 +91,14 @@ public class CanvasLayer : Node {
   }
 
   public void set_scale(Vector2 scale) {
-    GodotEnginePINVOKE.CanvasLayer_set_scale(swigCPtr, Vector2.getCPtr(scale));
+    GodotEnginePINVOKE.CanvasLayer_set_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_scale() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.CanvasLayer_get_scale(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.CanvasLayer_get_scale(swigCPtr);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_RefT_World2D_t get_world_2d() {
     SWIGTYPE_p_RefT_World2D_t ret = new SWIGTYPE_p_RefT_World2D_t(GodotEnginePINVOKE.CanvasLayer_get_world_2d(swigCPtr), true);

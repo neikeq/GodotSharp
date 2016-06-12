@@ -27,129 +27,57 @@
 #ifndef MONO_UTILS_H
 #define MONO_UTILS_H
 
-#include <mono/jit/jit.h>
-#include <mono/metadata/debug-helpers.h>
-
 #include "csharp_script.h"
 
-MonoObject *variant_to_mono_object(MonoClass* vclass, const Variant* p_var)
-{
-	MonoObject *mono_object = mono_object_new(CSharpLanguage::get_singleton()->get_domain(), vclass);
+MonoObject *variant_to_managed_of_type(const Variant* p_var, MonoType *p_type);
 
-	if (!mono_object)
-		return NULL;
+void mono_field_set_from_variant(MonoObject* p_object, MonoClassField* p_field, const Variant* p_var);
 
-	MonoMethodDesc *desc = mono_method_desc_new (":.ctor(intptr,bool)", FALSE);
-	MonoMethod *ctor_method = mono_method_desc_search_in_class (desc, vclass);
-	mono_method_desc_free (desc);
+MonoObject *create_managed_for_unmanaged(MonoClass* p_class, MonoClass* p_native, Object* p_object);
 
-	bool memown = false;
+Variant managed_to_variant(MonoObject* p_var, MonoType *p_type);
 
-	void *args [2];
-	args [0] = &p_var;
-	args [1] = &memown;
-	mono_runtime_invoke (ctor_method, mono_object, args, NULL);
+MonoObject *variant_to_managed_variant(MonoClass *vclass, const Variant* p_var);
 
-	return mono_object;
-}
+MonoClass *mono_class_get_native_class(MonoClass *script_class);
 
-MonoArray *vargs_to_mono_array(const Variant **p_args, int p_argc)
-{
-	MonoClass *variant_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "Variant");
-	MonoArray *result = mono_array_new(CSharpLanguage::get_singleton()->get_domain(), variant_class, p_argc);
+void mono_void_call(MonoClass *clazz, MonoObject *mono_object, const StringName &p_method, const Variant **p_args, int p_argcount);
 
-	for (int i = 0; i < p_argc; i++)
-		mono_array_setref(result, i, variant_to_mono_object(variant_class, p_args[i]));
+MonoObject *unmanaged_get_managed(void *unmanaged);
 
-	return result;
-}
+MonoClass *mono_class_from_unmanaged(Object *unmanaged);
 
-MonoClass *script_class_get_native_class(MonoClass *script_class)
-{
-	MonoClass* clazz = script_class;
+void tie_managed_to_unmanaged(MonoObject* managed, void *unmanaged);
 
-	while ((clazz = mono_class_get_parent(clazz)) != NULL) {
-		if (mono_class_get_namespace(clazz) == String("GodotEngine"))
-			return clazz;
-	}
+void register_mono_internal_calls();
 
-	return NULL;
-}
+#define UNBOX_DOUBLE( x ) *(double *) mono_object_unbox( x )
+#define UNBOX_FLOAT( x ) *(float *) mono_object_unbox( x )
+#define UNBOX_INT64( x ) *(int64_t *) mono_object_unbox( x )
+#define UNBOX_INT32( x ) *(int32_t *) mono_object_unbox( x )
+#define UNBOX_INT16( x ) *(int16_t *) mono_object_unbox( x )
+#define UNBOX_INT8( x ) *(int8_t *) mono_object_unbox( x )
+#define UNBOX_UINT64( x ) *(uint64_t *) mono_object_unbox( x )
+#define UNBOX_UINT32( x ) *(uint32_t *) mono_object_unbox( x )
+#define UNBOX_UINT16( x ) *(uint16_t *) mono_object_unbox( x )
+#define UNBOX_UINT8( x ) *(uint8_t *) mono_object_unbox( x )
+#define UNBOX_BOOLEAN( x ) *(MonoBoolean *) mono_object_unbox( x )
+#define UNBOX_CHAR( x ) (wchar_t *) mono_object_unbox( x )
+#define UNBOX_PTR( x ) *(gpointer *) mono_object_unbox( x )
 
-void mono_void_call(MonoClass *clazz, MonoObject *mono_object, const StringName &p_method, const Variant **p_args, int p_argcount)
-{
-	MonoMethod *method = mono_class_get_method_from_name(clazz, String(p_method).utf8(), p_argcount);
-
-	if (!method)
-		return;
-
-	if (p_argcount > 0) {
-		MonoClass *helper_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "InternalHelpers");
-		ERR_FAIL_COND(!helper_class);
-		MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCallExpectVoid", 3);
-		ERR_FAIL_COND(!variant_call);
-
-		MonoReflectionMethod *mrm = mono_method_get_object(CSharpLanguage::get_singleton()->get_domain(), method, clazz);
-		MonoArray* v = vargs_to_mono_array(p_args, p_argcount);
-
-		void *args [3];
-		args[0] = mono_object;
-		args[1] = mrm;
-		args[2] = v;
-
-		MonoObject *exc = NULL;
-		mono_runtime_invoke(variant_call, NULL, args, &exc);
-		if (exc) {
-			mono_print_unhandled_exception(exc);
-		}
-	} else {
-		// There is no need for VariantCall helper, no arguments are passed and no return is expected
-		MonoObject *exc = NULL;
-		mono_runtime_invoke(method, mono_object, NULL, &exc);
-		if (exc) {
-			mono_print_unhandled_exception(exc);
-		}
-	}
-}
-
-MonoObject *unmanaged_get_managed(void *unmanaged)
-{
-	Object *object = (Object *) unmanaged;
-
-	if (object) {
-		ScriptInstance *script_instance = object->get_script_instance();
-		if (script_instance) {
-			CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>(script_instance);
-			if (cs_instance) {
-				return cs_instance->get_mono_object();
-			} else {
-				return NULL;
-			}
-		}
-
-		Ref<CSharpGCHandle> gchandle = object->get_meta("__mono_gchandle__");
-		if (gchandle.is_valid())
-			return gchandle->get_object();
-	}
-
-	return NULL;
-}
-
-void tie_managed_to_unmanaged(MonoObject* managed, void *unmanaged)
-{
-	Object *object = (Object *) unmanaged;
-
-	if (object) {
-		Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(managed)));
-		object->set_meta("__mono_gchandle__", gchandle);
-	}
-}
-
-void register_mono_internal_calls()
-{
-	mono_add_internal_call("GodotEngine.InternalHelpers::UnmanagedGetManaged(intptr)", (void*)unmanaged_get_managed);
-	mono_add_internal_call("GodotEngine.InternalHelpers::TieManagedToUnmanaged(object, intptr)", (void*)tie_managed_to_unmanaged);
-}
+#define BOX_DOUBLE( x ) mono_value_box(mono_domain_get(), mono_get_double_class(), &x)
+#define BOX_FLOAT( x ) mono_value_box(mono_domain_get(), mono_get_single_class(), &x)
+#define BOX_INT64( x ) mono_value_box(mono_domain_get(), mono_get_int64_class(), &x)
+#define BOX_INT32( x ) mono_value_box(mono_domain_get(), mono_get_int32_class(), &x)
+#define BOX_INT16( x ) mono_value_box(mono_domain_get(), mono_get_int16_class(), &x)
+#define BOX_INT8( x ) mono_value_box(mono_domain_get(), mono_get_sbyte_class(), &x)
+#define BOX_UINT64( x ) mono_value_box(mono_domain_get(), mono_get_uint64_class(), &x)
+#define BOX_UINT32( x ) mono_value_box(mono_domain_get(), mono_get_uint32_class(), &x)
+#define BOX_UINT16( x ) mono_value_box(mono_domain_get(), mono_get_uint16_class(), &x)
+#define BOX_UINT8( x ) mono_value_box(mono_domain_get(), mono_get_byte_class(), &x)
+#define BOX_BOOLEAN( x ) mono_value_box(mono_domain_get(), mono_get_boolean_class(), &x)
+#define BOX_CHAR( x ) mono_value_box(mono_domain_get(), mono_get_char_class(), &x)
+#define BOX_PTR( x ) mono_value_box(mono_domain_get(), mono_get_intptr_class(), x)
 
 #endif // MONO_UTILS_H
 

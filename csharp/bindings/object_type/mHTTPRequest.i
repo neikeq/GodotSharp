@@ -12,8 +12,9 @@
   public static readonly int RESULT_NO_RESPONSE = 6;
   public static readonly int RESULT_BODY_SIZE_LIMIT_EXCEEDED = 7;
   public static readonly int RESULT_REQUEST_FAILED = 8;
-  public static readonly int RESULT_REDIRECT_LIMIT_REACHED = 11;
+  public static readonly int RESULT_DOWNLOAD_FILE_CANT_OPEN = 9;
   public static readonly int RESULT_DOWNLOAD_FILE_WRITE_ERROR = 10;
+  public static readonly int RESULT_REDIRECT_LIMIT_REACHED = 11;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   

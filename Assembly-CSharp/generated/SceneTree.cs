@@ -119,10 +119,9 @@ public class SceneTree : MainLoop {
 
   public Object get_edited_scene_root() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_edited_scene_root(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -154,7 +153,7 @@ public class SceneTree : MainLoop {
   }
 
   public void set_screen_stretch(int mode, int aspect, Vector2 minsize) {
-    GodotEnginePINVOKE.SceneTree_set_screen_stretch(swigCPtr, mode, aspect, Vector2.getCPtr(minsize));
+    GodotEnginePINVOKE.SceneTree_set_screen_stretch(swigCPtr, mode, aspect, ref minsize);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -198,10 +197,9 @@ public class SceneTree : MainLoop {
 
   public Node get_current_scene() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_current_scene(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
-    if (ret == null) {
-      ret = new Node(cPtr, false);
-    }
     return ret;
   }
 

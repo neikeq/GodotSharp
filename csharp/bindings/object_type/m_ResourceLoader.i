@@ -2,9 +2,12 @@
 %module m_ResourceLoader
 
 %rename(ResourceLoader) _ResourceLoader;
+%csmethodmodifiers _ResourceLoader::_ResourceLoader "private"
+%csmethodmodifiers _ResourceLoader::SingletonGetInstance "private"
 %nodefaultctor _ResourceLoader;
 
 %typemap(csbody_derived) _ResourceLoader %{
+  private static $csclassname instance;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -25,6 +28,15 @@
 %}
 
 %typemap(cscode) _ResourceLoader %{
+  public static $csclassname Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal $csclassname() {}
 
 %}
@@ -82,6 +94,9 @@ public:
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("has", path);
     }
+  }
+  %extend {
+    static _ResourceLoader* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("ResourceLoader")->cast_to<_ResourceLoader>(); }
   }
 
 };

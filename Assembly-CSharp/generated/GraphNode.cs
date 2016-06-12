@@ -97,14 +97,14 @@ public class GraphNode : Container {
   }
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.GraphNode_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.GraphNode_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.GraphNode_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.GraphNode_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public int get_connection_output_count() {
     int ret = GodotEnginePINVOKE.GraphNode_get_connection_output_count(swigCPtr);
@@ -117,9 +117,9 @@ public class GraphNode : Container {
   }
 
   public Vector2 get_connection_output_pos(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.GraphNode_get_connection_output_pos(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.GraphNode_get_connection_output_pos(swigCPtr, idx);
     return ret;
-  }
+}
 
   public int get_connection_output_type(int idx) {
     int ret = GodotEnginePINVOKE.GraphNode_get_connection_output_type(swigCPtr, idx);
@@ -132,9 +132,9 @@ public class GraphNode : Container {
   }
 
   public Vector2 get_connection_input_pos(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.GraphNode_get_connection_input_pos(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.GraphNode_get_connection_input_pos(swigCPtr, idx);
     return ret;
-  }
+}
 
   public int get_connection_input_type(int idx) {
     int ret = GodotEnginePINVOKE.GraphNode_get_connection_input_type(swigCPtr, idx);

@@ -150,14 +150,14 @@ public class Tree : Control {
   }
 
   public TreeItem get_item_at_pos(Vector2 pos) {
-    global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_item_at_pos(swigCPtr, Vector2.getCPtr(pos));
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_item_at_pos(swigCPtr, ref pos);
     TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public int get_column_at_pos(Vector2 pos) {
-    int ret = GodotEnginePINVOKE.Tree_get_column_at_pos(swigCPtr, Vector2.getCPtr(pos));
+    int ret = GodotEnginePINVOKE.Tree_get_column_at_pos(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -186,9 +186,9 @@ public class Tree : Control {
   }
 
   public Vector2 get_scroll() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Tree_get_scroll(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Tree_get_scroll(swigCPtr);
     return ret;
-  }
+}
 
   public void set_hide_folding(bool hide) {
     GodotEnginePINVOKE.Tree_set_hide_folding(swigCPtr, hide);

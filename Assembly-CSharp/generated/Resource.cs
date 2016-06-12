@@ -79,28 +79,25 @@ public class Resource : Reference {
 
   public Object get_import_metadata() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_get_import_metadata(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
   public Object duplicate(bool subresources) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_duplicate__SWIG_0(swigCPtr, subresources);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
   public Object duplicate() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_duplicate__SWIG_1(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

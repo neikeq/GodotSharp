@@ -102,6 +102,27 @@ public class BaseButton : Control {
     return ret;
   }
 
+  public void set_enabled_focus_mode(int mode) {
+    GodotEnginePINVOKE.BaseButton_set_enabled_focus_mode(swigCPtr, mode);
+  }
+
+  public int get_enabled_focus_mode() {
+    int ret = GodotEnginePINVOKE.BaseButton_get_enabled_focus_mode(swigCPtr);
+    return ret;
+  }
+
+  public void set_shortcut(Object shortcut) {
+    GodotEnginePINVOKE.BaseButton_set_shortcut(swigCPtr, Object.getCPtr(shortcut));
+  }
+
+  public Object get_shortcut() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.BaseButton_get_shortcut(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
+    return ret;
+  }
+
 }
 
 }

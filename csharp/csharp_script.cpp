@@ -35,8 +35,11 @@
 #include "os/os.h"
 #include "os/thread.h"
 
-#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
+#ifdef TOOLS_ENABLED
+#include "scene/main/scene_main_loop.h"
+#ifdef DEBUG_METHODS_ENABLED
 #include "cs_bindings_generator.h"
+#endif
 #endif
 
 CSharpLanguage *CSharpLanguage::singleton = NULL;
@@ -62,6 +65,18 @@ Error CSharpLanguage::execute_file(const String &p_path)
 	return OK;
 }
 
+String CSharpLanguage::get_assemblies_path()
+{
+	// TODO should return a res:// path but currently we can't load assemblies from memory :(
+	return "bin/"
+#ifdef DEBUG_ENABLED
+	"Debug"
+#else
+	"Release"
+#endif
+	;
+}
+
 void CSharpLanguage::init()
 {
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
@@ -71,45 +86,67 @@ void CSharpLanguage::init()
 		if (E->next()) {
 			generate_cs_interfaces(E->next()->get());
 		} else {
-			OS::get_singleton()->printerr("csintf: The path to the output directory was not specified.");
+			ERR_PRINT("Path to output directory not specified.");
 		}
 	}
 #endif
 
-	print_line("Initializing mono...");
+	OS::get_singleton()->print("Mono: Initializing mono...\n");
 
 	mono_config_parse(NULL);
 	domain = mono_jit_init_version("GodotEngineMono", "v4.0.30319");
 
-	ERR_EXPLAIN("Mono: Could not initialize domain");
+	ERR_EXPLAIN("Mono: Could not initialize jit");
 	ERR_FAIL_COND(!domain);
 
-#ifdef DEBUG_ENABLED
-	String game_assembly_path = "bin/Debug/GameAssembly.dll";
-	String engine_assembly_path = "bin/Debug/Assembly-CSharp.dll";
-#else
-	String game_assembly_path = "bin/Release/GameAssembly.dll";
-	String engine_assembly_path = "bin/Release/Assembly-CSharp.dll";
+	mono_thread_set_main(mono_thread_current());
+	register_mono_internal_calls();
+
+	String assemblies_path = get_assemblies_path();
+	String api_assembly_path = assemblies_path + "/Assembly-CSharp.dll";
+	String game_assembly_path = assemblies_path + "/" + Globals::get_singleton()->get("application/name") + ".dll";
+
+	if (FileAccess::exists("res://" + game_assembly_path)) {
+		if (!FileAccess::exists("res://" + api_assembly_path)) {
+			WARN_PRINT("Mono: Game assembly found but Assembly-CSharp.dll is missing");
+			return;
+		}
+
+		MonoAssembly *api_assembly = mono_domain_assembly_open(domain, api_assembly_path.utf8());
+		ERR_EXPLAIN("Mono: Failed to load Assembly-CSharp.dll");
+		ERR_FAIL_COND(!api_assembly);
+		api_image = mono_assembly_get_image(api_assembly);
+
+#ifdef TOOLS_ENABLED
+		String api_editor_assembly_path = assemblies_path + "/Assembly-CSharp-Editor.dll\n";
+
+		if (FileAccess::exists("res://" + api_editor_assembly_path)) {
+			if (SceneTree::get_singleton()->is_editor_hint()) {
+				MonoAssembly *api_editor_assembly = mono_domain_assembly_open(domain, api_editor_assembly_path.utf8());
+				ERR_EXPLAIN("Mono: Failed to load Assembly-CSharp-Editor.dll\n");
+				ERR_FAIL_COND(!api_editor_assembly);
+			}
+		}
 #endif
 
-	MonoAssembly *engine_assembly = mono_domain_assembly_open(domain, engine_assembly_path.utf8());
-	ERR_FAIL_COND(!engine_assembly);
-	engine_image = mono_assembly_get_image(engine_assembly);
-
-	MonoAssembly *game_assembly = mono_domain_assembly_open(domain, game_assembly_path.utf8());
-	if (game_assembly) {
+		MonoAssembly *game_assembly = mono_domain_assembly_open(domain, game_assembly_path.utf8());
+		ERR_EXPLAIN("Mono: Failed to load game assembly");
+		ERR_FAIL_COND(!game_assembly);
 		mono_assembly_set_main(game_assembly);
 		game_image = mono_assembly_get_image(game_assembly);
+
+		OS::get_singleton()->print("Mono: Successfully loaded assemblies\n");
+	} else {
+		OS::get_singleton()->print("Mono: Game assembly not found\n");
 	}
-
-	mono_thread_set_main(mono_thread_current());
-
-	register_mono_internal_calls();
 }
 
 void CSharpLanguage::finish()
 {
-	mono_jit_cleanup(domain);
+	if (!mono_jit_cleaned) {
+		mono_jit_cleanup(domain);
+		mono_jit_cleaned = true;
+	}
 }
 
 void CSharpLanguage::get_reserved_words(List<String> *p_words) const
@@ -245,6 +282,7 @@ void CSharpLanguage::get_string_delimiters(List<String> *p_delimiters) const
 String CSharpLanguage::get_template(const String &p_class_name, const String &p_base_class_name) const
 {
 	String _template = String() +
+	"using System;\n\n" +
 	"using GodotEngine;\n\n" +
 	"// Currently the class needs to be in the global namespace.\n" +
 	"// The class name must be the same as the file name.\n" +
@@ -253,7 +291,7 @@ String CSharpLanguage::get_template(const String &p_class_name, const String &p_
 	"    // Member variables here, example:\n" +
 	"    // private int a = 2;\n" +
 	"    // private string b = \"textvar\";\n\n" +
-	"    public void _ready()\n" +
+	"    void _ready()\n" +
 	"    {\n" +
 	"        // Called every time the node is added to the scene.\n" +
 	"        // Initialization here\n" +
@@ -331,7 +369,9 @@ CSharpLanguage::CSharpLanguage()
 
 	domain = NULL;
 	game_image = NULL;
-	engine_image = NULL;
+	api_image = NULL;
+
+	mono_jit_cleaned = false;
 }
 
 CSharpLanguage::~CSharpLanguage()
@@ -349,7 +389,7 @@ void CSharpInstance::_ml_call_reversed(MonoClass *clazz, const StringName &p_met
 	mono_void_call(clazz, get_mono_object(), p_method, p_args, p_argcount);
 }
 
-MonoObject *CSharpInstance::get_mono_object()
+MonoObject *CSharpInstance::get_mono_object() const
 {
 	return gchandle->get_object();
 }
@@ -358,13 +398,10 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 {
 	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
 	if (field) {
-		MonoClass *variant_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "Variant");
-		MonoObject* managed_variant = variant_to_mono_object(variant_class, &p_value);
-		void *value = &managed_variant;
-		mono_field_set_value(get_mono_object(), field, value);
+		mono_field_set_from_variant(get_mono_object(), field, &p_value);
 	}
 
-	// TODO MUST BE MULTILEVEL
+	// TODO _set call must be multilevel
 
 	Variant name = p_name;
 	const Variant *args[2] = { &name, &p_value };
@@ -376,28 +413,25 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 	return false;
 }
 
-// Nothing we can do as long as this method is const :(
 bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const
 {
 	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
 	if (field) {
-		// TODO Need a helper method to cast the return value
-		/*void *value;
-		mono_field_get_value(mono_object, field, value);
-		r_ret = value;
-		return true*/
+		MonoObject *value = mono_field_get_value_object(mono_domain_get(), field, get_mono_object());
+		r_ret = managed_to_variant(value, mono_field_get_type(field));
+		return true;
 	}
 
-	// TODO MUST BE MULTILEVEL
+	// TODO _get call must be multilevel
 
-	/*Variant name = p_name;
+	Variant name = p_name;
 	const Variant *args[1] = { &name };
 	Variant::CallError err;
-	Variant ret = call("_get", (const Variant**)args, 1, err);
+	Variant ret = call_const("_get", (const Variant**)args, 1, err);
 	if (err.error == Variant::CallError::CALL_OK && ret.get_type() != Variant::NIL) {
 		r_ret = ret;
 		return true;
-	}*/
+	}
 
 	return false;
 }
@@ -425,6 +459,11 @@ bool CSharpInstance::has_method(const StringName &p_method) const
 
 Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error)
 {
+	return call_const(p_method, p_args, p_argcount, r_error);
+}
+
+Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) const
+{
 	if (!script.ptr())
 		return Variant();
 
@@ -434,27 +473,28 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
 
 		if (method) {
-			MonoClass *helper_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "InternalHelpers");
-			ERR_FAIL_COND_V(!helper_class, Variant());
-			MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCall", 3);
-			ERR_FAIL_COND_V(!variant_call, Variant());
+			MonoMethodSignature *sig = mono_method_signature(method);
 
-			MonoReflectionMethod *mrm = mono_method_get_object(CSharpLanguage::get_singleton()->get_domain(), method, top);
-			MonoArray* v = vargs_to_mono_array(p_args, p_argcount);
+			int i = 0;
+			gpointer iter = NULL;
+			MonoType *paramType;
 
-			void *args [3];
-			args[0] = get_mono_object();
-			args[1] = mrm;
-			args[2] = v;
+			MonoArray *args = mono_array_new(mono_domain_get(), mono_get_object_class(), p_argcount);
+
+			while ((paramType = mono_signature_get_params(sig, &iter))) {
+				MonoObject* boxed_arg = variant_to_managed_of_type(p_args[i], paramType);
+				mono_array_set(args, MonoObject*, i, boxed_arg);
+				i++;
+			}
 
 			MonoObject *exc = NULL;
-			MonoObject *result = mono_runtime_invoke(variant_call, NULL, args, &exc);
+			MonoObject *result = mono_runtime_invoke_array(method, get_mono_object(), args, &exc);
 
 			if (exc) {
 				mono_print_unhandled_exception(exc);
 				return Variant();
 			} else if (result) {
-				return *(Variant*) mono_object_unbox(result);
+				return managed_to_variant(result, mono_signature_get_return_type(sig));
 			} else { // return type is void?
 				return Variant();
 			}
@@ -567,28 +607,32 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
 
 		if (method) {
-			MonoClass *helper_class = mono_class_from_name(CSharpLanguage::get_singleton()->get_engine_image(), "GodotEngine", "InternalHelpers");
-			ERR_FAIL_COND_V(!helper_class, Variant());
-			MonoMethod *variant_call = mono_class_get_method_from_name(helper_class, "VariantCall", 3);
-			ERR_FAIL_COND_V(!variant_call, Variant());
+			MonoMethodSignature *sig = mono_method_signature(method);
 
-			MonoReflectionMethod *mrm = mono_method_get_object(CSharpLanguage::get_singleton()->get_domain(), method, top);
-			MonoArray* v = vargs_to_mono_array(p_args, p_argcount);
+			if (mono_signature_is_instance(sig) == FALSE) {
+				int i = 0;
+				gpointer iter = NULL;
+				MonoType *paramType;
 
-			void *args [3];
-			args[0] = 0;
-			args[1] = mrm;
-			args[2] = v;
+				MonoArray *args = mono_array_new(mono_domain_get(), mono_get_object_class(), p_argcount);
 
-			MonoObject *exc = NULL;
-			MonoObject *result = mono_runtime_invoke(variant_call, NULL, args, &exc);
-			if (exc) {
-				mono_print_unhandled_exception(exc);
-				return Variant();
-			} else if (result) {
-				return *(Variant*) mono_object_unbox(result);
-			} else { // return type is void?
-				return Variant();
+				while ((paramType = mono_signature_get_params(sig, &iter))) {
+					MonoObject* boxed_arg = variant_to_managed_of_type(p_args[i], paramType);
+					mono_array_set(args, MonoObject*, i, boxed_arg);
+					i++;
+				}
+
+				MonoObject *exc = NULL;
+				MonoObject *result = mono_runtime_invoke_array(method, NULL, args, &exc);
+
+				if (exc) {
+					mono_print_unhandled_exception(exc);
+					return Variant();
+				} else if (result) {
+					return managed_to_variant(result, mono_signature_get_return_type(sig));
+				} else { // return type is void?
+					return Variant();
+				}
 			}
 		}
 
@@ -727,7 +771,7 @@ Error CSharpScript::reload()
 		script_class = mono_class_from_name(game_image, "", name.utf8());
 
 		if (script_class) {
-			native = script_class_get_native_class(script_class);
+			native = mono_class_get_native_class(script_class);
 			return OK;
 		}
 	}

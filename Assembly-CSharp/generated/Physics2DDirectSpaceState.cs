@@ -51,55 +51,55 @@ public class Physics2DDirectSpaceState : Object {
 
 
   public SWIGTYPE_p_Array intersect_point(Vector2 point, int max_results, SWIGTYPE_p_Array exclude, int layer_mask, int type_mask) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_0(swigCPtr, Vector2.getCPtr(point), max_results, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask, type_mask), true);
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_0(swigCPtr, ref point, max_results, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask, type_mask), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Array intersect_point(Vector2 point, int max_results, SWIGTYPE_p_Array exclude, int layer_mask) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_1(swigCPtr, Vector2.getCPtr(point), max_results, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask), true);
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_1(swigCPtr, ref point, max_results, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Array intersect_point(Vector2 point, int max_results, SWIGTYPE_p_Array exclude) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_2(swigCPtr, Vector2.getCPtr(point), max_results, SWIGTYPE_p_Array.getCPtr(exclude)), true);
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_2(swigCPtr, ref point, max_results, SWIGTYPE_p_Array.getCPtr(exclude)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Array intersect_point(Vector2 point, int max_results) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_3(swigCPtr, Vector2.getCPtr(point), max_results), true);
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_3(swigCPtr, ref point, max_results), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Array intersect_point(Vector2 point) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_4(swigCPtr, Vector2.getCPtr(point)), true);
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_point__SWIG_4(swigCPtr, ref point), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Dictionary intersect_ray(Vector2 from, Vector2 to, SWIGTYPE_p_Array exclude, int layer_mask, int type_mask) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_0(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to), SWIGTYPE_p_Array.getCPtr(exclude), layer_mask, type_mask), true);
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_0(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask, type_mask), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Dictionary intersect_ray(Vector2 from, Vector2 to, SWIGTYPE_p_Array exclude, int layer_mask) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_1(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to), SWIGTYPE_p_Array.getCPtr(exclude), layer_mask), true);
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_1(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Dictionary intersect_ray(Vector2 from, Vector2 to, SWIGTYPE_p_Array exclude) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_2(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to), SWIGTYPE_p_Array.getCPtr(exclude)), true);
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_2(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(exclude)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Dictionary intersect_ray(Vector2 from, Vector2 to) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_3(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to)), true);
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_ray__SWIG_3(swigCPtr, ref from, ref to), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

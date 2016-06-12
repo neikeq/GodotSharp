@@ -80,25 +80,25 @@ public class TileMap : Node2D {
     return ret;
   }
 
-  public void set_custom_transform(SWIGTYPE_p_Matrix32 custom_transform) {
-    GodotEnginePINVOKE.TileMap_set_custom_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(custom_transform));
+  public void set_custom_transform(Matrix32 custom_transform) {
+    GodotEnginePINVOKE.TileMap_set_custom_transform(swigCPtr, ref custom_transform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_custom_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.TileMap_get_custom_transform(swigCPtr), true);
+  public Matrix32 get_custom_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.TileMap_get_custom_transform(swigCPtr));
     return ret;
-  }
+}
 
   public void set_cell_size(Vector2 size) {
-    GodotEnginePINVOKE.TileMap_set_cell_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.TileMap_set_cell_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_cell_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.TileMap_get_cell_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.TileMap_get_cell_size(swigCPtr);
     return ret;
-  }
+}
 
   public void set_quadrant_size(int size) {
     GodotEnginePINVOKE.TileMap_set_quadrant_size(swigCPtr, size);
@@ -216,22 +216,22 @@ public class TileMap : Node2D {
   }
 
   public void set_cellv(Vector2 pos, int tile, bool flip_x, bool flip_y, bool transpose) {
-    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_0(swigCPtr, Vector2.getCPtr(pos), tile, flip_x, flip_y, transpose);
+    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_0(swigCPtr, ref pos, tile, flip_x, flip_y, transpose);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_cellv(Vector2 pos, int tile, bool flip_x, bool flip_y) {
-    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_1(swigCPtr, Vector2.getCPtr(pos), tile, flip_x, flip_y);
+    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_1(swigCPtr, ref pos, tile, flip_x, flip_y);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_cellv(Vector2 pos, int tile, bool flip_x) {
-    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_2(swigCPtr, Vector2.getCPtr(pos), tile, flip_x);
+    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_2(swigCPtr, ref pos, tile, flip_x);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_cellv(Vector2 pos, int tile) {
-    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_3(swigCPtr, Vector2.getCPtr(pos), tile);
+    GodotEnginePINVOKE.TileMap_set_cellv__SWIG_3(swigCPtr, ref pos, tile);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -241,7 +241,7 @@ public class TileMap : Node2D {
   }
 
   public int get_cellv(Vector2 pos) {
-    int ret = GodotEnginePINVOKE.TileMap_get_cellv(swigCPtr, Vector2.getCPtr(pos));
+    int ret = GodotEnginePINVOKE.TileMap_get_cellv(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -271,22 +271,22 @@ public class TileMap : Node2D {
   }
 
   public Vector2 map_to_world(Vector2 mappos, bool ignore_half_ofs) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.TileMap_map_to_world__SWIG_0(swigCPtr, Vector2.getCPtr(mappos), ignore_half_ofs), true);
+    Vector2 ret = GodotEnginePINVOKE.TileMap_map_to_world__SWIG_0(swigCPtr, ref mappos, ignore_half_ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public Vector2 map_to_world(Vector2 mappos) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.TileMap_map_to_world__SWIG_1(swigCPtr, Vector2.getCPtr(mappos)), true);
+    Vector2 ret = GodotEnginePINVOKE.TileMap_map_to_world__SWIG_1(swigCPtr, ref mappos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public Vector2 world_to_map(Vector2 worldpos) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.TileMap_world_to_map(swigCPtr, Vector2.getCPtr(worldpos)), true);
+    Vector2 ret = GodotEnginePINVOKE.TileMap_world_to_map(swigCPtr, ref worldpos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public TileMap() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

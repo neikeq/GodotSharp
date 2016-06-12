@@ -59,19 +59,17 @@ public class TabContainer : Control {
 
   public Control get_current_tab_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_current_tab_control(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
-    if (ret == null) {
-      ret = new Control(cPtr, false);
-    }
     return ret;
   }
 
   public Control get_tab_control(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_tab_control(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
-    if (ret == null) {
-      ret = new Control(cPtr, false);
-    }
     return ret;
   }
 

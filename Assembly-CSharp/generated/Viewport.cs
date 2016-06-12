@@ -77,30 +77,30 @@ public class Viewport : Node {
     return ret;
   }
 
-  public void set_canvas_transform(SWIGTYPE_p_Matrix32 xform) {
-    GodotEnginePINVOKE.Viewport_set_canvas_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(xform));
+  public void set_canvas_transform(Matrix32 xform) {
+    GodotEnginePINVOKE.Viewport_set_canvas_transform(swigCPtr, ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_canvas_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.Viewport_get_canvas_transform(swigCPtr), true);
+  public Matrix32 get_canvas_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Viewport_get_canvas_transform(swigCPtr));
     return ret;
-  }
+}
 
-  public void set_global_canvas_transform(SWIGTYPE_p_Matrix32 xform) {
-    GodotEnginePINVOKE.Viewport_set_global_canvas_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(xform));
+  public void set_global_canvas_transform(Matrix32 xform) {
+    GodotEnginePINVOKE.Viewport_set_global_canvas_transform(swigCPtr, ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_global_canvas_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.Viewport_get_global_canvas_transform(swigCPtr), true);
+  public Matrix32 get_global_canvas_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Viewport_get_global_canvas_transform(swigCPtr));
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Matrix32 get_final_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.Viewport_get_final_transform(swigCPtr), true);
+  public Matrix32 get_final_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Viewport_get_final_transform(swigCPtr));
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Rect2 get_visible_rect() {
     SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Viewport_get_visible_rect(swigCPtr), true);
@@ -117,12 +117,12 @@ public class Viewport : Node {
   }
 
   public void set_size_override(bool enable, Vector2 size, Vector2 margin) {
-    GodotEnginePINVOKE.Viewport_set_size_override__SWIG_0(swigCPtr, enable, Vector2.getCPtr(size), Vector2.getCPtr(margin));
+    GodotEnginePINVOKE.Viewport_set_size_override__SWIG_0(swigCPtr, enable, ref size, ref margin);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_size_override(bool enable, Vector2 size) {
-    GodotEnginePINVOKE.Viewport_set_size_override__SWIG_1(swigCPtr, enable, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.Viewport_set_size_override__SWIG_1(swigCPtr, enable, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -131,9 +131,9 @@ public class Viewport : Node {
   }
 
   public Vector2 get_size_override() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Viewport_get_size_override(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Viewport_get_size_override(swigCPtr);
     return ret;
-  }
+}
 
   public bool is_size_override_enabled() {
     bool ret = GodotEnginePINVOKE.Viewport_is_size_override_enabled(swigCPtr);
@@ -288,12 +288,12 @@ public class Viewport : Node {
   }
 
   public Vector2 get_mouse_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Viewport_get_mouse_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Viewport_get_mouse_pos(swigCPtr);
     return ret;
-  }
+}
 
   public void warp_mouse(Vector2 to_pos) {
-    GodotEnginePINVOKE.Viewport_warp_mouse(swigCPtr, Vector2.getCPtr(to_pos));
+    GodotEnginePINVOKE.Viewport_warp_mouse(swigCPtr, ref to_pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

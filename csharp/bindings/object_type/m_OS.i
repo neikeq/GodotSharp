@@ -2,9 +2,12 @@
 %module m_OS
 
 %rename(OS) _OS;
+%csmethodmodifiers _OS::_OS "private"
+%csmethodmodifiers _OS::SingletonGetInstance "private"
 %nodefaultctor _OS;
 
 %typemap(csbody_derived) _OS %{
+  private static $csclassname instance;
   public static readonly int DAY_SUNDAY = 0;
   public static readonly int DAY_MONDAY = 1;
   public static readonly int DAY_TUESDAY = 2;
@@ -59,6 +62,15 @@
 %}
 
 %typemap(cscode) _OS %{
+  public static $csclassname Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal $csclassname() {}
 
 %}
@@ -662,6 +674,21 @@ public:
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("set_thread_name", name);
     }
+  }
+  %extend {
+    void set_use_vsync(bool enable) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_use_vsync", enable);
+    }
+  }
+  %extend {
+    bool is_vsnc_enabled() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("is_vsnc_enabled");
+    }
+  }
+  %extend {
+    static _OS* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("OS")->cast_to<_OS>(); }
   }
 
 };

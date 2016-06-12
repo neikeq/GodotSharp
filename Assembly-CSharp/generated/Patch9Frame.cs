@@ -49,10 +49,9 @@ public class Patch9Frame : Control {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Patch9Frame_get_texture(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -72,6 +71,16 @@ public class Patch9Frame : Control {
 
   public int get_patch_margin(int margin) {
     int ret = GodotEnginePINVOKE.Patch9Frame_get_patch_margin(swigCPtr, margin);
+    return ret;
+  }
+
+  public void set_region_rect(SWIGTYPE_p_Rect2 rect) {
+    GodotEnginePINVOKE.Patch9Frame_set_region_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_Rect2 get_region_rect() {
+    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Patch9Frame_get_region_rect(swigCPtr), true);
     return ret;
   }
 

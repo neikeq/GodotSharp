@@ -60,14 +60,14 @@ public class SpriteBase3D : GeometryInstance {
   }
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.SpriteBase3D_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.SpriteBase3D_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.SpriteBase3D_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.SpriteBase3D_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_flip_h(bool flip_h) {
     GodotEnginePINVOKE.SpriteBase3D_set_flip_h(swigCPtr, flip_h);

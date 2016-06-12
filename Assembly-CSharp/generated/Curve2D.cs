@@ -49,68 +49,68 @@ public class Curve2D : Resource {
   }
 
   public void add_point(Vector2 pos, Vector2 arg1, Vector2 arg2, int atpos) {
-    GodotEnginePINVOKE.Curve2D_add_point__SWIG_0(swigCPtr, Vector2.getCPtr(pos), Vector2.getCPtr(arg1), Vector2.getCPtr(arg2), atpos);
+    GodotEnginePINVOKE.Curve2D_add_point__SWIG_0(swigCPtr, ref pos, ref arg1, ref arg2, atpos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_point(Vector2 pos, Vector2 arg1, Vector2 arg2) {
-    GodotEnginePINVOKE.Curve2D_add_point__SWIG_1(swigCPtr, Vector2.getCPtr(pos), Vector2.getCPtr(arg1), Vector2.getCPtr(arg2));
+    GodotEnginePINVOKE.Curve2D_add_point__SWIG_1(swigCPtr, ref pos, ref arg1, ref arg2);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_point(Vector2 pos, Vector2 arg1) {
-    GodotEnginePINVOKE.Curve2D_add_point__SWIG_2(swigCPtr, Vector2.getCPtr(pos), Vector2.getCPtr(arg1));
+    GodotEnginePINVOKE.Curve2D_add_point__SWIG_2(swigCPtr, ref pos, ref arg1);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_point(Vector2 pos) {
-    GodotEnginePINVOKE.Curve2D_add_point__SWIG_3(swigCPtr, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Curve2D_add_point__SWIG_3(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_point_pos(int idx, Vector2 pos) {
-    GodotEnginePINVOKE.Curve2D_set_point_pos(swigCPtr, idx, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Curve2D_set_point_pos(swigCPtr, idx, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_point_pos(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_get_point_pos(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_get_point_pos(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_point_in(int idx, Vector2 pos) {
-    GodotEnginePINVOKE.Curve2D_set_point_in(swigCPtr, idx, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Curve2D_set_point_in(swigCPtr, idx, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_point_in(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_get_point_in(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_get_point_in(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_point_out(int idx, Vector2 pos) {
-    GodotEnginePINVOKE.Curve2D_set_point_out(swigCPtr, idx, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Curve2D_set_point_out(swigCPtr, idx, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_point_out(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_get_point_out(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_get_point_out(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void remove_point(int idx) {
     GodotEnginePINVOKE.Curve2D_remove_point(swigCPtr, idx);
   }
 
   public Vector2 interpolate(int idx, float t) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_interpolate(swigCPtr, idx, t), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_interpolate(swigCPtr, idx, t);
     return ret;
-  }
+}
 
   public Vector2 interpolatef(float fofs) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_interpolatef(swigCPtr, fofs), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_interpolatef(swigCPtr, fofs);
     return ret;
-  }
+}
 
   public void set_bake_interval(float distance) {
     GodotEnginePINVOKE.Curve2D_set_bake_interval(swigCPtr, distance);
@@ -127,14 +127,14 @@ public class Curve2D : Resource {
   }
 
   public Vector2 interpolate_baked(float offset, bool cubic) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_interpolate_baked__SWIG_0(swigCPtr, offset, cubic), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_interpolate_baked__SWIG_0(swigCPtr, offset, cubic);
     return ret;
-  }
+}
 
   public Vector2 interpolate_baked(float offset) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Curve2D_interpolate_baked__SWIG_1(swigCPtr, offset), true);
+    Vector2 ret = GodotEnginePINVOKE.Curve2D_interpolate_baked__SWIG_1(swigCPtr, offset);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Vector2Array get_baked_points() {
     SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Curve2D_get_baked_points(swigCPtr), true);

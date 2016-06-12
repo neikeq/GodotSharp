@@ -73,6 +73,11 @@ public class ResourceImportMetadata : Reference {
     return ret;
   }
 
+  public void set_source_md5(int idx, string md5) {
+    GodotEnginePINVOKE.ResourceImportMetadata_set_source_md5(swigCPtr, idx, md5);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public void remove_source(int idx) {
     GodotEnginePINVOKE.ResourceImportMetadata_remove_source(swigCPtr, idx);
   }

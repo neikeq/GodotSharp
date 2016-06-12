@@ -45,10 +45,9 @@ public class WeakRef : Reference {
 
   public Object get_ref() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.WeakRef_get_ref(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

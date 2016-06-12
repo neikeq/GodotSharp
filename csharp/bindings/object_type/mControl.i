@@ -295,6 +295,12 @@ public:
     }
   }
   %extend {
+    int get_focus_mode() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_focus_mode");
+    }
+  }
+  %extend {
     bool has_focus() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("has_focus");
@@ -433,6 +439,66 @@ public:
     }
   }
   %extend {
+    bool has_icon_override(const String& name) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_icon_override", name);
+    }
+  }
+  %extend {
+    bool has_stylebox_override(const String& name) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_stylebox_override", name);
+    }
+  }
+  %extend {
+    bool has_font_override(const String& name) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_font_override", name);
+    }
+  }
+  %extend {
+    bool has_color_override(const String& name) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_color_override", name);
+    }
+  }
+  %extend {
+    bool has_constant_override(const String& name) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_constant_override", name);
+    }
+  }
+  %extend {
+    bool has_icon(const String& name, const String& type = "") {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_icon", name, type);
+    }
+  }
+  %extend {
+    bool has_stylebox(const String& name, const String& type = "") {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_stylebox", name, type);
+    }
+  }
+  %extend {
+    bool has_font(const String& name, const String& type = "") {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_font", name, type);
+    }
+  }
+  %extend {
+    bool has_color(const String& name, const String& type = "") {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_color", name, type);
+    }
+  }
+  %extend {
+    bool has_constant(const String& name, const String& type = "") {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_constant", name, type);
+    }
+  }
+  %extend {
     Control* get_parent_control() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_parent_control").operator Object *()->cast_to<Control>();
@@ -532,6 +598,12 @@ public:
     void warp_mouse(const Vector2& to_pos) {
   Object* self_obj = static_cast<Object*>($self);
   self_obj->call("warp_mouse", to_pos);
+    }
+  }
+  %extend {
+    void minimum_size_changed() {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("minimum_size_changed");
     }
   }
   Control();

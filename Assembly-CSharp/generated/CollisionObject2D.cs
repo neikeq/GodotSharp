@@ -49,8 +49,8 @@ public class CollisionObject2D : Node2D {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_shape(SWIGTYPE_p_RefT_Shape2D_t shape, SWIGTYPE_p_Matrix32 transform) {
-    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(shape), SWIGTYPE_p_Matrix32.getCPtr(transform));
+  public void add_shape(SWIGTYPE_p_RefT_Shape2D_t shape, Matrix32 transform) {
+    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(shape), ref transform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -69,8 +69,8 @@ public class CollisionObject2D : Node2D {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_shape_transform(int shape_idx, SWIGTYPE_p_Matrix32 transform) {
-    GodotEnginePINVOKE.CollisionObject2D_set_shape_transform(swigCPtr, shape_idx, SWIGTYPE_p_Matrix32.getCPtr(transform));
+  public void set_shape_transform(int shape_idx, Matrix32 transform) {
+    GodotEnginePINVOKE.CollisionObject2D_set_shape_transform(swigCPtr, shape_idx, ref transform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -83,10 +83,10 @@ public class CollisionObject2D : Node2D {
     return ret;
   }
 
-  public SWIGTYPE_p_Matrix32 get_shape_transform(int shape_idx) {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CollisionObject2D_get_shape_transform(swigCPtr, shape_idx), true);
+  public Matrix32 get_shape_transform(int shape_idx) {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CollisionObject2D_get_shape_transform(swigCPtr, shape_idx));
     return ret;
-  }
+}
 
   public bool is_shape_set_as_trigger(int shape_idx) {
     bool ret = GodotEnginePINVOKE.CollisionObject2D_is_shape_set_as_trigger(swigCPtr, shape_idx);

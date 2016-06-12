@@ -64,12 +64,12 @@ public class ImmediateGeometry : GeometryInstance {
   }
 
   public void set_uv(Vector2 uv) {
-    GodotEnginePINVOKE.ImmediateGeometry_set_uv(swigCPtr, Vector2.getCPtr(uv));
+    GodotEnginePINVOKE.ImmediateGeometry_set_uv(swigCPtr, ref uv);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_uv2(Vector2 uv) {
-    GodotEnginePINVOKE.ImmediateGeometry_set_uv2(swigCPtr, Vector2.getCPtr(uv));
+    GodotEnginePINVOKE.ImmediateGeometry_set_uv2(swigCPtr, ref uv);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

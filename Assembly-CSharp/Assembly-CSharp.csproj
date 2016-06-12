@@ -173,6 +173,8 @@
     <Compile Include="generated\Material.cs" />
     <Compile Include="generated\MaterialShader.cs" />
     <Compile Include="generated\MaterialShaderGraph.cs" />
+    <Compile Include="generated\Mathf.cs" />
+    <Compile Include="generated\Matrix32.cs" />
     <Compile Include="generated\MenuButton.cs" />
     <Compile Include="generated\Mesh.cs" />
     <Compile Include="generated\MeshDataTool.cs" />
@@ -280,7 +282,6 @@
     <Compile Include="generated\SWIGTYPE_p_Image.cs" />
     <Compile Include="generated\SWIGTYPE_p_InputEvent.cs" />
     <Compile Include="generated\SWIGTYPE_p_IntArray.cs" />
-    <Compile Include="generated\SWIGTYPE_p_Matrix32.cs" />
     <Compile Include="generated\SWIGTYPE_p_Plane.cs" />
     <Compile Include="generated\SWIGTYPE_p_Quat.cs" />
     <Compile Include="generated\SWIGTYPE_p_RID.cs" />
@@ -324,6 +325,7 @@
     <Compile Include="generated\SWIGTYPE_p_RefT_Shader_t.cs" />
     <Compile Include="generated\SWIGTYPE_p_RefT_Shape2D_t.cs" />
     <Compile Include="generated\SWIGTYPE_p_RefT_Shape_t.cs" />
+    <Compile Include="generated\SWIGTYPE_p_RefT_ShortCut_t.cs" />
     <Compile Include="generated\SWIGTYPE_p_RefT_SpatialGizmo_t.cs" />
     <Compile Include="generated\SWIGTYPE_p_RefT_SpriteFrames_t.cs" />
     <Compile Include="generated\SWIGTYPE_p_RefT_StreamPeer_t.cs" />
@@ -358,6 +360,7 @@
     <Compile Include="generated\ShaderMaterial.cs" />
     <Compile Include="generated\Shape.cs" />
     <Compile Include="generated\Shape2D.cs" />
+    <Compile Include="generated\ShortCut.cs" />
     <Compile Include="generated\Skeleton.cs" />
     <Compile Include="generated\Slider.cs" />
     <Compile Include="generated\SliderJoint.cs" />

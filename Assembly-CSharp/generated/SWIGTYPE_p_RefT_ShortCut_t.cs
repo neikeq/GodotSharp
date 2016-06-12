@@ -8,18 +8,18 @@
 
 namespace GodotEngine {
 
-public class SWIGTYPE_p_Matrix32 {
+public class SWIGTYPE_p_RefT_ShortCut_t {
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
-  internal SWIGTYPE_p_Matrix32(global::System.IntPtr cPtr, bool futureUse) {
+  internal SWIGTYPE_p_RefT_ShortCut_t(global::System.IntPtr cPtr, bool futureUse) {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
   }
 
-  protected SWIGTYPE_p_Matrix32() {
+  protected SWIGTYPE_p_RefT_ShortCut_t() {
     swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
   }
 
-  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_Matrix32 obj) {
+  internal static global::System.Runtime.InteropServices.HandleRef getCPtr(SWIGTYPE_p_RefT_ShortCut_t obj) {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 }

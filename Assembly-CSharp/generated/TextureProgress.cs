@@ -55,10 +55,9 @@ public class TextureProgress : Range {
 
   public Object get_under_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureProgress_get_under_texture(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -68,10 +67,9 @@ public class TextureProgress : Range {
 
   public Object get_progress_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureProgress_get_progress_texture(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -81,10 +79,9 @@ public class TextureProgress : Range {
 
   public Object get_over_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureProgress_get_over_texture(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -107,14 +104,14 @@ public class TextureProgress : Range {
   }
 
   public void set_radial_center_offset(Vector2 mode) {
-    GodotEnginePINVOKE.TextureProgress_set_radial_center_offset(swigCPtr, Vector2.getCPtr(mode));
+    GodotEnginePINVOKE.TextureProgress_set_radial_center_offset(swigCPtr, ref mode);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_radial_center_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.TextureProgress_get_radial_center_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.TextureProgress_get_radial_center_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_fill_degrees(float mode) {
     GodotEnginePINVOKE.TextureProgress_set_fill_degrees(swigCPtr, mode);

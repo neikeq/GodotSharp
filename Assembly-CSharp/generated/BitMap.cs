@@ -44,7 +44,7 @@ public class BitMap : Resource {
 
 
   public void create(Vector2 size) {
-    GodotEnginePINVOKE.BitMap_create(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.BitMap_create(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -54,12 +54,12 @@ public class BitMap : Resource {
   }
 
   public void set_bit(Vector2 pos, bool bit) {
-    GodotEnginePINVOKE.BitMap_set_bit(swigCPtr, Vector2.getCPtr(pos), bit);
+    GodotEnginePINVOKE.BitMap_set_bit(swigCPtr, ref pos, bit);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public bool get_bit(Vector2 pos) {
-    bool ret = GodotEnginePINVOKE.BitMap_get_bit(swigCPtr, Vector2.getCPtr(pos));
+    bool ret = GodotEnginePINVOKE.BitMap_get_bit(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -75,9 +75,9 @@ public class BitMap : Resource {
   }
 
   public Vector2 get_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.BitMap_get_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.BitMap_get_size(swigCPtr);
     return ret;
-  }
+}
 
   public BitMap() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

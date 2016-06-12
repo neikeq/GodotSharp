@@ -414,6 +414,8 @@ static void generate_cs_interfaces(const String& p_output_path)
 		String cs_members;
 		String cs_code;
 
+		String proxy_type_name = name;
+
 		if (name == "Object") {
 			definitions += "%define VARIANT_ARG_LIST const Variant& p_arg1 = Variant(), const Variant& p_arg2 = Variant(), const Variant& p_arg3 = Variant(), const Variant& p_arg4 = Variant(), const Variant& p_arg5 = Variant() %enddef\n\n";
 			if (!cxx_public_members.empty())
@@ -422,10 +424,11 @@ static void generate_cs_interfaces(const String& p_output_path)
 					"  void call_deferred(const String& p_method, VARIANT_ARG_LIST);\n"
 					"  Variant callv(const String& p_method, const Array& p_args);\n";
 		} else if (name.begins_with("_")) { // Proxy class
-			definitions += "%rename(" + name.substr(1, name.length()) + ") %%TypeName%%;\n";
+			proxy_type_name = name.substr(1, name.length());
+			definitions += "%rename(" + proxy_type_name + ") %%TypeName%%;\n";
 		}
 
-		if (Globals::get_singleton()->has_singleton(name)) {
+		if (Globals::get_singleton()->has_singleton(proxy_type_name)) {
 			cs_members += "  private static $csclassname instance;\n";
 			cs_code += "  public static $csclassname Instance {\n"
 					"    get {\n"
@@ -436,7 +439,7 @@ static void generate_cs_interfaces(const String& p_output_path)
 					"    }\n"
 					"  }\n\n";
 			cxx_public_members += "  %extend {\n"
-					"    static %%TypeName%%* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object(\"%%TypeName%%\")->cast_to<%%TypeName%%>(); }\n"
+					"    static %%TypeName%%* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object(\"%%ProxyTypeName%%\")->cast_to<%%TypeName%%>(); }\n"
 					"  }\n";
 			definitions += "%csmethodmodifiers %%TypeName%%::%%TypeName%% \"private\"\n";
 			definitions += "%csmethodmodifiers %%TypeName%%::SingletonGetInstance \"private\"\n";
@@ -466,6 +469,7 @@ static void generate_cs_interfaces(const String& p_output_path)
 				.replace("%%CSMembers%%", cs_members)
 				.replace("%%CSCode%%", cs_code)
 				.replace("%%TypeName%%", name)
+				.replace("%%ProxyTypeName%%", proxy_type_name)
 				.replace("%%TypeBaseName%%", inherits)
 				.replace("%%MemOwn%%", ObjectTypeDB::is_type(name, "Reference") ? "true" : "false");
 

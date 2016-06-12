@@ -9,6 +9,7 @@
 namespace GodotEngine {
 
 public class OS : Object {
+  private static OS instance;
   public static readonly int DAY_SUNDAY = 0;
   public static readonly int DAY_MONDAY = 1;
   public static readonly int DAY_TUESDAY = 2;
@@ -75,6 +76,15 @@ public class OS : Object {
     }
   }
 
+  public static OS Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal OS() {}
 
 
@@ -89,24 +99,24 @@ public class OS : Object {
   }
 
   public void set_video_mode(Vector2 size, bool fullscreen, bool resizable, int screen) {
-    GodotEnginePINVOKE.OS_set_video_mode__SWIG_0(swigCPtr, Vector2.getCPtr(size), fullscreen, resizable, screen);
+    GodotEnginePINVOKE.OS_set_video_mode__SWIG_0(swigCPtr, ref size, fullscreen, resizable, screen);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_video_mode(Vector2 size, bool fullscreen, bool resizable) {
-    GodotEnginePINVOKE.OS_set_video_mode__SWIG_1(swigCPtr, Vector2.getCPtr(size), fullscreen, resizable);
+    GodotEnginePINVOKE.OS_set_video_mode__SWIG_1(swigCPtr, ref size, fullscreen, resizable);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_video_mode_size(int screen) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_video_mode_size__SWIG_0(swigCPtr, screen), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_video_mode_size__SWIG_0(swigCPtr, screen);
     return ret;
-  }
+}
 
   public Vector2 get_video_mode_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_video_mode_size__SWIG_1(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_video_mode_size__SWIG_1(swigCPtr);
     return ret;
-  }
+}
 
   public bool is_video_mode_fullscreen(int screen) {
     bool ret = GodotEnginePINVOKE.OS_is_video_mode_fullscreen__SWIG_0(swigCPtr, screen);
@@ -153,24 +163,24 @@ public class OS : Object {
   }
 
   public Vector2 get_screen_position(int screen) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_screen_position__SWIG_0(swigCPtr, screen), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_screen_position__SWIG_0(swigCPtr, screen);
     return ret;
-  }
+}
 
   public Vector2 get_screen_position() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_screen_position__SWIG_1(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_screen_position__SWIG_1(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_screen_size(int screen) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_screen_size__SWIG_0(swigCPtr, screen), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_screen_size__SWIG_0(swigCPtr, screen);
     return ret;
-  }
+}
 
   public Vector2 get_screen_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_screen_size__SWIG_1(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_screen_size__SWIG_1(swigCPtr);
     return ret;
-  }
+}
 
   public int get_screen_dpi(int screen) {
     int ret = GodotEnginePINVOKE.OS_get_screen_dpi__SWIG_0(swigCPtr, screen);
@@ -183,22 +193,22 @@ public class OS : Object {
   }
 
   public Vector2 get_window_position() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_window_position(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_window_position(swigCPtr);
     return ret;
-  }
+}
 
   public void set_window_position(Vector2 position) {
-    GodotEnginePINVOKE.OS_set_window_position(swigCPtr, Vector2.getCPtr(position));
+    GodotEnginePINVOKE.OS_set_window_position(swigCPtr, ref position);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_window_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.OS_get_window_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.OS_get_window_size(swigCPtr);
     return ret;
-  }
+}
 
   public void set_window_size(Vector2 size) {
-    GodotEnginePINVOKE.OS_set_window_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.OS_set_window_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -373,10 +383,9 @@ public class OS : Object {
 
   public Object get_main_loop() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.OS_get_main_loop(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
@@ -631,6 +640,21 @@ public class OS : Object {
   public int set_thread_name(string name) {
     int ret = GodotEnginePINVOKE.OS_set_thread_name(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void set_use_vsync(bool enable) {
+    GodotEnginePINVOKE.OS_set_use_vsync(swigCPtr, enable);
+  }
+
+  public bool is_vsnc_enabled() {
+    bool ret = GodotEnginePINVOKE.OS_is_vsnc_enabled(swigCPtr);
+    return ret;
+  }
+
+  private static OS SingletonGetInstance() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.OS_SingletonGetInstance();
+    OS ret = (cPtr == global::System.IntPtr.Zero) ? null : new OS(cPtr, false);
     return ret;
   }
 

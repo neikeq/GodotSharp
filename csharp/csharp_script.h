@@ -37,26 +37,14 @@
 #include "io/resource_loader.h"
 #include "io/resource_saver.h"
 
+#include "csharp_gc_handle.h"
+
 class CSharpScript;
 class CSharpInstance;
 class CSharpLanguage;
 
 // TODO Cache stuff
-// TODO Describe "stuff" :P
-
-class CSharpGCHandle : public Reference
-{
-	OBJ_TYPE(CSharpGCHandle, Reference);
-
-	uint32_t handle;
-
-public:
-	MonoObject* get_object() { return mono_gchandle_get_target(handle); }
-
-	CSharpGCHandle(uint32_t p_handle) { handle = p_handle; }
-	CSharpGCHandle(MonoObject* p_object) { handle = mono_gchandle_new(p_object, FALSE); }
-	~CSharpGCHandle() { mono_gchandle_free(handle); }
-};
+// TODO Define "stuff" :P
 
 class CSharpScript : public Script
 {
@@ -128,7 +116,9 @@ friend class CSharpLanguage;
 	void _ml_call_reversed(MonoClass *clazz,const StringName& p_method,const Variant** p_args,int p_argcount);
 
 public:
-	MonoObject *get_mono_object();
+	MonoObject *get_mono_object() const;
+
+	Variant call_const(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) const;
 
 	virtual bool set(const StringName &p_name, const Variant &p_value);
 	virtual bool get(const StringName &p_name, Variant &r_ret) const;
@@ -155,19 +145,25 @@ class CSharpLanguage : public ScriptLanguage
 {
 friend class CSharpScript;
 friend class CSharpInstance;
+friend class CSharpGCHandle;
+
 	static CSharpLanguage *singleton;
 
 	MonoDomain *domain;
 
 	MonoImage *game_image;
-	MonoImage *engine_image;
+	MonoImage *api_image;
+
+	bool mono_jit_cleaned;
 
 public:
 	MonoDomain *get_domain() const { return domain; }
 	MonoImage *get_game_image() const { return game_image; }
-	MonoImage *get_engine_image() const { return engine_image; }
+	MonoImage *get_api_image() const { return api_image; }
 
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
+
+	String get_assemblies_path();
 
     bool debug_break(const String& p_error, bool p_allow_continue = true);
     bool debug_break_parse(const String& p_file, int p_line, const String& p_error);
@@ -219,14 +215,13 @@ public:
 	/* TODO? */ virtual void get_public_constants(List<Pair<String, Variant> > *p_constants) const {}
 
 	/* TODO */ void reload_all_scripts() {}
+	/* TODO */ void reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {}
 
 	/* LOADER FUNCTIONS */
 	virtual void get_recognized_extensions(List<String> *p_extensions) const;
 
 	CSharpLanguage();
 	~CSharpLanguage();
-
-	// ScriptLanguage interface
 };
 
 

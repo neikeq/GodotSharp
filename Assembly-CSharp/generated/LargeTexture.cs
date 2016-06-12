@@ -44,13 +44,13 @@ public class LargeTexture : Texture {
 
 
   public int add_piece(Vector2 ofs, SWIGTYPE_p_RefT_Texture_t texture) {
-    int ret = GodotEnginePINVOKE.LargeTexture_add_piece(swigCPtr, Vector2.getCPtr(ofs), SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+    int ret = GodotEnginePINVOKE.LargeTexture_add_piece(swigCPtr, ref ofs, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public void set_piece_offset(int idx, Vector2 ofs) {
-    GodotEnginePINVOKE.LargeTexture_set_piece_offset(swigCPtr, idx, Vector2.getCPtr(ofs));
+    GodotEnginePINVOKE.LargeTexture_set_piece_offset(swigCPtr, idx, ref ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -60,7 +60,7 @@ public class LargeTexture : Texture {
   }
 
   public void set_size(Vector2 size) {
-    GodotEnginePINVOKE.LargeTexture_set_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.LargeTexture_set_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -74,9 +74,9 @@ public class LargeTexture : Texture {
   }
 
   public Vector2 get_piece_offset(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.LargeTexture_get_piece_offset(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.LargeTexture_get_piece_offset(swigCPtr, idx);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_RefT_Texture_t get_piece_texture(int idx) {
     SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.LargeTexture_get_piece_texture(swigCPtr, idx), true);

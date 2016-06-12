@@ -63,9 +63,9 @@ public class Texture : Resource {
   }
 
   public Vector2 get_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Texture_get_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Texture_get_size(swigCPtr);
     return ret;
-  }
+}
 
   public new SWIGTYPE_p_RID get_rid() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.Texture_get_rid(swigCPtr), true);
@@ -87,17 +87,17 @@ public class Texture : Resource {
   }
 
   public void draw(SWIGTYPE_p_RID canvas_item, Vector2 pos, SWIGTYPE_p_Color modulate, bool transpose) {
-    GodotEnginePINVOKE.Texture_draw__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), SWIGTYPE_p_Color.getCPtr(modulate), transpose);
+    GodotEnginePINVOKE.Texture_draw__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, SWIGTYPE_p_Color.getCPtr(modulate), transpose);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw(SWIGTYPE_p_RID canvas_item, Vector2 pos, SWIGTYPE_p_Color modulate) {
-    GodotEnginePINVOKE.Texture_draw__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos), SWIGTYPE_p_Color.getCPtr(modulate));
+    GodotEnginePINVOKE.Texture_draw__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos, SWIGTYPE_p_Color.getCPtr(modulate));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw(SWIGTYPE_p_RID canvas_item, Vector2 pos) {
-    GodotEnginePINVOKE.Texture_draw__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.Texture_draw__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

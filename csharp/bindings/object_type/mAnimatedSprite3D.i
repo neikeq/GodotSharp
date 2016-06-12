@@ -45,9 +45,39 @@ public:
     }
   }
   %extend {
-    Ref<Texture> get_sprite_frames() {
+    Ref<SpriteFrames> get_sprite_frames() {
   Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sprite_frames").operator Object *()->cast_to<Texture>();
+  return self_obj->call("get_sprite_frames").operator Object *()->cast_to<SpriteFrames>();
+    }
+  }
+  %extend {
+    void set_animation(const String& animation) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_animation", animation);
+    }
+  }
+  %extend {
+    String get_animation() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_animation");
+    }
+  }
+  %extend {
+    void play(const String& anim = "") {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("play", anim);
+    }
+  }
+  %extend {
+    void stop() {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("stop");
+    }
+  }
+  %extend {
+    bool is_playing() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("is_playing");
     }
   }
   %extend {

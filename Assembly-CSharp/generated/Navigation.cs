@@ -102,10 +102,9 @@ public class Navigation : Spatial {
 
   public Object get_closest_point_owner(SWIGTYPE_p_Vector3 to_point) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation_get_closest_point_owner(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(to_point));
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

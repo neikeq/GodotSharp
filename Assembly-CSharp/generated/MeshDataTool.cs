@@ -108,24 +108,24 @@ public class MeshDataTool : Reference {
   }
 
   public void set_vertex_uv(int idx, Vector2 uv) {
-    GodotEnginePINVOKE.MeshDataTool_set_vertex_uv(swigCPtr, idx, Vector2.getCPtr(uv));
+    GodotEnginePINVOKE.MeshDataTool_set_vertex_uv(swigCPtr, idx, ref uv);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_vertex_uv(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.MeshDataTool_get_vertex_uv(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.MeshDataTool_get_vertex_uv(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_vertex_uv2(int idx, Vector2 uv2) {
-    GodotEnginePINVOKE.MeshDataTool_set_vertex_uv2(swigCPtr, idx, Vector2.getCPtr(uv2));
+    GodotEnginePINVOKE.MeshDataTool_set_vertex_uv2(swigCPtr, idx, ref uv2);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_vertex_uv2(int idx) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.MeshDataTool_get_vertex_uv2(swigCPtr, idx), true);
+    Vector2 ret = GodotEnginePINVOKE.MeshDataTool_get_vertex_uv2(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_vertex_color(int idx, SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.MeshDataTool_set_vertex_color(swigCPtr, idx, SWIGTYPE_p_Color.getCPtr(color));
@@ -226,10 +226,9 @@ public class MeshDataTool : Reference {
 
   public Object get_material() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshDataTool_get_material(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

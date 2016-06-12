@@ -61,10 +61,9 @@ public class TCP_Server : Reference {
 
   public Object take_connection() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TCP_Server_take_connection(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

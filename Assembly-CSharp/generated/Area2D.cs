@@ -71,14 +71,14 @@ public class Area2D : CollisionObject2D {
   }
 
   public void set_gravity_vector(Vector2 vector) {
-    GodotEnginePINVOKE.Area2D_set_gravity_vector(swigCPtr, Vector2.getCPtr(vector));
+    GodotEnginePINVOKE.Area2D_set_gravity_vector(swigCPtr, ref vector);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_gravity_vector() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Area2D_get_gravity_vector(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Area2D_get_gravity_vector(swigCPtr);
     return ret;
-  }
+}
 
   public void set_gravity(float gravity) {
     GodotEnginePINVOKE.Area2D_set_gravity(swigCPtr, gravity);

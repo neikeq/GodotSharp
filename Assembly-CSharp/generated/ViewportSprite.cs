@@ -63,14 +63,14 @@ public class ViewportSprite : Node2D {
   }
 
   public void set_offset(Vector2 offset) {
-    GodotEnginePINVOKE.ViewportSprite_set_offset(swigCPtr, Vector2.getCPtr(offset));
+    GodotEnginePINVOKE.ViewportSprite_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ViewportSprite_get_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ViewportSprite_get_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_modulate(SWIGTYPE_p_Color modulate) {
     GodotEnginePINVOKE.ViewportSprite_set_modulate(swigCPtr, SWIGTYPE_p_Color.getCPtr(modulate));

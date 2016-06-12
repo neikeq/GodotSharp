@@ -53,10 +53,9 @@ public class EditorScript : Reference {
 
   public Object get_scene() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorScript_get_scene(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

@@ -71,6 +71,12 @@ public:
     }
   }
   %extend {
+    Array get_actions() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_actions");
+    }
+  }
+  %extend {
     void add_action(const String& action) {
   Object* self_obj = static_cast<Object*>($self);
   self_obj->call("add_action", action);

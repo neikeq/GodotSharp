@@ -62,22 +62,21 @@ public class Light2D : Node2D {
 
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Light2D_get_texture(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 
   public void set_texture_offset(Vector2 texture_offset) {
-    GodotEnginePINVOKE.Light2D_set_texture_offset(swigCPtr, Vector2.getCPtr(texture_offset));
+    GodotEnginePINVOKE.Light2D_set_texture_offset(swigCPtr, ref texture_offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_texture_offset() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Light2D_get_texture_offset(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Light2D_get_texture_offset(swigCPtr);
     return ret;
-  }
+}
 
   public void set_color(SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.Light2D_set_color(swigCPtr, SWIGTYPE_p_Color.getCPtr(color));

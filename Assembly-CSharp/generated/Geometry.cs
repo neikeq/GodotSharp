@@ -9,6 +9,7 @@
 namespace GodotEngine {
 
 public class Geometry : Object {
+  private static Geometry instance;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -38,6 +39,15 @@ public class Geometry : Object {
       }
       global::System.GC.SuppressFinalize(this);
       base.Dispose();
+    }
+  }
+
+  public static Geometry Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
     }
   }
 
@@ -71,18 +81,18 @@ public class Geometry : Object {
   }
 
   public float segment_intersects_circle(Vector2 segment_from, Vector2 segment_to, Vector2 circle_pos, float circle_radius) {
-    float ret = GodotEnginePINVOKE.Geometry_segment_intersects_circle(swigCPtr, Vector2.getCPtr(segment_from), Vector2.getCPtr(segment_to), Vector2.getCPtr(circle_pos), circle_radius);
+    float ret = GodotEnginePINVOKE.Geometry_segment_intersects_circle(swigCPtr, ref segment_from, ref segment_to, ref circle_pos, circle_radius);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public void segment_intersects_segment_2d(Vector2 from_a, Vector2 to_a, Vector2 from_b, Vector2 to_b) {
-    GodotEnginePINVOKE.Geometry_segment_intersects_segment_2d(swigCPtr, Vector2.getCPtr(from_a), Vector2.getCPtr(to_a), Vector2.getCPtr(from_b), Vector2.getCPtr(to_b));
+    GodotEnginePINVOKE.Geometry_segment_intersects_segment_2d(swigCPtr, ref from_a, ref to_a, ref from_b, ref to_b);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public SWIGTYPE_p_Vector2Array get_closest_points_between_segments_2d(Vector2 p1, Vector2 q1, Vector2 p2, Vector2 q2) {
-    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Geometry_get_closest_points_between_segments_2d(swigCPtr, Vector2.getCPtr(p1), Vector2.getCPtr(q1), Vector2.getCPtr(p2), Vector2.getCPtr(q2)), true);
+    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Geometry_get_closest_points_between_segments_2d(swigCPtr, ref p1, ref q1, ref p2, ref q2), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -134,7 +144,7 @@ public class Geometry : Object {
   }
 
   public bool point_is_inside_triangle(Vector2 point, Vector2 a, Vector2 b, Vector2 c) {
-    bool ret = GodotEnginePINVOKE.Geometry_point_is_inside_triangle(swigCPtr, Vector2.getCPtr(point), Vector2.getCPtr(a), Vector2.getCPtr(b), Vector2.getCPtr(c));
+    bool ret = GodotEnginePINVOKE.Geometry_point_is_inside_triangle(swigCPtr, ref point, ref a, ref b, ref c);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -148,6 +158,12 @@ public class Geometry : Object {
   public SWIGTYPE_p_Dictionary make_atlas(SWIGTYPE_p_Vector2Array sizes) {
     SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Geometry_make_atlas(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(sizes)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  private static Geometry SingletonGetInstance() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Geometry_SingletonGetInstance();
+    Geometry ret = (cPtr == global::System.IntPtr.Zero) ? null : new Geometry(cPtr, false);
     return ret;
   }
 

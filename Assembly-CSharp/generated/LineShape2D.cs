@@ -44,14 +44,14 @@ public class LineShape2D : Shape2D {
 
 
   public void set_normal(Vector2 normal) {
-    GodotEnginePINVOKE.LineShape2D_set_normal(swigCPtr, Vector2.getCPtr(normal));
+    GodotEnginePINVOKE.LineShape2D_set_normal(swigCPtr, ref normal);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_normal() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.LineShape2D_get_normal(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.LineShape2D_get_normal(swigCPtr);
     return ret;
-  }
+}
 
   public void set_d(float d) {
     GodotEnginePINVOKE.LineShape2D_set_d(swigCPtr, d);

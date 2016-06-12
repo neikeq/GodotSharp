@@ -116,5 +116,29 @@ public:
   return self_obj->call("get_draw_mode");
     }
   }
+  %extend {
+    void set_enabled_focus_mode(int mode) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_enabled_focus_mode", mode);
+    }
+  }
+  %extend {
+    int get_enabled_focus_mode() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_enabled_focus_mode");
+    }
+  }
+  %extend {
+    void set_shortcut(Object* shortcut) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_shortcut", shortcut);
+    }
+  }
+  %extend {
+    Object* get_shortcut() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_shortcut").operator Object *();
+    }
+  }
 
 };

@@ -74,10 +74,9 @@ public class SpinBox : Range {
 
   public Object get_line_edit() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SpinBox_get_line_edit(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

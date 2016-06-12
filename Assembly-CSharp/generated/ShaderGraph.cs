@@ -165,14 +165,14 @@ public class ShaderGraph : Shader {
   }
 
   public void node_set_pos(int shader_type, int id, Vector2 pos) {
-    GodotEnginePINVOKE.ShaderGraph_node_set_pos(swigCPtr, shader_type, id, Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.ShaderGraph_node_set_pos(swigCPtr, shader_type, id, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 node_get_pos(int shader_type, int id) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ShaderGraph_node_get_pos(swigCPtr, shader_type, id), true);
+    Vector2 ret = GodotEnginePINVOKE.ShaderGraph_node_get_pos(swigCPtr, shader_type, id);
     return ret;
-  }
+}
 
   public int node_get_type(int shader_type, int id) {
     int ret = GodotEnginePINVOKE.ShaderGraph_node_get_type(swigCPtr, shader_type, id);

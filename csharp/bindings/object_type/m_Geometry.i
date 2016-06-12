@@ -2,9 +2,12 @@
 %module m_Geometry
 
 %rename(Geometry) _Geometry;
+%csmethodmodifiers _Geometry::_Geometry "private"
+%csmethodmodifiers _Geometry::SingletonGetInstance "private"
 %nodefaultctor _Geometry;
 
 %typemap(csbody_derived) _Geometry %{
+  private static $csclassname instance;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -25,6 +28,15 @@
 %}
 
 %typemap(cscode) _Geometry %{
+  public static $csclassname Instance {
+    get {
+      if (instance == null) {
+        instance = SingletonGetInstance();
+      }
+      return instance;
+    }
+  }
+
   internal $csclassname() {}
 
 %}
@@ -142,6 +154,9 @@ public:
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("make_atlas", sizes);
     }
+  }
+  %extend {
+    static _Geometry* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Geometry")->cast_to<_Geometry>(); }
   }
 
 };

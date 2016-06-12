@@ -58,25 +58,25 @@ public class Physics2DShapeQueryParameters : Reference {
     return ret;
   }
 
-  public void set_transform(SWIGTYPE_p_Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_transform(swigCPtr, SWIGTYPE_p_Matrix32.getCPtr(transform));
+  public void set_transform(Matrix32 transform) {
+    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_transform(swigCPtr, ref transform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_transform(swigCPtr), true);
+  public Matrix32 get_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_transform(swigCPtr));
     return ret;
-  }
+}
 
   public void set_motion(Vector2 motion) {
-    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_motion(swigCPtr, Vector2.getCPtr(motion));
+    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_motion(swigCPtr, ref motion);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_motion() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_motion(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_motion(swigCPtr);
     return ret;
-  }
+}
 
   public void set_margin(float margin) {
     GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_margin(swigCPtr, margin);

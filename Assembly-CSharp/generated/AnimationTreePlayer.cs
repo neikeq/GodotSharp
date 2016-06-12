@@ -230,15 +230,15 @@ public class AnimationTreePlayer : Node {
   }
 
   public void blend4_node_set_amount(string id, Vector2 blend) {
-    GodotEnginePINVOKE.AnimationTreePlayer_blend4_node_set_amount(swigCPtr, id, Vector2.getCPtr(blend));
+    GodotEnginePINVOKE.AnimationTreePlayer_blend4_node_set_amount(swigCPtr, id, ref blend);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 blend4_node_get_amount(string id) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.AnimationTreePlayer_blend4_node_get_amount(swigCPtr, id), true);
+    Vector2 ret = GodotEnginePINVOKE.AnimationTreePlayer_blend4_node_get_amount(swigCPtr, id);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void timescale_node_set_scale(string id, float scale) {
     GodotEnginePINVOKE.AnimationTreePlayer_timescale_node_set_scale(swigCPtr, id, scale);
@@ -306,15 +306,15 @@ public class AnimationTreePlayer : Node {
   }
 
   public void node_set_pos(string id, Vector2 screen_pos) {
-    GodotEnginePINVOKE.AnimationTreePlayer_node_set_pos(swigCPtr, id, Vector2.getCPtr(screen_pos));
+    GodotEnginePINVOKE.AnimationTreePlayer_node_set_pos(swigCPtr, id, ref screen_pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 node_get_pos(string id) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.AnimationTreePlayer_node_get_pos(swigCPtr, id), true);
+    Vector2 ret = GodotEnginePINVOKE.AnimationTreePlayer_node_get_pos(swigCPtr, id);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void remove_node(string id) {
     GodotEnginePINVOKE.AnimationTreePlayer_remove_node(swigCPtr, id);

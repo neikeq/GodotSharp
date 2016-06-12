@@ -48,8 +48,36 @@ public class AnimatedSprite3D : SpriteBase3D {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_sprite_frames() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.AnimatedSprite3D_get_sprite_frames(swigCPtr), true);
+  public SWIGTYPE_p_RefT_SpriteFrames_t get_sprite_frames() {
+    SWIGTYPE_p_RefT_SpriteFrames_t ret = new SWIGTYPE_p_RefT_SpriteFrames_t(GodotEnginePINVOKE.AnimatedSprite3D_get_sprite_frames(swigCPtr), true);
+    return ret;
+  }
+
+  public void set_animation(string animation) {
+    GodotEnginePINVOKE.AnimatedSprite3D_set_animation(swigCPtr, animation);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public string get_animation() {
+    string ret = GodotEnginePINVOKE.AnimatedSprite3D_get_animation(swigCPtr);
+    return ret;
+  }
+
+  public void play(string anim) {
+    GodotEnginePINVOKE.AnimatedSprite3D_play__SWIG_0(swigCPtr, anim);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void play() {
+    GodotEnginePINVOKE.AnimatedSprite3D_play__SWIG_1(swigCPtr);
+  }
+
+  public void stop() {
+    GodotEnginePINVOKE.AnimatedSprite3D_stop(swigCPtr);
+  }
+
+  public bool is_playing() {
+    bool ret = GodotEnginePINVOKE.AnimatedSprite3D_is_playing(swigCPtr);
     return ret;
   }
 

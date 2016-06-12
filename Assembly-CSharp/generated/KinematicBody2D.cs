@@ -44,27 +44,27 @@ public class KinematicBody2D : PhysicsBody2D {
 
 
   public Vector2 move(Vector2 rel_vec) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.KinematicBody2D_move(swigCPtr, Vector2.getCPtr(rel_vec)), true);
+    Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_move(swigCPtr, ref rel_vec);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public Vector2 move_to(Vector2 position) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.KinematicBody2D_move_to(swigCPtr, Vector2.getCPtr(position)), true);
+    Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_move_to(swigCPtr, ref position);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool test_move(Vector2 rel_vec) {
-    bool ret = GodotEnginePINVOKE.KinematicBody2D_test_move(swigCPtr, Vector2.getCPtr(rel_vec));
+    bool ret = GodotEnginePINVOKE.KinematicBody2D_test_move(swigCPtr, ref rel_vec);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Vector2 get_travel() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.KinematicBody2D_get_travel(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_get_travel(swigCPtr);
     return ret;
-  }
+}
 
   public void revert_motion() {
     GodotEnginePINVOKE.KinematicBody2D_revert_motion(swigCPtr);
@@ -76,26 +76,25 @@ public class KinematicBody2D : PhysicsBody2D {
   }
 
   public Vector2 get_collision_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.KinematicBody2D_get_collision_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_get_collision_pos(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_collision_normal() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.KinematicBody2D_get_collision_normal(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_get_collision_normal(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_collider_velocity() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.KinematicBody2D_get_collider_velocity(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_get_collider_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.KinematicBody2D_get_collider(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

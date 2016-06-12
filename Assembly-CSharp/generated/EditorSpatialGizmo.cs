@@ -63,7 +63,7 @@ public class EditorSpatialGizmo : SpatialGizmo {
   }
 
   public void set_handle(int index, Camera camera, Vector2 point) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_set_handle(swigCPtr, index, Camera.getCPtr(camera), Vector2.getCPtr(point));
+    GodotEnginePINVOKE.EditorSpatialGizmo_set_handle(swigCPtr, index, Camera.getCPtr(camera), ref point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

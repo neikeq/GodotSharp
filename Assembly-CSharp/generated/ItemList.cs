@@ -238,24 +238,24 @@ public class ItemList : Control {
   }
 
   public void set_min_icon_size(Vector2 size) {
-    GodotEnginePINVOKE.ItemList_set_min_icon_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.ItemList_set_min_icon_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_min_icon_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ItemList_get_min_icon_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ItemList_get_min_icon_size(swigCPtr);
     return ret;
-  }
+}
 
   public void set_max_icon_size(Vector2 size) {
-    GodotEnginePINVOKE.ItemList_set_max_icon_size(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.ItemList_set_max_icon_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Vector2 get_max_icon_size() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.ItemList_get_max_icon_size(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.ItemList_get_max_icon_size(swigCPtr);
     return ret;
-  }
+}
 
   public void set_icon_scale(float scale) {
     GodotEnginePINVOKE.ItemList_set_icon_scale(swigCPtr, scale);
@@ -276,13 +276,13 @@ public class ItemList : Control {
   }
 
   public int get_item_at_pos(Vector2 pos, bool exact) {
-    int ret = GodotEnginePINVOKE.ItemList_get_item_at_pos__SWIG_0(swigCPtr, Vector2.getCPtr(pos), exact);
+    int ret = GodotEnginePINVOKE.ItemList_get_item_at_pos__SWIG_0(swigCPtr, ref pos, exact);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public int get_item_at_pos(Vector2 pos) {
-    int ret = GodotEnginePINVOKE.ItemList_get_item_at_pos__SWIG_1(swigCPtr, Vector2.getCPtr(pos));
+    int ret = GodotEnginePINVOKE.ItemList_get_item_at_pos__SWIG_1(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

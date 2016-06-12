@@ -43,20 +43,20 @@ public class Navigation2D : Node2D {
 
 
 
-  public int navpoly_create(SWIGTYPE_p_RefT_NavigationPolygon_t mesh, SWIGTYPE_p_Matrix32 xform, Object owner) {
-    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(mesh), SWIGTYPE_p_Matrix32.getCPtr(xform), Object.getCPtr(owner));
+  public int navpoly_create(SWIGTYPE_p_RefT_NavigationPolygon_t mesh, Matrix32 xform, Object owner) {
+    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(mesh), ref xform.elements, Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int navpoly_create(SWIGTYPE_p_RefT_NavigationPolygon_t mesh, SWIGTYPE_p_Matrix32 xform) {
-    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(mesh), SWIGTYPE_p_Matrix32.getCPtr(xform));
+  public int navpoly_create(SWIGTYPE_p_RefT_NavigationPolygon_t mesh, Matrix32 xform) {
+    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(mesh), ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public void navpoly_set_transform(int id, SWIGTYPE_p_Matrix32 xform) {
-    GodotEnginePINVOKE.Navigation2D_navpoly_set_transform(swigCPtr, id, SWIGTYPE_p_Matrix32.getCPtr(xform));
+  public void navpoly_set_transform(int id, Matrix32 xform) {
+    GodotEnginePINVOKE.Navigation2D_navpoly_set_transform(swigCPtr, id, ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -65,29 +65,28 @@ public class Navigation2D : Node2D {
   }
 
   public SWIGTYPE_p_Vector2Array get_simple_path(Vector2 start, Vector2 end, bool optimize) {
-    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Navigation2D_get_simple_path__SWIG_0(swigCPtr, Vector2.getCPtr(start), Vector2.getCPtr(end), optimize), true);
+    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Navigation2D_get_simple_path__SWIG_0(swigCPtr, ref start, ref end, optimize), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Vector2Array get_simple_path(Vector2 start, Vector2 end) {
-    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Navigation2D_get_simple_path__SWIG_1(swigCPtr, Vector2.getCPtr(start), Vector2.getCPtr(end)), true);
+    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Navigation2D_get_simple_path__SWIG_1(swigCPtr, ref start, ref end), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Vector2 get_closest_point(Vector2 to_point) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Navigation2D_get_closest_point(swigCPtr, Vector2.getCPtr(to_point)), true);
+    Vector2 ret = GodotEnginePINVOKE.Navigation2D_get_closest_point(swigCPtr, ref to_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public Object get_closest_point_owner(Vector2 to_point) {
-    global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation2D_get_closest_point_owner(swigCPtr, Vector2.getCPtr(to_point));
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation2D_get_closest_point_owner(swigCPtr, ref to_point);
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

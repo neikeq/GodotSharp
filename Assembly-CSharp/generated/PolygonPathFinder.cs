@@ -49,25 +49,25 @@ public class PolygonPathFinder : Resource {
   }
 
   public SWIGTYPE_p_Vector2Array find_path(Vector2 from, Vector2 to) {
-    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.PolygonPathFinder_find_path(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to)), true);
+    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.PolygonPathFinder_find_path(swigCPtr, ref from, ref to), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public SWIGTYPE_p_Vector2Array get_intersections(Vector2 from, Vector2 to) {
-    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.PolygonPathFinder_get_intersections(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to)), true);
+    SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.PolygonPathFinder_get_intersections(swigCPtr, ref from, ref to), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Vector2 get_closest_point(Vector2 point) {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.PolygonPathFinder_get_closest_point(swigCPtr, Vector2.getCPtr(point)), true);
+    Vector2 ret = GodotEnginePINVOKE.PolygonPathFinder_get_closest_point(swigCPtr, ref point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool is_point_inside(Vector2 point) {
-    bool ret = GodotEnginePINVOKE.PolygonPathFinder_is_point_inside(swigCPtr, Vector2.getCPtr(point));
+    bool ret = GodotEnginePINVOKE.PolygonPathFinder_is_point_inside(swigCPtr, ref point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

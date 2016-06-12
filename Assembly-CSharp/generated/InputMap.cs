@@ -71,6 +71,11 @@ public class InputMap : Object {
     return ret;
   }
 
+  public SWIGTYPE_p_Array get_actions() {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.InputMap_get_actions(swigCPtr), true);
+    return ret;
+  }
+
   public void add_action(string action) {
     GodotEnginePINVOKE.InputMap_add_action(swigCPtr, action);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();

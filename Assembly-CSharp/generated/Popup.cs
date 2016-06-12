@@ -46,7 +46,7 @@ public class Popup : Control {
 
 
   public void popup_centered(Vector2 size) {
-    GodotEnginePINVOKE.Popup_popup_centered__SWIG_0(swigCPtr, Vector2.getCPtr(size));
+    GodotEnginePINVOKE.Popup_popup_centered__SWIG_0(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -63,7 +63,7 @@ public class Popup : Control {
   }
 
   public void popup_centered_minsize(Vector2 minsize) {
-    GodotEnginePINVOKE.Popup_popup_centered_minsize__SWIG_0(swigCPtr, Vector2.getCPtr(minsize));
+    GodotEnginePINVOKE.Popup_popup_centered_minsize__SWIG_0(swigCPtr, ref minsize);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

@@ -83,10 +83,9 @@ public class KinematicBody : PhysicsBody {
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.KinematicBody_get_collider(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

@@ -44,29 +44,29 @@ public class Physics2DTestMotionResult : Reference {
 
 
   public Vector2 get_motion() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Physics2DTestMotionResult_get_motion(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_motion(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_motion_remainder() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Physics2DTestMotionResult_get_motion_remainder(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_motion_remainder(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_collision_point() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Physics2DTestMotionResult_get_collision_point(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collision_point(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_collision_normal() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Physics2DTestMotionResult_get_collision_normal(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collision_normal(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_collider_velocity() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.Physics2DTestMotionResult_get_collider_velocity(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collider_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public int get_collider_id() {
     int ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collider_id(swigCPtr);
@@ -80,10 +80,9 @@ public class Physics2DTestMotionResult : Reference {
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collider(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

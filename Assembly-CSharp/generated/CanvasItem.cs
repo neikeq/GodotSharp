@@ -167,12 +167,12 @@ public class CanvasItem : Node {
   }
 
   public void draw_line(Vector2 from, Vector2 to, SWIGTYPE_p_Color color, float width) {
-    GodotEnginePINVOKE.CanvasItem_draw_line__SWIG_0(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to), SWIGTYPE_p_Color.getCPtr(color), width);
+    GodotEnginePINVOKE.CanvasItem_draw_line__SWIG_0(swigCPtr, ref from, ref to, SWIGTYPE_p_Color.getCPtr(color), width);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw_line(Vector2 from, Vector2 to, SWIGTYPE_p_Color color) {
-    GodotEnginePINVOKE.CanvasItem_draw_line__SWIG_1(swigCPtr, Vector2.getCPtr(from), Vector2.getCPtr(to), SWIGTYPE_p_Color.getCPtr(color));
+    GodotEnginePINVOKE.CanvasItem_draw_line__SWIG_1(swigCPtr, ref from, ref to, SWIGTYPE_p_Color.getCPtr(color));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -182,17 +182,17 @@ public class CanvasItem : Node {
   }
 
   public void draw_circle(Vector2 pos, float radius, SWIGTYPE_p_Color color) {
-    GodotEnginePINVOKE.CanvasItem_draw_circle(swigCPtr, Vector2.getCPtr(pos), radius, SWIGTYPE_p_Color.getCPtr(color));
+    GodotEnginePINVOKE.CanvasItem_draw_circle(swigCPtr, ref pos, radius, SWIGTYPE_p_Color.getCPtr(color));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw_texture(SWIGTYPE_p_RefT_Texture_t texture, Vector2 pos, SWIGTYPE_p_Color modulate) {
-    GodotEnginePINVOKE.CanvasItem_draw_texture__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), Vector2.getCPtr(pos), SWIGTYPE_p_Color.getCPtr(modulate));
+    GodotEnginePINVOKE.CanvasItem_draw_texture__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), ref pos, SWIGTYPE_p_Color.getCPtr(modulate));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw_texture(SWIGTYPE_p_RefT_Texture_t texture, Vector2 pos) {
-    GodotEnginePINVOKE.CanvasItem_draw_texture__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), Vector2.getCPtr(pos));
+    GodotEnginePINVOKE.CanvasItem_draw_texture__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -277,76 +277,76 @@ public class CanvasItem : Node {
   }
 
   public void draw_string(SWIGTYPE_p_RefT_Font_t font, Vector2 pos, string text, SWIGTYPE_p_Color modulate, int clip_w) {
-    GodotEnginePINVOKE.CanvasItem_draw_string__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), Vector2.getCPtr(pos), text, SWIGTYPE_p_Color.getCPtr(modulate), clip_w);
+    GodotEnginePINVOKE.CanvasItem_draw_string__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), ref pos, text, SWIGTYPE_p_Color.getCPtr(modulate), clip_w);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw_string(SWIGTYPE_p_RefT_Font_t font, Vector2 pos, string text, SWIGTYPE_p_Color modulate) {
-    GodotEnginePINVOKE.CanvasItem_draw_string__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), Vector2.getCPtr(pos), text, SWIGTYPE_p_Color.getCPtr(modulate));
+    GodotEnginePINVOKE.CanvasItem_draw_string__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), ref pos, text, SWIGTYPE_p_Color.getCPtr(modulate));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void draw_string(SWIGTYPE_p_RefT_Font_t font, Vector2 pos, string text) {
-    GodotEnginePINVOKE.CanvasItem_draw_string__SWIG_2(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), Vector2.getCPtr(pos), text);
+    GodotEnginePINVOKE.CanvasItem_draw_string__SWIG_2(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), ref pos, text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public float draw_char(SWIGTYPE_p_RefT_Font_t font, Vector2 pos, string char_, string next, SWIGTYPE_p_Color modulate) {
-    float ret = GodotEnginePINVOKE.CanvasItem_draw_char__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), Vector2.getCPtr(pos), char_, next, SWIGTYPE_p_Color.getCPtr(modulate));
+    float ret = GodotEnginePINVOKE.CanvasItem_draw_char__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), ref pos, char_, next, SWIGTYPE_p_Color.getCPtr(modulate));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public float draw_char(SWIGTYPE_p_RefT_Font_t font, Vector2 pos, string char_, string next) {
-    float ret = GodotEnginePINVOKE.CanvasItem_draw_char__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), Vector2.getCPtr(pos), char_, next);
+    float ret = GodotEnginePINVOKE.CanvasItem_draw_char__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Font_t.getCPtr(font), ref pos, char_, next);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public void draw_set_transform(Vector2 pos, float rot, Vector2 scale) {
-    GodotEnginePINVOKE.CanvasItem_draw_set_transform(swigCPtr, Vector2.getCPtr(pos), rot, Vector2.getCPtr(scale));
+    GodotEnginePINVOKE.CanvasItem_draw_set_transform(swigCPtr, ref pos, rot, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Matrix32 get_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CanvasItem_get_transform(swigCPtr), true);
+  public Matrix32 get_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasItem_get_transform(swigCPtr));
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Matrix32 get_global_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CanvasItem_get_global_transform(swigCPtr), true);
+  public Matrix32 get_global_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasItem_get_global_transform(swigCPtr));
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Matrix32 get_global_transform_with_canvas() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CanvasItem_get_global_transform_with_canvas(swigCPtr), true);
+  public Matrix32 get_global_transform_with_canvas() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasItem_get_global_transform_with_canvas(swigCPtr));
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Matrix32 get_viewport_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CanvasItem_get_viewport_transform(swigCPtr), true);
+  public Matrix32 get_viewport_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasItem_get_viewport_transform(swigCPtr));
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Rect2 get_viewport_rect() {
     SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.CanvasItem_get_viewport_rect(swigCPtr), true);
     return ret;
   }
 
-  public SWIGTYPE_p_Matrix32 get_canvas_transform() {
-    SWIGTYPE_p_Matrix32 ret = new SWIGTYPE_p_Matrix32(GodotEnginePINVOKE.CanvasItem_get_canvas_transform(swigCPtr), true);
+  public Matrix32 get_canvas_transform() {
+    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasItem_get_canvas_transform(swigCPtr));
     return ret;
-  }
+}
 
   public Vector2 get_local_mouse_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.CanvasItem_get_local_mouse_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.CanvasItem_get_local_mouse_pos(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_global_mouse_pos() {
-    Vector2 ret = new Vector2(GodotEnginePINVOKE.CanvasItem_get_global_mouse_pos(swigCPtr), true);
+    Vector2 ret = GodotEnginePINVOKE.CanvasItem_get_global_mouse_pos(swigCPtr);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_RID get_canvas() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.CanvasItem_get_canvas(swigCPtr), true);
@@ -355,10 +355,9 @@ public class CanvasItem : Node {
 
   public Object get_world_2d() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.CanvasItem_get_world_2d(swigCPtr);
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr);
-    if (ret == null) {
-      ret = new Object(cPtr, false);
-    }
+    if (cPtr == global::System.IntPtr.Zero)
+    	return null;
+    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
 

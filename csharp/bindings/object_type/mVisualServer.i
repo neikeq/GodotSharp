@@ -1043,9 +1043,16 @@ $self->call("canvas_item_add_texture_rect_region", (const Variant **) args_, 6, 
     }
   }
   %extend {
-    void canvas_item_add_style_box(const RID& arg0_, const Rect2& arg1_, const RID& arg2_, const RealArray& arg3_, const Color& arg4_ = Color(1,1,1,1)) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("canvas_item_add_style_box", arg0_, arg1_, arg2_, arg3_, arg4_);
+    void canvas_item_add_style_box(const RID& arg0_, const Rect2& arg1_, const Rect2& arg2_, const RID& arg3_, const RealArray& arg4_, const Color& arg5_ = Color(1,1,1,1)) {
+  Variant::CallError err;
+Variant arg_0_ = Variant(arg0_);
+Variant arg_1_ = Variant(arg1_);
+Variant arg_2_ = Variant(arg2_);
+Variant arg_3_ = Variant(arg3_);
+Variant arg_4_ = Variant(arg4_);
+Variant arg_5_ = Variant(arg5_);
+Variant *args_[6] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_ };
+$self->call("canvas_item_add_style_box", (const Variant **) args_, 6, err);
     }
   }
   %extend {
