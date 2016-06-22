@@ -31,6 +31,7 @@
 #include <mono/metadata/threads.h>
 
 #include "mono_utils.h"
+#include "core/globals.h"
 #include "os/file_access.h"
 #include "os/os.h"
 #include "os/thread.h"
@@ -394,11 +395,30 @@ MonoObject *CSharpInstance::get_mono_object() const
 	return gchandle->get_object();
 }
 
+void CSharpInstance::mono_object_disposed()
+{
+	if (!base_ref)
+		return;
+
+	Reference *ref_owner = owner->cast_to<Reference>();
+
+	if (ref_owner->reference_get_count() == 0) {
+		//gchandle->release(); // make sure it's released
+		memdelete(ref_owner);
+		owner = NULL;
+	}
+}
+
 bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 {
 	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
 	if (field) {
-		mono_field_set_from_variant(get_mono_object(), field, &p_value);
+		MonoObject *mono_object = get_mono_object();
+
+		ERR_EXPLAIN("Reference has been garbage collected?");
+		ERR_FAIL_COND_V(!mono_object, false);
+
+		mono_field_set_from_variant(mono_object, field, &p_value);
 	}
 
 	// TODO _set call must be multilevel
@@ -417,7 +437,13 @@ bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const
 {
 	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
 	if (field) {
-		MonoObject *value = mono_field_get_value_object(mono_domain_get(), field, get_mono_object());
+
+		MonoObject *mono_object = get_mono_object();
+
+		ERR_EXPLAIN("Reference has been garbage collected?");
+		ERR_FAIL_COND_V(!mono_object, false);
+
+		MonoObject *value = mono_field_get_value_object(mono_domain_get(), field, mono_object);
 		r_ret = managed_to_variant(value, mono_field_get_type(field));
 		return true;
 	}
@@ -464,6 +490,11 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 
 Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) const
 {
+	MonoObject *mono_object = get_mono_object();
+
+	ERR_EXPLAIN("Reference has been garbage collected?");
+	ERR_FAIL_COND_V(!mono_object, Variant());
+
 	if (!script.ptr())
 		return Variant();
 
@@ -488,7 +519,7 @@ Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p
 			}
 
 			MonoObject *exc = NULL;
-			MonoObject *result = mono_runtime_invoke_array(method, get_mono_object(), args, &exc);
+			MonoObject *result = mono_runtime_invoke_array(method, mono_object, args, &exc);
 
 			if (exc) {
 				mono_print_unhandled_exception(exc);
@@ -530,6 +561,48 @@ void CSharpInstance::call_multilevel_reversed(const StringName &p_method, const 
 	}
 }
 
+void CSharpInstance::refcount_incremented()
+{
+	if (!base_ref)
+		return;
+
+	Reference *ref_owner = owner->cast_to<Reference>();
+
+	if (holding_ref) {
+		// The reference count was increased after the managed side was holding the reference,
+		// so the reference must hold the managed side again to avoid it being GCed.
+
+		// Release the current weak handle and create a strong one.
+		Ref<CSharpGCHandle> strong_gchandle = memnew(CSharpGCHandle(gchandle->get_object()));
+		gchandle->release();
+		gchandle = strong_gchandle;
+		ref_owner->set_meta("__mono_gchandle__", gchandle);
+		holding_ref = false;
+	}
+}
+
+bool CSharpInstance::refcount_decremented()
+{
+	if (!base_ref)
+		return false;
+
+	Reference *ref_owner = owner->cast_to<Reference>();
+
+	if (ref_owner->reference_get_count() == 0) {
+		// If the unmanaged reference is no longer referenced in the unmanaged world,
+		// the managed side takes responsibility of deleting it when the managed side is GCed.
+
+		// Release the current strong handle and create a weak one.
+		Ref<CSharpGCHandle> weak_gchandle = memnew(CSharpGCHandle(gchandle->get_object(), true));
+		gchandle->release();
+		gchandle = weak_gchandle;
+		ref_owner->set_meta("__mono_gchandle__", gchandle);
+		holding_ref = true;
+	}
+
+	return false;
+}
+
 void CSharpInstance::notification(int p_notification)
 {
 	Variant value = p_notification;
@@ -552,6 +625,7 @@ CSharpInstance::CSharpInstance()
 {
 	owner = NULL;
 	base_ref = false;
+	holding_ref = false;
 }
 
 CSharpInstance::~CSharpInstance()
@@ -647,7 +721,9 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 
 void CSharpScript::_resource_path_changed()
 {
-	name = get_path().basename().get_file();
+	if (!builtin) {
+		name = get_path().basename().get_file();
+	}
 }
 
 bool CSharpScript::can_instance() const
@@ -667,6 +743,17 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 {
 	if (!script_class)
 		return NULL;
+
+	if (p_this->has_meta("__mono_gchandle__")) {
+		CSharpInstance* instance = memnew( CSharpInstance );
+		instance->base_ref = p_this->cast_to<Reference>();
+		instance->script = Ref<CSharpScript>(this);
+		instance->owner = p_this;
+		instance->owner->set_script_instance(instance);
+		instance->gchandle = p_this->get_meta("__mono_gchandle__");
+
+		return instance;
+	}
 
 	if (!tool && !ScriptServer::is_scripting_enabled()) {
 #ifdef TOOLS_ENABLED
@@ -766,7 +853,7 @@ Error CSharpScript::reload()
 		/* Currently the class needs to be in the global namespace.
 		 * A possible workaround to allow script classes inside namespaces
 		 * could be to iterate through all the assembly namespaces
-		 * until we find the class with the name we look for.
+		 * until we find the class with the name we are looking for.
 		 */
 		script_class = mono_class_from_name(game_image, "", name.utf8());
 
@@ -824,7 +911,7 @@ String CSharpScript::get_script_name() const
 	return name;
 }
 
-CSharpScript::CSharpScript()
+void CSharpScript::_init()
 {
 	tool = false;
 
@@ -833,8 +920,22 @@ CSharpScript::CSharpScript()
 
 	native = NULL;
 	script_class = NULL;
+}
 
+CSharpScript::CSharpScript()
+{
+	_init();
+	builtin = false;
 	_resource_path_changed();
+}
+
+CSharpScript::CSharpScript(const String &p_class_name)
+{
+	// TODO I am not sure if this is the right way to make it work as a built-in script
+	_init();
+	builtin = true;
+	name = p_class_name;
+	reload();
 }
 
 /*************** RESOURCE ***************/

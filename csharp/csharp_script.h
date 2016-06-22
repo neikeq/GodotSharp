@@ -56,6 +56,8 @@ friend class CSharpLanguage;
 	/* TODO */ bool tool;
 	/* TODO */ bool valid;
 
+	bool builtin;
+
 	MonoClass *native;
 	MonoClass *script_class;
 #ifdef TOOLS_ENABLED
@@ -73,6 +75,8 @@ friend class CSharpLanguage;
 #endif
 
 	bool _update_exports();
+
+	void _init();
 
 protected:
 	Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
@@ -102,6 +106,7 @@ public:
 	/* TODO */ Error reload(bool p_keep_state) { return FAILED; }
 
 	CSharpScript();
+	CSharpScript(const String& p_class_name);
 };
 
 class CSharpInstance : public ScriptInstance
@@ -113,10 +118,14 @@ friend class CSharpLanguage;
 	Ref<CSharpGCHandle> gchandle;
 	bool base_ref;
 
+	bool holding_ref;
+
 	void _ml_call_reversed(MonoClass *clazz,const StringName& p_method,const Variant** p_args,int p_argcount);
 
 public:
 	MonoObject *get_mono_object() const;
+
+	void mono_object_disposed();
 
 	Variant call_const(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error) const;
 
@@ -130,6 +139,9 @@ public:
 	virtual Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
 	virtual void call_multilevel(const StringName &p_method, const Variant **p_args, int p_argcount);
 	virtual void call_multilevel_reversed(const StringName &p_method, const Variant **p_args, int p_argcount);
+
+	void refcount_incremented();
+	bool refcount_decremented();
 
 	virtual void notification(int p_notification);
 

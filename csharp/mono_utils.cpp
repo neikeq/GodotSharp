@@ -423,7 +423,10 @@ MonoObject *variant_to_managed_variant(MonoClass* vclass, const Variant* p_var)
 MonoObject *create_managed_for_unmanaged(MonoClass* p_class, MonoClass* p_native, Object* p_object)
 {
 	String native_name = mono_class_get_name(p_native);
-	if (!ObjectTypeDB::is_type(p_object->get_type_name(), native_name)) {
+	String object_type = p_object->get_type_name();
+	if (object_type.begins_with("_"))
+		object_type = object_type.substr(1, object_type.length());
+	if (!ObjectTypeDB::is_type(object_type, native_name)) {
 		ERR_EXPLAIN("Type inherits from native type '" + native_name + "', so it can't be instanced in object of type: '" + p_object->get_type() + "'");
 		ERR_FAIL_V(NULL);
 	}
@@ -445,7 +448,9 @@ MonoObject *create_managed_for_unmanaged(MonoClass* p_class, MonoClass* p_native
 	mono_runtime_object_init(mono_object);
 
 	// Tie managed to unmanaged
-	Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(mono_object)));
+	Reference *ref = p_object->cast_to<Reference>();
+	bool strong = !ref || (ref->get_script_instance() && dynamic_cast<CSharpInstance*>(ref->get_script_instance()));
+	Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(mono_object, !strong)));
 	p_object->set_meta("__mono_gchandle__", gchandle);
 
 	return mono_object;
@@ -465,6 +470,9 @@ MonoClass *mono_class_get_native_class(MonoClass *script_class)
 
 void mono_void_call(MonoClass *clazz, MonoObject *mono_object, const StringName &p_method, const Variant **p_args, int p_argcount)
 {
+	ERR_EXPLAIN("Reference has been garbage collected?");
+	ERR_FAIL_COND(!mono_object);
+
 	MonoMethod *method = mono_class_get_method_from_name(clazz, String(p_method).utf8(), p_argcount);
 
 	if (!method)
@@ -487,7 +495,6 @@ void mono_void_call(MonoClass *clazz, MonoObject *mono_object, const StringName 
 
 		MonoObject *exc = NULL;
 		mono_runtime_invoke_array(method, mono_object, args, &exc);
-
 		if (exc) {
 			mono_print_unhandled_exception(exc);
 		}
@@ -506,20 +513,34 @@ MonoObject *unmanaged_get_managed(void *unmanaged)
 	Object *object = (Object *) unmanaged;
 
 	if (object) {
+		Reference *ref = object->cast_to<Reference>();
+
 		ScriptInstance *script_instance = object->get_script_instance();
+
 		if (script_instance) {
 			CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>(script_instance);
-			if (cs_instance)
+
+			if (cs_instance) {
+				if (ref) {
+					// reference() was called previously to temporally avoid deleting the reference,
+					// but a reference declared in the managed world cannot reference the unmanaged side
+					// to avoid a circular reference. The script will take responsibility of deleting the
+					// unmanaged reference when the managed side gets GCed.
+					ref->unreference();
+				}
 				return cs_instance->get_mono_object();
+			}
 		}
 
 		if (object->has_meta("__mono_gchandle__")) {
 			Ref<CSharpGCHandle> gchandle = object->get_meta("__mono_gchandle__");
+
 			if (gchandle.is_valid())
 				return gchandle->get_object();
 		}
 
 		MonoClass *type_class = mono_class_from_unmanaged(object);
+
 		if (type_class)
 			return create_managed_for_unmanaged(type_class, type_class, object);
 	}
@@ -541,13 +562,32 @@ void tie_managed_to_unmanaged(MonoObject* managed, void *unmanaged)
 {
 	Object *object = (Object*) unmanaged;
 	if (object) {
-		Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(managed)));
+		Reference *ref = object->cast_to<Reference>();
+		//bool strong = !ref || (ref->get_script_instance() && dynamic_cast<CSharpInstance*>(ref->get_script_instance()));
+
+		Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(managed/*, !strong*/)));
 		object->set_meta("__mono_gchandle__", gchandle);
+
+		if (object->get_script().is_null()) {
+			// All C# objects whose state needs to be kept must has a C# script
+			String class_name = mono_class_get_name(mono_object_get_class(managed));
+			Ref<CSharpScript> script=memnew(CSharpScript(class_name));
+			object->set_script(script.get_ref_ptr());
+		}
+
+		//if (strong) {
+		if (ref) {
+			// reference() was called previously to temporally avoid deleting the reference,
+			// but a reference declared in the managed world cannot reference the unmanaged side
+			// to avoid a circular reference. The script will take responsibility of deleting the
+			// unmanaged reference when the managed side gets GCed.
+			ref->unreference();
+		}
 	}
 }
 
 void register_mono_internal_calls()
 {
 	mono_add_internal_call("GodotEngine.InternalHelpers::UnmanagedGetManaged(intptr)", (const void*)unmanaged_get_managed);
-	mono_add_internal_call("GodotEngine.InternalHelpers::TieManagedToUnmanaged(object, intptr)", (const void*)tie_managed_to_unmanaged);
+	mono_add_internal_call("GodotEngine.InternalHelpers::TieManagedToUnmanaged(object,intptr)", (const void*)tie_managed_to_unmanaged);
 }

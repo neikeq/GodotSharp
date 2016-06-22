@@ -31,19 +31,29 @@ MonoObject *CSharpGCHandle::get_object() const
 	return mono_gchandle_get_target(handle);
 }
 
-CSharpGCHandle::CSharpGCHandle(uint32_t p_handle)
+void CSharpGCHandle::release()
 {
-	handle = p_handle;
+	CSharpLanguage* script_lang = CSharpLanguage::get_singleton();
+
+	if (!released && script_lang && !script_lang->mono_jit_cleaned) {
+		mono_gchandle_free(handle);
+		released = true;
+	}
 }
 
-CSharpGCHandle::CSharpGCHandle(MonoObject *p_object)
+CSharpGCHandle::CSharpGCHandle(MonoObject *p_object, bool weak)
 {
-	handle = mono_gchandle_new(p_object, FALSE);
+	released = false;
+
+	if (weak) {
+		// track_resurrection must be TRUE to be able to call _notification(NOTIFICATION_PREDELETE) while disposing
+		handle = mono_gchandle_new_weakref(p_object, TRUE);
+	} else {
+		handle = mono_gchandle_new(p_object, TRUE);
+	}
 }
 
 CSharpGCHandle::~CSharpGCHandle()
 {
-	CSharpLanguage* script_lang = CSharpLanguage::get_singleton();
-	if (script_lang && !script_lang->mono_jit_cleaned)
-		mono_gchandle_free(handle);
+	release();
 }

@@ -458,6 +458,52 @@ static void generate_cs_interfaces(const String& p_output_path)
 			cs_code += "  internal $csclassname() {}\n";
 		}
 
+		bool is_ref = ObjectTypeDB::is_type(name, "Reference");
+
+		if (is_ref) {
+			definitions += "%typemap(ctype, out=\"%%TypeName%%*\") Ref<%%TypeName%%> \"%%TypeName%%*\"\n"
+					"%typemap(out, null=\"NULL\") Ref<%%TypeName%%> %{\n"
+					"  $result = $1.ptr();\n"
+					"  $result->reference();\n"
+					"%}\n"
+					"%typemap(csin) Ref<%%TypeName%%> \"%%TypeName%%.getCPtr($csinput)\"\n"
+					"%typemap(imtype, out=\"global::System.IntPtr\") Ref<%%TypeName%%> \"global::System.Runtime.InteropServices.HandleRef\"\n"
+					"%typemap(cstype) Ref<%%TypeName%%> \"%%TypeName%%\"\n"
+					"%typemap(csout, excode=SWIGEXCODE) Ref<%%TypeName%%> {\n"
+					"    global::System.IntPtr cPtr = $imcall;\n"
+					"    if (cPtr == global::System.IntPtr.Zero)\n"
+					"      return null;\n"
+					"    %%TypeName%% ret = InternalHelpers.UnmanagedGetManaged(cPtr) as %%TypeName%%;$excode\n"
+					"    return ret;\n"
+					"}\n\n"
+					"template<class %%TypeName%%> class Ref;"
+					"%template() Ref<%%TypeName%%>;\n"
+					"%feature(\"novaluewrapper\") Ref<%%TypeName%%>;\n\n";
+			cxx_public_members += "  %extend {\n"
+					"    ~%%TypeName%%() {\n"
+					"      if ($self->get_script_instance()) {\n"
+					"        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());\n"
+					"        if (cs_instance) {\n"
+					"          cs_instance->mono_object_disposed();\n"
+					"          return;\n"
+					"        }\n"
+					"      }\n"
+					"      if ($self->unreference()) {\n"
+					"        memdelete($self);\n"
+					"      }\n"
+					"    }\n"
+					"  }\n\n";
+		} else {
+			definitions += "%typemap(out) %%TypeName%% \"$result = memnew($1_ltype((const $1_ltype &)$1));\"\n"
+					"%typemap(csout, excode=SWIGEXCODE) %%TypeName%%* {\n"
+					"    global::System.IntPtr cPtr = $imcall;\n"
+					"    if (cPtr == global::System.IntPtr.Zero)\n"
+					"      return null;\n"
+					"    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode\n"
+					"    return ret;\n"
+					"  }\n\n";
+		}
+
 		// TODO It would be better to use C# enums... somehow
 		for(List<String>::Element *E = constant_list.front(); E; E = E->next()) {
 			cs_members += "  public static readonly int " + E->get() + " = " + itos(ObjectTypeDB::get_integer_constant(name, E->get())) + ";\n";
@@ -471,7 +517,7 @@ static void generate_cs_interfaces(const String& p_output_path)
 				.replace("%%TypeName%%", name)
 				.replace("%%ProxyTypeName%%", proxy_type_name)
 				.replace("%%TypeBaseName%%", inherits)
-				.replace("%%MemOwn%%", ObjectTypeDB::is_type(name, "Reference") ? "true" : "false");
+				.replace("%%MemOwn%%", is_ref ? "true" : "false");
 
 		String module_name = "m" + name + ".i";
 

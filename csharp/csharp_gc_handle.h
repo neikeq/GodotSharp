@@ -35,13 +35,15 @@ class CSharpGCHandle : public Reference
 {
 	OBJ_TYPE(CSharpGCHandle, Reference);
 
+	bool released;
 	uint32_t handle;
 
 public:
 	MonoObject* get_object() const;
 
-	CSharpGCHandle(uint32_t p_handle);
-	CSharpGCHandle(MonoObject* p_object);
+	void release();
+
+	CSharpGCHandle(MonoObject* p_object, bool weak=false);
 	~CSharpGCHandle();
 };
 
