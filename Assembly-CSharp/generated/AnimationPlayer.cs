@@ -45,8 +45,8 @@ public class AnimationPlayer : Node {
 
 
 
-  public int add_animation(string name, SWIGTYPE_p_RefT_Animation_t animation) {
-    int ret = GodotEnginePINVOKE.AnimationPlayer_add_animation(swigCPtr, name, SWIGTYPE_p_RefT_Animation_t.getCPtr(animation));
+  public int add_animation(string name, Animation animation) {
+    int ret = GodotEnginePINVOKE.AnimationPlayer_add_animation(swigCPtr, name, Animation.getCPtr(animation));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -67,11 +67,14 @@ public class AnimationPlayer : Node {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Animation_t get_animation(string name) {
-    SWIGTYPE_p_RefT_Animation_t ret = new SWIGTYPE_p_RefT_Animation_t(GodotEnginePINVOKE.AnimationPlayer_get_animation(swigCPtr, name), true);
+  public Animation get_animation(string name) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.AnimationPlayer_get_animation(swigCPtr, name);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Animation ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Animation;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public SWIGTYPE_p_StringArray get_animation_list() {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.AnimationPlayer_get_animation_list(swigCPtr), true);
@@ -234,8 +237,8 @@ public class AnimationPlayer : Node {
     return ret;
   }
 
-  public string find_animation(SWIGTYPE_p_RefT_Animation_t animation) {
-    string ret = GodotEnginePINVOKE.AnimationPlayer_find_animation(swigCPtr, SWIGTYPE_p_RefT_Animation_t.getCPtr(animation));
+  public string find_animation(Animation animation) {
+    string ret = GodotEnginePINVOKE.AnimationPlayer_find_animation(swigCPtr, Animation.getCPtr(animation));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

@@ -1,6 +1,25 @@
 /* mBitmapFont.i */
 %module mBitmapFont
 
+%typemap(ctype, out="BitmapFont*") Ref<BitmapFont> "BitmapFont*"
+%typemap(out, null="NULL") Ref<BitmapFont> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<BitmapFont> "BitmapFont.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<BitmapFont> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<BitmapFont> "BitmapFont"
+%typemap(csout, excode=SWIGEXCODE) Ref<BitmapFont> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BitmapFont ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BitmapFont;$excode
+    return ret;
+}
+
+template<class BitmapFont> class Ref;%template() Ref<BitmapFont>;
+%feature("novaluewrapper") Ref<BitmapFont>;
+
 
 %typemap(csbody_derived) BitmapFont %{
 
@@ -123,5 +142,20 @@ public:
     }
   }
   BitmapFont();
+  %extend {
+    ~BitmapFont() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

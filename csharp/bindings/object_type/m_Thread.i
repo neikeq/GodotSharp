@@ -2,6 +2,25 @@
 %module m_Thread
 
 %rename(Thread) _Thread;
+%typemap(ctype, out="_Thread*") Ref<_Thread> "_Thread*"
+%typemap(out, null="NULL") Ref<_Thread> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<_Thread> "_Thread.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<_Thread> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<_Thread> "_Thread"
+%typemap(csout, excode=SWIGEXCODE) Ref<_Thread> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    _Thread ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Thread;$excode
+    return ret;
+}
+
+template<class _Thread> class Ref;%template() Ref<_Thread>;
+%feature("novaluewrapper") Ref<_Thread>;
+
 
 %typemap(csbody_derived) _Thread %{
   public static readonly int PRIORITY_LOW = 0;
@@ -67,5 +86,20 @@ public:
     }
   }
   _Thread();
+  %extend {
+    ~_Thread() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

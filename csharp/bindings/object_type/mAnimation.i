@@ -1,6 +1,25 @@
 /* mAnimation.i */
 %module mAnimation
 
+%typemap(ctype, out="Animation*") Ref<Animation> "Animation*"
+%typemap(out, null="NULL") Ref<Animation> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Animation> "Animation.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Animation> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Animation> "Animation"
+%typemap(csout, excode=SWIGEXCODE) Ref<Animation> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Animation ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Animation;$excode
+    return ret;
+}
+
+template<class Animation> class Ref;%template() Ref<Animation>;
+%feature("novaluewrapper") Ref<Animation>;
+
 
 %typemap(csbody_derived) Animation %{
   public static readonly int TYPE_VALUE = 0;
@@ -9,6 +28,9 @@
   public static readonly int INTERPOLATION_NEAREST = 0;
   public static readonly int INTERPOLATION_LINEAR = 1;
   public static readonly int INTERPOLATION_CUBIC = 2;
+  public static readonly int UPDATE_CONTINUOUS = 0;
+  public static readonly int UPDATE_DISCRETE = 1;
+  public static readonly int UPDATE_TRIGGER = 2;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -99,6 +121,18 @@ public:
     }
   }
   %extend {
+    void track_set_imported(int idx, bool imported) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("track_set_imported", idx, imported);
+    }
+  }
+  %extend {
+    bool track_is_imported(int idx) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("track_is_imported", idx);
+    }
+  }
+  %extend {
     int transform_track_insert_key(int idx, float time, const Vector3& loc, const Quat& rot, const Vector3& scale) {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("transform_track_insert_key", idx, time, loc, rot, scale);
@@ -183,15 +217,15 @@ public:
     }
   }
   %extend {
-    void value_track_set_continuous(int idx, bool continuous) {
+    void value_track_set_update_mode(int idx, int mode) {
   Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("value_track_set_continuous", idx, continuous);
+  self_obj->call("value_track_set_update_mode", idx, mode);
     }
   }
   %extend {
-    bool value_track_is_continuous(int idx) {
+    int value_track_get_update_mode(int idx) {
   Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("value_track_is_continuous", idx);
+  return self_obj->call("value_track_get_update_mode", idx);
     }
   }
   %extend {
@@ -237,9 +271,21 @@ public:
     }
   }
   %extend {
+    void set_loop_interpolation(bool enabled) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_loop_interpolation", enabled);
+    }
+  }
+  %extend {
     bool has_loop() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("has_loop");
+    }
+  }
+  %extend {
+    bool has_loop_interpolation() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("has_loop_interpolation");
     }
   }
   %extend {
@@ -261,5 +307,20 @@ public:
     }
   }
   Animation();
+  %extend {
+    ~Animation() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

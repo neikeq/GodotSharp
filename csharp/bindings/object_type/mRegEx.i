@@ -1,6 +1,25 @@
 /* mRegEx.i */
 %module mRegEx
 
+%typemap(ctype, out="RegEx*") Ref<RegEx> "RegEx*"
+%typemap(out, null="NULL") Ref<RegEx> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<RegEx> "RegEx.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<RegEx> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<RegEx> "RegEx"
+%typemap(csout, excode=SWIGEXCODE) Ref<RegEx> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    RegEx ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RegEx;$excode
+    return ret;
+}
+
+template<class RegEx> class Ref;%template() Ref<RegEx>;
+%feature("novaluewrapper") Ref<RegEx>;
+
 
 %typemap(csbody_derived) RegEx %{
 
@@ -87,5 +106,20 @@ public:
     }
   }
   RegEx();
+  %extend {
+    ~RegEx() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

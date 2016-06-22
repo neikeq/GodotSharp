@@ -89,7 +89,9 @@ public class Performance : Object {
 
   private static Performance SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Performance_SingletonGetInstance();
-    Performance ret = (cPtr == global::System.IntPtr.Zero) ? null : new Performance(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Performance ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Performance;
     return ret;
   }
 

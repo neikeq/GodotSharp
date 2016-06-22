@@ -335,7 +335,9 @@ public class AudioServer : Object {
 
   private static AudioServer SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AudioServer_SingletonGetInstance();
-    AudioServer ret = (cPtr == global::System.IntPtr.Zero) ? null : new AudioServer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    AudioServer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioServer;
     return ret;
   }
 

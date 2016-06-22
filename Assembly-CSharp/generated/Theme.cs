@@ -27,12 +27,16 @@ public class Theme : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Theme() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Theme(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,16 +47,19 @@ public class Theme : Resource {
 
 
 
-  public void set_icon(string name, string type, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.Theme_set_icon(swigCPtr, name, type, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_icon(string name, string type, Texture texture) {
+    GodotEnginePINVOKE.Theme_set_icon(swigCPtr, name, type, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_icon(string name, string type) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Theme_get_icon(swigCPtr, name, type), true);
+  public Texture get_icon(string name, string type) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Theme_get_icon(swigCPtr, name, type);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool has_icon(string name, string type) {
     bool ret = GodotEnginePINVOKE.Theme_has_icon(swigCPtr, name, type);
@@ -71,16 +78,19 @@ public class Theme : Resource {
     return ret;
   }
 
-  public void set_stylebox(string name, string type, SWIGTYPE_p_RefT_StyleBox_t texture) {
-    GodotEnginePINVOKE.Theme_set_stylebox(swigCPtr, name, type, SWIGTYPE_p_RefT_StyleBox_t.getCPtr(texture));
+  public void set_stylebox(string name, string type, StyleBox texture) {
+    GodotEnginePINVOKE.Theme_set_stylebox(swigCPtr, name, type, StyleBox.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_StyleBox_t get_stylebox(string name, string type) {
-    SWIGTYPE_p_RefT_StyleBox_t ret = new SWIGTYPE_p_RefT_StyleBox_t(GodotEnginePINVOKE.Theme_get_stylebox(swigCPtr, name, type), true);
+  public StyleBox get_stylebox(string name, string type) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Theme_get_stylebox(swigCPtr, name, type);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StyleBox ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBox;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool has_stylebox(string name, string type) {
     bool ret = GodotEnginePINVOKE.Theme_has_stylebox(swigCPtr, name, type);
@@ -195,7 +205,7 @@ public class Theme : Resource {
   public Object get_default_font() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Theme_get_default_font(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

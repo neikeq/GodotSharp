@@ -27,12 +27,16 @@ public class MeshDataTool : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~MeshDataTool() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_MeshDataTool(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -219,15 +223,15 @@ public class MeshDataTool : Reference {
     return ret;
   }
 
-  public void set_material(SWIGTYPE_p_RefT_Material_t material) {
-    GodotEnginePINVOKE.MeshDataTool_set_material(swigCPtr, SWIGTYPE_p_RefT_Material_t.getCPtr(material));
+  public void set_material(Material material) {
+    GodotEnginePINVOKE.MeshDataTool_set_material(swigCPtr, Material.getCPtr(material));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Object get_material() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshDataTool_get_material(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

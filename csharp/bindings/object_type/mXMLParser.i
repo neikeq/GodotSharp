@@ -1,6 +1,25 @@
 /* mXMLParser.i */
 %module mXMLParser
 
+%typemap(ctype, out="XMLParser*") Ref<XMLParser> "XMLParser*"
+%typemap(out, null="NULL") Ref<XMLParser> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<XMLParser> "XMLParser.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<XMLParser> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<XMLParser> "XMLParser"
+%typemap(csout, excode=SWIGEXCODE) Ref<XMLParser> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    XMLParser ret = InternalHelpers.UnmanagedGetManaged(cPtr) as XMLParser;$excode
+    return ret;
+}
+
+template<class XMLParser> class Ref;%template() Ref<XMLParser>;
+%feature("novaluewrapper") Ref<XMLParser>;
+
 
 %typemap(csbody_derived) XMLParser %{
   public static readonly int NODE_NONE = 0;
@@ -148,5 +167,20 @@ public:
     }
   }
   XMLParser();
+  %extend {
+    ~XMLParser() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

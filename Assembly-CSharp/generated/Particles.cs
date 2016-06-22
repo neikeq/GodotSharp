@@ -162,15 +162,18 @@ public class Particles : GeometryInstance {
     return ret;
   }
 
-  public void set_material(SWIGTYPE_p_RefT_Material_t material) {
-    GodotEnginePINVOKE.Particles_set_material(swigCPtr, SWIGTYPE_p_RefT_Material_t.getCPtr(material));
+  public void set_material(Material material) {
+    GodotEnginePINVOKE.Particles_set_material(swigCPtr, Material.getCPtr(material));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Material_t get_material() {
-    SWIGTYPE_p_RefT_Material_t ret = new SWIGTYPE_p_RefT_Material_t(GodotEnginePINVOKE.Particles_get_material(swigCPtr), true);
+  public Material get_material() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Particles_get_material(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Material ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Material;
     return ret;
-  }
+}
 
   public void set_emit_timeout(float timeout) {
     GodotEnginePINVOKE.Particles_set_emit_timeout(swigCPtr, timeout);

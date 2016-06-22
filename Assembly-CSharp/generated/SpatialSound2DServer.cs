@@ -56,7 +56,9 @@ public class SpatialSound2DServer : Object {
 
   private static SpatialSound2DServer SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SpatialSound2DServer_SingletonGetInstance();
-    SpatialSound2DServer ret = (cPtr == global::System.IntPtr.Zero) ? null : new SpatialSound2DServer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SpatialSound2DServer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SpatialSound2DServer;
     return ret;
   }
 

@@ -1,6 +1,15 @@
 /* mSceneTree.i */
 %module mSceneTree
 
+%typemap(out) SceneTree "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) SceneTree* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) SceneTree %{
   public static readonly int GROUP_CALL_DEFAULT = 0;

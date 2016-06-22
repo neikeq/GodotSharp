@@ -133,15 +133,21 @@ public class Particles2D : Node2D {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Texture_t set_texture(Object texture) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Particles2D_set_texture(swigCPtr, Object.getCPtr(texture)), true);
+  public Texture set_texture(Object texture) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Particles2D_set_texture(swigCPtr, Object.getCPtr(texture));
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Texture_t get_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Particles2D_get_texture(swigCPtr), true);
+  public Texture get_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Particles2D_get_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_color(SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.Particles2D_set_color(swigCPtr, SWIGTYPE_p_Color.getCPtr(color));
@@ -153,15 +159,21 @@ public class Particles2D : Node2D {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_ColorRamp_t set_color_ramp(Object color_ramp) {
-    SWIGTYPE_p_RefT_ColorRamp_t ret = new SWIGTYPE_p_RefT_ColorRamp_t(GodotEnginePINVOKE.Particles2D_set_color_ramp(swigCPtr, Object.getCPtr(color_ramp)), true);
+  public ColorRamp set_color_ramp(Object color_ramp) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Particles2D_set_color_ramp(swigCPtr, Object.getCPtr(color_ramp));
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ColorRamp ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ColorRamp;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_ColorRamp_t get_color_ramp() {
-    SWIGTYPE_p_RefT_ColorRamp_t ret = new SWIGTYPE_p_RefT_ColorRamp_t(GodotEnginePINVOKE.Particles2D_get_color_ramp(swigCPtr), true);
+  public ColorRamp get_color_ramp() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Particles2D_get_color_ramp(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ColorRamp ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ColorRamp;
     return ret;
-  }
+}
 
   public void set_emissor_offset(Vector2 offset) {
     GodotEnginePINVOKE.Particles2D_set_emissor_offset(swigCPtr, ref offset);

@@ -1,6 +1,25 @@
 /* mTheme.i */
 %module mTheme
 
+%typemap(ctype, out="Theme*") Ref<Theme> "Theme*"
+%typemap(out, null="NULL") Ref<Theme> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Theme> "Theme.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Theme> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Theme> "Theme"
+%typemap(csout, excode=SWIGEXCODE) Ref<Theme> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Theme ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Theme;$excode
+    return ret;
+}
+
+template<class Theme> class Ref;%template() Ref<Theme>;
+%feature("novaluewrapper") Ref<Theme>;
+
 
 %typemap(csbody_derived) Theme %{
 
@@ -219,5 +238,20 @@ public:
     }
   }
   Theme();
+  %extend {
+    ~Theme() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

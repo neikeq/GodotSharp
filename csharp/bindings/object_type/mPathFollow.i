@@ -1,6 +1,15 @@
 /* mPathFollow.i */
 %module mPathFollow
 
+%typemap(out) PathFollow "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) PathFollow* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) PathFollow %{
   public static readonly int ROTATION_NONE = 0;

@@ -2,6 +2,25 @@
 %module mEventStream
 
 %nodefaultctor EventStream;
+%typemap(ctype, out="EventStream*") Ref<EventStream> "EventStream*"
+%typemap(out, null="NULL") Ref<EventStream> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<EventStream> "EventStream.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<EventStream> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<EventStream> "EventStream"
+%typemap(csout, excode=SWIGEXCODE) Ref<EventStream> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EventStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EventStream;$excode
+    return ret;
+}
+
+template<class EventStream> class Ref;%template() Ref<EventStream>;
+%feature("novaluewrapper") Ref<EventStream>;
+
 
 %typemap(csbody_derived) EventStream %{
 
@@ -40,5 +59,20 @@
 
 class EventStream : public Resource {
 public:
+  %extend {
+    ~EventStream() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

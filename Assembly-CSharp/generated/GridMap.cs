@@ -44,15 +44,18 @@ public class GridMap : Spatial {
 
 
 
-  public void set_theme(SWIGTYPE_p_RefT_MeshLibrary_t theme) {
-    GodotEnginePINVOKE.GridMap_set_theme(swigCPtr, SWIGTYPE_p_RefT_MeshLibrary_t.getCPtr(theme));
+  public void set_theme(MeshLibrary theme) {
+    GodotEnginePINVOKE.GridMap_set_theme(swigCPtr, MeshLibrary.getCPtr(theme));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_MeshLibrary_t get_theme() {
-    SWIGTYPE_p_RefT_MeshLibrary_t ret = new SWIGTYPE_p_RefT_MeshLibrary_t(GodotEnginePINVOKE.GridMap_get_theme(swigCPtr), true);
+  public MeshLibrary get_theme() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.GridMap_get_theme(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    MeshLibrary ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MeshLibrary;
     return ret;
-  }
+}
 
   public void set_bake(bool enable) {
     GodotEnginePINVOKE.GridMap_set_bake(swigCPtr, enable);

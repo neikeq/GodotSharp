@@ -120,7 +120,9 @@ public class InputMap : Object {
 
   private static InputMap SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.InputMap_SingletonGetInstance();
-    InputMap ret = (cPtr == global::System.IntPtr.Zero) ? null : new InputMap(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    InputMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as InputMap;
     return ret;
   }
 

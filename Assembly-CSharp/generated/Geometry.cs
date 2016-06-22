@@ -163,7 +163,9 @@ public class Geometry : Object {
 
   private static Geometry SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Geometry_SingletonGetInstance();
-    Geometry ret = (cPtr == global::System.IntPtr.Zero) ? null : new Geometry(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Geometry ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Geometry;
     return ret;
   }
 

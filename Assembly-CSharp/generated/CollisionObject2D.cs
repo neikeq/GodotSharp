@@ -49,13 +49,13 @@ public class CollisionObject2D : Node2D {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_shape(SWIGTYPE_p_RefT_Shape2D_t shape, Matrix32 transform) {
-    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(shape), ref transform.elements);
+  public void add_shape(Shape2D shape, Matrix32 transform) {
+    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_0(swigCPtr, Shape2D.getCPtr(shape), ref transform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_shape(SWIGTYPE_p_RefT_Shape2D_t shape) {
-    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(shape));
+  public void add_shape(Shape2D shape) {
+    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_1(swigCPtr, Shape2D.getCPtr(shape));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -64,8 +64,8 @@ public class CollisionObject2D : Node2D {
     return ret;
   }
 
-  public void set_shape(int shape_idx, SWIGTYPE_p_RefT_Shape_t shape) {
-    GodotEnginePINVOKE.CollisionObject2D_set_shape(swigCPtr, shape_idx, SWIGTYPE_p_RefT_Shape_t.getCPtr(shape));
+  public void set_shape(int shape_idx, Shape shape) {
+    GodotEnginePINVOKE.CollisionObject2D_set_shape(swigCPtr, shape_idx, Shape.getCPtr(shape));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -78,10 +78,13 @@ public class CollisionObject2D : Node2D {
     GodotEnginePINVOKE.CollisionObject2D_set_shape_as_trigger(swigCPtr, shape_idx, enable);
   }
 
-  public SWIGTYPE_p_RefT_Shape2D_t get_shape(int shape_idx) {
-    SWIGTYPE_p_RefT_Shape2D_t ret = new SWIGTYPE_p_RefT_Shape2D_t(GodotEnginePINVOKE.CollisionObject2D_get_shape(swigCPtr, shape_idx), true);
+  public Shape2D get_shape(int shape_idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.CollisionObject2D_get_shape(swigCPtr, shape_idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Shape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shape2D;
     return ret;
-  }
+}
 
   public Matrix32 get_shape_transform(int shape_idx) {
     Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CollisionObject2D_get_shape_transform(swigCPtr, shape_idx));

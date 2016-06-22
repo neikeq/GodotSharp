@@ -1,6 +1,25 @@
 /* mConcavePolygonShape2D.i */
 %module mConcavePolygonShape2D
 
+%typemap(ctype, out="ConcavePolygonShape2D*") Ref<ConcavePolygonShape2D> "ConcavePolygonShape2D*"
+%typemap(out, null="NULL") Ref<ConcavePolygonShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ConcavePolygonShape2D> "ConcavePolygonShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ConcavePolygonShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ConcavePolygonShape2D> "ConcavePolygonShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<ConcavePolygonShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ConcavePolygonShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConcavePolygonShape2D;$excode
+    return ret;
+}
+
+template<class ConcavePolygonShape2D> class Ref;%template() Ref<ConcavePolygonShape2D>;
+%feature("novaluewrapper") Ref<ConcavePolygonShape2D>;
+
 
 %typemap(csbody_derived) ConcavePolygonShape2D %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   ConcavePolygonShape2D();
+  %extend {
+    ~ConcavePolygonShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

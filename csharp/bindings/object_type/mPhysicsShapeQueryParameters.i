@@ -1,6 +1,25 @@
 /* mPhysicsShapeQueryParameters.i */
 %module mPhysicsShapeQueryParameters
 
+%typemap(ctype, out="PhysicsShapeQueryParameters*") Ref<PhysicsShapeQueryParameters> "PhysicsShapeQueryParameters*"
+%typemap(out, null="NULL") Ref<PhysicsShapeQueryParameters> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PhysicsShapeQueryParameters> "PhysicsShapeQueryParameters.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PhysicsShapeQueryParameters> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PhysicsShapeQueryParameters> "PhysicsShapeQueryParameters"
+%typemap(csout, excode=SWIGEXCODE) Ref<PhysicsShapeQueryParameters> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PhysicsShapeQueryParameters ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PhysicsShapeQueryParameters;$excode
+    return ret;
+}
+
+template<class PhysicsShapeQueryParameters> class Ref;%template() Ref<PhysicsShapeQueryParameters>;
+%feature("novaluewrapper") Ref<PhysicsShapeQueryParameters>;
+
 
 %typemap(csbody_derived) PhysicsShapeQueryParameters %{
 
@@ -117,5 +136,20 @@ public:
     }
   }
   PhysicsShapeQueryParameters();
+  %extend {
+    ~PhysicsShapeQueryParameters() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

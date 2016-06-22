@@ -2,6 +2,15 @@
 %module mButtonArray
 
 %nodefaultctor ButtonArray;
+%typemap(out) ButtonArray "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) ButtonArray* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) ButtonArray %{
   public static readonly int ALIGN_BEGIN = 0;

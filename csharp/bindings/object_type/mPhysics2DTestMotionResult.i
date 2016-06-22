@@ -1,6 +1,25 @@
 /* mPhysics2DTestMotionResult.i */
 %module mPhysics2DTestMotionResult
 
+%typemap(ctype, out="Physics2DTestMotionResult*") Ref<Physics2DTestMotionResult> "Physics2DTestMotionResult*"
+%typemap(out, null="NULL") Ref<Physics2DTestMotionResult> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Physics2DTestMotionResult> "Physics2DTestMotionResult.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Physics2DTestMotionResult> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Physics2DTestMotionResult> "Physics2DTestMotionResult"
+%typemap(csout, excode=SWIGEXCODE) Ref<Physics2DTestMotionResult> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Physics2DTestMotionResult ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DTestMotionResult;$excode
+    return ret;
+}
+
+template<class Physics2DTestMotionResult> class Ref;%template() Ref<Physics2DTestMotionResult>;
+%feature("novaluewrapper") Ref<Physics2DTestMotionResult>;
+
 
 %typemap(csbody_derived) Physics2DTestMotionResult %{
 
@@ -93,5 +112,20 @@ public:
     }
   }
   Physics2DTestMotionResult();
+  %extend {
+    ~Physics2DTestMotionResult() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

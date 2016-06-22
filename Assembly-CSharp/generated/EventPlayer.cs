@@ -43,15 +43,18 @@ public class EventPlayer : Node {
 
 
 
-  public void set_stream(SWIGTYPE_p_RefT_EventStream_t stream) {
-    GodotEnginePINVOKE.EventPlayer_set_stream(swigCPtr, SWIGTYPE_p_RefT_EventStream_t.getCPtr(stream));
+  public void set_stream(EventStream stream) {
+    GodotEnginePINVOKE.EventPlayer_set_stream(swigCPtr, EventStream.getCPtr(stream));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_EventStream_t get_stream() {
-    SWIGTYPE_p_RefT_EventStream_t ret = new SWIGTYPE_p_RefT_EventStream_t(GodotEnginePINVOKE.EventPlayer_get_stream(swigCPtr), true);
+  public EventStream get_stream() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.EventPlayer_get_stream(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EventStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EventStream;
     return ret;
-  }
+}
 
   public void play() {
     GodotEnginePINVOKE.EventPlayer_play(swigCPtr);

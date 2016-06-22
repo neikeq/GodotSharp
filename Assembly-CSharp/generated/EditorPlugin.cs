@@ -67,10 +67,13 @@ public class EditorPlugin : Node {
     GodotEnginePINVOKE.EditorPlugin_clear(swigCPtr);
   }
 
-  public SWIGTYPE_p_RefT_EditorSpatialGizmo_t create_spatial_gizmo(Spatial for_spatial) {
-    SWIGTYPE_p_RefT_EditorSpatialGizmo_t ret = new SWIGTYPE_p_RefT_EditorSpatialGizmo_t(GodotEnginePINVOKE.EditorPlugin_create_spatial_gizmo(swigCPtr, Spatial.getCPtr(for_spatial)), true);
+  public EditorSpatialGizmo create_spatial_gizmo(Spatial for_spatial) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorPlugin_create_spatial_gizmo(swigCPtr, Spatial.getCPtr(for_spatial));
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorSpatialGizmo ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSpatialGizmo;
     return ret;
-  }
+}
 
   public void edit(Object arg0) {
     GodotEnginePINVOKE.EditorPlugin_edit(swigCPtr, Object.getCPtr(arg0));
@@ -143,8 +146,8 @@ public class EditorPlugin : Node {
     GodotEnginePINVOKE.EditorPlugin_remove_control_from_bottom_panel(swigCPtr, Control.getCPtr(control));
   }
 
-  public void add_custom_type(string type, string arg1, SWIGTYPE_p_RefT_Script_t script, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.EditorPlugin_add_custom_type(swigCPtr, type, arg1, SWIGTYPE_p_RefT_Script_t.getCPtr(script), SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void add_custom_type(string type, string arg1, Script script, Texture icon) {
+    GodotEnginePINVOKE.EditorPlugin_add_custom_type(swigCPtr, type, arg1, Script.getCPtr(script), Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -153,50 +156,57 @@ public class EditorPlugin : Node {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_import_plugin(SWIGTYPE_p_RefT_EditorImportPlugin_t plugin) {
-    GodotEnginePINVOKE.EditorPlugin_add_import_plugin(swigCPtr, SWIGTYPE_p_RefT_EditorImportPlugin_t.getCPtr(plugin));
+  public void add_import_plugin(EditorImportPlugin plugin) {
+    GodotEnginePINVOKE.EditorPlugin_add_import_plugin(swigCPtr, EditorImportPlugin.getCPtr(plugin));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void remove_import_plugin(SWIGTYPE_p_RefT_EditorImportPlugin_t plugin) {
-    GodotEnginePINVOKE.EditorPlugin_remove_import_plugin(swigCPtr, SWIGTYPE_p_RefT_EditorImportPlugin_t.getCPtr(plugin));
+  public void remove_import_plugin(EditorImportPlugin plugin) {
+    GodotEnginePINVOKE.EditorPlugin_remove_import_plugin(swigCPtr, EditorImportPlugin.getCPtr(plugin));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_export_plugin(SWIGTYPE_p_RefT_EditorExportPlugin_t plugin) {
-    GodotEnginePINVOKE.EditorPlugin_add_export_plugin(swigCPtr, SWIGTYPE_p_RefT_EditorExportPlugin_t.getCPtr(plugin));
+  public void add_export_plugin(EditorExportPlugin plugin) {
+    GodotEnginePINVOKE.EditorPlugin_add_export_plugin(swigCPtr, EditorExportPlugin.getCPtr(plugin));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void remove_export_plugin(SWIGTYPE_p_RefT_EditorExportPlugin_t plugin) {
-    GodotEnginePINVOKE.EditorPlugin_remove_export_plugin(swigCPtr, SWIGTYPE_p_RefT_EditorExportPlugin_t.getCPtr(plugin));
+  public void remove_export_plugin(EditorExportPlugin plugin) {
+    GodotEnginePINVOKE.EditorPlugin_remove_export_plugin(swigCPtr, EditorExportPlugin.getCPtr(plugin));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Control get_base_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorPlugin_get_base_control(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     return ret;
   }
 
   public UndoRedo get_undo_redo() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorPlugin_get_undo_redo(swigCPtr);
-    UndoRedo ret = (cPtr == global::System.IntPtr.Zero) ? null : new UndoRedo(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    UndoRedo ret = InternalHelpers.UnmanagedGetManaged(cPtr) as UndoRedo;
     return ret;
   }
 
   public EditorSelection get_selection() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorPlugin_get_selection(swigCPtr);
-    EditorSelection ret = (cPtr == global::System.IntPtr.Zero) ? null : new EditorSelection(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorSelection ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSelection;
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_EditorSettings_t get_editor_settings() {
-    SWIGTYPE_p_RefT_EditorSettings_t ret = new SWIGTYPE_p_RefT_EditorSettings_t(GodotEnginePINVOKE.EditorPlugin_get_editor_settings(swigCPtr), true);
+  public EditorSettings get_editor_settings() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorPlugin_get_editor_settings(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorSettings ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSettings;
     return ret;
-  }
+}
 
   public EditorPlugin() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

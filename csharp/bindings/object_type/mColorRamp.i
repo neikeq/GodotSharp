@@ -1,6 +1,25 @@
 /* mColorRamp.i */
 %module mColorRamp
 
+%typemap(ctype, out="ColorRamp*") Ref<ColorRamp> "ColorRamp*"
+%typemap(out, null="NULL") Ref<ColorRamp> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ColorRamp> "ColorRamp.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ColorRamp> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ColorRamp> "ColorRamp"
+%typemap(csout, excode=SWIGEXCODE) Ref<ColorRamp> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ColorRamp ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ColorRamp;$excode
+    return ret;
+}
+
+template<class ColorRamp> class Ref;%template() Ref<ColorRamp>;
+%feature("novaluewrapper") Ref<ColorRamp>;
+
 
 %typemap(csbody_derived) ColorRamp %{
 
@@ -111,5 +130,20 @@ public:
     }
   }
   ColorRamp();
+  %extend {
+    ~ColorRamp() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

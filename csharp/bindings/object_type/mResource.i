@@ -1,6 +1,25 @@
 /* mResource.i */
 %module mResource
 
+%typemap(ctype, out="Resource*") Ref<Resource> "Resource*"
+%typemap(out, null="NULL") Ref<Resource> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Resource> "Resource.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Resource> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Resource> "Resource"
+%typemap(csout, excode=SWIGEXCODE) Ref<Resource> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Resource ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Resource;$excode
+    return ret;
+}
+
+template<class Resource> class Ref;%template() Ref<Resource>;
+%feature("novaluewrapper") Ref<Resource>;
+
 
 %typemap(csbody_derived) Resource %{
 
@@ -93,5 +112,20 @@ public:
     }
   }
   Resource();
+  %extend {
+    ~Resource() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

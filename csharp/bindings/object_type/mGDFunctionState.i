@@ -2,6 +2,25 @@
 %module mGDFunctionState
 
 %nodefaultctor GDFunctionState;
+%typemap(ctype, out="GDFunctionState*") Ref<GDFunctionState> "GDFunctionState*"
+%typemap(out, null="NULL") Ref<GDFunctionState> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<GDFunctionState> "GDFunctionState.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<GDFunctionState> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<GDFunctionState> "GDFunctionState"
+%typemap(csout, excode=SWIGEXCODE) Ref<GDFunctionState> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    GDFunctionState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as GDFunctionState;$excode
+    return ret;
+}
+
+template<class GDFunctionState> class Ref;%template() Ref<GDFunctionState>;
+%feature("novaluewrapper") Ref<GDFunctionState>;
+
 
 %typemap(csbody_derived) GDFunctionState %{
 
@@ -52,5 +71,20 @@ public:
   return self_obj->call("is_valid");
     }
   }
+  %extend {
+    ~GDFunctionState() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

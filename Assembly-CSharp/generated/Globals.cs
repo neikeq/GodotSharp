@@ -113,7 +113,7 @@ public class Globals : Object {
   public Object get_singleton(string name) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Globals_get_singleton(swigCPtr, name);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
@@ -133,7 +133,9 @@ public class Globals : Object {
 
   private static Globals SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Globals_SingletonGetInstance();
-    Globals ret = (cPtr == global::System.IntPtr.Zero) ? null : new Globals(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Globals ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Globals;
     return ret;
   }
 

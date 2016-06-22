@@ -27,12 +27,16 @@ public class BitmapFont : Font {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~BitmapFont() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_BitmapFont(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -66,8 +70,8 @@ public class BitmapFont : Font {
     return ret;
   }
 
-  public void add_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.BitmapFont_add_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void add_texture(Texture texture) {
+    GodotEnginePINVOKE.BitmapFont_add_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -91,10 +95,13 @@ public class BitmapFont : Font {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_texture(int idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.BitmapFont_get_texture(swigCPtr, idx), true);
+  public Texture get_texture(int idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.BitmapFont_get_texture(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public Vector2 get_char_size(int char_, int next) {
     Vector2 ret = GodotEnginePINVOKE.BitmapFont_get_char_size__SWIG_0(swigCPtr, char_, next);
@@ -121,7 +128,7 @@ public class BitmapFont : Font {
   public Object get_fallback() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.BitmapFont_get_fallback(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

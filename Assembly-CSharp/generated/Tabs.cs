@@ -73,22 +73,25 @@ public class Tabs : Control {
     return ret;
   }
 
-  public void set_tab_icon(int tab_idx, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.Tabs_set_tab_icon(swigCPtr, tab_idx, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void set_tab_icon(int tab_idx, Texture icon) {
+    GodotEnginePINVOKE.Tabs_set_tab_icon(swigCPtr, tab_idx, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_tab_icon(int tab_idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Tabs_get_tab_icon(swigCPtr, tab_idx), true);
+  public Texture get_tab_icon(int tab_idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Tabs_get_tab_icon(swigCPtr, tab_idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void remove_tab(int tab_idx) {
     GodotEnginePINVOKE.Tabs_remove_tab(swigCPtr, tab_idx);
   }
 
-  public void add_tab(string title, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.Tabs_add_tab(swigCPtr, title, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void add_tab(string title, Texture icon) {
+    GodotEnginePINVOKE.Tabs_add_tab(swigCPtr, title, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

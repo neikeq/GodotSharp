@@ -1,6 +1,25 @@
 /* mStyleBoxTexture.i */
 %module mStyleBoxTexture
 
+%typemap(ctype, out="StyleBoxTexture*") Ref<StyleBoxTexture> "StyleBoxTexture*"
+%typemap(out, null="NULL") Ref<StyleBoxTexture> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<StyleBoxTexture> "StyleBoxTexture.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<StyleBoxTexture> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<StyleBoxTexture> "StyleBoxTexture"
+%typemap(csout, excode=SWIGEXCODE) Ref<StyleBoxTexture> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StyleBoxTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBoxTexture;$excode
+    return ret;
+}
+
+template<class StyleBoxTexture> class Ref;%template() Ref<StyleBoxTexture>;
+%feature("novaluewrapper") Ref<StyleBoxTexture>;
+
 
 %typemap(csbody_derived) StyleBoxTexture %{
 
@@ -99,5 +118,20 @@ public:
     }
   }
   StyleBoxTexture();
+  %extend {
+    ~StyleBoxTexture() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

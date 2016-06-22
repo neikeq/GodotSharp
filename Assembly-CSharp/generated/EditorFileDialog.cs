@@ -132,6 +132,15 @@ public class EditorFileDialog : ConfirmationDialog {
     return ret;
   }
 
+  public void set_disable_overwrite_warning(bool disable) {
+    GodotEnginePINVOKE.EditorFileDialog_set_disable_overwrite_warning(swigCPtr, disable);
+  }
+
+  public bool is_overwrite_warning_disabled() {
+    bool ret = GodotEnginePINVOKE.EditorFileDialog_is_overwrite_warning_disabled(swigCPtr);
+    return ret;
+  }
+
   public void invalidate() {
     GodotEnginePINVOKE.EditorFileDialog_invalidate(swigCPtr);
   }

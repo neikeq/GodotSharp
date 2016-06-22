@@ -27,12 +27,16 @@ public class MultiMesh : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~MultiMesh() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_MultiMesh(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,15 +47,18 @@ public class MultiMesh : Resource {
 
 
 
-  public void set_mesh(SWIGTYPE_p_RefT_Mesh_t mesh) {
-    GodotEnginePINVOKE.MultiMesh_set_mesh(swigCPtr, SWIGTYPE_p_RefT_Mesh_t.getCPtr(mesh));
+  public void set_mesh(Mesh mesh) {
+    GodotEnginePINVOKE.MultiMesh_set_mesh(swigCPtr, Mesh.getCPtr(mesh));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Mesh_t get_mesh() {
-    SWIGTYPE_p_RefT_Mesh_t ret = new SWIGTYPE_p_RefT_Mesh_t(GodotEnginePINVOKE.MultiMesh_get_mesh(swigCPtr), true);
+  public Mesh get_mesh() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.MultiMesh_get_mesh(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;
     return ret;
-  }
+}
 
   public void set_instance_count(int count) {
     GodotEnginePINVOKE.MultiMesh_set_instance_count(swigCPtr, count);

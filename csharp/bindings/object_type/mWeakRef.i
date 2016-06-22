@@ -1,6 +1,25 @@
 /* mWeakRef.i */
 %module mWeakRef
 
+%typemap(ctype, out="WeakRef*") Ref<WeakRef> "WeakRef*"
+%typemap(out, null="NULL") Ref<WeakRef> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<WeakRef> "WeakRef.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<WeakRef> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<WeakRef> "WeakRef"
+%typemap(csout, excode=SWIGEXCODE) Ref<WeakRef> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    WeakRef ret = InternalHelpers.UnmanagedGetManaged(cPtr) as WeakRef;$excode
+    return ret;
+}
+
+template<class WeakRef> class Ref;%template() Ref<WeakRef>;
+%feature("novaluewrapper") Ref<WeakRef>;
+
 
 %typemap(csbody_derived) WeakRef %{
 
@@ -45,5 +64,20 @@ public:
     }
   }
   WeakRef();
+  %extend {
+    ~WeakRef() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

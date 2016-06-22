@@ -113,6 +113,28 @@ public class Input : Object {
     return ret;
   }
 
+  public Vector2 get_joy_vibration_strength(int device) {
+    Vector2 ret = GodotEnginePINVOKE.Input_get_joy_vibration_strength(swigCPtr, device);
+    return ret;
+}
+
+  public float get_joy_vibration_duration(int device) {
+    float ret = GodotEnginePINVOKE.Input_get_joy_vibration_duration(swigCPtr, device);
+    return ret;
+  }
+
+  public void start_joy_vibration(int device, float weak_magnitude, float strong_magnitude, float duration) {
+    GodotEnginePINVOKE.Input_start_joy_vibration__SWIG_0(swigCPtr, device, weak_magnitude, strong_magnitude, duration);
+  }
+
+  public void start_joy_vibration(int device, float weak_magnitude, float strong_magnitude) {
+    GodotEnginePINVOKE.Input_start_joy_vibration__SWIG_1(swigCPtr, device, weak_magnitude, strong_magnitude);
+  }
+
+  public void stop_joy_vibration(int device) {
+    GodotEnginePINVOKE.Input_stop_joy_vibration(swigCPtr, device);
+  }
+
   public SWIGTYPE_p_Vector3 get_accelerometer() {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Input_get_accelerometer(swigCPtr), true);
     return ret;
@@ -157,19 +179,21 @@ public class Input : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_custom_mouse_cursor(SWIGTYPE_p_RefT_Texture_t image, Vector2 hotspot) {
-    GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(image), ref hotspot);
+  public void set_custom_mouse_cursor(Texture image, Vector2 hotspot) {
+    GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_0(swigCPtr, Texture.getCPtr(image), ref hotspot);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_custom_mouse_cursor(SWIGTYPE_p_RefT_Texture_t image) {
-    GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(image));
+  public void set_custom_mouse_cursor(Texture image) {
+    GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_1(swigCPtr, Texture.getCPtr(image));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   private static Input SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Input_SingletonGetInstance();
-    Input ret = (cPtr == global::System.IntPtr.Zero) ? null : new Input(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Input ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Input;
     return ret;
   }
 

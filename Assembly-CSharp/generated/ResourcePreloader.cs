@@ -67,7 +67,7 @@ public class ResourcePreloader : Node {
   public Object get_resource(string name) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourcePreloader_get_resource(swigCPtr, name);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;

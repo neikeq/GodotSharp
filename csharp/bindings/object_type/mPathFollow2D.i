@@ -1,6 +1,15 @@
 /* mPathFollow2D.i */
 %module mPathFollow2D
 
+%typemap(out) PathFollow2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) PathFollow2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) PathFollow2D %{
 

@@ -1,6 +1,15 @@
 /* mBackBufferCopy.i */
 %module mBackBufferCopy
 
+%typemap(out) BackBufferCopy "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) BackBufferCopy* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) BackBufferCopy %{
   public static readonly int COPY_MODE_DISABLED = 0;

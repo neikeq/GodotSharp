@@ -2,6 +2,25 @@
 %module mSceneState
 
 %nodefaultctor SceneState;
+%typemap(ctype, out="SceneState*") Ref<SceneState> "SceneState*"
+%typemap(out, null="NULL") Ref<SceneState> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<SceneState> "SceneState.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<SceneState> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<SceneState> "SceneState"
+%typemap(csout, excode=SWIGEXCODE) Ref<SceneState> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SceneState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SceneState;$excode
+    return ret;
+}
+
+template<class SceneState> class Ref;%template() Ref<SceneState>;
+%feature("novaluewrapper") Ref<SceneState>;
+
 
 %typemap(csbody_derived) SceneState %{
 
@@ -154,5 +173,20 @@ public:
   return self_obj->call("get_connection_binds", idx);
     }
   }
+  %extend {
+    ~SceneState() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -85,15 +85,18 @@ public class Light : VisualInstance {
     return ret;
   }
 
-  public void set_projector(SWIGTYPE_p_RefT_Texture_t projector) {
-    GodotEnginePINVOKE.Light_set_projector(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(projector));
+  public void set_projector(Texture projector) {
+    GodotEnginePINVOKE.Light_set_projector(swigCPtr, Texture.getCPtr(projector));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_projector() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Light_get_projector(swigCPtr), true);
+  public Texture get_projector() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Light_get_projector(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_operator(int operator_) {
     GodotEnginePINVOKE.Light_set_operator(swigCPtr, operator_);

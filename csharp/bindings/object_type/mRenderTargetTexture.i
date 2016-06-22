@@ -2,6 +2,25 @@
 %module mRenderTargetTexture
 
 %nodefaultctor RenderTargetTexture;
+%typemap(ctype, out="RenderTargetTexture*") Ref<RenderTargetTexture> "RenderTargetTexture*"
+%typemap(out, null="NULL") Ref<RenderTargetTexture> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<RenderTargetTexture> "RenderTargetTexture.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<RenderTargetTexture> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<RenderTargetTexture> "RenderTargetTexture"
+%typemap(csout, excode=SWIGEXCODE) Ref<RenderTargetTexture> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    RenderTargetTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RenderTargetTexture;$excode
+    return ret;
+}
+
+template<class RenderTargetTexture> class Ref;%template() Ref<RenderTargetTexture>;
+%feature("novaluewrapper") Ref<RenderTargetTexture>;
+
 
 %typemap(csbody_derived) RenderTargetTexture %{
 
@@ -40,5 +59,20 @@
 
 class RenderTargetTexture : public Texture {
 public:
+  %extend {
+    ~RenderTargetTexture() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -1,6 +1,15 @@
 /* mRemoteTransform2D.i */
 %module mRemoteTransform2D
 
+%typemap(out) RemoteTransform2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) RemoteTransform2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) RemoteTransform2D %{
 

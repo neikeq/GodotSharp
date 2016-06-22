@@ -27,12 +27,16 @@ public class Shape2D : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Shape2D() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Shape2D(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -53,26 +57,26 @@ public class Shape2D : Resource {
     return ret;
   }
 
-  public bool collide(Matrix32 local_xform, SWIGTYPE_p_RefT_Shape2D_t with_shape, Matrix32 shape_xform) {
-    bool ret = GodotEnginePINVOKE.Shape2D_collide(swigCPtr, ref local_xform.elements, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(with_shape), ref shape_xform.elements);
+  public bool collide(Matrix32 local_xform, Shape2D with_shape, Matrix32 shape_xform) {
+    bool ret = GodotEnginePINVOKE.Shape2D_collide(swigCPtr, ref local_xform.elements, Shape2D.getCPtr(with_shape), ref shape_xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public bool collide_with_motion(Matrix32 local_xform, Vector2 local_motion, SWIGTYPE_p_RefT_Shape2D_t with_shape, Matrix32 shape_xform, Vector2 shape_motion) {
-    bool ret = GodotEnginePINVOKE.Shape2D_collide_with_motion(swigCPtr, ref local_xform.elements, ref local_motion, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(with_shape), ref shape_xform.elements, ref shape_motion);
+  public bool collide_with_motion(Matrix32 local_xform, Vector2 local_motion, Shape2D with_shape, Matrix32 shape_xform, Vector2 shape_motion) {
+    bool ret = GodotEnginePINVOKE.Shape2D_collide_with_motion(swigCPtr, ref local_xform.elements, ref local_motion, Shape2D.getCPtr(with_shape), ref shape_xform.elements, ref shape_motion);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public Variant collide_and_get_contacts(Matrix32 local_xform, SWIGTYPE_p_RefT_Shape2D_t with_shape, Matrix32 shape_xform) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_and_get_contacts(swigCPtr, ref local_xform.elements, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(with_shape), ref shape_xform.elements), true);
+  public Variant collide_and_get_contacts(Matrix32 local_xform, Shape2D with_shape, Matrix32 shape_xform) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_and_get_contacts(swigCPtr, ref local_xform.elements, Shape2D.getCPtr(with_shape), ref shape_xform.elements), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public Variant collide_with_motion_and_get_contacts(Matrix32 local_xform, Vector2 local_motion, SWIGTYPE_p_RefT_Shape2D_t with_shape, Matrix32 shape_xform, Vector2 shape_motion) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_with_motion_and_get_contacts(swigCPtr, ref local_xform.elements, ref local_motion, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(with_shape), ref shape_xform.elements, ref shape_motion), true);
+  public Variant collide_with_motion_and_get_contacts(Matrix32 local_xform, Vector2 local_motion, Shape2D with_shape, Matrix32 shape_xform, Vector2 shape_motion) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_with_motion_and_get_contacts(swigCPtr, ref local_xform.elements, ref local_motion, Shape2D.getCPtr(with_shape), ref shape_xform.elements, ref shape_motion), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

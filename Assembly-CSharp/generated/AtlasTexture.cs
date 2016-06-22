@@ -27,12 +27,16 @@ public class AtlasTexture : Texture {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~AtlasTexture() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_AtlasTexture(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,15 +47,18 @@ public class AtlasTexture : Texture {
 
 
 
-  public void set_atlas(SWIGTYPE_p_RefT_Texture_t atlas) {
-    GodotEnginePINVOKE.AtlasTexture_set_atlas(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(atlas));
+  public void set_atlas(Texture atlas) {
+    GodotEnginePINVOKE.AtlasTexture_set_atlas(swigCPtr, Texture.getCPtr(atlas));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_atlas() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.AtlasTexture_get_atlas(swigCPtr), true);
+  public Texture get_atlas() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.AtlasTexture_get_atlas(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_region(SWIGTYPE_p_Rect2 region) {
     GodotEnginePINVOKE.AtlasTexture_set_region(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(region));

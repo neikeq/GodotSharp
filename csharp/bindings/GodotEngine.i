@@ -248,33 +248,6 @@
 typedef DVector<uint8_t> RawArray;
 %}
 
-%typemap(out) SWIGTYPE
-%{ $result = memnew($1_ltype((const $1_ltype &)$1)); %}
-
-%typemap(csout, excode=SWIGEXCODE) Object* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-    	return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
-%typemap(csout, excode=SWIGEXCODE) Node* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-    	return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
-%typemap(csout, excode=SWIGEXCODE) Control* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-    	return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 %include mString.i
 %include mNodePath.i
 %include mVector2.i
@@ -282,3 +255,4 @@ typedef DVector<uint8_t> RawArray;
 %include mVariant.i
 
 %include "object_type/Include.i"
+

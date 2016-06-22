@@ -134,25 +134,19 @@ public class Variant : global::System.IDisposable {
 
   public Object operator_to_Object() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Object(swigCPtr);
-    if (cPtr == global::System.IntPtr.Zero)
-    	return null;
-    Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
+    Object ret = (cPtr == global::System.IntPtr.Zero) ? null : new Object(cPtr, false);
     return ret;
   }
 
   public Node operator_to_Node() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Node(swigCPtr);
-    if (cPtr == global::System.IntPtr.Zero)
-    	return null;
-    Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
+    Node ret = (cPtr == global::System.IntPtr.Zero) ? null : new Node(cPtr, false);
     return ret;
   }
 
   public Control operator_to_Control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Variant_operator_to_Control(swigCPtr);
-    if (cPtr == global::System.IntPtr.Zero)
-    	return null;
-    Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
+    Control ret = (cPtr == global::System.IntPtr.Zero) ? null : new Control(cPtr, false);
     return ret;
   }
 

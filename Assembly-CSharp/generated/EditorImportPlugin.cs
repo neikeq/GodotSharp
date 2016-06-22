@@ -27,12 +27,16 @@ public class EditorImportPlugin : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~EditorImportPlugin() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_EditorImportPlugin(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -64,8 +68,8 @@ public class EditorImportPlugin : Reference {
     return ret;
   }
 
-  public int import(string path, SWIGTYPE_p_RefT_ResourceImportMetadata_t from) {
-    int ret = GodotEnginePINVOKE.EditorImportPlugin_import(swigCPtr, path, SWIGTYPE_p_RefT_ResourceImportMetadata_t.getCPtr(from));
+  public int import(string path, ResourceImportMetadata from) {
+    int ret = GodotEnginePINVOKE.EditorImportPlugin_import(swigCPtr, path, ResourceImportMetadata.getCPtr(from));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

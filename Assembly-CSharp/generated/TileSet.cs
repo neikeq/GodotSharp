@@ -27,12 +27,16 @@ public class TileSet : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~TileSet() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_TileSet(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -57,15 +61,18 @@ public class TileSet : Resource {
     return ret;
   }
 
-  public void tile_set_texture(int id, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TileSet_tile_set_texture(swigCPtr, id, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void tile_set_texture(int id, Texture texture) {
+    GodotEnginePINVOKE.TileSet_tile_set_texture(swigCPtr, id, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t tile_get_texture(int id) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TileSet_tile_get_texture(swigCPtr, id), true);
+  public Texture tile_get_texture(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TileSet_tile_get_texture(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void tile_set_material(int id, SWIGTYPE_p_RefT_CanvasItemMaterial_t material) {
     GodotEnginePINVOKE.TileSet_tile_set_material(swigCPtr, id, SWIGTYPE_p_RefT_CanvasItemMaterial_t.getCPtr(material));
@@ -107,15 +114,18 @@ public class TileSet : Resource {
     return ret;
   }
 
-  public void tile_set_shape(int id, SWIGTYPE_p_RefT_Shape2D_t shape) {
-    GodotEnginePINVOKE.TileSet_tile_set_shape(swigCPtr, id, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(shape));
+  public void tile_set_shape(int id, Shape2D shape) {
+    GodotEnginePINVOKE.TileSet_tile_set_shape(swigCPtr, id, Shape2D.getCPtr(shape));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Shape2D_t tile_get_shape(int id) {
-    SWIGTYPE_p_RefT_Shape2D_t ret = new SWIGTYPE_p_RefT_Shape2D_t(GodotEnginePINVOKE.TileSet_tile_get_shape(swigCPtr, id), true);
+  public Shape2D tile_get_shape(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TileSet_tile_get_shape(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Shape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shape2D;
     return ret;
-  }
+}
 
   public void tile_set_shapes(int id, SWIGTYPE_p_Array shapes) {
     GodotEnginePINVOKE.TileSet_tile_set_shapes(swigCPtr, id, SWIGTYPE_p_Array.getCPtr(shapes));

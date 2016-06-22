@@ -2,6 +2,25 @@
 %module mStyleBox
 
 %nodefaultctor StyleBox;
+%typemap(ctype, out="StyleBox*") Ref<StyleBox> "StyleBox*"
+%typemap(out, null="NULL") Ref<StyleBox> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<StyleBox> "StyleBox.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<StyleBox> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<StyleBox> "StyleBox"
+%typemap(csout, excode=SWIGEXCODE) Ref<StyleBox> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StyleBox ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBox;$excode
+    return ret;
+}
+
+template<class StyleBox> class Ref;%template() Ref<StyleBox>;
+%feature("novaluewrapper") Ref<StyleBox>;
+
 
 %typemap(csbody_derived) StyleBox %{
 
@@ -88,5 +107,20 @@ public:
   self_obj->call("draw", canvas_item, rect);
     }
   }
+  %extend {
+    ~StyleBox() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

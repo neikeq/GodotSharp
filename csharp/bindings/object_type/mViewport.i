@@ -1,6 +1,15 @@
 /* mViewport.i */
 %module mViewport
 
+%typemap(out) Viewport "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Viewport* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Viewport %{
   public static readonly int RENDER_TARGET_UPDATE_DISABLED = 0;

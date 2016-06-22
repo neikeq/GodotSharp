@@ -1,6 +1,25 @@
 /* mCubeMap.i */
 %module mCubeMap
 
+%typemap(ctype, out="CubeMap*") Ref<CubeMap> "CubeMap*"
+%typemap(out, null="NULL") Ref<CubeMap> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<CubeMap> "CubeMap.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<CubeMap> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<CubeMap> "CubeMap"
+%typemap(csout, excode=SWIGEXCODE) Ref<CubeMap> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CubeMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CubeMap;$excode
+    return ret;
+}
+
+template<class CubeMap> class Ref;%template() Ref<CubeMap>;
+%feature("novaluewrapper") Ref<CubeMap>;
+
 
 %typemap(csbody_derived) CubeMap %{
   public static readonly int STORAGE_RAW = 0;
@@ -118,5 +137,20 @@ public:
     }
   }
   CubeMap();
+  %extend {
+    ~CubeMap() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

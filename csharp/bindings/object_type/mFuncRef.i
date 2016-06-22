@@ -1,6 +1,25 @@
 /* mFuncRef.i */
 %module mFuncRef
 
+%typemap(ctype, out="FuncRef*") Ref<FuncRef> "FuncRef*"
+%typemap(out, null="NULL") Ref<FuncRef> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<FuncRef> "FuncRef.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<FuncRef> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<FuncRef> "FuncRef"
+%typemap(csout, excode=SWIGEXCODE) Ref<FuncRef> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    FuncRef ret = InternalHelpers.UnmanagedGetManaged(cPtr) as FuncRef;$excode
+    return ret;
+}
+
+template<class FuncRef> class Ref;%template() Ref<FuncRef>;
+%feature("novaluewrapper") Ref<FuncRef>;
+
 
 %typemap(csbody_derived) FuncRef %{
 
@@ -68,5 +87,20 @@ $self->call("call_func", (const Variant **) args_, 10, err);
     }
   }
   FuncRef();
+  %extend {
+    ~FuncRef() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

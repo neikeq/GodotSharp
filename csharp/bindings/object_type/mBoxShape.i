@@ -1,6 +1,25 @@
 /* mBoxShape.i */
 %module mBoxShape
 
+%typemap(ctype, out="BoxShape*") Ref<BoxShape> "BoxShape*"
+%typemap(out, null="NULL") Ref<BoxShape> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<BoxShape> "BoxShape.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<BoxShape> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<BoxShape> "BoxShape"
+%typemap(csout, excode=SWIGEXCODE) Ref<BoxShape> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BoxShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BoxShape;$excode
+    return ret;
+}
+
+template<class BoxShape> class Ref;%template() Ref<BoxShape>;
+%feature("novaluewrapper") Ref<BoxShape>;
+
 
 %typemap(csbody_derived) BoxShape %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   BoxShape();
+  %extend {
+    ~BoxShape() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

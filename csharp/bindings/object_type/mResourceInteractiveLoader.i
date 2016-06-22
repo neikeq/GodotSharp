@@ -2,6 +2,25 @@
 %module mResourceInteractiveLoader
 
 %nodefaultctor ResourceInteractiveLoader;
+%typemap(ctype, out="ResourceInteractiveLoader*") Ref<ResourceInteractiveLoader> "ResourceInteractiveLoader*"
+%typemap(out, null="NULL") Ref<ResourceInteractiveLoader> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ResourceInteractiveLoader> "ResourceInteractiveLoader.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ResourceInteractiveLoader> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ResourceInteractiveLoader> "ResourceInteractiveLoader"
+%typemap(csout, excode=SWIGEXCODE) Ref<ResourceInteractiveLoader> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceInteractiveLoader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceInteractiveLoader;$excode
+    return ret;
+}
+
+template<class ResourceInteractiveLoader> class Ref;%template() Ref<ResourceInteractiveLoader>;
+%feature("novaluewrapper") Ref<ResourceInteractiveLoader>;
+
 
 %typemap(csbody_derived) ResourceInteractiveLoader %{
 
@@ -70,5 +89,20 @@ public:
   return self_obj->call("get_stage_count");
     }
   }
+  %extend {
+    ~ResourceInteractiveLoader() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

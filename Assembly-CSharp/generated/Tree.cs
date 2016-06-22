@@ -55,19 +55,25 @@ public class Tree : Control {
 
   public TreeItem create_item(TreeItem parent) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_create_item__SWIG_0(swigCPtr, TreeItem.getCPtr(parent));
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem create_item() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_create_item__SWIG_1(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_root() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_root(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
@@ -90,13 +96,17 @@ public class Tree : Control {
 
   public TreeItem get_next_selected(TreeItem from) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_next_selected(swigCPtr, TreeItem.getCPtr(from));
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_selected() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_selected(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
@@ -125,7 +135,9 @@ public class Tree : Control {
 
   public TreeItem get_edited() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_edited(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
@@ -151,7 +163,9 @@ public class Tree : Control {
 
   public TreeItem get_item_at_pos(Vector2 pos) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_item_at_pos(swigCPtr, ref pos);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

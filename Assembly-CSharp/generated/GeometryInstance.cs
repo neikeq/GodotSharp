@@ -63,7 +63,7 @@ public class GeometryInstance : VisualInstance {
   public Object get_material_override() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.GeometryInstance_get_material_override(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

@@ -1,6 +1,25 @@
 /* mRectangleShape2D.i */
 %module mRectangleShape2D
 
+%typemap(ctype, out="RectangleShape2D*") Ref<RectangleShape2D> "RectangleShape2D*"
+%typemap(out, null="NULL") Ref<RectangleShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<RectangleShape2D> "RectangleShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<RectangleShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<RectangleShape2D> "RectangleShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<RectangleShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    RectangleShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RectangleShape2D;$excode
+    return ret;
+}
+
+template<class RectangleShape2D> class Ref;%template() Ref<RectangleShape2D>;
+%feature("novaluewrapper") Ref<RectangleShape2D>;
+
 
 %typemap(csbody_derived) RectangleShape2D %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   RectangleShape2D();
+  %extend {
+    ~RectangleShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

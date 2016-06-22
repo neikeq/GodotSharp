@@ -60,7 +60,7 @@ public class TabContainer : Control {
   public Control get_current_tab_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_current_tab_control(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     return ret;
   }
@@ -68,7 +68,7 @@ public class TabContainer : Control {
   public Control get_tab_control(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_tab_control(swigCPtr, idx);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     return ret;
   }
@@ -101,15 +101,18 @@ public class TabContainer : Control {
     return ret;
   }
 
-  public void set_tab_icon(int tab_idx, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.TabContainer_set_tab_icon(swigCPtr, tab_idx, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void set_tab_icon(int tab_idx, Texture icon) {
+    GodotEnginePINVOKE.TabContainer_set_tab_icon(swigCPtr, tab_idx, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_tab_icon(int tab_idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TabContainer_get_tab_icon(swigCPtr, tab_idx), true);
+  public Texture get_tab_icon(int tab_idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_tab_icon(swigCPtr, tab_idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_popup(Popup popup) {
     GodotEnginePINVOKE.TabContainer_set_popup(swigCPtr, Popup.getCPtr(popup));
@@ -117,7 +120,9 @@ public class TabContainer : Control {
 
   public Popup get_popup() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TabContainer_get_popup(swigCPtr);
-    Popup ret = (cPtr == global::System.IntPtr.Zero) ? null : new Popup(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Popup ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Popup;
     return ret;
   }
 

@@ -1,6 +1,25 @@
 /* mEditorScript.i */
 %module mEditorScript
 
+%typemap(ctype, out="EditorScript*") Ref<EditorScript> "EditorScript*"
+%typemap(out, null="NULL") Ref<EditorScript> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<EditorScript> "EditorScript.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<EditorScript> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<EditorScript> "EditorScript"
+%typemap(csout, excode=SWIGEXCODE) Ref<EditorScript> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorScript ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorScript;$excode
+    return ret;
+}
+
+template<class EditorScript> class Ref;%template() Ref<EditorScript>;
+%feature("novaluewrapper") Ref<EditorScript>;
+
 
 %typemap(csbody_derived) EditorScript %{
 
@@ -57,5 +76,20 @@ public:
     }
   }
   EditorScript();
+  %extend {
+    ~EditorScript() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

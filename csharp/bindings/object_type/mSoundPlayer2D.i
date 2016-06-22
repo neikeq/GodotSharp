@@ -2,6 +2,15 @@
 %module mSoundPlayer2D
 
 %nodefaultctor SoundPlayer2D;
+%typemap(out) SoundPlayer2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) SoundPlayer2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) SoundPlayer2D %{
   public static readonly int PARAM_VOLUME_DB = 0;

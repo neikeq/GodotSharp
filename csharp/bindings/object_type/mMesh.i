@@ -1,6 +1,25 @@
 /* mMesh.i */
 %module mMesh
 
+%typemap(ctype, out="Mesh*") Ref<Mesh> "Mesh*"
+%typemap(out, null="NULL") Ref<Mesh> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Mesh> "Mesh.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Mesh> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Mesh> "Mesh"
+%typemap(csout, excode=SWIGEXCODE) Ref<Mesh> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;$excode
+    return ret;
+}
+
+template<class Mesh> class Ref;%template() Ref<Mesh>;
+%feature("novaluewrapper") Ref<Mesh>;
+
 
 %typemap(csbody_derived) Mesh %{
   public static readonly int NO_INDEX_ARRAY = -1;
@@ -192,5 +211,20 @@ public:
     }
   }
   Mesh();
+  %extend {
+    ~Mesh() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

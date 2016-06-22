@@ -1,6 +1,25 @@
 /* mResourceImportMetadata.i */
 %module mResourceImportMetadata
 
+%typemap(ctype, out="ResourceImportMetadata*") Ref<ResourceImportMetadata> "ResourceImportMetadata*"
+%typemap(out, null="NULL") Ref<ResourceImportMetadata> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ResourceImportMetadata> "ResourceImportMetadata.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ResourceImportMetadata> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ResourceImportMetadata> "ResourceImportMetadata"
+%typemap(csout, excode=SWIGEXCODE) Ref<ResourceImportMetadata> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceImportMetadata ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceImportMetadata;$excode
+    return ret;
+}
+
+template<class ResourceImportMetadata> class Ref;%template() Ref<ResourceImportMetadata>;
+%feature("novaluewrapper") Ref<ResourceImportMetadata>;
+
 
 %typemap(csbody_derived) ResourceImportMetadata %{
 
@@ -105,5 +124,20 @@ public:
     }
   }
   ResourceImportMetadata();
+  %extend {
+    ~ResourceImportMetadata() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

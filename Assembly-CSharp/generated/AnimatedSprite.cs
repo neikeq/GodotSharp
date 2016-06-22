@@ -43,15 +43,18 @@ public class AnimatedSprite : Node2D {
 
 
 
-  public void set_sprite_frames(SWIGTYPE_p_RefT_SpriteFrames_t sprite_frames) {
-    GodotEnginePINVOKE.AnimatedSprite_set_sprite_frames(swigCPtr, SWIGTYPE_p_RefT_SpriteFrames_t.getCPtr(sprite_frames));
+  public void set_sprite_frames(SpriteFrames sprite_frames) {
+    GodotEnginePINVOKE.AnimatedSprite_set_sprite_frames(swigCPtr, SpriteFrames.getCPtr(sprite_frames));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_SpriteFrames_t get_sprite_frames() {
-    SWIGTYPE_p_RefT_SpriteFrames_t ret = new SWIGTYPE_p_RefT_SpriteFrames_t(GodotEnginePINVOKE.AnimatedSprite_get_sprite_frames(swigCPtr), true);
+  public SpriteFrames get_sprite_frames() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.AnimatedSprite_get_sprite_frames(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SpriteFrames ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SpriteFrames;
     return ret;
-  }
+}
 
   public void set_animation(string animation) {
     GodotEnginePINVOKE.AnimatedSprite_set_animation(swigCPtr, animation);

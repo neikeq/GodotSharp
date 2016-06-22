@@ -1,6 +1,25 @@
 /* mCurve3D.i */
 %module mCurve3D
 
+%typemap(ctype, out="Curve3D*") Ref<Curve3D> "Curve3D*"
+%typemap(out, null="NULL") Ref<Curve3D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Curve3D> "Curve3D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Curve3D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Curve3D> "Curve3D"
+%typemap(csout, excode=SWIGEXCODE) Ref<Curve3D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Curve3D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve3D;$excode
+    return ret;
+}
+
+template<class Curve3D> class Ref;%template() Ref<Curve3D>;
+%feature("novaluewrapper") Ref<Curve3D>;
+
 
 %typemap(csbody_derived) Curve3D %{
 
@@ -159,5 +178,20 @@ public:
     }
   }
   Curve3D();
+  %extend {
+    ~Curve3D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

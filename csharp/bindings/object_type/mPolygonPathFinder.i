@@ -1,6 +1,25 @@
 /* mPolygonPathFinder.i */
 %module mPolygonPathFinder
 
+%typemap(ctype, out="PolygonPathFinder*") Ref<PolygonPathFinder> "PolygonPathFinder*"
+%typemap(out, null="NULL") Ref<PolygonPathFinder> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PolygonPathFinder> "PolygonPathFinder.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PolygonPathFinder> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PolygonPathFinder> "PolygonPathFinder"
+%typemap(csout, excode=SWIGEXCODE) Ref<PolygonPathFinder> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PolygonPathFinder ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PolygonPathFinder;$excode
+    return ret;
+}
+
+template<class PolygonPathFinder> class Ref;%template() Ref<PolygonPathFinder>;
+%feature("novaluewrapper") Ref<PolygonPathFinder>;
+
 
 %typemap(csbody_derived) PolygonPathFinder %{
 
@@ -87,5 +106,20 @@ public:
     }
   }
   PolygonPathFinder();
+  %extend {
+    ~PolygonPathFinder() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

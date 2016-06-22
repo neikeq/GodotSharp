@@ -87,7 +87,9 @@ public class PathRemap : Object {
 
   private static PathRemap SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PathRemap_SingletonGetInstance();
-    PathRemap ret = (cPtr == global::System.IntPtr.Zero) ? null : new PathRemap(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PathRemap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PathRemap;
     return ret;
   }
 

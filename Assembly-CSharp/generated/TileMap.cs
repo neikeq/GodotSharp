@@ -52,15 +52,18 @@ public class TileMap : Node2D {
 
 
 
-  public void set_tileset(SWIGTYPE_p_RefT_TileSet_t tileset) {
-    GodotEnginePINVOKE.TileMap_set_tileset(swigCPtr, SWIGTYPE_p_RefT_TileSet_t.getCPtr(tileset));
+  public void set_tileset(TileSet tileset) {
+    GodotEnginePINVOKE.TileMap_set_tileset(swigCPtr, TileSet.getCPtr(tileset));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_TileSet_t get_tileset() {
-    SWIGTYPE_p_RefT_TileSet_t ret = new SWIGTYPE_p_RefT_TileSet_t(GodotEnginePINVOKE.TileMap_get_tileset(swigCPtr), true);
+  public TileSet get_tileset() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TileMap_get_tileset(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TileSet ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TileSet;
     return ret;
-  }
+}
 
   public void set_mode(int mode) {
     GodotEnginePINVOKE.TileMap_set_mode(swigCPtr, mode);

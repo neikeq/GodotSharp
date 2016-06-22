@@ -1,6 +1,25 @@
 /* mTCP_Server.i */
 %module mTCP_Server
 
+%typemap(ctype, out="TCP_Server*") Ref<TCP_Server> "TCP_Server*"
+%typemap(out, null="NULL") Ref<TCP_Server> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<TCP_Server> "TCP_Server.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<TCP_Server> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<TCP_Server> "TCP_Server"
+%typemap(csout, excode=SWIGEXCODE) Ref<TCP_Server> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TCP_Server ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TCP_Server;$excode
+    return ret;
+}
+
+template<class TCP_Server> class Ref;%template() Ref<TCP_Server>;
+%feature("novaluewrapper") Ref<TCP_Server>;
+
 
 %typemap(csbody_derived) TCP_Server %{
 
@@ -65,5 +84,20 @@ public:
   %extend {
     TCP_Server() { return TCP_Server::create(); }
   }
+  %extend {
+    ~TCP_Server() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

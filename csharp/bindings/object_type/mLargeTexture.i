@@ -1,6 +1,25 @@
 /* mLargeTexture.i */
 %module mLargeTexture
 
+%typemap(ctype, out="LargeTexture*") Ref<LargeTexture> "LargeTexture*"
+%typemap(out, null="NULL") Ref<LargeTexture> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<LargeTexture> "LargeTexture.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<LargeTexture> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<LargeTexture> "LargeTexture"
+%typemap(csout, excode=SWIGEXCODE) Ref<LargeTexture> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    LargeTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as LargeTexture;$excode
+    return ret;
+}
+
+template<class LargeTexture> class Ref;%template() Ref<LargeTexture>;
+%feature("novaluewrapper") Ref<LargeTexture>;
+
 
 %typemap(csbody_derived) LargeTexture %{
 
@@ -87,5 +106,20 @@ public:
     }
   }
   LargeTexture();
+  %extend {
+    ~LargeTexture() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

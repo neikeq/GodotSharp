@@ -31,12 +31,16 @@ public class StreamPeerSSL : StreamPeer {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~StreamPeerSSL() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_StreamPeerSSL(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -47,26 +51,26 @@ public class StreamPeerSSL : StreamPeer {
 
 
 
-  public int accept(SWIGTYPE_p_RefT_StreamPeer_t stream) {
-    int ret = GodotEnginePINVOKE.StreamPeerSSL_accept(swigCPtr, SWIGTYPE_p_RefT_StreamPeer_t.getCPtr(stream));
+  public int accept(StreamPeer stream) {
+    int ret = GodotEnginePINVOKE.StreamPeerSSL_accept(swigCPtr, StreamPeer.getCPtr(stream));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int connect(SWIGTYPE_p_RefT_StreamPeer_t stream, bool validate_certs, string for_hostname) {
-    int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_StreamPeer_t.getCPtr(stream), validate_certs, for_hostname);
+  public int connect(StreamPeer stream, bool validate_certs, string for_hostname) {
+    int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_0(swigCPtr, StreamPeer.getCPtr(stream), validate_certs, for_hostname);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int connect(SWIGTYPE_p_RefT_StreamPeer_t stream, bool validate_certs) {
-    int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_StreamPeer_t.getCPtr(stream), validate_certs);
+  public int connect(StreamPeer stream, bool validate_certs) {
+    int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_1(swigCPtr, StreamPeer.getCPtr(stream), validate_certs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int connect(SWIGTYPE_p_RefT_StreamPeer_t stream) {
-    int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_2(swigCPtr, SWIGTYPE_p_RefT_StreamPeer_t.getCPtr(stream));
+  public int connect(StreamPeer stream) {
+    int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_2(swigCPtr, StreamPeer.getCPtr(stream));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

@@ -1,6 +1,25 @@
 /* mCanvasItemShaderGraph.i */
 %module mCanvasItemShaderGraph
 
+%typemap(ctype, out="CanvasItemShaderGraph*") Ref<CanvasItemShaderGraph> "CanvasItemShaderGraph*"
+%typemap(out, null="NULL") Ref<CanvasItemShaderGraph> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<CanvasItemShaderGraph> "CanvasItemShaderGraph.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<CanvasItemShaderGraph> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<CanvasItemShaderGraph> "CanvasItemShaderGraph"
+%typemap(csout, excode=SWIGEXCODE) Ref<CanvasItemShaderGraph> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CanvasItemShaderGraph ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CanvasItemShaderGraph;$excode
+    return ret;
+}
+
+template<class CanvasItemShaderGraph> class Ref;%template() Ref<CanvasItemShaderGraph>;
+%feature("novaluewrapper") Ref<CanvasItemShaderGraph>;
+
 
 %typemap(csbody_derived) CanvasItemShaderGraph %{
 
@@ -39,5 +58,20 @@
 class CanvasItemShaderGraph : public ShaderGraph {
 public:
   CanvasItemShaderGraph();
+  %extend {
+    ~CanvasItemShaderGraph() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

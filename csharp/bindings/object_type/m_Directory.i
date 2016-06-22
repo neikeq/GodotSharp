@@ -2,6 +2,25 @@
 %module m_Directory
 
 %rename(Directory) _Directory;
+%typemap(ctype, out="_Directory*") Ref<_Directory> "_Directory*"
+%typemap(out, null="NULL") Ref<_Directory> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<_Directory> "_Directory.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<_Directory> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<_Directory> "_Directory"
+%typemap(csout, excode=SWIGEXCODE) Ref<_Directory> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    _Directory ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Directory;$excode
+    return ret;
+}
+
+template<class _Directory> class Ref;%template() Ref<_Directory>;
+%feature("novaluewrapper") Ref<_Directory>;
+
 
 %typemap(csbody_derived) _Directory %{
 
@@ -142,5 +161,20 @@ public:
     }
   }
   _Directory();
+  %extend {
+    ~_Directory() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

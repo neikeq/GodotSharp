@@ -78,15 +78,18 @@ public class TreeItem : Object {
     return ret;
   }
 
-  public void set_icon(int column, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TreeItem_set_icon(swigCPtr, column, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_icon(int column, Texture texture) {
+    GodotEnginePINVOKE.TreeItem_set_icon(swigCPtr, column, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_icon(int column) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TreeItem_get_icon(swigCPtr, column), true);
+  public Texture get_icon(int column) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_icon(swigCPtr, column);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_icon_region(int column, SWIGTYPE_p_Rect2 region) {
     GodotEnginePINVOKE.TreeItem_set_icon_region(swigCPtr, column, SWIGTYPE_p_Rect2.getCPtr(region));
@@ -154,43 +157,57 @@ public class TreeItem : Object {
 
   public TreeItem get_next() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_next(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_prev() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_prev(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_parent() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_parent(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_children() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_children(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_next_visible() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_next_visible(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem get_prev_visible() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_prev_visible(swigCPtr);
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
   public TreeItem remove_child(Object child) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_remove_child(swigCPtr, Object.getCPtr(child));
-    TreeItem ret = (cPtr == global::System.IntPtr.Zero) ? null : new TreeItem(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TreeItem ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TreeItem;
     return ret;
   }
 
@@ -253,18 +270,18 @@ public class TreeItem : Object {
     return ret;
   }
 
-  public void add_button(int column, SWIGTYPE_p_RefT_Texture_t button, int button_idx, bool disabled) {
-    GodotEnginePINVOKE.TreeItem_add_button__SWIG_0(swigCPtr, column, SWIGTYPE_p_RefT_Texture_t.getCPtr(button), button_idx, disabled);
+  public void add_button(int column, Texture button, int button_idx, bool disabled) {
+    GodotEnginePINVOKE.TreeItem_add_button__SWIG_0(swigCPtr, column, Texture.getCPtr(button), button_idx, disabled);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_button(int column, SWIGTYPE_p_RefT_Texture_t button, int button_idx) {
-    GodotEnginePINVOKE.TreeItem_add_button__SWIG_1(swigCPtr, column, SWIGTYPE_p_RefT_Texture_t.getCPtr(button), button_idx);
+  public void add_button(int column, Texture button, int button_idx) {
+    GodotEnginePINVOKE.TreeItem_add_button__SWIG_1(swigCPtr, column, Texture.getCPtr(button), button_idx);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_button(int column, SWIGTYPE_p_RefT_Texture_t button) {
-    GodotEnginePINVOKE.TreeItem_add_button__SWIG_2(swigCPtr, column, SWIGTYPE_p_RefT_Texture_t.getCPtr(button));
+  public void add_button(int column, Texture button) {
+    GodotEnginePINVOKE.TreeItem_add_button__SWIG_2(swigCPtr, column, Texture.getCPtr(button));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -273,10 +290,13 @@ public class TreeItem : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_button(int column, int button_idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TreeItem_get_button(swigCPtr, column, button_idx), true);
+  public Texture get_button(int column, int button_idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TreeItem_get_button(swigCPtr, column, button_idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void erase_button(int column, int button_idx) {
     GodotEnginePINVOKE.TreeItem_erase_button(swigCPtr, column, button_idx);

@@ -1,6 +1,15 @@
 /* mEditorFileDialog.i */
 %module mEditorFileDialog
 
+%typemap(out) EditorFileDialog "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) EditorFileDialog* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) EditorFileDialog %{
   public static readonly int MODE_OPEN_FILE = 0;
@@ -146,6 +155,18 @@ public:
     int get_display_mode() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_display_mode");
+    }
+  }
+  %extend {
+    void set_disable_overwrite_warning(bool disable) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("set_disable_overwrite_warning", disable);
+    }
+  }
+  %extend {
+    bool is_overwrite_warning_disabled() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("is_overwrite_warning_disabled");
     }
   }
   %extend {

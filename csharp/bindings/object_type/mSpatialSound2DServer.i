@@ -4,6 +4,15 @@
 %csmethodmodifiers SpatialSound2DServer::SpatialSound2DServer "private"
 %csmethodmodifiers SpatialSound2DServer::SingletonGetInstance "private"
 %nodefaultctor SpatialSound2DServer;
+%typemap(out) SpatialSound2DServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) SpatialSound2DServer* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) SpatialSound2DServer %{
   private static $csclassname instance;

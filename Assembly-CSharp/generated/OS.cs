@@ -384,7 +384,7 @@ public class OS : Object {
   public Object get_main_loop() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.OS_get_main_loop(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -654,7 +654,9 @@ public class OS : Object {
 
   private static OS SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.OS_SingletonGetInstance();
-    OS ret = (cPtr == global::System.IntPtr.Zero) ? null : new OS(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    OS ret = InternalHelpers.UnmanagedGetManaged(cPtr) as OS;
     return ret;
   }
 

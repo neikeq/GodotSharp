@@ -95,12 +95,16 @@ public class HTTPClient : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~HTTPClient() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_HTTPClient(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -129,15 +133,18 @@ public class HTTPClient : Reference {
     return ret;
   }
 
-  public void set_connection(SWIGTYPE_p_RefT_StreamPeer_t connection) {
-    GodotEnginePINVOKE.HTTPClient_set_connection(swigCPtr, SWIGTYPE_p_RefT_StreamPeer_t.getCPtr(connection));
+  public void set_connection(StreamPeer connection) {
+    GodotEnginePINVOKE.HTTPClient_set_connection(swigCPtr, StreamPeer.getCPtr(connection));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_StreamPeer_t get_connection() {
-    SWIGTYPE_p_RefT_StreamPeer_t ret = new SWIGTYPE_p_RefT_StreamPeer_t(GodotEnginePINVOKE.HTTPClient_get_connection(swigCPtr), true);
+  public StreamPeer get_connection() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.HTTPClient_get_connection(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StreamPeer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StreamPeer;
     return ret;
-  }
+}
 
   public int request_raw(int method, string url, SWIGTYPE_p_StringArray headers, SWIGTYPE_p_RawArray body) {
     int ret = GodotEnginePINVOKE.HTTPClient_request_raw(swigCPtr, method, url, SWIGTYPE_p_StringArray.getCPtr(headers), SWIGTYPE_p_RawArray.getCPtr(body));

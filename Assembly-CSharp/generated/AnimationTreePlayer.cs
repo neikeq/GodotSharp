@@ -88,16 +88,19 @@ public class AnimationTreePlayer : Node {
     return ret;
   }
 
-  public void animation_node_set_animation(string id, SWIGTYPE_p_RefT_Animation_t animation) {
-    GodotEnginePINVOKE.AnimationTreePlayer_animation_node_set_animation(swigCPtr, id, SWIGTYPE_p_RefT_Animation_t.getCPtr(animation));
+  public void animation_node_set_animation(string id, Animation animation) {
+    GodotEnginePINVOKE.AnimationTreePlayer_animation_node_set_animation(swigCPtr, id, Animation.getCPtr(animation));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Animation_t animation_node_get_animation(string id) {
-    SWIGTYPE_p_RefT_Animation_t ret = new SWIGTYPE_p_RefT_Animation_t(GodotEnginePINVOKE.AnimationTreePlayer_animation_node_get_animation(swigCPtr, id), true);
+  public Animation animation_node_get_animation(string id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.AnimationTreePlayer_animation_node_get_animation(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Animation ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Animation;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void animation_node_set_master_animation(string id, string source) {
     GodotEnginePINVOKE.AnimationTreePlayer_animation_node_set_master_animation(swigCPtr, id, source);

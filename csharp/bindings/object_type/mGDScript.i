@@ -1,6 +1,25 @@
 /* mGDScript.i */
 %module mGDScript
 
+%typemap(ctype, out="GDScript*") Ref<GDScript> "GDScript*"
+%typemap(out, null="NULL") Ref<GDScript> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<GDScript> "GDScript.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<GDScript> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<GDScript> "GDScript"
+%typemap(csout, excode=SWIGEXCODE) Ref<GDScript> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    GDScript ret = InternalHelpers.UnmanagedGetManaged(cPtr) as GDScript;$excode
+    return ret;
+}
+
+template<class GDScript> class Ref;%template() Ref<GDScript>;
+%feature("novaluewrapper") Ref<GDScript>;
+
 
 %typemap(csbody_derived) GDScript %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   GDScript();
+  %extend {
+    ~GDScript() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -27,12 +27,16 @@ public class World : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~World() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_World(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -70,7 +74,9 @@ public class World : Resource {
 
   public PhysicsDirectSpaceState get_direct_space_state() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.World_get_direct_space_state(swigCPtr);
-    PhysicsDirectSpaceState ret = (cPtr == global::System.IntPtr.Zero) ? null : new PhysicsDirectSpaceState(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PhysicsDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PhysicsDirectSpaceState;
     return ret;
   }
 

@@ -2,6 +2,15 @@
 %module mPhysics2DDirectBodyState
 
 %nodefaultctor Physics2DDirectBodyState;
+%typemap(out) Physics2DDirectBodyState "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Physics2DDirectBodyState* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Physics2DDirectBodyState %{
 

@@ -43,15 +43,18 @@ public class Sprite3D : SpriteBase3D {
 
 
 
-  public void set_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.Sprite3D_set_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_texture(Texture texture) {
+    GodotEnginePINVOKE.Sprite3D_set_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Sprite3D_get_texture(swigCPtr), true);
+  public Texture get_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Sprite3D_get_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_region(bool enabled) {
     GodotEnginePINVOKE.Sprite3D_set_region(swigCPtr, enabled);

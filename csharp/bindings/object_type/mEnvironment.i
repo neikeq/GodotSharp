@@ -1,6 +1,25 @@
 /* mEnvironment.i */
 %module mEnvironment
 
+%typemap(ctype, out="Environment*") Ref<Environment> "Environment*"
+%typemap(out, null="NULL") Ref<Environment> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Environment> "Environment.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Environment> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Environment> "Environment"
+%typemap(csout, excode=SWIGEXCODE) Ref<Environment> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Environment ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Environment;$excode
+    return ret;
+}
+
+template<class Environment> class Ref;%template() Ref<Environment>;
+%feature("novaluewrapper") Ref<Environment>;
+
 
 %typemap(csbody_derived) Environment %{
   public static readonly int BG_KEEP = 0;
@@ -145,5 +164,20 @@ public:
     }
   }
   Environment();
+  %extend {
+    ~Environment() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

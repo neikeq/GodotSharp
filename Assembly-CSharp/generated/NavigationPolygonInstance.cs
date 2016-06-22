@@ -43,15 +43,18 @@ public class NavigationPolygonInstance : Node2D {
 
 
 
-  public void set_navigation_polygon(SWIGTYPE_p_RefT_NavigationPolygon_t navpoly) {
-    GodotEnginePINVOKE.NavigationPolygonInstance_set_navigation_polygon(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(navpoly));
+  public void set_navigation_polygon(NavigationPolygon navpoly) {
+    GodotEnginePINVOKE.NavigationPolygonInstance_set_navigation_polygon(swigCPtr, NavigationPolygon.getCPtr(navpoly));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_NavigationPolygon_t get_navigation_polygon() {
-    SWIGTYPE_p_RefT_NavigationPolygon_t ret = new SWIGTYPE_p_RefT_NavigationPolygon_t(GodotEnginePINVOKE.NavigationPolygonInstance_get_navigation_polygon(swigCPtr), true);
+  public NavigationPolygon get_navigation_polygon() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.NavigationPolygonInstance_get_navigation_polygon(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    NavigationPolygon ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationPolygon;
     return ret;
-  }
+}
 
   public void set_enabled(bool enabled) {
     GodotEnginePINVOKE.NavigationPolygonInstance_set_enabled(swigCPtr, enabled);

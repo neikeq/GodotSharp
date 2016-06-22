@@ -4,9 +4,25 @@
 %csmethodmodifiers Physics2DServer::Physics2DServer "private"
 %csmethodmodifiers Physics2DServer::SingletonGetInstance "private"
 %nodefaultctor Physics2DServer;
+%typemap(out) Physics2DServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Physics2DServer* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Physics2DServer %{
   private static $csclassname instance;
+  public static readonly int SPACE_PARAM_CONTACT_RECYCLE_RADIUS = 0;
+  public static readonly int SPACE_PARAM_CONTACT_MAX_SEPARATION = 1;
+  public static readonly int SPACE_PARAM_BODY_MAX_ALLOWED_PENETRATION = 2;
+  public static readonly int SPACE_PARAM_BODY_LINEAR_VELOCITY_SLEEP_TRESHOLD = 3;
+  public static readonly int SPACE_PARAM_BODY_ANGULAR_VELOCITY_SLEEP_TRESHOLD = 4;
+  public static readonly int SPACE_PARAM_BODY_TIME_TO_SLEEP = 5;
+  public static readonly int SPACE_PARAM_CONSTRAINT_DEFAULT_BIAS = 6;
   public static readonly int SHAPE_LINE = 0;
   public static readonly int SHAPE_SEGMENT = 2;
   public static readonly int SHAPE_CIRCLE = 3;

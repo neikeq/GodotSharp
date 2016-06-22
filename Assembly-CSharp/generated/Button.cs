@@ -56,15 +56,18 @@ public class Button : BaseButton {
     return ret;
   }
 
-  public void set_button_icon(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.Button_set_button_icon(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_button_icon(Texture texture) {
+    GodotEnginePINVOKE.Button_set_button_icon(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_button_icon() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Button_get_button_icon(swigCPtr), true);
+  public Texture get_button_icon() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Button_get_button_icon(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_flat(bool enabled) {
     GodotEnginePINVOKE.Button_set_flat(swigCPtr, enabled);

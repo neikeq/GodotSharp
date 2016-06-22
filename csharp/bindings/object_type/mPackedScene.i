@@ -1,6 +1,25 @@
 /* mPackedScene.i */
 %module mPackedScene
 
+%typemap(ctype, out="PackedScene*") Ref<PackedScene> "PackedScene*"
+%typemap(out, null="NULL") Ref<PackedScene> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PackedScene> "PackedScene.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PackedScene> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PackedScene> "PackedScene"
+%typemap(csout, excode=SWIGEXCODE) Ref<PackedScene> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PackedScene ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PackedScene;$excode
+    return ret;
+}
+
+template<class PackedScene> class Ref;%template() Ref<PackedScene>;
+%feature("novaluewrapper") Ref<PackedScene>;
+
 
 %typemap(csbody_derived) PackedScene %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   PackedScene();
+  %extend {
+    ~PackedScene() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

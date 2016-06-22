@@ -2,6 +2,25 @@
 %module m_File
 
 %rename(File) _File;
+%typemap(ctype, out="_File*") Ref<_File> "_File*"
+%typemap(out, null="NULL") Ref<_File> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<_File> "_File.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<_File> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<_File> "_File"
+%typemap(csout, excode=SWIGEXCODE) Ref<_File> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    _File ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _File;$excode
+    return ret;
+}
+
+template<class _File> class Ref;%template() Ref<_File>;
+%feature("novaluewrapper") Ref<_File>;
+
 
 %typemap(csbody_derived) _File %{
   public static readonly int READ = 1;
@@ -170,6 +189,12 @@ public:
     }
   }
   %extend {
+    String get_sha256(const String& path) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_sha256", path);
+    }
+  }
+  %extend {
     bool get_endian_swap() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_endian_swap");
@@ -284,5 +309,20 @@ public:
     }
   }
   _File();
+  %extend {
+    ~_File() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

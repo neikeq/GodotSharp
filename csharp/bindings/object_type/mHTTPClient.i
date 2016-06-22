@@ -1,6 +1,25 @@
 /* mHTTPClient.i */
 %module mHTTPClient
 
+%typemap(ctype, out="HTTPClient*") Ref<HTTPClient> "HTTPClient*"
+%typemap(out, null="NULL") Ref<HTTPClient> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<HTTPClient> "HTTPClient.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<HTTPClient> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<HTTPClient> "HTTPClient"
+%typemap(csout, excode=SWIGEXCODE) Ref<HTTPClient> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    HTTPClient ret = InternalHelpers.UnmanagedGetManaged(cPtr) as HTTPClient;$excode
+    return ret;
+}
+
+template<class HTTPClient> class Ref;%template() Ref<HTTPClient>;
+%feature("novaluewrapper") Ref<HTTPClient>;
+
 
 %typemap(csbody_derived) HTTPClient %{
   public static readonly int METHOD_GET = 0;
@@ -233,5 +252,20 @@ public:
     }
   }
   HTTPClient();
+  %extend {
+    ~HTTPClient() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

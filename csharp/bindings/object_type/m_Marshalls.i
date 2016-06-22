@@ -5,6 +5,25 @@
 %csmethodmodifiers _Marshalls::_Marshalls "private"
 %csmethodmodifiers _Marshalls::SingletonGetInstance "private"
 %nodefaultctor _Marshalls;
+%typemap(ctype, out="_Marshalls*") Ref<_Marshalls> "_Marshalls*"
+%typemap(out, null="NULL") Ref<_Marshalls> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<_Marshalls> "_Marshalls.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<_Marshalls> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<_Marshalls> "_Marshalls"
+%typemap(csout, excode=SWIGEXCODE) Ref<_Marshalls> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    _Marshalls ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Marshalls;$excode
+    return ret;
+}
+
+template<class _Marshalls> class Ref;%template() Ref<_Marshalls>;
+%feature("novaluewrapper") Ref<_Marshalls>;
+
 
 %typemap(csbody_derived) _Marshalls %{
   private static $csclassname instance;
@@ -92,5 +111,20 @@ public:
   %extend {
     static _Marshalls* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Marshalls")->cast_to<_Marshalls>(); }
   }
+  %extend {
+    ~_Marshalls() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

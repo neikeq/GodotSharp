@@ -4,6 +4,15 @@
 %csmethodmodifiers InputMap::InputMap "private"
 %csmethodmodifiers InputMap::SingletonGetInstance "private"
 %nodefaultctor InputMap;
+%typemap(out) InputMap "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) InputMap* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) InputMap %{
   private static $csclassname instance;

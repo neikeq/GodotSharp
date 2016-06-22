@@ -54,13 +54,13 @@ public class ButtonArray : Control {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_icon_button(SWIGTYPE_p_RefT_Texture_t icon, string text) {
-    GodotEnginePINVOKE.ButtonArray_add_icon_button__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon), text);
+  public void add_icon_button(Texture icon, string text) {
+    GodotEnginePINVOKE.ButtonArray_add_icon_button__SWIG_0(swigCPtr, Texture.getCPtr(icon), text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_icon_button(SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.ButtonArray_add_icon_button__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void add_icon_button(Texture icon) {
+    GodotEnginePINVOKE.ButtonArray_add_icon_button__SWIG_1(swigCPtr, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -69,8 +69,8 @@ public class ButtonArray : Control {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_button_icon(int button_idx, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.ButtonArray_set_button_icon(swigCPtr, button_idx, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void set_button_icon(int button_idx, Texture icon) {
+    GodotEnginePINVOKE.ButtonArray_set_button_icon(swigCPtr, button_idx, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -79,10 +79,13 @@ public class ButtonArray : Control {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_button_icon(int button_idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.ButtonArray_get_button_icon(swigCPtr, button_idx), true);
+  public Texture get_button_icon(int button_idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ButtonArray_get_button_icon(swigCPtr, button_idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public int get_button_count() {
     int ret = GodotEnginePINVOKE.ButtonArray_get_button_count(swigCPtr);

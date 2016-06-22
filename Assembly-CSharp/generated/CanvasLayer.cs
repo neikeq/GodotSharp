@@ -100,10 +100,13 @@ public class CanvasLayer : Node {
     return ret;
 }
 
-  public SWIGTYPE_p_RefT_World2D_t get_world_2d() {
-    SWIGTYPE_p_RefT_World2D_t ret = new SWIGTYPE_p_RefT_World2D_t(GodotEnginePINVOKE.CanvasLayer_get_world_2d(swigCPtr), true);
+  public World2D get_world_2d() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.CanvasLayer_get_world_2d(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World2D;
     return ret;
-  }
+}
 
   public SWIGTYPE_p_RID get_viewport() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.CanvasLayer_get_viewport(swigCPtr), true);

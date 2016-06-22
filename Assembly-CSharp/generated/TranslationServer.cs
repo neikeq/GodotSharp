@@ -70,13 +70,13 @@ public class TranslationServer : Object {
     return ret;
   }
 
-  public void add_translation(SWIGTYPE_p_RefT_Translation_t translation) {
-    GodotEnginePINVOKE.TranslationServer_add_translation(swigCPtr, SWIGTYPE_p_RefT_Translation_t.getCPtr(translation));
+  public void add_translation(Translation translation) {
+    GodotEnginePINVOKE.TranslationServer_add_translation(swigCPtr, Translation.getCPtr(translation));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void remove_translation(SWIGTYPE_p_RefT_Translation_t translation) {
-    GodotEnginePINVOKE.TranslationServer_remove_translation(swigCPtr, SWIGTYPE_p_RefT_Translation_t.getCPtr(translation));
+  public void remove_translation(Translation translation) {
+    GodotEnginePINVOKE.TranslationServer_remove_translation(swigCPtr, Translation.getCPtr(translation));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -86,7 +86,9 @@ public class TranslationServer : Object {
 
   private static TranslationServer SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TranslationServer_SingletonGetInstance();
-    TranslationServer ret = (cPtr == global::System.IntPtr.Zero) ? null : new TranslationServer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TranslationServer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TranslationServer;
     return ret;
   }
 

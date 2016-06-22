@@ -1,6 +1,25 @@
 /* mMeshLibrary.i */
 %module mMeshLibrary
 
+%typemap(ctype, out="MeshLibrary*") Ref<MeshLibrary> "MeshLibrary*"
+%typemap(out, null="NULL") Ref<MeshLibrary> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<MeshLibrary> "MeshLibrary.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<MeshLibrary> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<MeshLibrary> "MeshLibrary"
+%typemap(csout, excode=SWIGEXCODE) Ref<MeshLibrary> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    MeshLibrary ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MeshLibrary;$excode
+    return ret;
+}
+
+template<class MeshLibrary> class Ref;%template() Ref<MeshLibrary>;
+%feature("novaluewrapper") Ref<MeshLibrary>;
+
 
 %typemap(csbody_derived) MeshLibrary %{
 
@@ -117,5 +136,20 @@ public:
     }
   }
   MeshLibrary();
+  %extend {
+    ~MeshLibrary() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

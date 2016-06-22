@@ -27,12 +27,16 @@ public class PackedScene : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~PackedScene() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_PackedScene(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -51,7 +55,7 @@ public class PackedScene : Resource {
   public Node instance(bool gen_edit_state) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PackedScene_instance__SWIG_0(swigCPtr, gen_edit_state);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -59,7 +63,7 @@ public class PackedScene : Resource {
   public Node instance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PackedScene_instance__SWIG_1(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -69,10 +73,13 @@ public class PackedScene : Resource {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_SceneState_t get_state() {
-    SWIGTYPE_p_RefT_SceneState_t ret = new SWIGTYPE_p_RefT_SceneState_t(GodotEnginePINVOKE.PackedScene_get_state(swigCPtr), true);
+  public SceneState get_state() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.PackedScene_get_state(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SceneState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SceneState;
     return ret;
-  }
+}
 
   public PackedScene() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

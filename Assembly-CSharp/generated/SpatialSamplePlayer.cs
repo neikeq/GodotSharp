@@ -45,15 +45,18 @@ public class SpatialSamplePlayer : SpatialPlayer {
 
 
 
-  public void set_sample_library(SWIGTYPE_p_RefT_SampleLibrary_t library) {
-    GodotEnginePINVOKE.SpatialSamplePlayer_set_sample_library(swigCPtr, SWIGTYPE_p_RefT_SampleLibrary_t.getCPtr(library));
+  public void set_sample_library(SampleLibrary library) {
+    GodotEnginePINVOKE.SpatialSamplePlayer_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_SampleLibrary_t get_sample_library() {
-    SWIGTYPE_p_RefT_SampleLibrary_t ret = new SWIGTYPE_p_RefT_SampleLibrary_t(GodotEnginePINVOKE.SpatialSamplePlayer_get_sample_library(swigCPtr), true);
+  public SampleLibrary get_sample_library() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.SpatialSamplePlayer_get_sample_library(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SampleLibrary ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SampleLibrary;
     return ret;
-  }
+}
 
   public void set_polyphony(int voices) {
     GodotEnginePINVOKE.SpatialSamplePlayer_set_polyphony(swigCPtr, voices);

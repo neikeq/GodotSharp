@@ -54,41 +54,59 @@ public class ResourceLoader : Object {
   internal ResourceLoader() {}
 
 
-  public SWIGTYPE_p_RefT_ResourceInteractiveLoader_t load_interactive(string path, string type_hint) {
-    SWIGTYPE_p_RefT_ResourceInteractiveLoader_t ret = new SWIGTYPE_p_RefT_ResourceInteractiveLoader_t(GodotEnginePINVOKE.ResourceLoader_load_interactive__SWIG_0(swigCPtr, path, type_hint), true);
+  public ResourceInteractiveLoader load_interactive(string path, string type_hint) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_load_interactive__SWIG_0(swigCPtr, path, type_hint);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceInteractiveLoader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceInteractiveLoader;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_ResourceInteractiveLoader_t load_interactive(string path) {
-    SWIGTYPE_p_RefT_ResourceInteractiveLoader_t ret = new SWIGTYPE_p_RefT_ResourceInteractiveLoader_t(GodotEnginePINVOKE.ResourceLoader_load_interactive__SWIG_1(swigCPtr, path), true);
+  public ResourceInteractiveLoader load_interactive(string path) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_load_interactive__SWIG_1(swigCPtr, path);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceInteractiveLoader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceInteractiveLoader;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Resource_t load(string path, string type_hint, bool p_no_cache) {
-    SWIGTYPE_p_RefT_Resource_t ret = new SWIGTYPE_p_RefT_Resource_t(GodotEnginePINVOKE.ResourceLoader_load__SWIG_0(swigCPtr, path, type_hint, p_no_cache), true);
+  public Resource load(string path, string type_hint, bool p_no_cache) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_load__SWIG_0(swigCPtr, path, type_hint, p_no_cache);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Resource ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Resource;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Resource_t load(string path, string type_hint) {
-    SWIGTYPE_p_RefT_Resource_t ret = new SWIGTYPE_p_RefT_Resource_t(GodotEnginePINVOKE.ResourceLoader_load__SWIG_1(swigCPtr, path, type_hint), true);
+  public Resource load(string path, string type_hint) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_load__SWIG_1(swigCPtr, path, type_hint);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Resource ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Resource;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Resource_t load(string path) {
-    SWIGTYPE_p_RefT_Resource_t ret = new SWIGTYPE_p_RefT_Resource_t(GodotEnginePINVOKE.ResourceLoader_load__SWIG_2(swigCPtr, path), true);
+  public Resource load(string path) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_load__SWIG_2(swigCPtr, path);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Resource ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Resource;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_ResourceImportMetadata_t load_import_metadata(string path) {
-    SWIGTYPE_p_RefT_ResourceImportMetadata_t ret = new SWIGTYPE_p_RefT_ResourceImportMetadata_t(GodotEnginePINVOKE.ResourceLoader_load_import_metadata(swigCPtr, path), true);
+  public ResourceImportMetadata load_import_metadata(string path) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_load_import_metadata(swigCPtr, path);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceImportMetadata ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceImportMetadata;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public SWIGTYPE_p_StringArray get_recognized_extensions_for_type(string type) {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.ResourceLoader_get_recognized_extensions_for_type(swigCPtr, type), true);
@@ -114,7 +132,9 @@ public class ResourceLoader : Object {
 
   private static ResourceLoader SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceLoader_SingletonGetInstance();
-    ResourceLoader ret = (cPtr == global::System.IntPtr.Zero) ? null : new ResourceLoader(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceLoader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceLoader;
     return ret;
   }
 

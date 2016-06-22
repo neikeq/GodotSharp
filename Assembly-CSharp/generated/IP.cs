@@ -93,7 +93,9 @@ public class IP : Object {
 
   private static IP SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.IP_SingletonGetInstance();
-    IP ret = (cPtr == global::System.IntPtr.Zero) ? null : new IP(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    IP ret = InternalHelpers.UnmanagedGetManaged(cPtr) as IP;
     return ret;
   }
 

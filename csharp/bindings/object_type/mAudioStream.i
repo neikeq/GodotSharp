@@ -2,6 +2,25 @@
 %module mAudioStream
 
 %nodefaultctor AudioStream;
+%typemap(ctype, out="AudioStream*") Ref<AudioStream> "AudioStream*"
+%typemap(out, null="NULL") Ref<AudioStream> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<AudioStream> "AudioStream.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<AudioStream> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<AudioStream> "AudioStream"
+%typemap(csout, excode=SWIGEXCODE) Ref<AudioStream> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    AudioStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioStream;$excode
+    return ret;
+}
+
+template<class AudioStream> class Ref;%template() Ref<AudioStream>;
+%feature("novaluewrapper") Ref<AudioStream>;
+
 
 %typemap(csbody_derived) AudioStream %{
 
@@ -40,5 +59,20 @@
 
 class AudioStream : public Resource {
 public:
+  %extend {
+    ~AudioStream() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

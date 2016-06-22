@@ -2,6 +2,25 @@
 %module mScript
 
 %nodefaultctor Script;
+%typemap(ctype, out="Script*") Ref<Script> "Script*"
+%typemap(out, null="NULL") Ref<Script> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Script> "Script.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Script> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Script> "Script"
+%typemap(csout, excode=SWIGEXCODE) Ref<Script> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Script ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Script;$excode
+    return ret;
+}
+
+template<class Script> class Ref;%template() Ref<Script>;
+%feature("novaluewrapper") Ref<Script>;
+
 
 %typemap(csbody_derived) Script %{
 
@@ -76,5 +95,20 @@ public:
   return self_obj->call("reload", keep_state);
     }
   }
+  %extend {
+    ~Script() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -1,6 +1,25 @@
 /* mNavigationPolygon.i */
 %module mNavigationPolygon
 
+%typemap(ctype, out="NavigationPolygon*") Ref<NavigationPolygon> "NavigationPolygon*"
+%typemap(out, null="NULL") Ref<NavigationPolygon> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<NavigationPolygon> "NavigationPolygon.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<NavigationPolygon> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<NavigationPolygon> "NavigationPolygon"
+%typemap(csout, excode=SWIGEXCODE) Ref<NavigationPolygon> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    NavigationPolygon ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationPolygon;$excode
+    return ret;
+}
+
+template<class NavigationPolygon> class Ref;%template() Ref<NavigationPolygon>;
+%feature("novaluewrapper") Ref<NavigationPolygon>;
+
 
 %typemap(csbody_derived) NavigationPolygon %{
 
@@ -123,5 +142,20 @@ public:
     }
   }
   NavigationPolygon();
+  %extend {
+    ~NavigationPolygon() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

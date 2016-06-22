@@ -1,6 +1,15 @@
 /* mItemList.i */
 %module mItemList
 
+%typemap(out) ItemList "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) ItemList* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) ItemList %{
   public static readonly int ICON_MODE_TOP = 0;
@@ -265,27 +274,15 @@ public:
     }
   }
   %extend {
-    void set_min_icon_size(const Vector2& size) {
+    void set_fixed_icon_size(const Vector2& size) {
   Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_min_icon_size", size);
+  self_obj->call("set_fixed_icon_size", size);
     }
   }
   %extend {
-    Vector2 get_min_icon_size() {
+    Vector2 get_fixed_icon_size() {
   Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_min_icon_size");
-    }
-  }
-  %extend {
-    void set_max_icon_size(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_max_icon_size", size);
-    }
-  }
-  %extend {
-    Vector2 get_max_icon_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_max_icon_size");
+  return self_obj->call("get_fixed_icon_size");
     }
   }
   %extend {

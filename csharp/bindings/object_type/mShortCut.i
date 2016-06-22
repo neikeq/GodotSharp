@@ -1,6 +1,25 @@
 /* mShortCut.i */
 %module mShortCut
 
+%typemap(ctype, out="ShortCut*") Ref<ShortCut> "ShortCut*"
+%typemap(out, null="NULL") Ref<ShortCut> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ShortCut> "ShortCut.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ShortCut> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ShortCut> "ShortCut"
+%typemap(csout, excode=SWIGEXCODE) Ref<ShortCut> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ShortCut ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ShortCut;$excode
+    return ret;
+}
+
+template<class ShortCut> class Ref;%template() Ref<ShortCut>;
+%feature("novaluewrapper") Ref<ShortCut>;
+
 
 %typemap(csbody_derived) ShortCut %{
 
@@ -69,5 +88,20 @@ public:
     }
   }
   ShortCut();
+  %extend {
+    ~ShortCut() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

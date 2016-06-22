@@ -66,8 +66,8 @@ public class RichTextLabel : Control {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_image(SWIGTYPE_p_RefT_Texture_t image) {
-    GodotEnginePINVOKE.RichTextLabel_add_image(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(image));
+  public void add_image(Texture image) {
+    GodotEnginePINVOKE.RichTextLabel_add_image(swigCPtr, Texture.getCPtr(image));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -155,7 +155,7 @@ public class RichTextLabel : Control {
   public Object get_v_scroll() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.RichTextLabel_get_v_scroll(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

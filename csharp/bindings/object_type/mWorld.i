@@ -1,6 +1,25 @@
 /* mWorld.i */
 %module mWorld
 
+%typemap(ctype, out="World*") Ref<World> "World*"
+%typemap(out, null="NULL") Ref<World> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<World> "World.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<World> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<World> "World"
+%typemap(csout, excode=SWIGEXCODE) Ref<World> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World;$excode
+    return ret;
+}
+
+template<class World> class Ref;%template() Ref<World>;
+%feature("novaluewrapper") Ref<World>;
+
 
 %typemap(csbody_derived) World %{
 
@@ -75,5 +94,20 @@ public:
     }
   }
   World();
+  %extend {
+    ~World() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

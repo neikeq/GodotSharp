@@ -1,6 +1,25 @@
 /* mSphereShape.i */
 %module mSphereShape
 
+%typemap(ctype, out="SphereShape*") Ref<SphereShape> "SphereShape*"
+%typemap(out, null="NULL") Ref<SphereShape> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<SphereShape> "SphereShape.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<SphereShape> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<SphereShape> "SphereShape"
+%typemap(csout, excode=SWIGEXCODE) Ref<SphereShape> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SphereShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SphereShape;$excode
+    return ret;
+}
+
+template<class SphereShape> class Ref;%template() Ref<SphereShape>;
+%feature("novaluewrapper") Ref<SphereShape>;
+
 
 %typemap(csbody_derived) SphereShape %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   SphereShape();
+  %extend {
+    ~SphereShape() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

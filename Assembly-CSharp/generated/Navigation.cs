@@ -43,14 +43,14 @@ public class Navigation : Spatial {
 
 
 
-  public int navmesh_create(SWIGTYPE_p_RefT_NavigationMesh_t mesh, SWIGTYPE_p_Transform xform, Object owner) {
-    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_NavigationMesh_t.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform), Object.getCPtr(owner));
+  public int navmesh_create(NavigationMesh mesh, SWIGTYPE_p_Transform xform, Object owner) {
+    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_0(swigCPtr, NavigationMesh.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform), Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int navmesh_create(SWIGTYPE_p_RefT_NavigationMesh_t mesh, SWIGTYPE_p_Transform xform) {
-    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_NavigationMesh_t.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform));
+  public int navmesh_create(NavigationMesh mesh, SWIGTYPE_p_Transform xform) {
+    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_1(swigCPtr, NavigationMesh.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -103,7 +103,7 @@ public class Navigation : Spatial {
   public Object get_closest_point_owner(SWIGTYPE_p_Vector3 to_point) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation_get_closest_point_owner(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(to_point));
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;

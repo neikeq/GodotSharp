@@ -1,6 +1,25 @@
 /* mLineShape2D.i */
 %module mLineShape2D
 
+%typemap(ctype, out="LineShape2D*") Ref<LineShape2D> "LineShape2D*"
+%typemap(out, null="NULL") Ref<LineShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<LineShape2D> "LineShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<LineShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<LineShape2D> "LineShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<LineShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    LineShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as LineShape2D;$excode
+    return ret;
+}
+
+template<class LineShape2D> class Ref;%template() Ref<LineShape2D>;
+%feature("novaluewrapper") Ref<LineShape2D>;
+
 
 %typemap(csbody_derived) LineShape2D %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   LineShape2D();
+  %extend {
+    ~LineShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

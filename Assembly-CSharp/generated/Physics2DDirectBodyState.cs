@@ -145,7 +145,7 @@ public class Physics2DDirectBodyState : Object {
   public Object get_contact_collider_object(int contact_idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DDirectBodyState_get_contact_collider_object(swigCPtr, contact_idx);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

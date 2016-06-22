@@ -1,6 +1,15 @@
 /* mPatch9Frame.i */
 %module mPatch9Frame
 
+%typemap(out) Patch9Frame "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Patch9Frame* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Patch9Frame %{
 

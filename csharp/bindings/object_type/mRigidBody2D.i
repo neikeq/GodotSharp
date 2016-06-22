@@ -1,6 +1,15 @@
 /* mRigidBody2D.i */
 %module mRigidBody2D
 
+%typemap(out) RigidBody2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) RigidBody2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) RigidBody2D %{
   public static readonly int MODE_STATIC = 1;

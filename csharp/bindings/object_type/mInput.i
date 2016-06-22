@@ -4,6 +4,15 @@
 %csmethodmodifiers Input::Input "private"
 %csmethodmodifiers Input::SingletonGetInstance "private"
 %nodefaultctor Input;
+%typemap(out) Input "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Input* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Input %{
   private static $csclassname instance;
@@ -113,6 +122,30 @@ public:
     String get_joy_guid(int device) {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_joy_guid", device);
+    }
+  }
+  %extend {
+    Vector2 get_joy_vibration_strength(int device) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_joy_vibration_strength", device);
+    }
+  }
+  %extend {
+    float get_joy_vibration_duration(int device) {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_joy_vibration_duration", device);
+    }
+  }
+  %extend {
+    void start_joy_vibration(int device, float weak_magnitude, float strong_magnitude, float duration = 0) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("start_joy_vibration", device, weak_magnitude, strong_magnitude, duration);
+    }
+  }
+  %extend {
+    void stop_joy_vibration(int device) {
+  Object* self_obj = static_cast<Object*>($self);
+  self_obj->call("stop_joy_vibration", device);
     }
   }
   %extend {

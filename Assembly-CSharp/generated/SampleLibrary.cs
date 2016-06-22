@@ -27,12 +27,16 @@ public class SampleLibrary : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~SampleLibrary() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_SampleLibrary(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,16 +47,19 @@ public class SampleLibrary : Resource {
 
 
 
-  public void add_sample(string name, SWIGTYPE_p_RefT_Sample_t sample) {
-    GodotEnginePINVOKE.SampleLibrary_add_sample(swigCPtr, name, SWIGTYPE_p_RefT_Sample_t.getCPtr(sample));
+  public void add_sample(string name, Sample sample) {
+    GodotEnginePINVOKE.SampleLibrary_add_sample(swigCPtr, name, Sample.getCPtr(sample));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Sample_t get_sample(string name) {
-    SWIGTYPE_p_RefT_Sample_t ret = new SWIGTYPE_p_RefT_Sample_t(GodotEnginePINVOKE.SampleLibrary_get_sample(swigCPtr, name), true);
+  public Sample get_sample(string name) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.SampleLibrary_get_sample(swigCPtr, name);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Sample ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Sample;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool has_sample(string name) {
     bool ret = GodotEnginePINVOKE.SampleLibrary_has_sample(swigCPtr, name);

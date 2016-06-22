@@ -2,6 +2,25 @@
 %module mShader
 
 %nodefaultctor Shader;
+%typemap(ctype, out="Shader*") Ref<Shader> "Shader*"
+%typemap(out, null="NULL") Ref<Shader> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Shader> "Shader.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Shader> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Shader> "Shader"
+%typemap(csout, excode=SWIGEXCODE) Ref<Shader> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Shader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shader;$excode
+    return ret;
+}
+
+template<class Shader> class Ref;%template() Ref<Shader>;
+%feature("novaluewrapper") Ref<Shader>;
+
 
 %typemap(csbody_derived) Shader %{
   public static readonly int MODE_MATERIAL = 0;
@@ -91,5 +110,20 @@ public:
   return self_obj->call("has_param", name);
     }
   }
+  %extend {
+    ~Shader() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

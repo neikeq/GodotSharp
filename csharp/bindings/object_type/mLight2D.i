@@ -1,6 +1,15 @@
 /* mLight2D.i */
 %module mLight2D
 
+%typemap(out) Light2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Light2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Light2D %{
   public static readonly int MODE_ADD = 0;

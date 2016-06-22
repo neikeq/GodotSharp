@@ -60,14 +60,14 @@ public class ResourceSaver : Object {
   internal ResourceSaver() {}
 
 
-  public int save(string path, SWIGTYPE_p_RefT_Resource_t resource, int flags) {
-    int ret = GodotEnginePINVOKE.ResourceSaver_save__SWIG_0(swigCPtr, path, SWIGTYPE_p_RefT_Resource_t.getCPtr(resource), flags);
+  public int save(string path, Resource resource, int flags) {
+    int ret = GodotEnginePINVOKE.ResourceSaver_save__SWIG_0(swigCPtr, path, Resource.getCPtr(resource), flags);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int save(string path, SWIGTYPE_p_RefT_Resource_t resource) {
-    int ret = GodotEnginePINVOKE.ResourceSaver_save__SWIG_1(swigCPtr, path, SWIGTYPE_p_RefT_Resource_t.getCPtr(resource));
+  public int save(string path, Resource resource) {
+    int ret = GodotEnginePINVOKE.ResourceSaver_save__SWIG_1(swigCPtr, path, Resource.getCPtr(resource));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -79,7 +79,9 @@ public class ResourceSaver : Object {
 
   private static ResourceSaver SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ResourceSaver_SingletonGetInstance();
-    ResourceSaver ret = (cPtr == global::System.IntPtr.Zero) ? null : new ResourceSaver(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ResourceSaver ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceSaver;
     return ret;
   }
 

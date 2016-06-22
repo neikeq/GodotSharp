@@ -27,12 +27,16 @@ public class World2D : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~World2D() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_World2D(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -60,7 +64,9 @@ public class World2D : Resource {
 
   public Physics2DDirectSpaceState get_direct_space_state() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.World2D_get_direct_space_state(swigCPtr);
-    Physics2DDirectSpaceState ret = (cPtr == global::System.IntPtr.Zero) ? null : new Physics2DDirectSpaceState(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Physics2DDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DDirectSpaceState;
     return ret;
   }
 

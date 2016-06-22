@@ -1,6 +1,25 @@
 /* mFixedMaterial.i */
 %module mFixedMaterial
 
+%typemap(ctype, out="FixedMaterial*") Ref<FixedMaterial> "FixedMaterial*"
+%typemap(out, null="NULL") Ref<FixedMaterial> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<FixedMaterial> "FixedMaterial.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<FixedMaterial> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<FixedMaterial> "FixedMaterial"
+%typemap(csout, excode=SWIGEXCODE) Ref<FixedMaterial> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    FixedMaterial ret = InternalHelpers.UnmanagedGetManaged(cPtr) as FixedMaterial;$excode
+    return ret;
+}
+
+template<class FixedMaterial> class Ref;%template() Ref<FixedMaterial>;
+%feature("novaluewrapper") Ref<FixedMaterial>;
+
 
 %typemap(csbody_derived) FixedMaterial %{
   public static readonly int PARAM_DIFFUSE = 0;
@@ -144,5 +163,20 @@ public:
     }
   }
   FixedMaterial();
+  %extend {
+    ~FixedMaterial() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

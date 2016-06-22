@@ -63,7 +63,7 @@ public class Light2D : Node2D {
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Light2D_get_texture(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

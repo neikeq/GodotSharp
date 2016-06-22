@@ -43,15 +43,18 @@ public class Path : Spatial {
 
 
 
-  public void set_curve(SWIGTYPE_p_RefT_Curve3D_t curve) {
-    GodotEnginePINVOKE.Path_set_curve(swigCPtr, SWIGTYPE_p_RefT_Curve3D_t.getCPtr(curve));
+  public void set_curve(Curve3D curve) {
+    GodotEnginePINVOKE.Path_set_curve(swigCPtr, Curve3D.getCPtr(curve));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Curve3D_t get_curve() {
-    SWIGTYPE_p_RefT_Curve3D_t ret = new SWIGTYPE_p_RefT_Curve3D_t(GodotEnginePINVOKE.Path_get_curve(swigCPtr), true);
+  public Curve3D get_curve() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Path_get_curve(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Curve3D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve3D;
     return ret;
-  }
+}
 
   public Path() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

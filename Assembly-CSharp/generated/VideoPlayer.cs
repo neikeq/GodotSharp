@@ -43,15 +43,18 @@ public class VideoPlayer : Control {
 
 
 
-  public void set_stream(SWIGTYPE_p_RefT_VideoStream_t stream) {
-    GodotEnginePINVOKE.VideoPlayer_set_stream(swigCPtr, SWIGTYPE_p_RefT_VideoStream_t.getCPtr(stream));
+  public void set_stream(VideoStream stream) {
+    GodotEnginePINVOKE.VideoPlayer_set_stream(swigCPtr, VideoStream.getCPtr(stream));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_VideoStream_t get_stream() {
-    SWIGTYPE_p_RefT_VideoStream_t ret = new SWIGTYPE_p_RefT_VideoStream_t(GodotEnginePINVOKE.VideoPlayer_get_stream(swigCPtr), true);
+  public VideoStream get_stream() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.VideoPlayer_get_stream(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    VideoStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as VideoStream;
     return ret;
-  }
+}
 
   public void play() {
     GodotEnginePINVOKE.VideoPlayer_play(swigCPtr);
@@ -139,10 +142,13 @@ public class VideoPlayer : Control {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_video_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.VideoPlayer_get_video_texture(swigCPtr), true);
+  public Texture get_video_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.VideoPlayer_get_video_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public VideoPlayer() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

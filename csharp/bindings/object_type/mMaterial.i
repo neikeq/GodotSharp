@@ -2,6 +2,25 @@
 %module mMaterial
 
 %nodefaultctor Material;
+%typemap(ctype, out="Material*") Ref<Material> "Material*"
+%typemap(out, null="NULL") Ref<Material> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Material> "Material.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Material> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Material> "Material"
+%typemap(csout, excode=SWIGEXCODE) Ref<Material> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Material ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Material;$excode
+    return ret;
+}
+
+template<class Material> class Ref;%template() Ref<Material>;
+%feature("novaluewrapper") Ref<Material>;
+
 
 %typemap(csbody_derived) Material %{
   public static readonly int FLAG_VISIBLE = 0;
@@ -105,5 +124,20 @@ public:
   return self_obj->call("get_depth_draw_mode");
     }
   }
+  %extend {
+    ~Material() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

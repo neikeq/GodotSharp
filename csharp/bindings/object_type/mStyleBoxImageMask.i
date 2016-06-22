@@ -1,6 +1,25 @@
 /* mStyleBoxImageMask.i */
 %module mStyleBoxImageMask
 
+%typemap(ctype, out="StyleBoxImageMask*") Ref<StyleBoxImageMask> "StyleBoxImageMask*"
+%typemap(out, null="NULL") Ref<StyleBoxImageMask> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<StyleBoxImageMask> "StyleBoxImageMask.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<StyleBoxImageMask> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<StyleBoxImageMask> "StyleBoxImageMask"
+%typemap(csout, excode=SWIGEXCODE) Ref<StyleBoxImageMask> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StyleBoxImageMask ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBoxImageMask;$excode
+    return ret;
+}
+
+template<class StyleBoxImageMask> class Ref;%template() Ref<StyleBoxImageMask>;
+%feature("novaluewrapper") Ref<StyleBoxImageMask>;
+
 
 %typemap(csbody_derived) StyleBoxImageMask %{
 
@@ -75,5 +94,20 @@ public:
     }
   }
   StyleBoxImageMask();
+  %extend {
+    ~StyleBoxImageMask() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

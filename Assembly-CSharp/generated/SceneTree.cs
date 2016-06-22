@@ -120,7 +120,7 @@ public class SceneTree : MainLoop {
   public Object get_edited_scene_root() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_edited_scene_root(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -198,7 +198,7 @@ public class SceneTree : MainLoop {
   public Node get_current_scene() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_current_scene(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -209,8 +209,8 @@ public class SceneTree : MainLoop {
     return ret;
   }
 
-  public int change_scene_to(SWIGTYPE_p_RefT_PackedScene_t packed_scene) {
-    int ret = GodotEnginePINVOKE.SceneTree_change_scene_to(swigCPtr, SWIGTYPE_p_RefT_PackedScene_t.getCPtr(packed_scene));
+  public int change_scene_to(PackedScene packed_scene) {
+    int ret = GodotEnginePINVOKE.SceneTree_change_scene_to(swigCPtr, PackedScene.getCPtr(packed_scene));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

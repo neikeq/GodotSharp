@@ -43,15 +43,18 @@ public class StreamPlayer : Node {
 
 
 
-  public void set_stream(SWIGTYPE_p_RefT_AudioStream_t stream) {
-    GodotEnginePINVOKE.StreamPlayer_set_stream(swigCPtr, SWIGTYPE_p_RefT_AudioStream_t.getCPtr(stream));
+  public void set_stream(AudioStream stream) {
+    GodotEnginePINVOKE.StreamPlayer_set_stream(swigCPtr, AudioStream.getCPtr(stream));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_AudioStream_t get_stream() {
-    SWIGTYPE_p_RefT_AudioStream_t ret = new SWIGTYPE_p_RefT_AudioStream_t(GodotEnginePINVOKE.StreamPlayer_get_stream(swigCPtr), true);
+  public AudioStream get_stream() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.StreamPlayer_get_stream(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    AudioStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioStream;
     return ret;
-  }
+}
 
   public void play(float offset) {
     GodotEnginePINVOKE.StreamPlayer_play__SWIG_0(swigCPtr, offset);

@@ -43,15 +43,18 @@ public class Path2D : Node2D {
 
 
 
-  public void set_curve(SWIGTYPE_p_RefT_Curve2D_t curve) {
-    GodotEnginePINVOKE.Path2D_set_curve(swigCPtr, SWIGTYPE_p_RefT_Curve2D_t.getCPtr(curve));
+  public void set_curve(Curve2D curve) {
+    GodotEnginePINVOKE.Path2D_set_curve(swigCPtr, Curve2D.getCPtr(curve));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Curve2D_t get_curve() {
-    SWIGTYPE_p_RefT_Curve2D_t ret = new SWIGTYPE_p_RefT_Curve2D_t(GodotEnginePINVOKE.Path2D_get_curve(swigCPtr), true);
+  public Curve2D get_curve() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Path2D_get_curve(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Curve2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve2D;
     return ret;
-  }
+}
 
   public Path2D() : this(false) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

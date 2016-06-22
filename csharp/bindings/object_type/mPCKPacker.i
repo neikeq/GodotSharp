@@ -1,6 +1,25 @@
 /* mPCKPacker.i */
 %module mPCKPacker
 
+%typemap(ctype, out="PCKPacker*") Ref<PCKPacker> "PCKPacker*"
+%typemap(out, null="NULL") Ref<PCKPacker> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PCKPacker> "PCKPacker.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PCKPacker> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PCKPacker> "PCKPacker"
+%typemap(csout, excode=SWIGEXCODE) Ref<PCKPacker> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PCKPacker ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PCKPacker;$excode
+    return ret;
+}
+
+template<class PCKPacker> class Ref;%template() Ref<PCKPacker>;
+%feature("novaluewrapper") Ref<PCKPacker>;
+
 
 %typemap(csbody_derived) PCKPacker %{
 
@@ -57,5 +76,20 @@ public:
     }
   }
   PCKPacker();
+  %extend {
+    ~PCKPacker() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

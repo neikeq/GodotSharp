@@ -90,7 +90,7 @@ public class Polygon2D : Node2D {
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Polygon2D_get_texture(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

@@ -4,6 +4,15 @@
 %csmethodmodifiers VisualServer::VisualServer "private"
 %csmethodmodifiers VisualServer::SingletonGetInstance "private"
 %nodefaultctor VisualServer;
+%typemap(out) VisualServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) VisualServer* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) VisualServer %{
   private static $csclassname instance;
@@ -1140,9 +1149,9 @@ $self->call("canvas_item_add_style_box", (const Variant **) args_, 6, err);
     }
   }
   %extend {
-    void free(const RID& arg0_) {
+    void free_rid(const RID& arg0_) {
   Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("free", arg0_);
+  self_obj->call("free_rid", arg0_);
     }
   }
   %extend {

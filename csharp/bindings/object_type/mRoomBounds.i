@@ -1,6 +1,25 @@
 /* mRoomBounds.i */
 %module mRoomBounds
 
+%typemap(ctype, out="RoomBounds*") Ref<RoomBounds> "RoomBounds*"
+%typemap(out, null="NULL") Ref<RoomBounds> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<RoomBounds> "RoomBounds.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<RoomBounds> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<RoomBounds> "RoomBounds"
+%typemap(csout, excode=SWIGEXCODE) Ref<RoomBounds> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    RoomBounds ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RoomBounds;$excode
+    return ret;
+}
+
+template<class RoomBounds> class Ref;%template() Ref<RoomBounds>;
+%feature("novaluewrapper") Ref<RoomBounds>;
+
 
 %typemap(csbody_derived) RoomBounds %{
 
@@ -75,5 +94,20 @@ public:
     }
   }
   RoomBounds();
+  %extend {
+    ~RoomBounds() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

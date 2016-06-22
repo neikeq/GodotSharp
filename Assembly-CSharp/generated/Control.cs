@@ -96,7 +96,7 @@ public class Control : CanvasItem {
   public Object get_drag_data(Vector2 pos) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_drag_data(swigCPtr, ref pos);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
@@ -286,7 +286,7 @@ public class Control : CanvasItem {
   public Control get_focus_owner() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_focus_owner(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     return ret;
   }
@@ -318,33 +318,36 @@ public class Control : CanvasItem {
     return ret;
   }
 
-  public void set_theme(SWIGTYPE_p_RefT_Theme_t theme) {
-    GodotEnginePINVOKE.Control_set_theme(swigCPtr, SWIGTYPE_p_RefT_Theme_t.getCPtr(theme));
+  public void set_theme(Theme theme) {
+    GodotEnginePINVOKE.Control_set_theme(swigCPtr, Theme.getCPtr(theme));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Theme_t get_theme() {
-    SWIGTYPE_p_RefT_Theme_t ret = new SWIGTYPE_p_RefT_Theme_t(GodotEnginePINVOKE.Control_get_theme(swigCPtr), true);
+  public Theme get_theme() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_theme(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Theme ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Theme;
     return ret;
-  }
+}
 
-  public void add_icon_override(string name, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.Control_add_icon_override(swigCPtr, name, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void add_icon_override(string name, Texture texture) {
+    GodotEnginePINVOKE.Control_add_icon_override(swigCPtr, name, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_shader_override(string name, SWIGTYPE_p_RefT_Shader_t shader) {
-    GodotEnginePINVOKE.Control_add_shader_override(swigCPtr, name, SWIGTYPE_p_RefT_Shader_t.getCPtr(shader));
+  public void add_shader_override(string name, Shader shader) {
+    GodotEnginePINVOKE.Control_add_shader_override(swigCPtr, name, Shader.getCPtr(shader));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_style_override(string name, SWIGTYPE_p_RefT_StyleBox_t stylebox) {
-    GodotEnginePINVOKE.Control_add_style_override(swigCPtr, name, SWIGTYPE_p_RefT_StyleBox_t.getCPtr(stylebox));
+  public void add_style_override(string name, StyleBox stylebox) {
+    GodotEnginePINVOKE.Control_add_style_override(swigCPtr, name, StyleBox.getCPtr(stylebox));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_font_override(string name, SWIGTYPE_p_RefT_Font_t font) {
-    GodotEnginePINVOKE.Control_add_font_override(swigCPtr, name, SWIGTYPE_p_RefT_Font_t.getCPtr(font));
+  public void add_font_override(string name, Font font) {
+    GodotEnginePINVOKE.Control_add_font_override(swigCPtr, name, Font.getCPtr(font));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -358,41 +361,59 @@ public class Control : CanvasItem {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_icon(string name, string type) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Control_get_icon__SWIG_0(swigCPtr, name, type), true);
+  public Texture get_icon(string name, string type) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_icon__SWIG_0(swigCPtr, name, type);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Texture_t get_icon(string name) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Control_get_icon__SWIG_1(swigCPtr, name), true);
+  public Texture get_icon(string name) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_icon__SWIG_1(swigCPtr, name);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_StyleBox_t get_stylebox(string name, string type) {
-    SWIGTYPE_p_RefT_StyleBox_t ret = new SWIGTYPE_p_RefT_StyleBox_t(GodotEnginePINVOKE.Control_get_stylebox__SWIG_0(swigCPtr, name, type), true);
+  public StyleBox get_stylebox(string name, string type) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_stylebox__SWIG_0(swigCPtr, name, type);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StyleBox ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBox;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_StyleBox_t get_stylebox(string name) {
-    SWIGTYPE_p_RefT_StyleBox_t ret = new SWIGTYPE_p_RefT_StyleBox_t(GodotEnginePINVOKE.Control_get_stylebox__SWIG_1(swigCPtr, name), true);
+  public StyleBox get_stylebox(string name) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_stylebox__SWIG_1(swigCPtr, name);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StyleBox ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBox;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Font_t get_font(string name, string type) {
-    SWIGTYPE_p_RefT_Font_t ret = new SWIGTYPE_p_RefT_Font_t(GodotEnginePINVOKE.Control_get_font__SWIG_0(swigCPtr, name, type), true);
+  public Font get_font(string name, string type) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_font__SWIG_0(swigCPtr, name, type);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Font ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Font;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Font_t get_font(string name) {
-    SWIGTYPE_p_RefT_Font_t ret = new SWIGTYPE_p_RefT_Font_t(GodotEnginePINVOKE.Control_get_font__SWIG_1(swigCPtr, name), true);
+  public Font get_font(string name) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_font__SWIG_1(swigCPtr, name);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Font ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Font;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Color get_color(string name, string type) {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.Control_get_color__SWIG_0(swigCPtr, name, type), true);
@@ -511,7 +532,7 @@ public class Control : CanvasItem {
   public Control get_parent_control() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Control_get_parent_control(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Control ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Control;
     return ret;
   }

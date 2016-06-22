@@ -1,6 +1,25 @@
 /* mEditorSpatialGizmo.i */
 %module mEditorSpatialGizmo
 
+%typemap(ctype, out="EditorSpatialGizmo*") Ref<EditorSpatialGizmo> "EditorSpatialGizmo*"
+%typemap(out, null="NULL") Ref<EditorSpatialGizmo> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<EditorSpatialGizmo> "EditorSpatialGizmo.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<EditorSpatialGizmo> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<EditorSpatialGizmo> "EditorSpatialGizmo"
+%typemap(csout, excode=SWIGEXCODE) Ref<EditorSpatialGizmo> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorSpatialGizmo ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSpatialGizmo;$excode
+    return ret;
+}
+
+template<class EditorSpatialGizmo> class Ref;%template() Ref<EditorSpatialGizmo>;
+%feature("novaluewrapper") Ref<EditorSpatialGizmo>;
+
 
 %typemap(csbody_derived) EditorSpatialGizmo %{
 
@@ -111,5 +130,20 @@ public:
     }
   }
   EditorSpatialGizmo();
+  %extend {
+    ~EditorSpatialGizmo() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

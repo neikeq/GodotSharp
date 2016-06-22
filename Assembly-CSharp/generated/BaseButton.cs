@@ -118,7 +118,7 @@ public class BaseButton : Control {
   public Object get_shortcut() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.BaseButton_get_shortcut(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

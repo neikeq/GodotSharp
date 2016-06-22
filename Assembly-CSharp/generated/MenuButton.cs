@@ -45,7 +45,9 @@ public class MenuButton : Button {
 
   public PopupMenu get_popup() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MenuButton_get_popup(swigCPtr);
-    PopupMenu ret = (cPtr == global::System.IntPtr.Zero) ? null : new PopupMenu(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PopupMenu ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PopupMenu;
     return ret;
   }
 

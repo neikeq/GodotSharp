@@ -1,6 +1,25 @@
 /* mTileSet.i */
 %module mTileSet
 
+%typemap(ctype, out="TileSet*") Ref<TileSet> "TileSet*"
+%typemap(out, null="NULL") Ref<TileSet> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<TileSet> "TileSet.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<TileSet> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<TileSet> "TileSet"
+%typemap(csout, excode=SWIGEXCODE) Ref<TileSet> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TileSet ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TileSet;$excode
+    return ret;
+}
+
+template<class TileSet> class Ref;%template() Ref<TileSet>;
+%feature("novaluewrapper") Ref<TileSet>;
+
 
 %typemap(csbody_derived) TileSet %{
 
@@ -219,5 +238,20 @@ public:
     }
   }
   TileSet();
+  %extend {
+    ~TileSet() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

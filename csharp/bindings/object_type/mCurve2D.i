@@ -1,6 +1,25 @@
 /* mCurve2D.i */
 %module mCurve2D
 
+%typemap(ctype, out="Curve2D*") Ref<Curve2D> "Curve2D*"
+%typemap(out, null="NULL") Ref<Curve2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Curve2D> "Curve2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Curve2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Curve2D> "Curve2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<Curve2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Curve2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve2D;$excode
+    return ret;
+}
+
+template<class Curve2D> class Ref;%template() Ref<Curve2D>;
+%feature("novaluewrapper") Ref<Curve2D>;
+
 
 %typemap(csbody_derived) Curve2D %{
 
@@ -141,5 +160,20 @@ public:
     }
   }
   Curve2D();
+  %extend {
+    ~Curve2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

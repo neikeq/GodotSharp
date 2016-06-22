@@ -27,12 +27,16 @@ public class MeshLibrary : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~MeshLibrary() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_MeshLibrary(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -52,8 +56,8 @@ public class MeshLibrary : Resource {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_item_mesh(int id, SWIGTYPE_p_RefT_Mesh_t mesh) {
-    GodotEnginePINVOKE.MeshLibrary_set_item_mesh(swigCPtr, id, SWIGTYPE_p_RefT_Mesh_t.getCPtr(mesh));
+  public void set_item_mesh(int id, Mesh mesh) {
+    GodotEnginePINVOKE.MeshLibrary_set_item_mesh(swigCPtr, id, Mesh.getCPtr(mesh));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -62,8 +66,8 @@ public class MeshLibrary : Resource {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_item_shape(int id, SWIGTYPE_p_RefT_Shape_t shape) {
-    GodotEnginePINVOKE.MeshLibrary_set_item_shape(swigCPtr, id, SWIGTYPE_p_RefT_Shape_t.getCPtr(shape));
+  public void set_item_shape(int id, Shape shape) {
+    GodotEnginePINVOKE.MeshLibrary_set_item_shape(swigCPtr, id, Shape.getCPtr(shape));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -72,20 +76,26 @@ public class MeshLibrary : Resource {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Mesh_t get_item_mesh(int id) {
-    SWIGTYPE_p_RefT_Mesh_t ret = new SWIGTYPE_p_RefT_Mesh_t(GodotEnginePINVOKE.MeshLibrary_get_item_mesh(swigCPtr, id), true);
+  public Mesh get_item_mesh(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshLibrary_get_item_mesh(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;
     return ret;
-  }
+}
 
   public SWIGTYPE_p_RefT_NavigationMesh_t get_item_navmesh(int id) {
     SWIGTYPE_p_RefT_NavigationMesh_t ret = new SWIGTYPE_p_RefT_NavigationMesh_t(GodotEnginePINVOKE.MeshLibrary_get_item_navmesh(swigCPtr, id), true);
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Shape_t get_item_shape(int id) {
-    SWIGTYPE_p_RefT_Shape_t ret = new SWIGTYPE_p_RefT_Shape_t(GodotEnginePINVOKE.MeshLibrary_get_item_shape(swigCPtr, id), true);
+  public Shape get_item_shape(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshLibrary_get_item_shape(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Shape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shape;
     return ret;
-  }
+}
 
   public void remove_item(int id) {
     GodotEnginePINVOKE.MeshLibrary_remove_item(swigCPtr, id);

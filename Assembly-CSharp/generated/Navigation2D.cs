@@ -43,14 +43,14 @@ public class Navigation2D : Node2D {
 
 
 
-  public int navpoly_create(SWIGTYPE_p_RefT_NavigationPolygon_t mesh, Matrix32 xform, Object owner) {
-    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(mesh), ref xform.elements, Object.getCPtr(owner));
+  public int navpoly_create(NavigationPolygon mesh, Matrix32 xform, Object owner) {
+    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform.elements, Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int navpoly_create(SWIGTYPE_p_RefT_NavigationPolygon_t mesh, Matrix32 xform) {
-    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(mesh), ref xform.elements);
+  public int navpoly_create(NavigationPolygon mesh, Matrix32 xform) {
+    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_1(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform.elements);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -85,7 +85,7 @@ public class Navigation2D : Node2D {
   public Object get_closest_point_owner(Vector2 to_point) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation2D_get_closest_point_owner(swigCPtr, ref to_point);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;

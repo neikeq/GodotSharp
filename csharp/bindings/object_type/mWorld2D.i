@@ -1,6 +1,25 @@
 /* mWorld2D.i */
 %module mWorld2D
 
+%typemap(ctype, out="World2D*") Ref<World2D> "World2D*"
+%typemap(out, null="NULL") Ref<World2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<World2D> "World2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<World2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<World2D> "World2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<World2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World2D;$excode
+    return ret;
+}
+
+template<class World2D> class Ref;%template() Ref<World2D>;
+%feature("novaluewrapper") Ref<World2D>;
+
 
 %typemap(csbody_derived) World2D %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   World2D();
+  %extend {
+    ~World2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

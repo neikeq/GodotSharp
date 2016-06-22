@@ -27,12 +27,16 @@ public class DynamicFont : Font {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~DynamicFont() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_DynamicFont(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,15 +47,18 @@ public class DynamicFont : Font {
 
 
 
-  public void set_font_data(SWIGTYPE_p_RefT_DynamicFontData_t data) {
-    GodotEnginePINVOKE.DynamicFont_set_font_data(swigCPtr, SWIGTYPE_p_RefT_DynamicFontData_t.getCPtr(data));
+  public void set_font_data(DynamicFontData data) {
+    GodotEnginePINVOKE.DynamicFont_set_font_data(swigCPtr, DynamicFontData.getCPtr(data));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_DynamicFontData_t get_font_data() {
-    SWIGTYPE_p_RefT_DynamicFontData_t ret = new SWIGTYPE_p_RefT_DynamicFontData_t(GodotEnginePINVOKE.DynamicFont_get_font_data(swigCPtr), true);
+  public DynamicFontData get_font_data() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.DynamicFont_get_font_data(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    DynamicFontData ret = InternalHelpers.UnmanagedGetManaged(cPtr) as DynamicFontData;
     return ret;
-  }
+}
 
   public void set_size(int data) {
     GodotEnginePINVOKE.DynamicFont_set_size(swigCPtr, data);
@@ -62,20 +69,23 @@ public class DynamicFont : Font {
     return ret;
   }
 
-  public void add_fallback(SWIGTYPE_p_RefT_DynamicFontData_t data) {
-    GodotEnginePINVOKE.DynamicFont_add_fallback(swigCPtr, SWIGTYPE_p_RefT_DynamicFontData_t.getCPtr(data));
+  public void add_fallback(DynamicFontData data) {
+    GodotEnginePINVOKE.DynamicFont_add_fallback(swigCPtr, DynamicFontData.getCPtr(data));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_fallback(int idx, SWIGTYPE_p_RefT_DynamicFontData_t data) {
-    GodotEnginePINVOKE.DynamicFont_set_fallback(swigCPtr, idx, SWIGTYPE_p_RefT_DynamicFontData_t.getCPtr(data));
+  public void set_fallback(int idx, DynamicFontData data) {
+    GodotEnginePINVOKE.DynamicFont_set_fallback(swigCPtr, idx, DynamicFontData.getCPtr(data));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_DynamicFontData_t get_fallback(int idx) {
-    SWIGTYPE_p_RefT_DynamicFontData_t ret = new SWIGTYPE_p_RefT_DynamicFontData_t(GodotEnginePINVOKE.DynamicFont_get_fallback(swigCPtr, idx), true);
+  public DynamicFontData get_fallback(int idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.DynamicFont_get_fallback(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    DynamicFontData ret = InternalHelpers.UnmanagedGetManaged(cPtr) as DynamicFontData;
     return ret;
-  }
+}
 
   public void remove_fallback(int idx) {
     GodotEnginePINVOKE.DynamicFont_remove_fallback(swigCPtr, idx);

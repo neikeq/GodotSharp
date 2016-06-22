@@ -1,6 +1,15 @@
 /* mCollisionShape2D.i */
 %module mCollisionShape2D
 
+%typemap(out) CollisionShape2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) CollisionShape2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) CollisionShape2D %{
 

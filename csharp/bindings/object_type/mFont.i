@@ -2,6 +2,25 @@
 %module mFont
 
 %nodefaultctor Font;
+%typemap(ctype, out="Font*") Ref<Font> "Font*"
+%typemap(out, null="NULL") Ref<Font> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Font> "Font.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Font> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Font> "Font"
+%typemap(csout, excode=SWIGEXCODE) Ref<Font> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Font ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Font;$excode
+    return ret;
+}
+
+template<class Font> class Ref;%template() Ref<Font>;
+%feature("novaluewrapper") Ref<Font>;
+
 
 %typemap(csbody_derived) Font %{
 
@@ -82,5 +101,20 @@ public:
   return self_obj->call("draw_char", canvas_item, pos, char_, next, modulate);
     }
   }
+  %extend {
+    ~Font() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

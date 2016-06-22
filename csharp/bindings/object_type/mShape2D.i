@@ -2,6 +2,25 @@
 %module mShape2D
 
 %nodefaultctor Shape2D;
+%typemap(ctype, out="Shape2D*") Ref<Shape2D> "Shape2D*"
+%typemap(out, null="NULL") Ref<Shape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Shape2D> "Shape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Shape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Shape2D> "Shape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<Shape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Shape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shape2D;$excode
+    return ret;
+}
+
+template<class Shape2D> class Ref;%template() Ref<Shape2D>;
+%feature("novaluewrapper") Ref<Shape2D>;
+
 
 %typemap(csbody_derived) Shape2D %{
 
@@ -76,5 +95,20 @@ public:
   return self_obj->call("collide_with_motion_and_get_contacts", local_xform, local_motion, with_shape, shape_xform, shape_motion);
     }
   }
+  %extend {
+    ~Shape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

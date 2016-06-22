@@ -1,6 +1,25 @@
 /* mEditorScenePostImport.i */
 %module mEditorScenePostImport
 
+%typemap(ctype, out="EditorScenePostImport*") Ref<EditorScenePostImport> "EditorScenePostImport*"
+%typemap(out, null="NULL") Ref<EditorScenePostImport> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<EditorScenePostImport> "EditorScenePostImport.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<EditorScenePostImport> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<EditorScenePostImport> "EditorScenePostImport"
+%typemap(csout, excode=SWIGEXCODE) Ref<EditorScenePostImport> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorScenePostImport ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorScenePostImport;$excode
+    return ret;
+}
+
+template<class EditorScenePostImport> class Ref;%template() Ref<EditorScenePostImport>;
+%feature("novaluewrapper") Ref<EditorScenePostImport>;
+
 
 %typemap(csbody_derived) EditorScenePostImport %{
 
@@ -45,5 +64,20 @@ public:
     }
   }
   EditorScenePostImport();
+  %extend {
+    ~EditorScenePostImport() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

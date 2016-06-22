@@ -1,6 +1,15 @@
 /* mColorPickerButton.i */
 %module mColorPickerButton
 
+%typemap(out) ColorPickerButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) ColorPickerButton* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) ColorPickerButton %{
 
@@ -48,6 +57,12 @@ public:
     Color get_color() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_color");
+    }
+  }
+  %extend {
+    ColorPicker* get_picker() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_picker").operator Object *()->cast_to<ColorPicker>();
     }
   }
   %extend {

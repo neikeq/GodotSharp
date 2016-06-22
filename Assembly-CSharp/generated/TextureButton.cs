@@ -43,33 +43,33 @@ public class TextureButton : BaseButton {
 
 
 
-  public void set_normal_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TextureButton_set_normal_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_normal_texture(Texture texture) {
+    GodotEnginePINVOKE.TextureButton_set_normal_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_pressed_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TextureButton_set_pressed_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_pressed_texture(Texture texture) {
+    GodotEnginePINVOKE.TextureButton_set_pressed_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_hover_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TextureButton_set_hover_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_hover_texture(Texture texture) {
+    GodotEnginePINVOKE.TextureButton_set_hover_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_disabled_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TextureButton_set_disabled_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_disabled_texture(Texture texture) {
+    GodotEnginePINVOKE.TextureButton_set_disabled_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_focused_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.TextureButton_set_focused_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_focused_texture(Texture texture) {
+    GodotEnginePINVOKE.TextureButton_set_focused_texture(swigCPtr, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_click_mask(SWIGTYPE_p_RefT_BitMap_t mask) {
-    GodotEnginePINVOKE.TextureButton_set_click_mask(swigCPtr, SWIGTYPE_p_RefT_BitMap_t.getCPtr(mask));
+  public void set_click_mask(BitMap mask) {
+    GodotEnginePINVOKE.TextureButton_set_click_mask(swigCPtr, BitMap.getCPtr(mask));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -83,35 +83,53 @@ public class TextureButton : BaseButton {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_normal_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TextureButton_get_normal_texture(swigCPtr), true);
+  public Texture get_normal_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureButton_get_normal_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Texture_t get_pressed_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TextureButton_get_pressed_texture(swigCPtr), true);
+  public Texture get_pressed_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureButton_get_pressed_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Texture_t get_hover_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TextureButton_get_hover_texture(swigCPtr), true);
+  public Texture get_hover_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureButton_get_hover_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Texture_t get_disabled_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TextureButton_get_disabled_texture(swigCPtr), true);
+  public Texture get_disabled_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureButton_get_disabled_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Texture_t get_focused_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.TextureButton_get_focused_texture(swigCPtr), true);
+  public Texture get_focused_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureButton_get_focused_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_BitMap_t get_click_mask() {
-    SWIGTYPE_p_RefT_BitMap_t ret = new SWIGTYPE_p_RefT_BitMap_t(GodotEnginePINVOKE.TextureButton_get_click_mask(swigCPtr), true);
+  public BitMap get_click_mask() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TextureButton_get_click_mask(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BitMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BitMap;
     return ret;
-  }
+}
 
   public Vector2 get_texture_scale() {
     Vector2 ret = GodotEnginePINVOKE.TextureButton_get_texture_scale(swigCPtr);

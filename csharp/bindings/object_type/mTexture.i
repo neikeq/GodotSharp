@@ -2,6 +2,25 @@
 %module mTexture
 
 %nodefaultctor Texture;
+%typemap(ctype, out="Texture*") Ref<Texture> "Texture*"
+%typemap(out, null="NULL") Ref<Texture> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Texture> "Texture.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Texture> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Texture> "Texture"
+%typemap(csout, excode=SWIGEXCODE) Ref<Texture> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;$excode
+    return ret;
+}
+
+template<class Texture> class Ref;%template() Ref<Texture>;
+%feature("novaluewrapper") Ref<Texture>;
+
 
 %typemap(csbody_derived) Texture %{
   public static readonly int FLAG_MIPMAPS = 1;
@@ -108,5 +127,20 @@ public:
   self_obj->call("draw_rect_region", canvas_item, rect, src_rect, modulate, transpose);
     }
   }
+  %extend {
+    ~Texture() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

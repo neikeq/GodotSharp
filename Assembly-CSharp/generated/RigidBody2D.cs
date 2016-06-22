@@ -242,8 +242,8 @@ public class RigidBody2D : PhysicsBody2D {
     return ret;
   }
 
-  public bool test_motion(Vector2 motion, float margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t result) {
-    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_0(swigCPtr, ref motion, margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t.getCPtr(result));
+  public bool test_motion(Vector2 motion, float margin, Physics2DTestMotionResult result) {
+    bool ret = GodotEnginePINVOKE.RigidBody2D_test_motion__SWIG_0(swigCPtr, ref motion, margin, Physics2DTestMotionResult.getCPtr(result));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

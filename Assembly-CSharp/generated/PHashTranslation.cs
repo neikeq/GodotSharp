@@ -27,12 +27,16 @@ public class PHashTranslation : Translation {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~PHashTranslation() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_PHashTranslation(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,8 +47,8 @@ public class PHashTranslation : Translation {
 
 
 
-  public void generate(SWIGTYPE_p_RefT_Translation_t from) {
-    GodotEnginePINVOKE.PHashTranslation_generate(swigCPtr, SWIGTYPE_p_RefT_Translation_t.getCPtr(from));
+  public void generate(Translation from) {
+    GodotEnginePINVOKE.PHashTranslation_generate(swigCPtr, Translation.getCPtr(from));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

@@ -1,6 +1,25 @@
 /* mReference.i */
 %module mReference
 
+%typemap(ctype, out="Reference*") Ref<Reference> "Reference*"
+%typemap(out, null="NULL") Ref<Reference> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Reference> "Reference.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Reference> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Reference> "Reference"
+%typemap(csout, excode=SWIGEXCODE) Ref<Reference> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Reference ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Reference;$excode
+    return ret;
+}
+
+template<class Reference> class Ref;%template() Ref<Reference>;
+%feature("novaluewrapper") Ref<Reference>;
+
 
 %typemap(csbody_derived) Reference %{
 
@@ -57,5 +76,20 @@ public:
     }
   }
   Reference();
+  %extend {
+    ~Reference() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

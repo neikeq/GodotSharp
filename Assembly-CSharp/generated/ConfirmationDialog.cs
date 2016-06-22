@@ -45,7 +45,9 @@ public class ConfirmationDialog : AcceptDialog {
 
   public Button get_cancel() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ConfirmationDialog_get_cancel(swigCPtr);
-    Button ret = (cPtr == global::System.IntPtr.Zero) ? null : new Button(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Button ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Button;
     return ret;
   }
 

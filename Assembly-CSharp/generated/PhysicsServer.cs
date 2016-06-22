@@ -210,7 +210,9 @@ public class PhysicsServer : Object {
 
   public PhysicsDirectSpaceState space_get_direct_state(SWIGTYPE_p_RID space) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PhysicsServer_space_get_direct_state(swigCPtr, SWIGTYPE_p_RID.getCPtr(space));
-    PhysicsDirectSpaceState ret = (cPtr == global::System.IntPtr.Zero) ? null : new PhysicsDirectSpaceState(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PhysicsDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PhysicsDirectSpaceState;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -734,7 +736,9 @@ public class PhysicsServer : Object {
 
   private static PhysicsServer SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.PhysicsServer_SingletonGetInstance();
-    PhysicsServer ret = (cPtr == global::System.IntPtr.Zero) ? null : new PhysicsServer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PhysicsServer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PhysicsServer;
     return ret;
   }
 

@@ -57,15 +57,18 @@ public class SamplePlayer : Node {
 
 
 
-  public void set_sample_library(SWIGTYPE_p_RefT_SampleLibrary_t library) {
-    GodotEnginePINVOKE.SamplePlayer_set_sample_library(swigCPtr, SWIGTYPE_p_RefT_SampleLibrary_t.getCPtr(library));
+  public void set_sample_library(SampleLibrary library) {
+    GodotEnginePINVOKE.SamplePlayer_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_SampleLibrary_t get_sample_library() {
-    SWIGTYPE_p_RefT_SampleLibrary_t ret = new SWIGTYPE_p_RefT_SampleLibrary_t(GodotEnginePINVOKE.SamplePlayer_get_sample_library(swigCPtr), true);
+  public SampleLibrary get_sample_library() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.SamplePlayer_get_sample_library(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SampleLibrary ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SampleLibrary;
     return ret;
-  }
+}
 
   public void set_polyphony(int max_voices) {
     GodotEnginePINVOKE.SamplePlayer_set_polyphony(swigCPtr, max_voices);

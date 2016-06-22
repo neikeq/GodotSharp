@@ -1,6 +1,25 @@
 /* mPacketPeerStream.i */
 %module mPacketPeerStream
 
+%typemap(ctype, out="PacketPeerStream*") Ref<PacketPeerStream> "PacketPeerStream*"
+%typemap(out, null="NULL") Ref<PacketPeerStream> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PacketPeerStream> "PacketPeerStream.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PacketPeerStream> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PacketPeerStream> "PacketPeerStream"
+%typemap(csout, excode=SWIGEXCODE) Ref<PacketPeerStream> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PacketPeerStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PacketPeerStream;$excode
+    return ret;
+}
+
+template<class PacketPeerStream> class Ref;%template() Ref<PacketPeerStream>;
+%feature("novaluewrapper") Ref<PacketPeerStream>;
+
 
 %typemap(csbody_derived) PacketPeerStream %{
 
@@ -45,5 +64,20 @@ public:
     }
   }
   PacketPeerStream();
+  %extend {
+    ~PacketPeerStream() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

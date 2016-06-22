@@ -2,6 +2,25 @@
 %module mVideoStream
 
 %nodefaultctor VideoStream;
+%typemap(ctype, out="VideoStream*") Ref<VideoStream> "VideoStream*"
+%typemap(out, null="NULL") Ref<VideoStream> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<VideoStream> "VideoStream.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<VideoStream> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<VideoStream> "VideoStream"
+%typemap(csout, excode=SWIGEXCODE) Ref<VideoStream> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    VideoStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as VideoStream;$excode
+    return ret;
+}
+
+template<class VideoStream> class Ref;%template() Ref<VideoStream>;
+%feature("novaluewrapper") Ref<VideoStream>;
+
 
 %typemap(csbody_derived) VideoStream %{
 
@@ -40,5 +59,20 @@
 
 class VideoStream : public Resource {
 public:
+  %extend {
+    ~VideoStream() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

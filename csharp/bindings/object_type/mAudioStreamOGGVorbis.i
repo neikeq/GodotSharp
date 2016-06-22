@@ -1,6 +1,25 @@
 /* mAudioStreamOGGVorbis.i */
 %module mAudioStreamOGGVorbis
 
+%typemap(ctype, out="AudioStreamOGGVorbis*") Ref<AudioStreamOGGVorbis> "AudioStreamOGGVorbis*"
+%typemap(out, null="NULL") Ref<AudioStreamOGGVorbis> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<AudioStreamOGGVorbis> "AudioStreamOGGVorbis.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<AudioStreamOGGVorbis> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<AudioStreamOGGVorbis> "AudioStreamOGGVorbis"
+%typemap(csout, excode=SWIGEXCODE) Ref<AudioStreamOGGVorbis> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    AudioStreamOGGVorbis ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioStreamOGGVorbis;$excode
+    return ret;
+}
+
+template<class AudioStreamOGGVorbis> class Ref;%template() Ref<AudioStreamOGGVorbis>;
+%feature("novaluewrapper") Ref<AudioStreamOGGVorbis>;
+
 
 %typemap(csbody_derived) AudioStreamOGGVorbis %{
 
@@ -39,5 +58,20 @@
 class AudioStreamOGGVorbis : public AudioStream {
 public:
   AudioStreamOGGVorbis();
+  %extend {
+    ~AudioStreamOGGVorbis() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

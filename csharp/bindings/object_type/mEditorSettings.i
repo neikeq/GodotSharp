@@ -1,6 +1,25 @@
 /* mEditorSettings.i */
 %module mEditorSettings
 
+%typemap(ctype, out="EditorSettings*") Ref<EditorSettings> "EditorSettings*"
+%typemap(out, null="NULL") Ref<EditorSettings> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<EditorSettings> "EditorSettings.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<EditorSettings> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<EditorSettings> "EditorSettings"
+%typemap(csout, excode=SWIGEXCODE) Ref<EditorSettings> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorSettings ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSettings;$excode
+    return ret;
+}
+
+template<class EditorSettings> class Ref;%template() Ref<EditorSettings>;
+%feature("novaluewrapper") Ref<EditorSettings>;
+
 
 %typemap(csbody_derived) EditorSettings %{
 
@@ -81,5 +100,20 @@ public:
     }
   }
   EditorSettings();
+  %extend {
+    ~EditorSettings() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

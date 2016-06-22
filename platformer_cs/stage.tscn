@@ -36,212 +36,170 @@ __meta__ = { "_edit_lock_":true }
 [node name="coin" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 672, 1179 )
-linear_damp = 0.1
 
 [node name="coin 2" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 704, 1179 )
-linear_damp = 0.1
 
 [node name="coin 3" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 736, 1179 )
-linear_damp = 0.1
 
 [node name="coin 4" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1120, 992 )
-linear_damp = 0.1
 
 [node name="coin 5" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1152, 992 )
-linear_damp = 0.1
 
 [node name="coin 6" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1184, 992 )
-linear_damp = 0.1
 
 [node name="coin 7" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1216, 992 )
-linear_damp = 0.1
 
 [node name="coin 8" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1248, 992 )
-linear_damp = 0.1
 
 [node name="coin 9" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1568, 864 )
-linear_damp = 0.1
 
 [node name="coin 10" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1632, 864 )
-linear_damp = 0.1
 
 [node name="coin 11" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1824, 768 )
-linear_damp = 0.1
 
 [node name="coin 12" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1888, 768 )
-linear_damp = 0.1
 
 [node name="coin 13" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 2080, 672 )
-linear_damp = 0.1
 
 [node name="coin 14" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 2144, 672 )
-linear_damp = 0.1
 
 [node name="coin 15" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1792, 1248 )
-linear_damp = 0.1
 
 [node name="coin 16" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1856, 1248 )
-linear_damp = 0.1
 
 [node name="coin 17" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1920, 1248 )
-linear_damp = 0.1
 
 [node name="coin 18" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1920, 1184 )
-linear_damp = 0.1
 
 [node name="coin 19" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1856, 1184 )
-linear_damp = 0.1
 
 [node name="coin 20" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 1792, 1184 )
-linear_damp = 0.1
 
 [node name="coin 21" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 98.8868, 488.515 )
-linear_damp = 0.1
 
 [node name="coin 22" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 89.5989, 481.217 )
-linear_damp = 0.1
 
 [node name="coin 23" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 108.175, 481.217 )
-linear_damp = 0.1
 
 [node name="coin 24" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 116.136, 469.939 )
-linear_damp = 0.1
 
 [node name="coin 25" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 117.463, 457.997 )
-linear_damp = 0.1
 
 [node name="coin 26" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 106.184, 449.373 )
-linear_damp = 0.1
 
 [node name="coin 27" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 98.2234, 458.661 )
-linear_damp = 0.1
 
 [node name="coin 28" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 88.272, 448.71 )
-linear_damp = 0.1
 
 [node name="coin 29" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 79.6476, 457.334 )
-linear_damp = 0.1
 
 [node name="coin 30" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 82.9647, 468.612 )
-linear_damp = 0.1
 
 [node name="coin 31" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 3357.42, 465.288 )
-linear_damp = 0.1
 
 [node name="coin 31 2" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 3421.42, 465.288 )
-linear_damp = 0.1
 
 [node name="coin 31 3" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 3485.42, 465.288 )
-linear_damp = 0.1
 
 [node name="coin 31 4" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 3485.42, 401.288 )
-linear_damp = 0.1
 
 [node name="coin 31 5" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 3421.42, 401.288 )
-linear_damp = 0.1
 
 [node name="coin 31 6" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 3357.42, 401.288 )
-linear_damp = 0.1
 
 [node name="coin 32" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 4172.75, 605.058 )
-linear_damp = 0.1
 
 [node name="coin 31 7" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 4236.75, 605.058 )
-linear_damp = 0.1
 
 [node name="coin 31 7 2" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 4300.75, 605.058 )
-linear_damp = 0.1
 
 [node name="coin 31 7 3" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 4300.75, 541.058 )
-linear_damp = 0.1
 
 [node name="coin 31 7 4" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 4236.75, 541.058 )
-linear_damp = 0.1
 
 [node name="coin 31 7 5" parent="coins" instance=ExtResource( 2 )]
 
 transform/pos = Vector2( 4172.75, 541.058 )
-linear_damp = 0.1
 
 [node name="props" type="Node" parent="."]
 
@@ -271,22 +229,6 @@ transform/pos = Vector2( 927.698, 1120.81 )
 
 transform/pos = Vector2( 96.1089, 414.891 )
 
-[node name="smoke" parent="sprite/player"]
-
-visibility/self_opacity = 0.363636
-transform/rot = 83.4504
-config/lifetime = 0.3
-config/emit_timeout = 0.3
-config/explosiveness = 0.1
-params/gravity_strength = 9.8
-
-[node name="camera" parent="player"]
-
-drag_margin/left = 0.2
-drag_margin/top = 0.2
-drag_margin/right = 0.2
-drag_margin/bottom = 0.2
-
 [node name="music" type="StreamPlayer" parent="."]
 
 stream/stream = ExtResource( 7 )
@@ -303,12 +245,6 @@ stream/buffering_ms = 500
 [node name="enemy 5" parent="enemies" instance=ExtResource( 8 )]
 
 transform/pos = Vector2( 834.664, 1309.6 )
-
-[node name="Particles2D" parent="enemies/enemy 5"]
-
-visibility/self_opacity = 0.121212
-config/explosiveness = 0.1
-params/gravity_strength = 9.8
 
 [node name="enemy 6" parent="enemies" instance=ExtResource( 8 )]
 

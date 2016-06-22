@@ -30,12 +30,16 @@ public class CanvasItemMaterial : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~CanvasItemMaterial() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_CanvasItemMaterial(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -46,15 +50,18 @@ public class CanvasItemMaterial : Resource {
 
 
 
-  public void set_shader(SWIGTYPE_p_RefT_Shader_t shader) {
-    GodotEnginePINVOKE.CanvasItemMaterial_set_shader(swigCPtr, SWIGTYPE_p_RefT_Shader_t.getCPtr(shader));
+  public void set_shader(Shader shader) {
+    GodotEnginePINVOKE.CanvasItemMaterial_set_shader(swigCPtr, Shader.getCPtr(shader));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Shader_t get_shader() {
-    SWIGTYPE_p_RefT_Shader_t ret = new SWIGTYPE_p_RefT_Shader_t(GodotEnginePINVOKE.CanvasItemMaterial_get_shader(swigCPtr), true);
+  public Shader get_shader() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.CanvasItemMaterial_get_shader(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Shader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shader;
     return ret;
-  }
+}
 
   public void set_shader_param(string param, Variant value) {
     GodotEnginePINVOKE.CanvasItemMaterial_set_shader_param(swigCPtr, param, Variant.getCPtr(value));

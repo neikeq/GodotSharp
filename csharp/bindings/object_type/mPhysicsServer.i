@@ -4,6 +4,15 @@
 %csmethodmodifiers PhysicsServer::PhysicsServer "private"
 %csmethodmodifiers PhysicsServer::SingletonGetInstance "private"
 %nodefaultctor PhysicsServer;
+%typemap(out) PhysicsServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) PhysicsServer* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) PhysicsServer %{
   private static $csclassname instance;

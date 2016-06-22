@@ -1,6 +1,25 @@
 /* mOccluderPolygon2D.i */
 %module mOccluderPolygon2D
 
+%typemap(ctype, out="OccluderPolygon2D*") Ref<OccluderPolygon2D> "OccluderPolygon2D*"
+%typemap(out, null="NULL") Ref<OccluderPolygon2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<OccluderPolygon2D> "OccluderPolygon2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<OccluderPolygon2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<OccluderPolygon2D> "OccluderPolygon2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<OccluderPolygon2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    OccluderPolygon2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as OccluderPolygon2D;$excode
+    return ret;
+}
+
+template<class OccluderPolygon2D> class Ref;%template() Ref<OccluderPolygon2D>;
+%feature("novaluewrapper") Ref<OccluderPolygon2D>;
+
 
 %typemap(csbody_derived) OccluderPolygon2D %{
   public static readonly int CULL_DISABLED = 0;
@@ -78,5 +97,20 @@ public:
     }
   }
   OccluderPolygon2D();
+  %extend {
+    ~OccluderPolygon2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

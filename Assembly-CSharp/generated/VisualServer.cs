@@ -1077,8 +1077,8 @@ public class VisualServer : Object {
     GodotEnginePINVOKE.VisualServer_sync(swigCPtr);
   }
 
-  public void free(SWIGTYPE_p_RID arg0_) {
-    GodotEnginePINVOKE.VisualServer_free(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_));
+  public void free_rid(SWIGTYPE_p_RID arg0_) {
+    GodotEnginePINVOKE.VisualServer_free_rid(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -1094,7 +1094,9 @@ public class VisualServer : Object {
 
   private static VisualServer SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.VisualServer_SingletonGetInstance();
-    VisualServer ret = (cPtr == global::System.IntPtr.Zero) ? null : new VisualServer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    VisualServer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as VisualServer;
     return ret;
   }
 

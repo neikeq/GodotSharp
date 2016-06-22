@@ -1,6 +1,25 @@
 /* mEditorExportPlugin.i */
 %module mEditorExportPlugin
 
+%typemap(ctype, out="EditorExportPlugin*") Ref<EditorExportPlugin> "EditorExportPlugin*"
+%typemap(out, null="NULL") Ref<EditorExportPlugin> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<EditorExportPlugin> "EditorExportPlugin.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<EditorExportPlugin> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<EditorExportPlugin> "EditorExportPlugin"
+%typemap(csout, excode=SWIGEXCODE) Ref<EditorExportPlugin> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    EditorExportPlugin ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorExportPlugin;$excode
+    return ret;
+}
+
+template<class EditorExportPlugin> class Ref;%template() Ref<EditorExportPlugin>;
+%feature("novaluewrapper") Ref<EditorExportPlugin>;
+
 
 %typemap(csbody_derived) EditorExportPlugin %{
 
@@ -45,5 +64,20 @@ public:
     }
   }
   EditorExportPlugin();
+  %extend {
+    ~EditorExportPlugin() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

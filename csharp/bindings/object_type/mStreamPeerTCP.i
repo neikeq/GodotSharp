@@ -1,6 +1,25 @@
 /* mStreamPeerTCP.i */
 %module mStreamPeerTCP
 
+%typemap(ctype, out="StreamPeerTCP*") Ref<StreamPeerTCP> "StreamPeerTCP*"
+%typemap(out, null="NULL") Ref<StreamPeerTCP> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<StreamPeerTCP> "StreamPeerTCP.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<StreamPeerTCP> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<StreamPeerTCP> "StreamPeerTCP"
+%typemap(csout, excode=SWIGEXCODE) Ref<StreamPeerTCP> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StreamPeerTCP ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StreamPeerTCP;$excode
+    return ret;
+}
+
+template<class StreamPeerTCP> class Ref;%template() Ref<StreamPeerTCP>;
+%feature("novaluewrapper") Ref<StreamPeerTCP>;
+
 
 %typemap(csbody_derived) StreamPeerTCP %{
   public static readonly int STATUS_NONE = 0;
@@ -81,5 +100,20 @@ public:
   %extend {
     StreamPeerTCP() { return StreamPeerTCP::create(); }
   }
+  %extend {
+    ~StreamPeerTCP() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

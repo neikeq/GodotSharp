@@ -2,6 +2,25 @@
 %module mAudioStreamPlayback
 
 %nodefaultctor AudioStreamPlayback;
+%typemap(ctype, out="AudioStreamPlayback*") Ref<AudioStreamPlayback> "AudioStreamPlayback*"
+%typemap(out, null="NULL") Ref<AudioStreamPlayback> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<AudioStreamPlayback> "AudioStreamPlayback.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<AudioStreamPlayback> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<AudioStreamPlayback> "AudioStreamPlayback"
+%typemap(csout, excode=SWIGEXCODE) Ref<AudioStreamPlayback> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    AudioStreamPlayback ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioStreamPlayback;$excode
+    return ret;
+}
+
+template<class AudioStreamPlayback> class Ref;%template() Ref<AudioStreamPlayback>;
+%feature("novaluewrapper") Ref<AudioStreamPlayback>;
+
 
 %typemap(csbody_derived) AudioStreamPlayback %{
 
@@ -112,5 +131,20 @@ public:
   return self_obj->call("get_minimum_buffer_size");
     }
   }
+  %extend {
+    ~AudioStreamPlayback() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -43,15 +43,18 @@ public class LightOccluder2D : Node2D {
 
 
 
-  public void set_occluder_polygon(SWIGTYPE_p_RefT_OccluderPolygon2D_t polygon) {
-    GodotEnginePINVOKE.LightOccluder2D_set_occluder_polygon(swigCPtr, SWIGTYPE_p_RefT_OccluderPolygon2D_t.getCPtr(polygon));
+  public void set_occluder_polygon(OccluderPolygon2D polygon) {
+    GodotEnginePINVOKE.LightOccluder2D_set_occluder_polygon(swigCPtr, OccluderPolygon2D.getCPtr(polygon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_OccluderPolygon2D_t get_occluder_polygon() {
-    SWIGTYPE_p_RefT_OccluderPolygon2D_t ret = new SWIGTYPE_p_RefT_OccluderPolygon2D_t(GodotEnginePINVOKE.LightOccluder2D_get_occluder_polygon(swigCPtr), true);
+  public OccluderPolygon2D get_occluder_polygon() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.LightOccluder2D_get_occluder_polygon(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    OccluderPolygon2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as OccluderPolygon2D;
     return ret;
-  }
+}
 
   public void set_occluder_light_mask(int mask) {
     GodotEnginePINVOKE.LightOccluder2D_set_occluder_light_mask(swigCPtr, mask);

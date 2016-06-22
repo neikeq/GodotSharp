@@ -1,6 +1,25 @@
 /* mConvexPolygonShape.i */
 %module mConvexPolygonShape
 
+%typemap(ctype, out="ConvexPolygonShape*") Ref<ConvexPolygonShape> "ConvexPolygonShape*"
+%typemap(out, null="NULL") Ref<ConvexPolygonShape> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ConvexPolygonShape> "ConvexPolygonShape.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ConvexPolygonShape> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ConvexPolygonShape> "ConvexPolygonShape"
+%typemap(csout, excode=SWIGEXCODE) Ref<ConvexPolygonShape> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ConvexPolygonShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConvexPolygonShape;$excode
+    return ret;
+}
+
+template<class ConvexPolygonShape> class Ref;%template() Ref<ConvexPolygonShape>;
+%feature("novaluewrapper") Ref<ConvexPolygonShape>;
+
 
 %typemap(csbody_derived) ConvexPolygonShape %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   ConvexPolygonShape();
+  %extend {
+    ~ConvexPolygonShape() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -50,7 +50,7 @@ public class Patch9Frame : Control {
   public Object get_texture() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Patch9Frame_get_texture(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

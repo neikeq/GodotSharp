@@ -1,6 +1,25 @@
 /* mSampleLibrary.i */
 %module mSampleLibrary
 
+%typemap(ctype, out="SampleLibrary*") Ref<SampleLibrary> "SampleLibrary*"
+%typemap(out, null="NULL") Ref<SampleLibrary> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<SampleLibrary> "SampleLibrary.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<SampleLibrary> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<SampleLibrary> "SampleLibrary"
+%typemap(csout, excode=SWIGEXCODE) Ref<SampleLibrary> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SampleLibrary ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SampleLibrary;$excode
+    return ret;
+}
+
+template<class SampleLibrary> class Ref;%template() Ref<SampleLibrary>;
+%feature("novaluewrapper") Ref<SampleLibrary>;
+
 
 %typemap(csbody_derived) SampleLibrary %{
 
@@ -87,5 +106,20 @@ public:
     }
   }
   SampleLibrary();
+  %extend {
+    ~SampleLibrary() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

@@ -2,6 +2,25 @@
 %module mPacketPeer
 
 %nodefaultctor PacketPeer;
+%typemap(ctype, out="PacketPeer*") Ref<PacketPeer> "PacketPeer*"
+%typemap(out, null="NULL") Ref<PacketPeer> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PacketPeer> "PacketPeer.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PacketPeer> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PacketPeer> "PacketPeer"
+%typemap(csout, excode=SWIGEXCODE) Ref<PacketPeer> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PacketPeer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PacketPeer;$excode
+    return ret;
+}
+
+template<class PacketPeer> class Ref;%template() Ref<PacketPeer>;
+%feature("novaluewrapper") Ref<PacketPeer>;
+
 
 %typemap(csbody_derived) PacketPeer %{
 
@@ -41,9 +60,9 @@
 class PacketPeer : public Reference {
 public:
   %extend {
-    void get_var() {
+    Variant get_var() {
   Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_var");
+  return self_obj->call("get_var");
     }
   }
   %extend {
@@ -76,5 +95,20 @@ public:
   return self_obj->call("get_available_packet_count");
     }
   }
+  %extend {
+    ~PacketPeer() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

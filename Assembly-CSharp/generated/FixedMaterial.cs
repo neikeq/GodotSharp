@@ -48,12 +48,16 @@ public class FixedMaterial : Material {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~FixedMaterial() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_FixedMaterial(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -73,15 +77,18 @@ public class FixedMaterial : Material {
     GodotEnginePINVOKE.FixedMaterial_get_parameter(swigCPtr, param);
   }
 
-  public void set_texture(int param, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.FixedMaterial_set_texture(swigCPtr, param, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_texture(int param, Texture texture) {
+    GodotEnginePINVOKE.FixedMaterial_set_texture(swigCPtr, param, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_texture(int param) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.FixedMaterial_get_texture(swigCPtr, param), true);
+  public Texture get_texture(int param) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.FixedMaterial_get_texture(swigCPtr, param);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_texcoord_mode(int param, int mode) {
     GodotEnginePINVOKE.FixedMaterial_set_texcoord_mode(swigCPtr, param, mode);

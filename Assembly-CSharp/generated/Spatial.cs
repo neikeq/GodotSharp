@@ -110,7 +110,7 @@ public class Spatial : Node {
   public Object get_parent_spatial() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Spatial_get_parent_spatial(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -128,24 +128,30 @@ public class Spatial : Node {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_World_t get_world() {
-    SWIGTYPE_p_RefT_World_t ret = new SWIGTYPE_p_RefT_World_t(GodotEnginePINVOKE.Spatial_get_world(swigCPtr), true);
+  public World get_world() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Spatial_get_world(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World;
     return ret;
-  }
+}
 
   public void update_gizmo() {
     GodotEnginePINVOKE.Spatial_update_gizmo(swigCPtr);
   }
 
-  public void set_gizmo(SWIGTYPE_p_RefT_SpatialGizmo_t gizmo) {
-    GodotEnginePINVOKE.Spatial_set_gizmo(swigCPtr, SWIGTYPE_p_RefT_SpatialGizmo_t.getCPtr(gizmo));
+  public void set_gizmo(SpatialGizmo gizmo) {
+    GodotEnginePINVOKE.Spatial_set_gizmo(swigCPtr, SpatialGizmo.getCPtr(gizmo));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_SpatialGizmo_t get_gizmo() {
-    SWIGTYPE_p_RefT_SpatialGizmo_t ret = new SWIGTYPE_p_RefT_SpatialGizmo_t(GodotEnginePINVOKE.Spatial_get_gizmo(swigCPtr), true);
+  public SpatialGizmo get_gizmo() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Spatial_get_gizmo(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SpatialGizmo ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SpatialGizmo;
     return ret;
-  }
+}
 
   public void show() {
     GodotEnginePINVOKE.Spatial_show(swigCPtr);

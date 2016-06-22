@@ -2,6 +2,15 @@
 %module mCanvasItem
 
 %nodefaultctor CanvasItem;
+%typemap(out) CanvasItem "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) CanvasItem* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) CanvasItem %{
   public static readonly int BLEND_MODE_MIX = 0;
@@ -84,6 +93,12 @@ public:
     Rect2 get_item_rect() {
   Object* self_obj = static_cast<Object*>($self);
   return self_obj->call("get_item_rect");
+    }
+  }
+  %extend {
+    Rect2 get_item_and_children_rect() {
+  Object* self_obj = static_cast<Object*>($self);
+  return self_obj->call("get_item_and_children_rect");
     }
   }
   %extend {

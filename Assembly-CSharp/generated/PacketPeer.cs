@@ -27,12 +27,16 @@ public class PacketPeer : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~PacketPeer() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_PacketPeer(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -44,8 +48,9 @@ public class PacketPeer : Reference {
   internal PacketPeer() {}
 
 
-  public void get_var() {
-    GodotEnginePINVOKE.PacketPeer_get_var(swigCPtr);
+  public Variant get_var() {
+    Variant ret = new Variant(GodotEnginePINVOKE.PacketPeer_get_var(swigCPtr), true);
+    return ret;
   }
 
   public int put_var(Variant var) {

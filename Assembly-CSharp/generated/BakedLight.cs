@@ -34,12 +34,16 @@ public class BakedLight : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~BakedLight() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_BakedLight(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -89,8 +93,8 @@ public class BakedLight : Resource {
     return ret;
   }
 
-  public void add_lightmap(SWIGTYPE_p_RefT_Texture_t texture, Vector2 gen_size) {
-    GodotEnginePINVOKE.BakedLight_add_lightmap(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), ref gen_size);
+  public void add_lightmap(Texture texture, Vector2 gen_size) {
+    GodotEnginePINVOKE.BakedLight_add_lightmap(swigCPtr, Texture.getCPtr(texture), ref gen_size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

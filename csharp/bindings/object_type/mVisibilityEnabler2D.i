@@ -1,6 +1,15 @@
 /* mVisibilityEnabler2D.i */
 %module mVisibilityEnabler2D
 
+%typemap(out) VisibilityEnabler2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) VisibilityEnabler2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) VisibilityEnabler2D %{
   public static readonly int ENABLER_FREEZE_BODIES = 1;

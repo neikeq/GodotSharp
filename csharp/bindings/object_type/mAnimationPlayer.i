@@ -1,6 +1,15 @@
 /* mAnimationPlayer.i */
 %module mAnimationPlayer
 
+%typemap(out) AnimationPlayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) AnimationPlayer* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) AnimationPlayer %{
   public static readonly int ANIMATION_PROCESS_FIXED = 0;

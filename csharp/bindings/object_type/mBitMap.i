@@ -1,6 +1,25 @@
 /* mBitMap.i */
 %module mBitMap
 
+%typemap(ctype, out="BitMap*") Ref<BitMap> "BitMap*"
+%typemap(out, null="NULL") Ref<BitMap> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<BitMap> "BitMap.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<BitMap> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<BitMap> "BitMap"
+%typemap(csout, excode=SWIGEXCODE) Ref<BitMap> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BitMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BitMap;$excode
+    return ret;
+}
+
+template<class BitMap> class Ref;%template() Ref<BitMap>;
+%feature("novaluewrapper") Ref<BitMap>;
+
 
 %typemap(csbody_derived) BitMap %{
 
@@ -81,5 +100,20 @@ public:
     }
   }
   BitMap();
+  %extend {
+    ~BitMap() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

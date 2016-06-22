@@ -27,12 +27,16 @@ public class PacketPeerStream : PacketPeer {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~PacketPeerStream() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_PacketPeerStream(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,8 +47,8 @@ public class PacketPeerStream : PacketPeer {
 
 
 
-  public void set_stream_peer(SWIGTYPE_p_RefT_StreamPeer_t peer) {
-    GodotEnginePINVOKE.PacketPeerStream_set_stream_peer(swigCPtr, SWIGTYPE_p_RefT_StreamPeer_t.getCPtr(peer));
+  public void set_stream_peer(StreamPeer peer) {
+    GodotEnginePINVOKE.PacketPeerStream_set_stream_peer(swigCPtr, StreamPeer.getCPtr(peer));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

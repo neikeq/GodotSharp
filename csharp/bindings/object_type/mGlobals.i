@@ -4,6 +4,15 @@
 %csmethodmodifiers Globals::Globals "private"
 %csmethodmodifiers Globals::SingletonGetInstance "private"
 %nodefaultctor Globals;
+%typemap(out) Globals "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Globals* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Globals %{
   private static $csclassname instance;

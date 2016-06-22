@@ -1,6 +1,25 @@
 /* mStreamPeerSSL.i */
 %module mStreamPeerSSL
 
+%typemap(ctype, out="StreamPeerSSL*") Ref<StreamPeerSSL> "StreamPeerSSL*"
+%typemap(out, null="NULL") Ref<StreamPeerSSL> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<StreamPeerSSL> "StreamPeerSSL.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<StreamPeerSSL> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<StreamPeerSSL> "StreamPeerSSL"
+%typemap(csout, excode=SWIGEXCODE) Ref<StreamPeerSSL> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StreamPeerSSL ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StreamPeerSSL;$excode
+    return ret;
+}
+
+template<class StreamPeerSSL> class Ref;%template() Ref<StreamPeerSSL>;
+%feature("novaluewrapper") Ref<StreamPeerSSL>;
+
 
 %typemap(csbody_derived) StreamPeerSSL %{
   public static readonly int STATUS_DISCONNECTED = 0;
@@ -69,5 +88,20 @@ public:
   %extend {
     StreamPeerSSL() { return StreamPeerSSL::create(); }
   }
+  %extend {
+    ~StreamPeerSSL() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

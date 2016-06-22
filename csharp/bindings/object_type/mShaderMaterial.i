@@ -1,6 +1,25 @@
 /* mShaderMaterial.i */
 %module mShaderMaterial
 
+%typemap(ctype, out="ShaderMaterial*") Ref<ShaderMaterial> "ShaderMaterial*"
+%typemap(out, null="NULL") Ref<ShaderMaterial> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ShaderMaterial> "ShaderMaterial.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ShaderMaterial> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ShaderMaterial> "ShaderMaterial"
+%typemap(csout, excode=SWIGEXCODE) Ref<ShaderMaterial> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ShaderMaterial ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ShaderMaterial;$excode
+    return ret;
+}
+
+template<class ShaderMaterial> class Ref;%template() Ref<ShaderMaterial>;
+%feature("novaluewrapper") Ref<ShaderMaterial>;
+
 
 %typemap(csbody_derived) ShaderMaterial %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   ShaderMaterial();
+  %extend {
+    ~ShaderMaterial() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

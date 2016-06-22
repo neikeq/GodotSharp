@@ -1,6 +1,25 @@
 /* mCircleShape2D.i */
 %module mCircleShape2D
 
+%typemap(ctype, out="CircleShape2D*") Ref<CircleShape2D> "CircleShape2D*"
+%typemap(out, null="NULL") Ref<CircleShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<CircleShape2D> "CircleShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<CircleShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<CircleShape2D> "CircleShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<CircleShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CircleShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CircleShape2D;$excode
+    return ret;
+}
+
+template<class CircleShape2D> class Ref;%template() Ref<CircleShape2D>;
+%feature("novaluewrapper") Ref<CircleShape2D>;
+
 
 %typemap(csbody_derived) CircleShape2D %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   CircleShape2D();
+  %extend {
+    ~CircleShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

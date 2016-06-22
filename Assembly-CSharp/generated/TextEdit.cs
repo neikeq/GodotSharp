@@ -251,7 +251,9 @@ public class TextEdit : Control {
 
   public PopupMenu get_menu() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.TextEdit_get_menu(swigCPtr);
-    PopupMenu ret = (cPtr == global::System.IntPtr.Zero) ? null : new PopupMenu(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PopupMenu ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PopupMenu;
     return ret;
   }
 

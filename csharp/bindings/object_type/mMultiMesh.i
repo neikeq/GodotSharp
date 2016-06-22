@@ -1,6 +1,25 @@
 /* mMultiMesh.i */
 %module mMultiMesh
 
+%typemap(ctype, out="MultiMesh*") Ref<MultiMesh> "MultiMesh*"
+%typemap(out, null="NULL") Ref<MultiMesh> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<MultiMesh> "MultiMesh.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<MultiMesh> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<MultiMesh> "MultiMesh"
+%typemap(csout, excode=SWIGEXCODE) Ref<MultiMesh> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    MultiMesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MultiMesh;$excode
+    return ret;
+}
+
+template<class MultiMesh> class Ref;%template() Ref<MultiMesh>;
+%feature("novaluewrapper") Ref<MultiMesh>;
+
 
 %typemap(csbody_derived) MultiMesh %{
 
@@ -105,5 +124,20 @@ public:
     }
   }
   MultiMesh();
+  %extend {
+    ~MultiMesh() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

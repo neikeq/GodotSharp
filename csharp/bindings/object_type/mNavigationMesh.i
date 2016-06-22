@@ -1,6 +1,25 @@
 /* mNavigationMesh.i */
 %module mNavigationMesh
 
+%typemap(ctype, out="NavigationMesh*") Ref<NavigationMesh> "NavigationMesh*"
+%typemap(out, null="NULL") Ref<NavigationMesh> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<NavigationMesh> "NavigationMesh.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<NavigationMesh> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<NavigationMesh> "NavigationMesh"
+%typemap(csout, excode=SWIGEXCODE) Ref<NavigationMesh> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    NavigationMesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationMesh;$excode
+    return ret;
+}
+
+template<class NavigationMesh> class Ref;%template() Ref<NavigationMesh>;
+%feature("novaluewrapper") Ref<NavigationMesh>;
+
 
 %typemap(csbody_derived) NavigationMesh %{
 
@@ -75,5 +94,20 @@ public:
     }
   }
   NavigationMesh();
+  %extend {
+    ~NavigationMesh() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

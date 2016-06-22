@@ -1,6 +1,25 @@
 /* mSegmentShape2D.i */
 %module mSegmentShape2D
 
+%typemap(ctype, out="SegmentShape2D*") Ref<SegmentShape2D> "SegmentShape2D*"
+%typemap(out, null="NULL") Ref<SegmentShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<SegmentShape2D> "SegmentShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<SegmentShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<SegmentShape2D> "SegmentShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<SegmentShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SegmentShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SegmentShape2D;$excode
+    return ret;
+}
+
+template<class SegmentShape2D> class Ref;%template() Ref<SegmentShape2D>;
+%feature("novaluewrapper") Ref<SegmentShape2D>;
+
 
 %typemap(csbody_derived) SegmentShape2D %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   SegmentShape2D();
+  %extend {
+    ~SegmentShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

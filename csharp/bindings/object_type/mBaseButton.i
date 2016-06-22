@@ -2,6 +2,15 @@
 %module mBaseButton
 
 %nodefaultctor BaseButton;
+%typemap(out) BaseButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) BaseButton* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) BaseButton %{
   public static readonly int DRAW_NORMAL = 0;

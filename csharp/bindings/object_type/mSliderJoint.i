@@ -1,6 +1,15 @@
 /* mSliderJoint.i */
 %module mSliderJoint
 
+%typemap(out) SliderJoint "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) SliderJoint* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) SliderJoint %{
   public static readonly int PARAM_LINEAR_LIMIT_UPPER = 0;

@@ -27,12 +27,16 @@ public class Physics2DShapeQueryResult : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Physics2DShapeQueryResult() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Physics2DShapeQueryResult(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -62,7 +66,7 @@ public class Physics2DShapeQueryResult : Reference {
   public Object get_result_object(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DShapeQueryResult_get_result_object(swigCPtr, idx);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

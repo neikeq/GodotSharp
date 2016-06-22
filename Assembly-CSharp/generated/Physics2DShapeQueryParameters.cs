@@ -27,12 +27,16 @@ public class Physics2DShapeQueryParameters : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Physics2DShapeQueryParameters() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Physics2DShapeQueryParameters(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,8 +47,8 @@ public class Physics2DShapeQueryParameters : Reference {
 
 
 
-  public void set_shape(SWIGTYPE_p_RefT_Shape2D_t shape) {
-    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_shape(swigCPtr, SWIGTYPE_p_RefT_Shape2D_t.getCPtr(shape));
+  public void set_shape(Shape2D shape) {
+    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_shape(swigCPtr, Shape2D.getCPtr(shape));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

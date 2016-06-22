@@ -1,6 +1,25 @@
 /* mCapsuleShape2D.i */
 %module mCapsuleShape2D
 
+%typemap(ctype, out="CapsuleShape2D*") Ref<CapsuleShape2D> "CapsuleShape2D*"
+%typemap(out, null="NULL") Ref<CapsuleShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<CapsuleShape2D> "CapsuleShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<CapsuleShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<CapsuleShape2D> "CapsuleShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<CapsuleShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CapsuleShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CapsuleShape2D;$excode
+    return ret;
+}
+
+template<class CapsuleShape2D> class Ref;%template() Ref<CapsuleShape2D>;
+%feature("novaluewrapper") Ref<CapsuleShape2D>;
+
 
 %typemap(csbody_derived) CapsuleShape2D %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   CapsuleShape2D();
+  %extend {
+    ~CapsuleShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

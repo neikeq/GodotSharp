@@ -1,6 +1,15 @@
 /* mTextEdit.i */
 %module mTextEdit
 
+%typemap(out) TextEdit "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) TextEdit* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) TextEdit %{
   public static readonly int SEARCH_MATCH_CASE = 1;

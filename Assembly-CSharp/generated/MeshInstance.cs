@@ -43,15 +43,18 @@ public class MeshInstance : GeometryInstance {
 
 
 
-  public void set_mesh(SWIGTYPE_p_RefT_Mesh_t mesh) {
-    GodotEnginePINVOKE.MeshInstance_set_mesh(swigCPtr, SWIGTYPE_p_RefT_Mesh_t.getCPtr(mesh));
+  public void set_mesh(Mesh mesh) {
+    GodotEnginePINVOKE.MeshInstance_set_mesh(swigCPtr, Mesh.getCPtr(mesh));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Mesh_t get_mesh() {
-    SWIGTYPE_p_RefT_Mesh_t ret = new SWIGTYPE_p_RefT_Mesh_t(GodotEnginePINVOKE.MeshInstance_get_mesh(swigCPtr), true);
+  public Mesh get_mesh() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshInstance_get_mesh(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;
     return ret;
-  }
+}
 
   public void set_skeleton_path(NodePath skeleton_path) {
     GodotEnginePINVOKE.MeshInstance_set_skeleton_path(swigCPtr, NodePath.getCPtr(skeleton_path));

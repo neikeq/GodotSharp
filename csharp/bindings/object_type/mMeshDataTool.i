@@ -1,6 +1,25 @@
 /* mMeshDataTool.i */
 %module mMeshDataTool
 
+%typemap(ctype, out="MeshDataTool*") Ref<MeshDataTool> "MeshDataTool*"
+%typemap(out, null="NULL") Ref<MeshDataTool> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<MeshDataTool> "MeshDataTool.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<MeshDataTool> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<MeshDataTool> "MeshDataTool"
+%typemap(csout, excode=SWIGEXCODE) Ref<MeshDataTool> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    MeshDataTool ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MeshDataTool;$excode
+    return ret;
+}
+
+template<class MeshDataTool> class Ref;%template() Ref<MeshDataTool>;
+%feature("novaluewrapper") Ref<MeshDataTool>;
+
 
 %typemap(csbody_derived) MeshDataTool %{
 
@@ -267,5 +286,20 @@ public:
     }
   }
   MeshDataTool();
+  %extend {
+    ~MeshDataTool() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

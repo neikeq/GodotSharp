@@ -27,12 +27,16 @@ public class LargeTexture : Texture {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~LargeTexture() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_LargeTexture(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -43,8 +47,8 @@ public class LargeTexture : Texture {
 
 
 
-  public int add_piece(Vector2 ofs, SWIGTYPE_p_RefT_Texture_t texture) {
-    int ret = GodotEnginePINVOKE.LargeTexture_add_piece(swigCPtr, ref ofs, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public int add_piece(Vector2 ofs, Texture texture) {
+    int ret = GodotEnginePINVOKE.LargeTexture_add_piece(swigCPtr, ref ofs, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -54,8 +58,8 @@ public class LargeTexture : Texture {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_piece_texture(int idx, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.LargeTexture_set_piece_texture(swigCPtr, idx, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_piece_texture(int idx, Texture texture) {
+    GodotEnginePINVOKE.LargeTexture_set_piece_texture(swigCPtr, idx, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -78,10 +82,13 @@ public class LargeTexture : Texture {
     return ret;
 }
 
-  public SWIGTYPE_p_RefT_Texture_t get_piece_texture(int idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.LargeTexture_get_piece_texture(swigCPtr, idx), true);
+  public Texture get_piece_texture(int idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.LargeTexture_get_piece_texture(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public LargeTexture() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

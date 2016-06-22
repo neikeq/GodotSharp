@@ -47,13 +47,13 @@ public class ItemList : Control {
 
 
 
-  public void add_item(string text, SWIGTYPE_p_RefT_Texture_t icon, bool selectable) {
-    GodotEnginePINVOKE.ItemList_add_item__SWIG_0(swigCPtr, text, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon), selectable);
+  public void add_item(string text, Texture icon, bool selectable) {
+    GodotEnginePINVOKE.ItemList_add_item__SWIG_0(swigCPtr, text, Texture.getCPtr(icon), selectable);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_item(string text, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.ItemList_add_item__SWIG_1(swigCPtr, text, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void add_item(string text, Texture icon) {
+    GodotEnginePINVOKE.ItemList_add_item__SWIG_1(swigCPtr, text, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -62,13 +62,13 @@ public class ItemList : Control {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_icon_item(SWIGTYPE_p_RefT_Texture_t icon, bool selectable) {
-    GodotEnginePINVOKE.ItemList_add_icon_item__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon), selectable);
+  public void add_icon_item(Texture icon, bool selectable) {
+    GodotEnginePINVOKE.ItemList_add_icon_item__SWIG_0(swigCPtr, Texture.getCPtr(icon), selectable);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_icon_item(SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.ItemList_add_icon_item__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void add_icon_item(Texture icon) {
+    GodotEnginePINVOKE.ItemList_add_icon_item__SWIG_1(swigCPtr, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -82,15 +82,18 @@ public class ItemList : Control {
     return ret;
   }
 
-  public void set_item_icon(int idx, SWIGTYPE_p_RefT_Texture_t icon) {
-    GodotEnginePINVOKE.ItemList_set_item_icon(swigCPtr, idx, SWIGTYPE_p_RefT_Texture_t.getCPtr(icon));
+  public void set_item_icon(int idx, Texture icon) {
+    GodotEnginePINVOKE.ItemList_set_item_icon(swigCPtr, idx, Texture.getCPtr(icon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_item_icon(int idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.ItemList_get_item_icon(swigCPtr, idx), true);
+  public Texture get_item_icon(int idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ItemList_get_item_icon(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_item_icon_region(int idx, SWIGTYPE_p_Rect2 rect) {
     GodotEnginePINVOKE.ItemList_set_item_icon_region(swigCPtr, idx, SWIGTYPE_p_Rect2.getCPtr(rect));
@@ -237,23 +240,13 @@ public class ItemList : Control {
     return ret;
   }
 
-  public void set_min_icon_size(Vector2 size) {
-    GodotEnginePINVOKE.ItemList_set_min_icon_size(swigCPtr, ref size);
+  public void set_fixed_icon_size(Vector2 size) {
+    GodotEnginePINVOKE.ItemList_set_fixed_icon_size(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public Vector2 get_min_icon_size() {
-    Vector2 ret = GodotEnginePINVOKE.ItemList_get_min_icon_size(swigCPtr);
-    return ret;
-}
-
-  public void set_max_icon_size(Vector2 size) {
-    GodotEnginePINVOKE.ItemList_set_max_icon_size(swigCPtr, ref size);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public Vector2 get_max_icon_size() {
-    Vector2 ret = GodotEnginePINVOKE.ItemList_get_max_icon_size(swigCPtr);
+  public Vector2 get_fixed_icon_size() {
+    Vector2 ret = GodotEnginePINVOKE.ItemList_get_fixed_icon_size(swigCPtr);
     return ret;
 }
 

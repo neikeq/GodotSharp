@@ -93,7 +93,7 @@ public class KinematicBody2D : PhysicsBody2D {
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.KinematicBody2D_get_collider(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

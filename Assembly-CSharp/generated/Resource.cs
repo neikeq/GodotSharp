@@ -27,12 +27,16 @@ public class Resource : Reference {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Resource() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Resource(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -80,7 +84,7 @@ public class Resource : Reference {
   public Object get_import_metadata() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_get_import_metadata(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -88,7 +92,7 @@ public class Resource : Reference {
   public Object duplicate(bool subresources) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_duplicate__SWIG_0(swigCPtr, subresources);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -96,7 +100,7 @@ public class Resource : Reference {
   public Object duplicate() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Resource_duplicate__SWIG_1(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

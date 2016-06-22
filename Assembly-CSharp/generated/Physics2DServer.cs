@@ -10,6 +10,13 @@ namespace GodotEngine {
 
 public class Physics2DServer : Object {
   private static Physics2DServer instance;
+  public static readonly int SPACE_PARAM_CONTACT_RECYCLE_RADIUS = 0;
+  public static readonly int SPACE_PARAM_CONTACT_MAX_SEPARATION = 1;
+  public static readonly int SPACE_PARAM_BODY_MAX_ALLOWED_PENETRATION = 2;
+  public static readonly int SPACE_PARAM_BODY_LINEAR_VELOCITY_SLEEP_TRESHOLD = 3;
+  public static readonly int SPACE_PARAM_BODY_ANGULAR_VELOCITY_SLEEP_TRESHOLD = 4;
+  public static readonly int SPACE_PARAM_BODY_TIME_TO_SLEEP = 5;
+  public static readonly int SPACE_PARAM_CONSTRAINT_DEFAULT_BIAS = 6;
   public static readonly int SHAPE_LINE = 0;
   public static readonly int SHAPE_SEGMENT = 2;
   public static readonly int SHAPE_CIRCLE = 3;
@@ -156,7 +163,9 @@ public class Physics2DServer : Object {
 
   public Physics2DDirectSpaceState space_get_direct_state(SWIGTYPE_p_RID space) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DServer_space_get_direct_state(swigCPtr, SWIGTYPE_p_RID.getCPtr(space));
-    Physics2DDirectSpaceState ret = (cPtr == global::System.IntPtr.Zero) ? null : new Physics2DDirectSpaceState(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Physics2DDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DDirectSpaceState;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -637,7 +646,9 @@ public class Physics2DServer : Object {
 
   private static Physics2DServer SingletonGetInstance() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DServer_SingletonGetInstance();
-    Physics2DServer ret = (cPtr == global::System.IntPtr.Zero) ? null : new Physics2DServer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Physics2DServer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DServer;
     return ret;
   }
 

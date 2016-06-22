@@ -1,6 +1,25 @@
 /* mDynamicFont.i */
 %module mDynamicFont
 
+%typemap(ctype, out="DynamicFont*") Ref<DynamicFont> "DynamicFont*"
+%typemap(out, null="NULL") Ref<DynamicFont> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<DynamicFont> "DynamicFont.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<DynamicFont> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<DynamicFont> "DynamicFont"
+%typemap(csout, excode=SWIGEXCODE) Ref<DynamicFont> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    DynamicFont ret = InternalHelpers.UnmanagedGetManaged(cPtr) as DynamicFont;$excode
+    return ret;
+}
+
+template<class DynamicFont> class Ref;%template() Ref<DynamicFont>;
+%feature("novaluewrapper") Ref<DynamicFont>;
+
 
 %typemap(csbody_derived) DynamicFont %{
 
@@ -93,5 +112,20 @@ public:
     }
   }
   DynamicFont();
+  %extend {
+    ~DynamicFont() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

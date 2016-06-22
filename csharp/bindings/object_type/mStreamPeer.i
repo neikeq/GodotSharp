@@ -2,6 +2,25 @@
 %module mStreamPeer
 
 %nodefaultctor StreamPeer;
+%typemap(ctype, out="StreamPeer*") Ref<StreamPeer> "StreamPeer*"
+%typemap(out, null="NULL") Ref<StreamPeer> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<StreamPeer> "StreamPeer.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<StreamPeer> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<StreamPeer> "StreamPeer"
+%typemap(csout, excode=SWIGEXCODE) Ref<StreamPeer> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    StreamPeer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StreamPeer;$excode
+    return ret;
+}
+
+template<class StreamPeer> class Ref;%template() Ref<StreamPeer>;
+%feature("novaluewrapper") Ref<StreamPeer>;
+
 
 %typemap(csbody_derived) StreamPeer %{
 
@@ -232,5 +251,20 @@ public:
   return self_obj->call("get_var");
     }
   }
+  %extend {
+    ~StreamPeer() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

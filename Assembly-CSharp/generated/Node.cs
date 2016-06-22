@@ -129,7 +129,7 @@ public class Node : Object {
   public Node get_child(int idx) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_child(swigCPtr, idx);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -143,7 +143,7 @@ public class Node : Object {
   public Node get_node(NodePath path) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_node(swigCPtr, NodePath.getCPtr(path));
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
@@ -152,7 +152,7 @@ public class Node : Object {
   public Node get_parent() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_parent(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -160,7 +160,7 @@ public class Node : Object {
   public Node find_node(string mask, bool recursive, bool owned) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_find_node__SWIG_0(swigCPtr, mask, recursive, owned);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
@@ -169,7 +169,7 @@ public class Node : Object {
   public Node find_node(string mask, bool recursive) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_find_node__SWIG_1(swigCPtr, mask, recursive);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
@@ -178,7 +178,7 @@ public class Node : Object {
   public Node find_node(string mask) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_find_node__SWIG_2(swigCPtr, mask);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
@@ -262,7 +262,7 @@ public class Node : Object {
   public Node get_owner() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_owner(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -381,7 +381,7 @@ public class Node : Object {
   public Node duplicate(bool use_instancing) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_duplicate__SWIG_0(swigCPtr, use_instancing);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -389,7 +389,7 @@ public class Node : Object {
   public Node duplicate() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_duplicate__SWIG_1(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Node ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Node;
     return ret;
   }
@@ -414,7 +414,7 @@ public class Node : Object {
   public Object get_viewport() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_viewport(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

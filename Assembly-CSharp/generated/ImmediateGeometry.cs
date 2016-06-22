@@ -43,8 +43,8 @@ public class ImmediateGeometry : GeometryInstance {
 
 
 
-  public void begin(int primitive, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.ImmediateGeometry_begin(swigCPtr, primitive, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void begin(int primitive, Texture texture) {
+    GodotEnginePINVOKE.ImmediateGeometry_begin(swigCPtr, primitive, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

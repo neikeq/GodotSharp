@@ -46,7 +46,7 @@ public class AcceptDialog : WindowDialog {
   public Object get_ok() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_get_ok(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -54,7 +54,7 @@ public class AcceptDialog : WindowDialog {
   public Object get_label() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_get_label(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }
@@ -98,7 +98,9 @@ public class AcceptDialog : WindowDialog {
 
   public LineEdit register_text_enter(Object line_edit) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_register_text_enter(swigCPtr, Object.getCPtr(line_edit));
-    LineEdit ret = (cPtr == global::System.IntPtr.Zero) ? null : new LineEdit(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    LineEdit ret = InternalHelpers.UnmanagedGetManaged(cPtr) as LineEdit;
     return ret;
   }
 

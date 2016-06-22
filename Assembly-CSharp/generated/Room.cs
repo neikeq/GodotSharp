@@ -49,7 +49,9 @@ public class Room : VisualInstance {
 
   public Room get_room() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Room_get_room(swigCPtr);
-    Room ret = (cPtr == global::System.IntPtr.Zero) ? null : new Room(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Room ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Room;
     return ret;
   }
 

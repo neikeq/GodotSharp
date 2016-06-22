@@ -1,6 +1,25 @@
 /* mRayShape.i */
 %module mRayShape
 
+%typemap(ctype, out="RayShape*") Ref<RayShape> "RayShape*"
+%typemap(out, null="NULL") Ref<RayShape> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<RayShape> "RayShape.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<RayShape> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<RayShape> "RayShape"
+%typemap(csout, excode=SWIGEXCODE) Ref<RayShape> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    RayShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RayShape;$excode
+    return ret;
+}
+
+template<class RayShape> class Ref;%template() Ref<RayShape>;
+%feature("novaluewrapper") Ref<RayShape>;
+
 
 %typemap(csbody_derived) RayShape %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   RayShape();
+  %extend {
+    ~RayShape() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

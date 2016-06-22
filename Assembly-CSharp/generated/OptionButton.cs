@@ -53,8 +53,8 @@ public class OptionButton : Button {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_icon_item(SWIGTYPE_p_RefT_Texture_t texture, string label, int id) {
-    GodotEnginePINVOKE.OptionButton_add_icon_item(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture), label, id);
+  public void add_icon_item(Texture texture, string label, int id) {
+    GodotEnginePINVOKE.OptionButton_add_icon_item(swigCPtr, Texture.getCPtr(texture), label, id);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -63,8 +63,8 @@ public class OptionButton : Button {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_item_icon(int idx, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.OptionButton_set_item_icon(swigCPtr, idx, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_item_icon(int idx, Texture texture) {
+    GodotEnginePINVOKE.OptionButton_set_item_icon(swigCPtr, idx, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -86,10 +86,13 @@ public class OptionButton : Button {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_item_icon(int idx) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.OptionButton_get_item_icon(swigCPtr, idx), true);
+  public Texture get_item_icon(int idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.OptionButton_get_item_icon(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public int get_item_ID(int idx) {
     int ret = GodotEnginePINVOKE.OptionButton_get_item_ID(swigCPtr, idx);

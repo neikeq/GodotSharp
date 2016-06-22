@@ -1,6 +1,25 @@
 /* mPackedDataContainer.i */
 %module mPackedDataContainer
 
+%typemap(ctype, out="PackedDataContainer*") Ref<PackedDataContainer> "PackedDataContainer*"
+%typemap(out, null="NULL") Ref<PackedDataContainer> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<PackedDataContainer> "PackedDataContainer.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<PackedDataContainer> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<PackedDataContainer> "PackedDataContainer"
+%typemap(csout, excode=SWIGEXCODE) Ref<PackedDataContainer> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PackedDataContainer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PackedDataContainer;$excode
+    return ret;
+}
+
+template<class PackedDataContainer> class Ref;%template() Ref<PackedDataContainer>;
+%feature("novaluewrapper") Ref<PackedDataContainer>;
+
 
 %typemap(csbody_derived) PackedDataContainer %{
 
@@ -51,5 +70,20 @@ public:
     }
   }
   PackedDataContainer();
+  %extend {
+    ~PackedDataContainer() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

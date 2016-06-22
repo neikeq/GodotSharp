@@ -24,15 +24,19 @@ public class Player : RigidBody2D
 
 	float MAX_SHOOT_POSE_TIME = 0.3f;
 
-	//Reference bullet;// = preload("res://bullet.tscn");
+	PackedScene bullet;// = preload("res://bullet.tscn");
 
 	float floor_h_velocity = 0.0f;
-	//Reference enemy;
+	PackedScene enemy;
+
+	TestResource _test_res;
 
     void _ready()
     {
-		//enemy = ResourceLoader.Instance.load("res://enemy.tscn");
-		//bullet = ResourceLoader.Instance.load("res://bullet.tscn");
+		TestResource test_res = new TestResource ();
+		_test_res = new TestResource ();
+		enemy = ResourceLoader.Instance.load("res://enemy.tscn") as PackedScene;
+		bullet = ResourceLoader.Instance.load("res://bullet.tscn") as PackedScene;
     }
 
 	void _integrate_forces(Physics2DDirectBodyState s)
@@ -52,14 +56,11 @@ public class Player : RigidBody2D
 
 		if (spawn)
 		{
-			/*Enemy e = ((Node)enemy.call("instance")) as Enemy;
+			Enemy e = enemy.instance() as Enemy;
 			Vector2 p = get_pos();
 			p.y = p.y - 100;
 			e.set_pos(p);
-			get_parent().add_child(e);*/
-
-			// Workaround. References are not yet working
-			get_node ("aux").call("instance_enemy_plz", get_pos (), get_parent ());
+			get_parent().add_child(e);
 		}
 
 		// Deapply prev floor velocity
@@ -86,11 +87,8 @@ public class Player : RigidBody2D
 		*/
 		if (shoot && !shooting)
 		{
-			// Workaround. References are not yet working
 			shoot_time = 0;
-			float ss = siding_left ? -1.0f : 1.0f;
-			get_node ("aux").call ("instance_bullet_plz", ss);
-			/*Bullet bi = ((Node)bullet.call("instance")) as Bullet;
+			Bullet bi = bullet.instance() as Bullet;
 			float ss = siding_left ? -1.0f : 1.0f;
 			Position2D bullet_shoot = get_node("bullet_shoot") as Position2D;
 			Vector2 pos = get_pos() + bullet_shoot.get_pos() * new Vector2(ss, 1.0f);
@@ -103,10 +101,10 @@ public class Player : RigidBody2D
 			Particles2D smoke = get_node("sprite/smoke") as Particles2D;
 			smoke.set_emitting(true);
 
-			SamplePlayer2D sound = get_node("sound") as SamplePlayer2D;
+			SamplePlayer sound = get_node("sound") as SamplePlayer;
 			sound.play("shoot");
 
-			Physics2DServer.Instance.body_add_collision_exception(bi.get_rid(), get_rid()); // Make bullet and this not collide*/
+			Physics2DServer.Instance.body_add_collision_exception(bi.get_rid(), get_rid()); // Make bullet and this not collide
 		}
 		else
 		{
@@ -260,5 +258,16 @@ public class Player : RigidBody2D
 		// Finally, apply gravity and set back the linear velocity
 		lv += s.get_total_gravity() * step;
 		s.set_linear_velocity(lv);
+	}
+}
+
+public class TestResource : Resource
+{
+	void _notification(int what)
+	{
+		if (what == 1)
+		{
+			Console.WriteLine ("PREDELETE!");
+		}
 	}
 }

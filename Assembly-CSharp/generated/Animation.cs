@@ -15,6 +15,9 @@ public class Animation : Resource {
   public static readonly int INTERPOLATION_NEAREST = 0;
   public static readonly int INTERPOLATION_LINEAR = 1;
   public static readonly int INTERPOLATION_CUBIC = 2;
+  public static readonly int UPDATE_CONTINUOUS = 0;
+  public static readonly int UPDATE_DISCRETE = 1;
+  public static readonly int UPDATE_TRIGGER = 2;
 
   private global::System.Runtime.InteropServices.HandleRef swigCPtr;
   
@@ -33,12 +36,16 @@ public class Animation : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Animation() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Animation(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -95,6 +102,15 @@ public class Animation : Resource {
 
   public void track_move_down(int idx) {
     GodotEnginePINVOKE.Animation_track_move_down(swigCPtr, idx);
+  }
+
+  public void track_set_imported(int idx, bool imported) {
+    GodotEnginePINVOKE.Animation_track_set_imported(swigCPtr, idx, imported);
+  }
+
+  public bool track_is_imported(int idx) {
+    bool ret = GodotEnginePINVOKE.Animation_track_is_imported(swigCPtr, idx);
+    return ret;
   }
 
   public int transform_track_insert_key(int idx, float time, SWIGTYPE_p_Vector3 loc, SWIGTYPE_p_Quat rot, SWIGTYPE_p_Vector3 scale) {
@@ -173,12 +189,12 @@ public class Animation : Resource {
     return ret;
   }
 
-  public void value_track_set_continuous(int idx, bool continuous) {
-    GodotEnginePINVOKE.Animation_value_track_set_continuous(swigCPtr, idx, continuous);
+  public void value_track_set_update_mode(int idx, int mode) {
+    GodotEnginePINVOKE.Animation_value_track_set_update_mode(swigCPtr, idx, mode);
   }
 
-  public bool value_track_is_continuous(int idx) {
-    bool ret = GodotEnginePINVOKE.Animation_value_track_is_continuous(swigCPtr, idx);
+  public int value_track_get_update_mode(int idx) {
+    int ret = GodotEnginePINVOKE.Animation_value_track_get_update_mode(swigCPtr, idx);
     return ret;
   }
 
@@ -215,8 +231,17 @@ public class Animation : Resource {
     GodotEnginePINVOKE.Animation_set_loop(swigCPtr, enabled);
   }
 
+  public void set_loop_interpolation(bool enabled) {
+    GodotEnginePINVOKE.Animation_set_loop_interpolation(swigCPtr, enabled);
+  }
+
   public bool has_loop() {
     bool ret = GodotEnginePINVOKE.Animation_has_loop(swigCPtr);
+    return ret;
+  }
+
+  public bool has_loop_interpolation() {
+    bool ret = GodotEnginePINVOKE.Animation_has_loop_interpolation(swigCPtr);
     return ret;
   }
 

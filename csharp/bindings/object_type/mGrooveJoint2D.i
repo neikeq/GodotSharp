@@ -1,6 +1,15 @@
 /* mGrooveJoint2D.i */
 %module mGrooveJoint2D
 
+%typemap(out) GrooveJoint2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) GrooveJoint2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) GrooveJoint2D %{
 

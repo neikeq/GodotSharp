@@ -1,6 +1,25 @@
 /* mBakedLight.i */
 %module mBakedLight
 
+%typemap(ctype, out="BakedLight*") Ref<BakedLight> "BakedLight*"
+%typemap(out, null="NULL") Ref<BakedLight> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<BakedLight> "BakedLight.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<BakedLight> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<BakedLight> "BakedLight"
+%typemap(csout, excode=SWIGEXCODE) Ref<BakedLight> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BakedLight ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BakedLight;$excode
+    return ret;
+}
+
+template<class BakedLight> class Ref;%template() Ref<BakedLight>;
+%feature("novaluewrapper") Ref<BakedLight>;
+
 
 %typemap(csbody_derived) BakedLight %{
   public static readonly int MODE_OCTREE = 0;
@@ -340,5 +359,20 @@ public:
     }
   }
   BakedLight();
+  %extend {
+    ~BakedLight() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

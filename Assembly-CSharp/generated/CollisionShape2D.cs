@@ -50,7 +50,7 @@ public class CollisionShape2D : Node2D {
   public Object get_shape() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.CollisionShape2D_get_shape(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
-    	return null;
+      return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
   }

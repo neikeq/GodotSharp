@@ -2,6 +2,15 @@
 %module mTreeItem
 
 %nodefaultctor TreeItem;
+%typemap(out) TreeItem "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) TreeItem* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) TreeItem %{
   public static readonly int CELL_MODE_STRING = 0;

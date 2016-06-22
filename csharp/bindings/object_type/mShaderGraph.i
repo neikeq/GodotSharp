@@ -2,6 +2,25 @@
 %module mShaderGraph
 
 %nodefaultctor ShaderGraph;
+%typemap(ctype, out="ShaderGraph*") Ref<ShaderGraph> "ShaderGraph*"
+%typemap(out, null="NULL") Ref<ShaderGraph> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ShaderGraph> "ShaderGraph.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ShaderGraph> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ShaderGraph> "ShaderGraph"
+%typemap(csout, excode=SWIGEXCODE) Ref<ShaderGraph> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ShaderGraph ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ShaderGraph;$excode
+    return ret;
+}
+
+template<class ShaderGraph> class Ref;%template() Ref<ShaderGraph>;
+%feature("novaluewrapper") Ref<ShaderGraph>;
+
 
 %typemap(csbody_derived) ShaderGraph %{
   public static readonly int NODE_INPUT = 0;
@@ -524,5 +543,20 @@ public:
   return self_obj->call("node_get_state", shader_type, id);
     }
   }
+  %extend {
+    ~ShaderGraph() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

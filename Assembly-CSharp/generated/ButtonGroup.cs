@@ -45,7 +45,9 @@ public class ButtonGroup : BoxContainer {
 
   public BaseButton get_pressed_button() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ButtonGroup_get_pressed_button(swigCPtr);
-    BaseButton ret = (cPtr == global::System.IntPtr.Zero) ? null : new BaseButton(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BaseButton ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BaseButton;
     return ret;
   }
 
@@ -56,7 +58,9 @@ public class ButtonGroup : BoxContainer {
 
   public BaseButton get_focused_button() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ButtonGroup_get_focused_button(swigCPtr);
-    BaseButton ret = (cPtr == global::System.IntPtr.Zero) ? null : new BaseButton(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    BaseButton ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BaseButton;
     return ret;
   }
 

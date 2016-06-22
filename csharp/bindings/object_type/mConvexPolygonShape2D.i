@@ -1,6 +1,25 @@
 /* mConvexPolygonShape2D.i */
 %module mConvexPolygonShape2D
 
+%typemap(ctype, out="ConvexPolygonShape2D*") Ref<ConvexPolygonShape2D> "ConvexPolygonShape2D*"
+%typemap(out, null="NULL") Ref<ConvexPolygonShape2D> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ConvexPolygonShape2D> "ConvexPolygonShape2D.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ConvexPolygonShape2D> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ConvexPolygonShape2D> "ConvexPolygonShape2D"
+%typemap(csout, excode=SWIGEXCODE) Ref<ConvexPolygonShape2D> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ConvexPolygonShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConvexPolygonShape2D;$excode
+    return ret;
+}
+
+template<class ConvexPolygonShape2D> class Ref;%template() Ref<ConvexPolygonShape2D>;
+%feature("novaluewrapper") Ref<ConvexPolygonShape2D>;
+
 
 %typemap(csbody_derived) ConvexPolygonShape2D %{
 
@@ -57,5 +76,20 @@ public:
     }
   }
   ConvexPolygonShape2D();
+  %extend {
+    ~ConvexPolygonShape2D() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

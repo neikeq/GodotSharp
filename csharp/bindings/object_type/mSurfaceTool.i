@@ -1,6 +1,25 @@
 /* mSurfaceTool.i */
 %module mSurfaceTool
 
+%typemap(ctype, out="SurfaceTool*") Ref<SurfaceTool> "SurfaceTool*"
+%typemap(out, null="NULL") Ref<SurfaceTool> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<SurfaceTool> "SurfaceTool.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<SurfaceTool> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<SurfaceTool> "SurfaceTool"
+%typemap(csout, excode=SWIGEXCODE) Ref<SurfaceTool> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SurfaceTool ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SurfaceTool;$excode
+    return ret;
+}
+
+template<class SurfaceTool> class Ref;%template() Ref<SurfaceTool>;
+%feature("novaluewrapper") Ref<SurfaceTool>;
+
 
 %typemap(csbody_derived) SurfaceTool %{
 
@@ -148,5 +167,20 @@ $self->call("add_triangle_fan", (const Variant **) args_, 6, err);
     }
   }
   SurfaceTool();
+  %extend {
+    ~SurfaceTool() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

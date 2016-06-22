@@ -1,6 +1,15 @@
 /* mParticles2D.i */
 %module mParticles2D
 
+%typemap(out) Particles2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) Particles2D* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) Particles2D %{
   public static readonly int PARAM_DIRECTION = 0;

@@ -1,6 +1,25 @@
 /* mCapsuleShape.i */
 %module mCapsuleShape
 
+%typemap(ctype, out="CapsuleShape*") Ref<CapsuleShape> "CapsuleShape*"
+%typemap(out, null="NULL") Ref<CapsuleShape> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<CapsuleShape> "CapsuleShape.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<CapsuleShape> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<CapsuleShape> "CapsuleShape"
+%typemap(csout, excode=SWIGEXCODE) Ref<CapsuleShape> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CapsuleShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CapsuleShape;$excode
+    return ret;
+}
+
+template<class CapsuleShape> class Ref;%template() Ref<CapsuleShape>;
+%feature("novaluewrapper") Ref<CapsuleShape>;
+
 
 %typemap(csbody_derived) CapsuleShape %{
 
@@ -63,5 +82,20 @@ public:
     }
   }
   CapsuleShape();
+  %extend {
+    ~CapsuleShape() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

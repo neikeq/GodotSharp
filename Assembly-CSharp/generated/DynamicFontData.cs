@@ -27,12 +27,16 @@ public class DynamicFontData : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~DynamicFontData() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_DynamicFontData(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -42,6 +46,16 @@ public class DynamicFontData : Resource {
   }
 
 
+
+  public void set_font_path(string path) {
+    GodotEnginePINVOKE.DynamicFontData_set_font_path(swigCPtr, path);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public string get_font_path() {
+    string ret = GodotEnginePINVOKE.DynamicFontData_get_font_path(swigCPtr);
+    return ret;
+  }
 
   public DynamicFontData() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {

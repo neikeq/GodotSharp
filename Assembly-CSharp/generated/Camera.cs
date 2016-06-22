@@ -143,15 +143,18 @@ public class Camera : Spatial {
     return ret;
   }
 
-  public void set_environment(SWIGTYPE_p_RefT_Environment_t env) {
-    GodotEnginePINVOKE.Camera_set_environment(swigCPtr, SWIGTYPE_p_RefT_Environment_t.getCPtr(env));
+  public void set_environment(Environment env) {
+    GodotEnginePINVOKE.Camera_set_environment(swigCPtr, Environment.getCPtr(env));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Environment_t get_environment() {
-    SWIGTYPE_p_RefT_Environment_t ret = new SWIGTYPE_p_RefT_Environment_t(GodotEnginePINVOKE.Camera_get_environment(swigCPtr), true);
+  public Environment get_environment() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Camera_get_environment(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Environment ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Environment;
     return ret;
-  }
+}
 
   public void set_keep_aspect_mode(int mode) {
     GodotEnginePINVOKE.Camera_set_keep_aspect_mode(swigCPtr, mode);

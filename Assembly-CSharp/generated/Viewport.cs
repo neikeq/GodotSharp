@@ -57,25 +57,34 @@ public class Viewport : Node {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_World2D_t find_world_2d() {
-    SWIGTYPE_p_RefT_World2D_t ret = new SWIGTYPE_p_RefT_World2D_t(GodotEnginePINVOKE.Viewport_find_world_2d(swigCPtr), true);
+  public World2D find_world_2d() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Viewport_find_world_2d(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World2D;
     return ret;
-  }
+}
 
-  public void set_world(SWIGTYPE_p_RefT_World_t world) {
-    GodotEnginePINVOKE.Viewport_set_world(swigCPtr, SWIGTYPE_p_RefT_World_t.getCPtr(world));
+  public void set_world(World world) {
+    GodotEnginePINVOKE.Viewport_set_world(swigCPtr, World.getCPtr(world));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_World_t get_world() {
-    SWIGTYPE_p_RefT_World_t ret = new SWIGTYPE_p_RefT_World_t(GodotEnginePINVOKE.Viewport_get_world(swigCPtr), true);
+  public World get_world() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Viewport_get_world(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_World_t find_world() {
-    SWIGTYPE_p_RefT_World_t ret = new SWIGTYPE_p_RefT_World_t(GodotEnginePINVOKE.Viewport_find_world(swigCPtr), true);
+  public World find_world() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Viewport_find_world(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    World ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World;
     return ret;
-  }
+}
 
   public void set_canvas_transform(Matrix32 xform) {
     GodotEnginePINVOKE.Viewport_set_canvas_transform(swigCPtr, ref xform.elements);
@@ -216,10 +225,13 @@ public class Viewport : Node {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_RenderTargetTexture_t get_render_target_texture() {
-    SWIGTYPE_p_RefT_RenderTargetTexture_t ret = new SWIGTYPE_p_RefT_RenderTargetTexture_t(GodotEnginePINVOKE.Viewport_get_render_target_texture(swigCPtr), true);
+  public RenderTargetTexture get_render_target_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Viewport_get_render_target_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    RenderTargetTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RenderTargetTexture;
     return ret;
-  }
+}
 
   public void set_physics_object_picking(bool enable) {
     GodotEnginePINVOKE.Viewport_set_physics_object_picking(swigCPtr, enable);

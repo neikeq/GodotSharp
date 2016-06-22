@@ -53,6 +53,12 @@ public class ColorPickerButton : Button {
     return ret;
   }
 
+  public ColorPicker get_picker() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ColorPickerButton_get_picker(swigCPtr);
+    ColorPicker ret = (cPtr == global::System.IntPtr.Zero) ? null : new ColorPicker(cPtr, false);
+    return ret;
+  }
+
   public void set_edit_alpha(bool show) {
     GodotEnginePINVOKE.ColorPickerButton_set_edit_alpha(swigCPtr, show);
   }

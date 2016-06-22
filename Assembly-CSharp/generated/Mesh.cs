@@ -54,12 +54,16 @@ public class Mesh : Resource {
     return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
   }
 
+  ~Mesh() {
+    Dispose();
+  }
+
   public override void Dispose() {
     lock(this) {
       if (swigCPtr.Handle != global::System.IntPtr.Zero) {
         if (swigCMemOwn) {
           swigCMemOwn = false;
-          throw new global::System.MethodAccessException("C++ destructor does not have public access");
+          GodotEnginePINVOKE.delete_Mesh(swigCPtr);
         }
         swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
       }
@@ -142,15 +146,18 @@ public class Mesh : Resource {
     return ret;
   }
 
-  public void surface_set_material(int surf_idx, SWIGTYPE_p_RefT_Material_t material) {
-    GodotEnginePINVOKE.Mesh_surface_set_material(swigCPtr, surf_idx, SWIGTYPE_p_RefT_Material_t.getCPtr(material));
+  public void surface_set_material(int surf_idx, Material material) {
+    GodotEnginePINVOKE.Mesh_surface_set_material(swigCPtr, surf_idx, Material.getCPtr(material));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Material_t surface_get_material(int surf_idx) {
-    SWIGTYPE_p_RefT_Material_t ret = new SWIGTYPE_p_RefT_Material_t(GodotEnginePINVOKE.Mesh_surface_get_material(swigCPtr, surf_idx), true);
+  public Material surface_get_material(int surf_idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Mesh_surface_get_material(swigCPtr, surf_idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Material ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Material;
     return ret;
-  }
+}
 
   public void surface_set_name(int surf_idx, string name) {
     GodotEnginePINVOKE.Mesh_surface_set_name(swigCPtr, surf_idx, name);

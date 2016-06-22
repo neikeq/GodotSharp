@@ -1,6 +1,25 @@
 /* mImageTexture.i */
 %module mImageTexture
 
+%typemap(ctype, out="ImageTexture*") Ref<ImageTexture> "ImageTexture*"
+%typemap(out, null="NULL") Ref<ImageTexture> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<ImageTexture> "ImageTexture.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<ImageTexture> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<ImageTexture> "ImageTexture"
+%typemap(csout, excode=SWIGEXCODE) Ref<ImageTexture> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ImageTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ImageTexture;$excode
+    return ret;
+}
+
+template<class ImageTexture> class Ref;%template() Ref<ImageTexture>;
+%feature("novaluewrapper") Ref<ImageTexture>;
+
 
 %typemap(csbody_derived) ImageTexture %{
   public static readonly int STORAGE_RAW = 0;
@@ -132,5 +151,20 @@ public:
     }
   }
   ImageTexture();
+  %extend {
+    ~ImageTexture() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

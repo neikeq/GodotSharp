@@ -2,6 +2,25 @@
 %module mPhysics2DShapeQueryResult
 
 %nodefaultctor Physics2DShapeQueryResult;
+%typemap(ctype, out="Physics2DShapeQueryResult*") Ref<Physics2DShapeQueryResult> "Physics2DShapeQueryResult*"
+%typemap(out, null="NULL") Ref<Physics2DShapeQueryResult> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<Physics2DShapeQueryResult> "Physics2DShapeQueryResult.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<Physics2DShapeQueryResult> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<Physics2DShapeQueryResult> "Physics2DShapeQueryResult"
+%typemap(csout, excode=SWIGEXCODE) Ref<Physics2DShapeQueryResult> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Physics2DShapeQueryResult ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DShapeQueryResult;$excode
+    return ret;
+}
+
+template<class Physics2DShapeQueryResult> class Ref;%template() Ref<Physics2DShapeQueryResult>;
+%feature("novaluewrapper") Ref<Physics2DShapeQueryResult>;
+
 
 %typemap(csbody_derived) Physics2DShapeQueryResult %{
 
@@ -70,5 +89,20 @@ public:
   return self_obj->call("get_result_object_shape", idx);
     }
   }
+  %extend {
+    ~Physics2DShapeQueryResult() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

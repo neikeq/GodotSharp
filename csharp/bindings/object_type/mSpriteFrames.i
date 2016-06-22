@@ -1,6 +1,25 @@
 /* mSpriteFrames.i */
 %module mSpriteFrames
 
+%typemap(ctype, out="SpriteFrames*") Ref<SpriteFrames> "SpriteFrames*"
+%typemap(out, null="NULL") Ref<SpriteFrames> %{
+  $result = $1.ptr();
+  $result->reference();
+%}
+%typemap(csin) Ref<SpriteFrames> "SpriteFrames.getCPtr($csinput)"
+%typemap(imtype, out="global::System.IntPtr") Ref<SpriteFrames> "global::System.Runtime.InteropServices.HandleRef"
+%typemap(cstype) Ref<SpriteFrames> "SpriteFrames"
+%typemap(csout, excode=SWIGEXCODE) Ref<SpriteFrames> {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SpriteFrames ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SpriteFrames;$excode
+    return ret;
+}
+
+template<class SpriteFrames> class Ref;%template() Ref<SpriteFrames>;
+%feature("novaluewrapper") Ref<SpriteFrames>;
+
 
 %typemap(csbody_derived) SpriteFrames %{
 
@@ -129,5 +148,20 @@ public:
     }
   }
   SpriteFrames();
+  %extend {
+    ~SpriteFrames() {
+      if ($self->get_script_instance()) {
+        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+        if (cs_instance) {
+          cs_instance->mono_object_disposed();
+          return;
+        }
+      }
+      if ($self->unreference()) {
+        memdelete($self);
+      }
+    }
+  }
+
 
 };

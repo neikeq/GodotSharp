@@ -5,6 +5,15 @@
 %csmethodmodifiers _OS::_OS "private"
 %csmethodmodifiers _OS::SingletonGetInstance "private"
 %nodefaultctor _OS;
+%typemap(out) _OS "$result = memnew($1_ltype((const $1_ltype &)$1));"
+%typemap(csout, excode=SWIGEXCODE) _OS* {
+    global::System.IntPtr cPtr = $imcall;
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
+    return ret;
+  }
+
 
 %typemap(csbody_derived) _OS %{
   private static $csclassname instance;
