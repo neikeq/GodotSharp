@@ -403,7 +403,6 @@ void CSharpInstance::mono_object_disposed()
 	Reference *ref_owner = owner->cast_to<Reference>();
 
 	if (ref_owner->reference_get_count() == 0) {
-		//gchandle->release(); // make sure it's released
 		memdelete(ref_owner);
 		owner = NULL;
 	}
@@ -630,6 +629,8 @@ CSharpInstance::CSharpInstance()
 
 CSharpInstance::~CSharpInstance()
 {
+	gchandle->release(); // make sure it's released
+
 	if (script.is_valid() && owner) {
 		script->instances.erase(owner);
 	}
