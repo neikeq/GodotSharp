@@ -101,19 +101,7 @@ MonoObject *variant_to_managed_of_type(const Variant* p_var, MonoType *p_type)
 			// Vector2
 			if (vector2_class == type_class) {
 				Vector2 val = p_var->operator Vector2();
-
-				MonoObject* managed = mono_object_new(mono_domain_get(), vector2_class);
-
-				MonoMethodDesc *desc = mono_method_desc_new(":.ctor(single,single)", FALSE);
-				MonoMethod *ctor = mono_method_desc_search_in_class(desc, vector2_class);
-				mono_method_desc_free(desc);
-
-				void *args [2];
-				args [0] = &val.x;
-				args [1] = &val.y;
-				mono_runtime_invoke(ctor, managed, args, NULL);
-
-				return managed;
+				return mono_value_box(mono_domain_get(), vector2_class, &val);
 			}
 		} break;
 
@@ -232,19 +220,7 @@ void mono_field_set_from_variant(MonoObject* p_object, MonoClassField* p_field, 
 			// Vector2
 			if (vector2_class == type_class) {
 				Vector2 val = p_var->operator Vector2();
-
-				MonoObject* managed = mono_object_new(mono_domain_get(), vector2_class);
-
-				MonoMethodDesc *desc = mono_method_desc_new(":.ctor(single,single)", FALSE);
-				MonoMethod *ctor = mono_method_desc_search_in_class(desc, vector2_class);
-				mono_method_desc_free(desc);
-
-				void *args [2];
-				args [0] = &val.x;
-				args [1] = &val.y;
-				mono_runtime_invoke(ctor, managed, args, NULL);
-
-				mono_field_set_value(p_object, p_field, managed);
+				mono_field_set_value(p_object, p_field, &val);
 				break;
 			}
 		} break;

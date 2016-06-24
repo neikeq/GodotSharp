@@ -63,7 +63,7 @@ void register_mono_internal_calls();
 #define UNBOX_UINT8( x ) *(uint8_t *) mono_object_unbox( x )
 #define UNBOX_BOOLEAN( x ) *(MonoBoolean *) mono_object_unbox( x )
 #define UNBOX_CHAR( x ) (wchar_t *) mono_object_unbox( x )
-#define UNBOX_PTR( x ) *(gpointer *) mono_object_unbox( x )
+#define UNBOX_PTR( x ) mono_object_unbox( x )
 
 #define BOX_DOUBLE( x ) mono_value_box(mono_domain_get(), mono_get_double_class(), &x)
 #define BOX_FLOAT( x ) mono_value_box(mono_domain_get(), mono_get_single_class(), &x)
