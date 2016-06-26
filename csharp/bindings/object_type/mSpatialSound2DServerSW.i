@@ -2,15 +2,6 @@
 %module mSpatialSound2DServerSW
 
 %nodefaultctor SpatialSound2DServerSW;
-%typemap(out) SpatialSound2DServerSW "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SpatialSound2DServerSW* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SpatialSound2DServerSW %{
 

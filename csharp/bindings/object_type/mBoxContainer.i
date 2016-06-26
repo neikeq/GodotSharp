@@ -2,15 +2,6 @@
 %module mBoxContainer
 
 %nodefaultctor BoxContainer;
-%typemap(out) BoxContainer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) BoxContainer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) BoxContainer %{
   public static readonly int ALIGN_BEGIN = 0;
@@ -52,23 +43,35 @@
 
 class BoxContainer : public Container {
 public:
-  %extend {
-    void add_spacer(bool begin) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_spacer", begin);
-    }
-  }
-  %extend {
-    int get_alignment() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_alignment");
-    }
-  }
-  %extend {
-    void set_alignment(int alignment) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_alignment", alignment);
-    }
-  }
+
+%extend {
+
+void add_spacer(bool begin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BoxContainer", "add_spacer");
+  const void* __args[1] = { &begin };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_alignment() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BoxContainer", "get_alignment");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_alignment(int alignment) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BoxContainer", "set_alignment");
+  const void* __args[1] = { &alignment };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

@@ -1,22 +1,6 @@
 /* mVideoStreamTheora.i */
 %module mVideoStreamTheora
 
-%typemap(ctype, out="VideoStreamTheora*") Ref<VideoStreamTheora> "VideoStreamTheora*"
-%typemap(out, null="NULL") Ref<VideoStreamTheora> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<VideoStreamTheora> "VideoStreamTheora.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<VideoStreamTheora> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<VideoStreamTheora> "VideoStreamTheora"
-%typemap(csout, excode=SWIGEXCODE) Ref<VideoStreamTheora> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    VideoStreamTheora ret = InternalHelpers.UnmanagedGetManaged(cPtr) as VideoStreamTheora;$excode
-    return ret;
-}
-
 template<class VideoStreamTheora> class Ref;%template() Ref<VideoStreamTheora>;
 %feature("novaluewrapper") Ref<VideoStreamTheora>;
 
@@ -58,20 +42,23 @@ template<class VideoStreamTheora> class Ref;%template() Ref<VideoStreamTheora>;
 class VideoStreamTheora : public VideoStream {
 public:
   VideoStreamTheora();
-  %extend {
-    ~VideoStreamTheora() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~VideoStreamTheora() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

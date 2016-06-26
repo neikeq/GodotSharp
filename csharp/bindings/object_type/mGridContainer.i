@@ -1,15 +1,6 @@
 /* mGridContainer.i */
 %module mGridContainer
 
-%typemap(out) GridContainer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) GridContainer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) GridContainer %{
 
@@ -47,18 +38,28 @@
 
 class GridContainer : public Container {
 public:
-  %extend {
-    void set_columns(int columns) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_columns", columns);
-    }
-  }
-  %extend {
-    int get_columns() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_columns");
-    }
-  }
   GridContainer();
+
+%extend {
+
+void set_columns(int columns) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridContainer", "set_columns");
+  const void* __args[1] = { &columns };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_columns() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridContainer", "get_columns");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

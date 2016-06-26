@@ -54,7 +54,6 @@ public class TileMap : Node2D {
 
   public void set_tileset(TileSet tileset) {
     GodotEnginePINVOKE.TileMap_set_tileset(swigCPtr, TileSet.getCPtr(tileset));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public TileSet get_tileset() {

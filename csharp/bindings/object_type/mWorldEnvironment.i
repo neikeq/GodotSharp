@@ -1,15 +1,6 @@
 /* mWorldEnvironment.i */
 %module mWorldEnvironment
 
-%typemap(out) WorldEnvironment "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) WorldEnvironment* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) WorldEnvironment %{
 
@@ -47,18 +38,28 @@
 
 class WorldEnvironment : public Spatial {
 public:
-  %extend {
-    void set_environment(Ref<Environment> env) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_environment", env);
-    }
-  }
-  %extend {
-    Ref<Environment> get_environment() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_environment").operator Object *()->cast_to<Environment>();
-    }
-  }
   WorldEnvironment();
+
+%extend {
+
+void set_environment(Environment* env) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("WorldEnvironment", "set_environment");
+  const void* __args[1] = { env };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Environment> get_environment() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("WorldEnvironment", "get_environment");
+  Ref<Environment> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

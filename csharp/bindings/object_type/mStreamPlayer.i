@@ -1,15 +1,6 @@
 /* mStreamPlayer.i */
 %module mStreamPlayer
 
-%typemap(out) StreamPlayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) StreamPlayer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) StreamPlayer %{
 
@@ -47,150 +38,215 @@
 
 class StreamPlayer : public Node {
 public:
-  %extend {
-    void set_stream(Ref<AudioStream> stream) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stream", stream);
-    }
-  }
-  %extend {
-    Ref<AudioStream> get_stream() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream").operator Object *()->cast_to<AudioStream>();
-    }
-  }
-  %extend {
-    void play(float offset = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play", offset);
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_paused(bool paused) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_paused", paused);
-    }
-  }
-  %extend {
-    bool is_paused() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_paused");
-    }
-  }
-  %extend {
-    void set_loop(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop", enabled);
-    }
-  }
-  %extend {
-    bool has_loop() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_loop");
-    }
-  }
-  %extend {
-    void set_volume(float volume) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_volume", volume);
-    }
-  }
-  %extend {
-    float get_volume() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_volume");
-    }
-  }
-  %extend {
-    void set_volume_db(float db) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_volume_db", db);
-    }
-  }
-  %extend {
-    float get_volume_db() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_volume_db");
-    }
-  }
-  %extend {
-    void set_buffering_msec(int msec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_buffering_msec", msec);
-    }
-  }
-  %extend {
-    int get_buffering_msec() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_buffering_msec");
-    }
-  }
-  %extend {
-    void set_loop_restart_time(float secs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop_restart_time", secs);
-    }
-  }
-  %extend {
-    float get_loop_restart_time() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_restart_time");
-    }
-  }
-  %extend {
-    String get_stream_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream_name");
-    }
-  }
-  %extend {
-    int get_loop_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_count");
-    }
-  }
-  %extend {
-    float get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    void seek_pos(float time) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("seek_pos", time);
-    }
-  }
-  %extend {
-    void set_autoplay(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_autoplay", enabled);
-    }
-  }
-  %extend {
-    bool has_autoplay() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_autoplay");
-    }
-  }
-  %extend {
-    float get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
   StreamPlayer();
+
+%extend {
+
+void set_stream(AudioStream* stream) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_stream");
+  const void* __args[1] = { stream };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<AudioStream> get_stream() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_stream");
+  Ref<AudioStream> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void play(float offset = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "play");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_paused(bool paused) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_paused");
+  const void* __args[1] = { &paused };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_paused() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "is_paused");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_loop");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_loop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "has_loop");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_volume(float volume) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_volume");
+  const void* __args[1] = { &volume };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_volume() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_volume");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_volume_db(float db) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_volume_db");
+  const void* __args[1] = { &db };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_volume_db() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_volume_db");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_buffering_msec(int msec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_buffering_msec");
+  const void* __args[1] = { &msec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_buffering_msec() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_buffering_msec");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop_restart_time(float secs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_loop_restart_time");
+  const void* __args[1] = { &secs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_loop_restart_time() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_loop_restart_time");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_stream_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_stream_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_loop_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_loop_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_pos");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void seek_pos(float time) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "seek_pos");
+  const void* __args[1] = { &time };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_autoplay(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "set_autoplay");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_autoplay() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "has_autoplay");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPlayer", "get_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

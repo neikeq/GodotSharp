@@ -1,15 +1,6 @@
 /* mProgressBar.i */
 %module mProgressBar
 
-%typemap(out) ProgressBar "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ProgressBar* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ProgressBar %{
 
@@ -47,18 +38,28 @@
 
 class ProgressBar : public Range {
 public:
-  %extend {
-    void set_percent_visible(bool visible) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_percent_visible", visible);
-    }
-  }
-  %extend {
-    bool is_percent_visible() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_percent_visible");
-    }
-  }
   ProgressBar();
+
+%extend {
+
+void set_percent_visible(bool visible) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProgressBar", "set_percent_visible");
+  const void* __args[1] = { &visible };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_percent_visible() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProgressBar", "is_percent_visible");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

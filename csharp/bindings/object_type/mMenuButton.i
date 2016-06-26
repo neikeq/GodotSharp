@@ -1,15 +1,6 @@
 /* mMenuButton.i */
 %module mMenuButton
 
-%typemap(out) MenuButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) MenuButton* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) MenuButton %{
 
@@ -47,12 +38,20 @@
 
 class MenuButton : public Button {
 public:
-  %extend {
-    PopupMenu* get_popup() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_popup").operator Object *()->cast_to<PopupMenu>();
-    }
-  }
   MenuButton();
+
+%extend {
+
+PopupMenu* get_popup() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MenuButton", "get_popup");
+  PopupMenu* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

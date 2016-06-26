@@ -1,22 +1,6 @@
 /* mResourceImportMetadata.i */
 %module mResourceImportMetadata
 
-%typemap(ctype, out="ResourceImportMetadata*") Ref<ResourceImportMetadata> "ResourceImportMetadata*"
-%typemap(out, null="NULL") Ref<ResourceImportMetadata> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ResourceImportMetadata> "ResourceImportMetadata.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ResourceImportMetadata> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ResourceImportMetadata> "ResourceImportMetadata"
-%typemap(csout, excode=SWIGEXCODE) Ref<ResourceImportMetadata> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ResourceImportMetadata ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceImportMetadata;$excode
-    return ret;
-}
-
 template<class ResourceImportMetadata> class Ref;%template() Ref<ResourceImportMetadata>;
 %feature("novaluewrapper") Ref<ResourceImportMetadata>;
 
@@ -57,87 +41,119 @@ template<class ResourceImportMetadata> class Ref;%template() Ref<ResourceImportM
 
 class ResourceImportMetadata : public Reference {
 public:
-  %extend {
-    void set_editor(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_editor", name);
-    }
-  }
-  %extend {
-    String get_editor() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_editor");
-    }
-  }
-  %extend {
-    void add_source(const String& path, const String& md5 = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_source", path, md5);
-    }
-  }
-  %extend {
-    String get_source_path(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_source_path", idx);
-    }
-  }
-  %extend {
-    String get_source_md5(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_source_md5", idx);
-    }
-  }
-  %extend {
-    void set_source_md5(int idx, const String& md5) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_source_md5", idx, md5);
-    }
-  }
-  %extend {
-    void remove_source(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_source", idx);
-    }
-  }
-  %extend {
-    int get_source_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_source_count");
-    }
-  }
-  %extend {
-    void set_option(const String& key, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_option", key, value);
-    }
-  }
-  %extend {
-    void get_option(const String& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_option", key);
-    }
-  }
-  %extend {
-    StringArray get_options() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_options");
-    }
-  }
   ResourceImportMetadata();
-  %extend {
-    ~ResourceImportMetadata() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_editor(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "set_editor");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_editor() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "get_editor");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_source(const String& path, const String& md5 = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "add_source");
+  const void* __args[2] = { &path, &md5 };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_source_path(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "get_source_path");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_source_md5(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "get_source_md5");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_source_md5(int idx, const String& md5) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "set_source_md5");
+  const void* __args[2] = { &idx, &md5 };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_source(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "remove_source");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_source_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "get_source_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_option(const String& key, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "set_option");
+  const void* __args[2] = { &key, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_option(const String& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "get_option");
+  const void* __args[1] = { &key };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_options() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceImportMetadata", "get_options");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ResourceImportMetadata() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

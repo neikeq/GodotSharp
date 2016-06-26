@@ -8624,8 +8624,8 @@ class GodotEnginePINVOKE {
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_edit_set_state")]
   public static extern void CanvasItem_edit_set_state(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
 
-  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_edit_get")]
-  public static extern void CanvasItem_edit_get(global::System.Runtime.InteropServices.HandleRef jarg1);
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_edit_get_state")]
+  public static extern global::System.IntPtr CanvasItem_edit_get_state(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_CanvasItem_edit_set_rect")]
   public static extern void CanvasItem_edit_set_rect(global::System.Runtime.InteropServices.HandleRef jarg1, global::System.Runtime.InteropServices.HandleRef jarg2);
@@ -10195,6 +10195,18 @@ class GodotEnginePINVOKE {
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_get_cursor_pos")]
   public static extern int LineEdit_get_cursor_pos(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_cursor_set_blink_enabled")]
+  public static extern void LineEdit_cursor_set_blink_enabled(global::System.Runtime.InteropServices.HandleRef jarg1, bool jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_cursor_get_blink_enabled")]
+  public static extern bool LineEdit_cursor_get_blink_enabled(global::System.Runtime.InteropServices.HandleRef jarg1);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_cursor_set_blink_speed")]
+  public static extern void LineEdit_cursor_set_blink_speed(global::System.Runtime.InteropServices.HandleRef jarg1, float jarg2);
+
+  [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_cursor_get_blink_speed")]
+  public static extern float LineEdit_cursor_get_blink_speed(global::System.Runtime.InteropServices.HandleRef jarg1);
 
   [global::System.Runtime.InteropServices.DllImport("__Internal", EntryPoint="CSharp_LineEdit_set_max_length")]
   public static extern void LineEdit_set_max_length(global::System.Runtime.InteropServices.HandleRef jarg1, int jarg2);

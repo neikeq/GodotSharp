@@ -2,22 +2,6 @@
 %module mScript
 
 %nodefaultctor Script;
-%typemap(ctype, out="Script*") Ref<Script> "Script*"
-%typemap(out, null="NULL") Ref<Script> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Script> "Script.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Script> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Script> "Script"
-%typemap(csout, excode=SWIGEXCODE) Ref<Script> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Script ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Script;$excode
-    return ret;
-}
-
 template<class Script> class Ref;%template() Ref<Script>;
 %feature("novaluewrapper") Ref<Script>;
 
@@ -59,56 +43,78 @@ template<class Script> class Ref;%template() Ref<Script>;
 
 class Script : public Resource {
 public:
-  %extend {
-    bool can_instance() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_instance");
+
+%extend {
+
+bool can_instance() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Script", "can_instance");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool instance_has(Object* base_object) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Script", "instance_has");
+  const void* __args[1] = { base_object };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_source_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Script", "has_source_code");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_source_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Script", "get_source_code");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_source_code(const String& source) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Script", "set_source_code");
+  const void* __args[1] = { &source };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int reload(bool keep_state = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Script", "reload");
+  const void* __args[1] = { &keep_state };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Script() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    bool instance_has(Object* base_object) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("instance_has", base_object);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    bool has_source_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_source_code");
-    }
-  }
-  %extend {
-    String get_source_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_source_code");
-    }
-  }
-  %extend {
-    void set_source_code(const String& source) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_source_code", source);
-    }
-  }
-  %extend {
-    int reload(bool keep_state = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("reload", keep_state);
-    }
-  }
-  %extend {
-    ~Script() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

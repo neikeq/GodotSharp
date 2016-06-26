@@ -49,7 +49,6 @@ public class ShaderMaterial : Material {
 
   public void set_shader(Shader shader) {
     GodotEnginePINVOKE.ShaderMaterial_set_shader(swigCPtr, Shader.getCPtr(shader));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Shader get_shader() {

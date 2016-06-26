@@ -1,15 +1,6 @@
 /* mTimer.i */
 %module mTimer
 
-%typemap(out) Timer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Timer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Timer %{
   public static readonly int TIMER_PROCESS_FIXED = 0;
@@ -49,84 +40,119 @@
 
 class Timer : public Node {
 public:
-  %extend {
-    void set_wait_time(float time_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_wait_time", time_sec);
-    }
-  }
-  %extend {
-    float get_wait_time() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_wait_time");
-    }
-  }
-  %extend {
-    void set_one_shot(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_one_shot", enable);
-    }
-  }
-  %extend {
-    bool is_one_shot() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_one_shot");
-    }
-  }
-  %extend {
-    void set_autostart(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_autostart", enable);
-    }
-  }
-  %extend {
-    bool has_autostart() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_autostart");
-    }
-  }
-  %extend {
-    void start() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("start");
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    void set_active(bool active) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_active", active);
-    }
-  }
-  %extend {
-    bool is_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_active");
-    }
-  }
-  %extend {
-    float get_time_left() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_time_left");
-    }
-  }
-  %extend {
-    void set_timer_process_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_timer_process_mode", mode);
-    }
-  }
-  %extend {
-    int get_timer_process_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_timer_process_mode");
-    }
-  }
   Timer();
+
+%extend {
+
+void set_wait_time(float time_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "set_wait_time");
+  const void* __args[1] = { &time_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_wait_time() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "get_wait_time");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_one_shot(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "set_one_shot");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_one_shot() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "is_one_shot");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_autostart(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "set_autostart");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_autostart() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "has_autostart");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void start() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "start");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_active(bool active) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "set_active");
+  const void* __args[1] = { &active };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "is_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_time_left() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "get_time_left");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_timer_process_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "set_timer_process_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_timer_process_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Timer", "get_timer_process_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

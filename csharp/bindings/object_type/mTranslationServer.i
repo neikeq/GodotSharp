@@ -4,15 +4,6 @@
 %csmethodmodifiers TranslationServer::TranslationServer "private"
 %csmethodmodifiers TranslationServer::SingletonGetInstance "private"
 %nodefaultctor TranslationServer;
-%typemap(out) TranslationServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) TranslationServer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) TranslationServer %{
   private static $csclassname instance;
@@ -61,44 +52,62 @@
 
 class TranslationServer : public Object {
 public:
-  %extend {
-    void set_locale(const String& locale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_locale", locale);
-    }
-  }
-  %extend {
-    String get_locale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_locale");
-    }
-  }
-  %extend {
-    String translate(const String& message) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("translate", message);
-    }
-  }
-  %extend {
-    void add_translation(Ref<Translation> translation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_translation", translation);
-    }
-  }
-  %extend {
-    void remove_translation(Ref<Translation> translation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_translation", translation);
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    static TranslationServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("TranslationServer")->cast_to<TranslationServer>(); }
-  }
+
+%extend {
+
+void set_locale(const String& locale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TranslationServer", "set_locale");
+  const void* __args[1] = { &locale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_locale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TranslationServer", "get_locale");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String translate(const String& message) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TranslationServer", "translate");
+  const void* __args[1] = { &message };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void add_translation(Translation* translation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TranslationServer", "add_translation");
+  const void* __args[1] = { translation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_translation(Translation* translation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TranslationServer", "remove_translation");
+  const void* __args[1] = { translation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TranslationServer", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+static TranslationServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("TranslationServer")->cast_to<TranslationServer>(); }
+
+}
+
 
 };

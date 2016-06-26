@@ -1,22 +1,6 @@
 /* mPolygonPathFinder.i */
 %module mPolygonPathFinder
 
-%typemap(ctype, out="PolygonPathFinder*") Ref<PolygonPathFinder> "PolygonPathFinder*"
-%typemap(out, null="NULL") Ref<PolygonPathFinder> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PolygonPathFinder> "PolygonPathFinder.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PolygonPathFinder> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PolygonPathFinder> "PolygonPathFinder"
-%typemap(csout, excode=SWIGEXCODE) Ref<PolygonPathFinder> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PolygonPathFinder ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PolygonPathFinder;$excode
-    return ret;
-}
-
 template<class PolygonPathFinder> class Ref;%template() Ref<PolygonPathFinder>;
 %feature("novaluewrapper") Ref<PolygonPathFinder>;
 
@@ -57,69 +41,99 @@ template<class PolygonPathFinder> class Ref;%template() Ref<PolygonPathFinder>;
 
 class PolygonPathFinder : public Resource {
 public:
-  %extend {
-    void setup(const Vector2Array& points, const IntArray& connections) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("setup", points, connections);
-    }
-  }
-  %extend {
-    Vector2Array find_path(const Vector2& from, const Vector2& to) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("find_path", from, to);
-    }
-  }
-  %extend {
-    Vector2Array get_intersections(const Vector2& from, const Vector2& to) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_intersections", from, to);
-    }
-  }
-  %extend {
-    Vector2 get_closest_point(const Vector2& point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point", point);
-    }
-  }
-  %extend {
-    bool is_point_inside(const Vector2& point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_point_inside", point);
-    }
-  }
-  %extend {
-    void set_point_penalty(int idx, float penalty) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_penalty", idx, penalty);
-    }
-  }
-  %extend {
-    float get_point_penalty(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_penalty", idx);
-    }
-  }
-  %extend {
-    Rect2 get_bounds() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bounds");
-    }
-  }
   PolygonPathFinder();
-  %extend {
-    ~PolygonPathFinder() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void setup(const Vector2Array& points, const IntArray& connections) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "setup");
+  const void* __args[2] = { &points, &connections };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array find_path(const Vector2& from, const Vector2& to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "find_path");
+  const void* __args[2] = { &from, &to };
+  Vector2Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2Array get_intersections(const Vector2& from, const Vector2& to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "get_intersections");
+  const void* __args[2] = { &from, &to };
+  Vector2Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_closest_point(const Vector2& point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "get_closest_point");
+  const void* __args[1] = { &point };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_point_inside(const Vector2& point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "is_point_inside");
+  const void* __args[1] = { &point };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_point_penalty(int idx, float penalty) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "set_point_penalty");
+  const void* __args[2] = { &idx, &penalty };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_point_penalty(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "get_point_penalty");
+  const void* __args[1] = { &idx };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Rect2 get_bounds() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PolygonPathFinder", "get_bounds");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~PolygonPathFinder() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

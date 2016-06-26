@@ -47,15 +47,17 @@ public class StyleBoxTexture : StyleBox {
 
 
 
-  public void set_texture(SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.StyleBoxTexture_set_texture(swigCPtr, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void set_texture(Texture texture) {
+    GodotEnginePINVOKE.StyleBoxTexture_set_texture(swigCPtr, Texture.getCPtr(texture));
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_texture() {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.StyleBoxTexture_get_texture(swigCPtr), true);
+  public Texture get_texture() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.StyleBoxTexture_get_texture(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
-  }
+}
 
   public void set_margin_size(int margin, float size) {
     GodotEnginePINVOKE.StyleBoxTexture_set_margin_size(swigCPtr, margin, size);

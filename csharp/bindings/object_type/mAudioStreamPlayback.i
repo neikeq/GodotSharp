@@ -2,22 +2,6 @@
 %module mAudioStreamPlayback
 
 %nodefaultctor AudioStreamPlayback;
-%typemap(ctype, out="AudioStreamPlayback*") Ref<AudioStreamPlayback> "AudioStreamPlayback*"
-%typemap(out, null="NULL") Ref<AudioStreamPlayback> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<AudioStreamPlayback> "AudioStreamPlayback.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<AudioStreamPlayback> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<AudioStreamPlayback> "AudioStreamPlayback"
-%typemap(csout, excode=SWIGEXCODE) Ref<AudioStreamPlayback> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    AudioStreamPlayback ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioStreamPlayback;$excode
-    return ret;
-}
-
 template<class AudioStreamPlayback> class Ref;%template() Ref<AudioStreamPlayback>;
 %feature("novaluewrapper") Ref<AudioStreamPlayback>;
 
@@ -59,92 +43,126 @@ template<class AudioStreamPlayback> class Ref;%template() Ref<AudioStreamPlaybac
 
 class AudioStreamPlayback : public Reference {
 public:
-  %extend {
-    void play(float from_pos_sec = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play", from_pos_sec);
+
+%extend {
+
+void play(float from_pos_sec = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "play");
+  const void* __args[1] = { &from_pos_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "set_loop");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_loop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "has_loop");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_loop_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "get_loop_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void seek_pos(float pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "seek_pos");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "get_pos");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "get_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_channels() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "get_channels");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_mix_rate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "get_mix_rate");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_minimum_buffer_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioStreamPlayback", "get_minimum_buffer_size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~AudioStreamPlayback() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_loop(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop", enabled);
-    }
-  }
-  %extend {
-    bool has_loop() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_loop");
-    }
-  }
-  %extend {
-    int get_loop_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_count");
-    }
-  }
-  %extend {
-    void seek_pos(float pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("seek_pos", pos);
-    }
-  }
-  %extend {
-    float get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    float get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
-  %extend {
-    int get_channels() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_channels");
-    }
-  }
-  %extend {
-    int get_mix_rate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mix_rate");
-    }
-  }
-  %extend {
-    int get_minimum_buffer_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_minimum_buffer_size");
-    }
-  }
-  %extend {
-    ~AudioStreamPlayback() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

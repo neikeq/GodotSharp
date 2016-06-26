@@ -1,15 +1,6 @@
 /* mLight2D.i */
 %module mLight2D
 
-%typemap(out) Light2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Light2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Light2D %{
   public static readonly int MODE_ADD = 0;
@@ -51,222 +42,317 @@
 
 class Light2D : public Node2D {
 public:
-  %extend {
-    void set_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
-  %extend {
-    void set_texture(Object* texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Object* get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_texture_offset(const Vector2& texture_offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture_offset", texture_offset);
-    }
-  }
-  %extend {
-    Vector2 get_texture_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture_offset");
-    }
-  }
-  %extend {
-    void set_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", color);
-    }
-  }
-  %extend {
-    Color get_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color");
-    }
-  }
-  %extend {
-    void set_height(float height) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_height", height);
-    }
-  }
-  %extend {
-    float get_height() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_height");
-    }
-  }
-  %extend {
-    void set_energy(float energy) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_energy", energy);
-    }
-  }
-  %extend {
-    float get_energy() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_energy");
-    }
-  }
-  %extend {
-    void set_texture_scale(float texture_scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture_scale", texture_scale);
-    }
-  }
-  %extend {
-    float get_texture_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture_scale");
-    }
-  }
-  %extend {
-    void set_z_range_min(int z) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_z_range_min", z);
-    }
-  }
-  %extend {
-    int get_z_range_min() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_z_range_min");
-    }
-  }
-  %extend {
-    void set_z_range_max(int z) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_z_range_max", z);
-    }
-  }
-  %extend {
-    int get_z_range_max() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_z_range_max");
-    }
-  }
-  %extend {
-    void set_layer_range_min(int layer) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_range_min", layer);
-    }
-  }
-  %extend {
-    int get_layer_range_min() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_range_min");
-    }
-  }
-  %extend {
-    void set_layer_range_max(int layer) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_range_max", layer);
-    }
-  }
-  %extend {
-    int get_layer_range_max() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_range_max");
-    }
-  }
-  %extend {
-    void set_item_mask(int item_mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_mask", item_mask);
-    }
-  }
-  %extend {
-    int get_item_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_item_mask");
-    }
-  }
-  %extend {
-    void set_item_shadow_mask(int item_shadow_mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_shadow_mask", item_shadow_mask);
-    }
-  }
-  %extend {
-    int get_item_shadow_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_item_shadow_mask");
-    }
-  }
-  %extend {
-    void set_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mode", mode);
-    }
-  }
-  %extend {
-    int get_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mode");
-    }
-  }
-  %extend {
-    void set_shadow_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shadow_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_shadow_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_shadow_enabled");
-    }
-  }
-  %extend {
-    void set_shadow_buffer_size(int size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shadow_buffer_size", size);
-    }
-  }
-  %extend {
-    int get_shadow_buffer_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shadow_buffer_size");
-    }
-  }
-  %extend {
-    void set_shadow_esm_multiplier(float multiplier) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shadow_esm_multiplier", multiplier);
-    }
-  }
-  %extend {
-    float get_shadow_esm_multiplier() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shadow_esm_multiplier");
-    }
-  }
-  %extend {
-    void set_shadow_color(const Color& shadow_color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shadow_color", shadow_color);
-    }
-  }
-  %extend {
-    Color get_shadow_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shadow_color");
-    }
-  }
   Light2D();
+
+%extend {
+
+void set_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_texture(Object* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_texture_offset(const Vector2& texture_offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_texture_offset");
+  const void* __args[1] = { &texture_offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_texture_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_texture_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_height(float height) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_height");
+  const void* __args[1] = { &height };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_height() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_height");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_energy(float energy) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_energy");
+  const void* __args[1] = { &energy };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_energy() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_energy");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_texture_scale(float texture_scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_texture_scale");
+  const void* __args[1] = { &texture_scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_texture_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_texture_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_z_range_min(int z) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_z_range_min");
+  const void* __args[1] = { &z };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_z_range_min() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_z_range_min");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_z_range_max(int z) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_z_range_max");
+  const void* __args[1] = { &z };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_z_range_max() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_z_range_max");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_layer_range_min(int layer) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_layer_range_min");
+  const void* __args[1] = { &layer };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_range_min() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_layer_range_min");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_layer_range_max(int layer) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_layer_range_max");
+  const void* __args[1] = { &layer };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_range_max() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_layer_range_max");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_item_mask(int item_mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_item_mask");
+  const void* __args[1] = { &item_mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_item_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_item_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_item_shadow_mask(int item_shadow_mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_item_shadow_mask");
+  const void* __args[1] = { &item_shadow_mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_item_shadow_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_item_shadow_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shadow_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_shadow_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_shadow_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "is_shadow_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shadow_buffer_size(int size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_shadow_buffer_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_shadow_buffer_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_shadow_buffer_size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shadow_esm_multiplier(float multiplier) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_shadow_esm_multiplier");
+  const void* __args[1] = { &multiplier };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_shadow_esm_multiplier() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_shadow_esm_multiplier");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shadow_color(const Color& shadow_color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "set_shadow_color");
+  const void* __args[1] = { &shadow_color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_shadow_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light2D", "get_shadow_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

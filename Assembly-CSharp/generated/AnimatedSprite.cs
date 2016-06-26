@@ -45,7 +45,6 @@ public class AnimatedSprite : Node2D {
 
   public void set_sprite_frames(SpriteFrames sprite_frames) {
     GodotEnginePINVOKE.AnimatedSprite_set_sprite_frames(swigCPtr, SpriteFrames.getCPtr(sprite_frames));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public SpriteFrames get_sprite_frames() {

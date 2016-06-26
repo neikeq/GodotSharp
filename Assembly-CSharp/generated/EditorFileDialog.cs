@@ -101,7 +101,9 @@ public class EditorFileDialog : ConfirmationDialog {
 
   public VBoxContainer get_vbox() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.EditorFileDialog_get_vbox(swigCPtr);
-    VBoxContainer ret = (cPtr == global::System.IntPtr.Zero) ? null : new VBoxContainer(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    VBoxContainer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as VBoxContainer;
     return ret;
   }
 

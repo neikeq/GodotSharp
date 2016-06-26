@@ -1,15 +1,6 @@
 /* mCollisionPolygon2D.i */
 %module mCollisionPolygon2D
 
-%typemap(out) CollisionPolygon2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) CollisionPolygon2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) CollisionPolygon2D %{
 
@@ -47,54 +38,80 @@
 
 class CollisionPolygon2D : public Node2D {
 public:
-  %extend {
-    void set_polygon(const Vector2Array& polygon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_polygon", polygon);
-    }
-  }
-  %extend {
-    Vector2Array get_polygon() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_polygon");
-    }
-  }
-  %extend {
-    void set_build_mode(int build_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_build_mode", build_mode);
-    }
-  }
-  %extend {
-    int get_build_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_build_mode");
-    }
-  }
-  %extend {
-    void set_trigger(bool trigger) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_trigger", trigger);
-    }
-  }
-  %extend {
-    bool is_trigger() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_trigger");
-    }
-  }
-  %extend {
-    int get_collision_object_first_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_object_first_shape");
-    }
-  }
-  %extend {
-    int get_collision_object_last_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_object_last_shape");
-    }
-  }
   CollisionPolygon2D();
+
+%extend {
+
+void set_polygon(const Vector2Array& polygon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "set_polygon");
+  const void* __args[1] = { &polygon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_polygon() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "get_polygon");
+  Vector2Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_build_mode(int build_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "set_build_mode");
+  const void* __args[1] = { &build_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_build_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "get_build_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_trigger(bool trigger) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "set_trigger");
+  const void* __args[1] = { &trigger };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_trigger() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "is_trigger");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collision_object_first_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "get_collision_object_first_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collision_object_last_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionPolygon2D", "get_collision_object_last_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

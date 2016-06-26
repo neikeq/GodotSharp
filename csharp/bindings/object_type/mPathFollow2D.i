@@ -1,15 +1,6 @@
 /* mPathFollow2D.i */
 %module mPathFollow2D
 
-%typemap(out) PathFollow2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) PathFollow2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) PathFollow2D %{
 
@@ -47,90 +38,130 @@
 
 class PathFollow2D : public Node2D {
 public:
-  %extend {
-    void set_offset(float offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offset", offset);
-    }
-  }
-  %extend {
-    float get_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offset");
-    }
-  }
-  %extend {
-    void set_h_offset(float h_offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_h_offset", h_offset);
-    }
-  }
-  %extend {
-    float get_h_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_h_offset");
-    }
-  }
-  %extend {
-    void set_v_offset(float v_offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_v_offset", v_offset);
-    }
-  }
-  %extend {
-    float get_v_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_v_offset");
-    }
-  }
-  %extend {
-    void set_unit_offset(float unit_offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_unit_offset", unit_offset);
-    }
-  }
-  %extend {
-    float get_unit_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_unit_offset");
-    }
-  }
-  %extend {
-    void set_rotate(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rotate", enable);
-    }
-  }
-  %extend {
-    bool is_rotating() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_rotating");
-    }
-  }
-  %extend {
-    void set_cubic_interpolation(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cubic_interpolation", enable);
-    }
-  }
-  %extend {
-    bool get_cubic_interpolation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cubic_interpolation");
-    }
-  }
-  %extend {
-    void set_loop(bool loop) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop", loop);
-    }
-  }
-  %extend {
-    bool has_loop() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_loop");
-    }
-  }
   PathFollow2D();
+
+%extend {
+
+void set_offset(float offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "get_offset");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_h_offset(float h_offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_h_offset");
+  const void* __args[1] = { &h_offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_h_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "get_h_offset");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_v_offset(float v_offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_v_offset");
+  const void* __args[1] = { &v_offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_v_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "get_v_offset");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_unit_offset(float unit_offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_unit_offset");
+  const void* __args[1] = { &unit_offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_unit_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "get_unit_offset");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_rotate(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_rotate");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_rotating() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "is_rotating");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_cubic_interpolation(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_cubic_interpolation");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_cubic_interpolation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "get_cubic_interpolation");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop(bool loop) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "set_loop");
+  const void* __args[1] = { &loop };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_loop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathFollow2D", "has_loop");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

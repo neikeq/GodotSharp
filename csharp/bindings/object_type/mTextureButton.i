@@ -1,15 +1,6 @@
 /* mTextureButton.i */
 %module mTextureButton
 
-%typemap(out) TextureButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) TextureButton* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) TextureButton %{
 
@@ -47,102 +38,147 @@
 
 class TextureButton : public BaseButton {
 public:
-  %extend {
-    void set_normal_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_normal_texture", texture);
-    }
-  }
-  %extend {
-    void set_pressed_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pressed_texture", texture);
-    }
-  }
-  %extend {
-    void set_hover_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_hover_texture", texture);
-    }
-  }
-  %extend {
-    void set_disabled_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_disabled_texture", texture);
-    }
-  }
-  %extend {
-    void set_focused_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_focused_texture", texture);
-    }
-  }
-  %extend {
-    void set_click_mask(Ref<BitMap> mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_click_mask", mask);
-    }
-  }
-  %extend {
-    void set_texture_scale(const Vector2& scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture_scale", scale);
-    }
-  }
-  %extend {
-    void set_modulate(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_modulate", color);
-    }
-  }
-  %extend {
-    Ref<Texture> get_normal_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_normal_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Ref<Texture> get_pressed_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pressed_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Ref<Texture> get_hover_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_hover_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Ref<Texture> get_disabled_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_disabled_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Ref<Texture> get_focused_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_focused_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Ref<BitMap> get_click_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_click_mask").operator Object *()->cast_to<BitMap>();
-    }
-  }
-  %extend {
-    Vector2 get_texture_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture_scale");
-    }
-  }
-  %extend {
-    Color get_modulate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_modulate");
-    }
-  }
   TextureButton();
+
+%extend {
+
+void set_normal_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_normal_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_pressed_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_pressed_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_hover_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_hover_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_disabled_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_disabled_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_focused_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_focused_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_click_mask(BitMap* mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_click_mask");
+  const void* __args[1] = { mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_texture_scale(const Vector2& scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_texture_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_modulate(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "set_modulate");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_normal_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_normal_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<Texture> get_pressed_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_pressed_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<Texture> get_hover_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_hover_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<Texture> get_disabled_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_disabled_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<Texture> get_focused_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_focused_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<BitMap> get_click_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_click_mask");
+  Ref<BitMap> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_texture_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_texture_scale");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Color get_modulate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureButton", "get_modulate");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

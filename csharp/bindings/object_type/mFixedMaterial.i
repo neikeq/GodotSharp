@@ -1,22 +1,6 @@
 /* mFixedMaterial.i */
 %module mFixedMaterial
 
-%typemap(ctype, out="FixedMaterial*") Ref<FixedMaterial> "FixedMaterial*"
-%typemap(out, null="NULL") Ref<FixedMaterial> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<FixedMaterial> "FixedMaterial.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<FixedMaterial> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<FixedMaterial> "FixedMaterial"
-%typemap(csout, excode=SWIGEXCODE) Ref<FixedMaterial> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    FixedMaterial ret = InternalHelpers.UnmanagedGetManaged(cPtr) as FixedMaterial;$excode
-    return ret;
-}
-
 template<class FixedMaterial> class Ref;%template() Ref<FixedMaterial>;
 %feature("novaluewrapper") Ref<FixedMaterial>;
 
@@ -78,105 +62,145 @@ template<class FixedMaterial> class Ref;%template() Ref<FixedMaterial>;
 
 class FixedMaterial : public Material {
 public:
-  %extend {
-    void set_parameter(int param, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_parameter", param, value);
-    }
-  }
-  %extend {
-    void get_parameter(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_parameter", param);
-    }
-  }
-  %extend {
-    void set_texture(int param, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", param, texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_texture(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture", param).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void set_texcoord_mode(int param, int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texcoord_mode", param, mode);
-    }
-  }
-  %extend {
-    int get_texcoord_mode(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texcoord_mode", param);
-    }
-  }
-  %extend {
-    void set_fixed_flag(int flag, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_fixed_flag", flag, value);
-    }
-  }
-  %extend {
-    bool get_fixed_flag(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fixed_flag", flag);
-    }
-  }
-  %extend {
-    void set_uv_transform(const Transform& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_uv_transform", transform);
-    }
-  }
-  %extend {
-    Transform get_uv_transform() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_uv_transform");
-    }
-  }
-  %extend {
-    void set_light_shader(int shader) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_light_shader", shader);
-    }
-  }
-  %extend {
-    int get_light_shader() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_light_shader");
-    }
-  }
-  %extend {
-    void set_point_size(float size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_size", size);
-    }
-  }
-  %extend {
-    float get_point_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_size");
-    }
-  }
   FixedMaterial();
-  %extend {
-    ~FixedMaterial() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_parameter(int param, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_parameter");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_parameter(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_parameter");
+  const void* __args[1] = { &param };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_texture(int param, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_texture");
+  const void* __args[2] = { &param, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_texture(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_texture");
+  const void* __args[1] = { &param };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_texcoord_mode(int param, int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_texcoord_mode");
+  const void* __args[2] = { &param, &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_texcoord_mode(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_texcoord_mode");
+  const void* __args[1] = { &param };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_fixed_flag(int flag, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_fixed_flag");
+  const void* __args[2] = { &flag, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_fixed_flag(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_fixed_flag");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_uv_transform(const Transform& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_uv_transform");
+  const void* __args[1] = { &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform get_uv_transform() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_uv_transform");
+  Transform ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_light_shader(int shader) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_light_shader");
+  const void* __args[1] = { &shader };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_light_shader() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_light_shader");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_point_size(float size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "set_point_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_point_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FixedMaterial", "get_point_size");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~FixedMaterial() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

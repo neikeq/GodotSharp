@@ -87,7 +87,6 @@ public class Light : VisualInstance {
 
   public void set_projector(Texture projector) {
     GodotEnginePINVOKE.Light_set_projector(swigCPtr, Texture.getCPtr(projector));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_projector() {

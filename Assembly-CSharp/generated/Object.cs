@@ -121,15 +121,17 @@ public class Object : global::System.IDisposable {
     return ret;
   }
 
-  public void set_script(SWIGTYPE_p_RefT_Script_t script) {
-    GodotEnginePINVOKE.Object_set_script(swigCPtr, SWIGTYPE_p_RefT_Script_t.getCPtr(script));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void set_script(Script script) {
+    GodotEnginePINVOKE.Object_set_script(swigCPtr, Script.getCPtr(script));
   }
 
-  public SWIGTYPE_p_RefT_Script_t get_script() {
-    SWIGTYPE_p_RefT_Script_t ret = new SWIGTYPE_p_RefT_Script_t(GodotEnginePINVOKE.Object_get_script(swigCPtr), true);
+  public Script get_script() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Object_get_script(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Script ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Script;
     return ret;
-  }
+}
 
   public void set_meta(string name, Variant value) {
     GodotEnginePINVOKE.Object_set_meta(swigCPtr, name, Variant.getCPtr(value));

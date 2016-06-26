@@ -1,22 +1,6 @@
 /* mRoomBounds.i */
 %module mRoomBounds
 
-%typemap(ctype, out="RoomBounds*") Ref<RoomBounds> "RoomBounds*"
-%typemap(out, null="NULL") Ref<RoomBounds> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<RoomBounds> "RoomBounds.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<RoomBounds> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<RoomBounds> "RoomBounds"
-%typemap(csout, excode=SWIGEXCODE) Ref<RoomBounds> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    RoomBounds ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RoomBounds;$excode
-    return ret;
-}
-
 template<class RoomBounds> class Ref;%template() Ref<RoomBounds>;
 %feature("novaluewrapper") Ref<RoomBounds>;
 
@@ -57,57 +41,72 @@ template<class RoomBounds> class Ref;%template() Ref<RoomBounds>;
 
 class RoomBounds : public Resource {
 public:
-  %extend {
-    void set_bounds(const Dictionary& bsp_tree) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bounds", bsp_tree);
-    }
-  }
-  %extend {
-    Dictionary get_bounds() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bounds");
-    }
-  }
-  %extend {
-    void set_geometry_hint(const Vector3Array& triangles) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_geometry_hint", triangles);
-    }
-  }
-  %extend {
-    Vector3Array get_geometry_hint() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_geometry_hint");
-    }
-  }
-  %extend {
-    void regenerate_bsp() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("regenerate_bsp");
-    }
-  }
-  %extend {
-    void regenerate_bsp_cubic() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("regenerate_bsp_cubic");
-    }
-  }
   RoomBounds();
-  %extend {
-    ~RoomBounds() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_bounds(const Dictionary& bsp_tree) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RoomBounds", "set_bounds");
+  const void* __args[1] = { &bsp_tree };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Dictionary get_bounds() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RoomBounds", "get_bounds");
+  Dictionary ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_geometry_hint(const Vector3Array& triangles) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RoomBounds", "set_geometry_hint");
+  const void* __args[1] = { &triangles };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3Array get_geometry_hint() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RoomBounds", "get_geometry_hint");
+  Vector3Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void regenerate_bsp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RoomBounds", "regenerate_bsp");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void regenerate_bsp_cubic() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RoomBounds", "regenerate_bsp_cubic");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~RoomBounds() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

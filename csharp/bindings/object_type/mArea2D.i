@@ -1,15 +1,6 @@
 /* mArea2D.i */
 %module mArea2D
 
-%typemap(out) Area2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Area2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Area2D %{
 
@@ -47,198 +38,289 @@
 
 class Area2D : public CollisionObject2D {
 public:
-  %extend {
-    void set_space_override_mode(int enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_space_override_mode", enable);
-    }
-  }
-  %extend {
-    int get_space_override_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_space_override_mode");
-    }
-  }
-  %extend {
-    void set_gravity_is_point(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity_is_point", enable);
-    }
-  }
-  %extend {
-    bool is_gravity_a_point() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_gravity_a_point");
-    }
-  }
-  %extend {
-    void set_gravity_distance_scale(float distance_scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity_distance_scale", distance_scale);
-    }
-  }
-  %extend {
-    float get_gravity_distance_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gravity_distance_scale");
-    }
-  }
-  %extend {
-    void set_gravity_vector(const Vector2& vector) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity_vector", vector);
-    }
-  }
-  %extend {
-    Vector2 get_gravity_vector() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gravity_vector");
-    }
-  }
-  %extend {
-    void set_gravity(float gravity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity", gravity);
-    }
-  }
-  %extend {
-    float get_gravity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gravity");
-    }
-  }
-  %extend {
-    void set_linear_damp(float linear_damp) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_linear_damp", linear_damp);
-    }
-  }
-  %extend {
-    float get_linear_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_linear_damp");
-    }
-  }
-  %extend {
-    void set_angular_damp(float angular_damp) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_angular_damp", angular_damp);
-    }
-  }
-  %extend {
-    float get_angular_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_angular_damp");
-    }
-  }
-  %extend {
-    void set_priority(float priority) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_priority", priority);
-    }
-  }
-  %extend {
-    float get_priority() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_priority");
-    }
-  }
-  %extend {
-    void set_collision_mask(int collision_mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collision_mask", collision_mask);
-    }
-  }
-  %extend {
-    int get_collision_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_mask");
-    }
-  }
-  %extend {
-    void set_layer_mask(int layer_mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask", layer_mask);
-    }
-  }
-  %extend {
-    int get_layer_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask");
-    }
-  }
-  %extend {
-    void set_collision_mask_bit(int bit, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collision_mask_bit", bit, value);
-    }
-  }
-  %extend {
-    bool get_collision_mask_bit(int bit) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_mask_bit", bit);
-    }
-  }
-  %extend {
-    void set_layer_mask_bit(int bit, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask_bit", bit, value);
-    }
-  }
-  %extend {
-    bool get_layer_mask_bit(int bit) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask_bit", bit);
-    }
-  }
-  %extend {
-    void set_enable_monitoring(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enable_monitoring", enable);
-    }
-  }
-  %extend {
-    bool is_monitoring_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_monitoring_enabled");
-    }
-  }
-  %extend {
-    void set_monitorable(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_monitorable", enable);
-    }
-  }
-  %extend {
-    bool is_monitorable() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_monitorable");
-    }
-  }
-  %extend {
-    Array get_overlapping_bodies() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_overlapping_bodies");
-    }
-  }
-  %extend {
-    Array get_overlapping_areas() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_overlapping_areas");
-    }
-  }
-  %extend {
-    bool overlaps_body(Object* body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("overlaps_body", body);
-    }
-  }
-  %extend {
-    bool overlaps_area(Object* area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("overlaps_area", area);
-    }
-  }
   Area2D();
+
+%extend {
+
+void set_space_override_mode(int enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_space_override_mode");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_space_override_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_space_override_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity_is_point(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_gravity_is_point");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_gravity_a_point() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "is_gravity_a_point");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity_distance_scale(float distance_scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_gravity_distance_scale");
+  const void* __args[1] = { &distance_scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_gravity_distance_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_gravity_distance_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity_vector(const Vector2& vector) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_gravity_vector");
+  const void* __args[1] = { &vector };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_gravity_vector() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_gravity_vector");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity(float gravity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_gravity");
+  const void* __args[1] = { &gravity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_gravity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_gravity");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_linear_damp(float linear_damp) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_linear_damp");
+  const void* __args[1] = { &linear_damp };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_linear_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_linear_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_angular_damp(float angular_damp) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_angular_damp");
+  const void* __args[1] = { &angular_damp };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_angular_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_angular_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_priority(float priority) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_priority");
+  const void* __args[1] = { &priority };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_priority() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_priority");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collision_mask(int collision_mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_collision_mask");
+  const void* __args[1] = { &collision_mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_collision_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_collision_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_layer_mask(int layer_mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_layer_mask");
+  const void* __args[1] = { &layer_mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_layer_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collision_mask_bit(int bit, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_collision_mask_bit");
+  const void* __args[2] = { &bit, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_collision_mask_bit(int bit) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_collision_mask_bit");
+  const void* __args[1] = { &bit };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_layer_mask_bit(int bit, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_layer_mask_bit");
+  const void* __args[2] = { &bit, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_layer_mask_bit(int bit) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_layer_mask_bit");
+  const void* __args[1] = { &bit };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_enable_monitoring(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_enable_monitoring");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_monitoring_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "is_monitoring_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_monitorable(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "set_monitorable");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_monitorable() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "is_monitorable");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_overlapping_bodies() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_overlapping_bodies");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_overlapping_areas() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "get_overlapping_areas");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool overlaps_body(Object* body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "overlaps_body");
+  const void* __args[1] = { body };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool overlaps_area(Object* area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Area2D", "overlaps_area");
+  const void* __args[1] = { area };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

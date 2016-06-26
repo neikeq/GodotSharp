@@ -1,15 +1,6 @@
 /* mSprite3D.i */
 %module mSprite3D
 
-%typemap(out) Sprite3D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Sprite3D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Sprite3D %{
 
@@ -47,78 +38,113 @@
 
 class Sprite3D : public SpriteBase3D {
 public:
-  %extend {
-    void set_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void set_region(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_region", enabled);
-    }
-  }
-  %extend {
-    bool is_region() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_region");
-    }
-  }
-  %extend {
-    void set_region_rect(const Rect2& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_region_rect", rect);
-    }
-  }
-  %extend {
-    Rect2 get_region_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_region_rect");
-    }
-  }
-  %extend {
-    void set_frame(int frame) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_frame", frame);
-    }
-  }
-  %extend {
-    int get_frame() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_frame");
-    }
-  }
-  %extend {
-    void set_vframes(int vframes) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vframes", vframes);
-    }
-  }
-  %extend {
-    int get_vframes() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vframes");
-    }
-  }
-  %extend {
-    void set_hframes(int hframes) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_hframes", hframes);
-    }
-  }
-  %extend {
-    int get_hframes() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_hframes");
-    }
-  }
   Sprite3D();
+
+%extend {
+
+void set_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "get_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_region(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "set_region");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_region() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "is_region");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_region_rect(const Rect2& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "set_region_rect");
+  const void* __args[1] = { &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Rect2 get_region_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "get_region_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_frame(int frame) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "set_frame");
+  const void* __args[1] = { &frame };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_frame() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "get_frame");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_vframes(int vframes) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "set_vframes");
+  const void* __args[1] = { &vframes };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_vframes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "get_vframes");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_hframes(int hframes) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "set_hframes");
+  const void* __args[1] = { &hframes };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_hframes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite3D", "get_hframes");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

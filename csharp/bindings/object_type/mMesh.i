@@ -1,22 +1,6 @@
 /* mMesh.i */
 %module mMesh
 
-%typemap(ctype, out="Mesh*") Ref<Mesh> "Mesh*"
-%typemap(out, null="NULL") Ref<Mesh> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Mesh> "Mesh.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Mesh> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Mesh> "Mesh"
-%typemap(csout, excode=SWIGEXCODE) Ref<Mesh> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;$excode
-    return ret;
-}
-
 template<class Mesh> class Ref;%template() Ref<Mesh>;
 %feature("novaluewrapper") Ref<Mesh>;
 
@@ -84,147 +68,207 @@ template<class Mesh> class Ref;%template() Ref<Mesh>;
 
 class Mesh : public Resource {
 public:
-  %extend {
-    void add_morph_target(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_morph_target", name);
-    }
-  }
-  %extend {
-    int get_morph_target_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_morph_target_count");
-    }
-  }
-  %extend {
-    String get_morph_target_name(int index) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_morph_target_name", index);
-    }
-  }
-  %extend {
-    void clear_morph_targets() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_morph_targets");
-    }
-  }
-  %extend {
-    void set_morph_target_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_morph_target_mode", mode);
-    }
-  }
-  %extend {
-    int get_morph_target_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_morph_target_mode");
-    }
-  }
-  %extend {
-    void add_surface(int primitive, const Array& arrays, const Array& morph_arrays = Array(), bool alphasort = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_surface", primitive, arrays, morph_arrays, alphasort);
-    }
-  }
-  %extend {
-    int get_surface_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_surface_count");
-    }
-  }
-  %extend {
-    void surface_remove(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("surface_remove", surf_idx);
-    }
-  }
-  %extend {
-    int surface_get_array_len(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("surface_get_array_len", surf_idx);
-    }
-  }
-  %extend {
-    int surface_get_array_index_len(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("surface_get_array_index_len", surf_idx);
-    }
-  }
-  %extend {
-    int surface_get_format(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("surface_get_format", surf_idx);
-    }
-  }
-  %extend {
-    int surface_get_primitive_type(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("surface_get_primitive_type", surf_idx);
-    }
-  }
-  %extend {
-    void surface_set_material(int surf_idx, Ref<Material> material) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("surface_set_material", surf_idx, material);
-    }
-  }
-  %extend {
-    Ref<Material> surface_get_material(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("surface_get_material", surf_idx).operator Object *()->cast_to<Material>();
-    }
-  }
-  %extend {
-    void surface_set_name(int surf_idx, const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("surface_set_name", surf_idx, name);
-    }
-  }
-  %extend {
-    String surface_get_name(int surf_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("surface_get_name", surf_idx);
-    }
-  }
-  %extend {
-    void center_geometry() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("center_geometry");
-    }
-  }
-  %extend {
-    void regen_normalmaps() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("regen_normalmaps");
-    }
-  }
-  %extend {
-    void set_custom_aabb(const AABB& aabb) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_custom_aabb", aabb);
-    }
-  }
-  %extend {
-    AABB get_custom_aabb() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_custom_aabb");
-    }
-  }
   Mesh();
-  %extend {
-    ~Mesh() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void add_morph_target(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "add_morph_target");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_morph_target_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "get_morph_target_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_morph_target_name(int index) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "get_morph_target_name");
+  const void* __args[1] = { &index };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_morph_targets() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "clear_morph_targets");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_morph_target_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "set_morph_target_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_morph_target_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "get_morph_target_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_surface(int primitive, const Array& arrays, const Array& morph_arrays = Array(), bool alphasort = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "add_surface");
+  const void* __args[4] = { &primitive, &arrays, &morph_arrays, &alphasort };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_surface_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "get_surface_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void surface_remove(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_remove");
+  const void* __args[1] = { &surf_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int surface_get_array_len(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_get_array_len");
+  const void* __args[1] = { &surf_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int surface_get_array_index_len(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_get_array_index_len");
+  const void* __args[1] = { &surf_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int surface_get_format(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_get_format");
+  const void* __args[1] = { &surf_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int surface_get_primitive_type(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_get_primitive_type");
+  const void* __args[1] = { &surf_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void surface_set_material(int surf_idx, Material* material) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_set_material");
+  const void* __args[2] = { &surf_idx, material };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Material> surface_get_material(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_get_material");
+  const void* __args[1] = { &surf_idx };
+  Ref<Material> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void surface_set_name(int surf_idx, const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_set_name");
+  const void* __args[2] = { &surf_idx, &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String surface_get_name(int surf_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "surface_get_name");
+  const void* __args[1] = { &surf_idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void center_geometry() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "center_geometry");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void regen_normalmaps() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "regen_normalmaps");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_custom_aabb(const AABB& aabb) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "set_custom_aabb");
+  const void* __args[1] = { &aabb };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+AABB get_custom_aabb() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Mesh", "get_custom_aabb");
+  AABB ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Mesh() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

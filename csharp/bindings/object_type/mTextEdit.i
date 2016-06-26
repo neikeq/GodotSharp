@@ -1,15 +1,6 @@
 /* mTextEdit.i */
 %module mTextEdit
 
-%typemap(out) TextEdit "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) TextEdit* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) TextEdit %{
   public static readonly int SEARCH_MATCH_CASE = 1;
@@ -57,252 +48,350 @@
 
 class TextEdit : public Control {
 public:
-  %extend {
-    void set_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_text", text);
-    }
-  }
-  %extend {
-    void insert_text_at_cursor(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("insert_text_at_cursor", text);
-    }
-  }
-  %extend {
-    int get_line_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line_count");
-    }
-  }
-  %extend {
-    String get_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_text");
-    }
-  }
-  %extend {
-    String get_line(int line) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line", line);
-    }
-  }
-  %extend {
-    void cursor_set_column(int column, bool adjust_viewport = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cursor_set_column", column, adjust_viewport);
-    }
-  }
-  %extend {
-    void cursor_set_line(int line, bool adjust_viewport = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cursor_set_line", line, adjust_viewport);
-    }
-  }
-  %extend {
-    int cursor_get_column() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cursor_get_column");
-    }
-  }
-  %extend {
-    int cursor_get_line() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cursor_get_line");
-    }
-  }
-  %extend {
-    void cursor_set_blink_enabled(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cursor_set_blink_enabled", enable);
-    }
-  }
-  %extend {
-    bool cursor_get_blink_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cursor_get_blink_enabled");
-    }
-  }
-  %extend {
-    void cursor_set_blink_speed(float blink_speed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cursor_set_blink_speed", blink_speed);
-    }
-  }
-  %extend {
-    float cursor_get_blink_speed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cursor_get_blink_speed");
-    }
-  }
-  %extend {
-    void set_readonly(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_readonly", enable);
-    }
-  }
-  %extend {
-    void set_wrap(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_wrap", enable);
-    }
-  }
-  %extend {
-    void set_max_chars(int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_max_chars", amount);
-    }
-  }
-  %extend {
-    void cut() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cut");
-    }
-  }
-  %extend {
-    void copy() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("copy");
-    }
-  }
-  %extend {
-    void paste() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("paste");
-    }
-  }
-  %extend {
-    void select_all() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("select_all");
-    }
-  }
-  %extend {
-    void select(int from_line, int from_column, int to_line, int to_column) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("select", from_line, from_column, to_line, to_column);
-    }
-  }
-  %extend {
-    bool is_selection_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_selection_active");
-    }
-  }
-  %extend {
-    int get_selection_from_line() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selection_from_line");
-    }
-  }
-  %extend {
-    int get_selection_from_column() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selection_from_column");
-    }
-  }
-  %extend {
-    int get_selection_to_line() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selection_to_line");
-    }
-  }
-  %extend {
-    int get_selection_to_column() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selection_to_column");
-    }
-  }
-  %extend {
-    String get_selection_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selection_text");
-    }
-  }
-  %extend {
-    String get_word_under_cursor() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_word_under_cursor");
-    }
-  }
-  %extend {
-    IntArray search(const String& flags, int from_line, int from_column, int to_line) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("search", flags, from_line, from_column, to_line);
-    }
-  }
-  %extend {
-    void undo() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("undo");
-    }
-  }
-  %extend {
-    void redo() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("redo");
-    }
-  }
-  %extend {
-    void clear_undo_history() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_undo_history");
-    }
-  }
-  %extend {
-    void set_syntax_coloring(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_syntax_coloring", enable);
-    }
-  }
-  %extend {
-    bool is_syntax_coloring_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_syntax_coloring_enabled");
-    }
-  }
-  %extend {
-    void add_keyword_color(const String& keyword, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_keyword_color", keyword, color);
-    }
-  }
-  %extend {
-    void add_color_region(const String& begin_key, const String& end_key, const Color& color, bool line_only = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_color_region", begin_key, end_key, color, line_only);
-    }
-  }
-  %extend {
-    void set_symbol_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_symbol_color", color);
-    }
-  }
-  %extend {
-    void set_custom_bg_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_custom_bg_color", color);
-    }
-  }
-  %extend {
-    void clear_colors() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_colors");
-    }
-  }
-  %extend {
-    void menu_option(int arg0_) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("menu_option", arg0_);
-    }
-  }
-  %extend {
-    PopupMenu* get_menu() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_menu").operator Object *()->cast_to<PopupMenu>();
-    }
-  }
   TextEdit();
+
+%extend {
+
+void set_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void insert_text_at_cursor(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "insert_text_at_cursor");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_line_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_line_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_line(int line) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_line");
+  const void* __args[1] = { &line };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void cursor_set_column(int column, bool adjust_viewport = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_set_column");
+  const void* __args[2] = { &column, &adjust_viewport };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void cursor_set_line(int line, bool adjust_viewport = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_set_line");
+  const void* __args[2] = { &line, &adjust_viewport };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int cursor_get_column() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_get_column");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int cursor_get_line() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_get_line");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void cursor_set_blink_enabled(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_set_blink_enabled");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool cursor_get_blink_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_get_blink_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void cursor_set_blink_speed(float blink_speed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_set_blink_speed");
+  const void* __args[1] = { &blink_speed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float cursor_get_blink_speed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cursor_get_blink_speed");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_readonly(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_readonly");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_wrap(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_wrap");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_max_chars(int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_max_chars");
+  const void* __args[1] = { &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void cut() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "cut");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void copy() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "copy");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void paste() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "paste");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void select_all() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "select_all");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void select(int from_line, int from_column, int to_line, int to_column) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "select");
+  const void* __args[4] = { &from_line, &from_column, &to_line, &to_column };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_selection_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "is_selection_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_selection_from_line() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_selection_from_line");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_selection_from_column() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_selection_from_column");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_selection_to_line() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_selection_to_line");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_selection_to_column() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_selection_to_column");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_selection_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_selection_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_word_under_cursor() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_word_under_cursor");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+IntArray search(const String& flags, int from_line, int from_column, int to_line) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "search");
+  const void* __args[4] = { &flags, &from_line, &from_column, &to_line };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void undo() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "undo");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void redo() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "redo");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void clear_undo_history() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "clear_undo_history");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_syntax_coloring(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_syntax_coloring");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_syntax_coloring_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "is_syntax_coloring_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_keyword_color(const String& keyword, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "add_keyword_color");
+  const void* __args[2] = { &keyword, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_color_region(const String& begin_key, const String& end_key, const Color& color, bool line_only = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "add_color_region");
+  const void* __args[4] = { &begin_key, &end_key, &color, &line_only };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_symbol_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_symbol_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_custom_bg_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "set_custom_bg_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_colors() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "clear_colors");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void menu_option(int arg0_) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "menu_option");
+  const void* __args[1] = { &arg0_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+PopupMenu* get_menu() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextEdit", "get_menu");
+  PopupMenu* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

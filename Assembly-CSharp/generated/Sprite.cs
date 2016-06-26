@@ -45,7 +45,6 @@ public class Sprite : Node2D {
 
   public void set_texture(Texture texture) {
     GodotEnginePINVOKE.Sprite_set_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_texture() {

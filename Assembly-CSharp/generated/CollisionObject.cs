@@ -56,7 +56,6 @@ public class CollisionObject : Spatial {
 
   public void add_shape(Shape shape) {
     GodotEnginePINVOKE.CollisionObject_add_shape__SWIG_1(swigCPtr, Shape.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public int get_shape_count() {
@@ -66,7 +65,6 @@ public class CollisionObject : Spatial {
 
   public void set_shape(int shape_idx, Shape shape) {
     GodotEnginePINVOKE.CollisionObject_set_shape(swigCPtr, shape_idx, Shape.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_shape_transform(int shape_idx, SWIGTYPE_p_Transform transform) {

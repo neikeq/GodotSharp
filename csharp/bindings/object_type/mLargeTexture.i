@@ -1,22 +1,6 @@
 /* mLargeTexture.i */
 %module mLargeTexture
 
-%typemap(ctype, out="LargeTexture*") Ref<LargeTexture> "LargeTexture*"
-%typemap(out, null="NULL") Ref<LargeTexture> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<LargeTexture> "LargeTexture.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<LargeTexture> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<LargeTexture> "LargeTexture"
-%typemap(csout, excode=SWIGEXCODE) Ref<LargeTexture> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    LargeTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as LargeTexture;$excode
-    return ret;
-}
-
 template<class LargeTexture> class Ref;%template() Ref<LargeTexture>;
 %feature("novaluewrapper") Ref<LargeTexture>;
 
@@ -57,69 +41,94 @@ template<class LargeTexture> class Ref;%template() Ref<LargeTexture>;
 
 class LargeTexture : public Texture {
 public:
-  %extend {
-    int add_piece(const Vector2& ofs, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("add_piece", ofs, texture);
-    }
-  }
-  %extend {
-    void set_piece_offset(int idx, const Vector2& ofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_piece_offset", idx, ofs);
-    }
-  }
-  %extend {
-    void set_piece_texture(int idx, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_piece_texture", idx, texture);
-    }
-  }
-  %extend {
-    void set_size(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_size", size);
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    int get_piece_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_piece_count");
-    }
-  }
-  %extend {
-    Vector2 get_piece_offset(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_piece_offset", idx);
-    }
-  }
-  %extend {
-    Ref<Texture> get_piece_texture(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_piece_texture", idx).operator Object *()->cast_to<Texture>();
-    }
-  }
   LargeTexture();
-  %extend {
-    ~LargeTexture() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int add_piece(const Vector2& ofs, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "add_piece");
+  const void* __args[2] = { &ofs, texture };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_piece_offset(int idx, const Vector2& ofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "set_piece_offset");
+  const void* __args[2] = { &idx, &ofs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_piece_texture(int idx, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "set_piece_texture");
+  const void* __args[2] = { &idx, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_size(const Vector2& size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "set_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_piece_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "get_piece_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_piece_offset(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "get_piece_offset");
+  const void* __args[1] = { &idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Texture> get_piece_texture(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LargeTexture", "get_piece_texture");
+  const void* __args[1] = { &idx };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~LargeTexture() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

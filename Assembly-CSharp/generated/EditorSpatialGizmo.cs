@@ -71,29 +71,27 @@ public class EditorSpatialGizmo : SpatialGizmo {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_lines(SWIGTYPE_p_Vector3Array lines, SWIGTYPE_p_RefT_Material_t material, bool billboard) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_lines__SWIG_0(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(lines), SWIGTYPE_p_RefT_Material_t.getCPtr(material), billboard);
+  public void add_lines(SWIGTYPE_p_Vector3Array lines, Material material, bool billboard) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_lines__SWIG_0(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(lines), Material.getCPtr(material), billboard);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_lines(SWIGTYPE_p_Vector3Array lines, SWIGTYPE_p_RefT_Material_t material) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_lines__SWIG_1(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(lines), SWIGTYPE_p_RefT_Material_t.getCPtr(material));
+  public void add_lines(SWIGTYPE_p_Vector3Array lines, Material material) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_lines__SWIG_1(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(lines), Material.getCPtr(material));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_mesh(SWIGTYPE_p_RefT_Mesh_t mesh, bool billboard, SWIGTYPE_p_RID skeleton) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_mesh__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Mesh_t.getCPtr(mesh), billboard, SWIGTYPE_p_RID.getCPtr(skeleton));
+  public void add_mesh(Mesh mesh, bool billboard, SWIGTYPE_p_RID skeleton) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_mesh__SWIG_0(swigCPtr, Mesh.getCPtr(mesh), billboard, SWIGTYPE_p_RID.getCPtr(skeleton));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_mesh(SWIGTYPE_p_RefT_Mesh_t mesh, bool billboard) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_mesh__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Mesh_t.getCPtr(mesh), billboard);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void add_mesh(Mesh mesh, bool billboard) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_mesh__SWIG_1(swigCPtr, Mesh.getCPtr(mesh), billboard);
   }
 
-  public void add_mesh(SWIGTYPE_p_RefT_Mesh_t mesh) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_mesh__SWIG_2(swigCPtr, SWIGTYPE_p_RefT_Mesh_t.getCPtr(mesh));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void add_mesh(Mesh mesh) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_mesh__SWIG_2(swigCPtr, Mesh.getCPtr(mesh));
   }
 
   public void add_collision_segments(SWIGTYPE_p_Vector3Array segments) {
@@ -105,14 +103,12 @@ public class EditorSpatialGizmo : SpatialGizmo {
     GodotEnginePINVOKE.EditorSpatialGizmo_add_collision_triangles(swigCPtr, SWIGTYPE_p_TriangleMesh.getCPtr(triangles));
   }
 
-  public void add_unscaled_billboard(SWIGTYPE_p_RefT_Material_t material, float default_scale) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_unscaled_billboard__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Material_t.getCPtr(material), default_scale);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void add_unscaled_billboard(Material material, float default_scale) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_unscaled_billboard__SWIG_0(swigCPtr, Material.getCPtr(material), default_scale);
   }
 
-  public void add_unscaled_billboard(SWIGTYPE_p_RefT_Material_t material) {
-    GodotEnginePINVOKE.EditorSpatialGizmo_add_unscaled_billboard__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Material_t.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void add_unscaled_billboard(Material material) {
+    GodotEnginePINVOKE.EditorSpatialGizmo_add_unscaled_billboard__SWIG_1(swigCPtr, Material.getCPtr(material));
   }
 
   public void add_handles(SWIGTYPE_p_Vector3Array handles, bool billboard, bool secondary) {

@@ -1,15 +1,6 @@
 /* mParticles.i */
 %module mParticles
 
-%typemap(out) Particles "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Particles* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Particles %{
   public static readonly int VAR_LIFETIME = 0;
@@ -61,198 +52,287 @@
 
 class Particles : public GeometryInstance {
 public:
-  %extend {
-    void set_amount(int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_amount", amount);
-    }
-  }
-  %extend {
-    int get_amount() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_amount");
-    }
-  }
-  %extend {
-    void set_emitting(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_emitting", enabled);
-    }
-  }
-  %extend {
-    bool is_emitting() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_emitting");
-    }
-  }
-  %extend {
-    void set_visibility_aabb(const AABB& aabb) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_visibility_aabb", aabb);
-    }
-  }
-  %extend {
-    AABB get_visibility_aabb() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_visibility_aabb");
-    }
-  }
-  %extend {
-    void set_emission_half_extents(const Vector3& half_extents) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_emission_half_extents", half_extents);
-    }
-  }
-  %extend {
-    Vector3 get_emission_half_extents() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_emission_half_extents");
-    }
-  }
-  %extend {
-    void set_emission_base_velocity(const Vector3& base_velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_emission_base_velocity", base_velocity);
-    }
-  }
-  %extend {
-    Vector3 get_emission_base_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_emission_base_velocity");
-    }
-  }
-  %extend {
-    void set_emission_points(const Vector3Array& points) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_emission_points", points);
-    }
-  }
-  %extend {
-    Vector3Array get_emission_points() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_emission_points");
-    }
-  }
-  %extend {
-    void set_gravity_normal(const Vector3& normal) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity_normal", normal);
-    }
-  }
-  %extend {
-    Vector3 get_gravity_normal() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gravity_normal");
-    }
-  }
-  %extend {
-    void set_variable(int variable, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_variable", variable, value);
-    }
-  }
-  %extend {
-    float get_variable(int variable) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_variable", variable);
-    }
-  }
-  %extend {
-    void set_randomness(int variable, float randomness) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_randomness", variable, randomness);
-    }
-  }
-  %extend {
-    float get_randomness(int variable) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_randomness", variable);
-    }
-  }
-  %extend {
-    void set_color_phase_pos(int phase, float pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color_phase_pos", phase, pos);
-    }
-  }
-  %extend {
-    float get_color_phase_pos(int phase) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color_phase_pos", phase);
-    }
-  }
-  %extend {
-    void set_color_phase_color(int phase, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color_phase_color", phase, color);
-    }
-  }
-  %extend {
-    Color get_color_phase_color(int phase) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color_phase_color", phase);
-    }
-  }
-  %extend {
-    void set_material(Ref<Material> material) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_material", material);
-    }
-  }
-  %extend {
-    Ref<Material> get_material() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_material").operator Object *()->cast_to<Material>();
-    }
-  }
-  %extend {
-    void set_emit_timeout(float timeout) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_emit_timeout", timeout);
-    }
-  }
-  %extend {
-    float get_emit_timeout() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_emit_timeout");
-    }
-  }
-  %extend {
-    void set_height_from_velocity(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_height_from_velocity", enable);
-    }
-  }
-  %extend {
-    bool has_height_from_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_height_from_velocity");
-    }
-  }
-  %extend {
-    void set_use_local_coordinates(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_local_coordinates", enable);
-    }
-  }
-  %extend {
-    bool is_using_local_coordinates() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_local_coordinates");
-    }
-  }
-  %extend {
-    void set_color_phases(int count) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color_phases", count);
-    }
-  }
-  %extend {
-    int get_color_phases() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color_phases");
-    }
-  }
   Particles();
+
+%extend {
+
+void set_amount(int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_amount");
+  const void* __args[1] = { &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_amount() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_amount");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_emitting(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_emitting");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_emitting() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "is_emitting");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_visibility_aabb(const AABB& aabb) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_visibility_aabb");
+  const void* __args[1] = { &aabb };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+AABB get_visibility_aabb() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_visibility_aabb");
+  AABB ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_emission_half_extents(const Vector3& half_extents) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_emission_half_extents");
+  const void* __args[1] = { &half_extents };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_emission_half_extents() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_emission_half_extents");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_emission_base_velocity(const Vector3& base_velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_emission_base_velocity");
+  const void* __args[1] = { &base_velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_emission_base_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_emission_base_velocity");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_emission_points(const Vector3Array& points) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_emission_points");
+  const void* __args[1] = { &points };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3Array get_emission_points() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_emission_points");
+  Vector3Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity_normal(const Vector3& normal) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_gravity_normal");
+  const void* __args[1] = { &normal };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_gravity_normal() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_gravity_normal");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_variable(int variable, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_variable");
+  const void* __args[2] = { &variable, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_variable(int variable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_variable");
+  const void* __args[1] = { &variable };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_randomness(int variable, float randomness) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_randomness");
+  const void* __args[2] = { &variable, &randomness };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_randomness(int variable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_randomness");
+  const void* __args[1] = { &variable };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_color_phase_pos(int phase, float pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_color_phase_pos");
+  const void* __args[2] = { &phase, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_color_phase_pos(int phase) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_color_phase_pos");
+  const void* __args[1] = { &phase };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_color_phase_color(int phase, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_color_phase_color");
+  const void* __args[2] = { &phase, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color_phase_color(int phase) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_color_phase_color");
+  const void* __args[1] = { &phase };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_material(Material* material) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_material");
+  const void* __args[1] = { material };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Material> get_material() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_material");
+  Ref<Material> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_emit_timeout(float timeout) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_emit_timeout");
+  const void* __args[1] = { &timeout };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_emit_timeout() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_emit_timeout");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_height_from_velocity(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_height_from_velocity");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_height_from_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "has_height_from_velocity");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_local_coordinates(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_use_local_coordinates");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_local_coordinates() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "is_using_local_coordinates");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_color_phases(int count) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "set_color_phases");
+  const void* __args[1] = { &count };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_color_phases() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Particles", "get_color_phases");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

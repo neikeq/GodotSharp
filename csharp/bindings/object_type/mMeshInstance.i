@@ -1,15 +1,6 @@
 /* mMeshInstance.i */
 %module mMeshInstance
 
-%typemap(out) MeshInstance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) MeshInstance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) MeshInstance %{
 
@@ -47,48 +38,68 @@
 
 class MeshInstance : public GeometryInstance {
 public:
-  %extend {
-    void set_mesh(Ref<Mesh> mesh) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mesh", mesh);
-    }
-  }
-  %extend {
-    Ref<Mesh> get_mesh() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mesh").operator Object *()->cast_to<Mesh>();
-    }
-  }
-  %extend {
-    void set_skeleton_path(const NodePath& skeleton_path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_skeleton_path", skeleton_path);
-    }
-  }
-  %extend {
-    NodePath get_skeleton_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_skeleton_path");
-    }
-  }
-  %extend {
-    AABB get_aabb() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_aabb");
-    }
-  }
-  %extend {
-    void create_trimesh_collision() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create_trimesh_collision");
-    }
-  }
-  %extend {
-    void create_convex_collision() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create_convex_collision");
-    }
-  }
   MeshInstance();
+
+%extend {
+
+void set_mesh(Mesh* mesh) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "set_mesh");
+  const void* __args[1] = { mesh };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Mesh> get_mesh() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "get_mesh");
+  Ref<Mesh> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_skeleton_path(const NodePath& skeleton_path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "set_skeleton_path");
+  const void* __args[1] = { &skeleton_path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_skeleton_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "get_skeleton_path");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+AABB get_aabb() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "get_aabb");
+  AABB ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void create_trimesh_collision() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "create_trimesh_collision");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void create_convex_collision() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshInstance", "create_convex_collision");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

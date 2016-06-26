@@ -2,15 +2,6 @@
 %module mLight
 
 %nodefaultctor Light;
-%typemap(out) Light "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Light* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Light %{
   public static readonly int PARAM_RADIUS = 2;
@@ -62,101 +53,148 @@
 
 class Light : public VisualInstance {
 public:
-  %extend {
-    void set_parameter(int variable, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_parameter", variable, value);
-    }
-  }
-  %extend {
-    float get_parameter(int variable) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_parameter", variable);
-    }
-  }
-  %extend {
-    void set_color(int color, const Color& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", color, value);
-    }
-  }
-  %extend {
-    Color get_color(int color) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color", color);
-    }
-  }
-  %extend {
-    void set_project_shadows(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_project_shadows", enable);
-    }
-  }
-  %extend {
-    bool has_project_shadows() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_project_shadows");
-    }
-  }
-  %extend {
-    void set_projector(Ref<Texture> projector) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_projector", projector);
-    }
-  }
-  %extend {
-    Ref<Texture> get_projector() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_projector").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void set_operator(int operator_) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_operator", operator_);
-    }
-  }
-  %extend {
-    int get_operator() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_operator");
-    }
-  }
-  %extend {
-    void set_bake_mode(int bake_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bake_mode", bake_mode);
-    }
-  }
-  %extend {
-    int get_bake_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bake_mode");
-    }
-  }
-  %extend {
-    void set_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
-  %extend {
-    void set_editor_only(bool editor_only) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_editor_only", editor_only);
-    }
-  }
-  %extend {
-    bool is_editor_only() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_editor_only");
-    }
-  }
+
+%extend {
+
+void set_parameter(int variable, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_parameter");
+  const void* __args[2] = { &variable, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_parameter(int variable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "get_parameter");
+  const void* __args[1] = { &variable };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_color(int color, const Color& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_color");
+  const void* __args[2] = { &color, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color(int color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "get_color");
+  const void* __args[1] = { &color };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_project_shadows(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_project_shadows");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_project_shadows() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "has_project_shadows");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_projector(Texture* projector) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_projector");
+  const void* __args[1] = { projector };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_projector() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "get_projector");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_operator(int operator_) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_operator");
+  const void* __args[1] = { &operator_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_operator() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "get_operator");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bake_mode(int bake_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_bake_mode");
+  const void* __args[1] = { &bake_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_bake_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "get_bake_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_editor_only(bool editor_only) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "set_editor_only");
+  const void* __args[1] = { &editor_only };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_editor_only() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Light", "is_editor_only");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,15 +1,6 @@
 /* mKinematicBody.i */
 %module mKinematicBody
 
-%typemap(out) KinematicBody "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) KinematicBody* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) KinematicBody %{
 
@@ -47,120 +38,180 @@
 
 class KinematicBody : public PhysicsBody {
 public:
-  %extend {
-    Vector3 move(const Vector3& rel_vec) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("move", rel_vec);
-    }
-  }
-  %extend {
-    Vector3 move_to(const Vector3& position) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("move_to", position);
-    }
-  }
-  %extend {
-    bool can_teleport_to(const Vector3& position) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_teleport_to", position);
-    }
-  }
-  %extend {
-    bool is_colliding() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_colliding");
-    }
-  }
-  %extend {
-    Vector3 get_collision_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_pos");
-    }
-  }
-  %extend {
-    Vector3 get_collision_normal() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_normal");
-    }
-  }
-  %extend {
-    Vector3 get_collider_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_velocity");
-    }
-  }
-  %extend {
-    Object* get_collider() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider").operator Object *();
-    }
-  }
-  %extend {
-    int get_collider_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_shape");
-    }
-  }
-  %extend {
-    void set_collide_with_static_bodies(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collide_with_static_bodies", enable);
-    }
-  }
-  %extend {
-    bool can_collide_with_static_bodies() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_collide_with_static_bodies");
-    }
-  }
-  %extend {
-    void set_collide_with_kinematic_bodies(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collide_with_kinematic_bodies", enable);
-    }
-  }
-  %extend {
-    bool can_collide_with_kinematic_bodies() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_collide_with_kinematic_bodies");
-    }
-  }
-  %extend {
-    void set_collide_with_rigid_bodies(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collide_with_rigid_bodies", enable);
-    }
-  }
-  %extend {
-    bool can_collide_with_rigid_bodies() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_collide_with_rigid_bodies");
-    }
-  }
-  %extend {
-    void set_collide_with_character_bodies(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collide_with_character_bodies", enable);
-    }
-  }
-  %extend {
-    bool can_collide_with_character_bodies() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_collide_with_character_bodies");
-    }
-  }
-  %extend {
-    void set_collision_margin(float pixels) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collision_margin", pixels);
-    }
-  }
-  %extend {
-    float get_collision_margin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_margin");
-    }
-  }
   KinematicBody();
+
+%extend {
+
+Vector3 move(const Vector3& rel_vec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "move");
+  const void* __args[1] = { &rel_vec };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector3 move_to(const Vector3& position) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "move_to");
+  const void* __args[1] = { &position };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool can_teleport_to(const Vector3& position) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "can_teleport_to");
+  const void* __args[1] = { &position };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_colliding() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "is_colliding");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3 get_collision_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "get_collision_pos");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3 get_collision_normal() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "get_collision_normal");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3 get_collider_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "get_collider_velocity");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_collider() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "get_collider");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collider_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "get_collider_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collide_with_static_bodies(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "set_collide_with_static_bodies");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool can_collide_with_static_bodies() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "can_collide_with_static_bodies");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collide_with_kinematic_bodies(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "set_collide_with_kinematic_bodies");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool can_collide_with_kinematic_bodies() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "can_collide_with_kinematic_bodies");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collide_with_rigid_bodies(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "set_collide_with_rigid_bodies");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool can_collide_with_rigid_bodies() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "can_collide_with_rigid_bodies");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collide_with_character_bodies(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "set_collide_with_character_bodies");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool can_collide_with_character_bodies() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "can_collide_with_character_bodies");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collision_margin(float pixels) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "set_collision_margin");
+  const void* __args[1] = { &pixels };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_collision_margin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody", "get_collision_margin");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

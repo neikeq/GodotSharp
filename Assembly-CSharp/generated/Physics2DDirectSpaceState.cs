@@ -104,39 +104,33 @@ public class Physics2DDirectSpaceState : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Array intersect_shape(SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t shape, int max_results) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t.getCPtr(shape), max_results), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public SWIGTYPE_p_Array intersect_shape(Physics2DShapeQueryParameters shape, int max_results) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_shape__SWIG_0(swigCPtr, Physics2DShapeQueryParameters.getCPtr(shape), max_results), true);
     return ret;
   }
 
-  public SWIGTYPE_p_Array intersect_shape(SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t shape) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_shape__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t.getCPtr(shape)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public SWIGTYPE_p_Array intersect_shape(Physics2DShapeQueryParameters shape) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_intersect_shape__SWIG_1(swigCPtr, Physics2DShapeQueryParameters.getCPtr(shape)), true);
     return ret;
   }
 
-  public SWIGTYPE_p_Array cast_motion(SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t shape) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_cast_motion(swigCPtr, SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t.getCPtr(shape)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public SWIGTYPE_p_Array cast_motion(Physics2DShapeQueryParameters shape) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_cast_motion(swigCPtr, Physics2DShapeQueryParameters.getCPtr(shape)), true);
     return ret;
   }
 
-  public SWIGTYPE_p_Array collide_shape(SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t shape, int max_results) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_collide_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t.getCPtr(shape), max_results), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public SWIGTYPE_p_Array collide_shape(Physics2DShapeQueryParameters shape, int max_results) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_collide_shape__SWIG_0(swigCPtr, Physics2DShapeQueryParameters.getCPtr(shape), max_results), true);
     return ret;
   }
 
-  public SWIGTYPE_p_Array collide_shape(SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t shape) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_collide_shape__SWIG_1(swigCPtr, SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t.getCPtr(shape)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public SWIGTYPE_p_Array collide_shape(Physics2DShapeQueryParameters shape) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DDirectSpaceState_collide_shape__SWIG_1(swigCPtr, Physics2DShapeQueryParameters.getCPtr(shape)), true);
     return ret;
   }
 
-  public SWIGTYPE_p_Dictionary get_rest_info(SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t shape) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_get_rest_info(swigCPtr, SWIGTYPE_p_RefT_Physics2DShapeQueryParameters_t.getCPtr(shape)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public SWIGTYPE_p_Dictionary get_rest_info(Physics2DShapeQueryParameters shape) {
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.Physics2DDirectSpaceState_get_rest_info(swigCPtr, Physics2DShapeQueryParameters.getCPtr(shape)), true);
     return ret;
   }
 

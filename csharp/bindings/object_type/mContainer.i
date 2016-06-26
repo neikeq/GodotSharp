@@ -1,15 +1,6 @@
 /* mContainer.i */
 %module mContainer
 
-%typemap(out) Container "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Container* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Container %{
   public static readonly int NOTIFICATION_SORT_CHILDREN = 50;
@@ -48,18 +39,26 @@
 
 class Container : public Control {
 public:
-  %extend {
-    void queue_sort() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("queue_sort");
-    }
-  }
-  %extend {
-    void fit_child_in_rect(Control* child, const Rect2& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("fit_child_in_rect", child, rect);
-    }
-  }
   Container();
+
+%extend {
+
+void queue_sort() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Container", "queue_sort");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void fit_child_in_rect(Control* child, const Rect2& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Container", "fit_child_in_rect");
+  const void* __args[2] = { child, &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

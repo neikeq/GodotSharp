@@ -1,15 +1,6 @@
 /* mCenterContainer.i */
 %module mCenterContainer
 
-%typemap(out) CenterContainer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) CenterContainer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) CenterContainer %{
 
@@ -47,18 +38,28 @@
 
 class CenterContainer : public Container {
 public:
-  %extend {
-    void set_use_top_left(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_top_left", enable);
-    }
-  }
-  %extend {
-    bool is_using_top_left() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_top_left");
-    }
-  }
   CenterContainer();
+
+%extend {
+
+void set_use_top_left(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CenterContainer", "set_use_top_left");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_top_left() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CenterContainer", "is_using_top_left");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

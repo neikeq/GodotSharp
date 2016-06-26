@@ -2,22 +2,6 @@
 %module mShape
 
 %nodefaultctor Shape;
-%typemap(ctype, out="Shape*") Ref<Shape> "Shape*"
-%typemap(out, null="NULL") Ref<Shape> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Shape> "Shape.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Shape> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Shape> "Shape"
-%typemap(csout, excode=SWIGEXCODE) Ref<Shape> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Shape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shape;$excode
-    return ret;
-}
-
 template<class Shape> class Ref;%template() Ref<Shape>;
 %feature("novaluewrapper") Ref<Shape>;
 
@@ -59,20 +43,23 @@ template<class Shape> class Ref;%template() Ref<Shape>;
 
 class Shape : public Resource {
 public:
-  %extend {
-    ~Shape() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~Shape() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

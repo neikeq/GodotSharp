@@ -2,22 +2,6 @@
 %module mTexture
 
 %nodefaultctor Texture;
-%typemap(ctype, out="Texture*") Ref<Texture> "Texture*"
-%typemap(out, null="NULL") Ref<Texture> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Texture> "Texture.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Texture> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Texture> "Texture"
-%typemap(csout, excode=SWIGEXCODE) Ref<Texture> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;$excode
-    return ret;
-}
-
 template<class Texture> class Ref;%template() Ref<Texture>;
 %feature("novaluewrapper") Ref<Texture>;
 
@@ -67,80 +51,109 @@ template<class Texture> class Ref;%template() Ref<Texture>;
 
 class Texture : public Resource {
 public:
-  %extend {
-    int get_width() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_width");
+
+%extend {
+
+int get_width() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "get_width");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_height() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "get_height");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "get_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_rid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "get_rid");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool has_alpha() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "has_alpha");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flags(int flags) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "set_flags");
+  const void* __args[1] = { &flags };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_flags() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "get_flags");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void draw(const RID& canvas_item, const Vector2& pos, const Color& modulate = Color(1,1,1,1), bool transpose = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "draw");
+  const void* __args[4] = { &canvas_item, &pos, &modulate, &transpose };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void draw_rect(const RID& canvas_item, const Rect2& rect, bool tile, const Color& modulate = Color(1,1,1,1), bool transpose = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "draw_rect");
+  const void* __args[5] = { &canvas_item, &rect, &tile, &modulate, &transpose };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void draw_rect_region(const RID& canvas_item, const Rect2& rect, const Rect2& src_rect, const Color& modulate = Color(1,1,1,1), bool transpose = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Texture", "draw_rect_region");
+  const void* __args[5] = { &canvas_item, &rect, &src_rect, &modulate, &transpose };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~Texture() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    int get_height() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_height");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    Vector2 get_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_size");
-    }
-  }
-  %extend {
-    RID get_rid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rid");
-    }
-  }
-  %extend {
-    bool has_alpha() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_alpha");
-    }
-  }
-  %extend {
-    void set_flags(int flags) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flags", flags);
-    }
-  }
-  %extend {
-    int get_flags() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flags");
-    }
-  }
-  %extend {
-    void draw(const RID& canvas_item, const Vector2& pos, const Color& modulate = Color(1,1,1,1), bool transpose = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("draw", canvas_item, pos, modulate, transpose);
-    }
-  }
-  %extend {
-    void draw_rect(const RID& canvas_item, const Rect2& rect, bool tile, const Color& modulate = Color(1,1,1,1), bool transpose = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("draw_rect", canvas_item, rect, tile, modulate, transpose);
-    }
-  }
-  %extend {
-    void draw_rect_region(const RID& canvas_item, const Rect2& rect, const Rect2& src_rect, const Color& modulate = Color(1,1,1,1), bool transpose = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("draw_rect_region", canvas_item, rect, src_rect, modulate, transpose);
-    }
-  }
-  %extend {
-    ~Texture() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

@@ -4,15 +4,6 @@
 %csmethodmodifiers InputMap::InputMap "private"
 %csmethodmodifiers InputMap::SingletonGetInstance "private"
 %nodefaultctor InputMap;
-%typemap(out) InputMap "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) InputMap* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) InputMap %{
   private static $csclassname instance;
@@ -61,80 +52,120 @@
 
 class InputMap : public Object {
 public:
-  %extend {
-    bool has_action(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_action", action);
-    }
-  }
-  %extend {
-    int get_action_id(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_action_id", action);
-    }
-  }
-  %extend {
-    String get_action_from_id(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_action_from_id", id);
-    }
-  }
-  %extend {
-    Array get_actions() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_actions");
-    }
-  }
-  %extend {
-    void add_action(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_action", action);
-    }
-  }
-  %extend {
-    void erase_action(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_action", action);
-    }
-  }
-  %extend {
-    void action_add_event(const String& action, const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("action_add_event", action, event);
-    }
-  }
-  %extend {
-    bool action_has_event(const String& action, const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("action_has_event", action, event);
-    }
-  }
-  %extend {
-    void action_erase_event(const String& action, const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("action_erase_event", action, event);
-    }
-  }
-  %extend {
-    Array get_action_list(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_action_list", action);
-    }
-  }
-  %extend {
-    bool event_is_action(const InputEvent& event, const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("event_is_action", event, action);
-    }
-  }
-  %extend {
-    void load_from_globals() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("load_from_globals");
-    }
-  }
-  %extend {
-    static InputMap* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("InputMap")->cast_to<InputMap>(); }
-  }
+
+%extend {
+
+bool has_action(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "has_action");
+  const void* __args[1] = { &action };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_action_id(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "get_action_id");
+  const void* __args[1] = { &action };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_action_from_id(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "get_action_from_id");
+  const void* __args[1] = { &id };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array get_actions() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "get_actions");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_action(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "add_action");
+  const void* __args[1] = { &action };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void erase_action(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "erase_action");
+  const void* __args[1] = { &action };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void action_add_event(const String& action, const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "action_add_event");
+  const void* __args[2] = { &action, &event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool action_has_event(const String& action, const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "action_has_event");
+  const void* __args[2] = { &action, &event };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void action_erase_event(const String& action, const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "action_erase_event");
+  const void* __args[2] = { &action, &event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_action_list(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "get_action_list");
+  const void* __args[1] = { &action };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool event_is_action(const InputEvent& event, const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "event_is_action");
+  const void* __args[2] = { &event, &action };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void load_from_globals() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InputMap", "load_from_globals");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+static InputMap* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("InputMap")->cast_to<InputMap>(); }
+
+}
+
 
 };

@@ -67,7 +67,6 @@ public class Viewport : Node {
 
   public void set_world(World world) {
     GodotEnginePINVOKE.Viewport_set_world(swigCPtr, World.getCPtr(world));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public World get_world() {
@@ -272,7 +271,9 @@ public class Viewport : Node {
 
   public Camera get_camera() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Viewport_get_camera(swigCPtr);
-    Camera ret = (cPtr == global::System.IntPtr.Zero) ? null : new Camera(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Camera ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Camera;
     return ret;
   }
 

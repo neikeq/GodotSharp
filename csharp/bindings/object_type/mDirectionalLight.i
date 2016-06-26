@@ -1,15 +1,6 @@
 /* mDirectionalLight.i */
 %module mDirectionalLight
 
-%typemap(out) DirectionalLight "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) DirectionalLight* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) DirectionalLight %{
   public static readonly int SHADOW_ORTHOGONAL = 0;
@@ -54,30 +45,46 @@
 
 class DirectionalLight : public Light {
 public:
-  %extend {
-    void set_shadow_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shadow_mode", mode);
-    }
-  }
-  %extend {
-    int get_shadow_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shadow_mode");
-    }
-  }
-  %extend {
-    void set_shadow_param(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shadow_param", param, value);
-    }
-  }
-  %extend {
-    float get_shadow_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shadow_param", param);
-    }
-  }
   DirectionalLight();
+
+%extend {
+
+void set_shadow_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DirectionalLight", "set_shadow_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_shadow_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DirectionalLight", "get_shadow_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shadow_param(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DirectionalLight", "set_shadow_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_shadow_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DirectionalLight", "get_shadow_param");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

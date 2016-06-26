@@ -1,22 +1,6 @@
 /* mTCP_Server.i */
 %module mTCP_Server
 
-%typemap(ctype, out="TCP_Server*") Ref<TCP_Server> "TCP_Server*"
-%typemap(out, null="NULL") Ref<TCP_Server> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<TCP_Server> "TCP_Server.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<TCP_Server> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<TCP_Server> "TCP_Server"
-%typemap(csout, excode=SWIGEXCODE) Ref<TCP_Server> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    TCP_Server ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TCP_Server;$excode
-    return ret;
-}
-
 template<class TCP_Server> class Ref;%template() Ref<TCP_Server>;
 %feature("novaluewrapper") Ref<TCP_Server>;
 
@@ -57,47 +41,60 @@ template<class TCP_Server> class Ref;%template() Ref<TCP_Server>;
 
 class TCP_Server : public Reference {
 public:
-  %extend {
-    int listen(int port, const StringArray& accepted_hosts = StringArray()) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("listen", port, accepted_hosts);
+
+%extend {
+
+int listen(int port, const StringArray& accepted_hosts = StringArray()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TCP_Server", "listen");
+  const void* __args[2] = { &port, &accepted_hosts };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_connection_available() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TCP_Server", "is_connection_available");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* take_connection() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TCP_Server", "take_connection");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TCP_Server", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+TCP_Server() { return TCP_Server::create(); }
+
+~TCP_Server() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    bool is_connection_available() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_connection_available");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    Object* take_connection() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("take_connection").operator Object *();
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    TCP_Server() { return TCP_Server::create(); }
-  }
-  %extend {
-    ~TCP_Server() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

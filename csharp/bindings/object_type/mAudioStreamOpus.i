@@ -1,22 +1,6 @@
 /* mAudioStreamOpus.i */
 %module mAudioStreamOpus
 
-%typemap(ctype, out="AudioStreamOpus*") Ref<AudioStreamOpus> "AudioStreamOpus*"
-%typemap(out, null="NULL") Ref<AudioStreamOpus> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<AudioStreamOpus> "AudioStreamOpus.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<AudioStreamOpus> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<AudioStreamOpus> "AudioStreamOpus"
-%typemap(csout, excode=SWIGEXCODE) Ref<AudioStreamOpus> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    AudioStreamOpus ret = InternalHelpers.UnmanagedGetManaged(cPtr) as AudioStreamOpus;$excode
-    return ret;
-}
-
 template<class AudioStreamOpus> class Ref;%template() Ref<AudioStreamOpus>;
 %feature("novaluewrapper") Ref<AudioStreamOpus>;
 
@@ -58,20 +42,23 @@ template<class AudioStreamOpus> class Ref;%template() Ref<AudioStreamOpus>;
 class AudioStreamOpus : public AudioStream {
 public:
   AudioStreamOpus();
-  %extend {
-    ~AudioStreamOpus() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~AudioStreamOpus() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

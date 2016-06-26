@@ -2,22 +2,6 @@
 %module m_File
 
 %rename(File) _File;
-%typemap(ctype, out="_File*") Ref<_File> "_File*"
-%typemap(out, null="NULL") Ref<_File> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<_File> "_File.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<_File> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<_File> "_File"
-%typemap(csout, excode=SWIGEXCODE) Ref<_File> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    _File ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _File;$excode
-    return ret;
-}
-
 template<class _File> class Ref;%template() Ref<_File>;
 %feature("novaluewrapper") Ref<_File>;
 
@@ -62,267 +46,382 @@ template<class _File> class Ref;%template() Ref<_File>;
 
 class _File : public Reference {
 public:
-  %extend {
-    int open_encrypted(const String& path, int mode_flags, const RawArray& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("open_encrypted", path, mode_flags, key);
-    }
-  }
-  %extend {
-    int open_encrypted_with_pass(const String& path, int mode_flags, const String& pass) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("open_encrypted_with_pass", path, mode_flags, pass);
-    }
-  }
-  %extend {
-    int open(const String& path, int flags) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("open", path, flags);
-    }
-  }
-  %extend {
-    void close() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("close");
-    }
-  }
-  %extend {
-    bool is_open() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_open");
-    }
-  }
-  %extend {
-    void seek(int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("seek", pos);
-    }
-  }
-  %extend {
-    void seek_end(int pos = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("seek_end", pos);
-    }
-  }
-  %extend {
-    int get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    int get_len() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_len");
-    }
-  }
-  %extend {
-    bool eof_reached() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("eof_reached");
-    }
-  }
-  %extend {
-    int get_8() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_8");
-    }
-  }
-  %extend {
-    int get_16() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_16");
-    }
-  }
-  %extend {
-    int get_32() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_32");
-    }
-  }
-  %extend {
-    int get_64() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_64");
-    }
-  }
-  %extend {
-    float get_float() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_float");
-    }
-  }
-  %extend {
-    float get_double() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_double");
-    }
-  }
-  %extend {
-    float get_real() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_real");
-    }
-  }
-  %extend {
-    RawArray get_buffer(int len) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_buffer", len);
-    }
-  }
-  %extend {
-    String get_line() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line");
-    }
-  }
-  %extend {
-    String get_as_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_as_text");
-    }
-  }
-  %extend {
-    String get_md5(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_md5", path);
-    }
-  }
-  %extend {
-    String get_sha256(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sha256", path);
-    }
-  }
-  %extend {
-    bool get_endian_swap() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_endian_swap");
-    }
-  }
-  %extend {
-    void set_endian_swap(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_endian_swap", enable);
-    }
-  }
-  %extend {
-    int get_error() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_error");
-    }
-  }
-  %extend {
-    void get_var() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_var");
-    }
-  }
-  %extend {
-    StringArray get_csv_line(const String& delim = ",") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_csv_line", delim);
-    }
-  }
-  %extend {
-    void store_8(int value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_8", value);
-    }
-  }
-  %extend {
-    void store_16(int value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_16", value);
-    }
-  }
-  %extend {
-    void store_32(int value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_32", value);
-    }
-  }
-  %extend {
-    void store_64(int value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_64", value);
-    }
-  }
-  %extend {
-    void store_float(float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_float", value);
-    }
-  }
-  %extend {
-    void store_double(float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_double", value);
-    }
-  }
-  %extend {
-    void store_real(float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_real", value);
-    }
-  }
-  %extend {
-    void store_buffer(const RawArray& buffer) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_buffer", buffer);
-    }
-  }
-  %extend {
-    void store_line(const String& line) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_line", line);
-    }
-  }
-  %extend {
-    void store_string(const String& string) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_string", string);
-    }
-  }
-  %extend {
-    void store_var(const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_var", value);
-    }
-  }
-  %extend {
-    void store_pascal_string(const String& string) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("store_pascal_string", string);
-    }
-  }
-  %extend {
-    String get_pascal_string() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pascal_string");
-    }
-  }
-  %extend {
-    bool file_exists(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("file_exists", path);
-    }
-  }
   _File();
-  %extend {
-    ~_File() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int open_encrypted(const String& path, int mode_flags, const RawArray& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "open_encrypted");
+  const void* __args[3] = { &path, &mode_flags, &key };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int open_encrypted_with_pass(const String& path, int mode_flags, const String& pass) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "open_encrypted_with_pass");
+  const void* __args[3] = { &path, &mode_flags, &pass };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int open(const String& path, int flags) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "open");
+  const void* __args[2] = { &path, &flags };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void close() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "close");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_open() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "is_open");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void seek(int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "seek");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void seek_end(int pos = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "seek_end");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_pos");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_len() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_len");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool eof_reached() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "eof_reached");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_8() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_8");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_16() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_16");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_32() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_32");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_64() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_64");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_float() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_float");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_double() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_double");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_real() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_real");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RawArray get_buffer(int len) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_buffer");
+  const void* __args[1] = { &len };
+  RawArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_line() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_line");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_as_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_as_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_md5(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_md5");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_sha256(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_sha256");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool get_endian_swap() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_endian_swap");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_endian_swap(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "set_endian_swap");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_error() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_error");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void get_var() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_var");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+StringArray get_csv_line(const String& delim = ",") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_csv_line");
+  const void* __args[1] = { &delim };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void store_8(int value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_8");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_16(int value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_16");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_32(int value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_32");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_64(int value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_64");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_float(float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_float");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_double(float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_double");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_real(float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_real");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_buffer(const RawArray& buffer) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_buffer");
+  const void* __args[1] = { &buffer };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_line(const String& line) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_line");
+  const void* __args[1] = { &line };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_string(const String& string) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_string");
+  const void* __args[1] = { &string };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_var(const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_var");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void store_pascal_string(const String& string) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "store_pascal_string");
+  const void* __args[1] = { &string };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_pascal_string() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "get_pascal_string");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool file_exists(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_File", "file_exists");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~_File() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

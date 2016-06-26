@@ -1,15 +1,6 @@
 /* mVSplitContainer.i */
 %module mVSplitContainer
 
-%typemap(out) VSplitContainer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VSplitContainer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VSplitContainer %{
 

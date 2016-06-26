@@ -1,22 +1,6 @@
 /* mEditorSpatialGizmo.i */
 %module mEditorSpatialGizmo
 
-%typemap(ctype, out="EditorSpatialGizmo*") Ref<EditorSpatialGizmo> "EditorSpatialGizmo*"
-%typemap(out, null="NULL") Ref<EditorSpatialGizmo> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<EditorSpatialGizmo> "EditorSpatialGizmo.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<EditorSpatialGizmo> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<EditorSpatialGizmo> "EditorSpatialGizmo"
-%typemap(csout, excode=SWIGEXCODE) Ref<EditorSpatialGizmo> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    EditorSpatialGizmo ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSpatialGizmo;$excode
-    return ret;
-}
-
 template<class EditorSpatialGizmo> class Ref;%template() Ref<EditorSpatialGizmo>;
 %feature("novaluewrapper") Ref<EditorSpatialGizmo>;
 
@@ -57,93 +41,123 @@ template<class EditorSpatialGizmo> class Ref;%template() Ref<EditorSpatialGizmo>
 
 class EditorSpatialGizmo : public SpatialGizmo {
 public:
-  %extend {
-    void commit_handle(int index, const Variant& restore, bool cancel) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("commit_handle", index, restore, cancel);
-    }
-  }
-  %extend {
-    String get_handle_name(int index) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_handle_name", index);
-    }
-  }
-  %extend {
-    Variant get_handle_value(int index) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_handle_value", index);
-    }
-  }
-  %extend {
-    void redraw() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("redraw");
-    }
-  }
-  %extend {
-    void set_handle(int index, Camera* camera, const Vector2& point) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_handle", index, camera, point);
-    }
-  }
-  %extend {
-    void add_lines(const Vector3Array& lines, Ref<Material> material, bool billboard = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_lines", lines, material, billboard);
-    }
-  }
-  %extend {
-    void add_mesh(Ref<Mesh> mesh, bool billboard = false, const RID& skeleton = RID()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_mesh", mesh, billboard, skeleton);
-    }
-  }
-  %extend {
-    void add_collision_segments(const Vector3Array& segments) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_collision_segments", segments);
-    }
-  }
-  %extend {
-    void add_collision_triangles(TriangleMesh* triangles) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_collision_triangles", triangles);
-    }
-  }
-  %extend {
-    void add_unscaled_billboard(Ref<Material> material, float default_scale = 1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_unscaled_billboard", material, default_scale);
-    }
-  }
-  %extend {
-    void add_handles(const Vector3Array& handles, bool billboard = false, bool secondary = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_handles", handles, billboard, secondary);
-    }
-  }
-  %extend {
-    void set_spatial_node(Spatial* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_spatial_node", node);
-    }
-  }
   EditorSpatialGizmo();
-  %extend {
-    ~EditorSpatialGizmo() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void commit_handle(int index, const Variant& restore, bool cancel) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "commit_handle");
+  const void* __args[3] = { &index, &restore, &cancel };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_handle_name(int index) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "get_handle_name");
+  const void* __args[1] = { &index };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Variant get_handle_value(int index) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "get_handle_value");
+  const void* __args[1] = { &index };
+  Variant ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void redraw() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "redraw");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_handle(int index, Camera* camera, const Vector2& point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "set_handle");
+  const void* __args[3] = { &index, camera, &point };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_lines(const Vector3Array& lines, Material* material, bool billboard = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "add_lines");
+  const void* __args[3] = { &lines, material, &billboard };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_mesh(Mesh* mesh, bool billboard = false, const RID& skeleton = RID()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "add_mesh");
+  const void* __args[3] = { mesh, &billboard, &skeleton };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_collision_segments(const Vector3Array& segments) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "add_collision_segments");
+  const void* __args[1] = { &segments };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_collision_triangles(TriangleMesh* triangles) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "add_collision_triangles");
+  const void* __args[1] = { triangles };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_unscaled_billboard(Material* material, float default_scale = 1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "add_unscaled_billboard");
+  const void* __args[2] = { material, &default_scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_handles(const Vector3Array& handles, bool billboard = false, bool secondary = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "add_handles");
+  const void* __args[3] = { &handles, &billboard, &secondary };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_spatial_node(Spatial* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSpatialGizmo", "set_spatial_node");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~EditorSpatialGizmo() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

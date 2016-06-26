@@ -1,22 +1,6 @@
 /* mBitMap.i */
 %module mBitMap
 
-%typemap(ctype, out="BitMap*") Ref<BitMap> "BitMap*"
-%typemap(out, null="NULL") Ref<BitMap> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<BitMap> "BitMap.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<BitMap> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<BitMap> "BitMap"
-%typemap(csout, excode=SWIGEXCODE) Ref<BitMap> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    BitMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BitMap;$excode
-    return ret;
-}
-
 template<class BitMap> class Ref;%template() Ref<BitMap>;
 %feature("novaluewrapper") Ref<BitMap>;
 
@@ -57,63 +41,84 @@ template<class BitMap> class Ref;%template() Ref<BitMap>;
 
 class BitMap : public Resource {
 public:
-  %extend {
-    void create(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create", size);
-    }
-  }
-  %extend {
-    void create_from_image_alpha(const Image& image) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create_from_image_alpha", image);
-    }
-  }
-  %extend {
-    void set_bit(const Vector2& pos, bool bit) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bit", pos, bit);
-    }
-  }
-  %extend {
-    bool get_bit(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bit", pos);
-    }
-  }
-  %extend {
-    void set_bit_rect(const Rect2& p_rect, bool bit) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bit_rect", p_rect, bit);
-    }
-  }
-  %extend {
-    int get_true_bit_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_true_bit_count");
-    }
-  }
-  %extend {
-    Vector2 get_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_size");
-    }
-  }
   BitMap();
-  %extend {
-    ~BitMap() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void create(const Vector2& size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "create");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void create_from_image_alpha(const Image& image) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "create_from_image_alpha");
+  const void* __args[1] = { &image };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_bit(const Vector2& pos, bool bit) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "set_bit");
+  const void* __args[2] = { &pos, &bit };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_bit(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "get_bit");
+  const void* __args[1] = { &pos };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_bit_rect(const Rect2& p_rect, bool bit) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "set_bit_rect");
+  const void* __args[2] = { &p_rect, &bit };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_true_bit_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "get_true_bit_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitMap", "get_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~BitMap() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

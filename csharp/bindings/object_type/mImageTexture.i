@@ -1,22 +1,6 @@
 /* mImageTexture.i */
 %module mImageTexture
 
-%typemap(ctype, out="ImageTexture*") Ref<ImageTexture> "ImageTexture*"
-%typemap(out, null="NULL") Ref<ImageTexture> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ImageTexture> "ImageTexture.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ImageTexture> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ImageTexture> "ImageTexture"
-%typemap(csout, excode=SWIGEXCODE) Ref<ImageTexture> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ImageTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ImageTexture;$excode
-    return ret;
-}
-
 template<class ImageTexture> class Ref;%template() Ref<ImageTexture>;
 %feature("novaluewrapper") Ref<ImageTexture>;
 
@@ -60,111 +44,144 @@ template<class ImageTexture> class Ref;%template() Ref<ImageTexture>;
 
 class ImageTexture : public Texture {
 public:
-  %extend {
-    void create(int width, int height, int format, int flags = 7) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create", width, height, format, flags);
-    }
-  }
-  %extend {
-    void create_from_image(const Image& image, int flags = 7) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create_from_image", image, flags);
-    }
-  }
-  %extend {
-    int get_format() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_format");
-    }
-  }
-  %extend {
-    void load(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("load", path);
-    }
-  }
-  %extend {
-    void set_data(const Image& image) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_data", image);
-    }
-  }
-  %extend {
-    Image get_data() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_data");
-    }
-  }
-  %extend {
-    void set_storage(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_storage", mode);
-    }
-  }
-  %extend {
-    int get_storage() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_storage");
-    }
-  }
-  %extend {
-    void set_lossy_storage_quality(float quality) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_lossy_storage_quality", quality);
-    }
-  }
-  %extend {
-    float get_lossy_storage_quality() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_lossy_storage_quality");
-    }
-  }
-  %extend {
-    void fix_alpha_edges() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("fix_alpha_edges");
-    }
-  }
-  %extend {
-    void premultiply_alpha() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("premultiply_alpha");
-    }
-  }
-  %extend {
-    void normal_to_xy() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("normal_to_xy");
-    }
-  }
-  %extend {
-    void shrink_x2_and_keep_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("shrink_x2_and_keep_size");
-    }
-  }
-  %extend {
-    void set_size_override(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_size_override", size);
-    }
-  }
   ImageTexture();
-  %extend {
-    ~ImageTexture() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void create(int width, int height, int format, int flags = 7) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "create");
+  const void* __args[4] = { &width, &height, &format, &flags };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void create_from_image(const Image& image, int flags = 7) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "create_from_image");
+  const void* __args[2] = { &image, &flags };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_format() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "get_format");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void load(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "load");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_data(const Image& image) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "set_data");
+  const void* __args[1] = { &image };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Image get_data() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "get_data");
+  Image ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_storage(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "set_storage");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_storage() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "get_storage");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_lossy_storage_quality(float quality) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "set_lossy_storage_quality");
+  const void* __args[1] = { &quality };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_lossy_storage_quality() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "get_lossy_storage_quality");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void fix_alpha_edges() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "fix_alpha_edges");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void premultiply_alpha() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "premultiply_alpha");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void normal_to_xy() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "normal_to_xy");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void shrink_x2_and_keep_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "shrink_x2_and_keep_size");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_size_override(const Vector2& size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImageTexture", "set_size_override");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~ImageTexture() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

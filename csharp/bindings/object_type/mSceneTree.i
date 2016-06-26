@@ -1,15 +1,6 @@
 /* mSceneTree.i */
 %module mSceneTree
 
-%typemap(out) SceneTree "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SceneTree* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SceneTree %{
   public static readonly int GROUP_CALL_DEFAULT = 0;
@@ -58,183 +49,251 @@
 
 class SceneTree : public MainLoop {
 public:
-  %extend {
-    void notify_group(int call_flags, const String& group, int notification) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("notify_group", call_flags, group, notification);
-    }
-  }
-  %extend {
-    void set_group(int call_flags, const String& group, const String& property, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_group", call_flags, group, property, value);
-    }
-  }
-  %extend {
-    Array get_nodes_in_group(const String& group) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_nodes_in_group", group);
-    }
-  }
-  %extend {
-    Viewport* get_root() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_root").operator Object *()->cast_to<Viewport>();
-    }
-  }
-  %extend {
-    bool has_group(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_group", name);
-    }
-  }
-  %extend {
-    void set_auto_accept_quit(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_auto_accept_quit", enabled);
-    }
-  }
-  %extend {
-    void set_editor_hint(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_editor_hint", enable);
-    }
-  }
-  %extend {
-    bool is_editor_hint() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_editor_hint");
-    }
-  }
-  %extend {
-    void set_debug_collisions_hint(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_debug_collisions_hint", enable);
-    }
-  }
-  %extend {
-    bool is_debugging_collisions_hint() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_debugging_collisions_hint");
-    }
-  }
-  %extend {
-    void set_debug_navigation_hint(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_debug_navigation_hint", enable);
-    }
-  }
-  %extend {
-    bool is_debugging_navigation_hint() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_debugging_navigation_hint");
-    }
-  }
-  %extend {
-    void set_edited_scene_root(Object* scene) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_edited_scene_root", scene);
-    }
-  }
-  %extend {
-    Object* get_edited_scene_root() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_edited_scene_root").operator Object *();
-    }
-  }
-  %extend {
-    void set_pause(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pause", enable);
-    }
-  }
-  %extend {
-    bool is_paused() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_paused");
-    }
-  }
-  %extend {
-    void set_input_as_handled() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_input_as_handled");
-    }
-  }
-  %extend {
-    int get_node_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_count");
-    }
-  }
-  %extend {
-    int get_frame() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_frame");
-    }
-  }
-  %extend {
-    void quit() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("quit");
-    }
-  }
-  %extend {
-    void set_screen_stretch(int mode, int aspect, const Vector2& minsize) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_screen_stretch", mode, aspect, minsize);
-    }
-  }
-  %extend {
-    void queue_delete(Object* obj) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("queue_delete", obj);
-    }
-  }
-  %extend {
-    void call_group(int flags, const String& group, const String& method, const Variant& arg0_ = Variant(), const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant()) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(flags);
-Variant arg_1_ = Variant(group);
-Variant arg_2_ = Variant(method);
-Variant arg_3_ = Variant(arg0_);
-Variant arg_4_ = Variant(arg1_);
-Variant arg_5_ = Variant(arg2_);
-Variant arg_6_ = Variant(arg3_);
-Variant arg_7_ = Variant(arg4_);
-Variant *args_[8] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_ };
-$self->call("call_group", (const Variant **) args_, 8, err);
-    }
-  }
-  %extend {
-    void set_current_scene(Node* child_node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_current_scene", child_node);
-    }
-  }
-  %extend {
-    Node* get_current_scene() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_scene").operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    int change_scene(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("change_scene", path);
-    }
-  }
-  %extend {
-    int change_scene_to(Ref<PackedScene> packed_scene) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("change_scene_to", packed_scene);
-    }
-  }
-  %extend {
-    int reload_current_scene() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("reload_current_scene");
-    }
-  }
   SceneTree();
+
+%extend {
+
+void notify_group(int call_flags, const String& group, int notification) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "notify_group");
+  const void* __args[3] = { &call_flags, &group, &notification };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_group(int call_flags, const String& group, const String& property, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_group");
+  const void* __args[4] = { &call_flags, &group, &property, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_nodes_in_group(const String& group) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "get_nodes_in_group");
+  const void* __args[1] = { &group };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Viewport* get_root() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "get_root");
+  Viewport* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool has_group(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "has_group");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_auto_accept_quit(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_auto_accept_quit");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_editor_hint(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_editor_hint");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_editor_hint() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "is_editor_hint");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_debug_collisions_hint(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_debug_collisions_hint");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_debugging_collisions_hint() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "is_debugging_collisions_hint");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_debug_navigation_hint(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_debug_navigation_hint");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_debugging_navigation_hint() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "is_debugging_navigation_hint");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_edited_scene_root(Object* scene) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_edited_scene_root");
+  const void* __args[1] = { scene };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_edited_scene_root() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "get_edited_scene_root");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_pause(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_pause");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_paused() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "is_paused");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_input_as_handled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_input_as_handled");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_node_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "get_node_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_frame() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "get_frame");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void quit() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "quit");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_screen_stretch(int mode, int aspect, const Vector2& minsize) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_screen_stretch");
+  const void* __args[3] = { &mode, &aspect, &minsize };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void queue_delete(Object* obj) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "queue_delete");
+  const void* __args[1] = { obj };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void call_group(int flags, const String& group, const String& method, const Variant& arg0_ = Variant(), const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "call_group");
+  const void* __args[8] = { &flags, &group, &method, &arg0_, &arg1_, &arg2_, &arg3_, &arg4_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_current_scene(Node* child_node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "set_current_scene");
+  const void* __args[1] = { child_node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Node* get_current_scene() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "get_current_scene");
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int change_scene(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "change_scene");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int change_scene_to(PackedScene* packed_scene) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "change_scene_to");
+  const void* __args[1] = { packed_scene };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int reload_current_scene() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneTree", "reload_current_scene");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

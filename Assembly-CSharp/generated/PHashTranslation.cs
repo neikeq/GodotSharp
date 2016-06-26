@@ -49,7 +49,6 @@ public class PHashTranslation : Translation {
 
   public void generate(Translation from) {
     GodotEnginePINVOKE.PHashTranslation_generate(swigCPtr, Translation.getCPtr(from));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public PHashTranslation() : this(true) {

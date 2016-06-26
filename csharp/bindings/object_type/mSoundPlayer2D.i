@@ -2,15 +2,6 @@
 %module mSoundPlayer2D
 
 %nodefaultctor SoundPlayer2D;
-%typemap(out) SoundPlayer2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SoundPlayer2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SoundPlayer2D %{
   public static readonly int PARAM_VOLUME_DB = 0;
@@ -55,17 +46,28 @@
 
 class SoundPlayer2D : public Node2D {
 public:
-  %extend {
-    void set_param(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param", param, value);
-    }
-  }
-  %extend {
-    float get_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param", param);
-    }
-  }
+
+%extend {
+
+void set_param(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundPlayer2D", "set_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundPlayer2D", "get_param");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

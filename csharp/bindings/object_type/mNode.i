@@ -1,15 +1,6 @@
 /* mNode.i */
 %module mNode
 
-%typemap(out) Node "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Node* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Node %{
   public static readonly int NOTIFICATION_ENTER_TREE = 10;
@@ -63,390 +54,560 @@
 
 class Node : public Object {
 public:
-  %extend {
-    void _enter_tree() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_enter_tree");
-    }
-  }
-  %extend {
-    void _exit_tree() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_exit_tree");
-    }
-  }
-  %extend {
-    void _fixed_process(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_fixed_process", delta);
-    }
-  }
-  %extend {
-    void _input(const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_input", event);
-    }
-  }
-  %extend {
-    void _process(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_process", delta);
-    }
-  }
-  %extend {
-    void _ready() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_ready");
-    }
-  }
-  %extend {
-    void _unhandled_input(const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_unhandled_input", event);
-    }
-  }
-  %extend {
-    void _unhandled_key_input(const InputEvent& key_event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_unhandled_key_input", key_event);
-    }
-  }
-  %extend {
-    void set_name(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_name", name);
-    }
-  }
-  %extend {
-    String get_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_name");
-    }
-  }
-  %extend {
-    void add_child(Node* node, bool legible_unique_name = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_child", node, legible_unique_name);
-    }
-  }
-  %extend {
-    void remove_child(Node* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_child", node);
-    }
-  }
-  %extend {
-    int get_child_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_child_count");
-    }
-  }
-  %extend {
-    Array get_children() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_children");
-    }
-  }
-  %extend {
-    Node* get_child(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_child", idx).operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    bool has_node(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_node", path);
-    }
-  }
-  %extend {
-    Node* get_node(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node", path).operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    Node* get_parent() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_parent").operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    Node* find_node(const String& mask, bool recursive = true, bool owned = true) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("find_node", mask, recursive, owned).operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    bool has_node_and_resource(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_node_and_resource", path);
-    }
-  }
-  %extend {
-    Array get_node_and_resource(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_and_resource", path);
-    }
-  }
-  %extend {
-    bool is_inside_tree() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_inside_tree");
-    }
-  }
-  %extend {
-    bool is_a_parent_of(Node* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_a_parent_of", node);
-    }
-  }
-  %extend {
-    bool is_greater_than(Node* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_greater_than", node);
-    }
-  }
-  %extend {
-    NodePath get_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_path");
-    }
-  }
-  %extend {
-    NodePath get_path_to(Node* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_path_to", node);
-    }
-  }
-  %extend {
-    void add_to_group(const String& group, bool persistent = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_to_group", group, persistent);
-    }
-  }
-  %extend {
-    void remove_from_group(const String& group) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_from_group", group);
-    }
-  }
-  %extend {
-    bool is_in_group(const String& group) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_in_group", group);
-    }
-  }
-  %extend {
-    void move_child(Node* child_node, int to_pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("move_child", child_node, to_pos);
-    }
-  }
-  %extend {
-    Array get_groups() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_groups");
-    }
-  }
-  %extend {
-    void raise() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("raise");
-    }
-  }
-  %extend {
-    void set_owner(Node* owner) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_owner", owner);
-    }
-  }
-  %extend {
-    Node* get_owner() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_owner").operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    void remove_and_skip() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_and_skip");
-    }
-  }
-  %extend {
-    int get_index() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_index");
-    }
-  }
-  %extend {
-    void print_tree() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("print_tree");
-    }
-  }
-  %extend {
-    void set_filename(const String& filename) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_filename", filename);
-    }
-  }
-  %extend {
-    String get_filename() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_filename");
-    }
-  }
-  %extend {
-    void propagate_notification(int what) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("propagate_notification", what);
-    }
-  }
-  %extend {
-    void set_fixed_process(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_fixed_process", enable);
-    }
-  }
-  %extend {
-    float get_fixed_process_delta_time() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fixed_process_delta_time");
-    }
-  }
-  %extend {
-    bool is_fixed_processing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_fixed_processing");
-    }
-  }
-  %extend {
-    void set_process(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_process", enable);
-    }
-  }
-  %extend {
-    float get_process_delta_time() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_process_delta_time");
-    }
-  }
-  %extend {
-    bool is_processing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_processing");
-    }
-  }
-  %extend {
-    void set_process_input(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_process_input", enable);
-    }
-  }
-  %extend {
-    bool is_processing_input() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_processing_input");
-    }
-  }
-  %extend {
-    void set_process_unhandled_input(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_process_unhandled_input", enable);
-    }
-  }
-  %extend {
-    bool is_processing_unhandled_input() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_processing_unhandled_input");
-    }
-  }
-  %extend {
-    void set_process_unhandled_key_input(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_process_unhandled_key_input", enable);
-    }
-  }
-  %extend {
-    bool is_processing_unhandled_key_input() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_processing_unhandled_key_input");
-    }
-  }
-  %extend {
-    void set_pause_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pause_mode", mode);
-    }
-  }
-  %extend {
-    int get_pause_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pause_mode");
-    }
-  }
-  %extend {
-    bool can_process() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_process");
-    }
-  }
-  %extend {
-    void print_stray_nodes() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("print_stray_nodes");
-    }
-  }
-  %extend {
-    int get_position_in_parent() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_position_in_parent");
-    }
-  }
-  %extend {
-    SceneTree* get_tree() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tree").operator Object *()->cast_to<SceneTree>();
-    }
-  }
-  %extend {
-    Node* duplicate(bool use_instancing = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("duplicate", use_instancing).operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    void replace_by(Node* node, bool keep_data = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("replace_by", node, keep_data);
-    }
-  }
-  %extend {
-    void set_scene_instance_load_placeholder(bool load_placeholder) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scene_instance_load_placeholder", load_placeholder);
-    }
-  }
-  %extend {
-    bool get_scene_instance_load_placeholder() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scene_instance_load_placeholder");
-    }
-  }
-  %extend {
-    Object* get_viewport() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_viewport").operator Object *();
-    }
-  }
-  %extend {
-    void queue_free() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("queue_free");
-    }
-  }
   Node();
+
+%extend {
+
+void _enter_tree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_enter_tree");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _exit_tree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_exit_tree");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _fixed_process(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_fixed_process");
+  const void* __args[1] = { &delta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _input(const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_input");
+  const void* __args[1] = { &event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _process(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_process");
+  const void* __args[1] = { &delta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _ready() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_ready");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _unhandled_input(const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_unhandled_input");
+  const void* __args[1] = { &event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _unhandled_key_input(const InputEvent& key_event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "_unhandled_key_input");
+  const void* __args[1] = { &key_event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_name(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_name");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_child(Node* node, bool legible_unique_name = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "add_child");
+  const void* __args[2] = { node, &legible_unique_name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_child(Node* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "remove_child");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_child_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_child_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_children() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_children");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Node* get_child(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_child");
+  const void* __args[1] = { &idx };
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_node(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "has_node");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Node* get_node(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_node");
+  const void* __args[1] = { &path };
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Node* get_parent() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_parent");
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Node* find_node(const String& mask, bool recursive = true, bool owned = true) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "find_node");
+  const void* __args[3] = { &mask, &recursive, &owned };
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_node_and_resource(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "has_node_and_resource");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array get_node_and_resource(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_node_and_resource");
+  const void* __args[1] = { &path };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_inside_tree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_inside_tree");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_a_parent_of(Node* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_a_parent_of");
+  const void* __args[1] = { node };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_greater_than(Node* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_greater_than");
+  const void* __args[1] = { node };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+NodePath get_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_path");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+NodePath get_path_to(Node* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_path_to");
+  const void* __args[1] = { node };
+  NodePath ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void add_to_group(const String& group, bool persistent = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "add_to_group");
+  const void* __args[2] = { &group, &persistent };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_from_group(const String& group) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "remove_from_group");
+  const void* __args[1] = { &group };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_in_group(const String& group) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_in_group");
+  const void* __args[1] = { &group };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void move_child(Node* child_node, int to_pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "move_child");
+  const void* __args[2] = { child_node, &to_pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_groups() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_groups");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void raise() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "raise");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_owner(Node* owner) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_owner");
+  const void* __args[1] = { owner };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Node* get_owner() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_owner");
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void remove_and_skip() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "remove_and_skip");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_index() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_index");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void print_tree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "print_tree");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_filename(const String& filename) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_filename");
+  const void* __args[1] = { &filename };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_filename() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_filename");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void propagate_notification(int what) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "propagate_notification");
+  const void* __args[1] = { &what };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_fixed_process(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_fixed_process");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_fixed_process_delta_time() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_fixed_process_delta_time");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_fixed_processing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_fixed_processing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_process(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_process");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_process_delta_time() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_process_delta_time");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_processing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_processing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_process_input(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_process_input");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_processing_input() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_processing_input");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_process_unhandled_input(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_process_unhandled_input");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_processing_unhandled_input() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_processing_unhandled_input");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_process_unhandled_key_input(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_process_unhandled_key_input");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_processing_unhandled_key_input() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "is_processing_unhandled_key_input");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_pause_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_pause_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_pause_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_pause_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool can_process() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "can_process");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void print_stray_nodes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "print_stray_nodes");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_position_in_parent() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_position_in_parent");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+SceneTree* get_tree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_tree");
+  SceneTree* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Node* duplicate(bool use_instancing = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "duplicate");
+  const void* __args[1] = { &use_instancing };
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void replace_by(Node* node, bool keep_data = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "replace_by");
+  const void* __args[2] = { node, &keep_data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_scene_instance_load_placeholder(bool load_placeholder) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "set_scene_instance_load_placeholder");
+  const void* __args[1] = { &load_placeholder };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_scene_instance_load_placeholder() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_scene_instance_load_placeholder");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_viewport() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "get_viewport");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void queue_free() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node", "queue_free");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

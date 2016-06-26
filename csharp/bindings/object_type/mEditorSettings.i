@@ -1,22 +1,6 @@
 /* mEditorSettings.i */
 %module mEditorSettings
 
-%typemap(ctype, out="EditorSettings*") Ref<EditorSettings> "EditorSettings*"
-%typemap(out, null="NULL") Ref<EditorSettings> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<EditorSettings> "EditorSettings.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<EditorSettings> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<EditorSettings> "EditorSettings"
-%typemap(csout, excode=SWIGEXCODE) Ref<EditorSettings> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    EditorSettings ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSettings;$excode
-    return ret;
-}
-
 template<class EditorSettings> class Ref;%template() Ref<EditorSettings>;
 %feature("novaluewrapper") Ref<EditorSettings>;
 
@@ -57,63 +41,84 @@ template<class EditorSettings> class Ref;%template() Ref<EditorSettings>;
 
 class EditorSettings : public Resource {
 public:
-  %extend {
-    void erase(const String& property) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase", property);
-    }
-  }
-  %extend {
-    String get_settings_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_settings_path");
-    }
-  }
-  %extend {
-    String get_project_settings_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_project_settings_path");
-    }
-  }
-  %extend {
-    void set_favorite_dirs(const StringArray& dirs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_favorite_dirs", dirs);
-    }
-  }
-  %extend {
-    StringArray get_favorite_dirs() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_favorite_dirs");
-    }
-  }
-  %extend {
-    void set_recent_dirs(const StringArray& dirs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_recent_dirs", dirs);
-    }
-  }
-  %extend {
-    StringArray get_recent_dirs() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_recent_dirs");
-    }
-  }
   EditorSettings();
-  %extend {
-    ~EditorSettings() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void erase(const String& property) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "erase");
+  const void* __args[1] = { &property };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_settings_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "get_settings_path");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_project_settings_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "get_project_settings_path");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_favorite_dirs(const StringArray& dirs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "set_favorite_dirs");
+  const void* __args[1] = { &dirs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_favorite_dirs() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "get_favorite_dirs");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_recent_dirs(const StringArray& dirs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "set_recent_dirs");
+  const void* __args[1] = { &dirs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_recent_dirs() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSettings", "get_recent_dirs");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~EditorSettings() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

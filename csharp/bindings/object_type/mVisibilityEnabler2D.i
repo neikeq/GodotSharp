@@ -1,15 +1,6 @@
 /* mVisibilityEnabler2D.i */
 %module mVisibilityEnabler2D
 
-%typemap(out) VisibilityEnabler2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VisibilityEnabler2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VisibilityEnabler2D %{
   public static readonly int ENABLER_FREEZE_BODIES = 1;
@@ -54,18 +45,29 @@
 
 class VisibilityEnabler2D : public VisibilityNotifier2D {
 public:
-  %extend {
-    void set_enabler(int enabler, bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabler", enabler, enabled);
-    }
-  }
-  %extend {
-    bool is_enabler_enabled(int enabler) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabler_enabled", enabler);
-    }
-  }
   VisibilityEnabler2D();
+
+%extend {
+
+void set_enabler(int enabler, bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityEnabler2D", "set_enabler");
+  const void* __args[2] = { &enabler, &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabler_enabled(int enabler) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityEnabler2D", "is_enabler_enabled");
+  const void* __args[1] = { &enabler };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

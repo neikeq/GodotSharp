@@ -1,22 +1,6 @@
 /* mStyleBoxImageMask.i */
 %module mStyleBoxImageMask
 
-%typemap(ctype, out="StyleBoxImageMask*") Ref<StyleBoxImageMask> "StyleBoxImageMask*"
-%typemap(out, null="NULL") Ref<StyleBoxImageMask> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<StyleBoxImageMask> "StyleBoxImageMask.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<StyleBoxImageMask> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<StyleBoxImageMask> "StyleBoxImageMask"
-%typemap(csout, excode=SWIGEXCODE) Ref<StyleBoxImageMask> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    StyleBoxImageMask ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBoxImageMask;$excode
-    return ret;
-}
-
 template<class StyleBoxImageMask> class Ref;%template() Ref<StyleBoxImageMask>;
 %feature("novaluewrapper") Ref<StyleBoxImageMask>;
 
@@ -57,57 +41,76 @@ template<class StyleBoxImageMask> class Ref;%template() Ref<StyleBoxImageMask>;
 
 class StyleBoxImageMask : public StyleBox {
 public:
-  %extend {
-    void set_image(const Image& image) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_image", image);
-    }
-  }
-  %extend {
-    Image get_image() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_image");
-    }
-  }
-  %extend {
-    void set_expand(bool expand) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_expand", expand);
-    }
-  }
-  %extend {
-    bool get_expand() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_expand");
-    }
-  }
-  %extend {
-    void set_expand_margin_size(int margin, float size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_expand_margin_size", margin, size);
-    }
-  }
-  %extend {
-    float get_expand_margin_size(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_expand_margin_size", margin);
-    }
-  }
   StyleBoxImageMask();
-  %extend {
-    ~StyleBoxImageMask() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_image(const Image& image) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxImageMask", "set_image");
+  const void* __args[1] = { &image };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Image get_image() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxImageMask", "get_image");
+  Image ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_expand(bool expand) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxImageMask", "set_expand");
+  const void* __args[1] = { &expand };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_expand() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxImageMask", "get_expand");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_expand_margin_size(int margin, float size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxImageMask", "set_expand_margin_size");
+  const void* __args[2] = { &margin, &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_expand_margin_size(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxImageMask", "get_expand_margin_size");
+  const void* __args[1] = { &margin };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~StyleBoxImageMask() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

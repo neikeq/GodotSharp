@@ -4,15 +4,6 @@
 %csmethodmodifiers PathRemap::PathRemap "private"
 %csmethodmodifiers PathRemap::SingletonGetInstance "private"
 %nodefaultctor PathRemap;
-%typemap(out) PathRemap "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) PathRemap* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) PathRemap %{
   private static $csclassname instance;
@@ -61,38 +52,55 @@
 
 class PathRemap : public Object {
 public:
-  %extend {
-    void add_remap(const String& from, const String& to, const String& locale = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_remap", from, to, locale);
-    }
-  }
-  %extend {
-    bool has_remap(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_remap", path);
-    }
-  }
-  %extend {
-    String get_remap(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_remap", path);
-    }
-  }
-  %extend {
-    void erase_remap(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_remap", path);
-    }
-  }
-  %extend {
-    void clear_remaps() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_remaps");
-    }
-  }
-  %extend {
-    static PathRemap* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("PathRemap")->cast_to<PathRemap>(); }
-  }
+
+%extend {
+
+void add_remap(const String& from, const String& to, const String& locale = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathRemap", "add_remap");
+  const void* __args[3] = { &from, &to, &locale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_remap(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathRemap", "has_remap");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_remap(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathRemap", "get_remap");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void erase_remap(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathRemap", "erase_remap");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_remaps() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PathRemap", "clear_remaps");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+static PathRemap* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("PathRemap")->cast_to<PathRemap>(); }
+
+}
+
 
 };

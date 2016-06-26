@@ -1,15 +1,6 @@
 /* mQuad.i */
 %module mQuad
 
-%typemap(out) Quad "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Quad* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Quad %{
 
@@ -47,54 +38,79 @@
 
 class Quad : public GeometryInstance {
 public:
-  %extend {
-    void set_axis(int axis) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_axis", axis);
-    }
-  }
-  %extend {
-    int get_axis() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_axis");
-    }
-  }
-  %extend {
-    void set_size(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_size", size);
-    }
-  }
-  %extend {
-    Vector2 get_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_size");
-    }
-  }
-  %extend {
-    void set_centered(bool centered) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_centered", centered);
-    }
-  }
-  %extend {
-    bool is_centered() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_centered");
-    }
-  }
-  %extend {
-    void set_offset(const Vector2& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offset", offset);
-    }
-  }
-  %extend {
-    Vector2 get_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offset");
-    }
-  }
   Quad();
+
+%extend {
+
+void set_axis(int axis) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "set_axis");
+  const void* __args[1] = { &axis };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_axis() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "get_axis");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_size(const Vector2& size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "set_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "get_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_centered(bool centered) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "set_centered");
+  const void* __args[1] = { &centered };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_centered() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "is_centered");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_offset(const Vector2& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "set_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Quad", "get_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

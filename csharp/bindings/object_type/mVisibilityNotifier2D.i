@@ -1,15 +1,6 @@
 /* mVisibilityNotifier2D.i */
 %module mVisibilityNotifier2D
 
-%typemap(out) VisibilityNotifier2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VisibilityNotifier2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VisibilityNotifier2D %{
 
@@ -47,24 +38,37 @@
 
 class VisibilityNotifier2D : public Node2D {
 public:
-  %extend {
-    void set_rect(const Rect2& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rect", rect);
-    }
-  }
-  %extend {
-    Rect2 get_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rect");
-    }
-  }
-  %extend {
-    bool is_on_screen() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_on_screen");
-    }
-  }
   VisibilityNotifier2D();
+
+%extend {
+
+void set_rect(const Rect2& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityNotifier2D", "set_rect");
+  const void* __args[1] = { &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Rect2 get_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityNotifier2D", "get_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_on_screen() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityNotifier2D", "is_on_screen");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

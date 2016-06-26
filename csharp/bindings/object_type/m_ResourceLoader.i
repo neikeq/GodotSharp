@@ -5,15 +5,6 @@
 %csmethodmodifiers _ResourceLoader::_ResourceLoader "private"
 %csmethodmodifiers _ResourceLoader::SingletonGetInstance "private"
 %nodefaultctor _ResourceLoader;
-%typemap(out) _ResourceLoader "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) _ResourceLoader* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) _ResourceLoader %{
   private static $csclassname instance;
@@ -62,50 +53,80 @@
 
 class _ResourceLoader : public Object {
 public:
-  %extend {
-    Ref<ResourceInteractiveLoader> load_interactive(const String& path, const String& type_hint = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("load_interactive", path, type_hint).operator Object *()->cast_to<ResourceInteractiveLoader>();
-    }
-  }
-  %extend {
-    Ref<Resource> load(const String& path, const String& type_hint = "", bool p_no_cache = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("load", path, type_hint, p_no_cache).operator Object *()->cast_to<Resource>();
-    }
-  }
-  %extend {
-    Ref<ResourceImportMetadata> load_import_metadata(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("load_import_metadata", path).operator Object *()->cast_to<ResourceImportMetadata>();
-    }
-  }
-  %extend {
-    StringArray get_recognized_extensions_for_type(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_recognized_extensions_for_type", type);
-    }
-  }
-  %extend {
-    void set_abort_on_missing_resources(bool abort) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_abort_on_missing_resources", abort);
-    }
-  }
-  %extend {
-    StringArray get_dependencies(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_dependencies", path);
-    }
-  }
-  %extend {
-    bool has(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has", path);
-    }
-  }
-  %extend {
-    static _ResourceLoader* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("ResourceLoader")->cast_to<_ResourceLoader>(); }
-  }
+
+%extend {
+
+Ref<ResourceInteractiveLoader> load_interactive(const String& path, const String& type_hint = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "load_interactive");
+  const void* __args[2] = { &path, &type_hint };
+  Ref<ResourceInteractiveLoader> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Resource> load(const String& path, const String& type_hint = "", bool p_no_cache = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "load");
+  const void* __args[3] = { &path, &type_hint, &p_no_cache };
+  Ref<Resource> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<ResourceImportMetadata> load_import_metadata(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "load_import_metadata");
+  const void* __args[1] = { &path };
+  Ref<ResourceImportMetadata> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_recognized_extensions_for_type(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "get_recognized_extensions_for_type");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_abort_on_missing_resources(bool abort) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "set_abort_on_missing_resources");
+  const void* __args[1] = { &abort };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_dependencies(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "get_dependencies");
+  const void* __args[1] = { &path };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceLoader", "has");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+static _ResourceLoader* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("ResourceLoader")->cast_to<_ResourceLoader>(); }
+
+}
+
 
 };

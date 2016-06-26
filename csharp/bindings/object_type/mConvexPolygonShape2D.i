@@ -1,22 +1,6 @@
 /* mConvexPolygonShape2D.i */
 %module mConvexPolygonShape2D
 
-%typemap(ctype, out="ConvexPolygonShape2D*") Ref<ConvexPolygonShape2D> "ConvexPolygonShape2D*"
-%typemap(out, null="NULL") Ref<ConvexPolygonShape2D> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ConvexPolygonShape2D> "ConvexPolygonShape2D.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ConvexPolygonShape2D> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ConvexPolygonShape2D> "ConvexPolygonShape2D"
-%typemap(csout, excode=SWIGEXCODE) Ref<ConvexPolygonShape2D> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ConvexPolygonShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConvexPolygonShape2D;$excode
-    return ret;
-}
-
 template<class ConvexPolygonShape2D> class Ref;%template() Ref<ConvexPolygonShape2D>;
 %feature("novaluewrapper") Ref<ConvexPolygonShape2D>;
 
@@ -57,39 +41,49 @@ template<class ConvexPolygonShape2D> class Ref;%template() Ref<ConvexPolygonShap
 
 class ConvexPolygonShape2D : public Shape2D {
 public:
-  %extend {
-    void set_point_cloud(const Vector2Array& point_cloud) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_cloud", point_cloud);
-    }
-  }
-  %extend {
-    void set_points(const Vector2Array& points) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_points", points);
-    }
-  }
-  %extend {
-    Vector2Array get_points() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_points");
-    }
-  }
   ConvexPolygonShape2D();
-  %extend {
-    ~ConvexPolygonShape2D() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_point_cloud(const Vector2Array& point_cloud) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConvexPolygonShape2D", "set_point_cloud");
+  const void* __args[1] = { &point_cloud };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_points(const Vector2Array& points) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConvexPolygonShape2D", "set_points");
+  const void* __args[1] = { &points };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_points() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConvexPolygonShape2D", "get_points");
+  Vector2Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ConvexPolygonShape2D() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

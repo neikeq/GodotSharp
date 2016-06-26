@@ -1,15 +1,6 @@
 /* mYSort.i */
 %module mYSort
 
-%typemap(out) YSort "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) YSort* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) YSort %{
 
@@ -47,18 +38,28 @@
 
 class YSort : public Node2D {
 public:
-  %extend {
-    void set_sort_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_sort_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_sort_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_sort_enabled");
-    }
-  }
   YSort();
+
+%extend {
+
+void set_sort_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("YSort", "set_sort_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_sort_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("YSort", "is_sort_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

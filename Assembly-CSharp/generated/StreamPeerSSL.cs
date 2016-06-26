@@ -53,7 +53,6 @@ public class StreamPeerSSL : StreamPeer {
 
   public int accept(StreamPeer stream) {
     int ret = GodotEnginePINVOKE.StreamPeerSSL_accept(swigCPtr, StreamPeer.getCPtr(stream));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
@@ -65,13 +64,11 @@ public class StreamPeerSSL : StreamPeer {
 
   public int connect(StreamPeer stream, bool validate_certs) {
     int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_1(swigCPtr, StreamPeer.getCPtr(stream), validate_certs);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public int connect(StreamPeer stream) {
     int ret = GodotEnginePINVOKE.StreamPeerSSL_connect__SWIG_2(swigCPtr, StreamPeer.getCPtr(stream));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

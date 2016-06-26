@@ -49,7 +49,6 @@ public class Physics2DShapeQueryParameters : Reference {
 
   public void set_shape(Shape2D shape) {
     GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_shape(swigCPtr, Shape2D.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_shape_rid(SWIGTYPE_p_RID shape) {

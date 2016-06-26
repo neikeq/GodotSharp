@@ -1,22 +1,6 @@
 /* mTheme.i */
 %module mTheme
 
-%typemap(ctype, out="Theme*") Ref<Theme> "Theme*"
-%typemap(out, null="NULL") Ref<Theme> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Theme> "Theme.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Theme> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Theme> "Theme"
-%typemap(csout, excode=SWIGEXCODE) Ref<Theme> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Theme ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Theme;$excode
-    return ret;
-}
-
 template<class Theme> class Ref;%template() Ref<Theme>;
 %feature("novaluewrapper") Ref<Theme>;
 
@@ -57,201 +41,297 @@ template<class Theme> class Ref;%template() Ref<Theme>;
 
 class Theme : public Resource {
 public:
-  %extend {
-    void set_icon(const String& name, const String& type, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_icon", name, type, texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_icon(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_icon", name, type).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    bool has_icon(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_icon", name, type);
-    }
-  }
-  %extend {
-    void clear_icon(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_icon", name, type);
-    }
-  }
-  %extend {
-    StringArray get_icon_list(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_icon_list", type);
-    }
-  }
-  %extend {
-    void set_stylebox(const String& name, const String& type, Ref<StyleBox> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stylebox", name, type, texture);
-    }
-  }
-  %extend {
-    Ref<StyleBox> get_stylebox(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stylebox", name, type).operator Object *()->cast_to<StyleBox>();
-    }
-  }
-  %extend {
-    bool has_stylebox(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_stylebox", name, type);
-    }
-  }
-  %extend {
-    void clear_stylebox(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_stylebox", name, type);
-    }
-  }
-  %extend {
-    StringArray get_stylebox_list(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stylebox_list", type);
-    }
-  }
-  %extend {
-    StringArray get_stylebox_types() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stylebox_types");
-    }
-  }
-  %extend {
-    void set_font(const String& name, const String& type, Ref<Font> font) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_font", name, type, font);
-    }
-  }
-  %extend {
-    Ref<Font> get_font(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_font", name, type).operator Object *()->cast_to<Font>();
-    }
-  }
-  %extend {
-    bool has_font(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_font", name, type);
-    }
-  }
-  %extend {
-    void clear_font(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_font", name, type);
-    }
-  }
-  %extend {
-    StringArray get_font_list(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_font_list", type);
-    }
-  }
-  %extend {
-    void set_color(const String& name, const String& type, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", name, type, color);
-    }
-  }
-  %extend {
-    Color get_color(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color", name, type);
-    }
-  }
-  %extend {
-    bool has_color(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_color", name, type);
-    }
-  }
-  %extend {
-    void clear_color(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_color", name, type);
-    }
-  }
-  %extend {
-    StringArray get_color_list(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color_list", type);
-    }
-  }
-  %extend {
-    void set_constant(const String& name, const String& type, int constant) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_constant", name, type, constant);
-    }
-  }
-  %extend {
-    int get_constant(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_constant", name, type);
-    }
-  }
-  %extend {
-    bool has_constant(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_constant", name, type);
-    }
-  }
-  %extend {
-    void clear_constant(const String& name, const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_constant", name, type);
-    }
-  }
-  %extend {
-    StringArray get_constant_list(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_constant_list", type);
-    }
-  }
-  %extend {
-    void set_default_font(Object* font) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_default_font", font);
-    }
-  }
-  %extend {
-    Object* get_default_font() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_default_font").operator Object *();
-    }
-  }
-  %extend {
-    StringArray get_type_list(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_type_list", type);
-    }
-  }
-  %extend {
-    void copy_default_theme() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("copy_default_theme");
-    }
-  }
   Theme();
-  %extend {
-    ~Theme() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_icon(const String& name, const String& type, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "set_icon");
+  const void* __args[3] = { &name, &type, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_icon(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_icon");
+  const void* __args[2] = { &name, &type };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_icon(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "has_icon");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_icon(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "clear_icon");
+  const void* __args[2] = { &name, &type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_icon_list(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_icon_list");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_stylebox(const String& name, const String& type, StyleBox* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "set_stylebox");
+  const void* __args[3] = { &name, &type, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<StyleBox> get_stylebox(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_stylebox");
+  const void* __args[2] = { &name, &type };
+  Ref<StyleBox> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_stylebox(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "has_stylebox");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_stylebox(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "clear_stylebox");
+  const void* __args[2] = { &name, &type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_stylebox_list(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_stylebox_list");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_stylebox_types() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_stylebox_types");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_font(const String& name, const String& type, Font* font) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "set_font");
+  const void* __args[3] = { &name, &type, font };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Font> get_font(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_font");
+  const void* __args[2] = { &name, &type };
+  Ref<Font> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_font(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "has_font");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_font(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "clear_font");
+  const void* __args[2] = { &name, &type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_font_list(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_font_list");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_color(const String& name, const String& type, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "set_color");
+  const void* __args[3] = { &name, &type, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_color");
+  const void* __args[2] = { &name, &type };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_color(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "has_color");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_color(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "clear_color");
+  const void* __args[2] = { &name, &type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_color_list(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_color_list");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_constant(const String& name, const String& type, int constant) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "set_constant");
+  const void* __args[3] = { &name, &type, &constant };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_constant(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_constant");
+  const void* __args[2] = { &name, &type };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_constant(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "has_constant");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_constant(const String& name, const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "clear_constant");
+  const void* __args[2] = { &name, &type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_constant_list(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_constant_list");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_default_font(Object* font) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "set_default_font");
+  const void* __args[1] = { font };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_default_font() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_default_font");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+StringArray get_type_list(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "get_type_list");
+  const void* __args[1] = { &type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void copy_default_theme() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Theme", "copy_default_theme");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~Theme() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

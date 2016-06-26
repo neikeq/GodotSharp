@@ -1,22 +1,6 @@
 /* mTranslation.i */
 %module mTranslation
 
-%typemap(ctype, out="Translation*") Ref<Translation> "Translation*"
-%typemap(out, null="NULL") Ref<Translation> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Translation> "Translation.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Translation> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Translation> "Translation"
-%typemap(csout, excode=SWIGEXCODE) Ref<Translation> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Translation ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Translation;$excode
-    return ret;
-}
-
 template<class Translation> class Ref;%template() Ref<Translation>;
 %feature("novaluewrapper") Ref<Translation>;
 
@@ -57,63 +41,85 @@ template<class Translation> class Ref;%template() Ref<Translation>;
 
 class Translation : public Resource {
 public:
-  %extend {
-    void set_locale(const String& locale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_locale", locale);
-    }
-  }
-  %extend {
-    String get_locale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_locale");
-    }
-  }
-  %extend {
-    void add_message(const String& src_message, const String& xlated_message) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_message", src_message, xlated_message);
-    }
-  }
-  %extend {
-    String get_message(const String& src_message) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_message", src_message);
-    }
-  }
-  %extend {
-    void erase_message(const String& src_message) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_message", src_message);
-    }
-  }
-  %extend {
-    StringArray get_message_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_message_list");
-    }
-  }
-  %extend {
-    int get_message_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_message_count");
-    }
-  }
   Translation();
-  %extend {
-    ~Translation() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_locale(const String& locale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "set_locale");
+  const void* __args[1] = { &locale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_locale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "get_locale");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_message(const String& src_message, const String& xlated_message) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "add_message");
+  const void* __args[2] = { &src_message, &xlated_message };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_message(const String& src_message) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "get_message");
+  const void* __args[1] = { &src_message };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void erase_message(const String& src_message) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "erase_message");
+  const void* __args[1] = { &src_message };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+StringArray get_message_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "get_message_list");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_message_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Translation", "get_message_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Translation() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

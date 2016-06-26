@@ -86,16 +86,19 @@ public class Shader : Resource {
     return ret;
   }
 
-  public void set_default_texture_param(string param, SWIGTYPE_p_RefT_Texture_t texture) {
-    GodotEnginePINVOKE.Shader_set_default_texture_param(swigCPtr, param, SWIGTYPE_p_RefT_Texture_t.getCPtr(texture));
+  public void set_default_texture_param(string param, Texture texture) {
+    GodotEnginePINVOKE.Shader_set_default_texture_param(swigCPtr, param, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Texture_t get_default_texture_param(string param) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.Shader_get_default_texture_param(swigCPtr, param), true);
+  public Texture get_default_texture_param(string param) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Shader_get_default_texture_param(swigCPtr, param);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool has_param(string name) {
     bool ret = GodotEnginePINVOKE.Shader_has_param(swigCPtr, name);

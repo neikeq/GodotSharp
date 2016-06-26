@@ -1,22 +1,6 @@
 /* mStyleBoxTexture.i */
 %module mStyleBoxTexture
 
-%typemap(ctype, out="StyleBoxTexture*") Ref<StyleBoxTexture> "StyleBoxTexture*"
-%typemap(out, null="NULL") Ref<StyleBoxTexture> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<StyleBoxTexture> "StyleBoxTexture.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<StyleBoxTexture> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<StyleBoxTexture> "StyleBoxTexture"
-%typemap(csout, excode=SWIGEXCODE) Ref<StyleBoxTexture> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    StyleBoxTexture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBoxTexture;$excode
-    return ret;
-}
-
 template<class StyleBoxTexture> class Ref;%template() Ref<StyleBoxTexture>;
 %feature("novaluewrapper") Ref<StyleBoxTexture>;
 
@@ -57,81 +41,111 @@ template<class StyleBoxTexture> class Ref;%template() Ref<StyleBoxTexture>;
 
 class StyleBoxTexture : public StyleBox {
 public:
-  %extend {
-    void set_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void set_margin_size(int margin, float size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_margin_size", margin, size);
-    }
-  }
-  %extend {
-    float get_margin_size(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_margin_size", margin);
-    }
-  }
-  %extend {
-    void set_expand_margin_size(int margin, float size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_expand_margin_size", margin, size);
-    }
-  }
-  %extend {
-    float get_expand_margin_size(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_expand_margin_size", margin);
-    }
-  }
-  %extend {
-    void set_region_rect(const Rect2& region) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_region_rect", region);
-    }
-  }
-  %extend {
-    Rect2 get_region_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_region_rect");
-    }
-  }
-  %extend {
-    void set_draw_center(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_draw_center", enable);
-    }
-  }
-  %extend {
-    bool get_draw_center() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_draw_center");
-    }
-  }
   StyleBoxTexture();
-  %extend {
-    ~StyleBoxTexture() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "get_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_margin_size(int margin, float size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "set_margin_size");
+  const void* __args[2] = { &margin, &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_margin_size(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "get_margin_size");
+  const void* __args[1] = { &margin };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_expand_margin_size(int margin, float size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "set_expand_margin_size");
+  const void* __args[2] = { &margin, &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_expand_margin_size(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "get_expand_margin_size");
+  const void* __args[1] = { &margin };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_region_rect(const Rect2& region) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "set_region_rect");
+  const void* __args[1] = { &region };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Rect2 get_region_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "get_region_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_draw_center(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "set_draw_center");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_draw_center() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxTexture", "get_draw_center");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~StyleBoxTexture() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

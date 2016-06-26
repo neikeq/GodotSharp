@@ -1,15 +1,6 @@
 /* mVehicleBody.i */
 %module mVehicleBody
 
-%typemap(out) VehicleBody "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VehicleBody* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VehicleBody %{
 
@@ -47,72 +38,105 @@
 
 class VehicleBody : public PhysicsBody {
 public:
-  %extend {
-    void set_mass(float mass) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mass", mass);
-    }
-  }
-  %extend {
-    float get_mass() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mass");
-    }
-  }
-  %extend {
-    void set_friction(float friction) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_friction", friction);
-    }
-  }
-  %extend {
-    float get_friction() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_friction");
-    }
-  }
-  %extend {
-    void set_engine_force(float engine_force) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_engine_force", engine_force);
-    }
-  }
-  %extend {
-    float get_engine_force() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_engine_force");
-    }
-  }
-  %extend {
-    void set_brake(float brake) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_brake", brake);
-    }
-  }
-  %extend {
-    float get_brake() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_brake");
-    }
-  }
-  %extend {
-    void set_steering(float steering) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_steering", steering);
-    }
-  }
-  %extend {
-    float get_steering() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_steering");
-    }
-  }
-  %extend {
-    Vector3 get_linear_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_linear_velocity");
-    }
-  }
   VehicleBody();
+
+%extend {
+
+void set_mass(float mass) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "set_mass");
+  const void* __args[1] = { &mass };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_mass() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "get_mass");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_friction(float friction) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "set_friction");
+  const void* __args[1] = { &friction };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_friction() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "get_friction");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_engine_force(float engine_force) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "set_engine_force");
+  const void* __args[1] = { &engine_force };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_engine_force() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "get_engine_force");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_brake(float brake) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "set_brake");
+  const void* __args[1] = { &brake };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_brake() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "get_brake");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_steering(float steering) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "set_steering");
+  const void* __args[1] = { &steering };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_steering() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "get_steering");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3 get_linear_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleBody", "get_linear_velocity");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

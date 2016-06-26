@@ -60,7 +60,6 @@ public class LargeTexture : Texture {
 
   public void set_piece_texture(int idx, Texture texture) {
     GodotEnginePINVOKE.LargeTexture_set_piece_texture(swigCPtr, idx, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_size(Vector2 size) {

@@ -1,15 +1,6 @@
 /* mEditorSelection.i */
 %module mEditorSelection
 
-%typemap(out) EditorSelection "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) EditorSelection* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) EditorSelection %{
 
@@ -47,30 +38,43 @@
 
 class EditorSelection : public Object {
 public:
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    void add_node(Node* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_node", node);
-    }
-  }
-  %extend {
-    void remove_node(Node* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_node", node);
-    }
-  }
-  %extend {
-    Array get_selected_nodes() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selected_nodes");
-    }
-  }
   EditorSelection();
+
+%extend {
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSelection", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void add_node(Node* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSelection", "add_node");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_node(Node* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSelection", "remove_node");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_selected_nodes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorSelection", "get_selected_nodes");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

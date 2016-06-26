@@ -1,22 +1,6 @@
 /* mRegEx.i */
 %module mRegEx
 
-%typemap(ctype, out="RegEx*") Ref<RegEx> "RegEx*"
-%typemap(out, null="NULL") Ref<RegEx> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<RegEx> "RegEx.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<RegEx> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<RegEx> "RegEx"
-%typemap(csout, excode=SWIGEXCODE) Ref<RegEx> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    RegEx ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RegEx;$excode
-    return ret;
-}
-
 template<class RegEx> class Ref;%template() Ref<RegEx>;
 %feature("novaluewrapper") Ref<RegEx>;
 
@@ -57,69 +41,98 @@ template<class RegEx> class Ref;%template() Ref<RegEx>;
 
 class RegEx : public Reference {
 public:
-  %extend {
-    int compile(const String& pattern, int capture = 9) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("compile", pattern, capture);
-    }
-  }
-  %extend {
-    int find(const String& text, int start = 0, int end = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("find", text, start, end);
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    bool is_valid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_valid");
-    }
-  }
-  %extend {
-    int get_capture_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_capture_count");
-    }
-  }
-  %extend {
-    String get_capture(int capture) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_capture", capture);
-    }
-  }
-  %extend {
-    int get_capture_start(int capture) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_capture_start", capture);
-    }
-  }
-  %extend {
-    StringArray get_captures() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_captures");
-    }
-  }
   RegEx();
-  %extend {
-    ~RegEx() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int compile(const String& pattern, int capture = 9) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "compile");
+  const void* __args[2] = { &pattern, &capture };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int find(const String& text, int start = 0, int end = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "find");
+  const void* __args[3] = { &text, &start, &end };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_valid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "is_valid");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_capture_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "get_capture_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_capture(int capture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "get_capture");
+  const void* __args[1] = { &capture };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_capture_start(int capture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "get_capture_start");
+  const void* __args[1] = { &capture };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_captures() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RegEx", "get_captures");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~RegEx() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

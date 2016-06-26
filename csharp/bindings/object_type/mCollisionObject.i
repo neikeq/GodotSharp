@@ -2,15 +2,6 @@
 %module mCollisionObject
 
 %nodefaultctor CollisionObject;
-%typemap(out) CollisionObject "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) CollisionObject* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) CollisionObject %{
 
@@ -49,101 +40,147 @@
 
 class CollisionObject : public Spatial {
 public:
-  %extend {
-    void _input_event(Object* camera, const InputEvent& event, const Vector3& click_pos, const Vector3& click_normal, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_input_event", camera, event, click_pos, click_normal, shape_idx);
-    }
-  }
-  %extend {
-    void add_shape(Ref<Shape> shape, const Transform& transform = Transform()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_shape", shape, transform);
-    }
-  }
-  %extend {
-    int get_shape_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape_count");
-    }
-  }
-  %extend {
-    void set_shape(int shape_idx, Ref<Shape> shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape", shape_idx, shape);
-    }
-  }
-  %extend {
-    void set_shape_transform(int shape_idx, const Transform& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape_transform", shape_idx, transform);
-    }
-  }
-  %extend {
-    void set_shape_as_trigger(int shape_idx, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape_as_trigger", shape_idx, enable);
-    }
-  }
-  %extend {
-    bool is_shape_set_as_trigger(int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_shape_set_as_trigger", shape_idx);
-    }
-  }
-  %extend {
-    Ref<Shape> get_shape(int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape", shape_idx).operator Object *()->cast_to<Shape>();
-    }
-  }
-  %extend {
-    Transform get_shape_transform(int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape_transform", shape_idx);
-    }
-  }
-  %extend {
-    void remove_shape(int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_shape", shape_idx);
-    }
-  }
-  %extend {
-    void clear_shapes() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_shapes");
-    }
-  }
-  %extend {
-    void set_ray_pickable(bool ray_pickable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ray_pickable", ray_pickable);
-    }
-  }
-  %extend {
-    bool is_ray_pickable() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_ray_pickable");
-    }
-  }
-  %extend {
-    void set_capture_input_on_drag(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_capture_input_on_drag", enable);
-    }
-  }
-  %extend {
-    bool get_capture_input_on_drag() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_capture_input_on_drag");
-    }
-  }
-  %extend {
-    RID get_rid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rid");
-    }
-  }
+
+%extend {
+
+void _input_event(Object* camera, const InputEvent& event, const Vector3& click_pos, const Vector3& click_normal, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "_input_event");
+  const void* __args[5] = { camera, &event, &click_pos, &click_normal, &shape_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_shape(Shape* shape, const Transform& transform = Transform()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "add_shape");
+  const void* __args[2] = { shape, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_shape_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "get_shape_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shape(int shape_idx, Shape* shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "set_shape");
+  const void* __args[2] = { &shape_idx, shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_shape_transform(int shape_idx, const Transform& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "set_shape_transform");
+  const void* __args[2] = { &shape_idx, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_shape_as_trigger(int shape_idx, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "set_shape_as_trigger");
+  const void* __args[2] = { &shape_idx, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_shape_set_as_trigger(int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "is_shape_set_as_trigger");
+  const void* __args[1] = { &shape_idx };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Shape> get_shape(int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "get_shape");
+  const void* __args[1] = { &shape_idx };
+  Ref<Shape> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Transform get_shape_transform(int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "get_shape_transform");
+  const void* __args[1] = { &shape_idx };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_shape(int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "remove_shape");
+  const void* __args[1] = { &shape_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_shapes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "clear_shapes");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_ray_pickable(bool ray_pickable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "set_ray_pickable");
+  const void* __args[1] = { &ray_pickable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_ray_pickable() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "is_ray_pickable");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_capture_input_on_drag(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "set_capture_input_on_drag");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_capture_input_on_drag() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "get_capture_input_on_drag");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_rid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionObject", "get_rid");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

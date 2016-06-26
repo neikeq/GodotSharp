@@ -1,15 +1,6 @@
 /* mParticleAttractor2D.i */
 %module mParticleAttractor2D
 
-%typemap(out) ParticleAttractor2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ParticleAttractor2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ParticleAttractor2D %{
 
@@ -47,78 +38,113 @@
 
 class ParticleAttractor2D : public Node2D {
 public:
-  %extend {
-    void set_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
-  %extend {
-    void set_radius(float radius) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_radius", radius);
-    }
-  }
-  %extend {
-    float get_radius() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_radius");
-    }
-  }
-  %extend {
-    void set_disable_radius(float radius) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_disable_radius", radius);
-    }
-  }
-  %extend {
-    float get_disable_radius() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_disable_radius");
-    }
-  }
-  %extend {
-    void set_gravity(float gravity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity", gravity);
-    }
-  }
-  %extend {
-    float get_gravity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gravity");
-    }
-  }
-  %extend {
-    void set_absorption(float absorption) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_absorption", absorption);
-    }
-  }
-  %extend {
-    float get_absorption() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_absorption");
-    }
-  }
-  %extend {
-    void set_particles_path(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_particles_path", path);
-    }
-  }
-  %extend {
-    NodePath get_particles_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_particles_path");
-    }
-  }
   ParticleAttractor2D();
+
+%extend {
+
+void set_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "set_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_radius(float radius) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "set_radius");
+  const void* __args[1] = { &radius };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_radius() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "get_radius");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_disable_radius(float radius) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "set_disable_radius");
+  const void* __args[1] = { &radius };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_disable_radius() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "get_disable_radius");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity(float gravity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "set_gravity");
+  const void* __args[1] = { &gravity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_gravity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "get_gravity");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_absorption(float absorption) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "set_absorption");
+  const void* __args[1] = { &absorption };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_absorption() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "get_absorption");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_particles_path(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "set_particles_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_particles_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParticleAttractor2D", "get_particles_path");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

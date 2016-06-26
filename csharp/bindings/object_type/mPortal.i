@@ -1,15 +1,6 @@
 /* mPortal.i */
 %module mPortal
 
-%typemap(out) Portal "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Portal* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Portal %{
 
@@ -47,66 +38,96 @@
 
 class Portal : public VisualInstance {
 public:
-  %extend {
-    void set_shape(const Vector2Array& points) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape", points);
-    }
-  }
-  %extend {
-    Vector2Array get_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape");
-    }
-  }
-  %extend {
-    void set_enabled(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enable);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
-  %extend {
-    void set_disable_distance(float distance) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_disable_distance", distance);
-    }
-  }
-  %extend {
-    float get_disable_distance() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_disable_distance");
-    }
-  }
-  %extend {
-    void set_disabled_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_disabled_color", color);
-    }
-  }
-  %extend {
-    Color get_disabled_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_disabled_color");
-    }
-  }
-  %extend {
-    void set_connect_range(float range) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_connect_range", range);
-    }
-  }
-  %extend {
-    float get_connect_range() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connect_range");
-    }
-  }
   Portal();
+
+%extend {
+
+void set_shape(const Vector2Array& points) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "set_shape");
+  const void* __args[1] = { &points };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "get_shape");
+  Vector2Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_enabled(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "set_enabled");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_disable_distance(float distance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "set_disable_distance");
+  const void* __args[1] = { &distance };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_disable_distance() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "get_disable_distance");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_disabled_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "set_disabled_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_disabled_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "get_disabled_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_connect_range(float range) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "set_connect_range");
+  const void* __args[1] = { &range };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_connect_range() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Portal", "get_connect_range");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

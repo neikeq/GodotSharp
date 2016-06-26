@@ -1,22 +1,6 @@
 /* mXMLParser.i */
 %module mXMLParser
 
-%typemap(ctype, out="XMLParser*") Ref<XMLParser> "XMLParser*"
-%typemap(out, null="NULL") Ref<XMLParser> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<XMLParser> "XMLParser.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<XMLParser> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<XMLParser> "XMLParser"
-%typemap(csout, excode=SWIGEXCODE) Ref<XMLParser> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    XMLParser ret = InternalHelpers.UnmanagedGetManaged(cPtr) as XMLParser;$excode
-    return ret;
-}
-
 template<class XMLParser> class Ref;%template() Ref<XMLParser>;
 %feature("novaluewrapper") Ref<XMLParser>;
 
@@ -64,123 +48,183 @@ template<class XMLParser> class Ref;%template() Ref<XMLParser>;
 
 class XMLParser : public Reference {
 public:
-  %extend {
-    int read() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("read");
-    }
-  }
-  %extend {
-    int get_node_type() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_type");
-    }
-  }
-  %extend {
-    String get_node_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_name");
-    }
-  }
-  %extend {
-    String get_node_data() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_data");
-    }
-  }
-  %extend {
-    int get_node_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_offset");
-    }
-  }
-  %extend {
-    int get_attribute_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_attribute_count");
-    }
-  }
-  %extend {
-    String get_attribute_name(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_attribute_name", idx);
-    }
-  }
-  %extend {
-    String get_attribute_value(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_attribute_value", idx);
-    }
-  }
-  %extend {
-    bool has_attribute(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_attribute", name);
-    }
-  }
-  %extend {
-    String get_named_attribute_value(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_named_attribute_value", name);
-    }
-  }
-  %extend {
-    String get_named_attribute_value_safe(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_named_attribute_value_safe", name);
-    }
-  }
-  %extend {
-    bool is_empty() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_empty");
-    }
-  }
-  %extend {
-    int get_current_line() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_line");
-    }
-  }
-  %extend {
-    void skip_section() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("skip_section");
-    }
-  }
-  %extend {
-    int seek(int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("seek", pos);
-    }
-  }
-  %extend {
-    int open(const String& file) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("open", file);
-    }
-  }
-  %extend {
-    int open_buffer(const RawArray& buffer) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("open_buffer", buffer);
-    }
-  }
   XMLParser();
-  %extend {
-    ~XMLParser() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int read() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "read");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_node_type() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_node_type");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_node_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_node_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_node_data() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_node_data");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_node_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_node_offset");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_attribute_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_attribute_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_attribute_name(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_attribute_name");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_attribute_value(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_attribute_value");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_attribute(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "has_attribute");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_named_attribute_value(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_named_attribute_value");
+  const void* __args[1] = { &name };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_named_attribute_value_safe(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_named_attribute_value_safe");
+  const void* __args[1] = { &name };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_empty() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "is_empty");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_current_line() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "get_current_line");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void skip_section() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "skip_section");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int seek(int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "seek");
+  const void* __args[1] = { &pos };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int open(const String& file) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "open");
+  const void* __args[1] = { &file };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int open_buffer(const RawArray& buffer) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("XMLParser", "open_buffer");
+  const void* __args[1] = { &buffer };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~XMLParser() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

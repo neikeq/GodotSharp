@@ -1,22 +1,6 @@
 /* mResource.i */
 %module mResource
 
-%typemap(ctype, out="Resource*") Ref<Resource> "Resource*"
-%typemap(out, null="NULL") Ref<Resource> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Resource> "Resource.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Resource> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Resource> "Resource"
-%typemap(csout, excode=SWIGEXCODE) Ref<Resource> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Resource ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Resource;$excode
-    return ret;
-}
-
 template<class Resource> class Ref;%template() Ref<Resource>;
 %feature("novaluewrapper") Ref<Resource>;
 
@@ -57,75 +41,102 @@ template<class Resource> class Ref;%template() Ref<Resource>;
 
 class Resource : public Reference {
 public:
-  %extend {
-    void set_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_path", path);
-    }
-  }
-  %extend {
-    void take_over_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("take_over_path", path);
-    }
-  }
-  %extend {
-    String get_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_path");
-    }
-  }
-  %extend {
-    void set_name(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_name", name);
-    }
-  }
-  %extend {
-    String get_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_name");
-    }
-  }
-  %extend {
-    RID get_rid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rid");
-    }
-  }
-  %extend {
-    void set_import_metadata(Object* metadata) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_import_metadata", metadata);
-    }
-  }
-  %extend {
-    Object* get_import_metadata() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_import_metadata").operator Object *();
-    }
-  }
-  %extend {
-    Object* duplicate(bool subresources = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("duplicate", subresources).operator Object *();
-    }
-  }
   Resource();
-  %extend {
-    ~Resource() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "set_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void take_over_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "take_over_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "get_path");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_name(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "set_name");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "get_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_rid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "get_rid");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_import_metadata(Object* metadata) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "set_import_metadata");
+  const void* __args[1] = { metadata };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_import_metadata() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "get_import_metadata");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* duplicate(bool subresources = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Resource", "duplicate");
+  const void* __args[1] = { &subresources };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Resource() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

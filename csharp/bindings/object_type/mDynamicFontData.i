@@ -1,22 +1,6 @@
 /* mDynamicFontData.i */
 %module mDynamicFontData
 
-%typemap(ctype, out="DynamicFontData*") Ref<DynamicFontData> "DynamicFontData*"
-%typemap(out, null="NULL") Ref<DynamicFontData> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<DynamicFontData> "DynamicFontData.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<DynamicFontData> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<DynamicFontData> "DynamicFontData"
-%typemap(csout, excode=SWIGEXCODE) Ref<DynamicFontData> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    DynamicFontData ret = InternalHelpers.UnmanagedGetManaged(cPtr) as DynamicFontData;$excode
-    return ret;
-}
-
 template<class DynamicFontData> class Ref;%template() Ref<DynamicFontData>;
 %feature("novaluewrapper") Ref<DynamicFontData>;
 
@@ -57,33 +41,41 @@ template<class DynamicFontData> class Ref;%template() Ref<DynamicFontData>;
 
 class DynamicFontData : public Resource {
 public:
-  %extend {
-    void set_font_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_font_path", path);
-    }
-  }
-  %extend {
-    String get_font_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_font_path");
-    }
-  }
   DynamicFontData();
-  %extend {
-    ~DynamicFontData() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_font_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DynamicFontData", "set_font_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_font_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DynamicFontData", "get_font_path");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~DynamicFontData() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

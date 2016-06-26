@@ -1,15 +1,6 @@
 /* mInterpolatedCamera.i */
 %module mInterpolatedCamera
 
-%typemap(out) InterpolatedCamera "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) InterpolatedCamera* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) InterpolatedCamera %{
 
@@ -47,48 +38,70 @@
 
 class InterpolatedCamera : public Camera {
 public:
-  %extend {
-    void set_target_path(const NodePath& target_path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_target_path", target_path);
-    }
-  }
-  %extend {
-    NodePath get_target_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_target_path");
-    }
-  }
-  %extend {
-    void set_target(Camera* target) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_target", target);
-    }
-  }
-  %extend {
-    void set_speed(float speed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_speed", speed);
-    }
-  }
-  %extend {
-    float get_speed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_speed");
-    }
-  }
-  %extend {
-    void set_interpolation_enabled(bool target_path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_interpolation_enabled", target_path);
-    }
-  }
-  %extend {
-    bool is_interpolation_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_interpolation_enabled");
-    }
-  }
   InterpolatedCamera();
+
+%extend {
+
+void set_target_path(const NodePath& target_path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "set_target_path");
+  const void* __args[1] = { &target_path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_target_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "get_target_path");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_target(Camera* target) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "set_target");
+  const void* __args[1] = { target };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_speed(float speed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "set_speed");
+  const void* __args[1] = { &speed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_speed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "get_speed");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_interpolation_enabled(bool target_path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "set_interpolation_enabled");
+  const void* __args[1] = { &target_path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_interpolation_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InterpolatedCamera", "is_interpolation_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

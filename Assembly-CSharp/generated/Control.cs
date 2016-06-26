@@ -320,7 +320,6 @@ public class Control : CanvasItem {
 
   public void set_theme(Theme theme) {
     GodotEnginePINVOKE.Control_set_theme(swigCPtr, Theme.getCPtr(theme));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Theme get_theme() {

@@ -65,7 +65,6 @@ public class OptionButton : Button {
 
   public void set_item_icon(int idx, Texture texture) {
     GodotEnginePINVOKE.OptionButton_set_item_icon(swigCPtr, idx, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_item_disabled(int idx, bool disabled) {

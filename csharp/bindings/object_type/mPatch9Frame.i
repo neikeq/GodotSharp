@@ -1,15 +1,6 @@
 /* mPatch9Frame.i */
 %module mPatch9Frame
 
-%typemap(out) Patch9Frame "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Patch9Frame* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Patch9Frame %{
 
@@ -47,66 +38,97 @@
 
 class Patch9Frame : public Control {
 public:
-  %extend {
-    void set_texture(Object* texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Object* get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_modulate(const Color& modulate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_modulate", modulate);
-    }
-  }
-  %extend {
-    Color get_modulate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_modulate");
-    }
-  }
-  %extend {
-    void set_patch_margin(int margin, int value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_patch_margin", margin, value);
-    }
-  }
-  %extend {
-    int get_patch_margin(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_patch_margin", margin);
-    }
-  }
-  %extend {
-    void set_region_rect(const Rect2& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_region_rect", rect);
-    }
-  }
-  %extend {
-    Rect2 get_region_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_region_rect");
-    }
-  }
-  %extend {
-    void set_draw_center(bool draw_center) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_draw_center", draw_center);
-    }
-  }
-  %extend {
-    bool get_draw_center() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_draw_center");
-    }
-  }
   Patch9Frame();
+
+%extend {
+
+void set_texture(Object* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "get_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_modulate(const Color& modulate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "set_modulate");
+  const void* __args[1] = { &modulate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_modulate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "get_modulate");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_patch_margin(int margin, int value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "set_patch_margin");
+  const void* __args[2] = { &margin, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_patch_margin(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "get_patch_margin");
+  const void* __args[1] = { &margin };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_region_rect(const Rect2& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "set_region_rect");
+  const void* __args[1] = { &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Rect2 get_region_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "get_region_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_draw_center(bool draw_center) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "set_draw_center");
+  const void* __args[1] = { &draw_center };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_draw_center() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Patch9Frame", "get_draw_center");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

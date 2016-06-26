@@ -1,15 +1,6 @@
 /* mVisibilityNotifier.i */
 %module mVisibilityNotifier
 
-%typemap(out) VisibilityNotifier "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VisibilityNotifier* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VisibilityNotifier %{
 
@@ -47,24 +38,37 @@
 
 class VisibilityNotifier : public Spatial {
 public:
-  %extend {
-    void set_aabb(const AABB& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_aabb", rect);
-    }
-  }
-  %extend {
-    AABB get_aabb() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_aabb");
-    }
-  }
-  %extend {
-    bool is_on_screen() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_on_screen");
-    }
-  }
   VisibilityNotifier();
+
+%extend {
+
+void set_aabb(const AABB& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityNotifier", "set_aabb");
+  const void* __args[1] = { &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+AABB get_aabb() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityNotifier", "get_aabb");
+  AABB ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_on_screen() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisibilityNotifier", "is_on_screen");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,22 +1,6 @@
 /* mColorRamp.i */
 %module mColorRamp
 
-%typemap(ctype, out="ColorRamp*") Ref<ColorRamp> "ColorRamp*"
-%typemap(out, null="NULL") Ref<ColorRamp> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ColorRamp> "ColorRamp.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ColorRamp> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ColorRamp> "ColorRamp"
-%typemap(csout, excode=SWIGEXCODE) Ref<ColorRamp> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ColorRamp ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ColorRamp;$excode
-    return ret;
-}
-
 template<class ColorRamp> class Ref;%template() Ref<ColorRamp>;
 %feature("novaluewrapper") Ref<ColorRamp>;
 
@@ -57,93 +41,129 @@ template<class ColorRamp> class Ref;%template() Ref<ColorRamp>;
 
 class ColorRamp : public Resource {
 public:
-  %extend {
-    void add_point(float offset, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_point", offset, color);
-    }
-  }
-  %extend {
-    void remove_point(int offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_point", offset);
-    }
-  }
-  %extend {
-    void set_offset(int point, float offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offset", point, offset);
-    }
-  }
-  %extend {
-    float get_offset(int point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offset", point);
-    }
-  }
-  %extend {
-    void set_color(int point, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", point, color);
-    }
-  }
-  %extend {
-    Color get_color(int point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color", point);
-    }
-  }
-  %extend {
-    Color interpolate(float offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolate", offset);
-    }
-  }
-  %extend {
-    int get_point_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_count");
-    }
-  }
-  %extend {
-    void set_offsets(const RealArray& offsets) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offsets", offsets);
-    }
-  }
-  %extend {
-    RealArray get_offsets() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offsets");
-    }
-  }
-  %extend {
-    void set_colors(const ColorArray& colors) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_colors", colors);
-    }
-  }
-  %extend {
-    ColorArray get_colors() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_colors");
-    }
-  }
   ColorRamp();
-  %extend {
-    ~ColorRamp() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void add_point(float offset, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "add_point");
+  const void* __args[2] = { &offset, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_point(int offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "remove_point");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_offset(int point, float offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "set_offset");
+  const void* __args[2] = { &point, &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_offset(int point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "get_offset");
+  const void* __args[1] = { &point };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_color(int point, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "set_color");
+  const void* __args[2] = { &point, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color(int point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "get_color");
+  const void* __args[1] = { &point };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Color interpolate(float offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "interpolate");
+  const void* __args[1] = { &offset };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_point_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "get_point_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_offsets(const RealArray& offsets) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "set_offsets");
+  const void* __args[1] = { &offsets };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RealArray get_offsets() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "get_offsets");
+  RealArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_colors(const ColorArray& colors) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "set_colors");
+  const void* __args[1] = { &colors };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+ColorArray get_colors() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorRamp", "get_colors");
+  ColorArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ColorRamp() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

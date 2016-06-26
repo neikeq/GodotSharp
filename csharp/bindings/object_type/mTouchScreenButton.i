@@ -1,15 +1,6 @@
 /* mTouchScreenButton.i */
 %module mTouchScreenButton
 
-%typemap(out) TouchScreenButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) TouchScreenButton* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) TouchScreenButton %{
 
@@ -47,84 +38,122 @@
 
 class TouchScreenButton : public Node2D {
 public:
-  %extend {
-    void set_texture(Object* texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Object* get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_texture_pressed(Object* texture_pressed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture_pressed", texture_pressed);
-    }
-  }
-  %extend {
-    Object* get_texture_pressed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture_pressed").operator Object *();
-    }
-  }
-  %extend {
-    void set_bitmask(Object* bitmask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bitmask", bitmask);
-    }
-  }
-  %extend {
-    Object* get_bitmask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bitmask").operator Object *();
-    }
-  }
-  %extend {
-    void set_action(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_action", action);
-    }
-  }
-  %extend {
-    String get_action() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_action");
-    }
-  }
-  %extend {
-    void set_visibility_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_visibility_mode", mode);
-    }
-  }
-  %extend {
-    int get_visibility_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_visibility_mode");
-    }
-  }
-  %extend {
-    void set_passby_press(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_passby_press", enabled);
-    }
-  }
-  %extend {
-    bool is_passby_press_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_passby_press_enabled");
-    }
-  }
-  %extend {
-    bool is_pressed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_pressed");
-    }
-  }
   TouchScreenButton();
+
+%extend {
+
+void set_texture(Object* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "get_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_texture_pressed(Object* texture_pressed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "set_texture_pressed");
+  const void* __args[1] = { texture_pressed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_texture_pressed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "get_texture_pressed");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bitmask(Object* bitmask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "set_bitmask");
+  const void* __args[1] = { bitmask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_bitmask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "get_bitmask");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_action(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "set_action");
+  const void* __args[1] = { &action };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_action() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "get_action");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_visibility_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "set_visibility_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_visibility_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "get_visibility_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_passby_press(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "set_passby_press");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_passby_press_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "is_passby_press_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_pressed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TouchScreenButton", "is_pressed");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

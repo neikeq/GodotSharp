@@ -142,7 +142,6 @@ public class Spatial : Node {
 
   public void set_gizmo(SpatialGizmo gizmo) {
     GodotEnginePINVOKE.Spatial_set_gizmo(swigCPtr, SpatialGizmo.getCPtr(gizmo));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public SpatialGizmo get_gizmo() {

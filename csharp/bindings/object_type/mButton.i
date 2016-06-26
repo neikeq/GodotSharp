@@ -1,15 +1,6 @@
 /* mButton.i */
 %module mButton
 
-%typemap(out) Button "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Button* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Button %{
   public static readonly int ALIGN_LEFT = 0;
@@ -50,66 +41,96 @@
 
 class Button : public BaseButton {
 public:
-  %extend {
-    void set_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_text", text);
-    }
-  }
-  %extend {
-    String get_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_text");
-    }
-  }
-  %extend {
-    void set_button_icon(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_button_icon", texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_button_icon() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_button_icon").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void set_flat(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flat", enabled);
-    }
-  }
-  %extend {
-    void set_clip_text(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_clip_text", enabled);
-    }
-  }
-  %extend {
-    bool get_clip_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_clip_text");
-    }
-  }
-  %extend {
-    void set_text_align(int align) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_text_align", align);
-    }
-  }
-  %extend {
-    int get_text_align() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_text_align");
-    }
-  }
-  %extend {
-    bool is_flat() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_flat");
-    }
-  }
   Button();
+
+%extend {
+
+void set_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "set_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "get_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_button_icon(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "set_button_icon");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_button_icon() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "get_button_icon");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flat(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "set_flat");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_clip_text(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "set_clip_text");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_clip_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "get_clip_text");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_text_align(int align) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "set_text_align");
+  const void* __args[1] = { &align };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_text_align() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "get_text_align");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_flat() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Button", "is_flat");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

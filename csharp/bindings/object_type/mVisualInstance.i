@@ -2,15 +2,6 @@
 %module mVisualInstance
 
 %nodefaultctor VisualInstance;
-%typemap(out) VisualInstance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VisualInstance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VisualInstance %{
 
@@ -49,23 +40,35 @@
 
 class VisualInstance : public Spatial {
 public:
-  %extend {
-    void set_base(const RID& base) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_base", base);
-    }
-  }
-  %extend {
-    void set_layer_mask(int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask", mask);
-    }
-  }
-  %extend {
-    int get_layer_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask");
-    }
-  }
+
+%extend {
+
+void set_base(const RID& base) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisualInstance", "set_base");
+  const void* __args[1] = { &base };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_layer_mask(int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisualInstance", "set_layer_mask");
+  const void* __args[1] = { &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VisualInstance", "get_layer_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

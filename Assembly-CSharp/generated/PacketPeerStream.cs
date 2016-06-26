@@ -49,7 +49,6 @@ public class PacketPeerStream : PacketPeer {
 
   public void set_stream_peer(StreamPeer peer) {
     GodotEnginePINVOKE.PacketPeerStream_set_stream_peer(swigCPtr, StreamPeer.getCPtr(peer));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public PacketPeerStream() : this(true) {

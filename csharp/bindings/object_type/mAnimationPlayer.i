@@ -1,15 +1,6 @@
 /* mAnimationPlayer.i */
 %module mAnimationPlayer
 
-%typemap(out) AnimationPlayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) AnimationPlayer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) AnimationPlayer %{
   public static readonly int ANIMATION_PROCESS_FIXED = 0;
@@ -49,234 +40,336 @@
 
 class AnimationPlayer : public Node {
 public:
-  %extend {
-    int add_animation(const String& name, Ref<Animation> animation) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("add_animation", name, animation);
-    }
-  }
-  %extend {
-    void remove_animation(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_animation", name);
-    }
-  }
-  %extend {
-    void rename_animation(const String& name, const String& newname) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rename_animation", name, newname);
-    }
-  }
-  %extend {
-    bool has_animation(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_animation", name);
-    }
-  }
-  %extend {
-    Ref<Animation> get_animation(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_animation", name).operator Object *()->cast_to<Animation>();
-    }
-  }
-  %extend {
-    StringArray get_animation_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_animation_list");
-    }
-  }
-  %extend {
-    void animation_set_next(const String& anim_from, const String& anim_to) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("animation_set_next", anim_from, anim_to);
-    }
-  }
-  %extend {
-    String animation_get_next(const String& anim_from) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("animation_get_next", anim_from);
-    }
-  }
-  %extend {
-    void set_blend_time(const String& anim_from, const String& anim_to, float sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_blend_time", anim_from, anim_to, sec);
-    }
-  }
-  %extend {
-    float get_blend_time(const String& anim_from, const String& anim_to) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_blend_time", anim_from, anim_to);
-    }
-  }
-  %extend {
-    void set_default_blend_time(float sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_default_blend_time", sec);
-    }
-  }
-  %extend {
-    float get_default_blend_time() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_default_blend_time");
-    }
-  }
-  %extend {
-    void play(const String& name = "", float custom_blend = -1, float custom_speed = 1, bool from_end = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play", name, custom_blend, custom_speed, from_end);
-    }
-  }
-  %extend {
-    void play_backwards(const String& name = "", float custom_blend = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play_backwards", name, custom_blend);
-    }
-  }
-  %extend {
-    void stop(bool reset = true) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop", reset);
-    }
-  }
-  %extend {
-    void stop_all() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop_all");
-    }
-  }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_current_animation(const String& anim) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_current_animation", anim);
-    }
-  }
-  %extend {
-    String get_current_animation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_animation");
-    }
-  }
-  %extend {
-    void queue(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("queue", name);
-    }
-  }
-  %extend {
-    void clear_queue() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_queue");
-    }
-  }
-  %extend {
-    void set_active(bool active) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_active", active);
-    }
-  }
-  %extend {
-    bool is_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_active");
-    }
-  }
-  %extend {
-    void set_speed(float speed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_speed", speed);
-    }
-  }
-  %extend {
-    float get_speed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_speed");
-    }
-  }
-  %extend {
-    void set_autoplay(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_autoplay", name);
-    }
-  }
-  %extend {
-    String get_autoplay() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_autoplay");
-    }
-  }
-  %extend {
-    void set_root(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_root", path);
-    }
-  }
-  %extend {
-    NodePath get_root() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_root");
-    }
-  }
-  %extend {
-    void seek(float pos_sec, bool update = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("seek", pos_sec, update);
-    }
-  }
-  %extend {
-    float get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    String find_animation(Ref<Animation> animation) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("find_animation", animation);
-    }
-  }
-  %extend {
-    void clear_caches() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_caches");
-    }
-  }
-  %extend {
-    void set_animation_process_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_animation_process_mode", mode);
-    }
-  }
-  %extend {
-    int get_animation_process_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_animation_process_mode");
-    }
-  }
-  %extend {
-    float get_current_animation_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_animation_pos");
-    }
-  }
-  %extend {
-    float get_current_animation_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_animation_length");
-    }
-  }
-  %extend {
-    void advance(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("advance", delta);
-    }
-  }
   AnimationPlayer();
+
+%extend {
+
+int add_animation(const String& name, Animation* animation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "add_animation");
+  const void* __args[2] = { &name, animation };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_animation(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "remove_animation");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void rename_animation(const String& name, const String& newname) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "rename_animation");
+  const void* __args[2] = { &name, &newname };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_animation(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "has_animation");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Animation> get_animation(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_animation");
+  const void* __args[1] = { &name };
+  Ref<Animation> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_animation_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_animation_list");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void animation_set_next(const String& anim_from, const String& anim_to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "animation_set_next");
+  const void* __args[2] = { &anim_from, &anim_to };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String animation_get_next(const String& anim_from) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "animation_get_next");
+  const void* __args[1] = { &anim_from };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_blend_time(const String& anim_from, const String& anim_to, float sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_blend_time");
+  const void* __args[3] = { &anim_from, &anim_to, &sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_blend_time(const String& anim_from, const String& anim_to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_blend_time");
+  const void* __args[2] = { &anim_from, &anim_to };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_default_blend_time(float sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_default_blend_time");
+  const void* __args[1] = { &sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_default_blend_time() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_default_blend_time");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void play(const String& name = "", float custom_blend = -1, float custom_speed = 1, bool from_end = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "play");
+  const void* __args[4] = { &name, &custom_blend, &custom_speed, &from_end };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void play_backwards(const String& name = "", float custom_blend = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "play_backwards");
+  const void* __args[2] = { &name, &custom_blend };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop(bool reset = true) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "stop");
+  const void* __args[1] = { &reset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop_all() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "stop_all");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_current_animation(const String& anim) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_current_animation");
+  const void* __args[1] = { &anim };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_current_animation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_current_animation");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void queue(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "queue");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_queue() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "clear_queue");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_active(bool active) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_active");
+  const void* __args[1] = { &active };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "is_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_speed(float speed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_speed");
+  const void* __args[1] = { &speed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_speed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_speed");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_autoplay(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_autoplay");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_autoplay() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_autoplay");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_root(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_root");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_root() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_root");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void seek(float pos_sec, bool update = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "seek");
+  const void* __args[2] = { &pos_sec, &update };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_pos");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String find_animation(Animation* animation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "find_animation");
+  const void* __args[1] = { animation };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_caches() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "clear_caches");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_animation_process_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "set_animation_process_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_animation_process_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_animation_process_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_current_animation_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_current_animation_pos");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_current_animation_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "get_current_animation_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void advance(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationPlayer", "advance");
+  const void* __args[1] = { &delta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

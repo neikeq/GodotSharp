@@ -2,15 +2,6 @@
 %module mInstancePlaceholder
 
 %nodefaultctor InstancePlaceholder;
-%typemap(out) InstancePlaceholder "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) InstancePlaceholder* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) InstancePlaceholder %{
 
@@ -49,17 +40,27 @@
 
 class InstancePlaceholder : public Node {
 public:
-  %extend {
-    void replace_by_instance(Ref<PackedScene> custom_scene = Ref<PackedScene>()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("replace_by_instance", custom_scene);
-    }
-  }
-  %extend {
-    String get_instance_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_instance_path");
-    }
-  }
+
+%extend {
+
+void replace_by_instance(PackedScene* custom_scene = NULL) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InstancePlaceholder", "replace_by_instance");
+  const void* __args[1] = { custom_scene };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_instance_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("InstancePlaceholder", "get_instance_path");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

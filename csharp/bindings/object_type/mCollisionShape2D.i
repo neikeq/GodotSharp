@@ -1,15 +1,6 @@
 /* mCollisionShape2D.i */
 %module mCollisionShape2D
 
-%typemap(out) CollisionShape2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) CollisionShape2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) CollisionShape2D %{
 
@@ -47,36 +38,54 @@
 
 class CollisionShape2D : public Node2D {
 public:
-  %extend {
-    void set_shape(Object* shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape", shape);
-    }
-  }
-  %extend {
-    Object* get_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape").operator Object *();
-    }
-  }
-  %extend {
-    void set_trigger(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_trigger", enable);
-    }
-  }
-  %extend {
-    bool is_trigger() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_trigger");
-    }
-  }
-  %extend {
-    int get_collision_object_shape_index() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_object_shape_index");
-    }
-  }
   CollisionShape2D();
+
+%extend {
+
+void set_shape(Object* shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape2D", "set_shape");
+  const void* __args[1] = { shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape2D", "get_shape");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_trigger(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape2D", "set_trigger");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_trigger() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape2D", "is_trigger");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collision_object_shape_index() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape2D", "get_collision_object_shape_index");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,22 +1,6 @@
 /* mPacketPeerUDP.i */
 %module mPacketPeerUDP
 
-%typemap(ctype, out="PacketPeerUDP*") Ref<PacketPeerUDP> "PacketPeerUDP*"
-%typemap(out, null="NULL") Ref<PacketPeerUDP> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PacketPeerUDP> "PacketPeerUDP.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PacketPeerUDP> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PacketPeerUDP> "PacketPeerUDP"
-%typemap(csout, excode=SWIGEXCODE) Ref<PacketPeerUDP> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PacketPeerUDP ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PacketPeerUDP;$excode
-    return ret;
-}
-
 template<class PacketPeerUDP> class Ref;%template() Ref<PacketPeerUDP>;
 %feature("novaluewrapper") Ref<PacketPeerUDP>;
 
@@ -57,71 +41,97 @@ template<class PacketPeerUDP> class Ref;%template() Ref<PacketPeerUDP>;
 
 class PacketPeerUDP : public PacketPeer {
 public:
-  %extend {
-    int listen(int port, int recv_buf_size = 65536) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("listen", port, recv_buf_size);
+
+%extend {
+
+int listen(int port, int recv_buf_size = 65536) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "listen");
+  const void* __args[2] = { &port, &recv_buf_size };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void close() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "close");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int wait() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "wait");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_listening() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "is_listening");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_packet_ip() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "get_packet_ip");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_packet_address() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "get_packet_address");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_packet_port() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "get_packet_port");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int set_send_address(const String& host, int port) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerUDP", "set_send_address");
+  const void* __args[2] = { &host, &port };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+PacketPeerUDP() { return PacketPeerUDP::create(); }
+
+~PacketPeerUDP() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    void close() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("close");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    int wait() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("wait");
-    }
-  }
-  %extend {
-    bool is_listening() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_listening");
-    }
-  }
-  %extend {
-    String get_packet_ip() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_packet_ip");
-    }
-  }
-  %extend {
-    int get_packet_address() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_packet_address");
-    }
-  }
-  %extend {
-    int get_packet_port() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_packet_port");
-    }
-  }
-  %extend {
-    int set_send_address(const String& host, int port) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("set_send_address", host, port);
-    }
-  }
-  %extend {
-    PacketPeerUDP() { return PacketPeerUDP::create(); }
-  }
-  %extend {
-    ~PacketPeerUDP() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

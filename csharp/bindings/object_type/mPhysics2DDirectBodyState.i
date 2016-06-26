@@ -2,15 +2,6 @@
 %module mPhysics2DDirectBodyState
 
 %nodefaultctor Physics2DDirectBodyState;
-%typemap(out) Physics2DDirectBodyState "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Physics2DDirectBodyState* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Physics2DDirectBodyState %{
 
@@ -49,167 +40,257 @@
 
 class Physics2DDirectBodyState : public Object {
 public:
-  %extend {
-    Vector2 get_total_gravity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_total_gravity");
-    }
-  }
-  %extend {
-    float get_total_linear_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_total_linear_damp");
-    }
-  }
-  %extend {
-    float get_total_angular_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_total_angular_damp");
-    }
-  }
-  %extend {
-    float get_inverse_mass() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_inverse_mass");
-    }
-  }
-  %extend {
-    float get_inverse_inertia() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_inverse_inertia");
-    }
-  }
-  %extend {
-    void set_linear_velocity(const Vector2& velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_linear_velocity", velocity);
-    }
-  }
-  %extend {
-    Vector2 get_linear_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_linear_velocity");
-    }
-  }
-  %extend {
-    void set_angular_velocity(float velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_angular_velocity", velocity);
-    }
-  }
-  %extend {
-    float get_angular_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_angular_velocity");
-    }
-  }
-  %extend {
-    void set_transform(const Matrix32& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_transform", transform);
-    }
-  }
-  %extend {
-    Matrix32 get_transform() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_transform");
-    }
-  }
-  %extend {
-    void set_sleep_state(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_sleep_state", enabled);
-    }
-  }
-  %extend {
-    bool is_sleeping() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_sleeping");
-    }
-  }
-  %extend {
-    int get_contact_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_count");
-    }
-  }
-  %extend {
-    Vector2 get_contact_local_pos(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_local_pos", contact_idx);
-    }
-  }
-  %extend {
-    Vector2 get_contact_local_normal(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_local_normal", contact_idx);
-    }
-  }
-  %extend {
-    int get_contact_local_shape(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_local_shape", contact_idx);
-    }
-  }
-  %extend {
-    RID get_contact_collider(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider", contact_idx);
-    }
-  }
-  %extend {
-    Vector2 get_contact_collider_pos(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider_pos", contact_idx);
-    }
-  }
-  %extend {
-    int get_contact_collider_id(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider_id", contact_idx);
-    }
-  }
-  %extend {
-    Object* get_contact_collider_object(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider_object", contact_idx).operator Object *();
-    }
-  }
-  %extend {
-    int get_contact_collider_shape(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider_shape", contact_idx);
-    }
-  }
-  %extend {
-    Variant get_contact_collider_shape_metadata(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider_shape_metadata", contact_idx);
-    }
-  }
-  %extend {
-    Vector2 get_contact_collider_velocity_at_pos(int contact_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_contact_collider_velocity_at_pos", contact_idx);
-    }
-  }
-  %extend {
-    float get_step() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_step");
-    }
-  }
-  %extend {
-    void integrate_forces() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("integrate_forces");
-    }
-  }
-  %extend {
-    Physics2DDirectSpaceState* get_space_state() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_space_state").operator Object *()->cast_to<Physics2DDirectSpaceState>();
-    }
-  }
+
+%extend {
+
+Vector2 get_total_gravity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_total_gravity");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_total_linear_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_total_linear_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_total_angular_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_total_angular_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_inverse_mass() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_inverse_mass");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_inverse_inertia() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_inverse_inertia");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_linear_velocity(const Vector2& velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "set_linear_velocity");
+  const void* __args[1] = { &velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_linear_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_linear_velocity");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_angular_velocity(float velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "set_angular_velocity");
+  const void* __args[1] = { &velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_angular_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_angular_velocity");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_transform(const Matrix32& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "set_transform");
+  const void* __args[1] = { &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Matrix32 get_transform() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_transform");
+  Matrix32 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_sleep_state(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "set_sleep_state");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_sleeping() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "is_sleeping");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_contact_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_contact_local_pos(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_local_pos");
+  const void* __args[1] = { &contact_idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_contact_local_normal(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_local_normal");
+  const void* __args[1] = { &contact_idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_contact_local_shape(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_local_shape");
+  const void* __args[1] = { &contact_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID get_contact_collider(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider");
+  const void* __args[1] = { &contact_idx };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_contact_collider_pos(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider_pos");
+  const void* __args[1] = { &contact_idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_contact_collider_id(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider_id");
+  const void* __args[1] = { &contact_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Object* get_contact_collider_object(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider_object");
+  const void* __args[1] = { &contact_idx };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_contact_collider_shape(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider_shape");
+  const void* __args[1] = { &contact_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Variant get_contact_collider_shape_metadata(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider_shape_metadata");
+  const void* __args[1] = { &contact_idx };
+  Variant ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_contact_collider_velocity_at_pos(int contact_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_contact_collider_velocity_at_pos");
+  const void* __args[1] = { &contact_idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float get_step() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_step");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void integrate_forces() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "integrate_forces");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+Physics2DDirectSpaceState* get_space_state() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectBodyState", "get_space_state");
+  Physics2DDirectSpaceState* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

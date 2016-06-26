@@ -1,22 +1,6 @@
 /* mPhysics2DShapeQueryParameters.i */
 %module mPhysics2DShapeQueryParameters
 
-%typemap(ctype, out="Physics2DShapeQueryParameters*") Ref<Physics2DShapeQueryParameters> "Physics2DShapeQueryParameters*"
-%typemap(out, null="NULL") Ref<Physics2DShapeQueryParameters> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Physics2DShapeQueryParameters> "Physics2DShapeQueryParameters.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Physics2DShapeQueryParameters> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Physics2DShapeQueryParameters> "Physics2DShapeQueryParameters"
-%typemap(csout, excode=SWIGEXCODE) Ref<Physics2DShapeQueryParameters> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Physics2DShapeQueryParameters ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DShapeQueryParameters;$excode
-    return ret;
-}
-
 template<class Physics2DShapeQueryParameters> class Ref;%template() Ref<Physics2DShapeQueryParameters>;
 %feature("novaluewrapper") Ref<Physics2DShapeQueryParameters>;
 
@@ -57,111 +41,151 @@ template<class Physics2DShapeQueryParameters> class Ref;%template() Ref<Physics2
 
 class Physics2DShapeQueryParameters : public Reference {
 public:
-  %extend {
-    void set_shape(Ref<Shape2D> shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape", shape);
-    }
-  }
-  %extend {
-    void set_shape_rid(const RID& shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape_rid", shape);
-    }
-  }
-  %extend {
-    RID get_shape_rid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape_rid");
-    }
-  }
-  %extend {
-    void set_transform(const Matrix32& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_transform", transform);
-    }
-  }
-  %extend {
-    Matrix32 get_transform() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_transform");
-    }
-  }
-  %extend {
-    void set_motion(const Vector2& motion) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_motion", motion);
-    }
-  }
-  %extend {
-    Vector2 get_motion() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_motion");
-    }
-  }
-  %extend {
-    void set_margin(float margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_margin", margin);
-    }
-  }
-  %extend {
-    float get_margin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_margin");
-    }
-  }
-  %extend {
-    void set_layer_mask(int layer_mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask", layer_mask);
-    }
-  }
-  %extend {
-    int get_layer_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask");
-    }
-  }
-  %extend {
-    void set_object_type_mask(int object_type_mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_object_type_mask", object_type_mask);
-    }
-  }
-  %extend {
-    int get_object_type_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_object_type_mask");
-    }
-  }
-  %extend {
-    void set_exclude(const Array& exclude) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_exclude", exclude);
-    }
-  }
-  %extend {
-    Array get_exclude() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_exclude");
-    }
-  }
   Physics2DShapeQueryParameters();
-  %extend {
-    ~Physics2DShapeQueryParameters() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_shape(Shape2D* shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_shape");
+  const void* __args[1] = { shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_shape_rid(const RID& shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_shape_rid");
+  const void* __args[1] = { &shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RID get_shape_rid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_shape_rid");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_transform(const Matrix32& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_transform");
+  const void* __args[1] = { &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Matrix32 get_transform() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_transform");
+  Matrix32 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_motion(const Vector2& motion) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_motion");
+  const void* __args[1] = { &motion };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_motion() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_motion");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_margin(float margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_margin");
+  const void* __args[1] = { &margin };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_margin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_margin");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_layer_mask(int layer_mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_layer_mask");
+  const void* __args[1] = { &layer_mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_layer_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_object_type_mask(int object_type_mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_object_type_mask");
+  const void* __args[1] = { &object_type_mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_object_type_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_object_type_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_exclude(const Array& exclude) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "set_exclude");
+  const void* __args[1] = { &exclude };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_exclude() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryParameters", "get_exclude");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Physics2DShapeQueryParameters() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

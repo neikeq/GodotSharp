@@ -135,7 +135,6 @@ public class HTTPClient : Reference {
 
   public void set_connection(StreamPeer connection) {
     GodotEnginePINVOKE.HTTPClient_set_connection(swigCPtr, StreamPeer.getCPtr(connection));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public StreamPeer get_connection() {

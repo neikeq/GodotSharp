@@ -1,22 +1,6 @@
 /* mCanvasItemShader.i */
 %module mCanvasItemShader
 
-%typemap(ctype, out="CanvasItemShader*") Ref<CanvasItemShader> "CanvasItemShader*"
-%typemap(out, null="NULL") Ref<CanvasItemShader> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<CanvasItemShader> "CanvasItemShader.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<CanvasItemShader> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<CanvasItemShader> "CanvasItemShader"
-%typemap(csout, excode=SWIGEXCODE) Ref<CanvasItemShader> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    CanvasItemShader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CanvasItemShader;$excode
-    return ret;
-}
-
 template<class CanvasItemShader> class Ref;%template() Ref<CanvasItemShader>;
 %feature("novaluewrapper") Ref<CanvasItemShader>;
 
@@ -58,20 +42,23 @@ template<class CanvasItemShader> class Ref;%template() Ref<CanvasItemShader>;
 class CanvasItemShader : public Shader {
 public:
   CanvasItemShader();
-  %extend {
-    ~CanvasItemShader() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~CanvasItemShader() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

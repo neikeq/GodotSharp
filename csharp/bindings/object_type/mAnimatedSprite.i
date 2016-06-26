@@ -1,15 +1,6 @@
 /* mAnimatedSprite.i */
 %module mAnimatedSprite
 
-%typemap(out) AnimatedSprite "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) AnimatedSprite* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) AnimatedSprite %{
 
@@ -47,120 +38,171 @@
 
 class AnimatedSprite : public Node2D {
 public:
-  %extend {
-    void set_sprite_frames(Ref<SpriteFrames> sprite_frames) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_sprite_frames", sprite_frames);
-    }
-  }
-  %extend {
-    Ref<SpriteFrames> get_sprite_frames() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sprite_frames").operator Object *()->cast_to<SpriteFrames>();
-    }
-  }
-  %extend {
-    void set_animation(const String& animation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_animation", animation);
-    }
-  }
-  %extend {
-    String get_animation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_animation");
-    }
-  }
-  %extend {
-    void play(const String& anim = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play", anim);
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_centered(bool centered) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_centered", centered);
-    }
-  }
-  %extend {
-    bool is_centered() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_centered");
-    }
-  }
-  %extend {
-    void set_offset(const Vector2& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offset", offset);
-    }
-  }
-  %extend {
-    Vector2 get_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offset");
-    }
-  }
-  %extend {
-    void set_flip_h(bool flip_h) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flip_h", flip_h);
-    }
-  }
-  %extend {
-    bool is_flipped_h() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_flipped_h");
-    }
-  }
-  %extend {
-    void set_flip_v(bool flip_v) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flip_v", flip_v);
-    }
-  }
-  %extend {
-    bool is_flipped_v() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_flipped_v");
-    }
-  }
-  %extend {
-    void set_frame(int frame) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_frame", frame);
-    }
-  }
-  %extend {
-    int get_frame() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_frame");
-    }
-  }
-  %extend {
-    void set_modulate(const Color& modulate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_modulate", modulate);
-    }
-  }
-  %extend {
-    Color get_modulate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_modulate");
-    }
-  }
   AnimatedSprite();
+
+%extend {
+
+void set_sprite_frames(SpriteFrames* sprite_frames) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_sprite_frames");
+  const void* __args[1] = { sprite_frames };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<SpriteFrames> get_sprite_frames() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "get_sprite_frames");
+  Ref<SpriteFrames> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_animation(const String& animation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_animation");
+  const void* __args[1] = { &animation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_animation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "get_animation");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void play(const String& anim = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "play");
+  const void* __args[1] = { &anim };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_centered(bool centered) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_centered");
+  const void* __args[1] = { &centered };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_centered() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "is_centered");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_offset(const Vector2& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "get_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flip_h(bool flip_h) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_flip_h");
+  const void* __args[1] = { &flip_h };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_flipped_h() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "is_flipped_h");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flip_v(bool flip_v) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_flip_v");
+  const void* __args[1] = { &flip_v };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_flipped_v() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "is_flipped_v");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_frame(int frame) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_frame");
+  const void* __args[1] = { &frame };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_frame() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "get_frame");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_modulate(const Color& modulate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "set_modulate");
+  const void* __args[1] = { &modulate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_modulate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite", "get_modulate");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,15 +1,6 @@
 /* mEventPlayer.i */
 %module mEventPlayer
 
-%typemap(out) EventPlayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) EventPlayer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) EventPlayer %{
 
@@ -47,168 +38,242 @@
 
 class EventPlayer : public Node {
 public:
-  %extend {
-    void set_stream(Ref<EventStream> stream) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stream", stream);
-    }
-  }
-  %extend {
-    Ref<EventStream> get_stream() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream").operator Object *()->cast_to<EventStream>();
-    }
-  }
-  %extend {
-    void play() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play");
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_paused(bool paused) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_paused", paused);
-    }
-  }
-  %extend {
-    bool is_paused() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_paused");
-    }
-  }
-  %extend {
-    void set_loop(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop", enabled);
-    }
-  }
-  %extend {
-    bool has_loop() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_loop");
-    }
-  }
-  %extend {
-    void set_volume(float volume) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_volume", volume);
-    }
-  }
-  %extend {
-    float get_volume() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_volume");
-    }
-  }
-  %extend {
-    void set_pitch_scale(float pitch_scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pitch_scale", pitch_scale);
-    }
-  }
-  %extend {
-    float get_pitch_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pitch_scale");
-    }
-  }
-  %extend {
-    void set_tempo_scale(float tempo_scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tempo_scale", tempo_scale);
-    }
-  }
-  %extend {
-    float get_tempo_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tempo_scale");
-    }
-  }
-  %extend {
-    void set_volume_db(float db) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_volume_db", db);
-    }
-  }
-  %extend {
-    float get_volume_db() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_volume_db");
-    }
-  }
-  %extend {
-    String get_stream_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream_name");
-    }
-  }
-  %extend {
-    int get_loop_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_count");
-    }
-  }
-  %extend {
-    float get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    void seek_pos(float time) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("seek_pos", time);
-    }
-  }
-  %extend {
-    float get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
-  %extend {
-    void set_autoplay(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_autoplay", enabled);
-    }
-  }
-  %extend {
-    bool has_autoplay() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_autoplay");
-    }
-  }
-  %extend {
-    void set_channel_volume(int channel, float channel_volume) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_channel_volume", channel, channel_volume);
-    }
-  }
-  %extend {
-    float get_channel_volume(int channel) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_channel_volume", channel);
-    }
-  }
-  %extend {
-    float get_channel_last_note_time(int channel) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_channel_last_note_time", channel);
-    }
-  }
   EventPlayer();
+
+%extend {
+
+void set_stream(EventStream* stream) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_stream");
+  const void* __args[1] = { stream };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<EventStream> get_stream() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_stream");
+  Ref<EventStream> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void play() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "play");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_paused(bool paused) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_paused");
+  const void* __args[1] = { &paused };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_paused() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "is_paused");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_loop");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_loop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "has_loop");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_volume(float volume) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_volume");
+  const void* __args[1] = { &volume };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_volume() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_volume");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_pitch_scale(float pitch_scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_pitch_scale");
+  const void* __args[1] = { &pitch_scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_pitch_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_pitch_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_tempo_scale(float tempo_scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_tempo_scale");
+  const void* __args[1] = { &tempo_scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_tempo_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_tempo_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_volume_db(float db) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_volume_db");
+  const void* __args[1] = { &db };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_volume_db() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_volume_db");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_stream_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_stream_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_loop_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_loop_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_pos");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void seek_pos(float time) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "seek_pos");
+  const void* __args[1] = { &time };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_autoplay(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_autoplay");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_autoplay() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "has_autoplay");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_channel_volume(int channel, float channel_volume) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "set_channel_volume");
+  const void* __args[2] = { &channel, &channel_volume };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_channel_volume(int channel) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_channel_volume");
+  const void* __args[1] = { &channel };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float get_channel_last_note_time(int channel) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EventPlayer", "get_channel_last_note_time");
+  const void* __args[1] = { &channel };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,15 +1,6 @@
 /* mEditorFileDialog.i */
 %module mEditorFileDialog
 
-%typemap(out) EditorFileDialog "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) EditorFileDialog* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) EditorFileDialog %{
   public static readonly int MODE_OPEN_FILE = 0;
@@ -55,126 +46,178 @@
 
 class EditorFileDialog : public ConfirmationDialog {
 public:
-  %extend {
-    void clear_filters() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_filters");
-    }
-  }
-  %extend {
-    void add_filter(const String& filter) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_filter", filter);
-    }
-  }
-  %extend {
-    String get_current_dir() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_dir");
-    }
-  }
-  %extend {
-    String get_current_file() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_file");
-    }
-  }
-  %extend {
-    String get_current_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_path");
-    }
-  }
-  %extend {
-    void set_current_dir(const String& dir) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_current_dir", dir);
-    }
-  }
-  %extend {
-    void set_current_file(const String& file) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_current_file", file);
-    }
-  }
-  %extend {
-    void set_current_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_current_path", path);
-    }
-  }
-  %extend {
-    void set_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mode", mode);
-    }
-  }
-  %extend {
-    int get_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mode");
-    }
-  }
-  %extend {
-    VBoxContainer* get_vbox() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vbox").operator Object *()->cast_to<VBoxContainer>();
-    }
-  }
-  %extend {
-    void set_access(int access) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_access", access);
-    }
-  }
-  %extend {
-    int get_access() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_access");
-    }
-  }
-  %extend {
-    void set_show_hidden_files(bool show) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_show_hidden_files", show);
-    }
-  }
-  %extend {
-    bool is_showing_hidden_files() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_showing_hidden_files");
-    }
-  }
-  %extend {
-    void set_display_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_display_mode", mode);
-    }
-  }
-  %extend {
-    int get_display_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_display_mode");
-    }
-  }
-  %extend {
-    void set_disable_overwrite_warning(bool disable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_disable_overwrite_warning", disable);
-    }
-  }
-  %extend {
-    bool is_overwrite_warning_disabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_overwrite_warning_disabled");
-    }
-  }
-  %extend {
-    void invalidate() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("invalidate");
-    }
-  }
   EditorFileDialog();
+
+%extend {
+
+void clear_filters() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "clear_filters");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void add_filter(const String& filter) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "add_filter");
+  const void* __args[1] = { &filter };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_current_dir() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_current_dir");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_current_file() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_current_file");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_current_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_current_path");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_current_dir(const String& dir) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_current_dir");
+  const void* __args[1] = { &dir };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_current_file(const String& file) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_current_file");
+  const void* __args[1] = { &file };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_current_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_current_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+VBoxContainer* get_vbox() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_vbox");
+  VBoxContainer* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_access(int access) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_access");
+  const void* __args[1] = { &access };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_access() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_access");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_show_hidden_files(bool show) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_show_hidden_files");
+  const void* __args[1] = { &show };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_showing_hidden_files() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "is_showing_hidden_files");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_display_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_display_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_display_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "get_display_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_disable_overwrite_warning(bool disable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "set_disable_overwrite_warning");
+  const void* __args[1] = { &disable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_overwrite_warning_disabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "is_overwrite_warning_disabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void invalidate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorFileDialog", "invalidate");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

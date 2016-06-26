@@ -1,22 +1,6 @@
 /* mMultiMesh.i */
 %module mMultiMesh
 
-%typemap(ctype, out="MultiMesh*") Ref<MultiMesh> "MultiMesh*"
-%typemap(out, null="NULL") Ref<MultiMesh> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<MultiMesh> "MultiMesh.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<MultiMesh> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<MultiMesh> "MultiMesh"
-%typemap(csout, excode=SWIGEXCODE) Ref<MultiMesh> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    MultiMesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MultiMesh;$excode
-    return ret;
-}
-
 template<class MultiMesh> class Ref;%template() Ref<MultiMesh>;
 %feature("novaluewrapper") Ref<MultiMesh>;
 
@@ -57,87 +41,118 @@ template<class MultiMesh> class Ref;%template() Ref<MultiMesh>;
 
 class MultiMesh : public Resource {
 public:
-  %extend {
-    void set_mesh(Ref<Mesh> mesh) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mesh", mesh);
-    }
-  }
-  %extend {
-    Ref<Mesh> get_mesh() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mesh").operator Object *()->cast_to<Mesh>();
-    }
-  }
-  %extend {
-    void set_instance_count(int count) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_instance_count", count);
-    }
-  }
-  %extend {
-    int get_instance_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_instance_count");
-    }
-  }
-  %extend {
-    void set_instance_transform(int instance, const Transform& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_instance_transform", instance, transform);
-    }
-  }
-  %extend {
-    Transform get_instance_transform(int instance) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_instance_transform", instance);
-    }
-  }
-  %extend {
-    void set_instance_color(int instance, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_instance_color", instance, color);
-    }
-  }
-  %extend {
-    Color get_instance_color(int instance) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_instance_color", instance);
-    }
-  }
-  %extend {
-    void set_aabb(const AABB& visibility_aabb) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_aabb", visibility_aabb);
-    }
-  }
-  %extend {
-    AABB get_aabb() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_aabb");
-    }
-  }
-  %extend {
-    void generate_aabb() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("generate_aabb");
-    }
-  }
   MultiMesh();
-  %extend {
-    ~MultiMesh() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_mesh(Mesh* mesh) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "set_mesh");
+  const void* __args[1] = { mesh };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Mesh> get_mesh() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "get_mesh");
+  Ref<Mesh> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_instance_count(int count) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "set_instance_count");
+  const void* __args[1] = { &count };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_instance_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "get_instance_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_instance_transform(int instance, const Transform& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "set_instance_transform");
+  const void* __args[2] = { &instance, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform get_instance_transform(int instance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "get_instance_transform");
+  const void* __args[1] = { &instance };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_instance_color(int instance, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "set_instance_color");
+  const void* __args[2] = { &instance, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_instance_color(int instance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "get_instance_color");
+  const void* __args[1] = { &instance };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_aabb(const AABB& visibility_aabb) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "set_aabb");
+  const void* __args[1] = { &visibility_aabb };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+AABB get_aabb() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "get_aabb");
+  AABB ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void generate_aabb() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMesh", "generate_aabb");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~MultiMesh() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

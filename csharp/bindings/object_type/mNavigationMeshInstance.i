@@ -1,15 +1,6 @@
 /* mNavigationMeshInstance.i */
 %module mNavigationMeshInstance
 
-%typemap(out) NavigationMeshInstance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) NavigationMeshInstance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) NavigationMeshInstance %{
 
@@ -47,30 +38,45 @@
 
 class NavigationMeshInstance : public Spatial {
 public:
-  %extend {
-    void set_navigation_mesh(Object* navmesh) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_navigation_mesh", navmesh);
-    }
-  }
-  %extend {
-    Object* get_navigation_mesh() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_navigation_mesh").operator Object *();
-    }
-  }
-  %extend {
-    void set_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
   NavigationMeshInstance();
+
+%extend {
+
+void set_navigation_mesh(Object* navmesh) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMeshInstance", "set_navigation_mesh");
+  const void* __args[1] = { navmesh };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_navigation_mesh() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMeshInstance", "get_navigation_mesh");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMeshInstance", "set_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMeshInstance", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,22 +1,6 @@
 /* mMaterialShader.i */
 %module mMaterialShader
 
-%typemap(ctype, out="MaterialShader*") Ref<MaterialShader> "MaterialShader*"
-%typemap(out, null="NULL") Ref<MaterialShader> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<MaterialShader> "MaterialShader.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<MaterialShader> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<MaterialShader> "MaterialShader"
-%typemap(csout, excode=SWIGEXCODE) Ref<MaterialShader> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    MaterialShader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MaterialShader;$excode
-    return ret;
-}
-
 template<class MaterialShader> class Ref;%template() Ref<MaterialShader>;
 %feature("novaluewrapper") Ref<MaterialShader>;
 
@@ -58,20 +42,23 @@ template<class MaterialShader> class Ref;%template() Ref<MaterialShader>;
 class MaterialShader : public Shader {
 public:
   MaterialShader();
-  %extend {
-    ~MaterialShader() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~MaterialShader() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

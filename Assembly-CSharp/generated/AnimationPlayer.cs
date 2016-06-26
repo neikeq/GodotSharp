@@ -239,7 +239,6 @@ public class AnimationPlayer : Node {
 
   public string find_animation(Animation animation) {
     string ret = GodotEnginePINVOKE.AnimationPlayer_find_animation(swigCPtr, Animation.getCPtr(animation));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

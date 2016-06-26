@@ -366,25 +366,29 @@ public class ShaderGraph : Shader {
     return ret;
   }
 
-  public void texture_input_node_set_value(int shader_type, int id, SWIGTYPE_p_RefT_Texture_t value) {
-    GodotEnginePINVOKE.ShaderGraph_texture_input_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_RefT_Texture_t.getCPtr(value));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void texture_input_node_set_value(int shader_type, int id, Texture value) {
+    GodotEnginePINVOKE.ShaderGraph_texture_input_node_set_value(swigCPtr, shader_type, id, Texture.getCPtr(value));
   }
 
-  public SWIGTYPE_p_RefT_Texture_t texture_input_node_get_value(int shader_type, int id) {
-    SWIGTYPE_p_RefT_Texture_t ret = new SWIGTYPE_p_RefT_Texture_t(GodotEnginePINVOKE.ShaderGraph_texture_input_node_get_value(swigCPtr, shader_type, id), true);
+  public Texture texture_input_node_get_value(int shader_type, int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ShaderGraph_texture_input_node_get_value(swigCPtr, shader_type, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
+}
+
+  public void cubemap_input_node_set_value(int shader_type, int id, CubeMap value) {
+    GodotEnginePINVOKE.ShaderGraph_cubemap_input_node_set_value(swigCPtr, shader_type, id, CubeMap.getCPtr(value));
   }
 
-  public void cubemap_input_node_set_value(int shader_type, int id, SWIGTYPE_p_RefT_CubeMap_t value) {
-    GodotEnginePINVOKE.ShaderGraph_cubemap_input_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_RefT_CubeMap_t.getCPtr(value));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public SWIGTYPE_p_RefT_CubeMap_t cubemap_input_node_get_value(int shader_type, int id) {
-    SWIGTYPE_p_RefT_CubeMap_t ret = new SWIGTYPE_p_RefT_CubeMap_t(GodotEnginePINVOKE.ShaderGraph_cubemap_input_node_get_value(swigCPtr, shader_type, id), true);
+  public CubeMap cubemap_input_node_get_value(int shader_type, int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.ShaderGraph_cubemap_input_node_get_value(swigCPtr, shader_type, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CubeMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CubeMap;
     return ret;
-  }
+}
 
   public void comment_node_set_text(int shader_type, int id, string text) {
     GodotEnginePINVOKE.ShaderGraph_comment_node_set_text(swigCPtr, shader_type, id, text);

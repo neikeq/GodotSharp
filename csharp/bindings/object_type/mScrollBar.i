@@ -2,15 +2,6 @@
 %module mScrollBar
 
 %nodefaultctor ScrollBar;
-%typemap(out) ScrollBar "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ScrollBar* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ScrollBar %{
 
@@ -49,17 +40,27 @@
 
 class ScrollBar : public Range {
 public:
-  %extend {
-    void set_custom_step(float step) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_custom_step", step);
-    }
-  }
-  %extend {
-    float get_custom_step() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_custom_step");
-    }
-  }
+
+%extend {
+
+void set_custom_step(float step) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollBar", "set_custom_step");
+  const void* __args[1] = { &step };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_custom_step() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollBar", "get_custom_step");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

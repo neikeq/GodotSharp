@@ -145,7 +145,6 @@ public class Camera : Spatial {
 
   public void set_environment(Environment env) {
     GodotEnginePINVOKE.Camera_set_environment(swigCPtr, Environment.getCPtr(env));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Environment get_environment() {

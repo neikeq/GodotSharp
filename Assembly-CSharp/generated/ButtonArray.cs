@@ -61,7 +61,6 @@ public class ButtonArray : Control {
 
   public void add_icon_button(Texture icon) {
     GodotEnginePINVOKE.ButtonArray_add_icon_button__SWIG_1(swigCPtr, Texture.getCPtr(icon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_button_text(int button_idx, string text) {
@@ -71,7 +70,6 @@ public class ButtonArray : Control {
 
   public void set_button_icon(int button_idx, Texture icon) {
     GodotEnginePINVOKE.ButtonArray_set_button_icon(swigCPtr, button_idx, Texture.getCPtr(icon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public string get_button_text(int button_idx) {

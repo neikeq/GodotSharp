@@ -49,7 +49,6 @@ public class MultiMesh : Resource {
 
   public void set_mesh(Mesh mesh) {
     GodotEnginePINVOKE.MultiMesh_set_mesh(swigCPtr, Mesh.getCPtr(mesh));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Mesh get_mesh() {

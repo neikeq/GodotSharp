@@ -49,7 +49,6 @@ public class AtlasTexture : Texture {
 
   public void set_atlas(Texture atlas) {
     GodotEnginePINVOKE.AtlasTexture_set_atlas(swigCPtr, Texture.getCPtr(atlas));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_atlas() {

@@ -55,7 +55,9 @@ public class WindowDialog : Popup {
 
   public TextureButton get_close_button() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.WindowDialog_get_close_button(swigCPtr);
-    TextureButton ret = (cPtr == global::System.IntPtr.Zero) ? null : new TextureButton(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    TextureButton ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TextureButton;
     return ret;
   }
 

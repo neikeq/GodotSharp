@@ -1,22 +1,6 @@
 /* mConfigFile.i */
 %module mConfigFile
 
-%typemap(ctype, out="ConfigFile*") Ref<ConfigFile> "ConfigFile*"
-%typemap(out, null="NULL") Ref<ConfigFile> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ConfigFile> "ConfigFile.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ConfigFile> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ConfigFile> "ConfigFile"
-%typemap(csout, excode=SWIGEXCODE) Ref<ConfigFile> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ConfigFile ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConfigFile;$excode
-    return ret;
-}
-
 template<class ConfigFile> class Ref;%template() Ref<ConfigFile>;
 %feature("novaluewrapper") Ref<ConfigFile>;
 
@@ -57,69 +41,101 @@ template<class ConfigFile> class Ref;%template() Ref<ConfigFile>;
 
 class ConfigFile : public Reference {
 public:
-  %extend {
-    void set_value(const String& section, const String& key, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_value", section, key, value);
-    }
-  }
-  %extend {
-    Variant get_value(const String& section, const String& key, const Variant& default_ = Variant()) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_value", section, key, default_);
-    }
-  }
-  %extend {
-    bool has_section(const String& section) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_section", section);
-    }
-  }
-  %extend {
-    bool has_section_key(const String& section, const String& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_section_key", section, key);
-    }
-  }
-  %extend {
-    StringArray get_sections() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sections");
-    }
-  }
-  %extend {
-    StringArray get_section_keys(const String& section) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_section_keys", section);
-    }
-  }
-  %extend {
-    int load(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("load", path);
-    }
-  }
-  %extend {
-    int save(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("save", path);
-    }
-  }
   ConfigFile();
-  %extend {
-    ~ConfigFile() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_value(const String& section, const String& key, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "set_value");
+  const void* __args[3] = { &section, &key, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Variant get_value(const String& section, const String& key, const Variant& default_ = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "get_value");
+  const void* __args[3] = { &section, &key, &default_ };
+  Variant ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_section(const String& section) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "has_section");
+  const void* __args[1] = { &section };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_section_key(const String& section, const String& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "has_section_key");
+  const void* __args[2] = { &section, &key };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_sections() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "get_sections");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+StringArray get_section_keys(const String& section) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "get_section_keys");
+  const void* __args[1] = { &section };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int load(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "load");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int save(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfigFile", "save");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~ConfigFile() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

@@ -1,15 +1,6 @@
 /* mViewportSprite.i */
 %module mViewportSprite
 
-%typemap(out) ViewportSprite "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ViewportSprite* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ViewportSprite %{
 
@@ -47,54 +38,79 @@
 
 class ViewportSprite : public Node2D {
 public:
-  %extend {
-    void set_viewport_path(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_viewport_path", path);
-    }
-  }
-  %extend {
-    NodePath get_viewport_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_viewport_path");
-    }
-  }
-  %extend {
-    void set_centered(bool centered) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_centered", centered);
-    }
-  }
-  %extend {
-    bool is_centered() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_centered");
-    }
-  }
-  %extend {
-    void set_offset(const Vector2& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offset", offset);
-    }
-  }
-  %extend {
-    Vector2 get_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offset");
-    }
-  }
-  %extend {
-    void set_modulate(const Color& modulate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_modulate", modulate);
-    }
-  }
-  %extend {
-    Color get_modulate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_modulate");
-    }
-  }
   ViewportSprite();
+
+%extend {
+
+void set_viewport_path(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "set_viewport_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_viewport_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "get_viewport_path");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_centered(bool centered) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "set_centered");
+  const void* __args[1] = { &centered };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_centered() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "is_centered");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_offset(const Vector2& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "set_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "get_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_modulate(const Color& modulate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "set_modulate");
+  const void* __args[1] = { &modulate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_modulate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ViewportSprite", "get_modulate");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

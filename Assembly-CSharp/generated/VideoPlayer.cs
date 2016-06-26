@@ -45,7 +45,6 @@ public class VideoPlayer : Control {
 
   public void set_stream(VideoStream stream) {
     GodotEnginePINVOKE.VideoPlayer_set_stream(swigCPtr, VideoStream.getCPtr(stream));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public VideoStream get_stream() {

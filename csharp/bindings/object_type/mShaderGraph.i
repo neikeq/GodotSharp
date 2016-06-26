@@ -2,22 +2,6 @@
 %module mShaderGraph
 
 %nodefaultctor ShaderGraph;
-%typemap(ctype, out="ShaderGraph*") Ref<ShaderGraph> "ShaderGraph*"
-%typemap(out, null="NULL") Ref<ShaderGraph> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ShaderGraph> "ShaderGraph.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ShaderGraph> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ShaderGraph> "ShaderGraph"
-%typemap(csout, excode=SWIGEXCODE) Ref<ShaderGraph> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ShaderGraph ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ShaderGraph;$excode
-    return ret;
-}
-
 template<class ShaderGraph> class Ref;%template() Ref<ShaderGraph>;
 %feature("novaluewrapper") Ref<ShaderGraph>;
 
@@ -171,392 +155,581 @@ template<class ShaderGraph> class Ref;%template() Ref<ShaderGraph>;
 
 class ShaderGraph : public Shader {
 public:
-  %extend {
-    void node_add(int shader_type, int node_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("node_add", shader_type, node_type, id);
+
+%extend {
+
+void node_add(int shader_type, int node_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_add");
+  const void* __args[3] = { &shader_type, &node_type, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void node_remove(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_remove");
+  const void* __args[2] = { &shader_type, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void node_set_pos(int shader_type, int id, const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_set_pos");
+  const void* __args[3] = { &shader_type, &id, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 node_get_pos(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_get_pos");
+  const void* __args[2] = { &shader_type, &id };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int node_get_type(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_get_type");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array get_node_list(int shader_type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "get_node_list");
+  const void* __args[1] = { &shader_type };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void default_set_value(int shader_type, int id, int param_id, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "default_set_value");
+  const void* __args[4] = { &shader_type, &id, &param_id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void default_get_value(int shader_type, int id, int param_id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "default_get_value");
+  const void* __args[3] = { &shader_type, &id, &param_id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void scalar_const_node_set_value(int shader_type, int id, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_const_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float scalar_const_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_const_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void vec_const_node_set_value(int shader_type, int id, const Vector3& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_const_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 vec_const_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_const_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void rgb_const_node_set_value(int shader_type, int id, const Color& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "rgb_const_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color rgb_const_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "rgb_const_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void xform_const_node_set_value(int shader_type, int id, const Transform& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "xform_const_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform xform_const_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "xform_const_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void texture_node_set_filter_size(int shader_type, int id, int filter_size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "texture_node_set_filter_size");
+  const void* __args[3] = { &shader_type, &id, &filter_size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int texture_node_get_filter_size(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "texture_node_get_filter_size");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void texture_node_set_filter_strength(int shader_type, float id, float filter_strength) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "texture_node_set_filter_strength");
+  const void* __args[3] = { &shader_type, &id, &filter_strength };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float texture_node_get_filter_strength(int shader_type, float id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "texture_node_get_filter_strength");
+  const void* __args[2] = { &shader_type, &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void scalar_op_node_set_op(int shader_type, float id, int op) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_op_node_set_op");
+  const void* __args[3] = { &shader_type, &id, &op };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int scalar_op_node_get_op(int shader_type, float id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_op_node_get_op");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void vec_op_node_set_op(int shader_type, float id, int op) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_op_node_set_op");
+  const void* __args[3] = { &shader_type, &id, &op };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int vec_op_node_get_op(int shader_type, float id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_op_node_get_op");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void vec_scalar_op_node_set_op(int shader_type, float id, int op) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_scalar_op_node_set_op");
+  const void* __args[3] = { &shader_type, &id, &op };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int vec_scalar_op_node_get_op(int shader_type, float id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_scalar_op_node_get_op");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void rgb_op_node_set_op(int shader_type, float id, int op) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "rgb_op_node_set_op");
+  const void* __args[3] = { &shader_type, &id, &op };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int rgb_op_node_get_op(int shader_type, float id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "rgb_op_node_get_op");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void xform_vec_mult_node_set_no_translation(int shader_type, int id, bool disable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "xform_vec_mult_node_set_no_translation");
+  const void* __args[3] = { &shader_type, &id, &disable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool xform_vec_mult_node_get_no_translation(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "xform_vec_mult_node_get_no_translation");
+  const void* __args[2] = { &shader_type, &id };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void scalar_func_node_set_function(int shader_type, int id, int func) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_func_node_set_function");
+  const void* __args[3] = { &shader_type, &id, &func };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int scalar_func_node_get_function(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_func_node_get_function");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void vec_func_node_set_function(int shader_type, int id, int func) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_func_node_set_function");
+  const void* __args[3] = { &shader_type, &id, &func };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int vec_func_node_get_function(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_func_node_get_function");
+  const void* __args[2] = { &shader_type, &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void input_node_set_name(int shader_type, int id, const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "input_node_set_name");
+  const void* __args[3] = { &shader_type, &id, &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String input_node_get_name(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "input_node_get_name");
+  const void* __args[2] = { &shader_type, &id };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void scalar_input_node_set_value(int shader_type, int id, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_input_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float scalar_input_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "scalar_input_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void vec_input_node_set_value(int shader_type, int id, const Vector3& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_input_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 vec_input_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "vec_input_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void rgb_input_node_set_value(int shader_type, int id, const Color& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "rgb_input_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color rgb_input_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "rgb_input_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void xform_input_node_set_value(int shader_type, int id, const Transform& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "xform_input_node_set_value");
+  const void* __args[3] = { &shader_type, &id, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform xform_input_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "xform_input_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void texture_input_node_set_value(int shader_type, int id, Texture* value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "texture_input_node_set_value");
+  const void* __args[3] = { &shader_type, &id, value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> texture_input_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "texture_input_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void cubemap_input_node_set_value(int shader_type, int id, CubeMap* value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "cubemap_input_node_set_value");
+  const void* __args[3] = { &shader_type, &id, value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<CubeMap> cubemap_input_node_get_value(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "cubemap_input_node_get_value");
+  const void* __args[2] = { &shader_type, &id };
+  Ref<CubeMap> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void comment_node_set_text(int shader_type, int id, const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "comment_node_set_text");
+  const void* __args[3] = { &shader_type, &id, &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String comment_node_get_text(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "comment_node_get_text");
+  const void* __args[2] = { &shader_type, &id };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void color_ramp_node_set_ramp(int shader_type, int id, const ColorArray& colors, const RealArray& offsets) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "color_ramp_node_set_ramp");
+  const void* __args[4] = { &shader_type, &id, &colors, &offsets };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+ColorArray color_ramp_node_get_colors(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "color_ramp_node_get_colors");
+  const void* __args[2] = { &shader_type, &id };
+  ColorArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RealArray color_ramp_node_get_offsets(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "color_ramp_node_get_offsets");
+  const void* __args[2] = { &shader_type, &id };
+  RealArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void curve_map_node_set_points(int shader_type, int id, const Vector2Array& points) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "curve_map_node_set_points");
+  const void* __args[3] = { &shader_type, &id, &points };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array curve_map_node_get_points(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "curve_map_node_get_points");
+  const void* __args[2] = { &shader_type, &id };
+  Vector2Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int connect_node(int shader_type, int src_id, int src_slot, int dst_id, int dst_slot) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "connect_node");
+  const void* __args[5] = { &shader_type, &src_id, &src_slot, &dst_id, &dst_slot };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_node_connected(int shader_type, int src_id, int src_slot, int dst_id, int dst_slot) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "is_node_connected");
+  const void* __args[5] = { &shader_type, &src_id, &src_slot, &dst_id, &dst_slot };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void disconnect_node(int shader_type, int src_id, int src_slot, int dst_id, int dst_slot) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "disconnect_node");
+  const void* __args[5] = { &shader_type, &src_id, &src_slot, &dst_id, &dst_slot };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_node_connections(int shader_type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "get_node_connections");
+  const void* __args[1] = { &shader_type };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear(int shader_type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "clear");
+  const void* __args[1] = { &shader_type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void node_set_state(int shader_type, int id, const Variant& state) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_set_state");
+  const void* __args[3] = { &shader_type, &id, &state };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Variant node_get_state(int shader_type, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderGraph", "node_get_state");
+  const void* __args[2] = { &shader_type, &id };
+  Variant ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~ShaderGraph() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    void node_remove(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("node_remove", shader_type, id);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    void node_set_pos(int shader_type, int id, const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("node_set_pos", shader_type, id, pos);
-    }
-  }
-  %extend {
-    Vector2 node_get_pos(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_pos", shader_type, id);
-    }
-  }
-  %extend {
-    int node_get_type(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_type", shader_type, id);
-    }
-  }
-  %extend {
-    Array get_node_list(int shader_type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_list", shader_type);
-    }
-  }
-  %extend {
-    void default_set_value(int shader_type, int id, int param_id, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("default_set_value", shader_type, id, param_id, value);
-    }
-  }
-  %extend {
-    void default_get_value(int shader_type, int id, int param_id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("default_get_value", shader_type, id, param_id);
-    }
-  }
-  %extend {
-    void scalar_const_node_set_value(int shader_type, int id, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("scalar_const_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    float scalar_const_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("scalar_const_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void vec_const_node_set_value(int shader_type, int id, const Vector3& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("vec_const_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Vector3 vec_const_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("vec_const_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void rgb_const_node_set_value(int shader_type, int id, const Color& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rgb_const_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Color rgb_const_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("rgb_const_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void xform_const_node_set_value(int shader_type, int id, const Transform& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("xform_const_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Transform xform_const_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("xform_const_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void texture_node_set_filter_size(int shader_type, int id, int filter_size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("texture_node_set_filter_size", shader_type, id, filter_size);
-    }
-  }
-  %extend {
-    int texture_node_get_filter_size(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("texture_node_get_filter_size", shader_type, id);
-    }
-  }
-  %extend {
-    void texture_node_set_filter_strength(int shader_type, float id, float filter_strength) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("texture_node_set_filter_strength", shader_type, id, filter_strength);
-    }
-  }
-  %extend {
-    float texture_node_get_filter_strength(int shader_type, float id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("texture_node_get_filter_strength", shader_type, id);
-    }
-  }
-  %extend {
-    void scalar_op_node_set_op(int shader_type, float id, int op) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("scalar_op_node_set_op", shader_type, id, op);
-    }
-  }
-  %extend {
-    int scalar_op_node_get_op(int shader_type, float id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("scalar_op_node_get_op", shader_type, id);
-    }
-  }
-  %extend {
-    void vec_op_node_set_op(int shader_type, float id, int op) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("vec_op_node_set_op", shader_type, id, op);
-    }
-  }
-  %extend {
-    int vec_op_node_get_op(int shader_type, float id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("vec_op_node_get_op", shader_type, id);
-    }
-  }
-  %extend {
-    void vec_scalar_op_node_set_op(int shader_type, float id, int op) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("vec_scalar_op_node_set_op", shader_type, id, op);
-    }
-  }
-  %extend {
-    int vec_scalar_op_node_get_op(int shader_type, float id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("vec_scalar_op_node_get_op", shader_type, id);
-    }
-  }
-  %extend {
-    void rgb_op_node_set_op(int shader_type, float id, int op) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rgb_op_node_set_op", shader_type, id, op);
-    }
-  }
-  %extend {
-    int rgb_op_node_get_op(int shader_type, float id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("rgb_op_node_get_op", shader_type, id);
-    }
-  }
-  %extend {
-    void xform_vec_mult_node_set_no_translation(int shader_type, int id, bool disable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("xform_vec_mult_node_set_no_translation", shader_type, id, disable);
-    }
-  }
-  %extend {
-    bool xform_vec_mult_node_get_no_translation(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("xform_vec_mult_node_get_no_translation", shader_type, id);
-    }
-  }
-  %extend {
-    void scalar_func_node_set_function(int shader_type, int id, int func) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("scalar_func_node_set_function", shader_type, id, func);
-    }
-  }
-  %extend {
-    int scalar_func_node_get_function(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("scalar_func_node_get_function", shader_type, id);
-    }
-  }
-  %extend {
-    void vec_func_node_set_function(int shader_type, int id, int func) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("vec_func_node_set_function", shader_type, id, func);
-    }
-  }
-  %extend {
-    int vec_func_node_get_function(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("vec_func_node_get_function", shader_type, id);
-    }
-  }
-  %extend {
-    void input_node_set_name(int shader_type, int id, const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("input_node_set_name", shader_type, id, name);
-    }
-  }
-  %extend {
-    String input_node_get_name(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("input_node_get_name", shader_type, id);
-    }
-  }
-  %extend {
-    void scalar_input_node_set_value(int shader_type, int id, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("scalar_input_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    float scalar_input_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("scalar_input_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void vec_input_node_set_value(int shader_type, int id, const Vector3& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("vec_input_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Vector3 vec_input_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("vec_input_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void rgb_input_node_set_value(int shader_type, int id, const Color& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rgb_input_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Color rgb_input_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("rgb_input_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void xform_input_node_set_value(int shader_type, int id, const Transform& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("xform_input_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Transform xform_input_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("xform_input_node_get_value", shader_type, id);
-    }
-  }
-  %extend {
-    void texture_input_node_set_value(int shader_type, int id, Ref<Texture> value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("texture_input_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Ref<Texture> texture_input_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("texture_input_node_get_value", shader_type, id).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void cubemap_input_node_set_value(int shader_type, int id, Ref<CubeMap> value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cubemap_input_node_set_value", shader_type, id, value);
-    }
-  }
-  %extend {
-    Ref<CubeMap> cubemap_input_node_get_value(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cubemap_input_node_get_value", shader_type, id).operator Object *()->cast_to<CubeMap>();
-    }
-  }
-  %extend {
-    void comment_node_set_text(int shader_type, int id, const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("comment_node_set_text", shader_type, id, text);
-    }
-  }
-  %extend {
-    String comment_node_get_text(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("comment_node_get_text", shader_type, id);
-    }
-  }
-  %extend {
-    void color_ramp_node_set_ramp(int shader_type, int id, const ColorArray& colors, const RealArray& offsets) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("color_ramp_node_set_ramp", shader_type, id, colors, offsets);
-    }
-  }
-  %extend {
-    ColorArray color_ramp_node_get_colors(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("color_ramp_node_get_colors", shader_type, id);
-    }
-  }
-  %extend {
-    RealArray color_ramp_node_get_offsets(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("color_ramp_node_get_offsets", shader_type, id);
-    }
-  }
-  %extend {
-    void curve_map_node_set_points(int shader_type, int id, const Vector2Array& points) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("curve_map_node_set_points", shader_type, id, points);
-    }
-  }
-  %extend {
-    Vector2Array curve_map_node_get_points(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("curve_map_node_get_points", shader_type, id);
-    }
-  }
-  %extend {
-    int connect_node(int shader_type, int src_id, int src_slot, int dst_id, int dst_slot) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("connect_node", shader_type, src_id, src_slot, dst_id, dst_slot);
-    }
-  }
-  %extend {
-    bool is_node_connected(int shader_type, int src_id, int src_slot, int dst_id, int dst_slot) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_node_connected", shader_type, src_id, src_slot, dst_id, dst_slot);
-    }
-  }
-  %extend {
-    void disconnect_node(int shader_type, int src_id, int src_slot, int dst_id, int dst_slot) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("disconnect_node", shader_type, src_id, src_slot, dst_id, dst_slot);
-    }
-  }
-  %extend {
-    Array get_node_connections(int shader_type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_connections", shader_type);
-    }
-  }
-  %extend {
-    void clear(int shader_type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear", shader_type);
-    }
-  }
-  %extend {
-    void node_set_state(int shader_type, int id, const Variant& state) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("node_set_state", shader_type, id, state);
-    }
-  }
-  %extend {
-    Variant node_get_state(int shader_type, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_state", shader_type, id);
-    }
-  }
-  %extend {
-    ~ShaderGraph() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

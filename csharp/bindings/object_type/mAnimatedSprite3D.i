@@ -1,15 +1,6 @@
 /* mAnimatedSprite3D.i */
 %module mAnimatedSprite3D
 
-%typemap(out) AnimatedSprite3D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) AnimatedSprite3D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) AnimatedSprite3D %{
 
@@ -47,60 +38,86 @@
 
 class AnimatedSprite3D : public SpriteBase3D {
 public:
-  %extend {
-    void set_sprite_frames(Ref<SpriteFrames> sprite_frames) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_sprite_frames", sprite_frames);
-    }
-  }
-  %extend {
-    Ref<SpriteFrames> get_sprite_frames() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sprite_frames").operator Object *()->cast_to<SpriteFrames>();
-    }
-  }
-  %extend {
-    void set_animation(const String& animation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_animation", animation);
-    }
-  }
-  %extend {
-    String get_animation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_animation");
-    }
-  }
-  %extend {
-    void play(const String& anim = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play", anim);
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_frame(int frame) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_frame", frame);
-    }
-  }
-  %extend {
-    int get_frame() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_frame");
-    }
-  }
   AnimatedSprite3D();
+
+%extend {
+
+void set_sprite_frames(SpriteFrames* sprite_frames) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "set_sprite_frames");
+  const void* __args[1] = { sprite_frames };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<SpriteFrames> get_sprite_frames() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "get_sprite_frames");
+  Ref<SpriteFrames> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_animation(const String& animation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "set_animation");
+  const void* __args[1] = { &animation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_animation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "get_animation");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void play(const String& anim = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "play");
+  const void* __args[1] = { &anim };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_frame(int frame) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "set_frame");
+  const void* __args[1] = { &frame };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_frame() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimatedSprite3D", "get_frame");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

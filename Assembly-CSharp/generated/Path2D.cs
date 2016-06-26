@@ -45,7 +45,6 @@ public class Path2D : Node2D {
 
   public void set_curve(Curve2D curve) {
     GodotEnginePINVOKE.Path2D_set_curve(swigCPtr, Curve2D.getCPtr(curve));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Curve2D get_curve() {

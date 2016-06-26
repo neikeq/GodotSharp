@@ -1,15 +1,6 @@
 /* mSprite.i */
 %module mSprite
 
-%typemap(out) Sprite "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Sprite* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Sprite %{
 
@@ -47,138 +38,198 @@
 
 class Sprite : public Node2D {
 public:
-  %extend {
-    void set_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void set_centered(bool centered) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_centered", centered);
-    }
-  }
-  %extend {
-    bool is_centered() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_centered");
-    }
-  }
-  %extend {
-    void set_offset(const Vector2& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_offset", offset);
-    }
-  }
-  %extend {
-    Vector2 get_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_offset");
-    }
-  }
-  %extend {
-    void set_flip_h(bool flip_h) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flip_h", flip_h);
-    }
-  }
-  %extend {
-    bool is_flipped_h() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_flipped_h");
-    }
-  }
-  %extend {
-    void set_flip_v(bool flip_v) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flip_v", flip_v);
-    }
-  }
-  %extend {
-    bool is_flipped_v() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_flipped_v");
-    }
-  }
-  %extend {
-    void set_region(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_region", enabled);
-    }
-  }
-  %extend {
-    bool is_region() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_region");
-    }
-  }
-  %extend {
-    void set_region_rect(const Rect2& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_region_rect", rect);
-    }
-  }
-  %extend {
-    Rect2 get_region_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_region_rect");
-    }
-  }
-  %extend {
-    void set_frame(int frame) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_frame", frame);
-    }
-  }
-  %extend {
-    int get_frame() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_frame");
-    }
-  }
-  %extend {
-    void set_vframes(int vframes) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vframes", vframes);
-    }
-  }
-  %extend {
-    int get_vframes() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vframes");
-    }
-  }
-  %extend {
-    void set_hframes(int hframes) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_hframes", hframes);
-    }
-  }
-  %extend {
-    int get_hframes() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_hframes");
-    }
-  }
-  %extend {
-    void set_modulate(const Color& modulate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_modulate", modulate);
-    }
-  }
-  %extend {
-    Color get_modulate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_modulate");
-    }
-  }
   Sprite();
+
+%extend {
+
+void set_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_centered(bool centered) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_centered");
+  const void* __args[1] = { &centered };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_centered() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "is_centered");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_offset(const Vector2& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flip_h(bool flip_h) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_flip_h");
+  const void* __args[1] = { &flip_h };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_flipped_h() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "is_flipped_h");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flip_v(bool flip_v) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_flip_v");
+  const void* __args[1] = { &flip_v };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_flipped_v() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "is_flipped_v");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_region(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_region");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_region() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "is_region");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_region_rect(const Rect2& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_region_rect");
+  const void* __args[1] = { &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Rect2 get_region_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_region_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_frame(int frame) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_frame");
+  const void* __args[1] = { &frame };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_frame() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_frame");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_vframes(int vframes) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_vframes");
+  const void* __args[1] = { &vframes };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_vframes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_vframes");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_hframes(int hframes) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_hframes");
+  const void* __args[1] = { &hframes };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_hframes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_hframes");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_modulate(const Color& modulate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "set_modulate");
+  const void* __args[1] = { &modulate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_modulate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sprite", "get_modulate");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

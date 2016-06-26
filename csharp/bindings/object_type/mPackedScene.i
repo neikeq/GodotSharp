@@ -1,22 +1,6 @@
 /* mPackedScene.i */
 %module mPackedScene
 
-%typemap(ctype, out="PackedScene*") Ref<PackedScene> "PackedScene*"
-%typemap(out, null="NULL") Ref<PackedScene> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PackedScene> "PackedScene.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PackedScene> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PackedScene> "PackedScene"
-%typemap(csout, excode=SWIGEXCODE) Ref<PackedScene> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PackedScene ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PackedScene;$excode
-    return ret;
-}
-
 template<class PackedScene> class Ref;%template() Ref<PackedScene>;
 %feature("novaluewrapper") Ref<PackedScene>;
 
@@ -57,45 +41,62 @@ template<class PackedScene> class Ref;%template() Ref<PackedScene>;
 
 class PackedScene : public Resource {
 public:
-  %extend {
-    int pack(Node* path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("pack", path);
-    }
-  }
-  %extend {
-    Node* instance(bool gen_edit_state = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("instance", gen_edit_state).operator Object *()->cast_to<Node>();
-    }
-  }
-  %extend {
-    bool can_instance() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_instance");
-    }
-  }
-  %extend {
-    Ref<SceneState> get_state() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_state").operator Object *()->cast_to<SceneState>();
-    }
-  }
   PackedScene();
-  %extend {
-    ~PackedScene() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int pack(Node* path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PackedScene", "pack");
+  const void* __args[1] = { path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Node* instance(bool gen_edit_state = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PackedScene", "instance");
+  const void* __args[1] = { &gen_edit_state };
+  Node* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool can_instance() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PackedScene", "can_instance");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<SceneState> get_state() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PackedScene", "get_state");
+  Ref<SceneState> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~PackedScene() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

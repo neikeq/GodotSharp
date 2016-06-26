@@ -2,22 +2,6 @@
 %module m_Mutex
 
 %rename(Mutex) _Mutex;
-%typemap(ctype, out="_Mutex*") Ref<_Mutex> "_Mutex*"
-%typemap(out, null="NULL") Ref<_Mutex> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<_Mutex> "_Mutex.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<_Mutex> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<_Mutex> "_Mutex"
-%typemap(csout, excode=SWIGEXCODE) Ref<_Mutex> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    _Mutex ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Mutex;$excode
-    return ret;
-}
-
 template<class _Mutex> class Ref;%template() Ref<_Mutex>;
 %feature("novaluewrapper") Ref<_Mutex>;
 
@@ -58,39 +42,47 @@ template<class _Mutex> class Ref;%template() Ref<_Mutex>;
 
 class _Mutex : public Reference {
 public:
-  %extend {
-    void lock() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("lock");
-    }
-  }
-  %extend {
-    int try_lock() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("try_lock");
-    }
-  }
-  %extend {
-    void unlock() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("unlock");
-    }
-  }
   _Mutex();
-  %extend {
-    ~_Mutex() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void lock() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Mutex", "lock");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int try_lock() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Mutex", "try_lock");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void unlock() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Mutex", "unlock");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~_Mutex() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

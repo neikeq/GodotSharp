@@ -1,5 +1,7 @@
 %module Include
 
+%include GlobalTypemaps.i
+
 %include mObject.i
 %include mPathRemap.i
 %include mPerformance.i

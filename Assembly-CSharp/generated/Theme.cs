@@ -114,16 +114,19 @@ public class Theme : Resource {
     return ret;
   }
 
-  public void set_font(string name, string type, SWIGTYPE_p_RefT_Font_t font) {
-    GodotEnginePINVOKE.Theme_set_font(swigCPtr, name, type, SWIGTYPE_p_RefT_Font_t.getCPtr(font));
+  public void set_font(string name, string type, Font font) {
+    GodotEnginePINVOKE.Theme_set_font(swigCPtr, name, type, Font.getCPtr(font));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RefT_Font_t get_font(string name, string type) {
-    SWIGTYPE_p_RefT_Font_t ret = new SWIGTYPE_p_RefT_Font_t(GodotEnginePINVOKE.Theme_get_font(swigCPtr, name, type), true);
+  public Font get_font(string name, string type) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Theme_get_font(swigCPtr, name, type);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Font ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Font;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public bool has_font(string name, string type) {
     bool ret = GodotEnginePINVOKE.Theme_has_font(swigCPtr, name, type);

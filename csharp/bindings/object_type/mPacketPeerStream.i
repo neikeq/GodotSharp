@@ -1,22 +1,6 @@
 /* mPacketPeerStream.i */
 %module mPacketPeerStream
 
-%typemap(ctype, out="PacketPeerStream*") Ref<PacketPeerStream> "PacketPeerStream*"
-%typemap(out, null="NULL") Ref<PacketPeerStream> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PacketPeerStream> "PacketPeerStream.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PacketPeerStream> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PacketPeerStream> "PacketPeerStream"
-%typemap(csout, excode=SWIGEXCODE) Ref<PacketPeerStream> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PacketPeerStream ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PacketPeerStream;$excode
-    return ret;
-}
-
 template<class PacketPeerStream> class Ref;%template() Ref<PacketPeerStream>;
 %feature("novaluewrapper") Ref<PacketPeerStream>;
 
@@ -57,27 +41,32 @@ template<class PacketPeerStream> class Ref;%template() Ref<PacketPeerStream>;
 
 class PacketPeerStream : public PacketPeer {
 public:
-  %extend {
-    void set_stream_peer(Ref<StreamPeer> peer) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stream_peer", peer);
-    }
-  }
   PacketPeerStream();
-  %extend {
-    ~PacketPeerStream() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_stream_peer(StreamPeer* peer) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeerStream", "set_stream_peer");
+  const void* __args[1] = { peer };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~PacketPeerStream() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

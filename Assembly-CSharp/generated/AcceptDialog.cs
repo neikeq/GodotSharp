@@ -70,28 +70,36 @@ public class AcceptDialog : WindowDialog {
 
   public Button add_button(string text, bool right, string action) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_add_button__SWIG_0(swigCPtr, text, right, action);
-    Button ret = (cPtr == global::System.IntPtr.Zero) ? null : new Button(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Button ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Button;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Button add_button(string text, bool right) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_add_button__SWIG_1(swigCPtr, text, right);
-    Button ret = (cPtr == global::System.IntPtr.Zero) ? null : new Button(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Button ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Button;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Button add_button(string text) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_add_button__SWIG_2(swigCPtr, text);
-    Button ret = (cPtr == global::System.IntPtr.Zero) ? null : new Button(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Button ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Button;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Button add_cancel(string name) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_add_cancel(swigCPtr, name);
-    Button ret = (cPtr == global::System.IntPtr.Zero) ? null : new Button(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Button ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Button;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

@@ -1,15 +1,6 @@
 /* mAnimationTreePlayer.i */
 %module mAnimationTreePlayer
 
-%typemap(out) AnimationTreePlayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) AnimationTreePlayer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) AnimationTreePlayer %{
   public static readonly int NODE_OUTPUT = 0;
@@ -57,390 +48,576 @@
 
 class AnimationTreePlayer : public Node {
 public:
-  %extend {
-    void add_node(int type, const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_node", type, id);
-    }
-  }
-  %extend {
-    bool node_exists(const String& node) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_exists", node);
-    }
-  }
-  %extend {
-    int node_rename(const String& node, const String& new_name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_rename", node, new_name);
-    }
-  }
-  %extend {
-    int node_get_type(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_type", id);
-    }
-  }
-  %extend {
-    int node_get_input_count(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_input_count", id);
-    }
-  }
-  %extend {
-    String node_get_input_source(const String& id, int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_input_source", id, idx);
-    }
-  }
-  %extend {
-    void animation_node_set_animation(const String& id, Ref<Animation> animation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("animation_node_set_animation", id, animation);
-    }
-  }
-  %extend {
-    Ref<Animation> animation_node_get_animation(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("animation_node_get_animation", id).operator Object *()->cast_to<Animation>();
-    }
-  }
-  %extend {
-    void animation_node_set_master_animation(const String& id, const String& source) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("animation_node_set_master_animation", id, source);
-    }
-  }
-  %extend {
-    String animation_node_get_master_animation(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("animation_node_get_master_animation", id);
-    }
-  }
-  %extend {
-    void animation_node_set_filter_path(const String& id, const NodePath& path, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("animation_node_set_filter_path", id, path, enable);
-    }
-  }
-  %extend {
-    void oneshot_node_set_fadein_time(const String& id, float time_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_set_fadein_time", id, time_sec);
-    }
-  }
-  %extend {
-    float oneshot_node_get_fadein_time(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("oneshot_node_get_fadein_time", id);
-    }
-  }
-  %extend {
-    void oneshot_node_set_fadeout_time(const String& id, float time_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_set_fadeout_time", id, time_sec);
-    }
-  }
-  %extend {
-    float oneshot_node_get_fadeout_time(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("oneshot_node_get_fadeout_time", id);
-    }
-  }
-  %extend {
-    void oneshot_node_set_autorestart(const String& id, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_set_autorestart", id, enable);
-    }
-  }
-  %extend {
-    void oneshot_node_set_autorestart_delay(const String& id, float delay_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_set_autorestart_delay", id, delay_sec);
-    }
-  }
-  %extend {
-    void oneshot_node_set_autorestart_random_delay(const String& id, float rand_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_set_autorestart_random_delay", id, rand_sec);
-    }
-  }
-  %extend {
-    bool oneshot_node_has_autorestart(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("oneshot_node_has_autorestart", id);
-    }
-  }
-  %extend {
-    float oneshot_node_get_autorestart_delay(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("oneshot_node_get_autorestart_delay", id);
-    }
-  }
-  %extend {
-    float oneshot_node_get_autorestart_random_delay(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("oneshot_node_get_autorestart_random_delay", id);
-    }
-  }
-  %extend {
-    void oneshot_node_start(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_start", id);
-    }
-  }
-  %extend {
-    void oneshot_node_stop(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_stop", id);
-    }
-  }
-  %extend {
-    bool oneshot_node_is_active(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("oneshot_node_is_active", id);
-    }
-  }
-  %extend {
-    void oneshot_node_set_filter_path(const String& id, const NodePath& path, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("oneshot_node_set_filter_path", id, path, enable);
-    }
-  }
-  %extend {
-    void mix_node_set_amount(const String& id, float ratio) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("mix_node_set_amount", id, ratio);
-    }
-  }
-  %extend {
-    float mix_node_get_amount(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("mix_node_get_amount", id);
-    }
-  }
-  %extend {
-    void blend2_node_set_amount(const String& id, float blend) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("blend2_node_set_amount", id, blend);
-    }
-  }
-  %extend {
-    float blend2_node_get_amount(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("blend2_node_get_amount", id);
-    }
-  }
-  %extend {
-    void blend2_node_set_filter_path(const String& id, const NodePath& path, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("blend2_node_set_filter_path", id, path, enable);
-    }
-  }
-  %extend {
-    void blend3_node_set_amount(const String& id, float blend) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("blend3_node_set_amount", id, blend);
-    }
-  }
-  %extend {
-    float blend3_node_get_amount(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("blend3_node_get_amount", id);
-    }
-  }
-  %extend {
-    void blend4_node_set_amount(const String& id, const Vector2& blend) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("blend4_node_set_amount", id, blend);
-    }
-  }
-  %extend {
-    Vector2 blend4_node_get_amount(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("blend4_node_get_amount", id);
-    }
-  }
-  %extend {
-    void timescale_node_set_scale(const String& id, float scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("timescale_node_set_scale", id, scale);
-    }
-  }
-  %extend {
-    float timescale_node_get_scale(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("timescale_node_get_scale", id);
-    }
-  }
-  %extend {
-    void timeseek_node_seek(const String& id, float pos_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("timeseek_node_seek", id, pos_sec);
-    }
-  }
-  %extend {
-    void transition_node_set_input_count(const String& id, int count) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("transition_node_set_input_count", id, count);
-    }
-  }
-  %extend {
-    int transition_node_get_input_count(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("transition_node_get_input_count", id);
-    }
-  }
-  %extend {
-    void transition_node_delete_input(const String& id, int input_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("transition_node_delete_input", id, input_idx);
-    }
-  }
-  %extend {
-    void transition_node_set_input_auto_advance(const String& id, int input_idx, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("transition_node_set_input_auto_advance", id, input_idx, enable);
-    }
-  }
-  %extend {
-    bool transition_node_has_input_auto_advance(const String& id, int input_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("transition_node_has_input_auto_advance", id, input_idx);
-    }
-  }
-  %extend {
-    void transition_node_set_xfade_time(const String& id, float time_sec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("transition_node_set_xfade_time", id, time_sec);
-    }
-  }
-  %extend {
-    float transition_node_get_xfade_time(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("transition_node_get_xfade_time", id);
-    }
-  }
-  %extend {
-    void transition_node_set_current(const String& id, int input_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("transition_node_set_current", id, input_idx);
-    }
-  }
-  %extend {
-    int transition_node_get_current(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("transition_node_get_current", id);
-    }
-  }
-  %extend {
-    void node_set_pos(const String& id, const Vector2& screen_pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("node_set_pos", id, screen_pos);
-    }
-  }
-  %extend {
-    Vector2 node_get_pos(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("node_get_pos", id);
-    }
-  }
-  %extend {
-    void remove_node(const String& id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_node", id);
-    }
-  }
-  %extend {
-    int connect(const String& id, const String& dst_id, int dst_input_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("connect", id, dst_id, dst_input_idx);
-    }
-  }
-  %extend {
-    bool is_connected(const String& id, const String& dst_id, int dst_input_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_connected", id, dst_id, dst_input_idx);
-    }
-  }
-  %extend {
-    void disconnect(const String& id, int dst_input_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("disconnect", id, dst_input_idx);
-    }
-  }
-  %extend {
-    void set_active(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_active", enabled);
-    }
-  }
-  %extend {
-    bool is_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_active");
-    }
-  }
-  %extend {
-    void set_base_path(const NodePath& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_base_path", path);
-    }
-  }
-  %extend {
-    NodePath get_base_path() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_base_path");
-    }
-  }
-  %extend {
-    void set_master_player(const NodePath& nodepath) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_master_player", nodepath);
-    }
-  }
-  %extend {
-    NodePath get_master_player() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_master_player");
-    }
-  }
-  %extend {
-    StringArray get_node_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_list");
-    }
-  }
-  %extend {
-    void set_animation_process_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_animation_process_mode", mode);
-    }
-  }
-  %extend {
-    int get_animation_process_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_animation_process_mode");
-    }
-  }
-  %extend {
-    void advance(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("advance", delta);
-    }
-  }
-  %extend {
-    void reset() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("reset");
-    }
-  }
-  %extend {
-    void recompute_caches() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("recompute_caches");
-    }
-  }
   AnimationTreePlayer();
+
+%extend {
+
+void add_node(int type, const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "add_node");
+  const void* __args[2] = { &type, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool node_exists(const String& node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_exists");
+  const void* __args[1] = { &node };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int node_rename(const String& node, const String& new_name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_rename");
+  const void* __args[2] = { &node, &new_name };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int node_get_type(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_get_type");
+  const void* __args[1] = { &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int node_get_input_count(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_get_input_count");
+  const void* __args[1] = { &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String node_get_input_source(const String& id, int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_get_input_source");
+  const void* __args[2] = { &id, &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void animation_node_set_animation(const String& id, Animation* animation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "animation_node_set_animation");
+  const void* __args[2] = { &id, animation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Animation> animation_node_get_animation(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "animation_node_get_animation");
+  const void* __args[1] = { &id };
+  Ref<Animation> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void animation_node_set_master_animation(const String& id, const String& source) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "animation_node_set_master_animation");
+  const void* __args[2] = { &id, &source };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String animation_node_get_master_animation(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "animation_node_get_master_animation");
+  const void* __args[1] = { &id };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void animation_node_set_filter_path(const String& id, const NodePath& path, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "animation_node_set_filter_path");
+  const void* __args[3] = { &id, &path, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void oneshot_node_set_fadein_time(const String& id, float time_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_set_fadein_time");
+  const void* __args[2] = { &id, &time_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float oneshot_node_get_fadein_time(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_get_fadein_time");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void oneshot_node_set_fadeout_time(const String& id, float time_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_set_fadeout_time");
+  const void* __args[2] = { &id, &time_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float oneshot_node_get_fadeout_time(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_get_fadeout_time");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void oneshot_node_set_autorestart(const String& id, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_set_autorestart");
+  const void* __args[2] = { &id, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void oneshot_node_set_autorestart_delay(const String& id, float delay_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_set_autorestart_delay");
+  const void* __args[2] = { &id, &delay_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void oneshot_node_set_autorestart_random_delay(const String& id, float rand_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_set_autorestart_random_delay");
+  const void* __args[2] = { &id, &rand_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool oneshot_node_has_autorestart(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_has_autorestart");
+  const void* __args[1] = { &id };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float oneshot_node_get_autorestart_delay(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_get_autorestart_delay");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float oneshot_node_get_autorestart_random_delay(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_get_autorestart_random_delay");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void oneshot_node_start(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_start");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void oneshot_node_stop(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_stop");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool oneshot_node_is_active(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_is_active");
+  const void* __args[1] = { &id };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void oneshot_node_set_filter_path(const String& id, const NodePath& path, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "oneshot_node_set_filter_path");
+  const void* __args[3] = { &id, &path, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void mix_node_set_amount(const String& id, float ratio) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "mix_node_set_amount");
+  const void* __args[2] = { &id, &ratio };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float mix_node_get_amount(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "mix_node_get_amount");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void blend2_node_set_amount(const String& id, float blend) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend2_node_set_amount");
+  const void* __args[2] = { &id, &blend };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float blend2_node_get_amount(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend2_node_get_amount");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void blend2_node_set_filter_path(const String& id, const NodePath& path, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend2_node_set_filter_path");
+  const void* __args[3] = { &id, &path, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void blend3_node_set_amount(const String& id, float blend) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend3_node_set_amount");
+  const void* __args[2] = { &id, &blend };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float blend3_node_get_amount(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend3_node_get_amount");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void blend4_node_set_amount(const String& id, const Vector2& blend) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend4_node_set_amount");
+  const void* __args[2] = { &id, &blend };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 blend4_node_get_amount(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "blend4_node_get_amount");
+  const void* __args[1] = { &id };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void timescale_node_set_scale(const String& id, float scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "timescale_node_set_scale");
+  const void* __args[2] = { &id, &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float timescale_node_get_scale(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "timescale_node_get_scale");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void timeseek_node_seek(const String& id, float pos_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "timeseek_node_seek");
+  const void* __args[2] = { &id, &pos_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void transition_node_set_input_count(const String& id, int count) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_set_input_count");
+  const void* __args[2] = { &id, &count };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int transition_node_get_input_count(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_get_input_count");
+  const void* __args[1] = { &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void transition_node_delete_input(const String& id, int input_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_delete_input");
+  const void* __args[2] = { &id, &input_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void transition_node_set_input_auto_advance(const String& id, int input_idx, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_set_input_auto_advance");
+  const void* __args[3] = { &id, &input_idx, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool transition_node_has_input_auto_advance(const String& id, int input_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_has_input_auto_advance");
+  const void* __args[2] = { &id, &input_idx };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void transition_node_set_xfade_time(const String& id, float time_sec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_set_xfade_time");
+  const void* __args[2] = { &id, &time_sec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float transition_node_get_xfade_time(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_get_xfade_time");
+  const void* __args[1] = { &id };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void transition_node_set_current(const String& id, int input_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_set_current");
+  const void* __args[2] = { &id, &input_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int transition_node_get_current(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "transition_node_get_current");
+  const void* __args[1] = { &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void node_set_pos(const String& id, const Vector2& screen_pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_set_pos");
+  const void* __args[2] = { &id, &screen_pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 node_get_pos(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "node_get_pos");
+  const void* __args[1] = { &id };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_node(const String& id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "remove_node");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int connect(const String& id, const String& dst_id, int dst_input_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "connect");
+  const void* __args[3] = { &id, &dst_id, &dst_input_idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_connected(const String& id, const String& dst_id, int dst_input_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "is_connected");
+  const void* __args[3] = { &id, &dst_id, &dst_input_idx };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void disconnect(const String& id, int dst_input_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "disconnect");
+  const void* __args[2] = { &id, &dst_input_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_active(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "set_active");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "is_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_base_path(const NodePath& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "set_base_path");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_base_path() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "get_base_path");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_master_player(const NodePath& nodepath) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "set_master_player");
+  const void* __args[1] = { &nodepath };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_master_player() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "get_master_player");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+StringArray get_node_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "get_node_list");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_animation_process_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "set_animation_process_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_animation_process_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "get_animation_process_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void advance(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "advance");
+  const void* __args[1] = { &delta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void reset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "reset");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void recompute_caches() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AnimationTreePlayer", "recompute_caches");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

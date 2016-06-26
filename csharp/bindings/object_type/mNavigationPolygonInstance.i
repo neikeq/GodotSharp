@@ -1,15 +1,6 @@
 /* mNavigationPolygonInstance.i */
 %module mNavigationPolygonInstance
 
-%typemap(out) NavigationPolygonInstance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) NavigationPolygonInstance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) NavigationPolygonInstance %{
 
@@ -47,30 +38,45 @@
 
 class NavigationPolygonInstance : public Node2D {
 public:
-  %extend {
-    void set_navigation_polygon(Ref<NavigationPolygon> navpoly) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_navigation_polygon", navpoly);
-    }
-  }
-  %extend {
-    Ref<NavigationPolygon> get_navigation_polygon() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_navigation_polygon").operator Object *()->cast_to<NavigationPolygon>();
-    }
-  }
-  %extend {
-    void set_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
   NavigationPolygonInstance();
+
+%extend {
+
+void set_navigation_polygon(NavigationPolygon* navpoly) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygonInstance", "set_navigation_polygon");
+  const void* __args[1] = { navpoly };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<NavigationPolygon> get_navigation_polygon() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygonInstance", "get_navigation_polygon");
+  Ref<NavigationPolygon> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygonInstance", "set_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygonInstance", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

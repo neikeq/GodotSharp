@@ -1,22 +1,6 @@
 /* mSurfaceTool.i */
 %module mSurfaceTool
 
-%typemap(ctype, out="SurfaceTool*") Ref<SurfaceTool> "SurfaceTool*"
-%typemap(out, null="NULL") Ref<SurfaceTool> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<SurfaceTool> "SurfaceTool.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<SurfaceTool> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<SurfaceTool> "SurfaceTool"
-%typemap(csout, excode=SWIGEXCODE) Ref<SurfaceTool> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    SurfaceTool ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SurfaceTool;$excode
-    return ret;
-}
-
 template<class SurfaceTool> class Ref;%template() Ref<SurfaceTool>;
 %feature("novaluewrapper") Ref<SurfaceTool>;
 
@@ -57,130 +41,158 @@ template<class SurfaceTool> class Ref;%template() Ref<SurfaceTool>;
 
 class SurfaceTool : public Reference {
 public:
-  %extend {
-    void begin(int primitive) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("begin", primitive);
-    }
-  }
-  %extend {
-    void add_vertex(const Vector3& vertex) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_vertex", vertex);
-    }
-  }
-  %extend {
-    void add_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_color", color);
-    }
-  }
-  %extend {
-    void add_normal(const Vector3& normal) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_normal", normal);
-    }
-  }
-  %extend {
-    void add_tangent(const Plane& tangent) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_tangent", tangent);
-    }
-  }
-  %extend {
-    void add_uv(const Vector2& uv) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_uv", uv);
-    }
-  }
-  %extend {
-    void add_uv2(const Vector2& uv2) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_uv2", uv2);
-    }
-  }
-  %extend {
-    void add_bones(const IntArray& bones) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_bones", bones);
-    }
-  }
-  %extend {
-    void add_weights(const RealArray& weights) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_weights", weights);
-    }
-  }
-  %extend {
-    void add_smooth_group(bool smooth) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_smooth_group", smooth);
-    }
-  }
-  %extend {
-    void add_triangle_fan(const Vector3Array& vertexes, const Vector2Array& uvs = Vector2Array(), const ColorArray& colors = ColorArray(), const Vector2Array& uv2s = Vector2Array(), const Vector3Array& normals = Vector3Array(), const Array& tangents = Array()) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(vertexes);
-Variant arg_1_ = Variant(uvs);
-Variant arg_2_ = Variant(colors);
-Variant arg_3_ = Variant(uv2s);
-Variant arg_4_ = Variant(normals);
-Variant arg_5_ = Variant(tangents);
-Variant *args_[6] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_ };
-$self->call("add_triangle_fan", (const Variant **) args_, 6, err);
-    }
-  }
-  %extend {
-    void set_material(Ref<Material> material) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_material", material);
-    }
-  }
-  %extend {
-    void index() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("index");
-    }
-  }
-  %extend {
-    void deindex() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("deindex");
-    }
-  }
-  %extend {
-    void generate_normals() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("generate_normals");
-    }
-  }
-  %extend {
-    Ref<Mesh> commit(Ref<Mesh> existing = Ref<Mesh>()) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("commit", existing).operator Object *()->cast_to<Mesh>();
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
   SurfaceTool();
-  %extend {
-    ~SurfaceTool() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void begin(int primitive) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "begin");
+  const void* __args[1] = { &primitive };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_vertex(const Vector3& vertex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_vertex");
+  const void* __args[1] = { &vertex };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_normal(const Vector3& normal) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_normal");
+  const void* __args[1] = { &normal };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_tangent(const Plane& tangent) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_tangent");
+  const void* __args[1] = { &tangent };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_uv(const Vector2& uv) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_uv");
+  const void* __args[1] = { &uv };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_uv2(const Vector2& uv2) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_uv2");
+  const void* __args[1] = { &uv2 };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_bones(const IntArray& bones) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_bones");
+  const void* __args[1] = { &bones };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_weights(const RealArray& weights) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_weights");
+  const void* __args[1] = { &weights };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_smooth_group(bool smooth) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_smooth_group");
+  const void* __args[1] = { &smooth };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_triangle_fan(const Vector3Array& vertexes, const Vector2Array& uvs = Vector2Array(), const ColorArray& colors = ColorArray(), const Vector2Array& uv2s = Vector2Array(), const Vector3Array& normals = Vector3Array(), const Array& tangents = Array()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "add_triangle_fan");
+  const void* __args[6] = { &vertexes, &uvs, &colors, &uv2s, &normals, &tangents };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_material(Material* material) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "set_material");
+  const void* __args[1] = { material };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void index() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "index");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void deindex() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "deindex");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void generate_normals() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "generate_normals");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+Ref<Mesh> commit(Mesh* existing = NULL) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "commit");
+  const void* __args[1] = { existing };
+  Ref<Mesh> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SurfaceTool", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~SurfaceTool() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

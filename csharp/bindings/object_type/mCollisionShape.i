@@ -1,15 +1,6 @@
 /* mCollisionShape.i */
 %module mCollisionShape
 
-%typemap(out) CollisionShape "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) CollisionShape* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) CollisionShape %{
 
@@ -47,48 +38,69 @@
 
 class CollisionShape : public Spatial {
 public:
-  %extend {
-    void resource_changed(Object* resource) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("resource_changed", resource);
-    }
-  }
-  %extend {
-    void set_shape(Object* shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shape", shape);
-    }
-  }
-  %extend {
-    Object* get_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shape").operator Object *();
-    }
-  }
-  %extend {
-    void set_trigger(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_trigger", enable);
-    }
-  }
-  %extend {
-    bool is_trigger() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_trigger");
-    }
-  }
-  %extend {
-    void make_convex_from_brothers() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("make_convex_from_brothers");
-    }
-  }
-  %extend {
-    int get_collision_object_shape_index() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_object_shape_index");
-    }
-  }
   CollisionShape();
+
+%extend {
+
+void resource_changed(Object* resource) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "resource_changed");
+  const void* __args[1] = { resource };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_shape(Object* shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "set_shape");
+  const void* __args[1] = { shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "get_shape");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_trigger(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "set_trigger");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_trigger() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "is_trigger");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void make_convex_from_brothers() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "make_convex_from_brothers");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_collision_object_shape_index() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CollisionShape", "get_collision_object_shape_index");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,15 +1,6 @@
 /* mHingeJoint.i */
 %module mHingeJoint
 
-%typemap(out) HingeJoint "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) HingeJoint* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) HingeJoint %{
   public static readonly int PARAM_BIAS = 0;
@@ -59,30 +50,47 @@
 
 class HingeJoint : public Joint {
 public:
-  %extend {
-    void set_param(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param", param, value);
-    }
-  }
-  %extend {
-    float get_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param", param);
-    }
-  }
-  %extend {
-    void set_flag(int flag, bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flag", flag, enabled);
-    }
-  }
-  %extend {
-    bool get_flag(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flag", flag);
-    }
-  }
   HingeJoint();
+
+%extend {
+
+void set_param(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HingeJoint", "set_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HingeJoint", "get_param");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_flag(int flag, bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HingeJoint", "set_flag");
+  const void* __args[2] = { &flag, &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_flag(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HingeJoint", "get_flag");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

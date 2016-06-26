@@ -542,8 +542,8 @@ public class Physics2DServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public bool body_test_motion(SWIGTYPE_p_RID body, Vector2 motion, float margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t result) {
-    bool ret = GodotEnginePINVOKE.Physics2DServer_body_test_motion__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), ref motion, margin, SWIGTYPE_p_RefT_Physics2DTestMotionResult_t.getCPtr(result));
+  public bool body_test_motion(SWIGTYPE_p_RID body, Vector2 motion, float margin, Physics2DTestMotionResult result) {
+    bool ret = GodotEnginePINVOKE.Physics2DServer_body_test_motion__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), ref motion, margin, Physics2DTestMotionResult.getCPtr(result));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

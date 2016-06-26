@@ -1,22 +1,6 @@
 /* mPackedDataContainer.i */
 %module mPackedDataContainer
 
-%typemap(ctype, out="PackedDataContainer*") Ref<PackedDataContainer> "PackedDataContainer*"
-%typemap(out, null="NULL") Ref<PackedDataContainer> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PackedDataContainer> "PackedDataContainer.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PackedDataContainer> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PackedDataContainer> "PackedDataContainer"
-%typemap(csout, excode=SWIGEXCODE) Ref<PackedDataContainer> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PackedDataContainer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PackedDataContainer;$excode
-    return ret;
-}
-
 template<class PackedDataContainer> class Ref;%template() Ref<PackedDataContainer>;
 %feature("novaluewrapper") Ref<PackedDataContainer>;
 
@@ -57,33 +41,43 @@ template<class PackedDataContainer> class Ref;%template() Ref<PackedDataContaine
 
 class PackedDataContainer : public Resource {
 public:
-  %extend {
-    int pack(const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("pack", value);
-    }
-  }
-  %extend {
-    int size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("size");
-    }
-  }
   PackedDataContainer();
-  %extend {
-    ~PackedDataContainer() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int pack(const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PackedDataContainer", "pack");
+  const void* __args[1] = { &value };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PackedDataContainer", "size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~PackedDataContainer() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

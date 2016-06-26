@@ -62,15 +62,17 @@ public class World : Resource {
     return ret;
   }
 
-  public void set_environment(SWIGTYPE_p_RefT_Environment_t env) {
-    GodotEnginePINVOKE.World_set_environment(swigCPtr, SWIGTYPE_p_RefT_Environment_t.getCPtr(env));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void set_environment(Environment env) {
+    GodotEnginePINVOKE.World_set_environment(swigCPtr, Environment.getCPtr(env));
   }
 
-  public SWIGTYPE_p_RefT_Environment_t get_environment() {
-    SWIGTYPE_p_RefT_Environment_t ret = new SWIGTYPE_p_RefT_Environment_t(GodotEnginePINVOKE.World_get_environment(swigCPtr), true);
+  public Environment get_environment() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.World_get_environment(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Environment ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Environment;
     return ret;
-  }
+}
 
   public PhysicsDirectSpaceState get_direct_space_state() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.World_get_direct_space_state(swigCPtr);

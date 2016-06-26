@@ -1,15 +1,6 @@
 /* mScrollContainer.i */
 %module mScrollContainer
 
-%typemap(out) ScrollContainer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ScrollContainer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ScrollContainer %{
 
@@ -47,54 +38,79 @@
 
 class ScrollContainer : public Container {
 public:
-  %extend {
-    void set_enable_h_scroll(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enable_h_scroll", enable);
-    }
-  }
-  %extend {
-    bool is_h_scroll_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_h_scroll_enabled");
-    }
-  }
-  %extend {
-    void set_enable_v_scroll(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enable_v_scroll", enable);
-    }
-  }
-  %extend {
-    bool is_v_scroll_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_v_scroll_enabled");
-    }
-  }
-  %extend {
-    void set_h_scroll(int val) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_h_scroll", val);
-    }
-  }
-  %extend {
-    int get_h_scroll() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_h_scroll");
-    }
-  }
-  %extend {
-    void set_v_scroll(int val) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_v_scroll", val);
-    }
-  }
-  %extend {
-    int get_v_scroll() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_v_scroll");
-    }
-  }
   ScrollContainer();
+
+%extend {
+
+void set_enable_h_scroll(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "set_enable_h_scroll");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_h_scroll_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "is_h_scroll_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_enable_v_scroll(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "set_enable_v_scroll");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_v_scroll_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "is_v_scroll_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_h_scroll(int val) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "set_h_scroll");
+  const void* __args[1] = { &val };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_h_scroll() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "get_h_scroll");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_v_scroll(int val) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "set_v_scroll");
+  const void* __args[1] = { &val };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_v_scroll() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ScrollContainer", "get_v_scroll");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

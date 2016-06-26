@@ -1,15 +1,6 @@
 /* mTextureFrame.i */
 %module mTextureFrame
 
-%typemap(out) TextureFrame "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) TextureFrame* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) TextureFrame %{
   public static readonly int STRETCH_SCALE_ON_EXPAND = 0;
@@ -54,54 +45,79 @@
 
 class TextureFrame : public Control {
 public:
-  %extend {
-    void set_texture(Object* texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_texture", texture);
-    }
-  }
-  %extend {
-    Object* get_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_modulate(const Color& modulate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_modulate", modulate);
-    }
-  }
-  %extend {
-    Color get_modulate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_modulate");
-    }
-  }
-  %extend {
-    void set_expand(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_expand", enable);
-    }
-  }
-  %extend {
-    bool has_expand() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_expand");
-    }
-  }
-  %extend {
-    void set_stretch_mode(int stretch_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stretch_mode", stretch_mode);
-    }
-  }
-  %extend {
-    int get_stretch_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stretch_mode");
-    }
-  }
   TextureFrame();
+
+%extend {
+
+void set_texture(Object* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "set_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "get_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_modulate(const Color& modulate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "set_modulate");
+  const void* __args[1] = { &modulate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_modulate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "get_modulate");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_expand(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "set_expand");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_expand() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "has_expand");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_stretch_mode(int stretch_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "set_stretch_mode");
+  const void* __args[1] = { &stretch_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_stretch_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureFrame", "get_stretch_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

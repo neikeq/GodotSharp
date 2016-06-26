@@ -45,32 +45,26 @@ public class TextureButton : BaseButton {
 
   public void set_normal_texture(Texture texture) {
     GodotEnginePINVOKE.TextureButton_set_normal_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_pressed_texture(Texture texture) {
     GodotEnginePINVOKE.TextureButton_set_pressed_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_hover_texture(Texture texture) {
     GodotEnginePINVOKE.TextureButton_set_hover_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_disabled_texture(Texture texture) {
     GodotEnginePINVOKE.TextureButton_set_disabled_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_focused_texture(Texture texture) {
     GodotEnginePINVOKE.TextureButton_set_focused_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_click_mask(BitMap mask) {
     GodotEnginePINVOKE.TextureButton_set_click_mask(swigCPtr, BitMap.getCPtr(mask));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_texture_scale(Vector2 scale) {

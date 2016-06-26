@@ -1,22 +1,6 @@
 /* mNavigationMesh.i */
 %module mNavigationMesh
 
-%typemap(ctype, out="NavigationMesh*") Ref<NavigationMesh> "NavigationMesh*"
-%typemap(out, null="NULL") Ref<NavigationMesh> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<NavigationMesh> "NavigationMesh.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<NavigationMesh> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<NavigationMesh> "NavigationMesh"
-%typemap(csout, excode=SWIGEXCODE) Ref<NavigationMesh> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    NavigationMesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationMesh;$excode
-    return ret;
-}
-
 template<class NavigationMesh> class Ref;%template() Ref<NavigationMesh>;
 %feature("novaluewrapper") Ref<NavigationMesh>;
 
@@ -57,57 +41,75 @@ template<class NavigationMesh> class Ref;%template() Ref<NavigationMesh>;
 
 class NavigationMesh : public Resource {
 public:
-  %extend {
-    void set_vertices(const Vector3Array& vertices) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertices", vertices);
-    }
-  }
-  %extend {
-    Vector3Array get_vertices() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertices");
-    }
-  }
-  %extend {
-    void add_polygon(const IntArray& polygon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_polygon", polygon);
-    }
-  }
-  %extend {
-    int get_polygon_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_polygon_count");
-    }
-  }
-  %extend {
-    IntArray get_polygon(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_polygon", idx);
-    }
-  }
-  %extend {
-    void clear_polygons() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_polygons");
-    }
-  }
   NavigationMesh();
-  %extend {
-    ~NavigationMesh() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_vertices(const Vector3Array& vertices) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMesh", "set_vertices");
+  const void* __args[1] = { &vertices };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3Array get_vertices() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMesh", "get_vertices");
+  Vector3Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_polygon(const IntArray& polygon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMesh", "add_polygon");
+  const void* __args[1] = { &polygon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_polygon_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMesh", "get_polygon_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+IntArray get_polygon(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMesh", "get_polygon");
+  const void* __args[1] = { &idx };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_polygons() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationMesh", "clear_polygons");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~NavigationMesh() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

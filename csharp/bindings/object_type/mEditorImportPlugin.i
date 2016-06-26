@@ -1,22 +1,6 @@
 /* mEditorImportPlugin.i */
 %module mEditorImportPlugin
 
-%typemap(ctype, out="EditorImportPlugin*") Ref<EditorImportPlugin> "EditorImportPlugin*"
-%typemap(out, null="NULL") Ref<EditorImportPlugin> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<EditorImportPlugin> "EditorImportPlugin.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<EditorImportPlugin> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<EditorImportPlugin> "EditorImportPlugin"
-%typemap(csout, excode=SWIGEXCODE) Ref<EditorImportPlugin> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    EditorImportPlugin ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorImportPlugin;$excode
-    return ret;
-}
-
 template<class EditorImportPlugin> class Ref;%template() Ref<EditorImportPlugin>;
 %feature("novaluewrapper") Ref<EditorImportPlugin>;
 
@@ -57,81 +41,115 @@ template<class EditorImportPlugin> class Ref;%template() Ref<EditorImportPlugin>
 
 class EditorImportPlugin : public Reference {
 public:
-  %extend {
-    bool can_reimport_multiple_files() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_reimport_multiple_files");
-    }
-  }
-  %extend {
-    RawArray custom_export(const String& path, EditorExportPlatform* platform) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("custom_export", path, platform);
-    }
-  }
-  %extend {
-    String get_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_name");
-    }
-  }
-  %extend {
-    String get_visible_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_visible_name");
-    }
-  }
-  %extend {
-    int import(const String& path, Ref<ResourceImportMetadata> from) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("import", path, from);
-    }
-  }
-  %extend {
-    void import_dialog(const String& from) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("import_dialog", from);
-    }
-  }
-  %extend {
-    void import_from_drop(const StringArray& files, const String& dest_path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("import_from_drop", files, dest_path);
-    }
-  }
-  %extend {
-    void reimport_multiple_files(const StringArray& files) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("reimport_multiple_files", files);
-    }
-  }
-  %extend {
-    String validate_source_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("validate_source_path", path);
-    }
-  }
-  %extend {
-    String expand_source_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("expand_source_path", path);
-    }
-  }
   EditorImportPlugin();
-  %extend {
-    ~EditorImportPlugin() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+bool can_reimport_multiple_files() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "can_reimport_multiple_files");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RawArray custom_export(const String& path, EditorExportPlatform* platform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "custom_export");
+  const void* __args[2] = { &path, platform };
+  RawArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "get_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_visible_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "get_visible_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int import(const String& path, ResourceImportMetadata* from) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "import");
+  const void* __args[2] = { &path, from };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void import_dialog(const String& from) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "import_dialog");
+  const void* __args[1] = { &from };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void import_from_drop(const StringArray& files, const String& dest_path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "import_from_drop");
+  const void* __args[2] = { &files, &dest_path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void reimport_multiple_files(const StringArray& files) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "reimport_multiple_files");
+  const void* __args[1] = { &files };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String validate_source_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "validate_source_path");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String expand_source_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorImportPlugin", "expand_source_path");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~EditorImportPlugin() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

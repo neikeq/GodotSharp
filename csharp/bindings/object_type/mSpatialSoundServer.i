@@ -4,15 +4,6 @@
 %csmethodmodifiers SpatialSoundServer::SpatialSoundServer "private"
 %csmethodmodifiers SpatialSoundServer::SingletonGetInstance "private"
 %nodefaultctor SpatialSoundServer;
-%typemap(out) SpatialSoundServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SpatialSoundServer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SpatialSoundServer %{
   private static $csclassname instance;
@@ -61,8 +52,12 @@
 
 class SpatialSoundServer : public Object {
 public:
-  %extend {
-    static SpatialSoundServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("SpatialSoundServer")->cast_to<SpatialSoundServer>(); }
-  }
+
+%extend {
+
+static SpatialSoundServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("SpatialSoundServer")->cast_to<SpatialSoundServer>(); }
+
+}
+
 
 };

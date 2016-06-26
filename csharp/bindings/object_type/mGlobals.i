@@ -4,15 +4,6 @@
 %csmethodmodifiers Globals::Globals "private"
 %csmethodmodifiers Globals::SingletonGetInstance "private"
 %nodefaultctor Globals;
-%typemap(out) Globals "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Globals* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Globals %{
   private static $csclassname instance;
@@ -61,86 +52,135 @@
 
 class Globals : public Object {
 public:
-  %extend {
-    bool has(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has", name);
-    }
-  }
-  %extend {
-    void set_order(const String& name, int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_order", name, pos);
-    }
-  }
-  %extend {
-    int get_order(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_order", name);
-    }
-  }
-  %extend {
-    void set_persisting(const String& name, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_persisting", name, enable);
-    }
-  }
-  %extend {
-    bool is_persisting(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_persisting", name);
-    }
-  }
-  %extend {
-    void clear(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear", name);
-    }
-  }
-  %extend {
-    String localize_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("localize_path", path);
-    }
-  }
-  %extend {
-    String globalize_path(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("globalize_path", path);
-    }
-  }
-  %extend {
-    int save() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("save");
-    }
-  }
-  %extend {
-    bool has_singleton(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_singleton", name);
-    }
-  }
-  %extend {
-    Object* get_singleton(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_singleton", name).operator Object *();
-    }
-  }
-  %extend {
-    bool load_resource_pack(const String& pack) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("load_resource_pack", pack);
-    }
-  }
-  %extend {
-    int save_custom(const String& file) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("save_custom", file);
-    }
-  }
-  %extend {
-    static Globals* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Globals")->cast_to<Globals>(); }
-  }
+
+%extend {
+
+bool has(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "has");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_order(const String& name, int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "set_order");
+  const void* __args[2] = { &name, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_order(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "get_order");
+  const void* __args[1] = { &name };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_persisting(const String& name, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "set_persisting");
+  const void* __args[2] = { &name, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_persisting(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "is_persisting");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "clear");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String localize_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "localize_path");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String globalize_path(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "globalize_path");
+  const void* __args[1] = { &path };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int save() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "save");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool has_singleton(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "has_singleton");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Object* get_singleton(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "get_singleton");
+  const void* __args[1] = { &name };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool load_resource_pack(const String& pack) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "load_resource_pack");
+  const void* __args[1] = { &pack };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int save_custom(const String& file) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Globals", "save_custom");
+  const void* __args[1] = { &file };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+static Globals* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Globals")->cast_to<Globals>(); }
+
+}
+
 
 };

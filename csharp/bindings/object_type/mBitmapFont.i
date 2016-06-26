@@ -1,22 +1,6 @@
 /* mBitmapFont.i */
 %module mBitmapFont
 
-%typemap(ctype, out="BitmapFont*") Ref<BitmapFont> "BitmapFont*"
-%typemap(out, null="NULL") Ref<BitmapFont> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<BitmapFont> "BitmapFont.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<BitmapFont> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<BitmapFont> "BitmapFont"
-%typemap(csout, excode=SWIGEXCODE) Ref<BitmapFont> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    BitmapFont ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BitmapFont;$excode
-    return ret;
-}
-
 template<class BitmapFont> class Ref;%template() Ref<BitmapFont>;
 %feature("novaluewrapper") Ref<BitmapFont>;
 
@@ -57,105 +41,145 @@ template<class BitmapFont> class Ref;%template() Ref<BitmapFont>;
 
 class BitmapFont : public Font {
 public:
-  %extend {
-    int create_from_fnt(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("create_from_fnt", path);
-    }
-  }
-  %extend {
-    void set_height(float px) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_height", px);
-    }
-  }
-  %extend {
-    void set_ascent(float px) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ascent", px);
-    }
-  }
-  %extend {
-    void add_kerning_pair(int char_a, int char_b, int kerning) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_kerning_pair", char_a, char_b, kerning);
-    }
-  }
-  %extend {
-    int get_kerning_pair(int char_a, int char_b) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_kerning_pair", char_a, char_b);
-    }
-  }
-  %extend {
-    void add_texture(Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_texture", texture);
-    }
-  }
-  %extend {
-    void add_char(int character, int texture, const Rect2& rect, const Vector2& align = Vector2(0,0), float advance = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_char", character, texture, rect, align, advance);
-    }
-  }
-  %extend {
-    int get_texture_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture_count");
-    }
-  }
-  %extend {
-    Ref<Texture> get_texture(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_texture", idx).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Vector2 get_char_size(int char_, int next = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_char_size", char_, next);
-    }
-  }
-  %extend {
-    void set_distance_field_hint(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_distance_field_hint", enable);
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    void set_fallback(Object* fallback) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_fallback", fallback);
-    }
-  }
-  %extend {
-    Object* get_fallback() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fallback").operator Object *();
-    }
-  }
   BitmapFont();
-  %extend {
-    ~BitmapFont() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int create_from_fnt(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "create_from_fnt");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_height(float px) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "set_height");
+  const void* __args[1] = { &px };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_ascent(float px) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "set_ascent");
+  const void* __args[1] = { &px };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_kerning_pair(int char_a, int char_b, int kerning) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "add_kerning_pair");
+  const void* __args[3] = { &char_a, &char_b, &kerning };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_kerning_pair(int char_a, int char_b) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "get_kerning_pair");
+  const void* __args[2] = { &char_a, &char_b };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void add_texture(Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "add_texture");
+  const void* __args[1] = { texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_char(int character, int texture, const Rect2& rect, const Vector2& align = Vector2(0,0), float advance = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "add_char");
+  const void* __args[5] = { &character, &texture, &rect, &align, &advance };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_texture_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "get_texture_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<Texture> get_texture(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "get_texture");
+  const void* __args[1] = { &idx };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_char_size(int char_, int next = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "get_char_size");
+  const void* __args[2] = { &char_, &next };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_distance_field_hint(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "set_distance_field_hint");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_fallback(Object* fallback) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "set_fallback");
+  const void* __args[1] = { fallback };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_fallback() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BitmapFont", "get_fallback");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~BitmapFont() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

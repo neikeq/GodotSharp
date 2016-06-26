@@ -1,15 +1,6 @@
 /* mControl.i */
 %module mControl
 
-%typemap(out) Control "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Control* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Control %{
   public static readonly int ANCHOR_BEGIN = 0;
@@ -81,540 +72,788 @@
 
 class Control : public CanvasItem {
 public:
-  %extend {
-    void _input_event(const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_input_event", event);
-    }
-  }
-  %extend {
-    bool can_drop_data(const Vector2& pos, const Variant& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_drop_data", pos, data);
-    }
-  }
-  %extend {
-    void drop_data(const Vector2& pos, const Variant& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("drop_data", pos, data);
-    }
-  }
-  %extend {
-    Object* get_drag_data(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_drag_data", pos).operator Object *();
-    }
-  }
-  %extend {
-    Vector2 get_minimum_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_minimum_size");
-    }
-  }
-  %extend {
-    void accept_event() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("accept_event");
-    }
-  }
-  %extend {
-    Vector2 get_minimum_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_minimum_size");
-    }
-  }
-  %extend {
-    Vector2 get_combined_minimum_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_combined_minimum_size");
-    }
-  }
-  %extend {
-    void set_anchor(int margin, int anchor_mode, bool keep_margin = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_anchor", margin, anchor_mode, keep_margin);
-    }
-  }
-  %extend {
-    int get_anchor(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_anchor", margin);
-    }
-  }
-  %extend {
-    void set_margin(int margin, float offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_margin", margin, offset);
-    }
-  }
-  %extend {
-    void set_anchor_and_margin(int margin, int anchor_mode, float offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_anchor_and_margin", margin, anchor_mode, offset);
-    }
-  }
-  %extend {
-    void set_begin(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_begin", pos);
-    }
-  }
-  %extend {
-    void set_end(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_end", pos);
-    }
-  }
-  %extend {
-    void set_pos(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pos", pos);
-    }
-  }
-  %extend {
-    void set_size(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_size", size);
-    }
-  }
-  %extend {
-    void set_custom_minimum_size(const Vector2& size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_custom_minimum_size", size);
-    }
-  }
-  %extend {
-    void set_global_pos(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_global_pos", pos);
-    }
-  }
-  %extend {
-    void set_rotation(float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rotation", radians);
-    }
-  }
-  %extend {
-    void set_rotation_deg(float degrees) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rotation_deg", degrees);
-    }
-  }
-  %extend {
-    void set_scale(const Vector2& scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scale", scale);
-    }
-  }
-  %extend {
-    float get_margin(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_margin", margin);
-    }
-  }
-  %extend {
-    Vector2 get_begin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_begin");
-    }
-  }
-  %extend {
-    Vector2 get_end() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_end");
-    }
-  }
-  %extend {
-    Vector2 get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    Vector2 get_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_size");
-    }
-  }
-  %extend {
-    float get_rotation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rotation");
-    }
-  }
-  %extend {
-    float get_rotation_deg() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rotation_deg");
-    }
-  }
-  %extend {
-    Vector2 get_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scale");
-    }
-  }
-  %extend {
-    Vector2 get_custom_minimum_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_custom_minimum_size");
-    }
-  }
-  %extend {
-    Vector2 get_parent_area_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_parent_area_size");
-    }
-  }
-  %extend {
-    Vector2 get_global_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_global_pos");
-    }
-  }
-  %extend {
-    Rect2 get_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rect");
-    }
-  }
-  %extend {
-    Rect2 get_global_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_global_rect");
-    }
-  }
-  %extend {
-    void set_area_as_parent_rect(int margin = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_area_as_parent_rect", margin);
-    }
-  }
-  %extend {
-    void show_modal(bool exclusive = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("show_modal", exclusive);
-    }
-  }
-  %extend {
-    void set_focus_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_focus_mode", mode);
-    }
-  }
-  %extend {
-    int get_focus_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_focus_mode");
-    }
-  }
-  %extend {
-    bool has_focus() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_focus");
-    }
-  }
-  %extend {
-    void grab_focus() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("grab_focus");
-    }
-  }
-  %extend {
-    void release_focus() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("release_focus");
-    }
-  }
-  %extend {
-    Control* get_focus_owner() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_focus_owner").operator Object *()->cast_to<Control>();
-    }
-  }
-  %extend {
-    void set_h_size_flags(int flags) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_h_size_flags", flags);
-    }
-  }
-  %extend {
-    int get_h_size_flags() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_h_size_flags");
-    }
-  }
-  %extend {
-    void set_stretch_ratio(float ratio) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stretch_ratio", ratio);
-    }
-  }
-  %extend {
-    float get_stretch_ratio() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stretch_ratio");
-    }
-  }
-  %extend {
-    void set_v_size_flags(int flags) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_v_size_flags", flags);
-    }
-  }
-  %extend {
-    int get_v_size_flags() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_v_size_flags");
-    }
-  }
-  %extend {
-    void set_theme(Ref<Theme> theme) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_theme", theme);
-    }
-  }
-  %extend {
-    Ref<Theme> get_theme() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_theme").operator Object *()->cast_to<Theme>();
-    }
-  }
-  %extend {
-    void add_icon_override(const String& name, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_icon_override", name, texture);
-    }
-  }
-  %extend {
-    void add_shader_override(const String& name, Ref<Shader> shader) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_shader_override", name, shader);
-    }
-  }
-  %extend {
-    void add_style_override(const String& name, Ref<StyleBox> stylebox) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_style_override", name, stylebox);
-    }
-  }
-  %extend {
-    void add_font_override(const String& name, Ref<Font> font) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_font_override", name, font);
-    }
-  }
-  %extend {
-    void add_color_override(const String& name, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_color_override", name, color);
-    }
-  }
-  %extend {
-    void add_constant_override(const String& name, int constant) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_constant_override", name, constant);
-    }
-  }
-  %extend {
-    Ref<Texture> get_icon(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_icon", name, type).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    Ref<StyleBox> get_stylebox(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stylebox", name, type).operator Object *()->cast_to<StyleBox>();
-    }
-  }
-  %extend {
-    Ref<Font> get_font(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_font", name, type).operator Object *()->cast_to<Font>();
-    }
-  }
-  %extend {
-    Color get_color(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color", name, type);
-    }
-  }
-  %extend {
-    int get_constant(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_constant", name, type);
-    }
-  }
-  %extend {
-    bool has_icon_override(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_icon_override", name);
-    }
-  }
-  %extend {
-    bool has_stylebox_override(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_stylebox_override", name);
-    }
-  }
-  %extend {
-    bool has_font_override(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_font_override", name);
-    }
-  }
-  %extend {
-    bool has_color_override(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_color_override", name);
-    }
-  }
-  %extend {
-    bool has_constant_override(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_constant_override", name);
-    }
-  }
-  %extend {
-    bool has_icon(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_icon", name, type);
-    }
-  }
-  %extend {
-    bool has_stylebox(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_stylebox", name, type);
-    }
-  }
-  %extend {
-    bool has_font(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_font", name, type);
-    }
-  }
-  %extend {
-    bool has_color(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_color", name, type);
-    }
-  }
-  %extend {
-    bool has_constant(const String& name, const String& type = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_constant", name, type);
-    }
-  }
-  %extend {
-    Control* get_parent_control() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_parent_control").operator Object *()->cast_to<Control>();
-    }
-  }
-  %extend {
-    void set_tooltip(const String& tooltip) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tooltip", tooltip);
-    }
-  }
-  %extend {
-    String get_tooltip(const Vector2& atpos = Vector2(0,0)) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tooltip", atpos);
-    }
-  }
-  %extend {
-    void set_default_cursor_shape(int shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_default_cursor_shape", shape);
-    }
-  }
-  %extend {
-    int get_default_cursor_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_default_cursor_shape");
-    }
-  }
-  %extend {
-    int get_cursor_shape(const Vector2& pos = Vector2(0,0)) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cursor_shape", pos);
-    }
-  }
-  %extend {
-    void set_focus_neighbour(int margin, const NodePath& neighbour) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_focus_neighbour", margin, neighbour);
-    }
-  }
-  %extend {
-    NodePath get_focus_neighbour(int margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_focus_neighbour", margin);
-    }
-  }
-  %extend {
-    void set_ignore_mouse(bool ignore) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ignore_mouse", ignore);
-    }
-  }
-  %extend {
-    bool is_ignoring_mouse() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_ignoring_mouse");
-    }
-  }
-  %extend {
-    void force_drag(const Variant& data, Object* preview) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("force_drag", data, preview);
-    }
-  }
-  %extend {
-    void set_stop_mouse(bool stop) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stop_mouse", stop);
-    }
-  }
-  %extend {
-    bool is_stopping_mouse() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_stopping_mouse");
-    }
-  }
-  %extend {
-    void grab_click_focus() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("grab_click_focus");
-    }
-  }
-  %extend {
-    void set_drag_forwarding(Control* target) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_drag_forwarding", target);
-    }
-  }
-  %extend {
-    void set_drag_preview(Control* control) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_drag_preview", control);
-    }
-  }
-  %extend {
-    void warp_mouse(const Vector2& to_pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("warp_mouse", to_pos);
-    }
-  }
-  %extend {
-    void minimum_size_changed() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("minimum_size_changed");
-    }
-  }
   Control();
+
+%extend {
+
+void _input_event(const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "_input_event");
+  const void* __args[1] = { &event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool can_drop_data(const Vector2& pos, const Variant& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "can_drop_data");
+  const void* __args[2] = { &pos, &data };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void drop_data(const Vector2& pos, const Variant& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "drop_data");
+  const void* __args[2] = { &pos, &data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_drag_data(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_drag_data");
+  const void* __args[1] = { &pos };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_minimum_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_minimum_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void accept_event() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "accept_event");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+Vector2 get_minimum_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_minimum_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_combined_minimum_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_combined_minimum_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_anchor(int margin, int anchor_mode, bool keep_margin = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_anchor");
+  const void* __args[3] = { &margin, &anchor_mode, &keep_margin };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_anchor(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_anchor");
+  const void* __args[1] = { &margin };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_margin(int margin, float offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_margin");
+  const void* __args[2] = { &margin, &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_anchor_and_margin(int margin, int anchor_mode, float offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_anchor_and_margin");
+  const void* __args[3] = { &margin, &anchor_mode, &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_begin(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_begin");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_end(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_end");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_pos(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_pos");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_size(const Vector2& size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_custom_minimum_size(const Vector2& size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_custom_minimum_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_global_pos(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_global_pos");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_rotation(float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_rotation");
+  const void* __args[1] = { &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_rotation_deg(float degrees) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_rotation_deg");
+  const void* __args[1] = { &degrees };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_scale(const Vector2& scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_margin(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_margin");
+  const void* __args[1] = { &margin };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_begin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_begin");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_end() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_end");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_pos");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_rotation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_rotation");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_rotation_deg() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_rotation_deg");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_scale");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_custom_minimum_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_custom_minimum_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_parent_area_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_parent_area_size");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_global_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_global_pos");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Rect2 get_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Rect2 get_global_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_global_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_area_as_parent_rect(int margin = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_area_as_parent_rect");
+  const void* __args[1] = { &margin };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void show_modal(bool exclusive = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "show_modal");
+  const void* __args[1] = { &exclusive };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_focus_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_focus_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_focus_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_focus_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool has_focus() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_focus");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void grab_focus() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "grab_focus");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void release_focus() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "release_focus");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+Control* get_focus_owner() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_focus_owner");
+  Control* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_h_size_flags(int flags) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_h_size_flags");
+  const void* __args[1] = { &flags };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_h_size_flags() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_h_size_flags");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_stretch_ratio(float ratio) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_stretch_ratio");
+  const void* __args[1] = { &ratio };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_stretch_ratio() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_stretch_ratio");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_v_size_flags(int flags) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_v_size_flags");
+  const void* __args[1] = { &flags };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_v_size_flags() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_v_size_flags");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_theme(Theme* theme) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_theme");
+  const void* __args[1] = { theme };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Theme> get_theme() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_theme");
+  Ref<Theme> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_icon_override(const String& name, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "add_icon_override");
+  const void* __args[2] = { &name, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_shader_override(const String& name, Shader* shader) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "add_shader_override");
+  const void* __args[2] = { &name, shader };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_style_override(const String& name, StyleBox* stylebox) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "add_style_override");
+  const void* __args[2] = { &name, stylebox };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_font_override(const String& name, Font* font) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "add_font_override");
+  const void* __args[2] = { &name, font };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_color_override(const String& name, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "add_color_override");
+  const void* __args[2] = { &name, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_constant_override(const String& name, int constant) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "add_constant_override");
+  const void* __args[2] = { &name, &constant };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_icon(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_icon");
+  const void* __args[2] = { &name, &type };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<StyleBox> get_stylebox(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_stylebox");
+  const void* __args[2] = { &name, &type };
+  Ref<StyleBox> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Font> get_font(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_font");
+  const void* __args[2] = { &name, &type };
+  Ref<Font> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Color get_color(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_color");
+  const void* __args[2] = { &name, &type };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_constant(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_constant");
+  const void* __args[2] = { &name, &type };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_icon_override(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_icon_override");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_stylebox_override(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_stylebox_override");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_font_override(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_font_override");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_color_override(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_color_override");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_constant_override(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_constant_override");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_icon(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_icon");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_stylebox(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_stylebox");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_font(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_font");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_color(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_color");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_constant(const String& name, const String& type = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "has_constant");
+  const void* __args[2] = { &name, &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Control* get_parent_control() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_parent_control");
+  Control* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_tooltip(const String& tooltip) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_tooltip");
+  const void* __args[1] = { &tooltip };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_tooltip(const Vector2& atpos = Vector2(0,0)) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_tooltip");
+  const void* __args[1] = { &atpos };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_default_cursor_shape(int shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_default_cursor_shape");
+  const void* __args[1] = { &shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_default_cursor_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_default_cursor_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_cursor_shape(const Vector2& pos = Vector2(0,0)) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_cursor_shape");
+  const void* __args[1] = { &pos };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_focus_neighbour(int margin, const NodePath& neighbour) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_focus_neighbour");
+  const void* __args[2] = { &margin, &neighbour };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_focus_neighbour(int margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "get_focus_neighbour");
+  const void* __args[1] = { &margin };
+  NodePath ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_ignore_mouse(bool ignore) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_ignore_mouse");
+  const void* __args[1] = { &ignore };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_ignoring_mouse() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "is_ignoring_mouse");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void force_drag(const Variant& data, Object* preview) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "force_drag");
+  const void* __args[2] = { &data, preview };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_stop_mouse(bool stop) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_stop_mouse");
+  const void* __args[1] = { &stop };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_stopping_mouse() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "is_stopping_mouse");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void grab_click_focus() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "grab_click_focus");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_drag_forwarding(Control* target) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_drag_forwarding");
+  const void* __args[1] = { target };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_drag_preview(Control* control) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "set_drag_preview");
+  const void* __args[1] = { control };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void warp_mouse(const Vector2& to_pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "warp_mouse");
+  const void* __args[1] = { &to_pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void minimum_size_changed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Control", "minimum_size_changed");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

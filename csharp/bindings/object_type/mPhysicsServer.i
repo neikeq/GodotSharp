@@ -4,15 +4,6 @@
 %csmethodmodifiers PhysicsServer::PhysicsServer "private"
 %csmethodmodifiers PhysicsServer::SingletonGetInstance "private"
 %nodefaultctor PhysicsServer;
-%typemap(out) PhysicsServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) PhysicsServer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) PhysicsServer %{
   private static $csclassname instance;
@@ -167,614 +158,912 @@
 
 class PhysicsServer : public Object {
 public:
-  %extend {
-    RID shape_create(int type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("shape_create", type);
-    }
-  }
-  %extend {
-    void shape_set_data(const RID& shape, const Variant& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("shape_set_data", shape, data);
-    }
-  }
-  %extend {
-    int shape_get_type(const RID& shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("shape_get_type", shape);
-    }
-  }
-  %extend {
-    void shape_get_data(const RID& shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("shape_get_data", shape);
-    }
-  }
-  %extend {
-    RID space_create() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("space_create");
-    }
-  }
-  %extend {
-    void space_set_active(const RID& space, bool active) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("space_set_active", space, active);
-    }
-  }
-  %extend {
-    bool space_is_active(const RID& space) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("space_is_active", space);
-    }
-  }
-  %extend {
-    void space_set_param(const RID& space, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("space_set_param", space, param, value);
-    }
-  }
-  %extend {
-    float space_get_param(const RID& space, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("space_get_param", space, param);
-    }
-  }
-  %extend {
-    PhysicsDirectSpaceState* space_get_direct_state(const RID& space) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("space_get_direct_state", space).operator Object *()->cast_to<PhysicsDirectSpaceState>();
-    }
-  }
-  %extend {
-    RID area_create() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_create");
-    }
-  }
-  %extend {
-    void area_set_space(const RID& area, const RID& space) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_space", area, space);
-    }
-  }
-  %extend {
-    RID area_get_space(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_space", area);
-    }
-  }
-  %extend {
-    void area_set_space_override_mode(const RID& area, int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_space_override_mode", area, mode);
-    }
-  }
-  %extend {
-    int area_get_space_override_mode(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_space_override_mode", area);
-    }
-  }
-  %extend {
-    void area_add_shape(const RID& area, const RID& shape, const Transform& transform = Transform()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_add_shape", area, shape, transform);
-    }
-  }
-  %extend {
-    void area_set_shape(const RID& area, int shape_idx, const RID& shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_shape", area, shape_idx, shape);
-    }
-  }
-  %extend {
-    void area_set_shape_transform(const RID& area, int shape_idx, const Transform& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_shape_transform", area, shape_idx, transform);
-    }
-  }
-  %extend {
-    int area_get_shape_count(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_shape_count", area);
-    }
-  }
-  %extend {
-    RID area_get_shape(const RID& area, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_shape", area, shape_idx);
-    }
-  }
-  %extend {
-    Transform area_get_shape_transform(const RID& area, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_shape_transform", area, shape_idx);
-    }
-  }
-  %extend {
-    void area_remove_shape(const RID& area, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_remove_shape", area, shape_idx);
-    }
-  }
-  %extend {
-    void area_clear_shapes(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_clear_shapes", area);
-    }
-  }
-  %extend {
-    void area_set_layer_mask(const RID& area, int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_layer_mask", area, mask);
-    }
-  }
-  %extend {
-    void area_set_collision_mask(const RID& area, int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_collision_mask", area, mask);
-    }
-  }
-  %extend {
-    void area_set_param(const RID& area, int param, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_param", area, param, value);
-    }
-  }
-  %extend {
-    void area_set_transform(const RID& area, const Transform& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_transform", area, transform);
-    }
-  }
-  %extend {
-    void area_get_param(const RID& area, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_get_param", area, param);
-    }
-  }
-  %extend {
-    Transform area_get_transform(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_transform", area);
-    }
-  }
-  %extend {
-    void area_attach_object_instance_ID(const RID& area, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_attach_object_instance_ID", area, id);
-    }
-  }
-  %extend {
-    int area_get_object_instance_ID(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_object_instance_ID", area);
-    }
-  }
-  %extend {
-    void area_set_monitor_callback(const RID& area, Object* receiver, const String& method) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_monitor_callback", area, receiver, method);
-    }
-  }
-  %extend {
-    void area_set_ray_pickable(const RID& area, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_ray_pickable", area, enable);
-    }
-  }
-  %extend {
-    bool area_is_ray_pickable(const RID& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_is_ray_pickable", area);
-    }
-  }
-  %extend {
-    RID body_create(int mode = 2, bool init_sleeping = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_create", mode, init_sleeping);
-    }
-  }
-  %extend {
-    void body_set_space(const RID& body, const RID& space) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_space", body, space);
-    }
-  }
-  %extend {
-    RID body_get_space(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_space", body);
-    }
-  }
-  %extend {
-    void body_set_mode(const RID& body, int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_mode", body, mode);
-    }
-  }
-  %extend {
-    int body_get_mode(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_mode", body);
-    }
-  }
-  %extend {
-    void body_set_layer_mask(const RID& body, int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_layer_mask", body, mask);
-    }
-  }
-  %extend {
-    int body_get_layer_mask(const RID& body, int arg1_) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_layer_mask", body, arg1_);
-    }
-  }
-  %extend {
-    void body_set_collision_mask(const RID& body, int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_collision_mask", body, mask);
-    }
-  }
-  %extend {
-    int body_get_collision_mask(const RID& body, int arg1_) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_collision_mask", body, arg1_);
-    }
-  }
-  %extend {
-    void body_add_shape(const RID& body, const RID& shape, const Transform& transform = Transform()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_add_shape", body, shape, transform);
-    }
-  }
-  %extend {
-    void body_set_shape(const RID& body, int shape_idx, const RID& shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_shape", body, shape_idx, shape);
-    }
-  }
-  %extend {
-    void body_set_shape_transform(const RID& body, int shape_idx, const Transform& transform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_shape_transform", body, shape_idx, transform);
-    }
-  }
-  %extend {
-    int body_get_shape_count(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_shape_count", body);
-    }
-  }
-  %extend {
-    RID body_get_shape(const RID& body, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_shape", body, shape_idx);
-    }
-  }
-  %extend {
-    Transform body_get_shape_transform(const RID& body, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_shape_transform", body, shape_idx);
-    }
-  }
-  %extend {
-    void body_remove_shape(const RID& body, int shape_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_remove_shape", body, shape_idx);
-    }
-  }
-  %extend {
-    void body_clear_shapes(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_clear_shapes", body);
-    }
-  }
-  %extend {
-    void body_attach_object_instance_ID(const RID& body, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_attach_object_instance_ID", body, id);
-    }
-  }
-  %extend {
-    int body_get_object_instance_ID(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_object_instance_ID", body);
-    }
-  }
-  %extend {
-    void body_set_enable_continuous_collision_detection(const RID& body, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_enable_continuous_collision_detection", body, enable);
-    }
-  }
-  %extend {
-    bool body_is_continuous_collision_detection_enabled(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_is_continuous_collision_detection_enabled", body);
-    }
-  }
-  %extend {
-    void body_set_param(const RID& body, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_param", body, param, value);
-    }
-  }
-  %extend {
-    float body_get_param(const RID& body, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_param", body, param);
-    }
-  }
-  %extend {
-    void body_set_state(const RID& body, int state, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_state", body, state, value);
-    }
-  }
-  %extend {
-    void body_get_state(const RID& body, int state) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_get_state", body, state);
-    }
-  }
-  %extend {
-    void body_apply_impulse(const RID& body, const Vector3& pos, const Vector3& impulse) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_apply_impulse", body, pos, impulse);
-    }
-  }
-  %extend {
-    void body_set_axis_velocity(const RID& body, const Vector3& axis_velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_axis_velocity", body, axis_velocity);
-    }
-  }
-  %extend {
-    void body_set_axis_lock(const RID& body, int axis) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_axis_lock", body, axis);
-    }
-  }
-  %extend {
-    int body_get_axis_lock(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_axis_lock", body);
-    }
-  }
-  %extend {
-    void body_add_collision_exception(const RID& body, const RID& excepted_body) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_add_collision_exception", body, excepted_body);
-    }
-  }
-  %extend {
-    void body_remove_collision_exception(const RID& body, const RID& excepted_body) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_remove_collision_exception", body, excepted_body);
-    }
-  }
-  %extend {
-    void body_set_max_contacts_reported(const RID& body, int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_max_contacts_reported", body, amount);
-    }
-  }
-  %extend {
-    int body_get_max_contacts_reported(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_get_max_contacts_reported", body);
-    }
-  }
-  %extend {
-    void body_set_omit_force_integration(const RID& body, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_omit_force_integration", body, enable);
-    }
-  }
-  %extend {
-    bool body_is_omitting_force_integration(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_is_omitting_force_integration", body);
-    }
-  }
-  %extend {
-    void body_set_force_integration_callback(const RID& body, Object* receiver, const String& method, const Variant& userdata = Variant()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_force_integration_callback", body, receiver, method, userdata);
-    }
-  }
-  %extend {
-    void body_set_ray_pickable(const RID& body, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("body_set_ray_pickable", body, enable);
-    }
-  }
-  %extend {
-    bool body_is_ray_pickable(const RID& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("body_is_ray_pickable", body);
-    }
-  }
-  %extend {
-    RID joint_create_pin(const RID& body_A, const Vector3& local_A, const RID& body_B, const Vector3& local_B) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_create_pin", body_A, local_A, body_B, local_B);
-    }
-  }
-  %extend {
-    void pin_joint_set_param(const RID& joint, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("pin_joint_set_param", joint, param, value);
-    }
-  }
-  %extend {
-    float pin_joint_get_param(const RID& joint, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("pin_joint_get_param", joint, param);
-    }
-  }
-  %extend {
-    void pin_joint_set_local_A(const RID& joint, const Vector3& local_A) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("pin_joint_set_local_A", joint, local_A);
-    }
-  }
-  %extend {
-    Vector3 pin_joint_get_local_A(const RID& joint) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("pin_joint_get_local_A", joint);
-    }
-  }
-  %extend {
-    void pin_joint_set_local_B(const RID& joint, const Vector3& local_B) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("pin_joint_set_local_B", joint, local_B);
-    }
-  }
-  %extend {
-    Vector3 pin_joint_get_local_B(const RID& joint) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("pin_joint_get_local_B", joint);
-    }
-  }
-  %extend {
-    RID joint_create_hinge(const RID& body_A, const Transform& hinge_A, const RID& body_B, const Transform& hinge_B) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_create_hinge", body_A, hinge_A, body_B, hinge_B);
-    }
-  }
-  %extend {
-    void hinge_joint_set_param(const RID& joint, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("hinge_joint_set_param", joint, param, value);
-    }
-  }
-  %extend {
-    float hinge_joint_get_param(const RID& joint, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("hinge_joint_get_param", joint, param);
-    }
-  }
-  %extend {
-    void hinge_joint_set_flag(const RID& joint, int flag, bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("hinge_joint_set_flag", joint, flag, enabled);
-    }
-  }
-  %extend {
-    bool hinge_joint_get_flag(const RID& joint, int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("hinge_joint_get_flag", joint, flag);
-    }
-  }
-  %extend {
-    RID joint_create_slider(const RID& body_A, const Transform& local_ref_A, const RID& body_B, const Transform& local_ref_B) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_create_slider", body_A, local_ref_A, body_B, local_ref_B);
-    }
-  }
-  %extend {
-    void slider_joint_set_param(const RID& joint, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("slider_joint_set_param", joint, param, value);
-    }
-  }
-  %extend {
-    float slider_joint_get_param(const RID& joint, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("slider_joint_get_param", joint, param);
-    }
-  }
-  %extend {
-    RID joint_create_cone_twist(const RID& body_A, const Transform& local_ref_A, const RID& body_B, const Transform& local_ref_B) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_create_cone_twist", body_A, local_ref_A, body_B, local_ref_B);
-    }
-  }
-  %extend {
-    void cone_twist_joint_set_param(const RID& joint, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cone_twist_joint_set_param", joint, param, value);
-    }
-  }
-  %extend {
-    float cone_twist_joint_get_param(const RID& joint, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cone_twist_joint_get_param", joint, param);
-    }
-  }
-  %extend {
-    int joint_get_type(const RID& joint) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_get_type", joint);
-    }
-  }
-  %extend {
-    void joint_set_solver_priority(const RID& joint, int priority) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("joint_set_solver_priority", joint, priority);
-    }
-  }
-  %extend {
-    int joint_get_solver_priority(const RID& joint) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_get_solver_priority", joint);
-    }
-  }
-  %extend {
-    RID joint_create_generic_6dof(const RID& body_A, const Transform& local_ref_A, const RID& body_B, const Transform& local_ref_B) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("joint_create_generic_6dof", body_A, local_ref_A, body_B, local_ref_B);
-    }
-  }
-  %extend {
-    void generic_6dof_joint_set_param(const RID& joint, int axis, int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("generic_6dof_joint_set_param", joint, axis, param, value);
-    }
-  }
-  %extend {
-    float generic_6dof_joint_get_param(const RID& joint, int axis, int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("generic_6dof_joint_get_param", joint, axis, param);
-    }
-  }
-  %extend {
-    void generic_6dof_joint_set_flag(const RID& joint, int axis, int flag, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("generic_6dof_joint_set_flag", joint, axis, flag, enable);
-    }
-  }
-  %extend {
-    bool generic_6dof_joint_get_flag(const RID& joint, int axis, int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("generic_6dof_joint_get_flag", joint, axis, flag);
-    }
-  }
-  %extend {
-    void free_rid(const RID& rid) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("free_rid", rid);
-    }
-  }
-  %extend {
-    void set_active(bool active) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_active", active);
-    }
-  }
-  %extend {
-    int get_process_info(int process_info) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_process_info", process_info);
-    }
-  }
-  %extend {
-    static PhysicsServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("PhysicsServer")->cast_to<PhysicsServer>(); }
-  }
+
+%extend {
+
+RID shape_create(int type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "shape_create");
+  const void* __args[1] = { &type };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void shape_set_data(const RID& shape, const Variant& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "shape_set_data");
+  const void* __args[2] = { &shape, &data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int shape_get_type(const RID& shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "shape_get_type");
+  const void* __args[1] = { &shape };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void shape_get_data(const RID& shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "shape_get_data");
+  const void* __args[1] = { &shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RID space_create() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "space_create");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void space_set_active(const RID& space, bool active) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "space_set_active");
+  const void* __args[2] = { &space, &active };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool space_is_active(const RID& space) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "space_is_active");
+  const void* __args[1] = { &space };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void space_set_param(const RID& space, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "space_set_param");
+  const void* __args[3] = { &space, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float space_get_param(const RID& space, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "space_get_param");
+  const void* __args[2] = { &space, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+PhysicsDirectSpaceState* space_get_direct_state(const RID& space) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "space_get_direct_state");
+  const void* __args[1] = { &space };
+  PhysicsDirectSpaceState* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID area_create() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_create");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void area_set_space(const RID& area, const RID& space) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_space");
+  const void* __args[2] = { &area, &space };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RID area_get_space(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_space");
+  const void* __args[1] = { &area };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_set_space_override_mode(const RID& area, int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_space_override_mode");
+  const void* __args[2] = { &area, &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int area_get_space_override_mode(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_space_override_mode");
+  const void* __args[1] = { &area };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_add_shape(const RID& area, const RID& shape, const Transform& transform = Transform()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_add_shape");
+  const void* __args[3] = { &area, &shape, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_shape(const RID& area, int shape_idx, const RID& shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_shape");
+  const void* __args[3] = { &area, &shape_idx, &shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_shape_transform(const RID& area, int shape_idx, const Transform& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_shape_transform");
+  const void* __args[3] = { &area, &shape_idx, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int area_get_shape_count(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_shape_count");
+  const void* __args[1] = { &area };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID area_get_shape(const RID& area, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_shape");
+  const void* __args[2] = { &area, &shape_idx };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Transform area_get_shape_transform(const RID& area, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_shape_transform");
+  const void* __args[2] = { &area, &shape_idx };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_remove_shape(const RID& area, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_remove_shape");
+  const void* __args[2] = { &area, &shape_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_clear_shapes(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_clear_shapes");
+  const void* __args[1] = { &area };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_layer_mask(const RID& area, int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_layer_mask");
+  const void* __args[2] = { &area, &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_collision_mask(const RID& area, int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_collision_mask");
+  const void* __args[2] = { &area, &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_param(const RID& area, int param, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_param");
+  const void* __args[3] = { &area, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_transform(const RID& area, const Transform& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_transform");
+  const void* __args[2] = { &area, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_get_param(const RID& area, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_param");
+  const void* __args[2] = { &area, &param };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform area_get_transform(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_transform");
+  const void* __args[1] = { &area };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_attach_object_instance_ID(const RID& area, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_attach_object_instance_ID");
+  const void* __args[2] = { &area, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int area_get_object_instance_ID(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_get_object_instance_ID");
+  const void* __args[1] = { &area };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_set_monitor_callback(const RID& area, Object* receiver, const String& method) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_monitor_callback");
+  const void* __args[3] = { &area, receiver, &method };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_ray_pickable(const RID& area, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_set_ray_pickable");
+  const void* __args[2] = { &area, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool area_is_ray_pickable(const RID& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "area_is_ray_pickable");
+  const void* __args[1] = { &area };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID body_create(int mode = 2, bool init_sleeping = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_create");
+  const void* __args[2] = { &mode, &init_sleeping };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_space(const RID& body, const RID& space) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_space");
+  const void* __args[2] = { &body, &space };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RID body_get_space(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_space");
+  const void* __args[1] = { &body };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_mode(const RID& body, int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_mode");
+  const void* __args[2] = { &body, &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_mode(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_mode");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_layer_mask(const RID& body, int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_layer_mask");
+  const void* __args[2] = { &body, &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_layer_mask(const RID& body, int arg1_) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_layer_mask");
+  const void* __args[2] = { &body, &arg1_ };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_collision_mask(const RID& body, int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_collision_mask");
+  const void* __args[2] = { &body, &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_collision_mask(const RID& body, int arg1_) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_collision_mask");
+  const void* __args[2] = { &body, &arg1_ };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_add_shape(const RID& body, const RID& shape, const Transform& transform = Transform()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_add_shape");
+  const void* __args[3] = { &body, &shape, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_set_shape(const RID& body, int shape_idx, const RID& shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_shape");
+  const void* __args[3] = { &body, &shape_idx, &shape };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_set_shape_transform(const RID& body, int shape_idx, const Transform& transform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_shape_transform");
+  const void* __args[3] = { &body, &shape_idx, &transform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_shape_count(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_shape_count");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID body_get_shape(const RID& body, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_shape");
+  const void* __args[2] = { &body, &shape_idx };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Transform body_get_shape_transform(const RID& body, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_shape_transform");
+  const void* __args[2] = { &body, &shape_idx };
+  Transform ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_remove_shape(const RID& body, int shape_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_remove_shape");
+  const void* __args[2] = { &body, &shape_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_clear_shapes(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_clear_shapes");
+  const void* __args[1] = { &body };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_attach_object_instance_ID(const RID& body, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_attach_object_instance_ID");
+  const void* __args[2] = { &body, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_object_instance_ID(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_object_instance_ID");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_enable_continuous_collision_detection(const RID& body, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_enable_continuous_collision_detection");
+  const void* __args[2] = { &body, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool body_is_continuous_collision_detection_enabled(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_is_continuous_collision_detection_enabled");
+  const void* __args[1] = { &body };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_param(const RID& body, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_param");
+  const void* __args[3] = { &body, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float body_get_param(const RID& body, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_param");
+  const void* __args[2] = { &body, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_state(const RID& body, int state, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_state");
+  const void* __args[3] = { &body, &state, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_get_state(const RID& body, int state) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_state");
+  const void* __args[2] = { &body, &state };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_apply_impulse(const RID& body, const Vector3& pos, const Vector3& impulse) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_apply_impulse");
+  const void* __args[3] = { &body, &pos, &impulse };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_set_axis_velocity(const RID& body, const Vector3& axis_velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_axis_velocity");
+  const void* __args[2] = { &body, &axis_velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_set_axis_lock(const RID& body, int axis) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_axis_lock");
+  const void* __args[2] = { &body, &axis };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_axis_lock(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_axis_lock");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_add_collision_exception(const RID& body, const RID& excepted_body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_add_collision_exception");
+  const void* __args[2] = { &body, &excepted_body };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_remove_collision_exception(const RID& body, const RID& excepted_body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_remove_collision_exception");
+  const void* __args[2] = { &body, &excepted_body };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_set_max_contacts_reported(const RID& body, int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_max_contacts_reported");
+  const void* __args[2] = { &body, &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int body_get_max_contacts_reported(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_get_max_contacts_reported");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_omit_force_integration(const RID& body, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_omit_force_integration");
+  const void* __args[2] = { &body, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool body_is_omitting_force_integration(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_is_omitting_force_integration");
+  const void* __args[1] = { &body };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void body_set_force_integration_callback(const RID& body, Object* receiver, const String& method, const Variant& userdata = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_force_integration_callback");
+  const void* __args[4] = { &body, receiver, &method, &userdata };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void body_set_ray_pickable(const RID& body, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_set_ray_pickable");
+  const void* __args[2] = { &body, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool body_is_ray_pickable(const RID& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "body_is_ray_pickable");
+  const void* __args[1] = { &body };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID joint_create_pin(const RID& body_A, const Vector3& local_A, const RID& body_B, const Vector3& local_B) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_create_pin");
+  const void* __args[4] = { &body_A, &local_A, &body_B, &local_B };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void pin_joint_set_param(const RID& joint, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "pin_joint_set_param");
+  const void* __args[3] = { &joint, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float pin_joint_get_param(const RID& joint, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "pin_joint_get_param");
+  const void* __args[2] = { &joint, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void pin_joint_set_local_A(const RID& joint, const Vector3& local_A) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "pin_joint_set_local_A");
+  const void* __args[2] = { &joint, &local_A };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 pin_joint_get_local_A(const RID& joint) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "pin_joint_get_local_A");
+  const void* __args[1] = { &joint };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void pin_joint_set_local_B(const RID& joint, const Vector3& local_B) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "pin_joint_set_local_B");
+  const void* __args[2] = { &joint, &local_B };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 pin_joint_get_local_B(const RID& joint) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "pin_joint_get_local_B");
+  const void* __args[1] = { &joint };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID joint_create_hinge(const RID& body_A, const Transform& hinge_A, const RID& body_B, const Transform& hinge_B) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_create_hinge");
+  const void* __args[4] = { &body_A, &hinge_A, &body_B, &hinge_B };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void hinge_joint_set_param(const RID& joint, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "hinge_joint_set_param");
+  const void* __args[3] = { &joint, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float hinge_joint_get_param(const RID& joint, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "hinge_joint_get_param");
+  const void* __args[2] = { &joint, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void hinge_joint_set_flag(const RID& joint, int flag, bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "hinge_joint_set_flag");
+  const void* __args[3] = { &joint, &flag, &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool hinge_joint_get_flag(const RID& joint, int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "hinge_joint_get_flag");
+  const void* __args[2] = { &joint, &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID joint_create_slider(const RID& body_A, const Transform& local_ref_A, const RID& body_B, const Transform& local_ref_B) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_create_slider");
+  const void* __args[4] = { &body_A, &local_ref_A, &body_B, &local_ref_B };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void slider_joint_set_param(const RID& joint, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "slider_joint_set_param");
+  const void* __args[3] = { &joint, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float slider_joint_get_param(const RID& joint, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "slider_joint_get_param");
+  const void* __args[2] = { &joint, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID joint_create_cone_twist(const RID& body_A, const Transform& local_ref_A, const RID& body_B, const Transform& local_ref_B) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_create_cone_twist");
+  const void* __args[4] = { &body_A, &local_ref_A, &body_B, &local_ref_B };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void cone_twist_joint_set_param(const RID& joint, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "cone_twist_joint_set_param");
+  const void* __args[3] = { &joint, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float cone_twist_joint_get_param(const RID& joint, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "cone_twist_joint_get_param");
+  const void* __args[2] = { &joint, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int joint_get_type(const RID& joint) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_get_type");
+  const void* __args[1] = { &joint };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void joint_set_solver_priority(const RID& joint, int priority) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_set_solver_priority");
+  const void* __args[2] = { &joint, &priority };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int joint_get_solver_priority(const RID& joint) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_get_solver_priority");
+  const void* __args[1] = { &joint };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID joint_create_generic_6dof(const RID& body_A, const Transform& local_ref_A, const RID& body_B, const Transform& local_ref_B) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "joint_create_generic_6dof");
+  const void* __args[4] = { &body_A, &local_ref_A, &body_B, &local_ref_B };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void generic_6dof_joint_set_param(const RID& joint, int axis, int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "generic_6dof_joint_set_param");
+  const void* __args[4] = { &joint, &axis, &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float generic_6dof_joint_get_param(const RID& joint, int axis, int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "generic_6dof_joint_get_param");
+  const void* __args[3] = { &joint, &axis, &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void generic_6dof_joint_set_flag(const RID& joint, int axis, int flag, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "generic_6dof_joint_set_flag");
+  const void* __args[4] = { &joint, &axis, &flag, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool generic_6dof_joint_get_flag(const RID& joint, int axis, int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "generic_6dof_joint_get_flag");
+  const void* __args[3] = { &joint, &axis, &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void free_rid(const RID& rid) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "free_rid");
+  const void* __args[1] = { &rid };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_active(bool active) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "set_active");
+  const void* __args[1] = { &active };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_process_info(int process_info) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsServer", "get_process_info");
+  const void* __args[1] = { &process_info };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+static PhysicsServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("PhysicsServer")->cast_to<PhysicsServer>(); }
+
+}
+
 
 };

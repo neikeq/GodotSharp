@@ -1,22 +1,6 @@
 /* mSample.i */
 %module mSample
 
-%typemap(ctype, out="Sample*") Ref<Sample> "Sample*"
-%typemap(out, null="NULL") Ref<Sample> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Sample> "Sample.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Sample> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Sample> "Sample"
-%typemap(csout, excode=SWIGEXCODE) Ref<Sample> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Sample ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Sample;$excode
-    return ret;
-}
-
 template<class Sample> class Ref;%template() Ref<Sample>;
 %feature("novaluewrapper") Ref<Sample>;
 
@@ -63,105 +47,144 @@ template<class Sample> class Ref;%template() Ref<Sample>;
 
 class Sample : public Resource {
 public:
-  %extend {
-    void create(int format, bool stereo, int length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("create", format, stereo, length);
-    }
-  }
-  %extend {
-    int get_format() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_format");
-    }
-  }
-  %extend {
-    bool is_stereo() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_stereo");
-    }
-  }
-  %extend {
-    int get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
-  %extend {
-    void set_data(const RawArray& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_data", data);
-    }
-  }
-  %extend {
-    RawArray get_data() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_data");
-    }
-  }
-  %extend {
-    void set_mix_rate(int hz) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mix_rate", hz);
-    }
-  }
-  %extend {
-    int get_mix_rate() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mix_rate");
-    }
-  }
-  %extend {
-    void set_loop_format(int format) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop_format", format);
-    }
-  }
-  %extend {
-    int get_loop_format() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_format");
-    }
-  }
-  %extend {
-    void set_loop_begin(int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop_begin", pos);
-    }
-  }
-  %extend {
-    int get_loop_begin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_begin");
-    }
-  }
-  %extend {
-    void set_loop_end(int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_loop_end", pos);
-    }
-  }
-  %extend {
-    int get_loop_end() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_loop_end");
-    }
-  }
   Sample();
-  %extend {
-    ~Sample() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void create(int format, bool stereo, int length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "create");
+  const void* __args[3] = { &format, &stereo, &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_format() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_format");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_stereo() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "is_stereo");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_length");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_data(const RawArray& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "set_data");
+  const void* __args[1] = { &data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RawArray get_data() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_data");
+  RawArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_mix_rate(int hz) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "set_mix_rate");
+  const void* __args[1] = { &hz };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_mix_rate() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_mix_rate");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop_format(int format) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "set_loop_format");
+  const void* __args[1] = { &format };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_loop_format() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_loop_format");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop_begin(int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "set_loop_begin");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_loop_begin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_loop_begin");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_loop_end(int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "set_loop_end");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_loop_end() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Sample", "get_loop_end");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Sample() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

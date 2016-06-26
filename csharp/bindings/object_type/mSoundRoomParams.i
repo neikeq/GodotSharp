@@ -1,15 +1,6 @@
 /* mSoundRoomParams.i */
 %module mSoundRoomParams
 
-%typemap(out) SoundRoomParams "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SoundRoomParams* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SoundRoomParams %{
 
@@ -47,42 +38,63 @@
 
 class SoundRoomParams : public Node {
 public:
-  %extend {
-    void set_param(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param", param, value);
-    }
-  }
-  %extend {
-    float get_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param", param);
-    }
-  }
-  %extend {
-    void set_reverb_mode(int reverb_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_reverb_mode", reverb_mode);
-    }
-  }
-  %extend {
-    int get_reverb_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_reverb_mode");
-    }
-  }
-  %extend {
-    void set_force_params_to_all_sources(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_force_params_to_all_sources", enabled);
-    }
-  }
-  %extend {
-    bool is_forcing_params_to_all_sources() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_forcing_params_to_all_sources");
-    }
-  }
   SoundRoomParams();
+
+%extend {
+
+void set_param(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundRoomParams", "set_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundRoomParams", "get_param");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_reverb_mode(int reverb_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundRoomParams", "set_reverb_mode");
+  const void* __args[1] = { &reverb_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_reverb_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundRoomParams", "get_reverb_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_force_params_to_all_sources(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundRoomParams", "set_force_params_to_all_sources");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_forcing_params_to_all_sources() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SoundRoomParams", "is_forcing_params_to_all_sources");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -63,7 +63,6 @@ public class TileSet : Resource {
 
   public void tile_set_texture(int id, Texture texture) {
     GodotEnginePINVOKE.TileSet_tile_set_texture(swigCPtr, id, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture tile_get_texture(int id) {
@@ -74,15 +73,17 @@ public class TileSet : Resource {
     return ret;
 }
 
-  public void tile_set_material(int id, SWIGTYPE_p_RefT_CanvasItemMaterial_t material) {
-    GodotEnginePINVOKE.TileSet_tile_set_material(swigCPtr, id, SWIGTYPE_p_RefT_CanvasItemMaterial_t.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void tile_set_material(int id, CanvasItemMaterial material) {
+    GodotEnginePINVOKE.TileSet_tile_set_material(swigCPtr, id, CanvasItemMaterial.getCPtr(material));
   }
 
-  public SWIGTYPE_p_RefT_CanvasItemMaterial_t tile_get_material(int id) {
-    SWIGTYPE_p_RefT_CanvasItemMaterial_t ret = new SWIGTYPE_p_RefT_CanvasItemMaterial_t(GodotEnginePINVOKE.TileSet_tile_get_material(swigCPtr, id), true);
+  public CanvasItemMaterial tile_get_material(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TileSet_tile_get_material(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    CanvasItemMaterial ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CanvasItemMaterial;
     return ret;
-  }
+}
 
   public void tile_set_texture_offset(int id, Vector2 texture_offset) {
     GodotEnginePINVOKE.TileSet_tile_set_texture_offset(swigCPtr, id, ref texture_offset);
@@ -116,7 +117,6 @@ public class TileSet : Resource {
 
   public void tile_set_shape(int id, Shape2D shape) {
     GodotEnginePINVOKE.TileSet_tile_set_shape(swigCPtr, id, Shape2D.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Shape2D tile_get_shape(int id) {
@@ -137,15 +137,17 @@ public class TileSet : Resource {
     return ret;
   }
 
-  public void tile_set_navigation_polygon(int id, SWIGTYPE_p_RefT_NavigationPolygon_t navigation_polygon) {
-    GodotEnginePINVOKE.TileSet_tile_set_navigation_polygon(swigCPtr, id, SWIGTYPE_p_RefT_NavigationPolygon_t.getCPtr(navigation_polygon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void tile_set_navigation_polygon(int id, NavigationPolygon navigation_polygon) {
+    GodotEnginePINVOKE.TileSet_tile_set_navigation_polygon(swigCPtr, id, NavigationPolygon.getCPtr(navigation_polygon));
   }
 
-  public SWIGTYPE_p_RefT_NavigationPolygon_t tile_get_navigation_polygon(int id) {
-    SWIGTYPE_p_RefT_NavigationPolygon_t ret = new SWIGTYPE_p_RefT_NavigationPolygon_t(GodotEnginePINVOKE.TileSet_tile_get_navigation_polygon(swigCPtr, id), true);
+  public NavigationPolygon tile_get_navigation_polygon(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TileSet_tile_get_navigation_polygon(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    NavigationPolygon ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationPolygon;
     return ret;
-  }
+}
 
   public void tile_set_navigation_polygon_offset(int id, Vector2 navigation_polygon_offset) {
     GodotEnginePINVOKE.TileSet_tile_set_navigation_polygon_offset(swigCPtr, id, ref navigation_polygon_offset);
@@ -157,15 +159,17 @@ public class TileSet : Resource {
     return ret;
 }
 
-  public void tile_set_light_occluder(int id, SWIGTYPE_p_RefT_OccluderPolygon2D_t light_occluder) {
-    GodotEnginePINVOKE.TileSet_tile_set_light_occluder(swigCPtr, id, SWIGTYPE_p_RefT_OccluderPolygon2D_t.getCPtr(light_occluder));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void tile_set_light_occluder(int id, OccluderPolygon2D light_occluder) {
+    GodotEnginePINVOKE.TileSet_tile_set_light_occluder(swigCPtr, id, OccluderPolygon2D.getCPtr(light_occluder));
   }
 
-  public SWIGTYPE_p_RefT_OccluderPolygon2D_t tile_get_light_occluder(int id) {
-    SWIGTYPE_p_RefT_OccluderPolygon2D_t ret = new SWIGTYPE_p_RefT_OccluderPolygon2D_t(GodotEnginePINVOKE.TileSet_tile_get_light_occluder(swigCPtr, id), true);
+  public OccluderPolygon2D tile_get_light_occluder(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.TileSet_tile_get_light_occluder(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    OccluderPolygon2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as OccluderPolygon2D;
     return ret;
-  }
+}
 
   public void tile_set_occluder_offset(int id, Vector2 occluder_offset) {
     GodotEnginePINVOKE.TileSet_tile_set_occluder_offset(swigCPtr, id, ref occluder_offset);

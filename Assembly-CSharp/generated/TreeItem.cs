@@ -80,7 +80,6 @@ public class TreeItem : Object {
 
   public void set_icon(int column, Texture texture) {
     GodotEnginePINVOKE.TreeItem_set_icon(swigCPtr, column, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_icon(int column) {
@@ -272,17 +271,14 @@ public class TreeItem : Object {
 
   public void add_button(int column, Texture button, int button_idx, bool disabled) {
     GodotEnginePINVOKE.TreeItem_add_button__SWIG_0(swigCPtr, column, Texture.getCPtr(button), button_idx, disabled);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_button(int column, Texture button, int button_idx) {
     GodotEnginePINVOKE.TreeItem_add_button__SWIG_1(swigCPtr, column, Texture.getCPtr(button), button_idx);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_button(int column, Texture button) {
     GodotEnginePINVOKE.TreeItem_add_button__SWIG_2(swigCPtr, column, Texture.getCPtr(button));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public int get_button_count(int column) {

@@ -2,22 +2,6 @@
 %module m_Directory
 
 %rename(Directory) _Directory;
-%typemap(ctype, out="_Directory*") Ref<_Directory> "_Directory*"
-%typemap(out, null="NULL") Ref<_Directory> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<_Directory> "_Directory.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<_Directory> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<_Directory> "_Directory"
-%typemap(csout, excode=SWIGEXCODE) Ref<_Directory> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    _Directory ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Directory;$excode
-    return ret;
-}
-
 template<class _Directory> class Ref;%template() Ref<_Directory>;
 %feature("novaluewrapper") Ref<_Directory>;
 
@@ -58,123 +42,185 @@ template<class _Directory> class Ref;%template() Ref<_Directory>;
 
 class _Directory : public Reference {
 public:
-  %extend {
-    int open(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("open", path);
-    }
-  }
-  %extend {
-    bool list_dir_begin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("list_dir_begin");
-    }
-  }
-  %extend {
-    String get_next() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_next");
-    }
-  }
-  %extend {
-    bool current_is_dir() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("current_is_dir");
-    }
-  }
-  %extend {
-    void list_dir_end() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("list_dir_end");
-    }
-  }
-  %extend {
-    int get_drive_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_drive_count");
-    }
-  }
-  %extend {
-    String get_drive(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_drive", idx);
-    }
-  }
-  %extend {
-    int change_dir(const String& todir) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("change_dir", todir);
-    }
-  }
-  %extend {
-    String get_current_dir() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_dir");
-    }
-  }
-  %extend {
-    int make_dir(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("make_dir", path);
-    }
-  }
-  %extend {
-    int make_dir_recursive(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("make_dir_recursive", path);
-    }
-  }
-  %extend {
-    bool file_exists(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("file_exists", path);
-    }
-  }
-  %extend {
-    bool dir_exists(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("dir_exists", path);
-    }
-  }
-  %extend {
-    int get_space_left() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_space_left");
-    }
-  }
-  %extend {
-    int copy(const String& from, const String& to) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("copy", from, to);
-    }
-  }
-  %extend {
-    int rename(const String& from, const String& to) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("rename", from, to);
-    }
-  }
-  %extend {
-    int remove(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("remove", path);
-    }
-  }
   _Directory();
-  %extend {
-    ~_Directory() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int open(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "open");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool list_dir_begin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "list_dir_begin");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_next() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "get_next");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool current_is_dir() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "current_is_dir");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void list_dir_end() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "list_dir_end");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_drive_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "get_drive_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_drive(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "get_drive");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int change_dir(const String& todir) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "change_dir");
+  const void* __args[1] = { &todir };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_current_dir() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "get_current_dir");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int make_dir(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "make_dir");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int make_dir_recursive(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "make_dir_recursive");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool file_exists(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "file_exists");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool dir_exists(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "dir_exists");
+  const void* __args[1] = { &path };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_space_left() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "get_space_left");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int copy(const String& from, const String& to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "copy");
+  const void* __args[2] = { &from, &to };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int rename(const String& from, const String& to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "rename");
+  const void* __args[2] = { &from, &to };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int remove(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Directory", "remove");
+  const void* __args[1] = { &path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~_Directory() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

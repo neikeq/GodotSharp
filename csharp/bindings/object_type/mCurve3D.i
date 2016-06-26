@@ -1,22 +1,6 @@
 /* mCurve3D.i */
 %module mCurve3D
 
-%typemap(ctype, out="Curve3D*") Ref<Curve3D> "Curve3D*"
-%typemap(out, null="NULL") Ref<Curve3D> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Curve3D> "Curve3D.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Curve3D> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Curve3D> "Curve3D"
-%typemap(csout, excode=SWIGEXCODE) Ref<Curve3D> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Curve3D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve3D;$excode
-    return ret;
-}
-
 template<class Curve3D> class Ref;%template() Ref<Curve3D>;
 %feature("novaluewrapper") Ref<Curve3D>;
 
@@ -57,141 +41,205 @@ template<class Curve3D> class Ref;%template() Ref<Curve3D>;
 
 class Curve3D : public Resource {
 public:
-  %extend {
-    int get_point_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_count");
-    }
-  }
-  %extend {
-    void add_point(const Vector3& pos, const Vector3& in = Vector3(0, 0, 0), const Vector3& out = Vector3(0, 0, 0), int atpos = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_point", pos, in, out, atpos);
-    }
-  }
-  %extend {
-    void set_point_pos(int idx, const Vector3& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_pos", idx, pos);
-    }
-  }
-  %extend {
-    Vector3 get_point_pos(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_pos", idx);
-    }
-  }
-  %extend {
-    void set_point_tilt(int idx, float tilt) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_tilt", idx, tilt);
-    }
-  }
-  %extend {
-    float get_point_tilt(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_tilt", idx);
-    }
-  }
-  %extend {
-    void set_point_in(int idx, const Vector3& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_in", idx, pos);
-    }
-  }
-  %extend {
-    Vector3 get_point_in(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_in", idx);
-    }
-  }
-  %extend {
-    void set_point_out(int idx, const Vector3& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_out", idx, pos);
-    }
-  }
-  %extend {
-    Vector3 get_point_out(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_out", idx);
-    }
-  }
-  %extend {
-    void remove_point(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_point", idx);
-    }
-  }
-  %extend {
-    Vector3 interpolate(int idx, float t) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolate", idx, t);
-    }
-  }
-  %extend {
-    Vector3 interpolatef(float fofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolatef", fofs);
-    }
-  }
-  %extend {
-    void set_bake_interval(float distance) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bake_interval", distance);
-    }
-  }
-  %extend {
-    float get_bake_interval() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bake_interval");
-    }
-  }
-  %extend {
-    float get_baked_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_baked_length");
-    }
-  }
-  %extend {
-    Vector3 interpolate_baked(float offset, bool cubic = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolate_baked", offset, cubic);
-    }
-  }
-  %extend {
-    Vector3Array get_baked_points() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_baked_points");
-    }
-  }
-  %extend {
-    RealArray get_baked_tilts() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_baked_tilts");
-    }
-  }
-  %extend {
-    Vector3Array tesselate(int max_stages = 5, float tolerance_degrees = 4) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("tesselate", max_stages, tolerance_degrees);
-    }
-  }
   Curve3D();
-  %extend {
-    ~Curve3D() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int get_point_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_point_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_point(const Vector3& pos, const Vector3& in = Vector3(0, 0, 0), const Vector3& out = Vector3(0, 0, 0), int atpos = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "add_point");
+  const void* __args[4] = { &pos, &in, &out, &atpos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_point_pos(int idx, const Vector3& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "set_point_pos");
+  const void* __args[2] = { &idx, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_point_pos(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_point_pos");
+  const void* __args[1] = { &idx };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_point_tilt(int idx, float tilt) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "set_point_tilt");
+  const void* __args[2] = { &idx, &tilt };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_point_tilt(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_point_tilt");
+  const void* __args[1] = { &idx };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_point_in(int idx, const Vector3& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "set_point_in");
+  const void* __args[2] = { &idx, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_point_in(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_point_in");
+  const void* __args[1] = { &idx };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_point_out(int idx, const Vector3& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "set_point_out");
+  const void* __args[2] = { &idx, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_point_out(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_point_out");
+  const void* __args[1] = { &idx };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_point(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "remove_point");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 interpolate(int idx, float t) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "interpolate");
+  const void* __args[2] = { &idx, &t };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector3 interpolatef(float fofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "interpolatef");
+  const void* __args[1] = { &fofs };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_bake_interval(float distance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "set_bake_interval");
+  const void* __args[1] = { &distance };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_bake_interval() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_bake_interval");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_baked_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_baked_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3 interpolate_baked(float offset, bool cubic = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "interpolate_baked");
+  const void* __args[2] = { &offset, &cubic };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector3Array get_baked_points() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_baked_points");
+  Vector3Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RealArray get_baked_tilts() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "get_baked_tilts");
+  RealArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3Array tesselate(int max_stages = 5, float tolerance_degrees = 4) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve3D", "tesselate");
+  const void* __args[2] = { &max_stages, &tolerance_degrees };
+  Vector3Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Curve3D() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

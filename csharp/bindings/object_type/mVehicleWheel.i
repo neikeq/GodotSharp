@@ -1,15 +1,6 @@
 /* mVehicleWheel.i */
 %module mVehicleWheel
 
-%typemap(out) VehicleWheel "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VehicleWheel* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VehicleWheel %{
 
@@ -47,126 +38,181 @@
 
 class VehicleWheel : public Spatial {
 public:
-  %extend {
-    void set_radius(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_radius", length);
-    }
-  }
-  %extend {
-    float get_radius() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_radius");
-    }
-  }
-  %extend {
-    void set_suspension_rest_length(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_suspension_rest_length", length);
-    }
-  }
-  %extend {
-    float get_suspension_rest_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_suspension_rest_length");
-    }
-  }
-  %extend {
-    void set_suspension_travel(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_suspension_travel", length);
-    }
-  }
-  %extend {
-    float get_suspension_travel() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_suspension_travel");
-    }
-  }
-  %extend {
-    void set_suspension_stiffness(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_suspension_stiffness", length);
-    }
-  }
-  %extend {
-    float get_suspension_stiffness() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_suspension_stiffness");
-    }
-  }
-  %extend {
-    void set_suspension_max_force(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_suspension_max_force", length);
-    }
-  }
-  %extend {
-    float get_suspension_max_force() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_suspension_max_force");
-    }
-  }
-  %extend {
-    void set_damping_compression(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_damping_compression", length);
-    }
-  }
-  %extend {
-    float get_damping_compression() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_damping_compression");
-    }
-  }
-  %extend {
-    void set_damping_relaxation(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_damping_relaxation", length);
-    }
-  }
-  %extend {
-    float get_damping_relaxation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_damping_relaxation");
-    }
-  }
-  %extend {
-    void set_use_as_traction(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_as_traction", enable);
-    }
-  }
-  %extend {
-    bool is_used_as_traction() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_used_as_traction");
-    }
-  }
-  %extend {
-    void set_use_as_steering(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_as_steering", enable);
-    }
-  }
-  %extend {
-    bool is_used_as_steering() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_used_as_steering");
-    }
-  }
-  %extend {
-    void set_friction_slip(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_friction_slip", length);
-    }
-  }
-  %extend {
-    float get_friction_slip() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_friction_slip");
-    }
-  }
   VehicleWheel();
+
+%extend {
+
+void set_radius(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_radius");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_radius() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_radius");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_suspension_rest_length(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_suspension_rest_length");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_suspension_rest_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_suspension_rest_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_suspension_travel(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_suspension_travel");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_suspension_travel() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_suspension_travel");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_suspension_stiffness(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_suspension_stiffness");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_suspension_stiffness() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_suspension_stiffness");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_suspension_max_force(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_suspension_max_force");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_suspension_max_force() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_suspension_max_force");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_damping_compression(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_damping_compression");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_damping_compression() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_damping_compression");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_damping_relaxation(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_damping_relaxation");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_damping_relaxation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_damping_relaxation");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_as_traction(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_use_as_traction");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_used_as_traction() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "is_used_as_traction");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_as_steering(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_use_as_steering");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_used_as_steering() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "is_used_as_steering");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_friction_slip(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "set_friction_slip");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_friction_slip() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VehicleWheel", "get_friction_slip");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

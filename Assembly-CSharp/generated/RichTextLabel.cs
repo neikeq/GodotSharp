@@ -68,7 +68,6 @@ public class RichTextLabel : Control {
 
   public void add_image(Texture image) {
     GodotEnginePINVOKE.RichTextLabel_add_image(swigCPtr, Texture.getCPtr(image));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void newline() {

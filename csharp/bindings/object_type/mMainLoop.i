@@ -1,15 +1,6 @@
 /* mMainLoop.i */
 %module mMainLoop
 
-%typemap(out) MainLoop "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) MainLoop* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) MainLoop %{
   public static readonly int NOTIFICATION_WM_MOUSE_ENTER = 3;
@@ -54,84 +45,115 @@
 
 class MainLoop : public Object {
 public:
-  %extend {
-    void _drop_files(const StringArray& files, int screen) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_drop_files", files, screen);
-    }
-  }
-  %extend {
-    void _finalize() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_finalize");
-    }
-  }
-  %extend {
-    void _idle(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_idle", delta);
-    }
-  }
-  %extend {
-    void _initialize() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_initialize");
-    }
-  }
-  %extend {
-    void _input_event(const InputEvent& ev) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_input_event", ev);
-    }
-  }
-  %extend {
-    void _input_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_input_text", text);
-    }
-  }
-  %extend {
-    void _iteration(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_iteration", delta);
-    }
-  }
-  %extend {
-    void input_event(const InputEvent& ev) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("input_event", ev);
-    }
-  }
-  %extend {
-    void input_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("input_text", text);
-    }
-  }
-  %extend {
-    void init() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("init");
-    }
-  }
-  %extend {
-    bool iteration(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("iteration", delta);
-    }
-  }
-  %extend {
-    bool idle(float delta) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("idle", delta);
-    }
-  }
-  %extend {
-    void finish() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("finish");
-    }
-  }
   MainLoop();
+
+%extend {
+
+void _drop_files(const StringArray& files, int screen) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_drop_files");
+  const void* __args[2] = { &files, &screen };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _finalize() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_finalize");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _idle(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_idle");
+  const void* __args[1] = { &delta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _initialize() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_initialize");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _input_event(const InputEvent& ev) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_input_event");
+  const void* __args[1] = { &ev };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _input_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_input_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _iteration(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "_iteration");
+  const void* __args[1] = { &delta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void input_event(const InputEvent& ev) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "input_event");
+  const void* __args[1] = { &ev };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void input_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "input_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void init() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "init");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool iteration(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "iteration");
+  const void* __args[1] = { &delta };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool idle(float delta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "idle");
+  const void* __args[1] = { &delta };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void finish() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MainLoop", "finish");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

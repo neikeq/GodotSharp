@@ -45,7 +45,6 @@ public class Path : Spatial {
 
   public void set_curve(Curve3D curve) {
     GodotEnginePINVOKE.Path_set_curve(swigCPtr, Curve3D.getCPtr(curve));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Curve3D get_curve() {

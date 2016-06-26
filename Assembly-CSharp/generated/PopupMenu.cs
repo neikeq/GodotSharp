@@ -115,42 +115,34 @@ public class PopupMenu : Popup {
 
   public void add_icon_shortcut(Object texture, ShortCut shortcut, int id) {
     GodotEnginePINVOKE.PopupMenu_add_icon_shortcut__SWIG_0(swigCPtr, Object.getCPtr(texture), ShortCut.getCPtr(shortcut), id);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_icon_shortcut(Object texture, ShortCut shortcut) {
     GodotEnginePINVOKE.PopupMenu_add_icon_shortcut__SWIG_1(swigCPtr, Object.getCPtr(texture), ShortCut.getCPtr(shortcut));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_shortcut(ShortCut shortcut, int id) {
     GodotEnginePINVOKE.PopupMenu_add_shortcut__SWIG_0(swigCPtr, ShortCut.getCPtr(shortcut), id);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_shortcut(ShortCut shortcut) {
     GodotEnginePINVOKE.PopupMenu_add_shortcut__SWIG_1(swigCPtr, ShortCut.getCPtr(shortcut));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_icon_check_shortcut(Object texture, ShortCut shortcut, int id) {
     GodotEnginePINVOKE.PopupMenu_add_icon_check_shortcut__SWIG_0(swigCPtr, Object.getCPtr(texture), ShortCut.getCPtr(shortcut), id);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_icon_check_shortcut(Object texture, ShortCut shortcut) {
     GodotEnginePINVOKE.PopupMenu_add_icon_check_shortcut__SWIG_1(swigCPtr, Object.getCPtr(texture), ShortCut.getCPtr(shortcut));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_check_shortcut(ShortCut shortcut, int id) {
     GodotEnginePINVOKE.PopupMenu_add_check_shortcut__SWIG_0(swigCPtr, ShortCut.getCPtr(shortcut), id);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_check_shortcut(ShortCut shortcut) {
     GodotEnginePINVOKE.PopupMenu_add_check_shortcut__SWIG_1(swigCPtr, ShortCut.getCPtr(shortcut));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_item_text(int idx, string text) {
@@ -181,7 +173,6 @@ public class PopupMenu : Popup {
 
   public void set_item_shortcut(int idx, ShortCut shortcut) {
     GodotEnginePINVOKE.PopupMenu_set_item_shortcut(swigCPtr, idx, ShortCut.getCPtr(shortcut));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_item_submenu(int idx, string submenu) {

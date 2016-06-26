@@ -1,22 +1,6 @@
 /* mPhysics2DTestMotionResult.i */
 %module mPhysics2DTestMotionResult
 
-%typemap(ctype, out="Physics2DTestMotionResult*") Ref<Physics2DTestMotionResult> "Physics2DTestMotionResult*"
-%typemap(out, null="NULL") Ref<Physics2DTestMotionResult> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Physics2DTestMotionResult> "Physics2DTestMotionResult.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Physics2DTestMotionResult> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Physics2DTestMotionResult> "Physics2DTestMotionResult"
-%typemap(csout, excode=SWIGEXCODE) Ref<Physics2DTestMotionResult> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Physics2DTestMotionResult ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DTestMotionResult;$excode
-    return ret;
-}
-
 template<class Physics2DTestMotionResult> class Ref;%template() Ref<Physics2DTestMotionResult>;
 %feature("novaluewrapper") Ref<Physics2DTestMotionResult>;
 
@@ -57,75 +41,105 @@ template<class Physics2DTestMotionResult> class Ref;%template() Ref<Physics2DTes
 
 class Physics2DTestMotionResult : public Reference {
 public:
-  %extend {
-    Vector2 get_motion() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_motion");
-    }
-  }
-  %extend {
-    Vector2 get_motion_remainder() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_motion_remainder");
-    }
-  }
-  %extend {
-    Vector2 get_collision_point() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_point");
-    }
-  }
-  %extend {
-    Vector2 get_collision_normal() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_normal");
-    }
-  }
-  %extend {
-    Vector2 get_collider_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_velocity");
-    }
-  }
-  %extend {
-    int get_collider_id() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_id");
-    }
-  }
-  %extend {
-    RID get_collider_rid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_rid");
-    }
-  }
-  %extend {
-    Object* get_collider() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider").operator Object *();
-    }
-  }
-  %extend {
-    int get_collider_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_shape");
-    }
-  }
   Physics2DTestMotionResult();
-  %extend {
-    ~Physics2DTestMotionResult() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+Vector2 get_motion() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_motion");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_motion_remainder() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_motion_remainder");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collision_point() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collision_point");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collision_normal() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collision_normal");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collider_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collider_velocity");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collider_id() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collider_id");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_collider_rid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collider_rid");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_collider() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collider");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collider_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DTestMotionResult", "get_collider_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Physics2DTestMotionResult() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

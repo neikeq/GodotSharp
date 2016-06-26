@@ -1,15 +1,6 @@
 /* mPopup.i */
 %module mPopup
 
-%typemap(out) Popup "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Popup* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Popup %{
   public static readonly int NOTIFICATION_POST_POPUP = 80;
@@ -49,42 +40,59 @@
 
 class Popup : public Control {
 public:
-  %extend {
-    void popup_centered(const Vector2& size = Vector2(0,0)) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("popup_centered", size);
-    }
-  }
-  %extend {
-    void popup_centered_ratio(float ratio = 0.75) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("popup_centered_ratio", ratio);
-    }
-  }
-  %extend {
-    void popup_centered_minsize(const Vector2& minsize = Vector2(0,0)) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("popup_centered_minsize", minsize);
-    }
-  }
-  %extend {
-    void popup() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("popup");
-    }
-  }
-  %extend {
-    void set_exclusive(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_exclusive", enable);
-    }
-  }
-  %extend {
-    bool is_exclusive() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_exclusive");
-    }
-  }
   Popup();
+
+%extend {
+
+void popup_centered(const Vector2& size = Vector2(0,0)) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Popup", "popup_centered");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void popup_centered_ratio(float ratio = 0.75) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Popup", "popup_centered_ratio");
+  const void* __args[1] = { &ratio };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void popup_centered_minsize(const Vector2& minsize = Vector2(0,0)) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Popup", "popup_centered_minsize");
+  const void* __args[1] = { &minsize };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void popup() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Popup", "popup");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_exclusive(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Popup", "set_exclusive");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_exclusive() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Popup", "is_exclusive");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

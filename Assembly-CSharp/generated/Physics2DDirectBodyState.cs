@@ -176,7 +176,9 @@ public class Physics2DDirectBodyState : Object {
 
   public Physics2DDirectSpaceState get_space_state() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Physics2DDirectBodyState_get_space_state(swigCPtr);
-    Physics2DDirectSpaceState ret = (cPtr == global::System.IntPtr.Zero) ? null : new Physics2DDirectSpaceState(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Physics2DDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DDirectSpaceState;
     return ret;
   }
 

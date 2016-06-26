@@ -1,15 +1,6 @@
 /* mButtonGroup.i */
 %module mButtonGroup
 
-%typemap(out) ButtonGroup "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ButtonGroup* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ButtonGroup %{
 
@@ -47,36 +38,55 @@
 
 class ButtonGroup : public BoxContainer {
 public:
-  %extend {
-    BaseButton* get_pressed_button() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pressed_button").operator Object *()->cast_to<BaseButton>();
-    }
-  }
-  %extend {
-    int get_pressed_button_index() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pressed_button_index");
-    }
-  }
-  %extend {
-    BaseButton* get_focused_button() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_focused_button").operator Object *()->cast_to<BaseButton>();
-    }
-  }
-  %extend {
-    Array get_button_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_button_list");
-    }
-  }
-  %extend {
-    void set_pressed_button(BaseButton* button) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pressed_button", button);
-    }
-  }
   ButtonGroup();
+
+%extend {
+
+BaseButton* get_pressed_button() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonGroup", "get_pressed_button");
+  BaseButton* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_pressed_button_index() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonGroup", "get_pressed_button_index");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+BaseButton* get_focused_button() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonGroup", "get_focused_button");
+  BaseButton* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_button_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonGroup", "get_button_list");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_pressed_button(BaseButton* button) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonGroup", "set_pressed_button");
+  const void* __args[1] = { button };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

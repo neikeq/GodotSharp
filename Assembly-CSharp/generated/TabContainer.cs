@@ -103,7 +103,6 @@ public class TabContainer : Control {
 
   public void set_tab_icon(int tab_idx, Texture icon) {
     GodotEnginePINVOKE.TabContainer_set_tab_icon(swigCPtr, tab_idx, Texture.getCPtr(icon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_tab_icon(int tab_idx) {

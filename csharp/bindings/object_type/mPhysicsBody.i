@@ -2,15 +2,6 @@
 %module mPhysicsBody
 
 %nodefaultctor PhysicsBody;
-%typemap(out) PhysicsBody "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) PhysicsBody* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) PhysicsBody %{
 
@@ -49,65 +40,96 @@
 
 class PhysicsBody : public CollisionObject {
 public:
-  %extend {
-    void set_layer_mask(int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask", mask);
-    }
-  }
-  %extend {
-    int get_layer_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask");
-    }
-  }
-  %extend {
-    void set_collision_mask(int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collision_mask", mask);
-    }
-  }
-  %extend {
-    int get_collision_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_mask");
-    }
-  }
-  %extend {
-    void set_collision_mask_bit(int bit, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collision_mask_bit", bit, value);
-    }
-  }
-  %extend {
-    bool get_collision_mask_bit(int bit) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_mask_bit", bit);
-    }
-  }
-  %extend {
-    void set_layer_mask_bit(int bit, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask_bit", bit, value);
-    }
-  }
-  %extend {
-    bool get_layer_mask_bit(int bit) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask_bit", bit);
-    }
-  }
-  %extend {
-    void add_collision_exception_with(PhysicsBody* body) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_collision_exception_with", body);
-    }
-  }
-  %extend {
-    void remove_collision_exception_with(PhysicsBody* body) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_collision_exception_with", body);
-    }
-  }
+
+%extend {
+
+void set_layer_mask(int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "set_layer_mask");
+  const void* __args[1] = { &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "get_layer_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collision_mask(int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "set_collision_mask");
+  const void* __args[1] = { &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_collision_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "get_collision_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collision_mask_bit(int bit, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "set_collision_mask_bit");
+  const void* __args[2] = { &bit, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_collision_mask_bit(int bit) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "get_collision_mask_bit");
+  const void* __args[1] = { &bit };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_layer_mask_bit(int bit, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "set_layer_mask_bit");
+  const void* __args[2] = { &bit, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_layer_mask_bit(int bit) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "get_layer_mask_bit");
+  const void* __args[1] = { &bit };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void add_collision_exception_with(PhysicsBody* body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "add_collision_exception_with");
+  const void* __args[1] = { body };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_collision_exception_with(PhysicsBody* body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PhysicsBody", "remove_collision_exception_with");
+  const void* __args[1] = { body };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

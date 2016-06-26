@@ -46,7 +46,6 @@ public class InstancePlaceholder : Node {
 
   public void replace_by_instance(PackedScene custom_scene) {
     GodotEnginePINVOKE.InstancePlaceholder_replace_by_instance__SWIG_0(swigCPtr, PackedScene.getCPtr(custom_scene));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void replace_by_instance() {

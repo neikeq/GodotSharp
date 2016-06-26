@@ -2,15 +2,6 @@
 %module mGeometryInstance
 
 %nodefaultctor GeometryInstance;
-%typemap(out) GeometryInstance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) GeometryInstance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) GeometryInstance %{
   public static readonly int FLAG_VISIBLE = 0;
@@ -61,89 +52,130 @@
 
 class GeometryInstance : public VisualInstance {
 public:
-  %extend {
-    void set_material_override(Object* material) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_material_override", material);
-    }
-  }
-  %extend {
-    Object* get_material_override() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_material_override").operator Object *();
-    }
-  }
-  %extend {
-    void set_flag(int flag, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flag", flag, value);
-    }
-  }
-  %extend {
-    bool get_flag(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flag", flag);
-    }
-  }
-  %extend {
-    void set_cast_shadows_setting(int shadow_casting_setting) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cast_shadows_setting", shadow_casting_setting);
-    }
-  }
-  %extend {
-    int get_cast_shadows_setting() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cast_shadows_setting");
-    }
-  }
-  %extend {
-    void set_draw_range_begin(float mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_draw_range_begin", mode);
-    }
-  }
-  %extend {
-    float get_draw_range_begin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_draw_range_begin");
-    }
-  }
-  %extend {
-    void set_draw_range_end(float mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_draw_range_end", mode);
-    }
-  }
-  %extend {
-    float get_draw_range_end() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_draw_range_end");
-    }
-  }
-  %extend {
-    void set_baked_light_texture_id(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_baked_light_texture_id", id);
-    }
-  }
-  %extend {
-    int get_baked_light_texture_id() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_baked_light_texture_id");
-    }
-  }
-  %extend {
-    void set_extra_cull_margin(float margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_extra_cull_margin", margin);
-    }
-  }
-  %extend {
-    float get_extra_cull_margin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_extra_cull_margin");
-    }
-  }
+
+%extend {
+
+void set_material_override(Object* material) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_material_override");
+  const void* __args[1] = { material };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_material_override() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_material_override");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flag(int flag, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_flag");
+  const void* __args[2] = { &flag, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_flag(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_flag");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_cast_shadows_setting(int shadow_casting_setting) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_cast_shadows_setting");
+  const void* __args[1] = { &shadow_casting_setting };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_cast_shadows_setting() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_cast_shadows_setting");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_draw_range_begin(float mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_draw_range_begin");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_draw_range_begin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_draw_range_begin");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_draw_range_end(float mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_draw_range_end");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_draw_range_end() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_draw_range_end");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_baked_light_texture_id(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_baked_light_texture_id");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_baked_light_texture_id() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_baked_light_texture_id");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_extra_cull_margin(float margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "set_extra_cull_margin");
+  const void* __args[1] = { &margin };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_extra_cull_margin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GeometryInstance", "get_extra_cull_margin");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

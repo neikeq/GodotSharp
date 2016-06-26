@@ -1,15 +1,6 @@
 /* mWindowDialog.i */
 %module mWindowDialog
 
-%typemap(out) WindowDialog "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) WindowDialog* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) WindowDialog %{
 
@@ -47,24 +38,37 @@
 
 class WindowDialog : public Popup {
 public:
-  %extend {
-    void set_title(const String& title) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_title", title);
-    }
-  }
-  %extend {
-    String get_title() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_title");
-    }
-  }
-  %extend {
-    TextureButton* get_close_button() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_close_button").operator Object *()->cast_to<TextureButton>();
-    }
-  }
   WindowDialog();
+
+%extend {
+
+void set_title(const String& title) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("WindowDialog", "set_title");
+  const void* __args[1] = { &title };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_title() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("WindowDialog", "get_title");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+TextureButton* get_close_button() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("WindowDialog", "get_close_button");
+  TextureButton* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

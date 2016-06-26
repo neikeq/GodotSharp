@@ -1,15 +1,6 @@
 /* mRigidBody.i */
 %module mRigidBody
 
-%typemap(out) RigidBody "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) RigidBody* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) RigidBody %{
   public static readonly int MODE_STATIC = 1;
@@ -51,234 +42,333 @@
 
 class RigidBody : public PhysicsBody {
 public:
-  %extend {
-    void _integrate_forces(PhysicsDirectBodyState* state) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_integrate_forces", state);
-    }
-  }
-  %extend {
-    void set_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mode", mode);
-    }
-  }
-  %extend {
-    int get_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mode");
-    }
-  }
-  %extend {
-    void set_mass(float mass) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mass", mass);
-    }
-  }
-  %extend {
-    float get_mass() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mass");
-    }
-  }
-  %extend {
-    void set_weight(float weight) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_weight", weight);
-    }
-  }
-  %extend {
-    float get_weight() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_weight");
-    }
-  }
-  %extend {
-    void set_friction(float friction) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_friction", friction);
-    }
-  }
-  %extend {
-    float get_friction() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_friction");
-    }
-  }
-  %extend {
-    void set_bounce(float bounce) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bounce", bounce);
-    }
-  }
-  %extend {
-    float get_bounce() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bounce");
-    }
-  }
-  %extend {
-    void set_linear_velocity(const Vector3& linear_velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_linear_velocity", linear_velocity);
-    }
-  }
-  %extend {
-    Vector3 get_linear_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_linear_velocity");
-    }
-  }
-  %extend {
-    void set_angular_velocity(const Vector3& angular_velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_angular_velocity", angular_velocity);
-    }
-  }
-  %extend {
-    Vector3 get_angular_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_angular_velocity");
-    }
-  }
-  %extend {
-    void set_gravity_scale(float gravity_scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gravity_scale", gravity_scale);
-    }
-  }
-  %extend {
-    float get_gravity_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gravity_scale");
-    }
-  }
-  %extend {
-    void set_linear_damp(float linear_damp) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_linear_damp", linear_damp);
-    }
-  }
-  %extend {
-    float get_linear_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_linear_damp");
-    }
-  }
-  %extend {
-    void set_angular_damp(float angular_damp) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_angular_damp", angular_damp);
-    }
-  }
-  %extend {
-    float get_angular_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_angular_damp");
-    }
-  }
-  %extend {
-    void set_max_contacts_reported(int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_max_contacts_reported", amount);
-    }
-  }
-  %extend {
-    int get_max_contacts_reported() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_max_contacts_reported");
-    }
-  }
-  %extend {
-    void set_use_custom_integrator(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_custom_integrator", enable);
-    }
-  }
-  %extend {
-    bool is_using_custom_integrator() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_custom_integrator");
-    }
-  }
-  %extend {
-    void set_contact_monitor(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_contact_monitor", enabled);
-    }
-  }
-  %extend {
-    bool is_contact_monitor_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_contact_monitor_enabled");
-    }
-  }
-  %extend {
-    void set_use_continuous_collision_detection(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_continuous_collision_detection", enable);
-    }
-  }
-  %extend {
-    bool is_using_continuous_collision_detection() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_continuous_collision_detection");
-    }
-  }
-  %extend {
-    void set_axis_velocity(const Vector3& axis_velocity) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_axis_velocity", axis_velocity);
-    }
-  }
-  %extend {
-    void apply_impulse(const Vector3& pos, const Vector3& impulse) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("apply_impulse", pos, impulse);
-    }
-  }
-  %extend {
-    void set_sleeping(bool sleeping) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_sleeping", sleeping);
-    }
-  }
-  %extend {
-    bool is_sleeping() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_sleeping");
-    }
-  }
-  %extend {
-    void set_can_sleep(bool able_to_sleep) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_can_sleep", able_to_sleep);
-    }
-  }
-  %extend {
-    bool is_able_to_sleep() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_able_to_sleep");
-    }
-  }
-  %extend {
-    void set_axis_lock(int axis_lock) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_axis_lock", axis_lock);
-    }
-  }
-  %extend {
-    int get_axis_lock() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_axis_lock");
-    }
-  }
-  %extend {
-    Array get_colliding_bodies() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_colliding_bodies");
-    }
-  }
   RigidBody();
+
+%extend {
+
+void _integrate_forces(PhysicsDirectBodyState* state) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "_integrate_forces");
+  const void* __args[1] = { state };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_mass(float mass) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_mass");
+  const void* __args[1] = { &mass };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_mass() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_mass");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_weight(float weight) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_weight");
+  const void* __args[1] = { &weight };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_weight() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_weight");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_friction(float friction) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_friction");
+  const void* __args[1] = { &friction };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_friction() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_friction");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bounce(float bounce) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_bounce");
+  const void* __args[1] = { &bounce };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_bounce() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_bounce");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_linear_velocity(const Vector3& linear_velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_linear_velocity");
+  const void* __args[1] = { &linear_velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_linear_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_linear_velocity");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_angular_velocity(const Vector3& angular_velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_angular_velocity");
+  const void* __args[1] = { &angular_velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_angular_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_angular_velocity");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gravity_scale(float gravity_scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_gravity_scale");
+  const void* __args[1] = { &gravity_scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_gravity_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_gravity_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_linear_damp(float linear_damp) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_linear_damp");
+  const void* __args[1] = { &linear_damp };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_linear_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_linear_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_angular_damp(float angular_damp) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_angular_damp");
+  const void* __args[1] = { &angular_damp };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_angular_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_angular_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_max_contacts_reported(int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_max_contacts_reported");
+  const void* __args[1] = { &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_max_contacts_reported() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_max_contacts_reported");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_custom_integrator(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_use_custom_integrator");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_custom_integrator() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "is_using_custom_integrator");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_contact_monitor(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_contact_monitor");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_contact_monitor_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "is_contact_monitor_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_continuous_collision_detection(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_use_continuous_collision_detection");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_continuous_collision_detection() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "is_using_continuous_collision_detection");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_axis_velocity(const Vector3& axis_velocity) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_axis_velocity");
+  const void* __args[1] = { &axis_velocity };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void apply_impulse(const Vector3& pos, const Vector3& impulse) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "apply_impulse");
+  const void* __args[2] = { &pos, &impulse };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_sleeping(bool sleeping) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_sleeping");
+  const void* __args[1] = { &sleeping };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_sleeping() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "is_sleeping");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_can_sleep(bool able_to_sleep) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_can_sleep");
+  const void* __args[1] = { &able_to_sleep };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_able_to_sleep() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "is_able_to_sleep");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_axis_lock(int axis_lock) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "set_axis_lock");
+  const void* __args[1] = { &axis_lock };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_axis_lock() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_axis_lock");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_colliding_bodies() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RigidBody", "get_colliding_bodies");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

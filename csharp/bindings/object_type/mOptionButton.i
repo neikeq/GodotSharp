@@ -1,15 +1,6 @@
 /* mOptionButton.i */
 %module mOptionButton
 
-%typemap(out) OptionButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) OptionButton* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) OptionButton %{
 
@@ -47,126 +38,179 @@
 
 class OptionButton : public Button {
 public:
-  %extend {
-    void add_item(const String& label, int id = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_item", label, id);
-    }
-  }
-  %extend {
-    void add_icon_item(Ref<Texture> texture, const String& label, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_icon_item", texture, label, id);
-    }
-  }
-  %extend {
-    void set_item_text(int idx, const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_text", idx, text);
-    }
-  }
-  %extend {
-    void set_item_icon(int idx, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_icon", idx, texture);
-    }
-  }
-  %extend {
-    void set_item_disabled(int idx, bool disabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_disabled", idx, disabled);
-    }
-  }
-  %extend {
-    void set_item_ID(int idx, int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_ID", idx, id);
-    }
-  }
-  %extend {
-    void set_item_metadata(int idx, const Variant& metadata) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_item_metadata", idx, metadata);
-    }
-  }
-  %extend {
-    String get_item_text(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_item_text", idx);
-    }
-  }
-  %extend {
-    Ref<Texture> get_item_icon(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_item_icon", idx).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    int get_item_ID(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_item_ID", idx);
-    }
-  }
-  %extend {
-    void get_item_metadata(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_item_metadata", idx);
-    }
-  }
-  %extend {
-    bool is_item_disabled(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_item_disabled", idx);
-    }
-  }
-  %extend {
-    int get_item_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_item_count");
-    }
-  }
-  %extend {
-    void add_separator() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_separator");
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    void select(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("select", idx);
-    }
-  }
-  %extend {
-    int get_selected() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selected");
-    }
-  }
-  %extend {
-    int get_selected_ID() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selected_ID");
-    }
-  }
-  %extend {
-    void get_selected_metadata() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_selected_metadata");
-    }
-  }
-  %extend {
-    void remove_item(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_item", idx);
-    }
-  }
   OptionButton();
+
+%extend {
+
+void add_item(const String& label, int id = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "add_item");
+  const void* __args[2] = { &label, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_icon_item(Texture* texture, const String& label, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "add_icon_item");
+  const void* __args[3] = { texture, &label, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_item_text(int idx, const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "set_item_text");
+  const void* __args[2] = { &idx, &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_item_icon(int idx, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "set_item_icon");
+  const void* __args[2] = { &idx, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_item_disabled(int idx, bool disabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "set_item_disabled");
+  const void* __args[2] = { &idx, &disabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_item_ID(int idx, int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "set_item_ID");
+  const void* __args[2] = { &idx, &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_item_metadata(int idx, const Variant& metadata) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "set_item_metadata");
+  const void* __args[2] = { &idx, &metadata };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_item_text(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_item_text");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Texture> get_item_icon(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_item_icon");
+  const void* __args[1] = { &idx };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_item_ID(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_item_ID");
+  const void* __args[1] = { &idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void get_item_metadata(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_item_metadata");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_item_disabled(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "is_item_disabled");
+  const void* __args[1] = { &idx };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_item_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_item_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_separator() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "add_separator");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void select(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "select");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_selected() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_selected");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_selected_ID() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_selected_ID");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void get_selected_metadata() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "get_selected_metadata");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void remove_item(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OptionButton", "remove_item");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

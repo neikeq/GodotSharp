@@ -1,22 +1,6 @@
 /* mEditorScenePostImport.i */
 %module mEditorScenePostImport
 
-%typemap(ctype, out="EditorScenePostImport*") Ref<EditorScenePostImport> "EditorScenePostImport*"
-%typemap(out, null="NULL") Ref<EditorScenePostImport> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<EditorScenePostImport> "EditorScenePostImport.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<EditorScenePostImport> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<EditorScenePostImport> "EditorScenePostImport"
-%typemap(csout, excode=SWIGEXCODE) Ref<EditorScenePostImport> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    EditorScenePostImport ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorScenePostImport;$excode
-    return ret;
-}
-
 template<class EditorScenePostImport> class Ref;%template() Ref<EditorScenePostImport>;
 %feature("novaluewrapper") Ref<EditorScenePostImport>;
 
@@ -57,27 +41,32 @@ template<class EditorScenePostImport> class Ref;%template() Ref<EditorScenePostI
 
 class EditorScenePostImport : public Reference {
 public:
-  %extend {
-    void post_import(Object* scene) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("post_import", scene);
-    }
-  }
   EditorScenePostImport();
-  %extend {
-    ~EditorScenePostImport() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void post_import(Object* scene) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorScenePostImport", "post_import");
+  const void* __args[1] = { scene };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~EditorScenePostImport() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

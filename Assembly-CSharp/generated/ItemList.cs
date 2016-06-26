@@ -64,12 +64,10 @@ public class ItemList : Control {
 
   public void add_icon_item(Texture icon, bool selectable) {
     GodotEnginePINVOKE.ItemList_add_icon_item__SWIG_0(swigCPtr, Texture.getCPtr(icon), selectable);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_icon_item(Texture icon) {
     GodotEnginePINVOKE.ItemList_add_icon_item__SWIG_1(swigCPtr, Texture.getCPtr(icon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_item_text(int idx, string text) {
@@ -84,7 +82,6 @@ public class ItemList : Control {
 
   public void set_item_icon(int idx, Texture icon) {
     GodotEnginePINVOKE.ItemList_set_item_icon(swigCPtr, idx, Texture.getCPtr(icon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_item_icon(int idx) {

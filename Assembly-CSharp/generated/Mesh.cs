@@ -148,7 +148,6 @@ public class Mesh : Resource {
 
   public void surface_set_material(int surf_idx, Material material) {
     GodotEnginePINVOKE.Mesh_surface_set_material(swigCPtr, surf_idx, Material.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Material surface_get_material(int surf_idx) {

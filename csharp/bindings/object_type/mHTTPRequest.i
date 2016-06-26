@@ -1,15 +1,6 @@
 /* mHTTPRequest.i */
 %module mHTTPRequest
 
-%typemap(out) HTTPRequest "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) HTTPRequest* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) HTTPRequest %{
   public static readonly int RESULT_SUCCESS = 0;
@@ -59,84 +50,123 @@
 
 class HTTPRequest : public Node {
 public:
-  %extend {
-    int request(const String& url, const StringArray& custom_headers = StringArray(), bool ssl_validate_domain = true) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("request", url, custom_headers, ssl_validate_domain);
-    }
-  }
-  %extend {
-    void cancel_request() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("cancel_request");
-    }
-  }
-  %extend {
-    int get_http_client_status() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_http_client_status");
-    }
-  }
-  %extend {
-    void set_use_threads(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_threads", enable);
-    }
-  }
-  %extend {
-    bool is_using_threads() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_threads");
-    }
-  }
-  %extend {
-    void set_body_size_limit(int bytes) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_body_size_limit", bytes);
-    }
-  }
-  %extend {
-    int get_body_size_limit() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_body_size_limit");
-    }
-  }
-  %extend {
-    void set_max_redirects(int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_max_redirects", amount);
-    }
-  }
-  %extend {
-    int get_max_redirects() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_max_redirects");
-    }
-  }
-  %extend {
-    void set_download_file(const String& path) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_download_file", path);
-    }
-  }
-  %extend {
-    String get_download_file() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_download_file");
-    }
-  }
-  %extend {
-    int get_downloaded_bytes() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_downloaded_bytes");
-    }
-  }
-  %extend {
-    int get_body_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_body_size");
-    }
-  }
   HTTPRequest();
+
+%extend {
+
+int request(const String& url, const StringArray& custom_headers = StringArray(), bool ssl_validate_domain = true) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "request");
+  const void* __args[3] = { &url, &custom_headers, &ssl_validate_domain };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void cancel_request() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "cancel_request");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int get_http_client_status() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "get_http_client_status");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_threads(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "set_use_threads");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_threads() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "is_using_threads");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_body_size_limit(int bytes) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "set_body_size_limit");
+  const void* __args[1] = { &bytes };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_body_size_limit() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "get_body_size_limit");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_max_redirects(int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "set_max_redirects");
+  const void* __args[1] = { &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_max_redirects() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "get_max_redirects");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_download_file(const String& path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "set_download_file");
+  const void* __args[1] = { &path };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_download_file() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "get_download_file");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_downloaded_bytes() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "get_downloaded_bytes");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_body_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPRequest", "get_body_size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

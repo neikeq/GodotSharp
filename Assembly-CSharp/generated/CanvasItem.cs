@@ -63,8 +63,9 @@ public class CanvasItem : Node {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void edit_get() {
-    GodotEnginePINVOKE.CanvasItem_edit_get(swigCPtr);
+  public Variant edit_get_state() {
+    Variant ret = new Variant(GodotEnginePINVOKE.CanvasItem_edit_get_state(swigCPtr), true);
+    return ret;
   }
 
   public void edit_set_rect(SWIGTYPE_p_Rect2 rect) {
@@ -368,7 +369,6 @@ public class CanvasItem : Node {
 
   public void set_material(CanvasItemMaterial material) {
     GodotEnginePINVOKE.CanvasItem_set_material(swigCPtr, CanvasItemMaterial.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public CanvasItemMaterial get_material() {

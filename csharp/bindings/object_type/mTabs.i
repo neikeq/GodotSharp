@@ -1,15 +1,6 @@
 /* mTabs.i */
 %module mTabs
 
-%typemap(out) Tabs "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Tabs* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Tabs %{
   public static readonly int ALIGN_LEFT = 0;
@@ -53,78 +44,114 @@
 
 class Tabs : public Control {
 public:
-  %extend {
-    int get_tab_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tab_count");
-    }
-  }
-  %extend {
-    void set_current_tab(int tab_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_current_tab", tab_idx);
-    }
-  }
-  %extend {
-    int get_current_tab() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_current_tab");
-    }
-  }
-  %extend {
-    void set_tab_title(int tab_idx, const String& title) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tab_title", tab_idx, title);
-    }
-  }
-  %extend {
-    String get_tab_title(int tab_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tab_title", tab_idx);
-    }
-  }
-  %extend {
-    void set_tab_icon(int tab_idx, Ref<Texture> icon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tab_icon", tab_idx, icon);
-    }
-  }
-  %extend {
-    Ref<Texture> get_tab_icon(int tab_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tab_icon", tab_idx).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    void remove_tab(int tab_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_tab", tab_idx);
-    }
-  }
-  %extend {
-    void add_tab(const String& title, Ref<Texture> icon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_tab", title, icon);
-    }
-  }
-  %extend {
-    void set_tab_align(int align) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tab_align", align);
-    }
-  }
-  %extend {
-    int get_tab_align() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tab_align");
-    }
-  }
-  %extend {
-    void ensure_tab_visible(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("ensure_tab_visible", idx);
-    }
-  }
   Tabs();
+
+%extend {
+
+int get_tab_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "get_tab_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_current_tab(int tab_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "set_current_tab");
+  const void* __args[1] = { &tab_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_current_tab() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "get_current_tab");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_tab_title(int tab_idx, const String& title) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "set_tab_title");
+  const void* __args[2] = { &tab_idx, &title };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_tab_title(int tab_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "get_tab_title");
+  const void* __args[1] = { &tab_idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_tab_icon(int tab_idx, Texture* icon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "set_tab_icon");
+  const void* __args[2] = { &tab_idx, icon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_tab_icon(int tab_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "get_tab_icon");
+  const void* __args[1] = { &tab_idx };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_tab(int tab_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "remove_tab");
+  const void* __args[1] = { &tab_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_tab(const String& title, Texture* icon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "add_tab");
+  const void* __args[2] = { &title, icon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_tab_align(int align) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "set_tab_align");
+  const void* __args[1] = { &align };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_tab_align() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "get_tab_align");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void ensure_tab_visible(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tabs", "ensure_tab_visible");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

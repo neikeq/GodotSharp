@@ -1,15 +1,6 @@
 /* mConfirmationDialog.i */
 %module mConfirmationDialog
 
-%typemap(out) ConfirmationDialog "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ConfirmationDialog* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ConfirmationDialog %{
 
@@ -47,12 +38,20 @@
 
 class ConfirmationDialog : public AcceptDialog {
 public:
-  %extend {
-    Button* get_cancel() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cancel").operator Object *()->cast_to<Button>();
-    }
-  }
   ConfirmationDialog();
+
+%extend {
+
+Button* get_cancel() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConfirmationDialog", "get_cancel");
+  Button* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

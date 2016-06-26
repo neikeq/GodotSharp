@@ -2,22 +2,6 @@
 %module mSceneState
 
 %nodefaultctor SceneState;
-%typemap(ctype, out="SceneState*") Ref<SceneState> "SceneState*"
-%typemap(out, null="NULL") Ref<SceneState> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<SceneState> "SceneState.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<SceneState> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<SceneState> "SceneState"
-%typemap(csout, excode=SWIGEXCODE) Ref<SceneState> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    SceneState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SceneState;$excode
-    return ret;
-}
-
 template<class SceneState> class Ref;%template() Ref<SceneState>;
 %feature("novaluewrapper") Ref<SceneState>;
 
@@ -59,134 +43,209 @@ template<class SceneState> class Ref;%template() Ref<SceneState>;
 
 class SceneState : public Reference {
 public:
-  %extend {
-    int get_node_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_count");
+
+%extend {
+
+int get_node_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_node_type(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_type");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_node_name(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_name");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+NodePath get_node_path(int idx, bool for_parent = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_path");
+  const void* __args[2] = { &idx, &for_parent };
+  NodePath ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+NodePath get_node_owner_path(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_owner_path");
+  const void* __args[1] = { &idx };
+  NodePath ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_node_instance_placeholder(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "is_node_instance_placeholder");
+  const void* __args[1] = { &idx };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_node_instance_placeholder(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_instance_placeholder");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<PackedScene> get_node_instance(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_instance");
+  const void* __args[1] = { &idx };
+  Ref<PackedScene> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_node_groups(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_groups");
+  const void* __args[1] = { &idx };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_node_property_count(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_property_count");
+  const void* __args[1] = { &idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_node_property_name(int idx, int prop_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_property_name");
+  const void* __args[2] = { &idx, &prop_idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void get_node_property_value(int idx, int prop_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_node_property_value");
+  const void* __args[2] = { &idx, &prop_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_connection_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+NodePath get_connection_source(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_source");
+  const void* __args[1] = { &idx };
+  NodePath ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_connection_signal(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_signal");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+NodePath get_connection_target(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_target");
+  const void* __args[1] = { &idx };
+  NodePath ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_connection_method(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_method");
+  const void* __args[1] = { &idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_connection_flags(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_flags");
+  const void* __args[1] = { &idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array get_connection_binds(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SceneState", "get_connection_binds");
+  const void* __args[1] = { &idx };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~SceneState() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    String get_node_type(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_type", idx);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    String get_node_name(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_name", idx);
-    }
-  }
-  %extend {
-    NodePath get_node_path(int idx, bool for_parent = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_path", idx, for_parent);
-    }
-  }
-  %extend {
-    NodePath get_node_owner_path(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_owner_path", idx);
-    }
-  }
-  %extend {
-    bool is_node_instance_placeholder(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_node_instance_placeholder", idx);
-    }
-  }
-  %extend {
-    String get_node_instance_placeholder(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_instance_placeholder", idx);
-    }
-  }
-  %extend {
-    Ref<PackedScene> get_node_instance(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_instance", idx).operator Object *()->cast_to<PackedScene>();
-    }
-  }
-  %extend {
-    StringArray get_node_groups(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_groups", idx);
-    }
-  }
-  %extend {
-    int get_node_property_count(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_property_count", idx);
-    }
-  }
-  %extend {
-    String get_node_property_name(int idx, int prop_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_property_name", idx, prop_idx);
-    }
-  }
-  %extend {
-    void get_node_property_value(int idx, int prop_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_node_property_value", idx, prop_idx);
-    }
-  }
-  %extend {
-    int get_connection_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_count");
-    }
-  }
-  %extend {
-    NodePath get_connection_source(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_source", idx);
-    }
-  }
-  %extend {
-    String get_connection_signal(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_signal", idx);
-    }
-  }
-  %extend {
-    NodePath get_connection_target(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_target", idx);
-    }
-  }
-  %extend {
-    String get_connection_method(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_method", idx);
-    }
-  }
-  %extend {
-    int get_connection_flags(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_flags", idx);
-    }
-  }
-  %extend {
-    Array get_connection_binds(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection_binds", idx);
-    }
-  }
-  %extend {
-    ~SceneState() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

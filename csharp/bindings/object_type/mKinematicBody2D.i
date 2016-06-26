@@ -1,15 +1,6 @@
 /* mKinematicBody2D.i */
 %module mKinematicBody2D
 
-%typemap(out) KinematicBody2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) KinematicBody2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) KinematicBody2D %{
 
@@ -47,90 +38,137 @@
 
 class KinematicBody2D : public PhysicsBody2D {
 public:
-  %extend {
-    Vector2 move(const Vector2& rel_vec) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("move", rel_vec);
-    }
-  }
-  %extend {
-    Vector2 move_to(const Vector2& position) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("move_to", position);
-    }
-  }
-  %extend {
-    bool test_move(const Vector2& rel_vec) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("test_move", rel_vec);
-    }
-  }
-  %extend {
-    Vector2 get_travel() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_travel");
-    }
-  }
-  %extend {
-    void revert_motion() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("revert_motion");
-    }
-  }
-  %extend {
-    bool is_colliding() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_colliding");
-    }
-  }
-  %extend {
-    Vector2 get_collision_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_pos");
-    }
-  }
-  %extend {
-    Vector2 get_collision_normal() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_normal");
-    }
-  }
-  %extend {
-    Vector2 get_collider_velocity() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_velocity");
-    }
-  }
-  %extend {
-    Object* get_collider() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider").operator Object *();
-    }
-  }
-  %extend {
-    int get_collider_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_shape");
-    }
-  }
-  %extend {
-    Variant get_collider_metadata() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_metadata");
-    }
-  }
-  %extend {
-    void set_collision_margin(float pixels) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collision_margin", pixels);
-    }
-  }
-  %extend {
-    float get_collision_margin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_margin");
-    }
-  }
   KinematicBody2D();
+
+%extend {
+
+Vector2 move(const Vector2& rel_vec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "move");
+  const void* __args[1] = { &rel_vec };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 move_to(const Vector2& position) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "move_to");
+  const void* __args[1] = { &position };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool test_move(const Vector2& rel_vec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "test_move");
+  const void* __args[1] = { &rel_vec };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_travel() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_travel");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void revert_motion() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "revert_motion");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_colliding() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "is_colliding");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collision_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collision_pos");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collision_normal() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collision_normal");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collider_velocity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collider_velocity");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_collider() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collider");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collider_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collider_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Variant get_collider_metadata() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collider_metadata");
+  Variant ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collision_margin(float pixels) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "set_collision_margin");
+  const void* __args[1] = { &pixels };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_collision_margin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("KinematicBody2D", "get_collision_margin");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

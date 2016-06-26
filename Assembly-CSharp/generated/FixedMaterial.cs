@@ -79,7 +79,6 @@ public class FixedMaterial : Material {
 
   public void set_texture(int param, Texture texture) {
     GodotEnginePINVOKE.FixedMaterial_set_texture(swigCPtr, param, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_texture(int param) {

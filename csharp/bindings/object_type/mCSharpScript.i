@@ -1,22 +1,6 @@
 /* mCSharpScript.i */
 %module mCSharpScript
 
-%typemap(ctype, out="CSharpScript*") Ref<CSharpScript> "CSharpScript*"
-%typemap(out, null="NULL") Ref<CSharpScript> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<CSharpScript> "CSharpScript.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<CSharpScript> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<CSharpScript> "CSharpScript"
-%typemap(csout, excode=SWIGEXCODE) Ref<CSharpScript> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    CSharpScript ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CSharpScript;$excode
-    return ret;
-}
-
 template<class CSharpScript> class Ref;%template() Ref<CSharpScript>;
 %feature("novaluewrapper") Ref<CSharpScript>;
 
@@ -58,20 +42,23 @@ template<class CSharpScript> class Ref;%template() Ref<CSharpScript>;
 class CSharpScript : public Script {
 public:
   CSharpScript();
-  %extend {
-    ~CSharpScript() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~CSharpScript() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

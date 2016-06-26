@@ -1,22 +1,6 @@
 /* mPHashTranslation.i */
 %module mPHashTranslation
 
-%typemap(ctype, out="PHashTranslation*") Ref<PHashTranslation> "PHashTranslation*"
-%typemap(out, null="NULL") Ref<PHashTranslation> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PHashTranslation> "PHashTranslation.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PHashTranslation> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PHashTranslation> "PHashTranslation"
-%typemap(csout, excode=SWIGEXCODE) Ref<PHashTranslation> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PHashTranslation ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PHashTranslation;$excode
-    return ret;
-}
-
 template<class PHashTranslation> class Ref;%template() Ref<PHashTranslation>;
 %feature("novaluewrapper") Ref<PHashTranslation>;
 
@@ -57,27 +41,32 @@ template<class PHashTranslation> class Ref;%template() Ref<PHashTranslation>;
 
 class PHashTranslation : public Translation {
 public:
-  %extend {
-    void generate(Ref<Translation> from) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("generate", from);
-    }
-  }
   PHashTranslation();
-  %extend {
-    ~PHashTranslation() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void generate(Translation* from) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PHashTranslation", "generate");
+  const void* __args[1] = { from };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~PHashTranslation() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

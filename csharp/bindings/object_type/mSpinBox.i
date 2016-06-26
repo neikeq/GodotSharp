@@ -1,15 +1,6 @@
 /* mSpinBox.i */
 %module mSpinBox
 
-%typemap(out) SpinBox "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SpinBox* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SpinBox %{
 
@@ -47,48 +38,71 @@
 
 class SpinBox : public Range {
 public:
-  %extend {
-    void set_suffix(const String& suffix) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_suffix", suffix);
-    }
-  }
-  %extend {
-    String get_suffix() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_suffix");
-    }
-  }
-  %extend {
-    void set_prefix(const String& prefix) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_prefix", prefix);
-    }
-  }
-  %extend {
-    String get_prefix() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_prefix");
-    }
-  }
-  %extend {
-    void set_editable(bool editable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_editable", editable);
-    }
-  }
-  %extend {
-    bool is_editable() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_editable");
-    }
-  }
-  %extend {
-    Object* get_line_edit() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line_edit").operator Object *();
-    }
-  }
   SpinBox();
+
+%extend {
+
+void set_suffix(const String& suffix) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "set_suffix");
+  const void* __args[1] = { &suffix };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_suffix() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "get_suffix");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_prefix(const String& prefix) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "set_prefix");
+  const void* __args[1] = { &prefix };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_prefix() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "get_prefix");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_editable(bool editable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "set_editable");
+  const void* __args[1] = { &editable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_editable() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "is_editable");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_line_edit() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SpinBox", "get_line_edit");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

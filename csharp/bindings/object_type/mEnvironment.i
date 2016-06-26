@@ -1,22 +1,6 @@
 /* mEnvironment.i */
 %module mEnvironment
 
-%typemap(ctype, out="Environment*") Ref<Environment> "Environment*"
-%typemap(out, null="NULL") Ref<Environment> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Environment> "Environment.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Environment> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Environment> "Environment"
-%typemap(csout, excode=SWIGEXCODE) Ref<Environment> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Environment ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Environment;$excode
-    return ret;
-}
-
 template<class Environment> class Ref;%template() Ref<Environment>;
 %feature("novaluewrapper") Ref<Environment>;
 
@@ -115,69 +99,91 @@ template<class Environment> class Ref;%template() Ref<Environment>;
 
 class Environment : public Resource {
 public:
-  %extend {
-    void set_background(int bgmode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_background", bgmode);
-    }
-  }
-  %extend {
-    int get_background() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_background");
-    }
-  }
-  %extend {
-    void set_background_param(int param, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_background_param", param, value);
-    }
-  }
-  %extend {
-    void get_background_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_background_param", param);
-    }
-  }
-  %extend {
-    void set_enable_fx(int effect, bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enable_fx", effect, enabled);
-    }
-  }
-  %extend {
-    bool is_fx_enabled(int effect) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_fx_enabled", effect);
-    }
-  }
-  %extend {
-    void fx_set_param(int param, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("fx_set_param", param, value);
-    }
-  }
-  %extend {
-    void fx_get_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("fx_get_param", param);
-    }
-  }
   Environment();
-  %extend {
-    ~Environment() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_background(int bgmode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "set_background");
+  const void* __args[1] = { &bgmode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_background() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "get_background");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_background_param(int param, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "set_background_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_background_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "get_background_param");
+  const void* __args[1] = { &param };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_enable_fx(int effect, bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "set_enable_fx");
+  const void* __args[2] = { &effect, &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_fx_enabled(int effect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "is_fx_enabled");
+  const void* __args[1] = { &effect };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void fx_set_param(int param, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "fx_set_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void fx_get_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Environment", "fx_get_param");
+  const void* __args[1] = { &param };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~Environment() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

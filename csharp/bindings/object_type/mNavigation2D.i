@@ -1,15 +1,6 @@
 /* mNavigation2D.i */
 %module mNavigation2D
 
-%typemap(out) Navigation2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Navigation2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Navigation2D %{
 
@@ -47,42 +38,67 @@
 
 class Navigation2D : public Node2D {
 public:
-  %extend {
-    int navpoly_create(Ref<NavigationPolygon> mesh, const Matrix32& xform, Object* owner = NULL) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("navpoly_create", mesh, xform, owner);
-    }
-  }
-  %extend {
-    void navpoly_set_transform(int id, const Matrix32& xform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("navpoly_set_transform", id, xform);
-    }
-  }
-  %extend {
-    void navpoly_remove(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("navpoly_remove", id);
-    }
-  }
-  %extend {
-    Vector2Array get_simple_path(const Vector2& start, const Vector2& end, bool optimize = true) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_simple_path", start, end, optimize);
-    }
-  }
-  %extend {
-    Vector2 get_closest_point(const Vector2& to_point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point", to_point);
-    }
-  }
-  %extend {
-    Object* get_closest_point_owner(const Vector2& to_point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point_owner", to_point).operator Object *();
-    }
-  }
   Navigation2D();
+
+%extend {
+
+int navpoly_create(NavigationPolygon* mesh, const Matrix32& xform, Object* owner = NULL) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation2D", "navpoly_create");
+  const void* __args[3] = { mesh, &xform, owner };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void navpoly_set_transform(int id, const Matrix32& xform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation2D", "navpoly_set_transform");
+  const void* __args[2] = { &id, &xform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void navpoly_remove(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation2D", "navpoly_remove");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_simple_path(const Vector2& start, const Vector2& end, bool optimize = true) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation2D", "get_simple_path");
+  const void* __args[3] = { &start, &end, &optimize };
+  Vector2Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_closest_point(const Vector2& to_point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation2D", "get_closest_point");
+  const void* __args[1] = { &to_point };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Object* get_closest_point_owner(const Vector2& to_point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation2D", "get_closest_point_owner");
+  const void* __args[1] = { &to_point };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

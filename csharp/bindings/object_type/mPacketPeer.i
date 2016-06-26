@@ -2,22 +2,6 @@
 %module mPacketPeer
 
 %nodefaultctor PacketPeer;
-%typemap(ctype, out="PacketPeer*") Ref<PacketPeer> "PacketPeer*"
-%typemap(out, null="NULL") Ref<PacketPeer> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PacketPeer> "PacketPeer.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PacketPeer> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PacketPeer> "PacketPeer"
-%typemap(csout, excode=SWIGEXCODE) Ref<PacketPeer> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PacketPeer ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PacketPeer;$excode
-    return ret;
-}
-
 template<class PacketPeer> class Ref;%template() Ref<PacketPeer>;
 %feature("novaluewrapper") Ref<PacketPeer>;
 
@@ -59,56 +43,79 @@ template<class PacketPeer> class Ref;%template() Ref<PacketPeer>;
 
 class PacketPeer : public Reference {
 public:
-  %extend {
-    Variant get_var() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_var");
+
+%extend {
+
+Variant get_var() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeer", "get_var");
+  Variant ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int put_var(const Variant& var) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeer", "put_var");
+  const void* __args[1] = { &var };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RawArray get_packet() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeer", "get_packet");
+  RawArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int put_packet(const RawArray& buffer) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeer", "put_packet");
+  const void* __args[1] = { &buffer };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_packet_error() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeer", "get_packet_error");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_available_packet_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PacketPeer", "get_available_packet_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~PacketPeer() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    int put_var(const Variant& var) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("put_var", var);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    RawArray get_packet() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_packet");
-    }
-  }
-  %extend {
-    int put_packet(const RawArray& buffer) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("put_packet", buffer);
-    }
-  }
-  %extend {
-    int get_packet_error() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_packet_error");
-    }
-  }
-  %extend {
-    int get_available_packet_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_available_packet_count");
-    }
-  }
-  %extend {
-    ~PacketPeer() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

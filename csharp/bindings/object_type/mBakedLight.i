@@ -1,22 +1,6 @@
 /* mBakedLight.i */
 %module mBakedLight
 
-%typemap(ctype, out="BakedLight*") Ref<BakedLight> "BakedLight*"
-%typemap(out, null="NULL") Ref<BakedLight> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<BakedLight> "BakedLight.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<BakedLight> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<BakedLight> "BakedLight"
-%typemap(csout, excode=SWIGEXCODE) Ref<BakedLight> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    BakedLight ret = InternalHelpers.UnmanagedGetManaged(cPtr) as BakedLight;$excode
-    return ret;
-}
-
 template<class BakedLight> class Ref;%template() Ref<BakedLight>;
 %feature("novaluewrapper") Ref<BakedLight>;
 
@@ -64,315 +48,439 @@ template<class BakedLight> class Ref;%template() Ref<BakedLight>;
 
 class BakedLight : public Resource {
 public:
-  %extend {
-    void set_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mode", mode);
-    }
-  }
-  %extend {
-    int get_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mode");
-    }
-  }
-  %extend {
-    void set_octree(const RawArray& octree) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_octree", octree);
-    }
-  }
-  %extend {
-    RawArray get_octree() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_octree");
-    }
-  }
-  %extend {
-    void set_light(const RawArray& light) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_light", light);
-    }
-  }
-  %extend {
-    RawArray get_light() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_light");
-    }
-  }
-  %extend {
-    void set_sampler_octree(const IntArray& sampler_octree) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_sampler_octree", sampler_octree);
-    }
-  }
-  %extend {
-    IntArray get_sampler_octree() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sampler_octree");
-    }
-  }
-  %extend {
-    void add_lightmap(Ref<Texture> texture, const Vector2& gen_size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_lightmap", texture, gen_size);
-    }
-  }
-  %extend {
-    void erase_lightmap(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_lightmap", id);
-    }
-  }
-  %extend {
-    void clear_lightmaps() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_lightmaps");
-    }
-  }
-  %extend {
-    void set_cell_subdivision(int cell_subdivision) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cell_subdivision", cell_subdivision);
-    }
-  }
-  %extend {
-    int get_cell_subdivision() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cell_subdivision");
-    }
-  }
-  %extend {
-    void set_initial_lattice_subdiv(int cell_subdivision) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_initial_lattice_subdiv", cell_subdivision);
-    }
-  }
-  %extend {
-    int get_initial_lattice_subdiv() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_initial_lattice_subdiv");
-    }
-  }
-  %extend {
-    void set_plot_size(float plot_size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_plot_size", plot_size);
-    }
-  }
-  %extend {
-    float get_plot_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_plot_size");
-    }
-  }
-  %extend {
-    void set_bounces(int bounces) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bounces", bounces);
-    }
-  }
-  %extend {
-    int get_bounces() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bounces");
-    }
-  }
-  %extend {
-    void set_cell_extra_margin(float cell_extra_margin) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cell_extra_margin", cell_extra_margin);
-    }
-  }
-  %extend {
-    float get_cell_extra_margin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cell_extra_margin");
-    }
-  }
-  %extend {
-    void set_edge_damp(float edge_damp) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_edge_damp", edge_damp);
-    }
-  }
-  %extend {
-    float get_edge_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_edge_damp");
-    }
-  }
-  %extend {
-    void set_normal_damp(float normal_damp) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_normal_damp", normal_damp);
-    }
-  }
-  %extend {
-    float get_normal_damp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_normal_damp");
-    }
-  }
-  %extend {
-    void set_tint(float tint) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tint", tint);
-    }
-  }
-  %extend {
-    float get_tint() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tint");
-    }
-  }
-  %extend {
-    void set_saturation(float saturation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_saturation", saturation);
-    }
-  }
-  %extend {
-    float get_saturation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_saturation");
-    }
-  }
-  %extend {
-    void set_ao_radius(float ao_radius) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ao_radius", ao_radius);
-    }
-  }
-  %extend {
-    float get_ao_radius() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_ao_radius");
-    }
-  }
-  %extend {
-    void set_ao_strength(float ao_strength) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ao_strength", ao_strength);
-    }
-  }
-  %extend {
-    float get_ao_strength() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_ao_strength");
-    }
-  }
-  %extend {
-    void set_realtime_color_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_realtime_color_enabled", enabled);
-    }
-  }
-  %extend {
-    bool get_realtime_color_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_realtime_color_enabled");
-    }
-  }
-  %extend {
-    void set_realtime_color(const Color& tint) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_realtime_color", tint);
-    }
-  }
-  %extend {
-    Color get_realtime_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_realtime_color");
-    }
-  }
-  %extend {
-    void set_realtime_energy(float energy) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_realtime_energy", energy);
-    }
-  }
-  %extend {
-    float get_realtime_energy() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_realtime_energy");
-    }
-  }
-  %extend {
-    void set_format(int format) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_format", format);
-    }
-  }
-  %extend {
-    int get_format() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_format");
-    }
-  }
-  %extend {
-    void set_transfer_lightmaps_only_to_uv2(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_transfer_lightmaps_only_to_uv2", enable);
-    }
-  }
-  %extend {
-    bool get_transfer_lightmaps_only_to_uv2() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_transfer_lightmaps_only_to_uv2");
-    }
-  }
-  %extend {
-    void set_energy_multiplier(float energy_multiplier) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_energy_multiplier", energy_multiplier);
-    }
-  }
-  %extend {
-    float get_energy_multiplier() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_energy_multiplier");
-    }
-  }
-  %extend {
-    void set_gamma_adjust(float gamma_adjust) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gamma_adjust", gamma_adjust);
-    }
-  }
-  %extend {
-    float get_gamma_adjust() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gamma_adjust");
-    }
-  }
-  %extend {
-    void set_bake_flag(int flag, bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bake_flag", flag, enabled);
-    }
-  }
-  %extend {
-    bool get_bake_flag(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bake_flag", flag);
-    }
-  }
   BakedLight();
-  %extend {
-    ~BakedLight() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_octree(const RawArray& octree) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_octree");
+  const void* __args[1] = { &octree };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RawArray get_octree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_octree");
+  RawArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_light(const RawArray& light) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_light");
+  const void* __args[1] = { &light };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RawArray get_light() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_light");
+  RawArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_sampler_octree(const IntArray& sampler_octree) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_sampler_octree");
+  const void* __args[1] = { &sampler_octree };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+IntArray get_sampler_octree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_sampler_octree");
+  IntArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_lightmap(Texture* texture, const Vector2& gen_size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "add_lightmap");
+  const void* __args[2] = { texture, &gen_size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void erase_lightmap(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "erase_lightmap");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_lightmaps() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "clear_lightmaps");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_cell_subdivision(int cell_subdivision) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_cell_subdivision");
+  const void* __args[1] = { &cell_subdivision };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_cell_subdivision() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_cell_subdivision");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_initial_lattice_subdiv(int cell_subdivision) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_initial_lattice_subdiv");
+  const void* __args[1] = { &cell_subdivision };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_initial_lattice_subdiv() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_initial_lattice_subdiv");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_plot_size(float plot_size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_plot_size");
+  const void* __args[1] = { &plot_size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_plot_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_plot_size");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bounces(int bounces) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_bounces");
+  const void* __args[1] = { &bounces };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_bounces() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_bounces");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_cell_extra_margin(float cell_extra_margin) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_cell_extra_margin");
+  const void* __args[1] = { &cell_extra_margin };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_cell_extra_margin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_cell_extra_margin");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_edge_damp(float edge_damp) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_edge_damp");
+  const void* __args[1] = { &edge_damp };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_edge_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_edge_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_normal_damp(float normal_damp) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_normal_damp");
+  const void* __args[1] = { &normal_damp };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_normal_damp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_normal_damp");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_tint(float tint) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_tint");
+  const void* __args[1] = { &tint };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_tint() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_tint");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_saturation(float saturation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_saturation");
+  const void* __args[1] = { &saturation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_saturation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_saturation");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_ao_radius(float ao_radius) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_ao_radius");
+  const void* __args[1] = { &ao_radius };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_ao_radius() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_ao_radius");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_ao_strength(float ao_strength) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_ao_strength");
+  const void* __args[1] = { &ao_strength };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_ao_strength() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_ao_strength");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_realtime_color_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_realtime_color_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_realtime_color_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_realtime_color_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_realtime_color(const Color& tint) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_realtime_color");
+  const void* __args[1] = { &tint };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_realtime_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_realtime_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_realtime_energy(float energy) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_realtime_energy");
+  const void* __args[1] = { &energy };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_realtime_energy() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_realtime_energy");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_format(int format) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_format");
+  const void* __args[1] = { &format };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_format() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_format");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_transfer_lightmaps_only_to_uv2(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_transfer_lightmaps_only_to_uv2");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_transfer_lightmaps_only_to_uv2() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_transfer_lightmaps_only_to_uv2");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_energy_multiplier(float energy_multiplier) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_energy_multiplier");
+  const void* __args[1] = { &energy_multiplier };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_energy_multiplier() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_energy_multiplier");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_gamma_adjust(float gamma_adjust) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_gamma_adjust");
+  const void* __args[1] = { &gamma_adjust };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_gamma_adjust() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_gamma_adjust");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bake_flag(int flag, bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "set_bake_flag");
+  const void* __args[2] = { &flag, &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_bake_flag(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BakedLight", "get_bake_flag");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~BakedLight() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

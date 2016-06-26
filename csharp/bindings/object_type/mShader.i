@@ -2,22 +2,6 @@
 %module mShader
 
 %nodefaultctor Shader;
-%typemap(ctype, out="Shader*") Ref<Shader> "Shader*"
-%typemap(out, null="NULL") Ref<Shader> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Shader> "Shader.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Shader> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Shader> "Shader"
-%typemap(csout, excode=SWIGEXCODE) Ref<Shader> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Shader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Shader;$excode
-    return ret;
-}
-
 template<class Shader> class Ref;%template() Ref<Shader>;
 %feature("novaluewrapper") Ref<Shader>;
 
@@ -62,68 +46,95 @@ template<class Shader> class Ref;%template() Ref<Shader>;
 
 class Shader : public Resource {
 public:
-  %extend {
-    int get_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mode");
+
+%extend {
+
+int get_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "get_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_code(const String& vcode, const String& fcode, const String& lcode, int fofs = 0, int lofs = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "set_code");
+  const void* __args[5] = { &vcode, &fcode, &lcode, &fofs, &lofs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_vertex_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "get_vertex_code");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_fragment_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "get_fragment_code");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_light_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "get_light_code");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_default_texture_param(const String& param, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "set_default_texture_param");
+  const void* __args[2] = { &param, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Texture> get_default_texture_param(const String& param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "get_default_texture_param");
+  const void* __args[1] = { &param };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_param(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Shader", "has_param");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Shader() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    void set_code(const String& vcode, const String& fcode, const String& lcode, int fofs = 0, int lofs = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_code", vcode, fcode, lcode, fofs, lofs);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    String get_vertex_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_code");
-    }
-  }
-  %extend {
-    String get_fragment_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fragment_code");
-    }
-  }
-  %extend {
-    String get_light_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_light_code");
-    }
-  }
-  %extend {
-    void set_default_texture_param(const String& param, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_default_texture_param", param, texture);
-    }
-  }
-  %extend {
-    Ref<Texture> get_default_texture_param(const String& param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_default_texture_param", param).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    bool has_param(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_param", name);
-    }
-  }
-  %extend {
-    ~Shader() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

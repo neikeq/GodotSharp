@@ -2,15 +2,6 @@
 %module mSplitContainer
 
 %nodefaultctor SplitContainer;
-%typemap(out) SplitContainer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SplitContainer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SplitContainer %{
   public static readonly int DRAGGER_VISIBLE = 0;
@@ -52,41 +43,61 @@
 
 class SplitContainer : public Container {
 public:
-  %extend {
-    void set_split_offset(int offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_split_offset", offset);
-    }
-  }
-  %extend {
-    int get_split_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_split_offset");
-    }
-  }
-  %extend {
-    void set_collapsed(bool collapsed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_collapsed", collapsed);
-    }
-  }
-  %extend {
-    bool is_collapsed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_collapsed");
-    }
-  }
-  %extend {
-    void set_dragger_visibility(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_dragger_visibility", mode);
-    }
-  }
-  %extend {
-    int get_dragger_visibility() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_dragger_visibility");
-    }
-  }
+
+%extend {
+
+void set_split_offset(int offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SplitContainer", "set_split_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_split_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SplitContainer", "get_split_offset");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_collapsed(bool collapsed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SplitContainer", "set_collapsed");
+  const void* __args[1] = { &collapsed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_collapsed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SplitContainer", "is_collapsed");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_dragger_visibility(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SplitContainer", "set_dragger_visibility");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_dragger_visibility() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SplitContainer", "get_dragger_visibility");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

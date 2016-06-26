@@ -1,22 +1,6 @@
 /* mRayShape2D.i */
 %module mRayShape2D
 
-%typemap(ctype, out="RayShape2D*") Ref<RayShape2D> "RayShape2D*"
-%typemap(out, null="NULL") Ref<RayShape2D> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<RayShape2D> "RayShape2D.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<RayShape2D> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<RayShape2D> "RayShape2D"
-%typemap(csout, excode=SWIGEXCODE) Ref<RayShape2D> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    RayShape2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as RayShape2D;$excode
-    return ret;
-}
-
 template<class RayShape2D> class Ref;%template() Ref<RayShape2D>;
 %feature("novaluewrapper") Ref<RayShape2D>;
 
@@ -57,33 +41,41 @@ template<class RayShape2D> class Ref;%template() Ref<RayShape2D>;
 
 class RayShape2D : public Shape2D {
 public:
-  %extend {
-    void set_length(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_length", length);
-    }
-  }
-  %extend {
-    float get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
   RayShape2D();
-  %extend {
-    ~RayShape2D() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_length(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayShape2D", "set_length");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayShape2D", "get_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~RayShape2D() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

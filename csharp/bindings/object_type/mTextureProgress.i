@@ -1,15 +1,6 @@
 /* mTextureProgress.i */
 %module mTextureProgress
 
-%typemap(out) TextureProgress "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) TextureProgress* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) TextureProgress %{
   public static readonly int FILL_LEFT_TO_RIGHT = 0;
@@ -53,90 +44,130 @@
 
 class TextureProgress : public Range {
 public:
-  %extend {
-    void set_under_texture(Object* tex) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_under_texture", tex);
-    }
-  }
-  %extend {
-    Object* get_under_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_under_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_progress_texture(Object* tex) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_progress_texture", tex);
-    }
-  }
-  %extend {
-    Object* get_progress_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_progress_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_over_texture(Object* tex) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_over_texture", tex);
-    }
-  }
-  %extend {
-    Object* get_over_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_over_texture").operator Object *();
-    }
-  }
-  %extend {
-    void set_fill_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_fill_mode", mode);
-    }
-  }
-  %extend {
-    int get_fill_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fill_mode");
-    }
-  }
-  %extend {
-    void set_radial_initial_angle(float mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_radial_initial_angle", mode);
-    }
-  }
-  %extend {
-    float get_radial_initial_angle() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_radial_initial_angle");
-    }
-  }
-  %extend {
-    void set_radial_center_offset(const Vector2& mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_radial_center_offset", mode);
-    }
-  }
-  %extend {
-    Vector2 get_radial_center_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_radial_center_offset");
-    }
-  }
-  %extend {
-    void set_fill_degrees(float mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_fill_degrees", mode);
-    }
-  }
-  %extend {
-    float get_fill_degrees() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fill_degrees");
-    }
-  }
   TextureProgress();
+
+%extend {
+
+void set_under_texture(Object* tex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_under_texture");
+  const void* __args[1] = { tex };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_under_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_under_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_progress_texture(Object* tex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_progress_texture");
+  const void* __args[1] = { tex };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_progress_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_progress_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_over_texture(Object* tex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_over_texture");
+  const void* __args[1] = { tex };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_over_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_over_texture");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_fill_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_fill_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_fill_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_fill_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_radial_initial_angle(float mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_radial_initial_angle");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_radial_initial_angle() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_radial_initial_angle");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_radial_center_offset(const Vector2& mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_radial_center_offset");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_radial_center_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_radial_center_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_fill_degrees(float mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "set_fill_degrees");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_fill_degrees() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("TextureProgress", "get_fill_degrees");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

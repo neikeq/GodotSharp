@@ -1,15 +1,6 @@
 /* mSliderJoint.i */
 %module mSliderJoint
 
-%typemap(out) SliderJoint "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) SliderJoint* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) SliderJoint %{
   public static readonly int PARAM_LINEAR_LIMIT_UPPER = 0;
@@ -70,18 +61,29 @@
 
 class SliderJoint : public Joint {
 public:
-  %extend {
-    void set_param(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param", param, value);
-    }
-  }
-  %extend {
-    float get_param(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param", param);
-    }
-  }
   SliderJoint();
+
+%extend {
+
+void set_param(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SliderJoint", "set_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SliderJoint", "get_param");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

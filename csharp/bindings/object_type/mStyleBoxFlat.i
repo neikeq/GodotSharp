@@ -1,22 +1,6 @@
 /* mStyleBoxFlat.i */
 %module mStyleBoxFlat
 
-%typemap(ctype, out="StyleBoxFlat*") Ref<StyleBoxFlat> "StyleBoxFlat*"
-%typemap(out, null="NULL") Ref<StyleBoxFlat> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<StyleBoxFlat> "StyleBoxFlat.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<StyleBoxFlat> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<StyleBoxFlat> "StyleBoxFlat"
-%typemap(csout, excode=SWIGEXCODE) Ref<StyleBoxFlat> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    StyleBoxFlat ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBoxFlat;$excode
-    return ret;
-}
-
 template<class StyleBoxFlat> class Ref;%template() Ref<StyleBoxFlat>;
 %feature("novaluewrapper") Ref<StyleBoxFlat>;
 
@@ -57,93 +41,126 @@ template<class StyleBoxFlat> class Ref;%template() Ref<StyleBoxFlat>;
 
 class StyleBoxFlat : public StyleBox {
 public:
-  %extend {
-    void set_bg_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bg_color", color);
-    }
-  }
-  %extend {
-    Color get_bg_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bg_color");
-    }
-  }
-  %extend {
-    void set_light_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_light_color", color);
-    }
-  }
-  %extend {
-    Color get_light_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_light_color");
-    }
-  }
-  %extend {
-    void set_dark_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_dark_color", color);
-    }
-  }
-  %extend {
-    Color get_dark_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_dark_color");
-    }
-  }
-  %extend {
-    void set_border_size(int size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_border_size", size);
-    }
-  }
-  %extend {
-    int get_border_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_border_size");
-    }
-  }
-  %extend {
-    void set_border_blend(bool blend) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_border_blend", blend);
-    }
-  }
-  %extend {
-    bool get_border_blend() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_border_blend");
-    }
-  }
-  %extend {
-    void set_draw_center(bool size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_draw_center", size);
-    }
-  }
-  %extend {
-    bool get_draw_center() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_draw_center");
-    }
-  }
   StyleBoxFlat();
-  %extend {
-    ~StyleBoxFlat() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_bg_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "set_bg_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_bg_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "get_bg_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_light_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "set_light_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_light_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "get_light_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_dark_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "set_dark_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_dark_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "get_dark_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_border_size(int size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "set_border_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_border_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "get_border_size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_border_blend(bool blend) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "set_border_blend");
+  const void* __args[1] = { &blend };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_border_blend() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "get_border_blend");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_draw_center(bool size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "set_draw_center");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_draw_center() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StyleBoxFlat", "get_draw_center");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~StyleBoxFlat() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

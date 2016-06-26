@@ -1,15 +1,6 @@
 /* mImmediateGeometry.i */
 %module mImmediateGeometry
 
-%typemap(out) ImmediateGeometry "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ImmediateGeometry* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ImmediateGeometry %{
 
@@ -47,66 +38,89 @@
 
 class ImmediateGeometry : public GeometryInstance {
 public:
-  %extend {
-    void begin(int primitive, Ref<Texture> texture) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("begin", primitive, texture);
-    }
-  }
-  %extend {
-    void set_normal(const Vector3& normal) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_normal", normal);
-    }
-  }
-  %extend {
-    void set_tangent(const Plane& tangent) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tangent", tangent);
-    }
-  }
-  %extend {
-    void set_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", color);
-    }
-  }
-  %extend {
-    void set_uv(const Vector2& uv) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_uv", uv);
-    }
-  }
-  %extend {
-    void set_uv2(const Vector2& uv) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_uv2", uv);
-    }
-  }
-  %extend {
-    void add_vertex(const Vector3& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_vertex", pos);
-    }
-  }
-  %extend {
-    void add_sphere(int lats, int lons, float radius) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_sphere", lats, lons, radius);
-    }
-  }
-  %extend {
-    void end() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("end");
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
   ImmediateGeometry();
+
+%extend {
+
+void begin(int primitive, Texture* texture) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "begin");
+  const void* __args[2] = { &primitive, texture };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_normal(const Vector3& normal) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "set_normal");
+  const void* __args[1] = { &normal };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_tangent(const Plane& tangent) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "set_tangent");
+  const void* __args[1] = { &tangent };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "set_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_uv(const Vector2& uv) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "set_uv");
+  const void* __args[1] = { &uv };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_uv2(const Vector2& uv) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "set_uv2");
+  const void* __args[1] = { &uv };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_vertex(const Vector3& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "add_vertex");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_sphere(int lats, int lons, float radius) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "add_sphere");
+  const void* __args[3] = { &lats, &lons, &radius };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void end() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "end");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ImmediateGeometry", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

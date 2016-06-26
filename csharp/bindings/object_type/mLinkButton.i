@@ -1,15 +1,6 @@
 /* mLinkButton.i */
 %module mLinkButton
 
-%typemap(out) LinkButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) LinkButton* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) LinkButton %{
   public static readonly int UNDERLINE_MODE_ALWAYS = 0;
@@ -49,30 +40,45 @@
 
 class LinkButton : public BaseButton {
 public:
-  %extend {
-    void set_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_text", text);
-    }
-  }
-  %extend {
-    String get_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_text");
-    }
-  }
-  %extend {
-    void set_underline_mode(int underline_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_underline_mode", underline_mode);
-    }
-  }
-  %extend {
-    int get_underline_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_underline_mode");
-    }
-  }
   LinkButton();
+
+%extend {
+
+void set_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LinkButton", "set_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LinkButton", "get_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_underline_mode(int underline_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LinkButton", "set_underline_mode");
+  const void* __args[1] = { &underline_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_underline_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LinkButton", "get_underline_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

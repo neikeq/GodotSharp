@@ -1,15 +1,6 @@
 /* mParallaxBackground.i */
 %module mParallaxBackground
 
-%typemap(out) ParallaxBackground "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ParallaxBackground* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ParallaxBackground %{
 
@@ -47,78 +38,113 @@
 
 class ParallaxBackground : public CanvasLayer {
 public:
-  %extend {
-    void set_scroll_offset(const Vector2& ofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scroll_offset", ofs);
-    }
-  }
-  %extend {
-    Vector2 get_scroll_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scroll_offset");
-    }
-  }
-  %extend {
-    void set_scroll_base_offset(const Vector2& ofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scroll_base_offset", ofs);
-    }
-  }
-  %extend {
-    Vector2 get_scroll_base_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scroll_base_offset");
-    }
-  }
-  %extend {
-    void set_scroll_base_scale(const Vector2& scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scroll_base_scale", scale);
-    }
-  }
-  %extend {
-    Vector2 get_scroll_base_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scroll_base_scale");
-    }
-  }
-  %extend {
-    void set_limit_begin(const Vector2& ofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_limit_begin", ofs);
-    }
-  }
-  %extend {
-    Vector2 get_limit_begin() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_limit_begin");
-    }
-  }
-  %extend {
-    void set_limit_end(const Vector2& ofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_limit_end", ofs);
-    }
-  }
-  %extend {
-    Vector2 get_limit_end() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_limit_end");
-    }
-  }
-  %extend {
-    void set_ignore_camera_zoom(bool ignore) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ignore_camera_zoom", ignore);
-    }
-  }
-  %extend {
-    bool is_ignore_camera_zoom() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_ignore_camera_zoom");
-    }
-  }
   ParallaxBackground();
+
+%extend {
+
+void set_scroll_offset(const Vector2& ofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "set_scroll_offset");
+  const void* __args[1] = { &ofs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_scroll_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "get_scroll_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_scroll_base_offset(const Vector2& ofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "set_scroll_base_offset");
+  const void* __args[1] = { &ofs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_scroll_base_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "get_scroll_base_offset");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_scroll_base_scale(const Vector2& scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "set_scroll_base_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_scroll_base_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "get_scroll_base_scale");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_limit_begin(const Vector2& ofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "set_limit_begin");
+  const void* __args[1] = { &ofs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_limit_begin() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "get_limit_begin");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_limit_end(const Vector2& ofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "set_limit_end");
+  const void* __args[1] = { &ofs };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_limit_end() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "get_limit_end");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_ignore_camera_zoom(bool ignore) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "set_ignore_camera_zoom");
+  const void* __args[1] = { &ignore };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_ignore_camera_zoom() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxBackground", "is_ignore_camera_zoom");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -1,22 +1,6 @@
 /* mStreamPeerTCP.i */
 %module mStreamPeerTCP
 
-%typemap(ctype, out="StreamPeerTCP*") Ref<StreamPeerTCP> "StreamPeerTCP*"
-%typemap(out, null="NULL") Ref<StreamPeerTCP> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<StreamPeerTCP> "StreamPeerTCP.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<StreamPeerTCP> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<StreamPeerTCP> "StreamPeerTCP"
-%typemap(csout, excode=SWIGEXCODE) Ref<StreamPeerTCP> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    StreamPeerTCP ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StreamPeerTCP;$excode
-    return ret;
-}
-
 template<class StreamPeerTCP> class Ref;%template() Ref<StreamPeerTCP>;
 %feature("novaluewrapper") Ref<StreamPeerTCP>;
 
@@ -61,59 +45,78 @@ template<class StreamPeerTCP> class Ref;%template() Ref<StreamPeerTCP>;
 
 class StreamPeerTCP : public StreamPeer {
 public:
-  %extend {
-    int connect(const String& host, int port) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("connect", host, port);
+
+%extend {
+
+int connect(const String& host, int port) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerTCP", "connect");
+  const void* __args[2] = { &host, &port };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_connected() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerTCP", "is_connected");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_status() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerTCP", "get_status");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_connected_host() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerTCP", "get_connected_host");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_connected_port() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerTCP", "get_connected_port");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void disconnect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerTCP", "disconnect");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+StreamPeerTCP() { return StreamPeerTCP::create(); }
+
+~StreamPeerTCP() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    bool is_connected() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_connected");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    int get_status() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_status");
-    }
-  }
-  %extend {
-    String get_connected_host() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connected_host");
-    }
-  }
-  %extend {
-    int get_connected_port() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connected_port");
-    }
-  }
-  %extend {
-    void disconnect() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("disconnect");
-    }
-  }
-  %extend {
-    StreamPeerTCP() { return StreamPeerTCP::create(); }
-  }
-  %extend {
-    ~StreamPeerTCP() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

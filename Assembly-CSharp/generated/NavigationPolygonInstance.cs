@@ -45,7 +45,6 @@ public class NavigationPolygonInstance : Node2D {
 
   public void set_navigation_polygon(NavigationPolygon navpoly) {
     GodotEnginePINVOKE.NavigationPolygonInstance_set_navigation_polygon(swigCPtr, NavigationPolygon.getCPtr(navpoly));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public NavigationPolygon get_navigation_polygon() {

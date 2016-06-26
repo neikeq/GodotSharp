@@ -1,15 +1,6 @@
 /* mRayCast2D.i */
 %module mRayCast2D
 
-%typemap(out) RayCast2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) RayCast2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) RayCast2D %{
 
@@ -47,114 +38,163 @@
 
 class RayCast2D : public Node2D {
 public:
-  %extend {
-    void set_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_enabled");
-    }
-  }
-  %extend {
-    void set_cast_to(const Vector2& local_point) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cast_to", local_point);
-    }
-  }
-  %extend {
-    Vector2 get_cast_to() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cast_to");
-    }
-  }
-  %extend {
-    bool is_colliding() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_colliding");
-    }
-  }
-  %extend {
-    Object* get_collider() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider").operator Object *();
-    }
-  }
-  %extend {
-    int get_collider_shape() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collider_shape");
-    }
-  }
-  %extend {
-    Vector2 get_collision_point() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_point");
-    }
-  }
-  %extend {
-    Vector2 get_collision_normal() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_collision_normal");
-    }
-  }
-  %extend {
-    void add_exception_rid(const RID& rid) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_exception_rid", rid);
-    }
-  }
-  %extend {
-    void add_exception(Object* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_exception", node);
-    }
-  }
-  %extend {
-    void remove_exception_rid(const RID& rid) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_exception_rid", rid);
-    }
-  }
-  %extend {
-    void remove_exception(Object* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_exception", node);
-    }
-  }
-  %extend {
-    void clear_exceptions() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_exceptions");
-    }
-  }
-  %extend {
-    void set_layer_mask(int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_layer_mask", mask);
-    }
-  }
-  %extend {
-    int get_layer_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_layer_mask");
-    }
-  }
-  %extend {
-    void set_type_mask(int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_type_mask", mask);
-    }
-  }
-  %extend {
-    int get_type_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_type_mask");
-    }
-  }
   RayCast2D();
+
+%extend {
+
+void set_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "set_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "is_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_cast_to(const Vector2& local_point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "set_cast_to");
+  const void* __args[1] = { &local_point };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_cast_to() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_cast_to");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_colliding() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "is_colliding");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_collider() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_collider");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_collider_shape() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_collider_shape");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collision_point() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_collision_point");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_collision_normal() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_collision_normal");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_exception_rid(const RID& rid) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "add_exception_rid");
+  const void* __args[1] = { &rid };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_exception(Object* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "add_exception");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_exception_rid(const RID& rid) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "remove_exception_rid");
+  const void* __args[1] = { &rid };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_exception(Object* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "remove_exception");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_exceptions() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "clear_exceptions");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_layer_mask(int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "set_layer_mask");
+  const void* __args[1] = { &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_layer_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_layer_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_type_mask(int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "set_type_mask");
+  const void* __args[1] = { &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_type_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RayCast2D", "get_type_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

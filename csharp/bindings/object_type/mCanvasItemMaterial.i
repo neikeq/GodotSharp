@@ -1,22 +1,6 @@
 /* mCanvasItemMaterial.i */
 %module mCanvasItemMaterial
 
-%typemap(ctype, out="CanvasItemMaterial*") Ref<CanvasItemMaterial> "CanvasItemMaterial*"
-%typemap(out, null="NULL") Ref<CanvasItemMaterial> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<CanvasItemMaterial> "CanvasItemMaterial.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<CanvasItemMaterial> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<CanvasItemMaterial> "CanvasItemMaterial"
-%typemap(csout, excode=SWIGEXCODE) Ref<CanvasItemMaterial> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    CanvasItemMaterial ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CanvasItemMaterial;$excode
-    return ret;
-}
-
 template<class CanvasItemMaterial> class Ref;%template() Ref<CanvasItemMaterial>;
 %feature("novaluewrapper") Ref<CanvasItemMaterial>;
 
@@ -60,57 +44,74 @@ template<class CanvasItemMaterial> class Ref;%template() Ref<CanvasItemMaterial>
 
 class CanvasItemMaterial : public Resource {
 public:
-  %extend {
-    void set_shader(Ref<Shader> shader) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shader", shader);
-    }
-  }
-  %extend {
-    Ref<Shader> get_shader() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shader").operator Object *()->cast_to<Shader>();
-    }
-  }
-  %extend {
-    void set_shader_param(const String& param, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shader_param", param, value);
-    }
-  }
-  %extend {
-    void get_shader_param(const String& param) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_shader_param", param);
-    }
-  }
-  %extend {
-    void set_shading_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shading_mode", mode);
-    }
-  }
-  %extend {
-    int get_shading_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shading_mode");
-    }
-  }
   CanvasItemMaterial();
-  %extend {
-    ~CanvasItemMaterial() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_shader(Shader* shader) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasItemMaterial", "set_shader");
+  const void* __args[1] = { shader };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Shader> get_shader() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasItemMaterial", "get_shader");
+  Ref<Shader> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shader_param(const String& param, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasItemMaterial", "set_shader_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_shader_param(const String& param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasItemMaterial", "get_shader_param");
+  const void* __args[1] = { &param };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_shading_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasItemMaterial", "set_shading_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_shading_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasItemMaterial", "get_shading_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~CanvasItemMaterial() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

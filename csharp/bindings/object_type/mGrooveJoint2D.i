@@ -1,15 +1,6 @@
 /* mGrooveJoint2D.i */
 %module mGrooveJoint2D
 
-%typemap(out) GrooveJoint2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) GrooveJoint2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) GrooveJoint2D %{
 
@@ -47,30 +38,45 @@
 
 class GrooveJoint2D : public Joint2D {
 public:
-  %extend {
-    void set_length(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_length", length);
-    }
-  }
-  %extend {
-    float get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
-  %extend {
-    void set_initial_offset(float offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_initial_offset", offset);
-    }
-  }
-  %extend {
-    float get_initial_offset() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_initial_offset");
-    }
-  }
   GrooveJoint2D();
+
+%extend {
+
+void set_length(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GrooveJoint2D", "set_length");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GrooveJoint2D", "get_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_initial_offset(float offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GrooveJoint2D", "set_initial_offset");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_initial_offset() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GrooveJoint2D", "get_initial_offset");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

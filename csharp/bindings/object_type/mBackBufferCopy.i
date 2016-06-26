@@ -1,15 +1,6 @@
 /* mBackBufferCopy.i */
 %module mBackBufferCopy
 
-%typemap(out) BackBufferCopy "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) BackBufferCopy* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) BackBufferCopy %{
   public static readonly int COPY_MODE_DISABLED = 0;
@@ -50,30 +41,45 @@
 
 class BackBufferCopy : public Node2D {
 public:
-  %extend {
-    void set_rect(const Rect2& rect) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rect", rect);
-    }
-  }
-  %extend {
-    Rect2 get_rect() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rect");
-    }
-  }
-  %extend {
-    void set_copy_mode(int copy_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_copy_mode", copy_mode);
-    }
-  }
-  %extend {
-    int get_copy_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_copy_mode");
-    }
-  }
   BackBufferCopy();
+
+%extend {
+
+void set_rect(const Rect2& rect) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BackBufferCopy", "set_rect");
+  const void* __args[1] = { &rect };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Rect2 get_rect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BackBufferCopy", "get_rect");
+  Rect2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_copy_mode(int copy_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BackBufferCopy", "set_copy_mode");
+  const void* __args[1] = { &copy_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_copy_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BackBufferCopy", "get_copy_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

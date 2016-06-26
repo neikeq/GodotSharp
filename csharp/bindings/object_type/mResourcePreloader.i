@@ -1,15 +1,6 @@
 /* mResourcePreloader.i */
 %module mResourcePreloader
 
-%typemap(out) ResourcePreloader "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ResourcePreloader* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ResourcePreloader %{
 
@@ -47,42 +38,64 @@
 
 class ResourcePreloader : public Node {
 public:
-  %extend {
-    void add_resource(const String& name, Object* resource) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_resource", name, resource);
-    }
-  }
-  %extend {
-    void remove_resource(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_resource", name);
-    }
-  }
-  %extend {
-    void rename_resource(const String& name, const String& newname) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rename_resource", name, newname);
-    }
-  }
-  %extend {
-    bool has_resource(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_resource", name);
-    }
-  }
-  %extend {
-    Object* get_resource(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_resource", name).operator Object *();
-    }
-  }
-  %extend {
-    StringArray get_resource_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_resource_list");
-    }
-  }
   ResourcePreloader();
+
+%extend {
+
+void add_resource(const String& name, Object* resource) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourcePreloader", "add_resource");
+  const void* __args[2] = { &name, resource };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_resource(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourcePreloader", "remove_resource");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void rename_resource(const String& name, const String& newname) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourcePreloader", "rename_resource");
+  const void* __args[2] = { &name, &newname };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_resource(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourcePreloader", "has_resource");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Object* get_resource(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourcePreloader", "get_resource");
+  const void* __args[1] = { &name };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_resource_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourcePreloader", "get_resource_list");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

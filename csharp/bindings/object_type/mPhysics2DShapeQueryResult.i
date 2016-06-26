@@ -2,22 +2,6 @@
 %module mPhysics2DShapeQueryResult
 
 %nodefaultctor Physics2DShapeQueryResult;
-%typemap(ctype, out="Physics2DShapeQueryResult*") Ref<Physics2DShapeQueryResult> "Physics2DShapeQueryResult*"
-%typemap(out, null="NULL") Ref<Physics2DShapeQueryResult> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Physics2DShapeQueryResult> "Physics2DShapeQueryResult.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Physics2DShapeQueryResult> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Physics2DShapeQueryResult> "Physics2DShapeQueryResult"
-%typemap(csout, excode=SWIGEXCODE) Ref<Physics2DShapeQueryResult> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Physics2DShapeQueryResult ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DShapeQueryResult;$excode
-    return ret;
-}
-
 template<class Physics2DShapeQueryResult> class Ref;%template() Ref<Physics2DShapeQueryResult>;
 %feature("novaluewrapper") Ref<Physics2DShapeQueryResult>;
 
@@ -59,50 +43,72 @@ template<class Physics2DShapeQueryResult> class Ref;%template() Ref<Physics2DSha
 
 class Physics2DShapeQueryResult : public Reference {
 public:
-  %extend {
-    int get_result_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_result_count");
+
+%extend {
+
+int get_result_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryResult", "get_result_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_result_rid(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryResult", "get_result_rid");
+  const void* __args[1] = { &idx };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_result_object_id(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryResult", "get_result_object_id");
+  const void* __args[1] = { &idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Object* get_result_object(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryResult", "get_result_object");
+  const void* __args[1] = { &idx };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_result_object_shape(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DShapeQueryResult", "get_result_object_shape");
+  const void* __args[1] = { &idx };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Physics2DShapeQueryResult() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    RID get_result_rid(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_result_rid", idx);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    int get_result_object_id(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_result_object_id", idx);
-    }
-  }
-  %extend {
-    Object* get_result_object(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_result_object", idx).operator Object *();
-    }
-  }
-  %extend {
-    int get_result_object_shape(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_result_object_shape", idx);
-    }
-  }
-  %extend {
-    ~Physics2DShapeQueryResult() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

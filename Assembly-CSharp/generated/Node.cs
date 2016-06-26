@@ -374,7 +374,9 @@ public class Node : Object {
 
   public SceneTree get_tree() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Node_get_tree(swigCPtr);
-    SceneTree ret = (cPtr == global::System.IntPtr.Zero) ? null : new SceneTree(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    SceneTree ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SceneTree;
     return ret;
   }
 

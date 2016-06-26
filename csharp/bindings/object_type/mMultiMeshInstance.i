@@ -1,15 +1,6 @@
 /* mMultiMeshInstance.i */
 %module mMultiMeshInstance
 
-%typemap(out) MultiMeshInstance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) MultiMeshInstance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) MultiMeshInstance %{
 
@@ -47,18 +38,28 @@
 
 class MultiMeshInstance : public GeometryInstance {
 public:
-  %extend {
-    void set_multimesh(Object* multimesh) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_multimesh", multimesh);
-    }
-  }
-  %extend {
-    Object* get_multimesh() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_multimesh").operator Object *();
-    }
-  }
   MultiMeshInstance();
+
+%extend {
+
+void set_multimesh(Object* multimesh) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMeshInstance", "set_multimesh");
+  const void* __args[1] = { multimesh };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_multimesh() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MultiMeshInstance", "get_multimesh");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

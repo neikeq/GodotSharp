@@ -56,7 +56,6 @@ public class CollisionObject2D : Node2D {
 
   public void add_shape(Shape2D shape) {
     GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_1(swigCPtr, Shape2D.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public int get_shape_count() {
@@ -66,7 +65,6 @@ public class CollisionObject2D : Node2D {
 
   public void set_shape(int shape_idx, Shape shape) {
     GodotEnginePINVOKE.CollisionObject2D_set_shape(swigCPtr, shape_idx, Shape.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_shape_transform(int shape_idx, Matrix32 transform) {

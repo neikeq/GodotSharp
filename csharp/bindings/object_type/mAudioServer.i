@@ -4,15 +4,6 @@
 %csmethodmodifiers AudioServer::AudioServer "private"
 %csmethodmodifiers AudioServer::SingletonGetInstance "private"
 %nodefaultctor AudioServer;
-%typemap(out) AudioServer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) AudioServer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) AudioServer %{
   private static $csclassname instance;
@@ -77,284 +68,428 @@
 
 class AudioServer : public Object {
 public:
-  %extend {
-    RID sample_create(int format, bool stereo, int length) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_create", format, stereo, length);
-    }
-  }
-  %extend {
-    void sample_set_description(const RID& sample, const String& description) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_description", sample, description);
-    }
-  }
-  %extend {
-    String sample_get_description(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_description", sample);
-    }
-  }
-  %extend {
-    int sample_get_format(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_format", sample);
-    }
-  }
-  %extend {
-    bool sample_is_stereo(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_is_stereo", sample);
-    }
-  }
-  %extend {
-    int sample_get_length(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_length", sample);
-    }
-  }
-  %extend {
-    void sample_set_signed_data(const RID& sample, const RealArray& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_signed_data", sample, data);
-    }
-  }
-  %extend {
-    void sample_set_data(const RID& sample, const RawArray& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_data", sample, data);
-    }
-  }
-  %extend {
-    RawArray sample_get_data(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_data", sample);
-    }
-  }
-  %extend {
-    void sample_set_mix_rate(const RID& sample, int mix_rate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_mix_rate", sample, mix_rate);
-    }
-  }
-  %extend {
-    int sample_get_mix_rate(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_mix_rate", sample);
-    }
-  }
-  %extend {
-    void sample_set_loop_format(const RID& sample, int loop_format) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_loop_format", sample, loop_format);
-    }
-  }
-  %extend {
-    int sample_get_loop_format(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_loop_format", sample);
-    }
-  }
-  %extend {
-    void sample_set_loop_begin(const RID& sample, int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_loop_begin", sample, pos);
-    }
-  }
-  %extend {
-    int sample_get_loop_begin(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_loop_begin", sample);
-    }
-  }
-  %extend {
-    void sample_set_loop_end(const RID& sample, int pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_loop_end", sample, pos);
-    }
-  }
-  %extend {
-    int sample_get_loop_end(const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_loop_end", sample);
-    }
-  }
-  %extend {
-    RID voice_create() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_create");
-    }
-  }
-  %extend {
-    void voice_play(const RID& voice, const RID& sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_play", voice, sample);
-    }
-  }
-  %extend {
-    void voice_set_volume(const RID& voice, float volume) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_volume", voice, volume);
-    }
-  }
-  %extend {
-    void voice_set_pan(const RID& voice, float pan, float depth = 0, float height = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_pan", voice, pan, depth, height);
-    }
-  }
-  %extend {
-    void voice_set_filter(const RID& voice, int type, float cutoff, float resonance, float gain = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_filter", voice, type, cutoff, resonance, gain);
-    }
-  }
-  %extend {
-    void voice_set_chorus(const RID& voice, float chorus) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_chorus", voice, chorus);
-    }
-  }
-  %extend {
-    void voice_set_reverb(const RID& voice, int room, float reverb) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_reverb", voice, room, reverb);
-    }
-  }
-  %extend {
-    void voice_set_mix_rate(const RID& voice, int rate) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_mix_rate", voice, rate);
-    }
-  }
-  %extend {
-    void voice_set_positional(const RID& voice, bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_set_positional", voice, enabled);
-    }
-  }
-  %extend {
-    float voice_get_volume(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_volume", voice);
-    }
-  }
-  %extend {
-    float voice_get_pan(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_pan", voice);
-    }
-  }
-  %extend {
-    float voice_get_pan_height(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_pan_height", voice);
-    }
-  }
-  %extend {
-    float voice_get_pan_depth(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_pan_depth", voice);
-    }
-  }
-  %extend {
-    int voice_get_filter_type(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_filter_type", voice);
-    }
-  }
-  %extend {
-    float voice_get_filter_cutoff(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_filter_cutoff", voice);
-    }
-  }
-  %extend {
-    float voice_get_filter_resonance(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_filter_resonance", voice);
-    }
-  }
-  %extend {
-    float voice_get_chorus(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_chorus", voice);
-    }
-  }
-  %extend {
-    int voice_get_reverb_type(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_reverb_type", voice);
-    }
-  }
-  %extend {
-    float voice_get_reverb(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_reverb", voice);
-    }
-  }
-  %extend {
-    int voice_get_mix_rate(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_get_mix_rate", voice);
-    }
-  }
-  %extend {
-    bool voice_is_positional(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("voice_is_positional", voice);
-    }
-  }
-  %extend {
-    void voice_stop(const RID& voice) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("voice_stop", voice);
-    }
-  }
-  %extend {
-    void free_rid(const RID& rid) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("free_rid", rid);
-    }
-  }
-  %extend {
-    void set_stream_global_volume_scale(float scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stream_global_volume_scale", scale);
-    }
-  }
-  %extend {
-    float get_stream_global_volume_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream_global_volume_scale");
-    }
-  }
-  %extend {
-    void set_fx_global_volume_scale(float scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_fx_global_volume_scale", scale);
-    }
-  }
-  %extend {
-    float get_fx_global_volume_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_fx_global_volume_scale");
-    }
-  }
-  %extend {
-    void set_event_voice_global_volume_scale(float scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_event_voice_global_volume_scale", scale);
-    }
-  }
-  %extend {
-    float get_event_voice_global_volume_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_event_voice_global_volume_scale");
-    }
-  }
-  %extend {
-    static AudioServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("AudioServer")->cast_to<AudioServer>(); }
-  }
+
+%extend {
+
+RID sample_create(int format, bool stereo, int length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_create");
+  const void* __args[3] = { &format, &stereo, &length };
+  RID ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_description(const RID& sample, const String& description) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_description");
+  const void* __args[2] = { &sample, &description };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String sample_get_description(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_description");
+  const void* __args[1] = { &sample };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int sample_get_format(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_format");
+  const void* __args[1] = { &sample };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool sample_is_stereo(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_is_stereo");
+  const void* __args[1] = { &sample };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int sample_get_length(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_length");
+  const void* __args[1] = { &sample };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_signed_data(const RID& sample, const RealArray& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_signed_data");
+  const void* __args[2] = { &sample, &data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void sample_set_data(const RID& sample, const RawArray& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_data");
+  const void* __args[2] = { &sample, &data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RawArray sample_get_data(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_data");
+  const void* __args[1] = { &sample };
+  RawArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_mix_rate(const RID& sample, int mix_rate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_mix_rate");
+  const void* __args[2] = { &sample, &mix_rate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int sample_get_mix_rate(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_mix_rate");
+  const void* __args[1] = { &sample };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_loop_format(const RID& sample, int loop_format) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_loop_format");
+  const void* __args[2] = { &sample, &loop_format };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int sample_get_loop_format(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_loop_format");
+  const void* __args[1] = { &sample };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_loop_begin(const RID& sample, int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_loop_begin");
+  const void* __args[2] = { &sample, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int sample_get_loop_begin(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_loop_begin");
+  const void* __args[1] = { &sample };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_loop_end(const RID& sample, int pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_set_loop_end");
+  const void* __args[2] = { &sample, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int sample_get_loop_end(const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "sample_get_loop_end");
+  const void* __args[1] = { &sample };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+RID voice_create() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_create");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void voice_play(const RID& voice, const RID& sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_play");
+  const void* __args[2] = { &voice, &sample };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_volume(const RID& voice, float volume) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_volume");
+  const void* __args[2] = { &voice, &volume };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_pan(const RID& voice, float pan, float depth = 0, float height = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_pan");
+  const void* __args[4] = { &voice, &pan, &depth, &height };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_filter(const RID& voice, int type, float cutoff, float resonance, float gain = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_filter");
+  const void* __args[5] = { &voice, &type, &cutoff, &resonance, &gain };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_chorus(const RID& voice, float chorus) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_chorus");
+  const void* __args[2] = { &voice, &chorus };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_reverb(const RID& voice, int room, float reverb) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_reverb");
+  const void* __args[3] = { &voice, &room, &reverb };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_mix_rate(const RID& voice, int rate) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_mix_rate");
+  const void* __args[2] = { &voice, &rate };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void voice_set_positional(const RID& voice, bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_set_positional");
+  const void* __args[2] = { &voice, &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float voice_get_volume(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_volume");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_pan(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_pan");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_pan_height(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_pan_height");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_pan_depth(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_pan_depth");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int voice_get_filter_type(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_filter_type");
+  const void* __args[1] = { &voice };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_filter_cutoff(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_filter_cutoff");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_filter_resonance(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_filter_resonance");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_chorus(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_chorus");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int voice_get_reverb_type(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_reverb_type");
+  const void* __args[1] = { &voice };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float voice_get_reverb(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_reverb");
+  const void* __args[1] = { &voice };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int voice_get_mix_rate(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_get_mix_rate");
+  const void* __args[1] = { &voice };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool voice_is_positional(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_is_positional");
+  const void* __args[1] = { &voice };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void voice_stop(const RID& voice) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "voice_stop");
+  const void* __args[1] = { &voice };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void free_rid(const RID& rid) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "free_rid");
+  const void* __args[1] = { &rid };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_stream_global_volume_scale(float scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "set_stream_global_volume_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_stream_global_volume_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "get_stream_global_volume_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_fx_global_volume_scale(float scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "set_fx_global_volume_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_fx_global_volume_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "get_fx_global_volume_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_event_voice_global_volume_scale(float scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "set_event_voice_global_volume_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_event_voice_global_volume_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("AudioServer", "get_event_voice_global_volume_scale");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+static AudioServer* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("AudioServer")->cast_to<AudioServer>(); }
+
+}
+
 
 };

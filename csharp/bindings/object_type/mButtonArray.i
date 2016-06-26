@@ -2,15 +2,6 @@
 %module mButtonArray
 
 %nodefaultctor ButtonArray;
-%typemap(out) ButtonArray "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ButtonArray* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ButtonArray %{
   public static readonly int ALIGN_BEGIN = 0;
@@ -54,77 +45,112 @@
 
 class ButtonArray : public Control {
 public:
-  %extend {
-    void add_button(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_button", text);
-    }
-  }
-  %extend {
-    void add_icon_button(Ref<Texture> icon, const String& text = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_icon_button", icon, text);
-    }
-  }
-  %extend {
-    void set_button_text(int button_idx, const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_button_text", button_idx, text);
-    }
-  }
-  %extend {
-    void set_button_icon(int button_idx, Ref<Texture> icon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_button_icon", button_idx, icon);
-    }
-  }
-  %extend {
-    String get_button_text(int button_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_button_text", button_idx);
-    }
-  }
-  %extend {
-    Ref<Texture> get_button_icon(int button_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_button_icon", button_idx).operator Object *()->cast_to<Texture>();
-    }
-  }
-  %extend {
-    int get_button_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_button_count");
-    }
-  }
-  %extend {
-    int get_selected() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_selected");
-    }
-  }
-  %extend {
-    int get_hovered() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_hovered");
-    }
-  }
-  %extend {
-    void set_selected(int button_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_selected", button_idx);
-    }
-  }
-  %extend {
-    void erase_button(int button_idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_button", button_idx);
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
+
+%extend {
+
+void add_button(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "add_button");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_icon_button(Texture* icon, const String& text = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "add_icon_button");
+  const void* __args[2] = { icon, &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_button_text(int button_idx, const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "set_button_text");
+  const void* __args[2] = { &button_idx, &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_button_icon(int button_idx, Texture* icon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "set_button_icon");
+  const void* __args[2] = { &button_idx, icon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_button_text(int button_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "get_button_text");
+  const void* __args[1] = { &button_idx };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Ref<Texture> get_button_icon(int button_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "get_button_icon");
+  const void* __args[1] = { &button_idx };
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_button_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "get_button_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_selected() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "get_selected");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_hovered() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "get_hovered");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_selected(int button_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "set_selected");
+  const void* __args[1] = { &button_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void erase_button(int button_idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "erase_button");
+  const void* __args[1] = { &button_idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ButtonArray", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

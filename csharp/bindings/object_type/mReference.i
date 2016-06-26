@@ -1,22 +1,6 @@
 /* mReference.i */
 %module mReference
 
-%typemap(ctype, out="Reference*") Ref<Reference> "Reference*"
-%typemap(out, null="NULL") Ref<Reference> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Reference> "Reference.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Reference> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Reference> "Reference"
-%typemap(csout, excode=SWIGEXCODE) Ref<Reference> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Reference ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Reference;$excode
-    return ret;
-}
-
 template<class Reference> class Ref;%template() Ref<Reference>;
 %feature("novaluewrapper") Ref<Reference>;
 
@@ -57,39 +41,49 @@ template<class Reference> class Ref;%template() Ref<Reference>;
 
 class Reference : public Object {
 public:
-  %extend {
-    bool init_ref() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("init_ref");
-    }
-  }
-  %extend {
-    void reference() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("reference");
-    }
-  }
-  %extend {
-    bool unreference() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("unreference");
-    }
-  }
   Reference();
-  %extend {
-    ~Reference() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+bool init_ref() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Reference", "init_ref");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void reference() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Reference", "reference");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool unreference() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Reference", "unreference");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Reference() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

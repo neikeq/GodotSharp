@@ -1,22 +1,6 @@
 /* mPlaneShape.i */
 %module mPlaneShape
 
-%typemap(ctype, out="PlaneShape*") Ref<PlaneShape> "PlaneShape*"
-%typemap(out, null="NULL") Ref<PlaneShape> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PlaneShape> "PlaneShape.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PlaneShape> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PlaneShape> "PlaneShape"
-%typemap(csout, excode=SWIGEXCODE) Ref<PlaneShape> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PlaneShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PlaneShape;$excode
-    return ret;
-}
-
 template<class PlaneShape> class Ref;%template() Ref<PlaneShape>;
 %feature("novaluewrapper") Ref<PlaneShape>;
 
@@ -57,33 +41,41 @@ template<class PlaneShape> class Ref;%template() Ref<PlaneShape>;
 
 class PlaneShape : public Shape {
 public:
-  %extend {
-    void set_plane(const Plane& plane) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_plane", plane);
-    }
-  }
-  %extend {
-    Plane get_plane() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_plane");
-    }
-  }
   PlaneShape();
-  %extend {
-    ~PlaneShape() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_plane(const Plane& plane) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PlaneShape", "set_plane");
+  const void* __args[1] = { &plane };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Plane get_plane() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PlaneShape", "get_plane");
+  Plane ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~PlaneShape() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

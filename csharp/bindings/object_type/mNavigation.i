@@ -1,15 +1,6 @@
 /* mNavigation.i */
 %module mNavigation
 
-%typemap(out) Navigation "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Navigation* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Navigation %{
 
@@ -47,66 +38,104 @@
 
 class Navigation : public Spatial {
 public:
-  %extend {
-    int navmesh_create(Ref<NavigationMesh> mesh, const Transform& xform, Object* owner = NULL) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("navmesh_create", mesh, xform, owner);
-    }
-  }
-  %extend {
-    void navmesh_set_transform(int id, const Transform& xform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("navmesh_set_transform", id, xform);
-    }
-  }
-  %extend {
-    void navmesh_remove(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("navmesh_remove", id);
-    }
-  }
-  %extend {
-    Vector3Array get_simple_path(const Vector3& start, const Vector3& end, bool optimize = true) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_simple_path", start, end, optimize);
-    }
-  }
-  %extend {
-    Vector3 get_closest_point_to_segment(const Vector3& start, const Vector3& end, bool use_collision = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point_to_segment", start, end, use_collision);
-    }
-  }
-  %extend {
-    Vector3 get_closest_point(const Vector3& to_point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point", to_point);
-    }
-  }
-  %extend {
-    Vector3 get_closest_point_normal(const Vector3& to_point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point_normal", to_point);
-    }
-  }
-  %extend {
-    Object* get_closest_point_owner(const Vector3& to_point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_closest_point_owner", to_point).operator Object *();
-    }
-  }
-  %extend {
-    void set_up_vector(const Vector3& up) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_up_vector", up);
-    }
-  }
-  %extend {
-    Vector3 get_up_vector() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_up_vector");
-    }
-  }
   Navigation();
+
+%extend {
+
+int navmesh_create(NavigationMesh* mesh, const Transform& xform, Object* owner = NULL) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "navmesh_create");
+  const void* __args[3] = { mesh, &xform, owner };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void navmesh_set_transform(int id, const Transform& xform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "navmesh_set_transform");
+  const void* __args[2] = { &id, &xform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void navmesh_remove(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "navmesh_remove");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3Array get_simple_path(const Vector3& start, const Vector3& end, bool optimize = true) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "get_simple_path");
+  const void* __args[3] = { &start, &end, &optimize };
+  Vector3Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector3 get_closest_point_to_segment(const Vector3& start, const Vector3& end, bool use_collision = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "get_closest_point_to_segment");
+  const void* __args[3] = { &start, &end, &use_collision };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector3 get_closest_point(const Vector3& to_point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "get_closest_point");
+  const void* __args[1] = { &to_point };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector3 get_closest_point_normal(const Vector3& to_point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "get_closest_point_normal");
+  const void* __args[1] = { &to_point };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Object* get_closest_point_owner(const Vector3& to_point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "get_closest_point_owner");
+  const void* __args[1] = { &to_point };
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_up_vector(const Vector3& up) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "set_up_vector");
+  const void* __args[1] = { &up };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_up_vector() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Navigation", "get_up_vector");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

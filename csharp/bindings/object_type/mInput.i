@@ -4,15 +4,6 @@
 %csmethodmodifiers Input::Input "private"
 %csmethodmodifiers Input::SingletonGetInstance "private"
 %nodefaultctor Input;
-%typemap(out) Input "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Input* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Input %{
   private static $csclassname instance;
@@ -64,152 +55,229 @@
 
 class Input : public Object {
 public:
-  %extend {
-    bool is_key_pressed(int scancode) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_key_pressed", scancode);
-    }
-  }
-  %extend {
-    bool is_mouse_button_pressed(int button) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_mouse_button_pressed", button);
-    }
-  }
-  %extend {
-    bool is_joy_button_pressed(int device, int button) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_joy_button_pressed", device, button);
-    }
-  }
-  %extend {
-    bool is_action_pressed(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_action_pressed", action);
-    }
-  }
-  %extend {
-    void add_joy_mapping(const String& mapping, bool update_existing = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_joy_mapping", mapping, update_existing);
-    }
-  }
-  %extend {
-    void remove_joy_mapping(const String& guid) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_joy_mapping", guid);
-    }
-  }
-  %extend {
-    bool is_joy_known(int device) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_joy_known", device);
-    }
-  }
-  %extend {
-    float get_joy_axis(int device, int axis) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_joy_axis", device, axis);
-    }
-  }
-  %extend {
-    String get_joy_name(int device) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_joy_name", device);
-    }
-  }
-  %extend {
-    String get_joy_guid(int device) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_joy_guid", device);
-    }
-  }
-  %extend {
-    Vector2 get_joy_vibration_strength(int device) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_joy_vibration_strength", device);
-    }
-  }
-  %extend {
-    float get_joy_vibration_duration(int device) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_joy_vibration_duration", device);
-    }
-  }
-  %extend {
-    void start_joy_vibration(int device, float weak_magnitude, float strong_magnitude, float duration = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("start_joy_vibration", device, weak_magnitude, strong_magnitude, duration);
-    }
-  }
-  %extend {
-    void stop_joy_vibration(int device) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop_joy_vibration", device);
-    }
-  }
-  %extend {
-    Vector3 get_accelerometer() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_accelerometer");
-    }
-  }
-  %extend {
-    Vector3 get_magnetometer() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_magnetometer");
-    }
-  }
-  %extend {
-    Vector2 get_mouse_speed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mouse_speed");
-    }
-  }
-  %extend {
-    int get_mouse_button_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mouse_button_mask");
-    }
-  }
-  %extend {
-    void set_mouse_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mouse_mode", mode);
-    }
-  }
-  %extend {
-    int get_mouse_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mouse_mode");
-    }
-  }
-  %extend {
-    void warp_mouse_pos(const Vector2& to) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("warp_mouse_pos", to);
-    }
-  }
-  %extend {
-    void action_press(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("action_press", action);
-    }
-  }
-  %extend {
-    void action_release(const String& action) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("action_release", action);
-    }
-  }
-  %extend {
-    void set_custom_mouse_cursor(Ref<Texture> image, const Vector2& hotspot = Vector2(0,0)) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_custom_mouse_cursor", image, hotspot);
-    }
-  }
-  %extend {
-    static Input* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Input")->cast_to<Input>(); }
-  }
+
+%extend {
+
+bool is_key_pressed(int scancode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "is_key_pressed");
+  const void* __args[1] = { &scancode };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_mouse_button_pressed(int button) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "is_mouse_button_pressed");
+  const void* __args[1] = { &button };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_joy_button_pressed(int device, int button) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "is_joy_button_pressed");
+  const void* __args[2] = { &device, &button };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_action_pressed(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "is_action_pressed");
+  const void* __args[1] = { &action };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void add_joy_mapping(const String& mapping, bool update_existing = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "add_joy_mapping");
+  const void* __args[2] = { &mapping, &update_existing };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void remove_joy_mapping(const String& guid) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "remove_joy_mapping");
+  const void* __args[1] = { &guid };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_joy_known(int device) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "is_joy_known");
+  const void* __args[1] = { &device };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float get_joy_axis(int device, int axis) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_joy_axis");
+  const void* __args[2] = { &device, &axis };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_joy_name(int device) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_joy_name");
+  const void* __args[1] = { &device };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_joy_guid(int device) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_joy_guid");
+  const void* __args[1] = { &device };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 get_joy_vibration_strength(int device) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_joy_vibration_strength");
+  const void* __args[1] = { &device };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float get_joy_vibration_duration(int device) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_joy_vibration_duration");
+  const void* __args[1] = { &device };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void start_joy_vibration(int device, float weak_magnitude, float strong_magnitude, float duration = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "start_joy_vibration");
+  const void* __args[4] = { &device, &weak_magnitude, &strong_magnitude, &duration };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void stop_joy_vibration(int device) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "stop_joy_vibration");
+  const void* __args[1] = { &device };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_accelerometer() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_accelerometer");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector3 get_magnetometer() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_magnetometer");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_mouse_speed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_mouse_speed");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_mouse_button_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_mouse_button_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_mouse_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "set_mouse_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_mouse_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "get_mouse_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void warp_mouse_pos(const Vector2& to) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "warp_mouse_pos");
+  const void* __args[1] = { &to };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void action_press(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "action_press");
+  const void* __args[1] = { &action };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void action_release(const String& action) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "action_release");
+  const void* __args[1] = { &action };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_custom_mouse_cursor(Texture* image, const Vector2& hotspot = Vector2(0,0)) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Input", "set_custom_mouse_cursor");
+  const void* __args[2] = { image, &hotspot };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+static Input* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Input")->cast_to<Input>(); }
+
+}
+
 
 };

@@ -1,15 +1,6 @@
 /* mRoom.i */
 %module mRoom
 
-%typemap(out) Room "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Room* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Room %{
 
@@ -47,36 +38,52 @@
 
 class Room : public VisualInstance {
 public:
-  %extend {
-    void set_room(Room* room) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_room", room);
-    }
-  }
-  %extend {
-    Room* get_room() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_room").operator Object *()->cast_to<Room>();
-    }
-  }
-  %extend {
-    void compute_room_from_subtree() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("compute_room_from_subtree");
-    }
-  }
-  %extend {
-    void set_simulate_acoustics(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_simulate_acoustics", enable);
-    }
-  }
-  %extend {
-    bool is_simulating_acoustics() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_simulating_acoustics");
-    }
-  }
   Room();
+
+%extend {
+
+void set_room(Room* room) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Room", "set_room");
+  const void* __args[1] = { room };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Room* get_room() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Room", "get_room");
+  Room* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void compute_room_from_subtree() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Room", "compute_room_from_subtree");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_simulate_acoustics(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Room", "set_simulate_acoustics");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_simulating_acoustics() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Room", "is_simulating_acoustics");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

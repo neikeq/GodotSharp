@@ -88,10 +88,13 @@ public class SceneState : Reference {
     return ret;
   }
 
-  public SWIGTYPE_p_RefT_PackedScene_t get_node_instance(int idx) {
-    SWIGTYPE_p_RefT_PackedScene_t ret = new SWIGTYPE_p_RefT_PackedScene_t(GodotEnginePINVOKE.SceneState_get_node_instance(swigCPtr, idx), true);
+  public PackedScene get_node_instance(int idx) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneState_get_node_instance(swigCPtr, idx);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PackedScene ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PackedScene;
     return ret;
-  }
+}
 
   public SWIGTYPE_p_StringArray get_node_groups(int idx) {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.SceneState_get_node_groups(swigCPtr, idx), true);

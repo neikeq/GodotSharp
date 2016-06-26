@@ -2,15 +2,6 @@
 %module mJoint2D
 
 %nodefaultctor Joint2D;
-%typemap(out) Joint2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Joint2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Joint2D %{
 
@@ -49,53 +40,78 @@
 
 class Joint2D : public Node2D {
 public:
-  %extend {
-    void set_node_a(const NodePath& node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_node_a", node);
-    }
-  }
-  %extend {
-    NodePath get_node_a() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_a");
-    }
-  }
-  %extend {
-    void set_node_b(const NodePath& node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_node_b", node);
-    }
-  }
-  %extend {
-    NodePath get_node_b() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_b");
-    }
-  }
-  %extend {
-    void set_bias(float bias) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bias", bias);
-    }
-  }
-  %extend {
-    float get_bias() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bias");
-    }
-  }
-  %extend {
-    void set_exclude_nodes_from_collision(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_exclude_nodes_from_collision", enable);
-    }
-  }
-  %extend {
-    bool get_exclude_nodes_from_collision() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_exclude_nodes_from_collision");
-    }
-  }
+
+%extend {
+
+void set_node_a(const NodePath& node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "set_node_a");
+  const void* __args[1] = { &node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_node_a() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "get_node_a");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_node_b(const NodePath& node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "set_node_b");
+  const void* __args[1] = { &node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_node_b() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "get_node_b");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bias(float bias) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "set_bias");
+  const void* __args[1] = { &bias };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_bias() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "get_bias");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_exclude_nodes_from_collision(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "set_exclude_nodes_from_collision");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_exclude_nodes_from_collision() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint2D", "get_exclude_nodes_from_collision");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

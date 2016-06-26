@@ -1,22 +1,6 @@
 /* mOccluderPolygon2D.i */
 %module mOccluderPolygon2D
 
-%typemap(ctype, out="OccluderPolygon2D*") Ref<OccluderPolygon2D> "OccluderPolygon2D*"
-%typemap(out, null="NULL") Ref<OccluderPolygon2D> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<OccluderPolygon2D> "OccluderPolygon2D.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<OccluderPolygon2D> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<OccluderPolygon2D> "OccluderPolygon2D"
-%typemap(csout, excode=SWIGEXCODE) Ref<OccluderPolygon2D> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    OccluderPolygon2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as OccluderPolygon2D;$excode
-    return ret;
-}
-
 template<class OccluderPolygon2D> class Ref;%template() Ref<OccluderPolygon2D>;
 %feature("novaluewrapper") Ref<OccluderPolygon2D>;
 
@@ -60,57 +44,75 @@ template<class OccluderPolygon2D> class Ref;%template() Ref<OccluderPolygon2D>;
 
 class OccluderPolygon2D : public Resource {
 public:
-  %extend {
-    void set_closed(bool closed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_closed", closed);
-    }
-  }
-  %extend {
-    bool is_closed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_closed");
-    }
-  }
-  %extend {
-    void set_cull_mode(int cull_mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cull_mode", cull_mode);
-    }
-  }
-  %extend {
-    int get_cull_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cull_mode");
-    }
-  }
-  %extend {
-    void set_polygon(const Vector2Array& polygon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_polygon", polygon);
-    }
-  }
-  %extend {
-    Vector2Array get_polygon() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_polygon");
-    }
-  }
   OccluderPolygon2D();
-  %extend {
-    ~OccluderPolygon2D() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_closed(bool closed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OccluderPolygon2D", "set_closed");
+  const void* __args[1] = { &closed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_closed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OccluderPolygon2D", "is_closed");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_cull_mode(int cull_mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OccluderPolygon2D", "set_cull_mode");
+  const void* __args[1] = { &cull_mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_cull_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OccluderPolygon2D", "get_cull_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_polygon(const Vector2Array& polygon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OccluderPolygon2D", "set_polygon");
+  const void* __args[1] = { &polygon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_polygon() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("OccluderPolygon2D", "get_polygon");
+  Vector2Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~OccluderPolygon2D() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

@@ -1,15 +1,6 @@
 /* mSpatial.i */
 %module mSpatial
 
-%typemap(out) Spatial "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Spatial* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Spatial %{
   public static readonly int NOTIFICATION_TRANSFORM_CHANGED = 29;
@@ -51,234 +42,323 @@
 
 class Spatial : public Node {
 public:
-  %extend {
-    void set_transform(const Transform& local) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_transform", local);
-    }
-  }
-  %extend {
-    Transform get_transform() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_transform");
-    }
-  }
-  %extend {
-    void set_translation(const Vector3& translation) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_translation", translation);
-    }
-  }
-  %extend {
-    Vector3 get_translation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_translation");
-    }
-  }
-  %extend {
-    void set_rotation(const Vector3& rotation_rad) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rotation", rotation_rad);
-    }
-  }
-  %extend {
-    Vector3 get_rotation() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rotation");
-    }
-  }
-  %extend {
-    void set_rotation_deg(const Vector3& rotation_deg) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rotation_deg", rotation_deg);
-    }
-  }
-  %extend {
-    Vector3 get_rotation_deg() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rotation_deg");
-    }
-  }
-  %extend {
-    void set_scale(const Vector3& scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scale", scale);
-    }
-  }
-  %extend {
-    Vector3 get_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scale");
-    }
-  }
-  %extend {
-    void set_global_transform(const Transform& global) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_global_transform", global);
-    }
-  }
-  %extend {
-    Transform get_global_transform() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_global_transform");
-    }
-  }
-  %extend {
-    Object* get_parent_spatial() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_parent_spatial").operator Object *();
-    }
-  }
-  %extend {
-    void set_ignore_transform_notification(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ignore_transform_notification", enabled);
-    }
-  }
-  %extend {
-    void set_as_toplevel(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_as_toplevel", enable);
-    }
-  }
-  %extend {
-    bool is_set_as_toplevel() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_set_as_toplevel");
-    }
-  }
-  %extend {
-    Ref<World> get_world() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_world").operator Object *()->cast_to<World>();
-    }
-  }
-  %extend {
-    void update_gizmo() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("update_gizmo");
-    }
-  }
-  %extend {
-    void set_gizmo(Ref<SpatialGizmo> gizmo) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_gizmo", gizmo);
-    }
-  }
-  %extend {
-    Ref<SpatialGizmo> get_gizmo() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_gizmo").operator Object *()->cast_to<SpatialGizmo>();
-    }
-  }
-  %extend {
-    void show() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("show");
-    }
-  }
-  %extend {
-    void hide() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("hide");
-    }
-  }
-  %extend {
-    bool is_visible() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_visible");
-    }
-  }
-  %extend {
-    bool is_hidden() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_hidden");
-    }
-  }
-  %extend {
-    void set_hidden(bool hidden) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_hidden", hidden);
-    }
-  }
-  %extend {
-    void set_notify_local_transform(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_notify_local_transform", enable);
-    }
-  }
-  %extend {
-    bool is_local_transform_notification_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_local_transform_notification_enabled");
-    }
-  }
-  %extend {
-    void rotate(const Vector3& normal, float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rotate", normal, radians);
-    }
-  }
-  %extend {
-    void global_rotate(const Vector3& normal, float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("global_rotate", normal, radians);
-    }
-  }
-  %extend {
-    void rotate_x(float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rotate_x", radians);
-    }
-  }
-  %extend {
-    void rotate_y(float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rotate_y", radians);
-    }
-  }
-  %extend {
-    void rotate_z(float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rotate_z", radians);
-    }
-  }
-  %extend {
-    void translate(const Vector3& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("translate", offset);
-    }
-  }
-  %extend {
-    void global_translate(const Vector3& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("global_translate", offset);
-    }
-  }
-  %extend {
-    void orthonormalize() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("orthonormalize");
-    }
-  }
-  %extend {
-    void set_identity() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_identity");
-    }
-  }
-  %extend {
-    void look_at(const Vector3& target, const Vector3& up) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("look_at", target, up);
-    }
-  }
-  %extend {
-    void look_at_from_pos(const Vector3& pos, const Vector3& target, const Vector3& up) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("look_at_from_pos", pos, target, up);
-    }
-  }
   Spatial();
+
+%extend {
+
+void set_transform(const Transform& local) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_transform");
+  const void* __args[1] = { &local };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform get_transform() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_transform");
+  Transform ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_translation(const Vector3& translation) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_translation");
+  const void* __args[1] = { &translation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_translation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_translation");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_rotation(const Vector3& rotation_rad) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_rotation");
+  const void* __args[1] = { &rotation_rad };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_rotation() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_rotation");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_rotation_deg(const Vector3& rotation_deg) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_rotation_deg");
+  const void* __args[1] = { &rotation_deg };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_rotation_deg() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_rotation_deg");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_scale(const Vector3& scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_scale");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_global_transform(const Transform& global) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_global_transform");
+  const void* __args[1] = { &global };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Transform get_global_transform() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_global_transform");
+  Transform ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_parent_spatial() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_parent_spatial");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_ignore_transform_notification(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_ignore_transform_notification");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_as_toplevel(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_as_toplevel");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_set_as_toplevel() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "is_set_as_toplevel");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<World> get_world() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_world");
+  Ref<World> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void update_gizmo() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "update_gizmo");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_gizmo(SpatialGizmo* gizmo) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_gizmo");
+  const void* __args[1] = { gizmo };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<SpatialGizmo> get_gizmo() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "get_gizmo");
+  Ref<SpatialGizmo> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void show() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "show");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void hide() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "hide");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_visible() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "is_visible");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_hidden() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "is_hidden");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_hidden(bool hidden) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_hidden");
+  const void* __args[1] = { &hidden };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_notify_local_transform(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_notify_local_transform");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_local_transform_notification_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "is_local_transform_notification_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void rotate(const Vector3& normal, float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "rotate");
+  const void* __args[2] = { &normal, &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void global_rotate(const Vector3& normal, float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "global_rotate");
+  const void* __args[2] = { &normal, &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void rotate_x(float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "rotate_x");
+  const void* __args[1] = { &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void rotate_y(float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "rotate_y");
+  const void* __args[1] = { &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void rotate_z(float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "rotate_z");
+  const void* __args[1] = { &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void translate(const Vector3& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "translate");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void global_translate(const Vector3& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "global_translate");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void orthonormalize() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "orthonormalize");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_identity() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "set_identity");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void look_at(const Vector3& target, const Vector3& up) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "look_at");
+  const void* __args[2] = { &target, &up };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void look_at_from_pos(const Vector3& pos, const Vector3& target, const Vector3& up) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Spatial", "look_at_from_pos");
+  const void* __args[3] = { &pos, &target, &up };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

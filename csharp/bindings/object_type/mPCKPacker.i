@@ -1,22 +1,6 @@
 /* mPCKPacker.i */
 %module mPCKPacker
 
-%typemap(ctype, out="PCKPacker*") Ref<PCKPacker> "PCKPacker*"
-%typemap(out, null="NULL") Ref<PCKPacker> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<PCKPacker> "PCKPacker.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<PCKPacker> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<PCKPacker> "PCKPacker"
-%typemap(csout, excode=SWIGEXCODE) Ref<PCKPacker> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    PCKPacker ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PCKPacker;$excode
-    return ret;
-}
-
 template<class PCKPacker> class Ref;%template() Ref<PCKPacker>;
 %feature("novaluewrapper") Ref<PCKPacker>;
 
@@ -57,39 +41,54 @@ template<class PCKPacker> class Ref;%template() Ref<PCKPacker>;
 
 class PCKPacker : public Reference {
 public:
-  %extend {
-    int pck_start(const String& pck_name, int alignment) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("pck_start", pck_name, alignment);
-    }
-  }
-  %extend {
-    int add_file(const String& pck_path, const String& source_path) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("add_file", pck_path, source_path);
-    }
-  }
-  %extend {
-    int flush(bool verbose) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("flush", verbose);
-    }
-  }
   PCKPacker();
-  %extend {
-    ~PCKPacker() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int pck_start(const String& pck_name, int alignment) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PCKPacker", "pck_start");
+  const void* __args[2] = { &pck_name, &alignment };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int add_file(const String& pck_path, const String& source_path) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PCKPacker", "add_file");
+  const void* __args[2] = { &pck_path, &source_path };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int flush(bool verbose) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PCKPacker", "flush");
+  const void* __args[1] = { &verbose };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~PCKPacker() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

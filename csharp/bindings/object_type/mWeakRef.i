@@ -1,22 +1,6 @@
 /* mWeakRef.i */
 %module mWeakRef
 
-%typemap(ctype, out="WeakRef*") Ref<WeakRef> "WeakRef*"
-%typemap(out, null="NULL") Ref<WeakRef> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<WeakRef> "WeakRef.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<WeakRef> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<WeakRef> "WeakRef"
-%typemap(csout, excode=SWIGEXCODE) Ref<WeakRef> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    WeakRef ret = InternalHelpers.UnmanagedGetManaged(cPtr) as WeakRef;$excode
-    return ret;
-}
-
 template<class WeakRef> class Ref;%template() Ref<WeakRef>;
 %feature("novaluewrapper") Ref<WeakRef>;
 
@@ -57,27 +41,33 @@ template<class WeakRef> class Ref;%template() Ref<WeakRef>;
 
 class WeakRef : public Reference {
 public:
-  %extend {
-    Object* get_ref() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_ref").operator Object *();
-    }
-  }
   WeakRef();
-  %extend {
-    ~WeakRef() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+Object* get_ref() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("WeakRef", "get_ref");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~WeakRef() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

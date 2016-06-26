@@ -1,22 +1,6 @@
 /* mNavigationPolygon.i */
 %module mNavigationPolygon
 
-%typemap(ctype, out="NavigationPolygon*") Ref<NavigationPolygon> "NavigationPolygon*"
-%typemap(out, null="NULL") Ref<NavigationPolygon> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<NavigationPolygon> "NavigationPolygon.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<NavigationPolygon> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<NavigationPolygon> "NavigationPolygon"
-%typemap(csout, excode=SWIGEXCODE) Ref<NavigationPolygon> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    NavigationPolygon ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationPolygon;$excode
-    return ret;
-}
-
 template<class NavigationPolygon> class Ref;%template() Ref<NavigationPolygon>;
 %feature("novaluewrapper") Ref<NavigationPolygon>;
 
@@ -57,105 +41,140 @@ template<class NavigationPolygon> class Ref;%template() Ref<NavigationPolygon>;
 
 class NavigationPolygon : public Resource {
 public:
-  %extend {
-    void set_vertices(const Vector2Array& vertices) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertices", vertices);
-    }
-  }
-  %extend {
-    Vector2Array get_vertices() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertices");
-    }
-  }
-  %extend {
-    void add_polygon(const IntArray& polygon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_polygon", polygon);
-    }
-  }
-  %extend {
-    int get_polygon_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_polygon_count");
-    }
-  }
-  %extend {
-    IntArray get_polygon(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_polygon", idx);
-    }
-  }
-  %extend {
-    void clear_polygons() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_polygons");
-    }
-  }
-  %extend {
-    void add_outline(const Vector2Array& outline) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_outline", outline);
-    }
-  }
-  %extend {
-    void add_outline_at_index(const Vector2Array& outline, int index) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_outline_at_index", outline, index);
-    }
-  }
-  %extend {
-    int get_outline_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_outline_count");
-    }
-  }
-  %extend {
-    void set_outline(int idx, const Vector2Array& outline) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_outline", idx, outline);
-    }
-  }
-  %extend {
-    Vector2Array get_outline(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_outline", idx);
-    }
-  }
-  %extend {
-    void remove_outline(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_outline", idx);
-    }
-  }
-  %extend {
-    void clear_outlines() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_outlines");
-    }
-  }
-  %extend {
-    void make_polygons_from_outlines() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("make_polygons_from_outlines");
-    }
-  }
   NavigationPolygon();
-  %extend {
-    ~NavigationPolygon() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_vertices(const Vector2Array& vertices) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "set_vertices");
+  const void* __args[1] = { &vertices };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_vertices() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "get_vertices");
+  Vector2Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_polygon(const IntArray& polygon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "add_polygon");
+  const void* __args[1] = { &polygon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_polygon_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "get_polygon_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+IntArray get_polygon(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "get_polygon");
+  const void* __args[1] = { &idx };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void clear_polygons() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "clear_polygons");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void add_outline(const Vector2Array& outline) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "add_outline");
+  const void* __args[1] = { &outline };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_outline_at_index(const Vector2Array& outline, int index) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "add_outline_at_index");
+  const void* __args[2] = { &outline, &index };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_outline_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "get_outline_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_outline(int idx, const Vector2Array& outline) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "set_outline");
+  const void* __args[2] = { &idx, &outline };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2Array get_outline(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "get_outline");
+  const void* __args[1] = { &idx };
+  Vector2Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_outline(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "remove_outline");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void clear_outlines() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "clear_outlines");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void make_polygons_from_outlines() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("NavigationPolygon", "make_polygons_from_outlines");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+~NavigationPolygon() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

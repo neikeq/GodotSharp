@@ -45,7 +45,6 @@ public class SpatialStreamPlayer : SpatialPlayer {
 
   public void set_stream(AudioStream stream) {
     GodotEnginePINVOKE.SpatialStreamPlayer_set_stream(swigCPtr, AudioStream.getCPtr(stream));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public AudioStream get_stream() {

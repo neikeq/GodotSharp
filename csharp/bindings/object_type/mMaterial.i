@@ -2,22 +2,6 @@
 %module mMaterial
 
 %nodefaultctor Material;
-%typemap(ctype, out="Material*") Ref<Material> "Material*"
-%typemap(out, null="NULL") Ref<Material> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Material> "Material.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Material> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Material> "Material"
-%typemap(csout, excode=SWIGEXCODE) Ref<Material> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Material ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Material;$excode
-    return ret;
-}
-
 template<class Material> class Ref;%template() Ref<Material>;
 %feature("novaluewrapper") Ref<Material>;
 
@@ -76,68 +60,92 @@ template<class Material> class Ref;%template() Ref<Material>;
 
 class Material : public Resource {
 public:
-  %extend {
-    void set_flag(int flag, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flag", flag, enable);
+
+%extend {
+
+void set_flag(int flag, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "set_flag");
+  const void* __args[2] = { &flag, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_flag(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "get_flag");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_blend_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "set_blend_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_blend_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "get_blend_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_line_width(float width) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "set_line_width");
+  const void* __args[1] = { &width };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_line_width() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "get_line_width");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_depth_draw_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "set_depth_draw_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_depth_draw_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Material", "get_depth_draw_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~Material() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    bool get_flag(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flag", flag);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    void set_blend_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_blend_mode", mode);
-    }
-  }
-  %extend {
-    int get_blend_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_blend_mode");
-    }
-  }
-  %extend {
-    void set_line_width(float width) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_line_width", width);
-    }
-  }
-  %extend {
-    float get_line_width() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line_width");
-    }
-  }
-  %extend {
-    void set_depth_draw_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_depth_draw_mode", mode);
-    }
-  }
-  %extend {
-    int get_depth_draw_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_depth_draw_mode");
-    }
-  }
-  %extend {
-    ~Material() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

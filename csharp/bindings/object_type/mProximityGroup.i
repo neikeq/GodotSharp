@@ -1,15 +1,6 @@
 /* mProximityGroup.i */
 %module mProximityGroup
 
-%typemap(out) ProximityGroup "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ProximityGroup* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ProximityGroup %{
 
@@ -47,36 +38,52 @@
 
 class ProximityGroup : public Spatial {
 public:
-  %extend {
-    void set_group_name(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_group_name", name);
-    }
-  }
-  %extend {
-    void broadcast(const String& name, const Variant& parameters) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("broadcast", name, parameters);
-    }
-  }
-  %extend {
-    void set_dispatch_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_dispatch_mode", mode);
-    }
-  }
-  %extend {
-    void set_grid_radius(const Vector3& radius) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_grid_radius", radius);
-    }
-  }
-  %extend {
-    Vector3 get_grid_radius() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_grid_radius");
-    }
-  }
   ProximityGroup();
+
+%extend {
+
+void set_group_name(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProximityGroup", "set_group_name");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void broadcast(const String& name, const Variant& parameters) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProximityGroup", "broadcast");
+  const void* __args[2] = { &name, &parameters };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_dispatch_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProximityGroup", "set_dispatch_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_grid_radius(const Vector3& radius) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProximityGroup", "set_grid_radius");
+  const void* __args[1] = { &radius };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_grid_radius() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ProximityGroup", "get_grid_radius");
+  Vector3 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

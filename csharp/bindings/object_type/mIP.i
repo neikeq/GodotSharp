@@ -4,15 +4,6 @@
 %csmethodmodifiers IP::IP "private"
 %csmethodmodifiers IP::SingletonGetInstance "private"
 %nodefaultctor IP;
-%typemap(out) IP "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) IP* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) IP %{
   private static $csclassname instance;
@@ -67,44 +58,69 @@
 
 class IP : public Object {
 public:
-  %extend {
-    String resolve_hostname(const String& host) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("resolve_hostname", host);
-    }
-  }
-  %extend {
-    int resolve_hostname_queue_item(const String& host) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("resolve_hostname_queue_item", host);
-    }
-  }
-  %extend {
-    int get_resolve_item_status(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_resolve_item_status", id);
-    }
-  }
-  %extend {
-    String get_resolve_item_address(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_resolve_item_address", id);
-    }
-  }
-  %extend {
-    void erase_resolve_item(int id) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_resolve_item", id);
-    }
-  }
-  %extend {
-    Array get_local_addresses() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_local_addresses");
-    }
-  }
-  %extend {
-    static IP* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("IP")->cast_to<IP>(); }
-  }
+
+%extend {
+
+String resolve_hostname(const String& host) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("IP", "resolve_hostname");
+  const void* __args[1] = { &host };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int resolve_hostname_queue_item(const String& host) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("IP", "resolve_hostname_queue_item");
+  const void* __args[1] = { &host };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_resolve_item_status(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("IP", "get_resolve_item_status");
+  const void* __args[1] = { &id };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_resolve_item_address(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("IP", "get_resolve_item_address");
+  const void* __args[1] = { &id };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void erase_resolve_item(int id) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("IP", "erase_resolve_item");
+  const void* __args[1] = { &id };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_local_addresses() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("IP", "get_local_addresses");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+static IP* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("IP")->cast_to<IP>(); }
+
+}
+
 
 };

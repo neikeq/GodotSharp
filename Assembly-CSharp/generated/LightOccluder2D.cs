@@ -45,7 +45,6 @@ public class LightOccluder2D : Node2D {
 
   public void set_occluder_polygon(OccluderPolygon2D polygon) {
     GodotEnginePINVOKE.LightOccluder2D_set_occluder_polygon(swigCPtr, OccluderPolygon2D.getCPtr(polygon));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public OccluderPolygon2D get_occluder_polygon() {

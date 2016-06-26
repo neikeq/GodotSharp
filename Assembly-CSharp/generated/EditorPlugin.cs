@@ -158,22 +158,18 @@ public class EditorPlugin : Node {
 
   public void add_import_plugin(EditorImportPlugin plugin) {
     GodotEnginePINVOKE.EditorPlugin_add_import_plugin(swigCPtr, EditorImportPlugin.getCPtr(plugin));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void remove_import_plugin(EditorImportPlugin plugin) {
     GodotEnginePINVOKE.EditorPlugin_remove_import_plugin(swigCPtr, EditorImportPlugin.getCPtr(plugin));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_export_plugin(EditorExportPlugin plugin) {
     GodotEnginePINVOKE.EditorPlugin_add_export_plugin(swigCPtr, EditorExportPlugin.getCPtr(plugin));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void remove_export_plugin(EditorExportPlugin plugin) {
     GodotEnginePINVOKE.EditorPlugin_remove_export_plugin(swigCPtr, EditorExportPlugin.getCPtr(plugin));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Control get_base_control() {

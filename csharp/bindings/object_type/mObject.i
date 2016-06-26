@@ -3,15 +3,6 @@
 
 %define VARIANT_ARG_LIST const Variant& p_arg1 = Variant(), const Variant& p_arg2 = Variant(), const Variant& p_arg3 = Variant(), const Variant& p_arg4 = Variant(), const Variant& p_arg5 = Variant() %enddef
 
-%typemap(out) Object "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Object* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody) Object %{
   public static readonly int NOTIFICATION_POSTINITIALIZE = 0;
@@ -57,239 +48,336 @@
 
 class Object {
 public:
-  %extend {
-    void _get(const String& property) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_get", property);
-    }
-  }
-  %extend {
-    Array _get_property_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("_get_property_list");
-    }
-  }
-  %extend {
-    void _init() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_init");
-    }
-  }
-  %extend {
-    void _notification(int what) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_notification", what);
-    }
-  }
-  %extend {
-    void _set(const String& property, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_set", property, value);
-    }
-  }
-  %extend {
-    void free() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("free");
-    }
-  }
-  %extend {
-    String get_type() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_type");
-    }
-  }
-  %extend {
-    bool is_type(const String& type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_type", type);
-    }
-  }
-  %extend {
-    void set(const String& property, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set", property, value);
-    }
-  }
-  %extend {
-    void get(const String& property) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get", property);
-    }
-  }
-  %extend {
-    Array get_property_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_property_list");
-    }
-  }
-  %extend {
-    Array get_method_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_method_list");
-    }
-  }
-  %extend {
-    void notification(int what, bool reversed = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("notification", what, reversed);
-    }
-  }
-  %extend {
-    int get_instance_ID() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_instance_ID");
-    }
-  }
-  %extend {
-    void set_script(Ref<Script> script) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_script", script);
-    }
-  }
-  %extend {
-    Ref<Script> get_script() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_script").operator Object *()->cast_to<Script>();
-    }
-  }
-  %extend {
-    void set_meta(const String& name, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_meta", name, value);
-    }
-  }
-  %extend {
-    void get_meta(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_meta", name);
-    }
-  }
-  %extend {
-    bool has_meta(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_meta", name);
-    }
-  }
-  %extend {
-    StringArray get_meta_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_meta_list");
-    }
-  }
-  %extend {
-    void add_user_signal(const String& signal, const Array& arguments_ = Array()) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_user_signal", signal, arguments_);
-    }
-  }
-  %extend {
-    bool has_user_signal(const String& signal) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_user_signal", signal);
-    }
-  }
-  %extend {
-    void emit_signal(const String& signal, const Variant& arg0_ = Variant(), const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant()) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(signal);
-Variant arg_1_ = Variant(arg0_);
-Variant arg_2_ = Variant(arg1_);
-Variant arg_3_ = Variant(arg2_);
-Variant arg_4_ = Variant(arg3_);
-Variant arg_5_ = Variant(arg4_);
-Variant *args_[6] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_ };
-$self->call("emit_signal", (const Variant **) args_, 6, err);
-    }
-  }
-  %extend {
-    bool has_method(const String& method) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_method", method);
-    }
-  }
-  %extend {
-    Array get_signal_list() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_signal_list");
-    }
-  }
-  %extend {
-    Array get_signal_connection_list(const String& signal) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_signal_connection_list", signal);
-    }
-  }
-  %extend {
-    int connect(const String& signal, Object* target, const String& method, const Array& binds = Array(), int flags = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("connect", signal, target, method, binds, flags);
-    }
-  }
-  %extend {
-    void disconnect(const String& signal, Object* target, const String& method) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("disconnect", signal, target, method);
-    }
-  }
-  %extend {
-    bool is_connected(const String& signal, Object* target, const String& method) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_connected", signal, target, method);
-    }
-  }
-  %extend {
-    void set_block_signals(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_block_signals", enable);
-    }
-  }
-  %extend {
-    bool is_blocking_signals() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_blocking_signals");
-    }
-  }
-  %extend {
-    void set_message_translation(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_message_translation", enable);
-    }
-  }
-  %extend {
-    bool can_translate_messages() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("can_translate_messages");
-    }
-  }
-  %extend {
-    void property_list_changed_notify() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("property_list_changed_notify");
-    }
-  }
-  %extend {
-    String XL_MESSAGE(const String& message) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("XL_MESSAGE", message);
-    }
-  }
-  %extend {
-    String tr(const String& message) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("tr", message);
-    }
-  }
-  %extend {
-    bool is_queued_for_deletion() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_queued_for_deletion");
-    }
-  }
-
   Variant call(const String& p_name, VARIANT_ARG_LIST);
   void call_deferred(const String& p_method, VARIANT_ARG_LIST);
   Variant callv(const String& p_method, const Array& p_args);
   Object();
+
+%extend {
+
+void _get(const String& property) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "_get");
+  const void* __args[1] = { &property };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array _get_property_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "_get_property_list");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void _init() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "_init");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _notification(int what) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "_notification");
+  const void* __args[1] = { &what };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void _set(const String& property, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "_set");
+  const void* __args[2] = { &property, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void free() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "free");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+String get_type() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_type");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_type(const String& type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "is_type");
+  const void* __args[1] = { &type };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set(const String& property, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "set");
+  const void* __args[2] = { &property, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get(const String& property) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get");
+  const void* __args[1] = { &property };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Array get_property_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_property_list");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_method_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_method_list");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void notification(int what, bool reversed = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "notification");
+  const void* __args[2] = { &what, &reversed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_instance_ID() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_instance_ID");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_script(Script* script) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "set_script");
+  const void* __args[1] = { script };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Script> get_script() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_script");
+  Ref<Script> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_meta(const String& name, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "set_meta");
+  const void* __args[2] = { &name, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_meta(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_meta");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_meta(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "has_meta");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_meta_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_meta_list");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_user_signal(const String& signal, const Array& arguments_ = Array()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "add_user_signal");
+  const void* __args[2] = { &signal, &arguments_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_user_signal(const String& signal) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "has_user_signal");
+  const void* __args[1] = { &signal };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void emit_signal(const String& signal, const Variant& arg0_ = Variant(), const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "emit_signal");
+  const void* __args[6] = { &signal, &arg0_, &arg1_, &arg2_, &arg3_, &arg4_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_method(const String& method) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "has_method");
+  const void* __args[1] = { &method };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array get_signal_list() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_signal_list");
+  Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Array get_signal_connection_list(const String& signal) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "get_signal_connection_list");
+  const void* __args[1] = { &signal };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int connect(const String& signal, Object* target, const String& method, const Array& binds = Array(), int flags = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "connect");
+  const void* __args[5] = { &signal, target, &method, &binds, &flags };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void disconnect(const String& signal, Object* target, const String& method) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "disconnect");
+  const void* __args[3] = { &signal, target, &method };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_connected(const String& signal, Object* target, const String& method) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "is_connected");
+  const void* __args[3] = { &signal, target, &method };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_block_signals(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "set_block_signals");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_blocking_signals() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "is_blocking_signals");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_message_translation(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "set_message_translation");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool can_translate_messages() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "can_translate_messages");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void property_list_changed_notify() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "property_list_changed_notify");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+String XL_MESSAGE(const String& message) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "XL_MESSAGE");
+  const void* __args[1] = { &message };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String tr(const String& message) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "tr");
+  const void* __args[1] = { &message };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool is_queued_for_deletion() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Object", "is_queued_for_deletion");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

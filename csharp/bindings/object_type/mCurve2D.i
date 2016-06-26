@@ -1,22 +1,6 @@
 /* mCurve2D.i */
 %module mCurve2D
 
-%typemap(ctype, out="Curve2D*") Ref<Curve2D> "Curve2D*"
-%typemap(out, null="NULL") Ref<Curve2D> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Curve2D> "Curve2D.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Curve2D> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Curve2D> "Curve2D"
-%typemap(csout, excode=SWIGEXCODE) Ref<Curve2D> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Curve2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve2D;$excode
-    return ret;
-}
-
 template<class Curve2D> class Ref;%template() Ref<Curve2D>;
 %feature("novaluewrapper") Ref<Curve2D>;
 
@@ -57,123 +41,178 @@ template<class Curve2D> class Ref;%template() Ref<Curve2D>;
 
 class Curve2D : public Resource {
 public:
-  %extend {
-    int get_point_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_count");
-    }
-  }
-  %extend {
-    void add_point(const Vector2& pos, const Vector2& in = Vector2(0,0), const Vector2& out = Vector2(0,0), int atpos = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_point", pos, in, out, atpos);
-    }
-  }
-  %extend {
-    void set_point_pos(int idx, const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_pos", idx, pos);
-    }
-  }
-  %extend {
-    Vector2 get_point_pos(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_pos", idx);
-    }
-  }
-  %extend {
-    void set_point_in(int idx, const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_in", idx, pos);
-    }
-  }
-  %extend {
-    Vector2 get_point_in(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_in", idx);
-    }
-  }
-  %extend {
-    void set_point_out(int idx, const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_point_out", idx, pos);
-    }
-  }
-  %extend {
-    Vector2 get_point_out(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_point_out", idx);
-    }
-  }
-  %extend {
-    void remove_point(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_point", idx);
-    }
-  }
-  %extend {
-    Vector2 interpolate(int idx, float t) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolate", idx, t);
-    }
-  }
-  %extend {
-    Vector2 interpolatef(float fofs) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolatef", fofs);
-    }
-  }
-  %extend {
-    void set_bake_interval(float distance) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bake_interval", distance);
-    }
-  }
-  %extend {
-    float get_bake_interval() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bake_interval");
-    }
-  }
-  %extend {
-    float get_baked_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_baked_length");
-    }
-  }
-  %extend {
-    Vector2 interpolate_baked(float offset, bool cubic = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("interpolate_baked", offset, cubic);
-    }
-  }
-  %extend {
-    Vector2Array get_baked_points() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_baked_points");
-    }
-  }
-  %extend {
-    Vector2Array tesselate(int max_stages = 5, float tolerance_degrees = 4) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("tesselate", max_stages, tolerance_degrees);
-    }
-  }
   Curve2D();
-  %extend {
-    ~Curve2D() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int get_point_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_point_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_point(const Vector2& pos, const Vector2& in = Vector2(0,0), const Vector2& out = Vector2(0,0), int atpos = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "add_point");
+  const void* __args[4] = { &pos, &in, &out, &atpos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_point_pos(int idx, const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "set_point_pos");
+  const void* __args[2] = { &idx, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_point_pos(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_point_pos");
+  const void* __args[1] = { &idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_point_in(int idx, const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "set_point_in");
+  const void* __args[2] = { &idx, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_point_in(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_point_in");
+  const void* __args[1] = { &idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_point_out(int idx, const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "set_point_out");
+  const void* __args[2] = { &idx, &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_point_out(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_point_out");
+  const void* __args[1] = { &idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_point(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "remove_point");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 interpolate(int idx, float t) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "interpolate");
+  const void* __args[2] = { &idx, &t };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2 interpolatef(float fofs) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "interpolatef");
+  const void* __args[1] = { &fofs };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_bake_interval(float distance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "set_bake_interval");
+  const void* __args[1] = { &distance };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_bake_interval() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_bake_interval");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_baked_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_baked_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 interpolate_baked(float offset, bool cubic = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "interpolate_baked");
+  const void* __args[2] = { &offset, &cubic };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Vector2Array get_baked_points() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "get_baked_points");
+  Vector2Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2Array tesselate(int max_stages = 5, float tolerance_degrees = 4) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Curve2D", "tesselate");
+  const void* __args[2] = { &max_stages, &tolerance_degrees };
+  Vector2Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Curve2D() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

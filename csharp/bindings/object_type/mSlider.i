@@ -2,15 +2,6 @@
 %module mSlider
 
 %nodefaultctor Slider;
-%typemap(out) Slider "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Slider* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Slider %{
 
@@ -49,29 +40,44 @@
 
 class Slider : public Range {
 public:
-  %extend {
-    void set_ticks(int count) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ticks", count);
-    }
-  }
-  %extend {
-    int get_ticks() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_ticks");
-    }
-  }
-  %extend {
-    bool get_ticks_on_borders() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_ticks_on_borders");
-    }
-  }
-  %extend {
-    void set_ticks_on_borders(bool ticks_on_border) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_ticks_on_borders", ticks_on_border);
-    }
-  }
+
+%extend {
+
+void set_ticks(int count) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Slider", "set_ticks");
+  const void* __args[1] = { &count };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_ticks() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Slider", "get_ticks");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool get_ticks_on_borders() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Slider", "get_ticks_on_borders");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_ticks_on_borders(bool ticks_on_border) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Slider", "set_ticks_on_borders");
+  const void* __args[1] = { &ticks_on_border };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

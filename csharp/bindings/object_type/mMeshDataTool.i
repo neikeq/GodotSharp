@@ -1,22 +1,6 @@
 /* mMeshDataTool.i */
 %module mMeshDataTool
 
-%typemap(ctype, out="MeshDataTool*") Ref<MeshDataTool> "MeshDataTool*"
-%typemap(out, null="NULL") Ref<MeshDataTool> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<MeshDataTool> "MeshDataTool.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<MeshDataTool> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<MeshDataTool> "MeshDataTool"
-%typemap(csout, excode=SWIGEXCODE) Ref<MeshDataTool> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    MeshDataTool ret = InternalHelpers.UnmanagedGetManaged(cPtr) as MeshDataTool;$excode
-    return ret;
-}
-
 template<class MeshDataTool> class Ref;%template() Ref<MeshDataTool>;
 %feature("novaluewrapper") Ref<MeshDataTool>;
 
@@ -57,249 +41,366 @@ template<class MeshDataTool> class Ref;%template() Ref<MeshDataTool>;
 
 class MeshDataTool : public Reference {
 public:
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    int create_from_surface(Object* mesh, int surface) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("create_from_surface", mesh, surface);
-    }
-  }
-  %extend {
-    int commit_to_surface(Object* mesh) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("commit_to_surface", mesh);
-    }
-  }
-  %extend {
-    int get_format() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_format");
-    }
-  }
-  %extend {
-    int get_vertex_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_count");
-    }
-  }
-  %extend {
-    int get_edge_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_edge_count");
-    }
-  }
-  %extend {
-    int get_face_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_face_count");
-    }
-  }
-  %extend {
-    void set_vertex(int idx, const Vector3& vertex) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex", idx, vertex);
-    }
-  }
-  %extend {
-    Vector3 get_vertex(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex", idx);
-    }
-  }
-  %extend {
-    void set_vertex_normal(int idx, const Vector3& normal) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_normal", idx, normal);
-    }
-  }
-  %extend {
-    Vector3 get_vertex_normal(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_normal", idx);
-    }
-  }
-  %extend {
-    void set_vertex_tangent(int idx, const Plane& tangent) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_tangent", idx, tangent);
-    }
-  }
-  %extend {
-    Plane get_vertex_tangent(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_tangent", idx);
-    }
-  }
-  %extend {
-    void set_vertex_uv(int idx, const Vector2& uv) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_uv", idx, uv);
-    }
-  }
-  %extend {
-    Vector2 get_vertex_uv(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_uv", idx);
-    }
-  }
-  %extend {
-    void set_vertex_uv2(int idx, const Vector2& uv2) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_uv2", idx, uv2);
-    }
-  }
-  %extend {
-    Vector2 get_vertex_uv2(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_uv2", idx);
-    }
-  }
-  %extend {
-    void set_vertex_color(int idx, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_color", idx, color);
-    }
-  }
-  %extend {
-    Color get_vertex_color(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_color", idx);
-    }
-  }
-  %extend {
-    void set_vertex_bones(int idx, const IntArray& bones) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_bones", idx, bones);
-    }
-  }
-  %extend {
-    IntArray get_vertex_bones(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_bones", idx);
-    }
-  }
-  %extend {
-    void set_vertex_weights(int idx, const RealArray& weights) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_weights", idx, weights);
-    }
-  }
-  %extend {
-    RealArray get_vertex_weights(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_weights", idx);
-    }
-  }
-  %extend {
-    void set_vertex_meta(int idx, const Variant& meta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_vertex_meta", idx, meta);
-    }
-  }
-  %extend {
-    void get_vertex_meta(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_vertex_meta", idx);
-    }
-  }
-  %extend {
-    IntArray get_vertex_edges(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_edges", idx);
-    }
-  }
-  %extend {
-    IntArray get_vertex_faces(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_vertex_faces", idx);
-    }
-  }
-  %extend {
-    int get_edge_vertex(int idx, int vertex) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_edge_vertex", idx, vertex);
-    }
-  }
-  %extend {
-    IntArray get_edge_faces(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_edge_faces", idx);
-    }
-  }
-  %extend {
-    void set_edge_meta(int idx, const Variant& meta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_edge_meta", idx, meta);
-    }
-  }
-  %extend {
-    void get_edge_meta(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_edge_meta", idx);
-    }
-  }
-  %extend {
-    int get_face_vertex(int idx, int vertex) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_face_vertex", idx, vertex);
-    }
-  }
-  %extend {
-    int get_face_edge(int idx, int edge) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_face_edge", idx, edge);
-    }
-  }
-  %extend {
-    void set_face_meta(int idx, const Variant& meta) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_face_meta", idx, meta);
-    }
-  }
-  %extend {
-    void get_face_meta(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("get_face_meta", idx);
-    }
-  }
-  %extend {
-    Vector3 get_face_normal(int idx) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_face_normal", idx);
-    }
-  }
-  %extend {
-    void set_material(Ref<Material> material) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_material", material);
-    }
-  }
-  %extend {
-    Object* get_material() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_material").operator Object *();
-    }
-  }
   MeshDataTool();
-  %extend {
-    ~MeshDataTool() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+int create_from_surface(Object* mesh, int surface) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "create_from_surface");
+  const void* __args[2] = { mesh, &surface };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int commit_to_surface(Object* mesh) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "commit_to_surface");
+  const void* __args[1] = { mesh };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_format() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_format");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_vertex_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_edge_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_edge_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_face_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_face_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_vertex(int idx, const Vector3& vertex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex");
+  const void* __args[2] = { &idx, &vertex };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_vertex(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex");
+  const void* __args[1] = { &idx };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_normal(int idx, const Vector3& normal) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_normal");
+  const void* __args[2] = { &idx, &normal };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_vertex_normal(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_normal");
+  const void* __args[1] = { &idx };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_tangent(int idx, const Plane& tangent) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_tangent");
+  const void* __args[2] = { &idx, &tangent };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Plane get_vertex_tangent(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_tangent");
+  const void* __args[1] = { &idx };
+  Plane ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_uv(int idx, const Vector2& uv) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_uv");
+  const void* __args[2] = { &idx, &uv };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_vertex_uv(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_uv");
+  const void* __args[1] = { &idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_uv2(int idx, const Vector2& uv2) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_uv2");
+  const void* __args[2] = { &idx, &uv2 };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_vertex_uv2(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_uv2");
+  const void* __args[1] = { &idx };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_color(int idx, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_color");
+  const void* __args[2] = { &idx, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_vertex_color(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_color");
+  const void* __args[1] = { &idx };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_bones(int idx, const IntArray& bones) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_bones");
+  const void* __args[2] = { &idx, &bones };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+IntArray get_vertex_bones(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_bones");
+  const void* __args[1] = { &idx };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_weights(int idx, const RealArray& weights) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_weights");
+  const void* __args[2] = { &idx, &weights };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+RealArray get_vertex_weights(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_weights");
+  const void* __args[1] = { &idx };
+  RealArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_vertex_meta(int idx, const Variant& meta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_vertex_meta");
+  const void* __args[2] = { &idx, &meta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_vertex_meta(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_meta");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+IntArray get_vertex_edges(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_edges");
+  const void* __args[1] = { &idx };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+IntArray get_vertex_faces(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_vertex_faces");
+  const void* __args[1] = { &idx };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_edge_vertex(int idx, int vertex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_edge_vertex");
+  const void* __args[2] = { &idx, &vertex };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+IntArray get_edge_faces(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_edge_faces");
+  const void* __args[1] = { &idx };
+  IntArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_edge_meta(int idx, const Variant& meta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_edge_meta");
+  const void* __args[2] = { &idx, &meta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_edge_meta(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_edge_meta");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_face_vertex(int idx, int vertex) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_face_vertex");
+  const void* __args[2] = { &idx, &vertex };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_face_edge(int idx, int edge) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_face_edge");
+  const void* __args[2] = { &idx, &edge };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_face_meta(int idx, const Variant& meta) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_face_meta");
+  const void* __args[2] = { &idx, &meta };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void get_face_meta(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_face_meta");
+  const void* __args[1] = { &idx };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3 get_face_normal(int idx) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_face_normal");
+  const void* __args[1] = { &idx };
+  Vector3 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_material(Material* material) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "set_material");
+  const void* __args[1] = { material };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_material() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("MeshDataTool", "get_material");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~MeshDataTool() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

@@ -1,22 +1,6 @@
 /* mFuncRef.i */
 %module mFuncRef
 
-%typemap(ctype, out="FuncRef*") Ref<FuncRef> "FuncRef*"
-%typemap(out, null="NULL") Ref<FuncRef> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<FuncRef> "FuncRef.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<FuncRef> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<FuncRef> "FuncRef"
-%typemap(csout, excode=SWIGEXCODE) Ref<FuncRef> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    FuncRef ret = InternalHelpers.UnmanagedGetManaged(cPtr) as FuncRef;$excode
-    return ret;
-}
-
 template<class FuncRef> class Ref;%template() Ref<FuncRef>;
 %feature("novaluewrapper") Ref<FuncRef>;
 
@@ -57,50 +41,48 @@ template<class FuncRef> class Ref;%template() Ref<FuncRef>;
 
 class FuncRef : public Reference {
 public:
-  %extend {
-    void call_func(const Variant& arg0_ = Variant(), const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant(), const Variant& arg5_ = Variant(), const Variant& arg6_ = Variant(), const Variant& arg7_ = Variant(), const Variant& arg8_ = Variant(), const Variant& arg9_ = Variant()) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(arg0_);
-Variant arg_1_ = Variant(arg1_);
-Variant arg_2_ = Variant(arg2_);
-Variant arg_3_ = Variant(arg3_);
-Variant arg_4_ = Variant(arg4_);
-Variant arg_5_ = Variant(arg5_);
-Variant arg_6_ = Variant(arg6_);
-Variant arg_7_ = Variant(arg7_);
-Variant arg_8_ = Variant(arg8_);
-Variant arg_9_ = Variant(arg9_);
-Variant *args_[10] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_, &arg_8_, &arg_9_ };
-$self->call("call_func", (const Variant **) args_, 10, err);
-    }
-  }
-  %extend {
-    void set_instance(Object* instance) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_instance", instance);
-    }
-  }
-  %extend {
-    void set_function(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_function", name);
-    }
-  }
   FuncRef();
-  %extend {
-    ~FuncRef() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void call_func(const Variant& arg0_ = Variant(), const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant(), const Variant& arg5_ = Variant(), const Variant& arg6_ = Variant(), const Variant& arg7_ = Variant(), const Variant& arg8_ = Variant(), const Variant& arg9_ = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FuncRef", "call_func");
+  const void* __args[10] = { &arg0_, &arg1_, &arg2_, &arg3_, &arg4_, &arg5_, &arg6_, &arg7_, &arg8_, &arg9_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_instance(Object* instance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FuncRef", "set_instance");
+  const void* __args[1] = { instance };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_function(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("FuncRef", "set_function");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+~FuncRef() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

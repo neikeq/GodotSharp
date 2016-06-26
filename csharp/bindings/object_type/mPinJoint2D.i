@@ -1,15 +1,6 @@
 /* mPinJoint2D.i */
 %module mPinJoint2D
 
-%typemap(out) PinJoint2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) PinJoint2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) PinJoint2D %{
 
@@ -47,18 +38,28 @@
 
 class PinJoint2D : public Joint2D {
 public:
-  %extend {
-    void set_softness(float softness) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_softness", softness);
-    }
-  }
-  %extend {
-    float get_softness() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_softness");
-    }
-  }
   PinJoint2D();
+
+%extend {
+
+void set_softness(float softness) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PinJoint2D", "set_softness");
+  const void* __args[1] = { &softness };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_softness() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("PinJoint2D", "get_softness");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

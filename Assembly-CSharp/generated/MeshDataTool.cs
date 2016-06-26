@@ -225,7 +225,6 @@ public class MeshDataTool : Reference {
 
   public void set_material(Material material) {
     GodotEnginePINVOKE.MeshDataTool_set_material(swigCPtr, Material.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Object get_material() {

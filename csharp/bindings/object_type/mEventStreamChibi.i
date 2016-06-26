@@ -1,22 +1,6 @@
 /* mEventStreamChibi.i */
 %module mEventStreamChibi
 
-%typemap(ctype, out="EventStreamChibi*") Ref<EventStreamChibi> "EventStreamChibi*"
-%typemap(out, null="NULL") Ref<EventStreamChibi> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<EventStreamChibi> "EventStreamChibi.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<EventStreamChibi> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<EventStreamChibi> "EventStreamChibi"
-%typemap(csout, excode=SWIGEXCODE) Ref<EventStreamChibi> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    EventStreamChibi ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EventStreamChibi;$excode
-    return ret;
-}
-
 template<class EventStreamChibi> class Ref;%template() Ref<EventStreamChibi>;
 %feature("novaluewrapper") Ref<EventStreamChibi>;
 
@@ -58,20 +42,23 @@ template<class EventStreamChibi> class Ref;%template() Ref<EventStreamChibi>;
 class EventStreamChibi : public EventStream {
 public:
   EventStreamChibi();
-  %extend {
-    ~EventStreamChibi() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~EventStreamChibi() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

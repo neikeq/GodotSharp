@@ -1,15 +1,6 @@
 /* mPath.i */
 %module mPath
 
-%typemap(out) Path "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Path* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Path %{
 
@@ -47,18 +38,28 @@
 
 class Path : public Spatial {
 public:
-  %extend {
-    void set_curve(Ref<Curve3D> curve) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_curve", curve);
-    }
-  }
-  %extend {
-    Ref<Curve3D> get_curve() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_curve").operator Object *()->cast_to<Curve3D>();
-    }
-  }
   Path();
+
+%extend {
+
+void set_curve(Curve3D* curve) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Path", "set_curve");
+  const void* __args[1] = { curve };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Curve3D> get_curve() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Path", "get_curve");
+  Ref<Curve3D> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

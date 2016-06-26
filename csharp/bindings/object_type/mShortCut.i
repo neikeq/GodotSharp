@@ -1,22 +1,6 @@
 /* mShortCut.i */
 %module mShortCut
 
-%typemap(ctype, out="ShortCut*") Ref<ShortCut> "ShortCut*"
-%typemap(out, null="NULL") Ref<ShortCut> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ShortCut> "ShortCut.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ShortCut> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ShortCut> "ShortCut"
-%typemap(csout, excode=SWIGEXCODE) Ref<ShortCut> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ShortCut ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ShortCut;$excode
-    return ret;
-}
-
 template<class ShortCut> class Ref;%template() Ref<ShortCut>;
 %feature("novaluewrapper") Ref<ShortCut>;
 
@@ -57,51 +41,69 @@ template<class ShortCut> class Ref;%template() Ref<ShortCut>;
 
 class ShortCut : public Resource {
 public:
-  %extend {
-    void set_shortcut(const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shortcut", event);
-    }
-  }
-  %extend {
-    InputEvent get_shortcut() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shortcut");
-    }
-  }
-  %extend {
-    bool is_valid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_valid");
-    }
-  }
-  %extend {
-    bool is_shortcut(const InputEvent& event) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_shortcut", event);
-    }
-  }
-  %extend {
-    String get_as_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_as_text");
-    }
-  }
   ShortCut();
-  %extend {
-    ~ShortCut() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_shortcut(const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShortCut", "set_shortcut");
+  const void* __args[1] = { &event };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+InputEvent get_shortcut() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShortCut", "get_shortcut");
+  InputEvent ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_valid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShortCut", "is_valid");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_shortcut(const InputEvent& event) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShortCut", "is_shortcut");
+  const void* __args[1] = { &event };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_as_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShortCut", "get_as_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ShortCut() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

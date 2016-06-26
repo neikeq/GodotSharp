@@ -2,22 +2,6 @@
 %module mFont
 
 %nodefaultctor Font;
-%typemap(ctype, out="Font*") Ref<Font> "Font*"
-%typemap(out, null="NULL") Ref<Font> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<Font> "Font.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<Font> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<Font> "Font"
-%typemap(csout, excode=SWIGEXCODE) Ref<Font> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    Font ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Font;$excode
-    return ret;
-}
-
 template<class Font> class Ref;%template() Ref<Font>;
 %feature("novaluewrapper") Ref<Font>;
 
@@ -59,62 +43,87 @@ template<class Font> class Ref;%template() Ref<Font>;
 
 class Font : public Resource {
 public:
-  %extend {
-    void draw(const RID& canvas_item, const Vector2& pos, const String& string, const Color& modulate = Color(1,1,1,1), int clip_w = -1) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("draw", canvas_item, pos, string, modulate, clip_w);
+
+%extend {
+
+void draw(const RID& canvas_item, const Vector2& pos, const String& string, const Color& modulate = Color(1,1,1,1), int clip_w = -1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "draw");
+  const void* __args[5] = { &canvas_item, &pos, &string, &modulate, &clip_w };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_ascent() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "get_ascent");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_descent() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "get_descent");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_height() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "get_height");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_distance_field_hint() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "is_distance_field_hint");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_string_size(const String& string) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "get_string_size");
+  const void* __args[1] = { &string };
+  Vector2 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float draw_char(const RID& canvas_item, const Vector2& pos, int char_, int next = -1, const Color& modulate = Color(1,1,1,1)) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Font", "draw_char");
+  const void* __args[5] = { &canvas_item, &pos, &char_, &next, &modulate };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~Font() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    float get_ascent() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_ascent");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    float get_descent() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_descent");
-    }
-  }
-  %extend {
-    float get_height() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_height");
-    }
-  }
-  %extend {
-    bool is_distance_field_hint() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_distance_field_hint");
-    }
-  }
-  %extend {
-    Vector2 get_string_size(const String& string) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_string_size", string);
-    }
-  }
-  %extend {
-    float draw_char(const RID& canvas_item, const Vector2& pos, int char_, int next = -1, const Color& modulate = Color(1,1,1,1)) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("draw_char", canvas_item, pos, char_, next, modulate);
-    }
-  }
-  %extend {
-    ~Font() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

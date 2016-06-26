@@ -1,15 +1,6 @@
 /* mParallaxLayer.i */
 %module mParallaxLayer
 
-%typemap(out) ParallaxLayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ParallaxLayer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ParallaxLayer %{
 
@@ -47,30 +38,45 @@
 
 class ParallaxLayer : public Node2D {
 public:
-  %extend {
-    void set_motion_scale(const Vector2& scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_motion_scale", scale);
-    }
-  }
-  %extend {
-    Vector2 get_motion_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_motion_scale");
-    }
-  }
-  %extend {
-    void set_mirroring(const Vector2& mirror) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_mirroring", mirror);
-    }
-  }
-  %extend {
-    Vector2 get_mirroring() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_mirroring");
-    }
-  }
   ParallaxLayer();
+
+%extend {
+
+void set_motion_scale(const Vector2& scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxLayer", "set_motion_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_motion_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxLayer", "get_motion_scale");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_mirroring(const Vector2& mirror) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxLayer", "set_mirroring");
+  const void* __args[1] = { &mirror };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_mirroring() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ParallaxLayer", "get_mirroring");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

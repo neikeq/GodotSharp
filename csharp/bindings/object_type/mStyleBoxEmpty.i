@@ -1,22 +1,6 @@
 /* mStyleBoxEmpty.i */
 %module mStyleBoxEmpty
 
-%typemap(ctype, out="StyleBoxEmpty*") Ref<StyleBoxEmpty> "StyleBoxEmpty*"
-%typemap(out, null="NULL") Ref<StyleBoxEmpty> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<StyleBoxEmpty> "StyleBoxEmpty.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<StyleBoxEmpty> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<StyleBoxEmpty> "StyleBoxEmpty"
-%typemap(csout, excode=SWIGEXCODE) Ref<StyleBoxEmpty> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    StyleBoxEmpty ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StyleBoxEmpty;$excode
-    return ret;
-}
-
 template<class StyleBoxEmpty> class Ref;%template() Ref<StyleBoxEmpty>;
 %feature("novaluewrapper") Ref<StyleBoxEmpty>;
 
@@ -58,20 +42,23 @@ template<class StyleBoxEmpty> class Ref;%template() Ref<StyleBoxEmpty>;
 class StyleBoxEmpty : public StyleBox {
 public:
   StyleBoxEmpty();
-  %extend {
-    ~StyleBoxEmpty() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+~StyleBoxEmpty() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

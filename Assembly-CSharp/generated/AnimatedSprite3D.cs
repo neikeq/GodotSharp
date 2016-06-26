@@ -45,7 +45,6 @@ public class AnimatedSprite3D : SpriteBase3D {
 
   public void set_sprite_frames(SpriteFrames sprite_frames) {
     GodotEnginePINVOKE.AnimatedSprite3D_set_sprite_frames(swigCPtr, SpriteFrames.getCPtr(sprite_frames));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public SpriteFrames get_sprite_frames() {

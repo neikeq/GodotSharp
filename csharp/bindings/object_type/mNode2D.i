@@ -1,15 +1,6 @@
 /* mNode2D.i */
 %module mNode2D
 
-%typemap(out) Node2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Node2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Node2D %{
 
@@ -47,162 +38,230 @@
 
 class Node2D : public CanvasItem {
 public:
-  %extend {
-    void set_pos(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pos", pos);
-    }
-  }
-  %extend {
-    void set_rot(float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rot", radians);
-    }
-  }
-  %extend {
-    void set_rotd(float degrees) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rotd", degrees);
-    }
-  }
-  %extend {
-    void set_scale(const Vector2& scale) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scale", scale);
-    }
-  }
-  %extend {
-    Vector2 get_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_pos");
-    }
-  }
-  %extend {
-    float get_rot() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rot");
-    }
-  }
-  %extend {
-    float get_rotd() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rotd");
-    }
-  }
-  %extend {
-    Vector2 get_scale() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scale");
-    }
-  }
-  %extend {
-    void rotate(float radians) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("rotate", radians);
-    }
-  }
-  %extend {
-    void move_local_x(float delta, bool scaled = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("move_local_x", delta, scaled);
-    }
-  }
-  %extend {
-    void move_local_y(float delta, bool scaled = false) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("move_local_y", delta, scaled);
-    }
-  }
-  %extend {
-    void translate(const Vector2& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("translate", offset);
-    }
-  }
-  %extend {
-    void global_translate(const Vector2& offset) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("global_translate", offset);
-    }
-  }
-  %extend {
-    void scale(const Vector2& ratio) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("scale", ratio);
-    }
-  }
-  %extend {
-    void set_global_pos(const Vector2& pos) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_global_pos", pos);
-    }
-  }
-  %extend {
-    Vector2 get_global_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_global_pos");
-    }
-  }
-  %extend {
-    void set_transform(const Matrix32& xform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_transform", xform);
-    }
-  }
-  %extend {
-    void set_global_transform(const Matrix32& xform) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_global_transform", xform);
-    }
-  }
-  %extend {
-    void look_at(const Vector2& point) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("look_at", point);
-    }
-  }
-  %extend {
-    float get_angle_to(const Vector2& point) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_angle_to", point);
-    }
-  }
-  %extend {
-    void set_z(int z) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_z", z);
-    }
-  }
-  %extend {
-    int get_z() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_z");
-    }
-  }
-  %extend {
-    void set_z_as_relative(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_z_as_relative", enable);
-    }
-  }
-  %extend {
-    bool is_z_relative() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_z_relative");
-    }
-  }
-  %extend {
-    void edit_set_pivot(const Vector2& pivot) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("edit_set_pivot", pivot);
-    }
-  }
-  %extend {
-    Matrix32 get_relative_transform_to_parent(Object* parent) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_relative_transform_to_parent", parent);
-    }
-  }
   Node2D();
+
+%extend {
+
+void set_pos(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_pos");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_rot(float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_rot");
+  const void* __args[1] = { &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_rotd(float degrees) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_rotd");
+  const void* __args[1] = { &degrees };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_scale(const Vector2& scale) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_scale");
+  const void* __args[1] = { &scale };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_pos");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_rot() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_rot");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_rotd() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_rotd");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Vector2 get_scale() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_scale");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void rotate(float radians) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "rotate");
+  const void* __args[1] = { &radians };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void move_local_x(float delta, bool scaled = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "move_local_x");
+  const void* __args[2] = { &delta, &scaled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void move_local_y(float delta, bool scaled = false) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "move_local_y");
+  const void* __args[2] = { &delta, &scaled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void translate(const Vector2& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "translate");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void global_translate(const Vector2& offset) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "global_translate");
+  const void* __args[1] = { &offset };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void scale(const Vector2& ratio) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "scale");
+  const void* __args[1] = { &ratio };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_global_pos(const Vector2& pos) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_global_pos");
+  const void* __args[1] = { &pos };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector2 get_global_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_global_pos");
+  Vector2 ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_transform(const Matrix32& xform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_transform");
+  const void* __args[1] = { &xform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_global_transform(const Matrix32& xform) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_global_transform");
+  const void* __args[1] = { &xform };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void look_at(const Vector2& point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "look_at");
+  const void* __args[1] = { &point };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_angle_to(const Vector2& point) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_angle_to");
+  const void* __args[1] = { &point };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_z(int z) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_z");
+  const void* __args[1] = { &z };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_z() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_z");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_z_as_relative(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "set_z_as_relative");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_z_relative() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "is_z_relative");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void edit_set_pivot(const Vector2& pivot) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "edit_set_pivot");
+  const void* __args[1] = { &pivot };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Matrix32 get_relative_transform_to_parent(Object* parent) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Node2D", "get_relative_transform_to_parent");
+  const void* __args[1] = { parent };
+  Matrix32 ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

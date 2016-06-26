@@ -1,15 +1,6 @@
 /* mTween.i */
 %module mTween
 
-%typemap(out) Tween "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Tween* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Tween %{
   public static readonly int TWEEN_PROCESS_FIXED = 0;
@@ -64,250 +55,272 @@
 
 class Tween : public Node {
 public:
-  %extend {
-    bool is_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_active");
-    }
-  }
-  %extend {
-    void set_active(bool active) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_active", active);
-    }
-  }
-  %extend {
-    bool is_repeat() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_repeat");
-    }
-  }
-  %extend {
-    void set_repeat(bool repeat) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_repeat", repeat);
-    }
-  }
-  %extend {
-    void set_speed(float speed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_speed", speed);
-    }
-  }
-  %extend {
-    float get_speed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_speed");
-    }
-  }
-  %extend {
-    void set_tween_process_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tween_process_mode", mode);
-    }
-  }
-  %extend {
-    int get_tween_process_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tween_process_mode");
-    }
-  }
-  %extend {
-    bool start() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("start");
-    }
-  }
-  %extend {
-    bool reset(Object* object, const String& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("reset", object, key);
-    }
-  }
-  %extend {
-    bool reset_all() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("reset_all");
-    }
-  }
-  %extend {
-    bool stop(Object* object, const String& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("stop", object, key);
-    }
-  }
-  %extend {
-    bool stop_all() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("stop_all");
-    }
-  }
-  %extend {
-    bool resume(Object* object, const String& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("resume", object, key);
-    }
-  }
-  %extend {
-    bool resume_all() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("resume_all");
-    }
-  }
-  %extend {
-    bool remove(Object* object, const String& key) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("remove", object, key);
-    }
-  }
-  %extend {
-    bool remove_all() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("remove_all");
-    }
-  }
-  %extend {
-    bool seek(float time) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("seek", time);
-    }
-  }
-  %extend {
-    float tell() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("tell");
-    }
-  }
-  %extend {
-    float get_runtime() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_runtime");
-    }
-  }
-  %extend {
-    bool interpolate_property(Object* object, const String& property, const Variant& initial_val, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(property);
-Variant arg_2_ = Variant(initial_val);
-Variant arg_3_ = Variant(final_val);
-Variant arg_4_ = Variant(times_in_sec);
-Variant arg_5_ = Variant(trans_type);
-Variant arg_6_ = Variant(ease_type);
-Variant arg_7_ = Variant(delay);
-Variant *args_[8] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_ };
-return $self->call("interpolate_property", (const Variant **) args_, 8, err);
-    }
-  }
-  %extend {
-    bool interpolate_method(Object* object, const String& method, const Variant& initial_val, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(method);
-Variant arg_2_ = Variant(initial_val);
-Variant arg_3_ = Variant(final_val);
-Variant arg_4_ = Variant(times_in_sec);
-Variant arg_5_ = Variant(trans_type);
-Variant arg_6_ = Variant(ease_type);
-Variant arg_7_ = Variant(delay);
-Variant *args_[8] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_ };
-return $self->call("interpolate_method", (const Variant **) args_, 8, err);
-    }
-  }
-  %extend {
-    bool interpolate_callback(Object* object, float times_in_sec, const String& callback, const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant(), const Variant& arg5_ = Variant()) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(times_in_sec);
-Variant arg_2_ = Variant(callback);
-Variant arg_3_ = Variant(arg1_);
-Variant arg_4_ = Variant(arg2_);
-Variant arg_5_ = Variant(arg3_);
-Variant arg_6_ = Variant(arg4_);
-Variant arg_7_ = Variant(arg5_);
-Variant *args_[8] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_ };
-return $self->call("interpolate_callback", (const Variant **) args_, 8, err);
-    }
-  }
-  %extend {
-    bool interpolate_deferred_callback(Object* object, float times_in_sec, const String& callback, const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant(), const Variant& arg5_ = Variant()) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(times_in_sec);
-Variant arg_2_ = Variant(callback);
-Variant arg_3_ = Variant(arg1_);
-Variant arg_4_ = Variant(arg2_);
-Variant arg_5_ = Variant(arg3_);
-Variant arg_6_ = Variant(arg4_);
-Variant arg_7_ = Variant(arg5_);
-Variant *args_[8] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_ };
-return $self->call("interpolate_deferred_callback", (const Variant **) args_, 8, err);
-    }
-  }
-  %extend {
-    bool follow_property(Object* object, const String& property, const Variant& initial_val, Object* target, const String& target_property, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(property);
-Variant arg_2_ = Variant(initial_val);
-Variant arg_3_ = Variant(target);
-Variant arg_4_ = Variant(target_property);
-Variant arg_5_ = Variant(times_in_sec);
-Variant arg_6_ = Variant(trans_type);
-Variant arg_7_ = Variant(ease_type);
-Variant arg_8_ = Variant(delay);
-Variant *args_[9] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_, &arg_8_ };
-return $self->call("follow_property", (const Variant **) args_, 9, err);
-    }
-  }
-  %extend {
-    bool follow_method(Object* object, const String& method, const Variant& initial_val, Object* target, const String& target_method, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(method);
-Variant arg_2_ = Variant(initial_val);
-Variant arg_3_ = Variant(target);
-Variant arg_4_ = Variant(target_method);
-Variant arg_5_ = Variant(times_in_sec);
-Variant arg_6_ = Variant(trans_type);
-Variant arg_7_ = Variant(ease_type);
-Variant arg_8_ = Variant(delay);
-Variant *args_[9] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_, &arg_8_ };
-return $self->call("follow_method", (const Variant **) args_, 9, err);
-    }
-  }
-  %extend {
-    bool targeting_property(Object* object, const String& property, Object* initial, const String& initial_val, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(property);
-Variant arg_2_ = Variant(initial);
-Variant arg_3_ = Variant(initial_val);
-Variant arg_4_ = Variant(final_val);
-Variant arg_5_ = Variant(times_in_sec);
-Variant arg_6_ = Variant(trans_type);
-Variant arg_7_ = Variant(ease_type);
-Variant arg_8_ = Variant(delay);
-Variant *args_[9] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_, &arg_8_ };
-return $self->call("targeting_property", (const Variant **) args_, 9, err);
-    }
-  }
-  %extend {
-    bool targeting_method(Object* object, const String& method, Object* initial, const String& initial_method, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
-  Variant::CallError err;
-Variant arg_0_ = Variant(object);
-Variant arg_1_ = Variant(method);
-Variant arg_2_ = Variant(initial);
-Variant arg_3_ = Variant(initial_method);
-Variant arg_4_ = Variant(final_val);
-Variant arg_5_ = Variant(times_in_sec);
-Variant arg_6_ = Variant(trans_type);
-Variant arg_7_ = Variant(ease_type);
-Variant arg_8_ = Variant(delay);
-Variant *args_[9] = { &arg_0_, &arg_1_, &arg_2_, &arg_3_, &arg_4_, &arg_5_, &arg_6_, &arg_7_, &arg_8_ };
-return $self->call("targeting_method", (const Variant **) args_, 9, err);
-    }
-  }
   Tween();
+
+%extend {
+
+bool is_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "is_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_active(bool active) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "set_active");
+  const void* __args[1] = { &active };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_repeat() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "is_repeat");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_repeat(bool repeat) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "set_repeat");
+  const void* __args[1] = { &repeat };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_speed(float speed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "set_speed");
+  const void* __args[1] = { &speed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_speed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "get_speed");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_tween_process_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "set_tween_process_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_tween_process_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "get_tween_process_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool start() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "start");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool reset(Object* object, const String& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "reset");
+  const void* __args[2] = { object, &key };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool reset_all() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "reset_all");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool stop(Object* object, const String& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "stop");
+  const void* __args[2] = { object, &key };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool stop_all() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "stop_all");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool resume(Object* object, const String& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "resume");
+  const void* __args[2] = { object, &key };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool resume_all() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "resume_all");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool remove(Object* object, const String& key) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "remove");
+  const void* __args[2] = { object, &key };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool remove_all() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "remove_all");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool seek(float time) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "seek");
+  const void* __args[1] = { &time };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+float tell() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "tell");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_runtime() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "get_runtime");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool interpolate_property(Object* object, const String& property, const Variant& initial_val, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "interpolate_property");
+  const void* __args[8] = { object, &property, &initial_val, &final_val, &times_in_sec, &trans_type, &ease_type, &delay };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool interpolate_method(Object* object, const String& method, const Variant& initial_val, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "interpolate_method");
+  const void* __args[8] = { object, &method, &initial_val, &final_val, &times_in_sec, &trans_type, &ease_type, &delay };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool interpolate_callback(Object* object, float times_in_sec, const String& callback, const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant(), const Variant& arg5_ = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "interpolate_callback");
+  const void* __args[8] = { object, &times_in_sec, &callback, &arg1_, &arg2_, &arg3_, &arg4_, &arg5_ };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool interpolate_deferred_callback(Object* object, float times_in_sec, const String& callback, const Variant& arg1_ = Variant(), const Variant& arg2_ = Variant(), const Variant& arg3_ = Variant(), const Variant& arg4_ = Variant(), const Variant& arg5_ = Variant()) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "interpolate_deferred_callback");
+  const void* __args[8] = { object, &times_in_sec, &callback, &arg1_, &arg2_, &arg3_, &arg4_, &arg5_ };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool follow_property(Object* object, const String& property, const Variant& initial_val, Object* target, const String& target_property, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "follow_property");
+  const void* __args[9] = { object, &property, &initial_val, target, &target_property, &times_in_sec, &trans_type, &ease_type, &delay };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool follow_method(Object* object, const String& method, const Variant& initial_val, Object* target, const String& target_method, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "follow_method");
+  const void* __args[9] = { object, &method, &initial_val, target, &target_method, &times_in_sec, &trans_type, &ease_type, &delay };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool targeting_property(Object* object, const String& property, Object* initial, const String& initial_val, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "targeting_property");
+  const void* __args[9] = { object, &property, initial, &initial_val, &final_val, &times_in_sec, &trans_type, &ease_type, &delay };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool targeting_method(Object* object, const String& method, Object* initial, const String& initial_method, const Variant& final_val, float times_in_sec, int trans_type, int ease_type, float delay = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Tween", "targeting_method");
+  const void* __args[9] = { object, &method, initial, &initial_method, &final_val, &times_in_sec, &trans_type, &ease_type, &delay };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

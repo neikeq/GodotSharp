@@ -1,22 +1,6 @@
 /* mCubeMap.i */
 %module mCubeMap
 
-%typemap(ctype, out="CubeMap*") Ref<CubeMap> "CubeMap*"
-%typemap(out, null="NULL") Ref<CubeMap> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<CubeMap> "CubeMap.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<CubeMap> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<CubeMap> "CubeMap"
-%typemap(csout, excode=SWIGEXCODE) Ref<CubeMap> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    CubeMap ret = InternalHelpers.UnmanagedGetManaged(cPtr) as CubeMap;$excode
-    return ret;
-}
-
 template<class CubeMap> class Ref;%template() Ref<CubeMap>;
 %feature("novaluewrapper") Ref<CubeMap>;
 
@@ -70,87 +54,120 @@ template<class CubeMap> class Ref;%template() Ref<CubeMap>;
 
 class CubeMap : public Resource {
 public:
-  %extend {
-    int get_width() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_width");
-    }
-  }
-  %extend {
-    int get_height() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_height");
-    }
-  }
-  %extend {
-    RID get_rid() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rid");
-    }
-  }
-  %extend {
-    void set_flags(int flags) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flags", flags);
-    }
-  }
-  %extend {
-    int get_flags() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flags");
-    }
-  }
-  %extend {
-    void set_side(int side, const Image& image) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_side", side, image);
-    }
-  }
-  %extend {
-    Image get_side(int side) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_side", side);
-    }
-  }
-  %extend {
-    void set_storage(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_storage", mode);
-    }
-  }
-  %extend {
-    int get_storage() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_storage");
-    }
-  }
-  %extend {
-    void set_lossy_storage_quality(float quality) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_lossy_storage_quality", quality);
-    }
-  }
-  %extend {
-    float get_lossy_storage_quality() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_lossy_storage_quality");
-    }
-  }
   CubeMap();
-  %extend {
-    ~CubeMap() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int get_width() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_width");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_height() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_height");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_rid() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_rid");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_flags(int flags) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "set_flags");
+  const void* __args[1] = { &flags };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_flags() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_flags");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_side(int side, const Image& image) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "set_side");
+  const void* __args[2] = { &side, &image };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Image get_side(int side) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_side");
+  const void* __args[1] = { &side };
+  Image ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_storage(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "set_storage");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_storage() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_storage");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_lossy_storage_quality(float quality) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "set_lossy_storage_quality");
+  const void* __args[1] = { &quality };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_lossy_storage_quality() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CubeMap", "get_lossy_storage_quality");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~CubeMap() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

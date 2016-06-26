@@ -1,15 +1,6 @@
 /* mRange.i */
 %module mRange
 
-%typemap(out) Range "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Range* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Range %{
 
@@ -47,126 +38,179 @@
 
 class Range : public Control {
 public:
-  %extend {
-    float get_val() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_val");
-    }
-  }
-  %extend {
-    float get_value() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_value");
-    }
-  }
-  %extend {
-    float get_min() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_min");
-    }
-  }
-  %extend {
-    float get_max() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_max");
-    }
-  }
-  %extend {
-    float get_step() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_step");
-    }
-  }
-  %extend {
-    float get_page() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_page");
-    }
-  }
-  %extend {
-    float get_unit_value() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_unit_value");
-    }
-  }
-  %extend {
-    void set_val(float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_val", value);
-    }
-  }
-  %extend {
-    void set_value(float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_value", value);
-    }
-  }
-  %extend {
-    void set_min(float minimum) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_min", minimum);
-    }
-  }
-  %extend {
-    void set_max(float maximum) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_max", maximum);
-    }
-  }
-  %extend {
-    void set_step(float step) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_step", step);
-    }
-  }
-  %extend {
-    void set_page(float pagesize) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_page", pagesize);
-    }
-  }
-  %extend {
-    void set_unit_value(float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_unit_value", value);
-    }
-  }
-  %extend {
-    void set_rounded_values(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rounded_values", enabled);
-    }
-  }
-  %extend {
-    bool is_rounded_values() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_rounded_values");
-    }
-  }
-  %extend {
-    void set_exp_unit_value(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_exp_unit_value", enabled);
-    }
-  }
-  %extend {
-    bool is_unit_value_exp() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_unit_value_exp");
-    }
-  }
-  %extend {
-    void share(Object* with) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("share", with);
-    }
-  }
-  %extend {
-    void unshare() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("unshare");
-    }
-  }
   Range();
+
+%extend {
+
+float get_val() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_val");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_value() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_value");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_min() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_min");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_max() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_max");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_step() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_step");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_page() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_page");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_unit_value() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "get_unit_value");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_val(float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_val");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_value(float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_value");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_min(float minimum) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_min");
+  const void* __args[1] = { &minimum };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_max(float maximum) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_max");
+  const void* __args[1] = { &maximum };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_step(float step) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_step");
+  const void* __args[1] = { &step };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_page(float pagesize) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_page");
+  const void* __args[1] = { &pagesize };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_unit_value(float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_unit_value");
+  const void* __args[1] = { &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_rounded_values(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_rounded_values");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_rounded_values() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "is_rounded_values");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_exp_unit_value(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "set_exp_unit_value");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_unit_value_exp() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "is_unit_value_exp");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void share(Object* with) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "share");
+  const void* __args[1] = { with };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void unshare() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Range", "unshare");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

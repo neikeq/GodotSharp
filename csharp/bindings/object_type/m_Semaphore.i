@@ -2,22 +2,6 @@
 %module m_Semaphore
 
 %rename(Semaphore) _Semaphore;
-%typemap(ctype, out="_Semaphore*") Ref<_Semaphore> "_Semaphore*"
-%typemap(out, null="NULL") Ref<_Semaphore> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<_Semaphore> "_Semaphore.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<_Semaphore> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<_Semaphore> "_Semaphore"
-%typemap(csout, excode=SWIGEXCODE) Ref<_Semaphore> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    _Semaphore ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Semaphore;$excode
-    return ret;
-}
-
 template<class _Semaphore> class Ref;%template() Ref<_Semaphore>;
 %feature("novaluewrapper") Ref<_Semaphore>;
 
@@ -58,33 +42,42 @@ template<class _Semaphore> class Ref;%template() Ref<_Semaphore>;
 
 class _Semaphore : public Reference {
 public:
-  %extend {
-    int wait() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("wait");
-    }
-  }
-  %extend {
-    int post() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("post");
-    }
-  }
   _Semaphore();
-  %extend {
-    ~_Semaphore() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int wait() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Semaphore", "wait");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int post() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Semaphore", "post");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~_Semaphore() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

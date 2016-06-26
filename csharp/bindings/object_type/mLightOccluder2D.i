@@ -1,15 +1,6 @@
 /* mLightOccluder2D.i */
 %module mLightOccluder2D
 
-%typemap(out) LightOccluder2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) LightOccluder2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) LightOccluder2D %{
 
@@ -47,30 +38,45 @@
 
 class LightOccluder2D : public Node2D {
 public:
-  %extend {
-    void set_occluder_polygon(Ref<OccluderPolygon2D> polygon) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_occluder_polygon", polygon);
-    }
-  }
-  %extend {
-    Ref<OccluderPolygon2D> get_occluder_polygon() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_occluder_polygon").operator Object *()->cast_to<OccluderPolygon2D>();
-    }
-  }
-  %extend {
-    void set_occluder_light_mask(int mask) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_occluder_light_mask", mask);
-    }
-  }
-  %extend {
-    int get_occluder_light_mask() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_occluder_light_mask");
-    }
-  }
   LightOccluder2D();
+
+%extend {
+
+void set_occluder_polygon(OccluderPolygon2D* polygon) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LightOccluder2D", "set_occluder_polygon");
+  const void* __args[1] = { polygon };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<OccluderPolygon2D> get_occluder_polygon() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LightOccluder2D", "get_occluder_polygon");
+  Ref<OccluderPolygon2D> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_occluder_light_mask(int mask) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LightOccluder2D", "set_occluder_light_mask");
+  const void* __args[1] = { &mask };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_occluder_light_mask() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("LightOccluder2D", "get_occluder_light_mask");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

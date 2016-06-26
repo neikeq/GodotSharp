@@ -1,22 +1,6 @@
 /* mWorld.i */
 %module mWorld
 
-%typemap(ctype, out="World*") Ref<World> "World*"
-%typemap(out, null="NULL") Ref<World> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<World> "World.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<World> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<World> "World"
-%typemap(csout, excode=SWIGEXCODE) Ref<World> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    World ret = InternalHelpers.UnmanagedGetManaged(cPtr) as World;$excode
-    return ret;
-}
-
 template<class World> class Ref;%template() Ref<World>;
 %feature("novaluewrapper") Ref<World>;
 
@@ -57,57 +41,77 @@ template<class World> class Ref;%template() Ref<World>;
 
 class World : public Resource {
 public:
-  %extend {
-    RID get_space() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_space");
-    }
-  }
-  %extend {
-    RID get_scenario() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scenario");
-    }
-  }
-  %extend {
-    RID get_sound_space() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sound_space");
-    }
-  }
-  %extend {
-    void set_environment(Ref<Environment> env) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_environment", env);
-    }
-  }
-  %extend {
-    Ref<Environment> get_environment() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_environment").operator Object *()->cast_to<Environment>();
-    }
-  }
-  %extend {
-    PhysicsDirectSpaceState* get_direct_space_state() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_direct_space_state").operator Object *()->cast_to<PhysicsDirectSpaceState>();
-    }
-  }
   World();
-  %extend {
-    ~World() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+RID get_space() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("World", "get_space");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_scenario() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("World", "get_scenario");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RID get_sound_space() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("World", "get_sound_space");
+  RID ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_environment(Environment* env) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("World", "set_environment");
+  const void* __args[1] = { env };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Environment> get_environment() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("World", "get_environment");
+  Ref<Environment> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+PhysicsDirectSpaceState* get_direct_space_state() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("World", "get_direct_space_state");
+  PhysicsDirectSpaceState* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~World() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

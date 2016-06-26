@@ -1,15 +1,6 @@
 /* mListener.i */
 %module mListener
 
-%typemap(out) Listener "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Listener* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Listener %{
 
@@ -47,30 +38,43 @@
 
 class Listener : public Spatial {
 public:
-  %extend {
-    void make_current() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("make_current");
-    }
-  }
-  %extend {
-    void clear_current() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear_current");
-    }
-  }
-  %extend {
-    bool is_current() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_current");
-    }
-  }
-  %extend {
-    Transform get_listener_transform() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_listener_transform");
-    }
-  }
   Listener();
+
+%extend {
+
+void make_current() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Listener", "make_current");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void clear_current() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Listener", "clear_current");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_current() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Listener", "is_current");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Transform get_listener_transform() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Listener", "get_listener_transform");
+  Transform ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

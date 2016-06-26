@@ -1,22 +1,6 @@
 /* mConvexPolygonShape.i */
 %module mConvexPolygonShape
 
-%typemap(ctype, out="ConvexPolygonShape*") Ref<ConvexPolygonShape> "ConvexPolygonShape*"
-%typemap(out, null="NULL") Ref<ConvexPolygonShape> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ConvexPolygonShape> "ConvexPolygonShape.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ConvexPolygonShape> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ConvexPolygonShape> "ConvexPolygonShape"
-%typemap(csout, excode=SWIGEXCODE) Ref<ConvexPolygonShape> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ConvexPolygonShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConvexPolygonShape;$excode
-    return ret;
-}
-
 template<class ConvexPolygonShape> class Ref;%template() Ref<ConvexPolygonShape>;
 %feature("novaluewrapper") Ref<ConvexPolygonShape>;
 
@@ -57,33 +41,41 @@ template<class ConvexPolygonShape> class Ref;%template() Ref<ConvexPolygonShape>
 
 class ConvexPolygonShape : public Shape {
 public:
-  %extend {
-    void set_points(const Vector3Array& points) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_points", points);
-    }
-  }
-  %extend {
-    Vector3Array get_points() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_points");
-    }
-  }
   ConvexPolygonShape();
-  %extend {
-    ~ConvexPolygonShape() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_points(const Vector3Array& points) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConvexPolygonShape", "set_points");
+  const void* __args[1] = { &points };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3Array get_points() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConvexPolygonShape", "get_points");
+  Vector3Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ConvexPolygonShape() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

@@ -2,15 +2,6 @@
 %module mPhysics2DDirectSpaceState
 
 %nodefaultctor Physics2DDirectSpaceState;
-%typemap(out) Physics2DDirectSpaceState "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Physics2DDirectSpaceState* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Physics2DDirectSpaceState %{
   public static readonly int TYPE_MASK_STATIC_BODY = 1;
@@ -55,41 +46,70 @@
 
 class Physics2DDirectSpaceState : public Object {
 public:
-  %extend {
-    Array intersect_point(const Vector2& point, int max_results = 32, const Array& exclude = Array(), int layer_mask = 2147483647, int type_mask = 15) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("intersect_point", point, max_results, exclude, layer_mask, type_mask);
-    }
-  }
-  %extend {
-    Dictionary intersect_ray(const Vector2& from, const Vector2& to, const Array& exclude = Array(), int layer_mask = 2147483647, int type_mask = 15) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("intersect_ray", from, to, exclude, layer_mask, type_mask);
-    }
-  }
-  %extend {
-    Array intersect_shape(Ref<Physics2DShapeQueryParameters> shape, int max_results = 32) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("intersect_shape", shape, max_results);
-    }
-  }
-  %extend {
-    Array cast_motion(Ref<Physics2DShapeQueryParameters> shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("cast_motion", shape);
-    }
-  }
-  %extend {
-    Array collide_shape(Ref<Physics2DShapeQueryParameters> shape, int max_results = 32) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("collide_shape", shape, max_results);
-    }
-  }
-  %extend {
-    Dictionary get_rest_info(Ref<Physics2DShapeQueryParameters> shape) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rest_info", shape);
-    }
-  }
+
+%extend {
+
+Array intersect_point(const Vector2& point, int max_results = 32, const Array& exclude = Array(), int layer_mask = 2147483647, int type_mask = 15) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectSpaceState", "intersect_point");
+  const void* __args[5] = { &point, &max_results, &exclude, &layer_mask, &type_mask };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Dictionary intersect_ray(const Vector2& from, const Vector2& to, const Array& exclude = Array(), int layer_mask = 2147483647, int type_mask = 15) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectSpaceState", "intersect_ray");
+  const void* __args[5] = { &from, &to, &exclude, &layer_mask, &type_mask };
+  Dictionary ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array intersect_shape(Physics2DShapeQueryParameters* shape, int max_results = 32) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectSpaceState", "intersect_shape");
+  const void* __args[2] = { shape, &max_results };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array cast_motion(Physics2DShapeQueryParameters* shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectSpaceState", "cast_motion");
+  const void* __args[1] = { shape };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Array collide_shape(Physics2DShapeQueryParameters* shape, int max_results = 32) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectSpaceState", "collide_shape");
+  const void* __args[2] = { shape, &max_results };
+  Array ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+Dictionary get_rest_info(Physics2DShapeQueryParameters* shape) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Physics2DDirectSpaceState", "get_rest_info");
+  const void* __args[1] = { shape };
+  Dictionary ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

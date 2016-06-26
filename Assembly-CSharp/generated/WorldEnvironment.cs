@@ -45,7 +45,6 @@ public class WorldEnvironment : Spatial {
 
   public void set_environment(Environment env) {
     GodotEnginePINVOKE.WorldEnvironment_set_environment(swigCPtr, Environment.getCPtr(env));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Environment get_environment() {

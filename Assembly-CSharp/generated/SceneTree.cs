@@ -72,7 +72,9 @@ public class SceneTree : MainLoop {
 
   public Viewport get_root() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.SceneTree_get_root(swigCPtr);
-    Viewport ret = (cPtr == global::System.IntPtr.Zero) ? null : new Viewport(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Viewport ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Viewport;
     return ret;
   }
 
@@ -211,7 +213,6 @@ public class SceneTree : MainLoop {
 
   public int change_scene_to(PackedScene packed_scene) {
     int ret = GodotEnginePINVOKE.SceneTree_change_scene_to(swigCPtr, PackedScene.getCPtr(packed_scene));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 

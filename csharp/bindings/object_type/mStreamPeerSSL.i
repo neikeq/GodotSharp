@@ -1,22 +1,6 @@
 /* mStreamPeerSSL.i */
 %module mStreamPeerSSL
 
-%typemap(ctype, out="StreamPeerSSL*") Ref<StreamPeerSSL> "StreamPeerSSL*"
-%typemap(out, null="NULL") Ref<StreamPeerSSL> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<StreamPeerSSL> "StreamPeerSSL.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<StreamPeerSSL> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<StreamPeerSSL> "StreamPeerSSL"
-%typemap(csout, excode=SWIGEXCODE) Ref<StreamPeerSSL> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    StreamPeerSSL ret = InternalHelpers.UnmanagedGetManaged(cPtr) as StreamPeerSSL;$excode
-    return ret;
-}
-
 template<class StreamPeerSSL> class Ref;%template() Ref<StreamPeerSSL>;
 %feature("novaluewrapper") Ref<StreamPeerSSL>;
 
@@ -61,47 +45,61 @@ template<class StreamPeerSSL> class Ref;%template() Ref<StreamPeerSSL>;
 
 class StreamPeerSSL : public StreamPeer {
 public:
-  %extend {
-    int accept(Ref<StreamPeer> stream) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("accept", stream);
+
+%extend {
+
+int accept(StreamPeer* stream) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerSSL", "accept");
+  const void* __args[1] = { stream };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int connect(StreamPeer* stream, bool validate_certs = false, const String& for_hostname = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerSSL", "connect");
+  const void* __args[3] = { stream, &validate_certs, &for_hostname };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_status() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerSSL", "get_status");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void disconnect() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("StreamPeerSSL", "disconnect");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+StreamPeerSSL() { return StreamPeerSSL::create(); }
+
+~StreamPeerSSL() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    int connect(Ref<StreamPeer> stream, bool validate_certs = false, const String& for_hostname = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("connect", stream, validate_certs, for_hostname);
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    int get_status() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_status");
-    }
-  }
-  %extend {
-    void disconnect() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("disconnect");
-    }
-  }
-  %extend {
-    StreamPeerSSL() { return StreamPeerSSL::create(); }
-  }
-  %extend {
-    ~StreamPeerSSL() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

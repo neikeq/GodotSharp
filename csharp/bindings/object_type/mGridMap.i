@@ -1,15 +1,6 @@
 /* mGridMap.i */
 %module mGridMap
 
-%typemap(out) GridMap "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) GridMap* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) GridMap %{
   public static readonly int INVALID_CELL_ITEM = -1;
@@ -48,216 +39,314 @@
 
 class GridMap : public Spatial {
 public:
-  %extend {
-    void set_theme(Ref<MeshLibrary> theme) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_theme", theme);
-    }
-  }
-  %extend {
-    Ref<MeshLibrary> get_theme() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_theme").operator Object *()->cast_to<MeshLibrary>();
-    }
-  }
-  %extend {
-    void set_bake(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bake", enable);
-    }
-  }
-  %extend {
-    bool is_baking_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_baking_enabled");
-    }
-  }
-  %extend {
-    void set_cell_size(float size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cell_size", size);
-    }
-  }
-  %extend {
-    float get_cell_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cell_size");
-    }
-  }
-  %extend {
-    void set_octant_size(int size) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_octant_size", size);
-    }
-  }
-  %extend {
-    int get_octant_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_octant_size");
-    }
-  }
-  %extend {
-    void set_cell_item(int x, int y, int z, int item, int orientation = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_cell_item", x, y, z, item, orientation);
-    }
-  }
-  %extend {
-    int get_cell_item(int x, int y, int z) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cell_item", x, y, z);
-    }
-  }
-  %extend {
-    int get_cell_item_orientation(int x, int y, int z) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_cell_item_orientation", x, y, z);
-    }
-  }
-  %extend {
-    void resource_changed(Object* resource) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("resource_changed", resource);
-    }
-  }
-  %extend {
-    void set_center_x(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_center_x", enable);
-    }
-  }
-  %extend {
-    bool get_center_x() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_center_x");
-    }
-  }
-  %extend {
-    void set_center_y(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_center_y", enable);
-    }
-  }
-  %extend {
-    bool get_center_y() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_center_y");
-    }
-  }
-  %extend {
-    void set_center_z(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_center_z", enable);
-    }
-  }
-  %extend {
-    bool get_center_z() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_center_z");
-    }
-  }
-  %extend {
-    void set_clip(bool enabled, bool clipabove = true, int floor = 0, int axis = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_clip", enabled, clipabove, floor, axis);
-    }
-  }
-  %extend {
-    int create_area(int id, const AABB& area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("create_area", id, area);
-    }
-  }
-  %extend {
-    AABB area_get_bounds(int area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_bounds", area);
-    }
-  }
-  %extend {
-    void area_set_exterior_portal(int area, bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_exterior_portal", area, enable);
-    }
-  }
-  %extend {
-    void area_set_name(int area, const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_name", area, name);
-    }
-  }
-  %extend {
-    String area_get_name(int area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_name", area);
-    }
-  }
-  %extend {
-    bool area_is_exterior_portal(int area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_is_exterior_portal", area);
-    }
-  }
-  %extend {
-    void area_set_portal_disable_distance(int area, float distance) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_portal_disable_distance", area, distance);
-    }
-  }
-  %extend {
-    float area_get_portal_disable_distance(int area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_portal_disable_distance", area);
-    }
-  }
-  %extend {
-    void area_set_portal_disable_color(int area, const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("area_set_portal_disable_color", area, color);
-    }
-  }
-  %extend {
-    Color area_get_portal_disable_color(int area) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("area_get_portal_disable_color", area);
-    }
-  }
-  %extend {
-    void erase_area(int area) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("erase_area", area);
-    }
-  }
-  %extend {
-    int get_unused_area_id() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_unused_area_id");
-    }
-  }
-  %extend {
-    void bake_geometry() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("bake_geometry");
-    }
-  }
-  %extend {
-    void set_use_baked_light(bool use) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_baked_light", use);
-    }
-  }
-  %extend {
-    bool is_using_baked_light() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_baked_light");
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
   GridMap();
+
+%extend {
+
+void set_theme(MeshLibrary* theme) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_theme");
+  const void* __args[1] = { theme };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<MeshLibrary> get_theme() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_theme");
+  Ref<MeshLibrary> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_bake(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_bake");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_baking_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "is_baking_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_cell_size(float size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_cell_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_cell_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_cell_size");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_octant_size(int size) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_octant_size");
+  const void* __args[1] = { &size };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_octant_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_octant_size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_cell_item(int x, int y, int z, int item, int orientation = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_cell_item");
+  const void* __args[5] = { &x, &y, &z, &item, &orientation };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_cell_item(int x, int y, int z) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_cell_item");
+  const void* __args[3] = { &x, &y, &z };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int get_cell_item_orientation(int x, int y, int z) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_cell_item_orientation");
+  const void* __args[3] = { &x, &y, &z };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void resource_changed(Object* resource) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "resource_changed");
+  const void* __args[1] = { resource };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_center_x(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_center_x");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_center_x() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_center_x");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_center_y(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_center_y");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_center_y() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_center_y");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_center_z(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_center_z");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_center_z() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_center_z");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_clip(bool enabled, bool clipabove = true, int floor = 0, int axis = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_clip");
+  const void* __args[4] = { &enabled, &clipabove, &floor, &axis };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int create_area(int id, const AABB& area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "create_area");
+  const void* __args[2] = { &id, &area };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+AABB area_get_bounds(int area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_get_bounds");
+  const void* __args[1] = { &area };
+  AABB ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_set_exterior_portal(int area, bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_set_exterior_portal");
+  const void* __args[2] = { &area, &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void area_set_name(int area, const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_set_name");
+  const void* __args[2] = { &area, &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String area_get_name(int area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_get_name");
+  const void* __args[1] = { &area };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool area_is_exterior_portal(int area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_is_exterior_portal");
+  const void* __args[1] = { &area };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_set_portal_disable_distance(int area, float distance) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_set_portal_disable_distance");
+  const void* __args[2] = { &area, &distance };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float area_get_portal_disable_distance(int area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_get_portal_disable_distance");
+  const void* __args[1] = { &area };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void area_set_portal_disable_color(int area, const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_set_portal_disable_color");
+  const void* __args[2] = { &area, &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color area_get_portal_disable_color(int area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "area_get_portal_disable_color");
+  const void* __args[1] = { &area };
+  Color ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void erase_area(int area) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "erase_area");
+  const void* __args[1] = { &area };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_unused_area_id() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "get_unused_area_id");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void bake_geometry() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "bake_geometry");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_use_baked_light(bool use) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "set_use_baked_light");
+  const void* __args[1] = { &use };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_baked_light() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "is_using_baked_light");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GridMap", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+}
+
 
 };

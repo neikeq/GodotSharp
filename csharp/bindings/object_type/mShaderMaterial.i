@@ -1,22 +1,6 @@
 /* mShaderMaterial.i */
 %module mShaderMaterial
 
-%typemap(ctype, out="ShaderMaterial*") Ref<ShaderMaterial> "ShaderMaterial*"
-%typemap(out, null="NULL") Ref<ShaderMaterial> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ShaderMaterial> "ShaderMaterial.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ShaderMaterial> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ShaderMaterial> "ShaderMaterial"
-%typemap(csout, excode=SWIGEXCODE) Ref<ShaderMaterial> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ShaderMaterial ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ShaderMaterial;$excode
-    return ret;
-}
-
 template<class ShaderMaterial> class Ref;%template() Ref<ShaderMaterial>;
 %feature("novaluewrapper") Ref<ShaderMaterial>;
 
@@ -57,45 +41,59 @@ template<class ShaderMaterial> class Ref;%template() Ref<ShaderMaterial>;
 
 class ShaderMaterial : public Material {
 public:
-  %extend {
-    void set_shader(Ref<Shader> shader) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shader", shader);
-    }
-  }
-  %extend {
-    Ref<Shader> get_shader() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shader").operator Object *()->cast_to<Shader>();
-    }
-  }
-  %extend {
-    void set_shader_param(const String& param, const Variant& value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shader_param", param, value);
-    }
-  }
-  %extend {
-    Variant get_shader_param(const String& param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shader_param", param);
-    }
-  }
   ShaderMaterial();
-  %extend {
-    ~ShaderMaterial() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_shader(Shader* shader) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderMaterial", "set_shader");
+  const void* __args[1] = { shader };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Shader> get_shader() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderMaterial", "get_shader");
+  Ref<Shader> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shader_param(const String& param, const Variant& value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderMaterial", "set_shader_param");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Variant get_shader_param(const String& param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ShaderMaterial", "get_shader_param");
+  const void* __args[1] = { &param };
+  Variant ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~ShaderMaterial() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

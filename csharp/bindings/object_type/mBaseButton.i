@@ -2,15 +2,6 @@
 %module mBaseButton
 
 %nodefaultctor BaseButton;
-%typemap(out) BaseButton "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) BaseButton* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) BaseButton %{
   public static readonly int DRAW_NORMAL = 0;
@@ -53,101 +44,145 @@
 
 class BaseButton : public Control {
 public:
-  %extend {
-    void _pressed() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_pressed");
-    }
-  }
-  %extend {
-    void _toggled(bool pressed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_toggled", pressed);
-    }
-  }
-  %extend {
-    void set_pressed(bool pressed) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_pressed", pressed);
-    }
-  }
-  %extend {
-    bool is_pressed() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_pressed");
-    }
-  }
-  %extend {
-    bool is_hovered() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_hovered");
-    }
-  }
-  %extend {
-    void set_toggle_mode(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_toggle_mode", enabled);
-    }
-  }
-  %extend {
-    bool is_toggle_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_toggle_mode");
-    }
-  }
-  %extend {
-    void set_disabled(bool disabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_disabled", disabled);
-    }
-  }
-  %extend {
-    bool is_disabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_disabled");
-    }
-  }
-  %extend {
-    void set_click_on_press(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_click_on_press", enable);
-    }
-  }
-  %extend {
-    bool get_click_on_press() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_click_on_press");
-    }
-  }
-  %extend {
-    int get_draw_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_draw_mode");
-    }
-  }
-  %extend {
-    void set_enabled_focus_mode(int mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_enabled_focus_mode", mode);
-    }
-  }
-  %extend {
-    int get_enabled_focus_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_enabled_focus_mode");
-    }
-  }
-  %extend {
-    void set_shortcut(Object* shortcut) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_shortcut", shortcut);
-    }
-  }
-  %extend {
-    Object* get_shortcut() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_shortcut").operator Object *();
-    }
-  }
+
+%extend {
+
+void _pressed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "_pressed");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void _toggled(bool pressed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "_toggled");
+  const void* __args[1] = { &pressed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_pressed(bool pressed) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "set_pressed");
+  const void* __args[1] = { &pressed };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_pressed() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "is_pressed");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_hovered() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "is_hovered");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_toggle_mode(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "set_toggle_mode");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_toggle_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "is_toggle_mode");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_disabled(bool disabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "set_disabled");
+  const void* __args[1] = { &disabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_disabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "is_disabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_click_on_press(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "set_click_on_press");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_click_on_press() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "get_click_on_press");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_draw_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "get_draw_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_enabled_focus_mode(int mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "set_enabled_focus_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_enabled_focus_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "get_enabled_focus_mode");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_shortcut(Object* shortcut) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "set_shortcut");
+  const void* __args[1] = { shortcut };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_shortcut() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("BaseButton", "get_shortcut");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

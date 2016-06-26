@@ -90,6 +90,24 @@ public class LineEdit : Control {
     return ret;
   }
 
+  public void cursor_set_blink_enabled(bool enable) {
+    GodotEnginePINVOKE.LineEdit_cursor_set_blink_enabled(swigCPtr, enable);
+  }
+
+  public bool cursor_get_blink_enabled() {
+    bool ret = GodotEnginePINVOKE.LineEdit_cursor_get_blink_enabled(swigCPtr);
+    return ret;
+  }
+
+  public void cursor_set_blink_speed(float blink_speed) {
+    GodotEnginePINVOKE.LineEdit_cursor_set_blink_speed(swigCPtr, blink_speed);
+  }
+
+  public float cursor_get_blink_speed() {
+    float ret = GodotEnginePINVOKE.LineEdit_cursor_get_blink_speed(swigCPtr);
+    return ret;
+  }
+
   public void set_max_length(int chars) {
     GodotEnginePINVOKE.LineEdit_set_max_length(swigCPtr, chars);
   }
@@ -140,7 +158,9 @@ public class LineEdit : Control {
 
   public PopupMenu get_menu() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.LineEdit_get_menu(swigCPtr);
-    PopupMenu ret = (cPtr == global::System.IntPtr.Zero) ? null : new PopupMenu(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    PopupMenu ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PopupMenu;
     return ret;
   }
 

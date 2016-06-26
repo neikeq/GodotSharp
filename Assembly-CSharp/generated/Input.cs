@@ -186,7 +186,6 @@ public class Input : Object {
 
   public void set_custom_mouse_cursor(Texture image) {
     GodotEnginePINVOKE.Input_set_custom_mouse_cursor__SWIG_1(swigCPtr, Texture.getCPtr(image));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   private static Input SingletonGetInstance() {

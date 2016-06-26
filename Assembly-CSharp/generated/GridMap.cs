@@ -46,7 +46,6 @@ public class GridMap : Spatial {
 
   public void set_theme(MeshLibrary theme) {
     GodotEnginePINVOKE.GridMap_set_theme(swigCPtr, MeshLibrary.getCPtr(theme));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public MeshLibrary get_theme() {

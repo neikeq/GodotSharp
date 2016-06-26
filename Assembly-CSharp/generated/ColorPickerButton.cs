@@ -55,7 +55,9 @@ public class ColorPickerButton : Button {
 
   public ColorPicker get_picker() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ColorPickerButton_get_picker(swigCPtr);
-    ColorPicker ret = (cPtr == global::System.IntPtr.Zero) ? null : new ColorPicker(cPtr, false);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    ColorPicker ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ColorPicker;
     return ret;
   }
 

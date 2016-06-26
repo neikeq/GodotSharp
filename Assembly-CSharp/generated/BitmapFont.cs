@@ -72,7 +72,6 @@ public class BitmapFont : Font {
 
   public void add_texture(Texture texture) {
     GodotEnginePINVOKE.BitmapFont_add_texture(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void add_char(int character, int texture, SWIGTYPE_p_Rect2 rect, Vector2 align, float advance) {

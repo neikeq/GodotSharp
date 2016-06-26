@@ -125,9 +125,8 @@ public class SurfaceTool : Reference {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_material(SWIGTYPE_p_RefT_Material_t material) {
-    GodotEnginePINVOKE.SurfaceTool_set_material(swigCPtr, SWIGTYPE_p_RefT_Material_t.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void set_material(Material material) {
+    GodotEnginePINVOKE.SurfaceTool_set_material(swigCPtr, Material.getCPtr(material));
   }
 
   public void index() {
@@ -142,16 +141,21 @@ public class SurfaceTool : Reference {
     GodotEnginePINVOKE.SurfaceTool_generate_normals(swigCPtr);
   }
 
-  public SWIGTYPE_p_RefT_Mesh_t commit(SWIGTYPE_p_RefT_Mesh_t existing) {
-    SWIGTYPE_p_RefT_Mesh_t ret = new SWIGTYPE_p_RefT_Mesh_t(GodotEnginePINVOKE.SurfaceTool_commit__SWIG_0(swigCPtr, SWIGTYPE_p_RefT_Mesh_t.getCPtr(existing)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public Mesh commit(Mesh existing) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.SurfaceTool_commit__SWIG_0(swigCPtr, Mesh.getCPtr(existing));
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_RefT_Mesh_t commit() {
-    SWIGTYPE_p_RefT_Mesh_t ret = new SWIGTYPE_p_RefT_Mesh_t(GodotEnginePINVOKE.SurfaceTool_commit__SWIG_1(swigCPtr), true);
+  public Mesh commit() {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.SurfaceTool_commit__SWIG_1(swigCPtr);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    Mesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Mesh;
     return ret;
-  }
+}
 
   public void clear() {
     GodotEnginePINVOKE.SurfaceTool_clear(swigCPtr);

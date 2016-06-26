@@ -49,7 +49,6 @@ public class DynamicFont : Font {
 
   public void set_font_data(DynamicFontData data) {
     GodotEnginePINVOKE.DynamicFont_set_font_data(swigCPtr, DynamicFontData.getCPtr(data));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public DynamicFontData get_font_data() {
@@ -71,12 +70,10 @@ public class DynamicFont : Font {
 
   public void add_fallback(DynamicFontData data) {
     GodotEnginePINVOKE.DynamicFont_add_fallback(swigCPtr, DynamicFontData.getCPtr(data));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_fallback(int idx, DynamicFontData data) {
     GodotEnginePINVOKE.DynamicFont_set_fallback(swigCPtr, idx, DynamicFontData.getCPtr(data));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public DynamicFontData get_fallback(int idx) {

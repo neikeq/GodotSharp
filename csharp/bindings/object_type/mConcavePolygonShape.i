@@ -1,22 +1,6 @@
 /* mConcavePolygonShape.i */
 %module mConcavePolygonShape
 
-%typemap(ctype, out="ConcavePolygonShape*") Ref<ConcavePolygonShape> "ConcavePolygonShape*"
-%typemap(out, null="NULL") Ref<ConcavePolygonShape> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ConcavePolygonShape> "ConcavePolygonShape.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ConcavePolygonShape> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ConcavePolygonShape> "ConcavePolygonShape"
-%typemap(csout, excode=SWIGEXCODE) Ref<ConcavePolygonShape> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ConcavePolygonShape ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ConcavePolygonShape;$excode
-    return ret;
-}
-
 template<class ConcavePolygonShape> class Ref;%template() Ref<ConcavePolygonShape>;
 %feature("novaluewrapper") Ref<ConcavePolygonShape>;
 
@@ -57,33 +41,41 @@ template<class ConcavePolygonShape> class Ref;%template() Ref<ConcavePolygonShap
 
 class ConcavePolygonShape : public Shape {
 public:
-  %extend {
-    void set_faces(const Vector3Array& faces) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_faces", faces);
-    }
-  }
-  %extend {
-    Vector3Array get_faces() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_faces");
-    }
-  }
   ConcavePolygonShape();
-  %extend {
-    ~ConcavePolygonShape() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void set_faces(const Vector3Array& faces) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConcavePolygonShape", "set_faces");
+  const void* __args[1] = { &faces };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Vector3Array get_faces() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ConcavePolygonShape", "get_faces");
+  Vector3Array ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ConcavePolygonShape() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

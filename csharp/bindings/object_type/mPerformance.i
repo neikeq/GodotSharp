@@ -4,15 +4,6 @@
 %csmethodmodifiers Performance::Performance "private"
 %csmethodmodifiers Performance::SingletonGetInstance "private"
 %nodefaultctor Performance;
-%typemap(out) Performance "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Performance* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Performance %{
   private static $csclassname instance;
@@ -89,14 +80,22 @@
 
 class Performance : public Object {
 public:
-  %extend {
-    float get_monitor(int monitor) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_monitor", monitor);
-    }
-  }
-  %extend {
-    static Performance* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Performance")->cast_to<Performance>(); }
-  }
+
+%extend {
+
+float get_monitor(int monitor) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Performance", "get_monitor");
+  const void* __args[1] = { &monitor };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+static Performance* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("Performance")->cast_to<Performance>(); }
+
+}
+
 
 };

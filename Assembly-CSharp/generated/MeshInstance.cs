@@ -45,7 +45,6 @@ public class MeshInstance : GeometryInstance {
 
   public void set_mesh(Mesh mesh) {
     GodotEnginePINVOKE.MeshInstance_set_mesh(swigCPtr, Mesh.getCPtr(mesh));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Mesh get_mesh() {

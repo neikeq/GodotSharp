@@ -1,15 +1,6 @@
 /* mRichTextLabel.i */
 %module mRichTextLabel
 
-%typemap(out) RichTextLabel "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) RichTextLabel* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) RichTextLabel %{
   public static readonly int ALIGN_LEFT = 0;
@@ -65,222 +56,308 @@
 
 class RichTextLabel : public Control {
 public:
-  %extend {
-    void add_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_text", text);
-    }
-  }
-  %extend {
-    void add_image(Ref<Texture> image) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_image", image);
-    }
-  }
-  %extend {
-    void newline() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("newline");
-    }
-  }
-  %extend {
-    void push_font(Object* font) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_font", font);
-    }
-  }
-  %extend {
-    void push_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_color", color);
-    }
-  }
-  %extend {
-    void push_align(int align) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_align", align);
-    }
-  }
-  %extend {
-    void push_indent(int level) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_indent", level);
-    }
-  }
-  %extend {
-    void push_list(int type) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_list", type);
-    }
-  }
-  %extend {
-    void push_meta(const Variant& data) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_meta", data);
-    }
-  }
-  %extend {
-    void push_underline() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_underline");
-    }
-  }
-  %extend {
-    void push_table(int columns) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_table", columns);
-    }
-  }
-  %extend {
-    void set_table_column_expand(int column, bool expand, int ratio) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_table_column_expand", column, expand, ratio);
-    }
-  }
-  %extend {
-    void push_cell() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("push_cell");
-    }
-  }
-  %extend {
-    void pop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("pop");
-    }
-  }
-  %extend {
-    void clear() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("clear");
-    }
-  }
-  %extend {
-    void set_meta_underline(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_meta_underline", enable);
-    }
-  }
-  %extend {
-    bool is_meta_underlined() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_meta_underlined");
-    }
-  }
-  %extend {
-    void set_scroll_active(bool active) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scroll_active", active);
-    }
-  }
-  %extend {
-    bool is_scroll_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_scroll_active");
-    }
-  }
-  %extend {
-    void set_scroll_follow(bool follow) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_scroll_follow", follow);
-    }
-  }
-  %extend {
-    bool is_scroll_following() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_scroll_following");
-    }
-  }
-  %extend {
-    Object* get_v_scroll() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_v_scroll").operator Object *();
-    }
-  }
-  %extend {
-    void scroll_to_line(int line) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("scroll_to_line", line);
-    }
-  }
-  %extend {
-    void set_tab_size(int spaces) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_tab_size", spaces);
-    }
-  }
-  %extend {
-    int get_tab_size() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_tab_size");
-    }
-  }
-  %extend {
-    void set_selection_enabled(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_selection_enabled", enabled);
-    }
-  }
-  %extend {
-    bool is_selection_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_selection_enabled");
-    }
-  }
-  %extend {
-    int parse_bbcode(const String& bbcode) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("parse_bbcode", bbcode);
-    }
-  }
-  %extend {
-    int append_bbcode(const String& bbcode) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("append_bbcode", bbcode);
-    }
-  }
-  %extend {
-    void set_bbcode(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_bbcode", text);
-    }
-  }
-  %extend {
-    String get_bbcode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_bbcode");
-    }
-  }
-  %extend {
-    void set_visible_characters(int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_visible_characters", amount);
-    }
-  }
-  %extend {
-    int get_visible_characters() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_visible_characters");
-    }
-  }
-  %extend {
-    int get_total_character_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_total_character_count");
-    }
-  }
-  %extend {
-    void set_use_bbcode(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_use_bbcode", enable);
-    }
-  }
-  %extend {
-    bool is_using_bbcode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_using_bbcode");
-    }
-  }
   RichTextLabel();
+
+%extend {
+
+void add_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "add_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void add_image(Texture* image) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "add_image");
+  const void* __args[1] = { image };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void newline() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "newline");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void push_font(Object* font) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_font");
+  const void* __args[1] = { font };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_align(int align) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_align");
+  const void* __args[1] = { &align };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_indent(int level) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_indent");
+  const void* __args[1] = { &level };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_list(int type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_list");
+  const void* __args[1] = { &type };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_meta(const Variant& data) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_meta");
+  const void* __args[1] = { &data };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_underline() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_underline");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void push_table(int columns) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_table");
+  const void* __args[1] = { &columns };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_table_column_expand(int column, bool expand, int ratio) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_table_column_expand");
+  const void* __args[3] = { &column, &expand, &ratio };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void push_cell() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "push_cell");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void pop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "pop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void clear() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "clear");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void set_meta_underline(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_meta_underline");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_meta_underlined() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "is_meta_underlined");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_scroll_active(bool active) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_scroll_active");
+  const void* __args[1] = { &active };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_scroll_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "is_scroll_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_scroll_follow(bool follow) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_scroll_follow");
+  const void* __args[1] = { &follow };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_scroll_following() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "is_scroll_following");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Object* get_v_scroll() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "get_v_scroll");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void scroll_to_line(int line) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "scroll_to_line");
+  const void* __args[1] = { &line };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_tab_size(int spaces) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_tab_size");
+  const void* __args[1] = { &spaces };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_tab_size() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "get_tab_size");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_selection_enabled(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_selection_enabled");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_selection_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "is_selection_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int parse_bbcode(const String& bbcode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "parse_bbcode");
+  const void* __args[1] = { &bbcode };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int append_bbcode(const String& bbcode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "append_bbcode");
+  const void* __args[1] = { &bbcode };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_bbcode(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_bbcode");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_bbcode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "get_bbcode");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_visible_characters(int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_visible_characters");
+  const void* __args[1] = { &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_visible_characters() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "get_visible_characters");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_total_character_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "get_total_character_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_use_bbcode(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "set_use_bbcode");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_using_bbcode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("RichTextLabel", "is_using_bbcode");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

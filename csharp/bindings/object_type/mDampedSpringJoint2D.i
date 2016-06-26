@@ -1,15 +1,6 @@
 /* mDampedSpringJoint2D.i */
 %module mDampedSpringJoint2D
 
-%typemap(out) DampedSpringJoint2D "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) DampedSpringJoint2D* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) DampedSpringJoint2D %{
 
@@ -47,54 +38,79 @@
 
 class DampedSpringJoint2D : public Joint2D {
 public:
-  %extend {
-    void set_length(float length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_length", length);
-    }
-  }
-  %extend {
-    float get_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_length");
-    }
-  }
-  %extend {
-    void set_rest_length(float rest_length) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_rest_length", rest_length);
-    }
-  }
-  %extend {
-    float get_rest_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_rest_length");
-    }
-  }
-  %extend {
-    void set_stiffness(float stiffness) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stiffness", stiffness);
-    }
-  }
-  %extend {
-    float get_stiffness() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stiffness");
-    }
-  }
-  %extend {
-    void set_damping(float damping) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_damping", damping);
-    }
-  }
-  %extend {
-    float get_damping() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_damping");
-    }
-  }
   DampedSpringJoint2D();
+
+%extend {
+
+void set_length(float length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "set_length");
+  const void* __args[1] = { &length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "get_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_rest_length(float rest_length) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "set_rest_length");
+  const void* __args[1] = { &rest_length };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_rest_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "get_rest_length");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_stiffness(float stiffness) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "set_stiffness");
+  const void* __args[1] = { &stiffness };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_stiffness() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "get_stiffness");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_damping(float damping) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "set_damping");
+  const void* __args[1] = { &damping };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_damping() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("DampedSpringJoint2D", "get_damping");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

@@ -47,7 +47,6 @@ public class SpatialSamplePlayer : SpatialPlayer {
 
   public void set_sample_library(SampleLibrary library) {
     GodotEnginePINVOKE.SpatialSamplePlayer_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public SampleLibrary get_sample_library() {

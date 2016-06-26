@@ -1,15 +1,6 @@
 /* mCanvasModulate.i */
 %module mCanvasModulate
 
-%typemap(out) CanvasModulate "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) CanvasModulate* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) CanvasModulate %{
 
@@ -47,18 +38,28 @@
 
 class CanvasModulate : public Node2D {
 public:
-  %extend {
-    void set_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", color);
-    }
-  }
-  %extend {
-    Color get_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color");
-    }
-  }
   CanvasModulate();
+
+%extend {
+
+void set_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasModulate", "set_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("CanvasModulate", "get_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

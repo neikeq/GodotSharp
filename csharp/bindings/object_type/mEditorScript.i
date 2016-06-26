@@ -1,22 +1,6 @@
 /* mEditorScript.i */
 %module mEditorScript
 
-%typemap(ctype, out="EditorScript*") Ref<EditorScript> "EditorScript*"
-%typemap(out, null="NULL") Ref<EditorScript> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<EditorScript> "EditorScript.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<EditorScript> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<EditorScript> "EditorScript"
-%typemap(csout, excode=SWIGEXCODE) Ref<EditorScript> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    EditorScript ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorScript;$excode
-    return ret;
-}
-
 template<class EditorScript> class Ref;%template() Ref<EditorScript>;
 %feature("novaluewrapper") Ref<EditorScript>;
 
@@ -57,39 +41,48 @@ template<class EditorScript> class Ref;%template() Ref<EditorScript>;
 
 class EditorScript : public Reference {
 public:
-  %extend {
-    void _run() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("_run");
-    }
-  }
-  %extend {
-    void add_root_node(Object* node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_root_node", node);
-    }
-  }
-  %extend {
-    Object* get_scene() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_scene").operator Object *();
-    }
-  }
   EditorScript();
-  %extend {
-    ~EditorScript() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void _run() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorScript", "_run");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void add_root_node(Object* node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorScript", "add_root_node");
+  const void* __args[1] = { node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Object* get_scene() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("EditorScript", "get_scene");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~EditorScript() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

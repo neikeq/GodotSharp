@@ -1,15 +1,6 @@
 /* mLabel.i */
 %module mLabel
 
-%typemap(out) Label "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Label* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Label %{
   public static readonly int ALIGN_LEFT = 0;
@@ -55,144 +46,208 @@
 
 class Label : public Control {
 public:
-  %extend {
-    void set_align(int align) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_align", align);
-    }
-  }
-  %extend {
-    int get_align() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_align");
-    }
-  }
-  %extend {
-    void set_valign(int valign) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_valign", valign);
-    }
-  }
-  %extend {
-    int get_valign() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_valign");
-    }
-  }
-  %extend {
-    void set_text(const String& text) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_text", text);
-    }
-  }
-  %extend {
-    String get_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_text");
-    }
-  }
-  %extend {
-    void set_autowrap(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_autowrap", enable);
-    }
-  }
-  %extend {
-    bool has_autowrap() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_autowrap");
-    }
-  }
-  %extend {
-    void set_clip_text(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_clip_text", enable);
-    }
-  }
-  %extend {
-    bool is_clipping_text() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_clipping_text");
-    }
-  }
-  %extend {
-    void set_uppercase(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_uppercase", enable);
-    }
-  }
-  %extend {
-    bool is_uppercase() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_uppercase");
-    }
-  }
-  %extend {
-    int get_line_height() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line_height");
-    }
-  }
-  %extend {
-    int get_line_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_line_count");
-    }
-  }
-  %extend {
-    int get_total_character_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_total_character_count");
-    }
-  }
-  %extend {
-    void set_visible_characters(int amount) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_visible_characters", amount);
-    }
-  }
-  %extend {
-    int get_visible_characters() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_visible_characters");
-    }
-  }
-  %extend {
-    void set_percent_visible(float percent_visible) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_percent_visible", percent_visible);
-    }
-  }
-  %extend {
-    float get_percent_visible() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_percent_visible");
-    }
-  }
-  %extend {
-    void set_lines_skipped(int lines_skipped) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_lines_skipped", lines_skipped);
-    }
-  }
-  %extend {
-    int get_lines_skipped() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_lines_skipped");
-    }
-  }
-  %extend {
-    void set_max_lines_visible(int lines_visible) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_max_lines_visible", lines_visible);
-    }
-  }
-  %extend {
-    int get_max_lines_visible() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_max_lines_visible");
-    }
-  }
   Label();
+
+%extend {
+
+void set_align(int align) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_align");
+  const void* __args[1] = { &align };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_align() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_align");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_valign(int valign) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_valign");
+  const void* __args[1] = { &valign };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_valign() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_valign");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_text(const String& text) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_text");
+  const void* __args[1] = { &text };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+String get_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_text");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_autowrap(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_autowrap");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_autowrap() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "has_autowrap");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_clip_text(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_clip_text");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_clipping_text() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "is_clipping_text");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_uppercase(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_uppercase");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_uppercase() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "is_uppercase");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_line_height() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_line_height");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_line_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_line_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_total_character_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_total_character_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_visible_characters(int amount) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_visible_characters");
+  const void* __args[1] = { &amount };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_visible_characters() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_visible_characters");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_percent_visible(float percent_visible) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_percent_visible");
+  const void* __args[1] = { &percent_visible };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_percent_visible() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_percent_visible");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_lines_skipped(int lines_skipped) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_lines_skipped");
+  const void* __args[1] = { &lines_skipped };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_lines_skipped() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_lines_skipped");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_max_lines_visible(int lines_visible) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "set_max_lines_visible");
+  const void* __args[1] = { &lines_visible };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_max_lines_visible() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Label", "get_max_lines_visible");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

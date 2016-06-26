@@ -2,15 +2,6 @@
 %module mJoint
 
 %nodefaultctor Joint;
-%typemap(out) Joint "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Joint* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Joint %{
 
@@ -49,53 +40,78 @@
 
 class Joint : public Spatial {
 public:
-  %extend {
-    void set_node_a(const NodePath& node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_node_a", node);
-    }
-  }
-  %extend {
-    NodePath get_node_a() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_a");
-    }
-  }
-  %extend {
-    void set_node_b(const NodePath& node) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_node_b", node);
-    }
-  }
-  %extend {
-    NodePath get_node_b() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_node_b");
-    }
-  }
-  %extend {
-    void set_solver_priority(int priority) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_solver_priority", priority);
-    }
-  }
-  %extend {
-    int get_solver_priority() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_solver_priority");
-    }
-  }
-  %extend {
-    void set_exclude_nodes_from_collision(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_exclude_nodes_from_collision", enable);
-    }
-  }
-  %extend {
-    bool get_exclude_nodes_from_collision() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_exclude_nodes_from_collision");
-    }
-  }
+
+%extend {
+
+void set_node_a(const NodePath& node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "set_node_a");
+  const void* __args[1] = { &node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_node_a() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "get_node_a");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_node_b(const NodePath& node) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "set_node_b");
+  const void* __args[1] = { &node };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+NodePath get_node_b() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "get_node_b");
+  NodePath ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_solver_priority(int priority) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "set_solver_priority");
+  const void* __args[1] = { &priority };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_solver_priority() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "get_solver_priority");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_exclude_nodes_from_collision(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "set_exclude_nodes_from_collision");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_exclude_nodes_from_collision() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Joint", "get_exclude_nodes_from_collision");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

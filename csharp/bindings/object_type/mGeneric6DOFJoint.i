@@ -1,15 +1,6 @@
 /* mGeneric6DOFJoint.i */
 %module mGeneric6DOFJoint
 
-%typemap(out) Generic6DOFJoint "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) Generic6DOFJoint* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) Generic6DOFJoint %{
   public static readonly int PARAM_LINEAR_LOWER_LIMIT = 0;
@@ -66,78 +57,119 @@
 
 class Generic6DOFJoint : public Joint {
 public:
-  %extend {
-    void set_param_x(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param_x", param, value);
-    }
-  }
-  %extend {
-    float get_param_x(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param_x", param);
-    }
-  }
-  %extend {
-    void set_param_y(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param_y", param, value);
-    }
-  }
-  %extend {
-    float get_param_y(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param_y", param);
-    }
-  }
-  %extend {
-    void set_param_z(int param, float value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_param_z", param, value);
-    }
-  }
-  %extend {
-    float get_param_z(int param) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_param_z", param);
-    }
-  }
-  %extend {
-    void set_flag_x(int flag, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flag_x", flag, value);
-    }
-  }
-  %extend {
-    bool get_flag_x(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flag_x", flag);
-    }
-  }
-  %extend {
-    void set_flag_y(int flag, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flag_y", flag, value);
-    }
-  }
-  %extend {
-    bool get_flag_y(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flag_y", flag);
-    }
-  }
-  %extend {
-    void set_flag_z(int flag, bool value) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_flag_z", flag, value);
-    }
-  }
-  %extend {
-    bool get_flag_z(int flag) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_flag_z", flag);
-    }
-  }
   Generic6DOFJoint();
+
+%extend {
+
+void set_param_x(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "set_param_x");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param_x(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "get_param_x");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_param_y(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "set_param_y");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param_y(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "get_param_y");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_param_z(int param, float value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "set_param_z");
+  const void* __args[2] = { &param, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_param_z(int param) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "get_param_z");
+  const void* __args[1] = { &param };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_flag_x(int flag, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "set_flag_x");
+  const void* __args[2] = { &flag, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_flag_x(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "get_flag_x");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_flag_y(int flag, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "set_flag_y");
+  const void* __args[2] = { &flag, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_flag_y(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "get_flag_y");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_flag_z(int flag, bool value) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "set_flag_z");
+  const void* __args[2] = { &flag, &value };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool get_flag_z(int flag) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("Generic6DOFJoint", "get_flag_z");
+  const void* __args[1] = { &flag };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+}
+
 
 };

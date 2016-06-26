@@ -1,15 +1,6 @@
 /* mColorPicker.i */
 %module mColorPicker
 
-%typemap(out) ColorPicker "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) ColorPicker* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) ColorPicker %{
 
@@ -47,48 +38,70 @@
 
 class ColorPicker : public BoxContainer {
 public:
-  %extend {
-    void set_color(const Color& color) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_color", color);
-    }
-  }
-  %extend {
-    Color get_color() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_color");
-    }
-  }
-  %extend {
-    void set_raw_mode(bool mode) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_raw_mode", mode);
-    }
-  }
-  %extend {
-    bool is_raw_mode() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_raw_mode");
-    }
-  }
-  %extend {
-    void set_edit_alpha(bool show) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_edit_alpha", show);
-    }
-  }
-  %extend {
-    bool is_editing_alpha() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_editing_alpha");
-    }
-  }
-  %extend {
-    void add_preset(const Color& arg0_) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_preset", arg0_);
-    }
-  }
   ColorPicker();
+
+%extend {
+
+void set_color(const Color& color) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "set_color");
+  const void* __args[1] = { &color };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Color get_color() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "get_color");
+  Color ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_raw_mode(bool mode) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "set_raw_mode");
+  const void* __args[1] = { &mode };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_raw_mode() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "is_raw_mode");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_edit_alpha(bool show) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "set_edit_alpha");
+  const void* __args[1] = { &show };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_editing_alpha() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "is_editing_alpha");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void add_preset(const Color& arg0_) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ColorPicker", "add_preset");
+  const void* __args[1] = { &arg0_ };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+}
+
 
 };

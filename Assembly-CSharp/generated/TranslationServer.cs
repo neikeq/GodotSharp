@@ -72,12 +72,10 @@ public class TranslationServer : Object {
 
   public void add_translation(Translation translation) {
     GodotEnginePINVOKE.TranslationServer_add_translation(swigCPtr, Translation.getCPtr(translation));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void remove_translation(Translation translation) {
     GodotEnginePINVOKE.TranslationServer_remove_translation(swigCPtr, Translation.getCPtr(translation));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void clear() {

@@ -1,22 +1,6 @@
 /* mSampleLibrary.i */
 %module mSampleLibrary
 
-%typemap(ctype, out="SampleLibrary*") Ref<SampleLibrary> "SampleLibrary*"
-%typemap(out, null="NULL") Ref<SampleLibrary> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<SampleLibrary> "SampleLibrary.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<SampleLibrary> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<SampleLibrary> "SampleLibrary"
-%typemap(csout, excode=SWIGEXCODE) Ref<SampleLibrary> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    SampleLibrary ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SampleLibrary;$excode
-    return ret;
-}
-
 template<class SampleLibrary> class Ref;%template() Ref<SampleLibrary>;
 %feature("novaluewrapper") Ref<SampleLibrary>;
 
@@ -57,69 +41,96 @@ template<class SampleLibrary> class Ref;%template() Ref<SampleLibrary>;
 
 class SampleLibrary : public Resource {
 public:
-  %extend {
-    void add_sample(const String& name, Ref<Sample> sample) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("add_sample", name, sample);
-    }
-  }
-  %extend {
-    Ref<Sample> get_sample(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_sample", name).operator Object *()->cast_to<Sample>();
-    }
-  }
-  %extend {
-    bool has_sample(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_sample", name);
-    }
-  }
-  %extend {
-    void remove_sample(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("remove_sample", name);
-    }
-  }
-  %extend {
-    void sample_set_volume_db(const String& name, float db) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_volume_db", name, db);
-    }
-  }
-  %extend {
-    float sample_get_volume_db(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_volume_db", name);
-    }
-  }
-  %extend {
-    void sample_set_pitch_scale(const String& name, float pitch) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("sample_set_pitch_scale", name, pitch);
-    }
-  }
-  %extend {
-    float sample_get_pitch_scale(const String& name) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("sample_get_pitch_scale", name);
-    }
-  }
   SampleLibrary();
-  %extend {
-    ~SampleLibrary() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void add_sample(const String& name, Sample* sample) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "add_sample");
+  const void* __args[2] = { &name, sample };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<Sample> get_sample(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "get_sample");
+  const void* __args[1] = { &name };
+  Ref<Sample> ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+bool has_sample(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "has_sample");
+  const void* __args[1] = { &name };
+  bool ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void remove_sample(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "remove_sample");
+  const void* __args[1] = { &name };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void sample_set_volume_db(const String& name, float db) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "sample_set_volume_db");
+  const void* __args[2] = { &name, &db };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float sample_get_volume_db(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "sample_get_volume_db");
+  const void* __args[1] = { &name };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void sample_set_pitch_scale(const String& name, float pitch) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "sample_set_pitch_scale");
+  const void* __args[2] = { &name, &pitch };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float sample_get_pitch_scale(const String& name) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("SampleLibrary", "sample_get_pitch_scale");
+  const void* __args[1] = { &name };
+  float ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~SampleLibrary() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

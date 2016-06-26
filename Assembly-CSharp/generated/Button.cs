@@ -58,7 +58,6 @@ public class Button : BaseButton {
 
   public void set_button_icon(Texture texture) {
     GodotEnginePINVOKE.Button_set_button_icon(swigCPtr, Texture.getCPtr(texture));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Texture get_button_icon() {

@@ -1,22 +1,6 @@
 /* mHTTPClient.i */
 %module mHTTPClient
 
-%typemap(ctype, out="HTTPClient*") Ref<HTTPClient> "HTTPClient*"
-%typemap(out, null="NULL") Ref<HTTPClient> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<HTTPClient> "HTTPClient.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<HTTPClient> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<HTTPClient> "HTTPClient"
-%typemap(csout, excode=SWIGEXCODE) Ref<HTTPClient> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    HTTPClient ret = InternalHelpers.UnmanagedGetManaged(cPtr) as HTTPClient;$excode
-    return ret;
-}
-
 template<class HTTPClient> class Ref;%template() Ref<HTTPClient>;
 %feature("novaluewrapper") Ref<HTTPClient>;
 
@@ -125,147 +109,214 @@ template<class HTTPClient> class Ref;%template() Ref<HTTPClient>;
 
 class HTTPClient : public Reference {
 public:
-  %extend {
-    int connect(const String& host, int port, bool use_ssl = false, bool verify_host = true) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("connect", host, port, use_ssl, verify_host);
-    }
-  }
-  %extend {
-    void set_connection(Ref<StreamPeer> connection) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_connection", connection);
-    }
-  }
-  %extend {
-    Ref<StreamPeer> get_connection() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_connection").operator Object *()->cast_to<StreamPeer>();
-    }
-  }
-  %extend {
-    int request_raw(int method, const String& url, const StringArray& headers, const RawArray& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("request_raw", method, url, headers, body);
-    }
-  }
-  %extend {
-    int request(int method, const String& url, const StringArray& headers, const String& body = "") {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("request", method, url, headers, body);
-    }
-  }
-  %extend {
-    int send_body_text(const String& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("send_body_text", body);
-    }
-  }
-  %extend {
-    int send_body_data(const RawArray& body) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("send_body_data", body);
-    }
-  }
-  %extend {
-    void close() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("close");
-    }
-  }
-  %extend {
-    bool has_response() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_response");
-    }
-  }
-  %extend {
-    bool is_response_chunked() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_response_chunked");
-    }
-  }
-  %extend {
-    int get_response_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_response_code");
-    }
-  }
-  %extend {
-    StringArray get_response_headers() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_response_headers");
-    }
-  }
-  %extend {
-    Dictionary get_response_headers_as_dictionary() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_response_headers_as_dictionary");
-    }
-  }
-  %extend {
-    int get_response_body_length() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_response_body_length");
-    }
-  }
-  %extend {
-    RawArray read_response_body_chunk() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("read_response_body_chunk");
-    }
-  }
-  %extend {
-    void set_read_chunk_size(int bytes) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_read_chunk_size", bytes);
-    }
-  }
-  %extend {
-    void set_blocking_mode(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_blocking_mode", enabled);
-    }
-  }
-  %extend {
-    bool is_blocking_mode_enabled() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_blocking_mode_enabled");
-    }
-  }
-  %extend {
-    int get_status() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_status");
-    }
-  }
-  %extend {
-    int poll() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("poll");
-    }
-  }
-  %extend {
-    String query_string_from_dict(const Dictionary& fields) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("query_string_from_dict", fields);
-    }
-  }
   HTTPClient();
-  %extend {
-    ~HTTPClient() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int connect(const String& host, int port, bool use_ssl = false, bool verify_host = true) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "connect");
+  const void* __args[4] = { &host, &port, &use_ssl, &verify_host };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void set_connection(StreamPeer* connection) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "set_connection");
+  const void* __args[1] = { connection };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<StreamPeer> get_connection() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "get_connection");
+  Ref<StreamPeer> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int request_raw(int method, const String& url, const StringArray& headers, const RawArray& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "request_raw");
+  const void* __args[4] = { &method, &url, &headers, &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int request(int method, const String& url, const StringArray& headers, const String& body = "") {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "request");
+  const void* __args[4] = { &method, &url, &headers, &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int send_body_text(const String& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "send_body_text");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+int send_body_data(const RawArray& body) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "send_body_data");
+  const void* __args[1] = { &body };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+void close() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "close");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool has_response() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "has_response");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_response_chunked() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "is_response_chunked");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_response_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "get_response_code");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+StringArray get_response_headers() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "get_response_headers");
+  StringArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Dictionary get_response_headers_as_dictionary() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "get_response_headers_as_dictionary");
+  Dictionary ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_response_body_length() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "get_response_body_length");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+RawArray read_response_body_chunk() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "read_response_body_chunk");
+  RawArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_read_chunk_size(int bytes) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "set_read_chunk_size");
+  const void* __args[1] = { &bytes };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+void set_blocking_mode(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "set_blocking_mode");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_blocking_mode_enabled() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "is_blocking_mode_enabled");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_status() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "get_status");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int poll() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "poll");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String query_string_from_dict(const Dictionary& fields) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("HTTPClient", "query_string_from_dict");
+  const void* __args[1] = { &fields };
+  String ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+~HTTPClient() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

@@ -1,15 +1,6 @@
 /* mVideoPlayer.i */
 %module mVideoPlayer
 
-%typemap(out) VideoPlayer "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) VideoPlayer* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) VideoPlayer %{
 
@@ -47,138 +38,197 @@
 
 class VideoPlayer : public Control {
 public:
-  %extend {
-    void set_stream(Ref<VideoStream> stream) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_stream", stream);
-    }
-  }
-  %extend {
-    Ref<VideoStream> get_stream() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream").operator Object *()->cast_to<VideoStream>();
-    }
-  }
-  %extend {
-    void play() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("play");
-    }
-  }
-  %extend {
-    void stop() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("stop");
-    }
-  }
-  %extend {
-    bool is_playing() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_playing");
-    }
-  }
-  %extend {
-    void set_paused(bool paused) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_paused", paused);
-    }
-  }
-  %extend {
-    bool is_paused() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_paused");
-    }
-  }
-  %extend {
-    void set_volume(float volume) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_volume", volume);
-    }
-  }
-  %extend {
-    float get_volume() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_volume");
-    }
-  }
-  %extend {
-    void set_volume_db(float db) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_volume_db", db);
-    }
-  }
-  %extend {
-    float get_volume_db() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_volume_db");
-    }
-  }
-  %extend {
-    void set_audio_track(int track) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_audio_track", track);
-    }
-  }
-  %extend {
-    int get_audio_track() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_audio_track");
-    }
-  }
-  %extend {
-    String get_stream_name() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream_name");
-    }
-  }
-  %extend {
-    float get_stream_pos() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stream_pos");
-    }
-  }
-  %extend {
-    void set_autoplay(bool enabled) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_autoplay", enabled);
-    }
-  }
-  %extend {
-    bool has_autoplay() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_autoplay");
-    }
-  }
-  %extend {
-    void set_expand(bool enable) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_expand", enable);
-    }
-  }
-  %extend {
-    bool has_expand() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("has_expand");
-    }
-  }
-  %extend {
-    void set_buffering_msec(int msec) {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("set_buffering_msec", msec);
-    }
-  }
-  %extend {
-    int get_buffering_msec() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_buffering_msec");
-    }
-  }
-  %extend {
-    Ref<Texture> get_video_texture() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_video_texture").operator Object *()->cast_to<Texture>();
-    }
-  }
   VideoPlayer();
+
+%extend {
+
+void set_stream(VideoStream* stream) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_stream");
+  const void* __args[1] = { stream };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+Ref<VideoStream> get_stream() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_stream");
+  Ref<VideoStream> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void play() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "play");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+void stop() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "stop");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+bool is_playing() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "is_playing");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_paused(bool paused) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_paused");
+  const void* __args[1] = { &paused };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool is_paused() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "is_paused");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_volume(float volume) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_volume");
+  const void* __args[1] = { &volume };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_volume() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_volume");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_volume_db(float db) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_volume_db");
+  const void* __args[1] = { &db };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+float get_volume_db() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_volume_db");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_audio_track(int track) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_audio_track");
+  const void* __args[1] = { &track };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_audio_track() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_audio_track");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+String get_stream_name() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_stream_name");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+float get_stream_pos() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_stream_pos");
+  float ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_autoplay(bool enabled) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_autoplay");
+  const void* __args[1] = { &enabled };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_autoplay() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "has_autoplay");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_expand(bool enable) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_expand");
+  const void* __args[1] = { &enable };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+bool has_expand() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "has_expand");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+void set_buffering_msec(int msec) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "set_buffering_msec");
+  const void* __args[1] = { &msec };
+  __method_bind->ptrcall($self, __args, NULL);
+}
+
+int get_buffering_msec() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_buffering_msec");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Ref<Texture> get_video_texture() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("VideoPlayer", "get_video_texture");
+  Ref<Texture> ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+}
+
 
 };

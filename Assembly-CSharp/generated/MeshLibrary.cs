@@ -58,17 +58,14 @@ public class MeshLibrary : Resource {
 
   public void set_item_mesh(int id, Mesh mesh) {
     GodotEnginePINVOKE.MeshLibrary_set_item_mesh(swigCPtr, id, Mesh.getCPtr(mesh));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_item_navmesh(int id, SWIGTYPE_p_RefT_NavigationMesh_t navmesh) {
-    GodotEnginePINVOKE.MeshLibrary_set_item_navmesh(swigCPtr, id, SWIGTYPE_p_RefT_NavigationMesh_t.getCPtr(navmesh));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  public void set_item_navmesh(int id, NavigationMesh navmesh) {
+    GodotEnginePINVOKE.MeshLibrary_set_item_navmesh(swigCPtr, id, NavigationMesh.getCPtr(navmesh));
   }
 
   public void set_item_shape(int id, Shape shape) {
     GodotEnginePINVOKE.MeshLibrary_set_item_shape(swigCPtr, id, Shape.getCPtr(shape));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public string get_item_name(int id) {
@@ -84,10 +81,13 @@ public class MeshLibrary : Resource {
     return ret;
 }
 
-  public SWIGTYPE_p_RefT_NavigationMesh_t get_item_navmesh(int id) {
-    SWIGTYPE_p_RefT_NavigationMesh_t ret = new SWIGTYPE_p_RefT_NavigationMesh_t(GodotEnginePINVOKE.MeshLibrary_get_item_navmesh(swigCPtr, id), true);
+  public NavigationMesh get_item_navmesh(int id) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshLibrary_get_item_navmesh(swigCPtr, id);
+    if (cPtr == global::System.IntPtr.Zero)
+      return null;
+    NavigationMesh ret = InternalHelpers.UnmanagedGetManaged(cPtr) as NavigationMesh;
     return ret;
-  }
+}
 
   public Shape get_item_shape(int id) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MeshLibrary_get_item_shape(swigCPtr, id);

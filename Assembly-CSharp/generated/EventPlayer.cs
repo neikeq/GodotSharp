@@ -45,7 +45,6 @@ public class EventPlayer : Node {
 
   public void set_stream(EventStream stream) {
     GodotEnginePINVOKE.EventPlayer_set_stream(swigCPtr, EventStream.getCPtr(stream));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public EventStream get_stream() {

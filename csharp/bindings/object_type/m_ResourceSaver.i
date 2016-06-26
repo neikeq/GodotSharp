@@ -5,15 +5,6 @@
 %csmethodmodifiers _ResourceSaver::_ResourceSaver "private"
 %csmethodmodifiers _ResourceSaver::SingletonGetInstance "private"
 %nodefaultctor _ResourceSaver;
-%typemap(out) _ResourceSaver "$result = memnew($1_ltype((const $1_ltype &)$1));"
-%typemap(csout, excode=SWIGEXCODE) _ResourceSaver* {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    $csclassname ret = InternalHelpers.UnmanagedGetManaged(cPtr) as $csclassname;$excode
-    return ret;
-  }
-
 
 %typemap(csbody_derived) _ResourceSaver %{
   private static $csclassname instance;
@@ -68,20 +59,32 @@
 
 class _ResourceSaver : public Object {
 public:
-  %extend {
-    int save(const String& path, Ref<Resource> resource, int flags = 0) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("save", path, resource, flags);
-    }
-  }
-  %extend {
-    StringArray get_recognized_extensions(Object* type) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_recognized_extensions", type);
-    }
-  }
-  %extend {
-    static _ResourceSaver* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("ResourceSaver")->cast_to<_ResourceSaver>(); }
-  }
+
+%extend {
+
+int save(const String& path, Resource* resource, int flags = 0) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceSaver", "save");
+  const void* __args[3] = { &path, resource, &flags };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+StringArray get_recognized_extensions(Object* type) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_ResourceSaver", "get_recognized_extensions");
+  const void* __args[1] = { type };
+  StringArray ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+static _ResourceSaver* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object("ResourceSaver")->cast_to<_ResourceSaver>(); }
+
+}
+
 
 };

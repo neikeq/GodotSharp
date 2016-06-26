@@ -1,22 +1,6 @@
 /* mGDScript.i */
 %module mGDScript
 
-%typemap(ctype, out="GDScript*") Ref<GDScript> "GDScript*"
-%typemap(out, null="NULL") Ref<GDScript> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<GDScript> "GDScript.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<GDScript> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<GDScript> "GDScript"
-%typemap(csout, excode=SWIGEXCODE) Ref<GDScript> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    GDScript ret = InternalHelpers.UnmanagedGetManaged(cPtr) as GDScript;$excode
-    return ret;
-}
-
 template<class GDScript> class Ref;%template() Ref<GDScript>;
 %feature("novaluewrapper") Ref<GDScript>;
 
@@ -57,33 +41,40 @@ template<class GDScript> class Ref;%template() Ref<GDScript>;
 
 class GDScript : public Script {
 public:
-  %extend {
-    void new() {
-  Object* self_obj = static_cast<Object*>($self);
-  self_obj->call("new");
-    }
-  }
-  %extend {
-    RawArray get_as_byte_code() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_as_byte_code");
-    }
-  }
   GDScript();
-  %extend {
-    ~GDScript() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+void new() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GDScript", "new");
+  __method_bind->ptrcall($self, NULL, NULL);
+}
+
+RawArray get_as_byte_code() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("GDScript", "get_as_byte_code");
+  RawArray ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~GDScript() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };

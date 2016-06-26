@@ -2,22 +2,6 @@
 %module mResourceInteractiveLoader
 
 %nodefaultctor ResourceInteractiveLoader;
-%typemap(ctype, out="ResourceInteractiveLoader*") Ref<ResourceInteractiveLoader> "ResourceInteractiveLoader*"
-%typemap(out, null="NULL") Ref<ResourceInteractiveLoader> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<ResourceInteractiveLoader> "ResourceInteractiveLoader.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<ResourceInteractiveLoader> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<ResourceInteractiveLoader> "ResourceInteractiveLoader"
-%typemap(csout, excode=SWIGEXCODE) Ref<ResourceInteractiveLoader> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    ResourceInteractiveLoader ret = InternalHelpers.UnmanagedGetManaged(cPtr) as ResourceInteractiveLoader;$excode
-    return ret;
-}
-
 template<class ResourceInteractiveLoader> class Ref;%template() Ref<ResourceInteractiveLoader>;
 %feature("novaluewrapper") Ref<ResourceInteractiveLoader>;
 
@@ -59,50 +43,68 @@ template<class ResourceInteractiveLoader> class Ref;%template() Ref<ResourceInte
 
 class ResourceInteractiveLoader : public Reference {
 public:
-  %extend {
-    Object* get_resource() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_resource").operator Object *();
+
+%extend {
+
+Object* get_resource() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceInteractiveLoader", "get_resource");
+  Object* ret = NULL;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int poll() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceInteractiveLoader", "poll");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int wait() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceInteractiveLoader", "wait");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_stage() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceInteractiveLoader", "get_stage");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+int get_stage_count() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("ResourceInteractiveLoader", "get_stage_count");
+  int ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~ResourceInteractiveLoader() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
-  %extend {
-    int poll() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("poll");
-    }
+  if ($self->unreference()) {
+    memdelete($self);
   }
-  %extend {
-    int wait() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("wait");
-    }
-  }
-  %extend {
-    int get_stage() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stage");
-    }
-  }
-  %extend {
-    int get_stage_count() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_stage_count");
-    }
-  }
-  %extend {
-    ~ResourceInteractiveLoader() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
-    }
-  }
+}
+
+}
 
 
 };

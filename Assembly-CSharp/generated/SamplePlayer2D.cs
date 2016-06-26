@@ -47,7 +47,6 @@ public class SamplePlayer2D : SoundPlayer2D {
 
   public void set_sample_library(SampleLibrary library) {
     GodotEnginePINVOKE.SamplePlayer2D_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public SampleLibrary get_sample_library() {

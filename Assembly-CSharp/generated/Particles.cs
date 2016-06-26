@@ -164,7 +164,6 @@ public class Particles : GeometryInstance {
 
   public void set_material(Material material) {
     GodotEnginePINVOKE.Particles_set_material(swigCPtr, Material.getCPtr(material));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Material get_material() {

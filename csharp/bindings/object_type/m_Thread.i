@@ -2,22 +2,6 @@
 %module m_Thread
 
 %rename(Thread) _Thread;
-%typemap(ctype, out="_Thread*") Ref<_Thread> "_Thread*"
-%typemap(out, null="NULL") Ref<_Thread> %{
-  $result = $1.ptr();
-  $result->reference();
-%}
-%typemap(csin) Ref<_Thread> "_Thread.getCPtr($csinput)"
-%typemap(imtype, out="global::System.IntPtr") Ref<_Thread> "global::System.Runtime.InteropServices.HandleRef"
-%typemap(cstype) Ref<_Thread> "_Thread"
-%typemap(csout, excode=SWIGEXCODE) Ref<_Thread> {
-    global::System.IntPtr cPtr = $imcall;
-    if (cPtr == global::System.IntPtr.Zero)
-      return null;
-    _Thread ret = InternalHelpers.UnmanagedGetManaged(cPtr) as _Thread;$excode
-    return ret;
-}
-
 template<class _Thread> class Ref;%template() Ref<_Thread>;
 %feature("novaluewrapper") Ref<_Thread>;
 
@@ -61,45 +45,61 @@ template<class _Thread> class Ref;%template() Ref<_Thread>;
 
 class _Thread : public Reference {
 public:
-  %extend {
-    int start(Object* instance, const String& method, const Variant& userdata = Variant(), int priority = 1) {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("start", instance, method, userdata, priority);
-    }
-  }
-  %extend {
-    String get_id() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("get_id");
-    }
-  }
-  %extend {
-    bool is_active() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("is_active");
-    }
-  }
-  %extend {
-    Variant wait_to_finish() {
-  Object* self_obj = static_cast<Object*>($self);
-  return self_obj->call("wait_to_finish");
-    }
-  }
   _Thread();
-  %extend {
-    ~_Thread() {
-      if ($self->get_script_instance()) {
-        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
-        if (cs_instance) {
-          cs_instance->mono_object_disposed();
-          return;
-        }
-      }
-      if ($self->unreference()) {
-        memdelete($self);
-      }
+
+%extend {
+
+int start(Object* instance, const String& method, const Variant& userdata = Variant(), int priority = 1) {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Thread", "start");
+  const void* __args[4] = { instance, &method, &userdata, &priority };
+  int ret;
+  __method_bind->ptrcall($self, __args, &ret);
+  return ret;
+}
+
+String get_id() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Thread", "get_id");
+  String ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+bool is_active() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Thread", "is_active");
+  bool ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+Variant wait_to_finish() {
+  static MethodBind* __method_bind = NULL;
+  if (!__method_bind)
+    __method_bind = ObjectTypeDB::get_method("_Thread", "wait_to_finish");
+  Variant ret;
+  __method_bind->ptrcall($self, NULL, &ret);
+  return ret;
+}
+
+~_Thread() {
+  if ($self->get_script_instance()) {
+    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());
+    if (cs_instance) {
+      cs_instance->mono_object_disposed();
+      return;
     }
   }
+  if ($self->unreference()) {
+    memdelete($self);
+  }
+}
+
+}
 
 
 };
