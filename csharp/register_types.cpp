@@ -50,6 +50,8 @@ void register_csharp_types()
 
 void unregister_csharp_types()
 {
+	ScriptServer::unregister_language(script_language_cs);
+
 	if (script_language_cs)
 		memdelete(script_language_cs);
 	if (resource_loader_cs)

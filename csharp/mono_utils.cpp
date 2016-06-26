@@ -504,6 +504,7 @@ MonoObject *unmanaged_get_managed(void *unmanaged)
 					// unmanaged reference when the managed side gets GCed.
 					ref->unreference();
 				}
+
 				return cs_instance->get_mono_object();
 			}
 		}

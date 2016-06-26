@@ -192,6 +192,8 @@ static void generate_cs_interfaces(const String& p_output_path)
 		"%%ClassPublicMembers%%\n"
 		"};\n";
 
+	String global_typemaps("%module GlobalTypemaps\n\n");
+
 	List<StringName> classes;
 	ObjectTypeDB::get_type_list(&classes);
 	classes.sort_custom<StringName::AlphCompare>();
@@ -213,6 +215,7 @@ static void generate_cs_interfaces(const String& p_output_path)
 		method_list.sort();
 
 		String cxx_public_members;
+		String cxx_extend;
 
 		for(List<MethodInfo>::Element *E = method_list.front(); E; E = E->next()) {
 			int argc = E->get().arguments.size();
@@ -256,17 +259,13 @@ static void generate_cs_interfaces(const String& p_output_path)
 					else
 						arg_type = Variant::get_type_name(arginfo.type);
 
-					bool ref_type = ObjectTypeDB::is_type(arg_type, "Reference");
-
 					if (m && m->has_default_argument(i)) {
 						Variant default_arg = m->get_default_argument(i);
 						default_arg_text = m->get_default_argument(i);
 
 						switch(default_arg.get_type()) {
 							case Variant::NIL:
-								if (ref_type) {
-									default_arg_text = "Ref<" + arg_type + ">()";
-								} else if (ObjectTypeDB::is_type(arg_type, "Object")) {
+								if (ObjectTypeDB::is_type(arg_type, "Object")) {
 									default_arg_text = "NULL";
 								} else {
 									default_arg_text = "Variant()";
@@ -324,12 +323,8 @@ static void generate_cs_interfaces(const String& p_output_path)
 					if (arg_type_cxx == "String" || arg_type_cxx == "Vector2" || arg_type_cxx == "Rect2" || arg_type_cxx == "Matrix32" || arg_type_cxx == "Vector3" || arg_type_cxx == "Plane" || arg_type_cxx == "AABB" || arg_type_cxx == "Quat" || arg_type_cxx == "Matrix3" || arg_type_cxx == "Transform" || arg_type_cxx == "Color" || arg_type_cxx == "Image" || arg_type_cxx == "RID" || arg_type_cxx == "NodePath" || arg_type_cxx == "InputEvent" || arg_type_cxx == "Dictionary" || arg_type_cxx == "Array" || arg_type_cxx == "RawArray" || arg_type_cxx == "IntArray" || arg_type_cxx == "RealArray" || arg_type_cxx == "StringArray" || arg_type_cxx == "Vector2Array" || arg_type_cxx == "Vector3Array" || arg_type_cxx == "ColorArray" || arg_type_cxx == "Variant") {
 						arg_type_cxx = "const " + arg_type_cxx + "&";
 					} else if ((arg_type_cxx != "bool" && arg_type_cxx != "int" && arg_type_cxx != "float")) {
-						// Object, Node or Control
-						if (ref_type) {
-							arg_type_cxx = "Ref<" + arg_type_cxx + ">";
-						} else {
-							arg_type_cxx += "*";
-						}
+						// Object and its derived types
+						arg_type_cxx += "*";
 					}
 
 					String arg_name = arginfo.name;
@@ -351,6 +346,10 @@ static void generate_cs_interfaces(const String& p_output_path)
 					if (!default_arg_text.empty())
 						arguments_decl += " = " + default_arg_text;
 
+					if (!arg_type_cxx.ends_with("*")) {
+						arg_name = "&" + arg_name;
+					}
+
 					arguments.push_back(arg_name);
 				}
 			}
@@ -359,7 +358,6 @@ static void generate_cs_interfaces(const String& p_output_path)
 				continue;
 
 			String return_type_cxx = return_type;
-			String optional_cast;
 
 			if (return_type_cxx == "Nil") {
 				return_type_cxx = "void";
@@ -367,8 +365,6 @@ static void generate_cs_interfaces(const String& p_output_path)
 				return_type_cxx = "int";
 			} else if (return_type_cxx != "void" && return_type_cxx != "bool" && return_type_cxx != "int" && return_type_cxx != "float" && return_type_cxx != "String" && return_type_cxx != "Vector2" && return_type_cxx != "Rect2" && return_type_cxx != "Matrix32" && return_type_cxx != "Vector3" && return_type_cxx != "Plane" && return_type_cxx != "AABB" && return_type_cxx != "Quat" && return_type_cxx != "Matrix3" && return_type_cxx != "Transform" && return_type_cxx != "Color" && return_type_cxx != "Image" && return_type_cxx != "RID" && return_type_cxx != "NodePath" && return_type_cxx != "InputEvent" && return_type_cxx != "Dictionary" && return_type_cxx != "Array" && return_type_cxx != "RawArray" && return_type_cxx != "IntArray" && return_type_cxx != "RealArray" && return_type_cxx != "StringArray" && return_type_cxx != "Vector2Array" && return_type_cxx != "Vector3Array" && return_type_cxx != "ColorArray" && return_type_cxx != "Variant") {
 				// Object, Node or Control
-				optional_cast = ".operator Object *()" + (return_type_cxx == "Object" ? "" : "->cast_to<" + return_type_cxx + ">()");
-
 				if (ObjectTypeDB::is_type(return_type_cxx, "Reference")) {
 					return_type_cxx = "Ref<" + return_type_cxx + ">";
 				} else {
@@ -376,41 +372,52 @@ static void generate_cs_interfaces(const String& p_output_path)
 				}
 			}
 
-			String arguments_joined;
-			for (int i = 0; i < arguments.size(); i++) {
-				arguments_joined += ", " + arguments[i];
-			}
-
 			String method_content;
 
-			if (argc > 5) {
-				String sargc = String::num(argc);
+			bool void_return = return_type_cxx == "void";
 
-				method_content += "Variant::CallError err;\n";
+			method_content += "static MethodBind* __method_bind = NULL;\n"
+					"  if (!__method_bind)\n";
+			method_content += "    __method_bind = ObjectTypeDB::get_method(\"%%TypeName%%\", \"" + method_name + "\");\n";
+
+			if (argc > 0) {
+				method_content += "  const void* __args[" + String::num(argc) + "] = { ";
 				for (int i = 0; i < argc; i++) {
-					method_content += "Variant arg_" + String::num(i) + "_ = Variant(" + arguments[i] + ");\n";
+					method_content += arguments[i];
+					if (i < argc - 1)
+						method_content += ", ";
 				}
-				method_content += "Variant *args_[" + sargc + "] = { ";
-				for (int i = 0; i < argc - 1; i++) {
-					method_content += "&arg_" + String::num(i) + "_, ";
-				}
-				method_content += "&arg_" + String::num(argc - 1) + "_ };\n";
-				method_content += (return_type_cxx == "void" ? "" : "return ");
-				method_content += "$self->call(\"" + method_name + "\", (const Variant **) args_, " + sargc + ", err)";
-			} else {
-				method_content += "Object* self_obj = static_cast<Object*>($self);\n";
-				method_content += return_type_cxx == "void" ? "  " : "  return ";
-				method_content += "self_obj->call(\"" + method_name + "\"" + arguments_joined + ")";
+				method_content += " };\n";
 			}
 
-			cxx_public_members += "  %extend {\n    " + return_type_cxx + " " + method_name + "(" + arguments_decl + ") {\n" +
-										"  " + method_content + optional_cast + ";\n    }\n  }\n";
+			if (!void_return) {
+				method_content += "  " + return_type_cxx + " ret";
+
+				if (return_type_cxx.ends_with("*"))
+					method_content += " = NULL";
+
+				method_content += ";\n";
+			}
+
+			method_content += "  __method_bind->ptrcall($self, ";
+			method_content += argc > 0 ? "__args, " : "NULL, ";
+
+			if (!void_return) {
+				method_content += "&ret)";
+				method_content += ";\n  return ret";
+			} else {
+				method_content += "NULL)";
+			}
+
+			cxx_extend += return_type_cxx + " " + method_name + "(" + arguments_decl + ") {\n" +
+										"  " + method_content + ";\n}\n\n";
 		}
 
 		List<String> constant_list;
 		ObjectTypeDB::get_integer_constant_list(name, &constant_list, true);
 
 		String definitions;
+		String typemaps;
 		String cs_members;
 		String cs_code;
 
@@ -438,18 +445,14 @@ static void generate_cs_interfaces(const String& p_output_path)
 					"      return instance;\n"
 					"    }\n"
 					"  }\n\n";
-			cxx_public_members += "  %extend {\n"
-					"    static %%TypeName%%* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object(\"%%ProxyTypeName%%\")->cast_to<%%TypeName%%>(); }\n"
-					"  }\n";
+			cxx_extend += "static %%TypeName%%* SingletonGetInstance()  { return Globals::get_singleton()->get_singleton_object(\"%%ProxyTypeName%%\")->cast_to<%%TypeName%%>(); }\n\n";
 			definitions += "%csmethodmodifiers %%TypeName%%::%%TypeName%% \"private\"\n";
 			definitions += "%csmethodmodifiers %%TypeName%%::SingletonGetInstance \"private\"\n";
 		}
 
 		if (ObjectTypeDB::can_instance(name)) {
 			if (name == "StreamPeerSSL" || name == "StreamPeerTCP" || name == "TCP_Server" || name == "PacketPeerUDP") {
-				cxx_public_members += "  %extend {\n"
-						"    %%TypeName%%() { return %%TypeName%%::create(); }\n"
-						"  }\n";
+				cxx_extend += "%%TypeName%%() { return %%TypeName%%::create(); }\n\n";
 			} else {
 				cxx_public_members += "  %%TypeName%%();\n";
 			}
@@ -461,10 +464,10 @@ static void generate_cs_interfaces(const String& p_output_path)
 		bool is_ref = ObjectTypeDB::is_type(name, "Reference");
 
 		if (is_ref) {
-			definitions += "%typemap(ctype, out=\"%%TypeName%%*\") Ref<%%TypeName%%> \"%%TypeName%%*\"\n"
+			typemaps += "%typemap(ctype, out=\"%%TypeName%%*\") Ref<%%TypeName%%> \"%%TypeName%%*\"\n"
 					"%typemap(out, null=\"NULL\") Ref<%%TypeName%%> %{\n"
 					"  $result = $1.ptr();\n"
-					"  $result->reference();\n"
+					"  if ($result) $result->reference();\n"
 					"%}\n"
 					"%typemap(csin) Ref<%%TypeName%%> \"%%TypeName%%.getCPtr($csinput)\"\n"
 					"%typemap(imtype, out=\"global::System.IntPtr\") Ref<%%TypeName%%> \"global::System.Runtime.InteropServices.HandleRef\"\n"
@@ -475,26 +478,24 @@ static void generate_cs_interfaces(const String& p_output_path)
 					"      return null;\n"
 					"    %%TypeName%% ret = InternalHelpers.UnmanagedGetManaged(cPtr) as %%TypeName%%;$excode\n"
 					"    return ret;\n"
-					"}\n\n"
-					"template<class %%TypeName%%> class Ref;"
+					"}\n\n";
+			definitions += "template<class %%TypeName%%> class Ref;"
 					"%template() Ref<%%TypeName%%>;\n"
 					"%feature(\"novaluewrapper\") Ref<%%TypeName%%>;\n\n";
-			cxx_public_members += "  %extend {\n"
-					"    ~%%TypeName%%() {\n"
-					"      if ($self->get_script_instance()) {\n"
-					"        CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());\n"
-					"        if (cs_instance) {\n"
-					"          cs_instance->mono_object_disposed();\n"
-					"          return;\n"
-					"        }\n"
-					"      }\n"
-					"      if ($self->unreference()) {\n"
-					"        memdelete($self);\n"
-					"      }\n"
+			cxx_extend += "~%%TypeName%%() {\n"
+					"  if ($self->get_script_instance()) {\n"
+					"    CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>($self->get_script_instance());\n"
+					"    if (cs_instance) {\n"
+					"      cs_instance->mono_object_disposed();\n"
+					"      return;\n"
 					"    }\n"
-					"  }\n\n";
+					"  }\n"
+					"  if ($self->unreference()) {\n"
+					"    memdelete($self);\n"
+					"  }\n"
+					"}\n\n";
 		} else {
-			definitions += "%typemap(out) %%TypeName%% \"$result = memnew($1_ltype((const $1_ltype &)$1));\"\n"
+			typemaps += "%typemap(out) %%TypeName%% \"$result = memnew($1_ltype((const $1_ltype &)$1));\"\n"
 					"%typemap(csout, excode=SWIGEXCODE) %%TypeName%%* {\n"
 					"    global::System.IntPtr cPtr = $imcall;\n"
 					"    if (cPtr == global::System.IntPtr.Zero)\n"
@@ -509,11 +510,22 @@ static void generate_cs_interfaces(const String& p_output_path)
 			cs_members += "  public static readonly int " + E->get() + " = " + itos(ObjectTypeDB::get_integer_constant(name, E->get())) + ";\n";
 		}
 
+		if (!cxx_extend.empty()) {
+			cxx_extend = "%extend {\n\n" + cxx_extend + "}\n\n";
+			cxx_public_members += "\n" + cxx_extend;
+		}
+
 		content = content
 				.replace("%%Definitions%%", definitions)
 				.replace("%%ClassPublicMembers%%", cxx_public_members)
 				.replace("%%CSMembers%%", cs_members)
 				.replace("%%CSCode%%", cs_code)
+				.replace("%%TypeName%%", name)
+				.replace("%%ProxyTypeName%%", proxy_type_name)
+				.replace("%%TypeBaseName%%", inherits)
+				.replace("%%MemOwn%%", is_ref ? "true" : "false");
+
+		global_typemaps += typemaps
 				.replace("%%TypeName%%", name)
 				.replace("%%ProxyTypeName%%", proxy_type_name)
 				.replace("%%TypeBaseName%%", inherits)
@@ -534,25 +546,34 @@ static void generate_cs_interfaces(const String& p_output_path)
 		classes.pop_front();
 	}
 
-	FileAccess *fclass = FileAccess::open(output_path + "Include.i", FileAccess::WRITE);
-	if (fclass) {
-		fclass->store_string("%module Include\n\n");
+	FileAccess *fclass = FileAccess::open(output_path + "GlobalTypemaps.i", FileAccess::WRITE);
+	ERR_FAIL_COND(!fclass);
+	fclass->store_string(global_typemaps);
+	fclass->close();
+	memdelete(fclass);
 
-		// Ensure types are defined before used as base. Required for SWIG inheritance to work.
-		while (!remaining_modules.empty()) {
-			List<String>::Element *E = remaining_modules.front();
-			String inherits = modules.find(E->get())->get();
-			if (!remaining_modules.find(inherits)) {
-				fclass->store_string("%include " + E->get() + "\n");
-				remaining_modules.erase(E);
-			} else {
-				remaining_modules.move_to_back(E);
-			}
+	fclass = FileAccess::open(output_path + "Include.i", FileAccess::WRITE);
+	ERR_FAIL_COND(!fclass);
+	String include_content;
+	include_content += "%module Include\n\n";
+	include_content += "%include GlobalTypemaps.i\n\n";
+
+	// Ensure types are defined before used as base. Required for SWIG inheritance to work.
+	while (!remaining_modules.empty()) {
+		List<String>::Element *E = remaining_modules.front();
+		String inherits = modules.find(E->get())->get();
+		if (!remaining_modules.find(inherits)) {
+			include_content += "%include " + E->get() + "\n";
+			remaining_modules.erase(E);
+		} else {
+			remaining_modules.move_to_back(E);
 		}
-
-		fclass->close();
-		memdelete(fclass);
 	}
+
+	fclass->store_string(include_content);
+
+	fclass->close();
+	memdelete(fclass);
 
 	// TODO Built-in types
 
