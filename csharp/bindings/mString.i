@@ -7,8 +7,8 @@
 class String;
 
 // String
-%typemap(ctype, out="void *") String "char *"
-%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]") String "string"
+%typemap(ctype, out="void *") String "wchar_t *"
+%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPWStr)]") String "string"
 %typemap(cstype) String "string"
 %typemap(csdirectorin) String "$iminput"
 %typemap(csdirectorout) String "$cscall"
@@ -36,7 +36,7 @@ class String;
     return ret;
   }
 
-%typemap(typecheck) String = char *;
+%typemap(typecheck) String = wchar_t *;
 
 %typemap(throws, canthrow=1) String
 %{ String message = $1;
@@ -44,8 +44,8 @@ class String;
    return $null; %}
 
 // const String &
-%typemap(ctype, out="void *") const String & "char *"
-%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPTStr)]") const String & "string"
+%typemap(ctype, out="void *") const String & "wchar_t *"
+%typemap(imtype, inattributes="[global::System.Runtime.InteropServices.MarshalAs(global::System.Runtime.InteropServices.UnmanagedType.LPWStr)]") const String & "string"
 %typemap(cstype) const String & "string"
 
 %typemap(csdirectorin) const String & "$iminput"
@@ -88,7 +88,7 @@ class String;
       return ret;
     } %}
 
-%typemap(typecheck) const String & = char *;
+%typemap(typecheck) const String & = wchar_t *;
 
 %typemap(throws, canthrow=1) const String &
 %{ String message  = $1;

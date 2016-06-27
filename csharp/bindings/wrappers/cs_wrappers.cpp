@@ -33560,7 +33560,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_NodePath__SWIG_0() {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_NodePath__SWIG_1(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_NodePath__SWIG_1(wchar_t * jarg1) {
   void * jresult ;
   String *arg1 = 0 ;
   NodePath *result = 0 ;
@@ -33775,7 +33775,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Variant__SWIG_3(float jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_Variant__SWIG_4(char * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_Variant__SWIG_4(wchar_t * jarg1) {
   void * jresult ;
   String *arg1 = 0 ;
   Variant *result = 0 ;
@@ -33844,7 +33844,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Variant(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33893,7 +33893,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33936,7 +33936,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33973,7 +33973,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, char * jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34004,7 +34004,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, wchar_t * jarg2, void * jarg3) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34029,7 +34029,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_5(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_5(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34048,7 +34048,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_5(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34093,7 +34093,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34132,7 +34132,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34165,7 +34165,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_3(void * jarg1, char * jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_3(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34192,7 +34192,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_3(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_4(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_4(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34213,7 +34213,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_4(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_5(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_5(void * jarg1, wchar_t * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
@@ -34228,7 +34228,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_5(void * jarg1, ch
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_callv(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_callv(void * jarg1, wchar_t * jarg2, void * jarg3) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34263,7 +34263,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Object() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object__get(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object__get(void * jarg1, wchar_t * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
@@ -34308,7 +34308,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object__notification(void * jarg1, int jarg2)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object__set(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object__set(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34349,7 +34349,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_type(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_type(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_type(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34368,7 +34368,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_type(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_set(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_set(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34389,7 +34389,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_set(void * jarg1, char * jarg2, void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_get(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_get(void * jarg1, wchar_t * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
@@ -34487,7 +34487,7 @@ SWIGEXPORT Script* SWIGSTDCALL CSharp_Object_get_script(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_set_meta(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_set_meta(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34508,7 +34508,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_set_meta(void * jarg1, char * jarg2, v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_get_meta(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_get_meta(void * jarg1, wchar_t * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
@@ -34523,7 +34523,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_get_meta(void * jarg1, char * jarg2) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_meta(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_meta(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34554,7 +34554,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_meta_list(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_0(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Array *arg3 = 0 ;
@@ -34575,7 +34575,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_1(void * jarg1, wchar_t * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
@@ -34590,7 +34590,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_user_signal(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_user_signal(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34609,7 +34609,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_user_signal(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34654,7 +34654,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34693,7 +34693,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34726,7 +34726,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_3(void * jarg1, char * jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_3(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34753,7 +34753,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_3(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_4(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_4(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34774,7 +34774,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_4(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_5(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_5(void * jarg1, wchar_t * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
@@ -34789,7 +34789,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_5(void * jarg1, char
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_method(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_method(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34820,7 +34820,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_list(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_connection_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_connection_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34839,7 +34839,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_connection_list(void * ja
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5, int jarg6) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5, int jarg6) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34875,7 +34875,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34909,7 +34909,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_2(void * jarg1, char * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34937,7 +34937,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_2(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_disconnect(void * jarg1, char * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_disconnect(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -34961,7 +34961,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_disconnect(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_connected(void * jarg1, char * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_connected(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -35041,7 +35041,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_property_list_changed_notify(void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_XL_MESSAGE(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_XL_MESSAGE(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -35060,7 +35060,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_XL_MESSAGE(void * jarg1, char * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_tr(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_tr(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -35091,7 +35091,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_queued_for_deletion(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_0(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4) {
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -35120,7 +35120,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_0(void * jarg1, cha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -35142,7 +35142,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_1(void * jarg1, cha
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PathRemap_has_remap(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PathRemap_has_remap(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
@@ -35161,7 +35161,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PathRemap_has_remap(void * jarg1, cha
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_PathRemap_get_remap(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_PathRemap_get_remap(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
@@ -35180,7 +35180,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_PathRemap_get_remap(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_erase_remap(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_erase_remap(void * jarg1, wchar_t * jarg2) {
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   
@@ -36479,7 +36479,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Physics2DServer_area_get_object_instance_ID(vo
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
   Physics2DServer *arg1 = (Physics2DServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -37334,7 +37334,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Physics2DServer_body_is_omitting_forc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5) {
   Physics2DServer *arg1 = (Physics2DServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -37363,7 +37363,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_ca
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
   Physics2DServer *arg1 = (Physics2DServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -38990,7 +38990,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PhysicsServer_area_get_object_instance_ID(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
   PhysicsServer *arg1 = (PhysicsServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -39743,7 +39743,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PhysicsServer_body_is_omitting_force_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5) {
   PhysicsServer *arg1 = (PhysicsServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -39772,7 +39772,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_call
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
   PhysicsServer *arg1 = (PhysicsServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -40519,7 +40519,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_RegEx() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40540,7 +40540,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, char * jar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_1(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40559,7 +40559,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_1(void * jarg1, char * jar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, char * jarg2, int jarg3, int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40582,7 +40582,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40603,7 +40603,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_2(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40712,7 +40712,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Resource() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_path(void * jarg1, wchar_t * jarg2) {
   Resource *arg1 = (Resource *) 0 ;
   String *arg2 = 0 ;
   
@@ -40727,7 +40727,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_path(void * jarg1, char * jarg2)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Resource_take_over_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Resource_take_over_path(void * jarg1, wchar_t * jarg2) {
   Resource *arg1 = (Resource *) 0 ;
   String *arg2 = 0 ;
   
@@ -40754,7 +40754,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Resource_get_path(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_name(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_name(void * jarg1, wchar_t * jarg2) {
   Resource *arg1 = (Resource *) 0 ;
   String *arg2 = 0 ;
   
@@ -40859,7 +40859,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ResourceImportMetadata() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_editor(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_editor(void * jarg1, wchar_t * jarg2) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   
@@ -40886,7 +40886,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceImportMetadata_get_editor(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -40908,7 +40908,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_0(voi
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_1(void * jarg1, wchar_t * jarg2) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   
@@ -40951,7 +40951,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceImportMetadata_get_source_md5(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_source_md5(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_source_md5(void * jarg1, int jarg2, wchar_t * jarg3) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -40990,7 +40990,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ResourceImportMetadata_get_source_count(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_option(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_option(void * jarg1, wchar_t * jarg2, void * jarg3) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -41011,7 +41011,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_option(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_get_option(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_get_option(void * jarg1, wchar_t * jarg2) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   
@@ -41392,7 +41392,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SampleLibrary() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_add_sample(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_add_sample(void * jarg1, wchar_t * jarg2, void * jarg3) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   Sample *arg3 = (Sample *) 0 ;
@@ -41409,7 +41409,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_add_sample(void * jarg1, char *
 }
 
 
-SWIGEXPORT Sample* SWIGSTDCALL CSharp_SampleLibrary_get_sample(void * jarg1, char * jarg2) {
+SWIGEXPORT Sample* SWIGSTDCALL CSharp_SampleLibrary_get_sample(void * jarg1, wchar_t * jarg2) {
   Sample* jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
@@ -41431,7 +41431,7 @@ SWIGEXPORT Sample* SWIGSTDCALL CSharp_SampleLibrary_get_sample(void * jarg1, cha
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SampleLibrary_has_sample(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SampleLibrary_has_sample(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
@@ -41450,7 +41450,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SampleLibrary_has_sample(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_remove_sample(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_remove_sample(void * jarg1, wchar_t * jarg2) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   
@@ -41465,7 +41465,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_remove_sample(void * jarg1, cha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_volume_db(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_volume_db(void * jarg1, wchar_t * jarg2, float jarg3) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -41482,7 +41482,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_volume_db(void * jar
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_volume_db(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_volume_db(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
@@ -41501,7 +41501,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_volume_db(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_pitch_scale(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_pitch_scale(void * jarg1, wchar_t * jarg2, float jarg3) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -41518,7 +41518,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_pitch_scale(void * j
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_pitch_scale(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_pitch_scale(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
@@ -41884,7 +41884,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Script_get_source_code(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Script_set_source_code(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Script_set_source_code(void * jarg1, wchar_t * jarg2) {
   Script *arg1 = (Script *) 0 ;
   String *arg2 = 0 ;
   
@@ -41945,7 +41945,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Shader_get_mode(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_0(void * jarg1, char * jarg2, char * jarg3, char * jarg4, int jarg5, int jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4, int jarg5, int jarg6) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -41978,7 +41978,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_0(void * jarg1, char * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4, int jarg5) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -42009,7 +42009,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_1(void * jarg1, char * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_2(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_2(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -42074,7 +42074,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Shader_get_light_code(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_default_texture_param(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_default_texture_param(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
@@ -42091,7 +42091,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_default_texture_param(void * jarg1
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Shader_get_default_texture_param(void * jarg1, char * jarg2) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Shader_get_default_texture_param(void * jarg1, wchar_t * jarg2) {
   Texture* jresult ;
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
@@ -42113,7 +42113,7 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Shader_get_default_texture_param(void * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Shader_has_param(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Shader_has_param(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
@@ -42666,7 +42666,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ShaderGraph_vec_func_node_get_function(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_input_node_set_name(void * jarg1, int jarg2, int jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_input_node_set_name(void * jarg1, int jarg2, int jarg3, wchar_t * jarg4) {
   ShaderGraph *arg1 = (ShaderGraph *) 0 ;
   int arg2 ;
   int arg3 ;
@@ -42899,7 +42899,7 @@ SWIGEXPORT CubeMap* SWIGSTDCALL CSharp_ShaderGraph_cubemap_input_node_get_value(
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_comment_node_set_text(void * jarg1, int jarg2, int jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_comment_node_set_text(void * jarg1, int jarg2, int jarg3, wchar_t * jarg4) {
   ShaderGraph *arg1 = (ShaderGraph *) 0 ;
   int arg2 ;
   int arg3 ;
@@ -43482,7 +43482,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SpriteFrames() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_animation(void * jarg1, wchar_t * jarg2) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   
@@ -43497,7 +43497,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_animation(void * jarg1, char
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_has_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_has_animation(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
@@ -43516,7 +43516,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_has_animation(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_animation(void * jarg1, wchar_t * jarg2) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   
@@ -43531,7 +43531,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_animation(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_rename_animation(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_rename_animation(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -43553,7 +43553,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_rename_animation(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_speed(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_speed(void * jarg1, wchar_t * jarg2, float jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -43570,7 +43570,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_speed(void * jarg1
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_SpriteFrames_get_animation_speed(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_SpriteFrames_get_animation_speed(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
@@ -43589,7 +43589,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_SpriteFrames_get_animation_speed(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_loop(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_loop(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
@@ -43606,7 +43606,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_loop(void * jarg1,
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_get_animation_loop(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_get_animation_loop(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
@@ -43625,7 +43625,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_get_animation_loop(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_0(void * jarg1, char * jarg2, void * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, int jarg4) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -43644,7 +43644,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -43661,7 +43661,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SpriteFrames_get_frame_count(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SpriteFrames_get_frame_count(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
@@ -43680,7 +43680,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SpriteFrames_get_frame_count(void * jarg1, cha
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, wchar_t * jarg2, int jarg3) {
   void * jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
@@ -43701,7 +43701,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, char *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_frame(void * jarg1, char * jarg2, int jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_frame(void * jarg1, wchar_t * jarg2, int jarg3, void * jarg4) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -43720,7 +43720,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_frame(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_frame(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_frame(void * jarg1, wchar_t * jarg2, int jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -43737,7 +43737,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_frame(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_clear(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_clear(void * jarg1, wchar_t * jarg2) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   
@@ -43966,7 +43966,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_StreamPeer_put_double(void * jarg1, float jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_StreamPeer_put_utf8_string(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_StreamPeer_put_utf8_string(void * jarg1, wchar_t * jarg2) {
   StreamPeer *arg1 = (StreamPeer *) 0 ;
   String *arg2 = 0 ;
   
@@ -44177,7 +44177,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_accept(void * jarg1, void * jarg
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_connect__SWIG_0(void * jarg1, void * jarg2, unsigned int jarg3, char * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_connect__SWIG_0(void * jarg1, void * jarg2, unsigned int jarg3, wchar_t * jarg4) {
   int jresult ;
   StreamPeerSSL *arg1 = (StreamPeerSSL *) 0 ;
   StreamPeer *arg2 = (StreamPeer *) 0 ;
@@ -44268,7 +44268,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_StreamPeerSSL(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerTCP_connect(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerTCP_connect(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   StreamPeerTCP *arg1 = (StreamPeerTCP *) 0 ;
   String *arg2 = 0 ;
@@ -45734,7 +45734,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Theme() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_icon(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -45758,7 +45758,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_icon(void * jarg1, char * jarg2, ch
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Texture* jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45787,7 +45787,7 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_icon(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45813,7 +45813,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_icon(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_icon(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -45835,7 +45835,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_icon(void * jarg1, char * jarg2, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_icon_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_icon_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45854,7 +45854,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_icon_list(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_stylebox(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -45878,7 +45878,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_stylebox(void * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   StyleBox* jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45907,7 +45907,7 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, char * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_stylebox(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45933,7 +45933,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_stylebox(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_stylebox(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -45955,7 +45955,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_stylebox(void * jarg1, char * jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_stylebox_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_stylebox_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45986,7 +45986,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_stylebox_types(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_font(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46010,7 +46010,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_font(void * jarg1, char * jarg2, ch
 }
 
 
-SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Font* jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46039,7 +46039,7 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, char * jarg2, c
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_font(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46065,7 +46065,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_font(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_font(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46087,7 +46087,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_font(void * jarg1, char * jarg2, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_font_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_font_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46106,7 +46106,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_font_list(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_color(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46134,7 +46134,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_color(void * jarg1, char * jarg2, c
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46160,7 +46160,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_color(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46186,7 +46186,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_color(void * jarg1, char * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_color(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46208,7 +46208,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_color(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46227,7 +46227,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color_list(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_constant(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46251,7 +46251,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_constant(void * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Theme_get_constant(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Theme_get_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46277,7 +46277,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Theme_get_constant(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_constant(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46303,7 +46303,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_constant(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_constant(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46325,7 +46325,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_constant(void * jarg1, char * jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_constant_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_constant_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46366,7 +46366,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_default_font(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_type_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_type_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46421,7 +46421,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TileSet_create_tile(void * jarg1, int jarg2) 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TileSet_tile_set_name(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TileSet_tile_set_name(void * jarg1, int jarg2, wchar_t * jarg3) {
   TileSet *arg1 = (TileSet *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -46807,7 +46807,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_TileSet_get_last_unused_tile_id(void * jarg1) 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_TileSet_find_tile_by_name(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_TileSet_find_tile_by_name(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   TileSet *arg1 = (TileSet *) 0 ;
   String *arg2 = 0 ;
@@ -46856,7 +46856,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Translation() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Translation_set_locale(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Translation_set_locale(void * jarg1, wchar_t * jarg2) {
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   
@@ -46883,7 +46883,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_locale(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Translation_add_message(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Translation_add_message(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -46905,7 +46905,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Translation_add_message(void * jarg1, char * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_message(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_message(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
@@ -46924,7 +46924,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_message(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Translation_erase_message(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Translation_erase_message(void * jarg1, wchar_t * jarg2) {
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   
@@ -46971,7 +46971,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Translation(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TranslationServer_set_locale(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TranslationServer_set_locale(void * jarg1, wchar_t * jarg2) {
   TranslationServer *arg1 = (TranslationServer *) 0 ;
   String *arg2 = 0 ;
   
@@ -46998,7 +46998,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TranslationServer_get_locale(void * jarg1) 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_TranslationServer_translate(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_TranslationServer_translate(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   TranslationServer *arg1 = (TranslationServer *) 0 ;
   String *arg2 = 0 ;
@@ -47107,7 +47107,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TreeItem_is_checked(void * jarg1, int
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_text(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_text(void * jarg1, int jarg2, wchar_t * jarg3) {
   TreeItem *arg1 = (TreeItem *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -47323,7 +47323,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_get_metadata(void * jarg1, int jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_custom_draw(void * jarg1, int jarg2, void * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_custom_draw(void * jarg1, int jarg2, void * jarg3, wchar_t * jarg4) {
   TreeItem *arg1 = (TreeItem *) 0 ;
   int arg2 ;
   Object *arg3 = (Object *) 0 ;
@@ -47723,7 +47723,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TreeItem_is_button_disabled(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_tooltip(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_tooltip(void * jarg1, int jarg2, wchar_t * jarg3) {
   TreeItem *arg1 = (TreeItem *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -47780,7 +47780,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_UndoRedo() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
@@ -47797,7 +47797,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_1(void * jarg1, wchar_t * jarg2) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   String *arg2 = 0 ;
   
@@ -47820,7 +47820,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_commit_action(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47867,7 +47867,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47908,7 +47908,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47943,7 +47943,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47972,7 +47972,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47995,7 +47995,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_5(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_5(void * jarg1, void * jarg2, wchar_t * jarg3) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48012,7 +48012,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_5(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48059,7 +48059,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48100,7 +48100,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48135,7 +48135,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48164,7 +48164,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48187,7 +48187,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_5(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_5(void * jarg1, void * jarg2, wchar_t * jarg3) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48204,7 +48204,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_5(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48227,7 +48227,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_property(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_property(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48550,7 +48550,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_VisualServer_material_get_shader(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
   VisualServer *arg1 = (VisualServer *) 0 ;
   RID *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -48577,7 +48577,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_get_param(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_get_param(void * jarg1, void * jarg2, wchar_t * jarg3) {
   VisualServer *arg1 = (VisualServer *) 0 ;
   RID *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -51963,7 +51963,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_attribute_value(void * jarg1,
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_XMLParser_has_attribute(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_XMLParser_has_attribute(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
@@ -51982,7 +51982,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_XMLParser_has_attribute(void * jarg1,
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
@@ -52001,7 +52001,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value(void * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value_safe(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value_safe(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
@@ -52066,7 +52066,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_XMLParser_seek(void * jarg1, int jarg2) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_XMLParser_open(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_XMLParser_open(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
@@ -52121,7 +52121,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Directory() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_open(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_open(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52210,7 +52210,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Directory_get_drive(void * jarg1, int jarg2
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_change_dir(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_change_dir(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52241,7 +52241,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Directory_get_current_dir(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52260,7 +52260,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir(void * jarg1, char * jarg2)
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir_recursive(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir_recursive(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52279,7 +52279,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir_recursive(void * jarg1, cha
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_file_exists(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_file_exists(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52298,7 +52298,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_file_exists(void * jarg1, c
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_dir_exists(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_dir_exists(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52329,7 +52329,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_get_space_left(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_copy(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_copy(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52355,7 +52355,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_copy(void * jarg1, char * jarg2, cha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_rename(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_rename(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52381,7 +52381,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_rename(void * jarg1, char * jarg2, c
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_remove(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_remove(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52418,7 +52418,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_File() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, char * jarg2, int jarg3, void * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, wchar_t * jarg2, int jarg3, void * jarg4) {
   int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52445,7 +52445,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted_with_pass(void * jarg1, char * jarg2, int jarg3, char * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted_with_pass(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4) {
   int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52473,7 +52473,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted_with_pass(void * jarg1, ch
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_File_open(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_File_open(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52700,7 +52700,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_as_text(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_md5(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_md5(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52719,7 +52719,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_md5(void * jarg1, char * jarg2) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_sha256(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_sha256(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52780,7 +52780,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_get_var(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_csv_line__SWIG_0(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_csv_line__SWIG_0(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52895,7 +52895,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_store_buffer(void * jarg1, void * jarg2)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_File_store_line(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_File_store_line(void * jarg1, wchar_t * jarg2) {
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   
@@ -52910,7 +52910,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_store_line(void * jarg1, char * jarg2) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_File_store_string(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_File_store_string(void * jarg1, wchar_t * jarg2) {
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   
@@ -52939,7 +52939,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_store_var(void * jarg1, void * jarg2) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_File_store_pascal_string(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_File_store_pascal_string(void * jarg1, wchar_t * jarg2) {
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   
@@ -52966,7 +52966,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_pascal_string(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_File_file_exists(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_File_file_exists(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -53541,7 +53541,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_variant_to_base64(void * jarg1, v
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_variant(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_variant(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
@@ -53578,7 +53578,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_raw_to_base64(void * jarg1, void 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_raw(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_raw(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
@@ -53597,7 +53597,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_raw(void * jarg1, char 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_utf8_to_base64(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_utf8_to_base64(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
@@ -53616,7 +53616,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_utf8_to_base64(void * jarg1, char
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_utf8(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_utf8(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
@@ -53699,7 +53699,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Mutex(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_clipboard(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_clipboard(void * jarg1, wchar_t * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
@@ -54264,7 +54264,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_has_touchscreen_ui_hint(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_window_title(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_window_title(void * jarg1, wchar_t * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
@@ -54325,7 +54325,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_executable_path(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4, void * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4, void * jarg5) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54358,7 +54358,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_1(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54399,7 +54399,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_kill(void * jarg1, int jarg2) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_shell_open(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_shell_open(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54430,7 +54430,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_get_process_ID(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_environment(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_environment(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54449,7 +54449,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_environment(void * jarg1, char * jar
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_has_environment(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_has_environment(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54804,7 +54804,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_is_debug_build(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_memory_to_file(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_memory_to_file(void * jarg1, wchar_t * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
@@ -54819,7 +54819,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_memory_to_file(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_resources_to_file(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_resources_to_file(void * jarg1, wchar_t * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
@@ -54852,7 +54852,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_resources_in_use__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_all_resources__SWIG_0(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_all_resources__SWIG_0(void * jarg1, wchar_t * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
@@ -54995,7 +54995,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_resources_by_type(void * jarg1, void
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_native_video_play(void * jarg1, char * jarg2, float jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_native_video_play(void * jarg1, wchar_t * jarg2, float jarg3, wchar_t * jarg4, wchar_t * jarg5) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -55094,7 +55094,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_is_scancode_unicode(void * jarg1, 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_find_scancode_from_string(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_find_scancode_from_string(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -55123,7 +55123,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_use_file_access_save_and_swap(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -55145,7 +55145,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_0(void * jarg1, char * jarg2, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_1(void * jarg1, wchar_t * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
@@ -55160,7 +55160,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_1(void * jarg1, char * jarg2) 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_set_thread_name(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_set_thread_name(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -55211,7 +55211,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_SingletonGetInstance() {
 }
 
 
-SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   ResourceInteractiveLoader* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55240,7 +55240,7 @@ SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_int
 }
 
 
-SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_1(void * jarg1, wchar_t * jarg2) {
   ResourceInteractiveLoader* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55262,7 +55262,7 @@ SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_int
 }
 
 
-SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1, char * jarg2, char * jarg3, unsigned int jarg4) {
+SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, unsigned int jarg4) {
   Resource* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55293,7 +55293,7 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Resource* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55322,7 +55322,7 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_2(void * jarg1, wchar_t * jarg2) {
   Resource* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55344,7 +55344,7 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_2(void * jarg1
 }
 
 
-SWIGEXPORT ResourceImportMetadata* SWIGSTDCALL CSharp_ResourceLoader_load_import_metadata(void * jarg1, char * jarg2) {
+SWIGEXPORT ResourceImportMetadata* SWIGSTDCALL CSharp_ResourceLoader_load_import_metadata(void * jarg1, wchar_t * jarg2) {
   ResourceImportMetadata* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55366,7 +55366,7 @@ SWIGEXPORT ResourceImportMetadata* SWIGSTDCALL CSharp_ResourceLoader_load_import
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_recognized_extensions_for_type(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_recognized_extensions_for_type(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55395,7 +55395,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourceLoader_set_abort_on_missing_resources
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_dependencies(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_dependencies(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55414,7 +55414,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_dependencies(void * jarg
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourceLoader_has(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourceLoader_has(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55443,7 +55443,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_SingletonGetInstance() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, char * jarg2, void * jarg3, int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, int jarg4) {
   int jresult ;
   _ResourceSaver *arg1 = (_ResourceSaver *) 0 ;
   String *arg2 = 0 ;
@@ -55466,7 +55466,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, char 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
   int jresult ;
   _ResourceSaver *arg1 = (_ResourceSaver *) 0 ;
   String *arg2 = 0 ;
@@ -55563,7 +55563,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Thread() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, int jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, int jarg5) {
   int jresult ;
   _Thread *arg1 = (_Thread *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -55592,7 +55592,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
   int jresult ;
   _Thread *arg1 = (_Thread *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -55619,7 +55619,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_2(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3) {
   int jresult ;
   _Thread *arg1 = (_Thread *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -56427,7 +56427,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AudioServer_sample_create(void * jarg1, int
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AudioServer_sample_set_description(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AudioServer_sample_set_description(void * jarg1, void * jarg2, wchar_t * jarg3) {
   AudioServer *arg1 = (AudioServer *) 0 ;
   RID *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -58269,7 +58269,7 @@ SWIGEXPORT Shader* SWIGSTDCALL CSharp_CanvasItemMaterial_get_shader(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_set_shader_param(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_set_shader_param(void * jarg1, wchar_t * jarg2, void * jarg3) {
   CanvasItemMaterial *arg1 = (CanvasItemMaterial *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -58290,7 +58290,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_set_shader_param(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_get_shader_param(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_get_shader_param(void * jarg1, wchar_t * jarg2) {
   CanvasItemMaterial *arg1 = (CanvasItemMaterial *) 0 ;
   String *arg2 = 0 ;
   
@@ -58811,7 +58811,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ConfigFile() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ConfigFile_set_value(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ConfigFile_set_value(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -58839,7 +58839,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ConfigFile_set_value(void * jarg1, char * jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   void * jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58871,7 +58871,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   void * jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58897,7 +58897,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58916,7 +58916,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section(void * jarg1, 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section_key(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section_key(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58954,7 +58954,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_sections(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_section_keys(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_section_keys(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58973,7 +58973,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_section_keys(void * jarg1, c
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_load(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_load(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58992,7 +58992,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_load(void * jarg1, char * jarg2) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_save(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_save(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -60051,7 +60051,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_DynamicFontData() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_DynamicFontData_set_font_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_DynamicFontData_set_font_path(void * jarg1, wchar_t * jarg2) {
   DynamicFontData *arg1 = (DynamicFontData *) 0 ;
   String *arg2 = 0 ;
   
@@ -60096,7 +60096,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_EditorExportPlugin() {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorExportPlugin_custom_export(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorExportPlugin_custom_export(void * jarg1, wchar_t * jarg2, void * jarg3) {
   void * jresult ;
   EditorExportPlugin *arg1 = (EditorExportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60147,7 +60147,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_EditorImportPlugin_can_reimport_multi
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_custom_export(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_custom_export(void * jarg1, wchar_t * jarg2, void * jarg3) {
   void * jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60192,7 +60192,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_get_visible_name(void * 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, wchar_t * jarg2, void * jarg3) {
   int jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60213,7 +60213,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, char *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_dialog(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_dialog(void * jarg1, wchar_t * jarg2) {
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
   
@@ -60228,7 +60228,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_dialog(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_from_drop(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_from_drop(void * jarg1, void * jarg2, wchar_t * jarg3) {
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   StringArray *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -60263,7 +60263,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_reimport_multiple_files(vo
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_validate_source_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_validate_source_path(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60282,7 +60282,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_validate_source_path(voi
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_expand_source_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_expand_source_path(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60445,7 +60445,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_EditorSettings() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorSettings_erase(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorSettings_erase(void * jarg1, wchar_t * jarg2) {
   EditorSettings *arg1 = (EditorSettings *) 0 ;
   String *arg2 = 0 ;
   
@@ -60956,7 +60956,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_EventStreamChibi(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5, int jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5, int jarg6) {
   Font *arg1 = (Font *) 0 ;
   RID *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -60991,7 +60991,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5) {
   Font *arg1 = (Font *) 0 ;
   RID *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -61024,7 +61024,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4) {
   Font *arg1 = (Font *) 0 ;
   RID *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -61099,7 +61099,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Font_is_distance_field_hint(void * ja
 }
 
 
-SWIGEXPORT Vector2 SWIGSTDCALL CSharp_Font_get_string_size(void * jarg1, char * jarg2) {
+SWIGEXPORT Vector2 SWIGSTDCALL CSharp_Font_get_string_size(void * jarg1, wchar_t * jarg2) {
   Vector2 jresult ;
   Font *arg1 = (Font *) 0 ;
   String *arg2 = 0 ;
@@ -61652,7 +61652,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_FuncRef_set_instance(void * jarg1, void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FuncRef_set_function(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FuncRef_set_function(void * jarg1, wchar_t * jarg2) {
   FuncRef *arg1 = (FuncRef *) 0 ;
   String *arg2 = 0 ;
   
@@ -61763,7 +61763,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GDScript(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61782,7 +61782,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has(void * jarg1, char * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_order(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_order(void * jarg1, wchar_t * jarg2, int jarg3) {
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -61799,7 +61799,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_order(void * jarg1, char * jarg2,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Globals_get_order(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Globals_get_order(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61818,7 +61818,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Globals_get_order(void * jarg1, char * jarg2) 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_persisting(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_persisting(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
@@ -61835,7 +61835,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_persisting(void * jarg1, char * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_is_persisting(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_is_persisting(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61854,7 +61854,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_is_persisting(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Globals_clear(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Globals_clear(void * jarg1, wchar_t * jarg2) {
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   
@@ -61869,7 +61869,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Globals_clear(void * jarg1, char * jarg2) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_localize_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_localize_path(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61888,7 +61888,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_localize_path(void * jarg1, char * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_globalize_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_globalize_path(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61919,7 +61919,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Globals_save(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has_singleton(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has_singleton(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61938,7 +61938,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has_singleton(void * jarg1, c
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_get_singleton(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_get_singleton(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61957,7 +61957,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_get_singleton(void * jarg1, char * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_load_resource_pack(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_load_resource_pack(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -61976,7 +61976,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_load_resource_pack(void * jar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Globals_save_custom(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Globals_save_custom(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
@@ -62015,7 +62015,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_HTTPClient() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, char * jarg2, int jarg3, unsigned int jarg4, unsigned int jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, unsigned int jarg4, unsigned int jarg5) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62040,7 +62040,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, char 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, char * jarg2, int jarg3, unsigned int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3, unsigned int jarg4) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62063,7 +62063,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, char 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_2(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_2(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62109,7 +62109,7 @@ SWIGEXPORT StreamPeer* SWIGSTDCALL CSharp_HTTPClient_get_connection(void * jarg1
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   int arg2 ;
@@ -62142,7 +62142,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_0(void * jarg1, int jarg2, char * jarg3, void * jarg4, char * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_0(void * jarg1, int jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   int arg2 ;
@@ -62176,7 +62176,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_0(void * jarg1, int j
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int jarg2, wchar_t * jarg3, void * jarg4) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   int arg2 ;
@@ -62203,7 +62203,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int j
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_send_body_text(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_send_body_text(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62414,7 +62414,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_HTTPClient(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_IP_resolve_hostname(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_IP_resolve_hostname(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   IP *arg1 = (IP *) 0 ;
   String *arg2 = 0 ;
@@ -62433,7 +62433,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_IP_resolve_hostname(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_IP_resolve_hostname_queue_item(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_IP_resolve_hostname_queue_item(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   IP *arg1 = (IP *) 0 ;
   String *arg2 = 0 ;
@@ -62594,7 +62594,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ImageTexture_get_format(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ImageTexture_load(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ImageTexture_load(void * jarg1, wchar_t * jarg2) {
   ImageTexture *arg1 = (ImageTexture *) 0 ;
   String *arg2 = 0 ;
   
@@ -62777,7 +62777,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_joy_button_pressed(void * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_action_pressed(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_action_pressed(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
@@ -62796,7 +62796,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_action_pressed(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
@@ -62813,7 +62813,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_0(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_1(void * jarg1, wchar_t * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
@@ -62828,7 +62828,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_1(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_remove_joy_mapping(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_remove_joy_mapping(void * jarg1, wchar_t * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
@@ -63053,7 +63053,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Input_warp_mouse_pos(void * jarg1, Vector2* j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_press(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_press(void * jarg1, wchar_t * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
@@ -63068,7 +63068,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_press(void * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_release(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_release(void * jarg1, wchar_t * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
@@ -63119,7 +63119,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Input_SingletonGetInstance() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_has_action(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_has_action(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
@@ -63138,7 +63138,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_has_action(void * jarg1, cha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_InputMap_get_action_id(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_InputMap_get_action_id(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
@@ -63183,7 +63183,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_actions(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_add_action(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_add_action(void * jarg1, wchar_t * jarg2) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   
@@ -63198,7 +63198,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_add_action(void * jarg1, char * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_erase_action(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_erase_action(void * jarg1, wchar_t * jarg2) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   
@@ -63213,7 +63213,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_erase_action(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_add_event(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_add_event(void * jarg1, wchar_t * jarg2, void * jarg3) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   InputEvent *arg3 = 0 ;
@@ -63234,7 +63234,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_add_event(void * jarg1, char 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg1, wchar_t * jarg2, void * jarg3) {
   unsigned int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
@@ -63259,7 +63259,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_erase_event(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_erase_event(void * jarg1, wchar_t * jarg2, void * jarg3) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   InputEvent *arg3 = 0 ;
@@ -63280,7 +63280,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_erase_event(void * jarg1, cha
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_action_list(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_action_list(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
@@ -63299,7 +63299,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_action_list(void * jarg1, char
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_event_is_action(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_event_is_action(void * jarg1, void * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   InputEvent *arg2 = 0 ;
@@ -63605,7 +63605,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop__input_event(void * jarg1, void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop__input_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop__input_text(void * jarg1, wchar_t * jarg2) {
   MainLoop *arg1 = (MainLoop *) 0 ;
   String *arg2 = 0 ;
   
@@ -63644,7 +63644,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop_input_event(void * jarg1, void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop_input_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop_input_text(void * jarg1, wchar_t * jarg2) {
   MainLoop *arg1 = (MainLoop *) 0 ;
   String *arg2 = 0 ;
   
@@ -63849,7 +63849,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Mesh() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_add_morph_target(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_add_morph_target(void * jarg1, wchar_t * jarg2) {
   Mesh *arg1 = (Mesh *) 0 ;
   String *arg2 = 0 ;
   
@@ -64089,7 +64089,7 @@ SWIGEXPORT Material* SWIGSTDCALL CSharp_Mesh_surface_get_material(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_surface_set_name(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_surface_set_name(void * jarg1, int jarg2, wchar_t * jarg3) {
   Mesh *arg1 = (Mesh *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -64738,7 +64738,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MeshLibrary_create_item(void * jarg1, int jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MeshLibrary_set_item_name(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MeshLibrary_set_item_name(void * jarg1, int jarg2, wchar_t * jarg3) {
   MeshLibrary *arg1 = (MeshLibrary *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -65443,7 +65443,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node__unhandled_key_input(void * jarg1, void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_name(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_name(void * jarg1, wchar_t * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
@@ -65453,7 +65453,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_name(void * jarg1, char * jarg2) {
     return ;
   }
   String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  arg2 = &arg2_str;
   Node_set_name(arg1,(String const &)*arg2);
 }
 
@@ -65588,7 +65588,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_get_parent(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3, unsigned int jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3, unsigned int jarg4) {
   void * jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
@@ -65611,7 +65611,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, char *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   void * jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
@@ -65632,7 +65632,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, char *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_2(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
@@ -65753,7 +65753,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_get_path_to(void * jarg1, void * jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
@@ -65770,7 +65770,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_0(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_1(void * jarg1, wchar_t * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
@@ -65785,7 +65785,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_1(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_remove_from_group(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_remove_from_group(void * jarg1, wchar_t * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
@@ -65800,7 +65800,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node_remove_from_group(void * jarg1, char * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Node_is_in_group(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Node_is_in_group(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
@@ -65901,7 +65901,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node_print_tree(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_filename(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_filename(void * jarg1, wchar_t * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
@@ -66326,7 +66326,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_PCKPacker() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   PCKPacker *arg1 = (PCKPacker *) 0 ;
   String *arg2 = 0 ;
@@ -66347,7 +66347,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, char * jarg2
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_add_file(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_add_file(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   int jresult ;
   PCKPacker *arg1 = (PCKPacker *) 0 ;
   String *arg2 = 0 ;
@@ -66794,7 +66794,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_get_packet_port(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_set_send_address(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_set_send_address(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   PacketPeerUDP *arg1 = (PacketPeerUDP *) 0 ;
   String *arg2 = 0 ;
@@ -67827,7 +67827,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ResourcePreloader() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_add_resource(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_add_resource(void * jarg1, wchar_t * jarg2, void * jarg3) {
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -67844,7 +67844,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_add_resource(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_remove_resource(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_remove_resource(void * jarg1, wchar_t * jarg2) {
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   
@@ -67859,7 +67859,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_remove_resource(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_rename_resource(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_rename_resource(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -67881,7 +67881,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_rename_resource(void * jarg
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourcePreloader_has_resource(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourcePreloader_has_resource(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
@@ -67900,7 +67900,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourcePreloader_has_resource(void *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ResourcePreloader_get_resource(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ResourcePreloader_get_resource(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
@@ -67988,7 +67988,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_get_polyphony(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   int jresult ;
   SamplePlayer *arg1 = (SamplePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -68009,7 +68009,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, char *
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_1(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   SamplePlayer *arg1 = (SamplePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -68702,7 +68702,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SceneTree() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_notify_group(void * jarg1, int jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_notify_group(void * jarg1, int jarg2, wchar_t * jarg3, int jarg4) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -68721,7 +68721,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_notify_group(void * jarg1, int jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -68751,7 +68751,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_nodes_in_group(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_nodes_in_group(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   SceneTree *arg1 = (SceneTree *) 0 ;
   String *arg2 = 0 ;
@@ -68782,7 +68782,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_root(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SceneTree_has_group(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SceneTree_has_group(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   SceneTree *arg1 = (SceneTree *) 0 ;
   String *arg2 = 0 ;
@@ -68989,7 +68989,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_queue_delete(void * jarg1, void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69043,7 +69043,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69091,7 +69091,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69133,7 +69133,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69169,7 +69169,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69199,7 +69199,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_5(void * jarg1, int jarg2, char * jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_5(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69245,7 +69245,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_current_scene(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SceneTree_change_scene(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SceneTree_change_scene(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   SceneTree *arg1 = (SceneTree *) 0 ;
   String *arg2 = 0 ;
@@ -69395,7 +69395,7 @@ SWIGEXPORT Shader* SWIGSTDCALL CSharp_ShaderMaterial_get_shader(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ShaderMaterial_set_shader_param(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ShaderMaterial_set_shader_param(void * jarg1, wchar_t * jarg2, void * jarg3) {
   ShaderMaterial *arg1 = (ShaderMaterial *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -69416,7 +69416,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ShaderMaterial_set_shader_param(void * jarg1,
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ShaderMaterial_get_shader_param(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ShaderMaterial_get_shader_param(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   ShaderMaterial *arg1 = (ShaderMaterial *) 0 ;
   String *arg2 = 0 ;
@@ -70088,7 +70088,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_get_polyphony(void * jarg1
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   SpatialSamplePlayer *arg1 = (SpatialSamplePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -70109,7 +70109,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_1(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   SpatialSamplePlayer *arg1 = (SpatialSamplePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -71012,7 +71012,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_start(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset(void * jarg1, void * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71045,7 +71045,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset_all(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop(void * jarg1, void * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71078,7 +71078,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop_all(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume(void * jarg1, void * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71111,7 +71111,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume_all(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_remove(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_remove(void * jarg1, void * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71182,7 +71182,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_Tween_get_runtime(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71223,7 +71223,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71262,7 +71262,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71303,7 +71303,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71342,7 +71342,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71395,7 +71395,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71442,7 +71442,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71483,7 +71483,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71518,7 +71518,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71547,7 +71547,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, char * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71570,7 +71570,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_5(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71623,7 +71623,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71670,7 +71670,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71711,7 +71711,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71746,7 +71746,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71775,7 +71775,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, char * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71798,7 +71798,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71842,7 +71842,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71884,7 +71884,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71928,7 +71928,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71970,7 +71970,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -72014,7 +72014,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -72056,7 +72056,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -72100,7 +72100,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void *
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -73193,7 +73193,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_AnimationPlayer() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, wchar_t * jarg2, void * jarg3) {
   int jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73214,7 +73214,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_remove_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_remove_animation(void * jarg1, wchar_t * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -73229,7 +73229,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_remove_animation(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_rename_animation(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_rename_animation(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -73251,7 +73251,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_rename_animation(void * jarg1
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_has_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_has_animation(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73270,7 +73270,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_has_animation(void * 
 }
 
 
-SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationPlayer_get_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationPlayer_get_animation(void * jarg1, wchar_t * jarg2) {
   Animation* jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73304,7 +73304,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_get_animation_list(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_animation_set_next(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_animation_set_next(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -73326,7 +73326,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_animation_set_next(void * jar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_animation_get_next(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_animation_get_next(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73345,7 +73345,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_animation_get_next(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_blend_time(void * jarg1, char * jarg2, char * jarg3, float jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_blend_time(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, float jarg4) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -73369,7 +73369,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_blend_time(void * jarg1, 
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_blend_time(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_blend_time(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   float jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73417,7 +73417,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_default_blend_time(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, char * jarg2, float jarg3, float jarg4, unsigned int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, wchar_t * jarg2, float jarg3, float jarg4, unsigned int jarg5) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -73438,7 +73438,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_1(void * jarg1, char * jarg2, float jarg3, float jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_1(void * jarg1, wchar_t * jarg2, float jarg3, float jarg4) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -73457,7 +73457,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_1(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_2(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_2(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -73474,7 +73474,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_2(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_3(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_3(void * jarg1, wchar_t * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -73497,7 +73497,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_4(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_0(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_0(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -73514,7 +73514,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_0(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_1(void * jarg1, wchar_t * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -73575,7 +73575,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_is_playing(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_current_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_current_animation(void * jarg1, wchar_t * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -73602,7 +73602,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_get_current_animation(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_queue(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_queue(void * jarg1, wchar_t * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -73669,7 +73669,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_speed(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_autoplay(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_autoplay(void * jarg1, wchar_t * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -73844,7 +73844,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_AnimationTreePlayer() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_add_node(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_add_node(void * jarg1, int jarg2, wchar_t * jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -73861,7 +73861,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_add_node(void * jarg1, in
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_node_exists(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_node_exists(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73880,7 +73880,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_node_exists(void 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_rename(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_rename(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73906,7 +73906,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_rename(void * jarg1, 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_type(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_type(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73925,7 +73925,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_type(void * jarg1
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_count(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_count(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73944,7 +73944,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_count(void 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_source(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_source(void * jarg1, wchar_t * jarg2, int jarg3) {
   void * jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73965,7 +73965,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_source(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_animation(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_animation(void * jarg1, wchar_t * jarg2, void * jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Animation *arg3 = (Animation *) 0 ;
@@ -73982,7 +73982,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_animat
 }
 
 
-SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_animation(void * jarg1, wchar_t * jarg2) {
   Animation* jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74004,7 +74004,7 @@ SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_master_animation(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_master_animation(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -74026,7 +74026,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_master
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_master_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_master_animation(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74045,7 +74045,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_mast
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_filter_path(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_filter_path(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   NodePath *arg3 = 0 ;
@@ -74068,7 +74068,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_filter
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadein_time(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadein_time(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74085,7 +74085,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadein_t
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadein_time(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadein_time(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74104,7 +74104,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadein_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadeout_time(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadeout_time(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74121,7 +74121,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadeout_
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadeout_time(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadeout_time(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74140,7 +74140,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadeout
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
@@ -74157,7 +74157,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorest
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_delay(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_delay(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74174,7 +74174,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorest
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_random_delay(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_random_delay(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74191,7 +74191,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorest
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_has_autorestart(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_has_autorestart(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74210,7 +74210,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_has_
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_delay(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_delay(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74229,7 +74229,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autores
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_random_delay(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_random_delay(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74248,7 +74248,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autores
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_start(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_start(void * jarg1, wchar_t * jarg2) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -74263,7 +74263,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_start(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_stop(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_stop(void * jarg1, wchar_t * jarg2) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -74278,7 +74278,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_stop(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_is_active(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_is_active(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74297,7 +74297,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_is_a
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_filter_path(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_filter_path(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   NodePath *arg3 = 0 ;
@@ -74320,7 +74320,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_filter_p
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_set_amount(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_set_amount(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74337,7 +74337,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_set_amount(void 
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_get_amount(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_get_amount(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74356,7 +74356,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_get_amount(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_amount(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_amount(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74373,7 +74373,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_amount(vo
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_get_amount(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_get_amount(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74392,7 +74392,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_get_amount(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_filter_path(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_filter_path(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   NodePath *arg3 = 0 ;
@@ -74415,7 +74415,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_filter_pa
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_set_amount(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_set_amount(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74432,7 +74432,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_set_amount(vo
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_get_amount(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_get_amount(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74451,7 +74451,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_get_amount(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_set_amount(void * jarg1, char * jarg2, Vector2* jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_set_amount(void * jarg1, wchar_t * jarg2, Vector2* jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -74472,7 +74472,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_set_amount(vo
 }
 
 
-SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_get_amount(void * jarg1, char * jarg2) {
+SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_get_amount(void * jarg1, wchar_t * jarg2) {
   Vector2 jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74491,7 +74491,7 @@ SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_get_amount
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_set_scale(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_set_scale(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74508,7 +74508,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_set_scale(
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_get_scale(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_get_scale(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74527,7 +74527,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_get_scale
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timeseek_node_seek(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timeseek_node_seek(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74544,7 +74544,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timeseek_node_seek(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_count(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_count(void * jarg1, wchar_t * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -74561,7 +74561,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_input_count(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_input_count(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74580,7 +74580,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_input_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_delete_input(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_delete_input(void * jarg1, wchar_t * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -74597,7 +74597,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_delete_in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_auto_advance(void * jarg1, char * jarg2, int jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_auto_advance(void * jarg1, wchar_t * jarg2, int jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -74616,7 +74616,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_has_input_auto_advance(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_has_input_auto_advance(void * jarg1, wchar_t * jarg2, int jarg3) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74637,7 +74637,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_h
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_xfade_time(void * jarg1, char * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_xfade_time(void * jarg1, wchar_t * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -74654,7 +74654,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_xfade
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_xfade_time(void * jarg1, char * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_xfade_time(void * jarg1, wchar_t * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74673,7 +74673,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_xfad
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_current(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_current(void * jarg1, wchar_t * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -74690,7 +74690,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_curre
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_current(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_current(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74709,7 +74709,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_curren
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_node_set_pos(void * jarg1, char * jarg2, Vector2* jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_node_set_pos(void * jarg1, wchar_t * jarg2, Vector2* jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -74730,7 +74730,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_node_set_pos(void * jarg1
 }
 
 
-SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_pos(void * jarg1, char * jarg2) {
+SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_pos(void * jarg1, wchar_t * jarg2) {
   Vector2 jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74749,7 +74749,7 @@ SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_pos(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_remove_node(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_remove_node(void * jarg1, wchar_t * jarg2) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   
@@ -74764,7 +74764,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_remove_node(void * jarg1,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74792,7 +74792,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, char
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74820,7 +74820,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_disconnect(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_disconnect(void * jarg1, wchar_t * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -75083,7 +75083,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_BitmapFont() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_BitmapFont_create_from_fnt(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_BitmapFont_create_from_fnt(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   BitmapFont *arg1 = (BitmapFont *) 0 ;
   String *arg2 = 0 ;
@@ -76476,7 +76476,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_colored_polygon__SWIG_2(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5, int jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5, int jarg6) {
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
   Vector2 *arg3 = 0 ;
@@ -76507,7 +76507,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5) {
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
   Vector2 *arg3 = 0 ;
@@ -76536,7 +76536,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4) {
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
   Vector2 *arg3 = 0 ;
@@ -76559,7 +76559,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_2(void * jarg1, 
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, char * jarg5, void * jarg6) {
+SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, wchar_t * jarg5, void * jarg6) {
   float jresult ;
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
@@ -76599,7 +76599,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, v
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, char * jarg5) {
+SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, wchar_t * jarg5) {
   float jresult ;
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
@@ -78099,7 +78099,7 @@ SWIGEXPORT Theme* SWIGSTDCALL CSharp_Control_get_theme(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_icon_override(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_icon_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
@@ -78116,7 +78116,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_icon_override(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_shader_override(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_shader_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Shader *arg3 = (Shader *) 0 ;
@@ -78133,7 +78133,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_shader_override(void * jarg1, cha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_style_override(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_style_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   StyleBox *arg3 = (StyleBox *) 0 ;
@@ -78150,7 +78150,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_style_override(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_font_override(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_font_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Font *arg3 = (Font *) 0 ;
@@ -78167,7 +78167,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_font_override(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_color_override(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_color_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Color *arg3 = 0 ;
@@ -78188,7 +78188,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_color_override(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_constant_override(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_constant_override(void * jarg1, wchar_t * jarg2, int jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -78205,7 +78205,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_constant_override(void * jarg1, c
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Texture* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78234,7 +78234,7 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, ch
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_1(void * jarg1, wchar_t * jarg2) {
   Texture* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78256,7 +78256,7 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_1(void * jarg1, ch
 }
 
 
-SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   StyleBox* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78285,7 +78285,7 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg
 }
 
 
-SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_1(void * jarg1, wchar_t * jarg2) {
   StyleBox* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78307,7 +78307,7 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   Font* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78336,7 +78336,7 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, char 
 }
 
 
-SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_1(void * jarg1, wchar_t * jarg2) {
   Font* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78358,7 +78358,7 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_1(void * jarg1, char 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   void * jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78384,7 +78384,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_0(void * jarg1, cha
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_1(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78403,7 +78403,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_1(void * jarg1, cha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78429,7 +78429,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_0(void * jarg1, cha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_1(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78448,7 +78448,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_1(void * jarg1, cha
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon_override(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon_override(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78467,7 +78467,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon_override(void * jarg
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox_override(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox_override(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78486,7 +78486,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox_override(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font_override(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font_override(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78505,7 +78505,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font_override(void * jarg
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color_override(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color_override(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78524,7 +78524,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color_override(void * jar
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant_override(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant_override(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78543,7 +78543,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant_override(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78569,7 +78569,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_1(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78588,7 +78588,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78614,7 +78614,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_0(void * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_1(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78633,7 +78633,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_1(void * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78659,7 +78659,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_1(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78678,7 +78678,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78704,7 +78704,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_0(void * jarg
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_1(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78723,7 +78723,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78749,7 +78749,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_0(void * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_1(void * jarg1, wchar_t * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78780,7 +78780,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_parent_control(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_set_tooltip(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_set_tooltip(void * jarg1, wchar_t * jarg2) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   
@@ -79332,7 +79332,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_control_to_container(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_control_to_bottom_panel(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_control_to_bottom_panel(void * jarg1, void * jarg2, wchar_t * jarg3) {
   EditorPlugin *arg1 = (EditorPlugin *) 0 ;
   Control *arg2 = (Control *) 0 ;
   String *arg3 = 0 ;
@@ -79381,7 +79381,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_remove_control_from_bottom_panel
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_custom_type(void * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_custom_type(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
   EditorPlugin *arg1 = (EditorPlugin *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -79407,7 +79407,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_custom_type(void * jarg1, ch
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_remove_custom_type(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_remove_custom_type(void * jarg1, wchar_t * jarg2) {
   EditorPlugin *arg1 = (EditorPlugin *) 0 ;
   String *arg2 = 0 ;
   
@@ -80191,7 +80191,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GraphEdit() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, char * jarg2, int jarg3, char * jarg4, int jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4, int jarg5) {
   int jresult ;
   GraphEdit *arg1 = (GraphEdit *) 0 ;
   String *arg2 = 0 ;
@@ -80221,7 +80221,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, char * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * jarg1, char * jarg2, int jarg3, char * jarg4, int jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4, int jarg5) {
   unsigned int jresult ;
   GraphEdit *arg1 = (GraphEdit *) 0 ;
   String *arg2 = 0 ;
@@ -80251,7 +80251,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GraphEdit_disconnect_node(void * jarg1, char * jarg2, int jarg3, char * jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GraphEdit_disconnect_node(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4, int jarg5) {
   GraphEdit *arg1 = (GraphEdit *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -80690,7 +80690,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GridMap_area_set_exterior_portal(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GridMap_area_set_name(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GridMap_area_set_name(void * jarg1, int jarg2, wchar_t * jarg3) {
   GridMap *arg1 = (GridMap *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -80861,7 +80861,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_HTTPRequest() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
   int jresult ;
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
@@ -80888,7 +80888,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, char
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
   int jresult ;
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
@@ -80913,7 +80913,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, char
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_2(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
@@ -81018,7 +81018,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_get_max_redirects(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_HTTPRequest_set_download_file(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_HTTPRequest_set_download_file(void * jarg1, wchar_t * jarg2) {
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
   
@@ -81335,7 +81335,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_InverseKinematics() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InverseKinematics_set_bone_name(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InverseKinematics_set_bone_name(void * jarg1, wchar_t * jarg2) {
   InverseKinematics *arg1 = (InverseKinematics *) 0 ;
   String *arg2 = 0 ;
   
@@ -81460,7 +81460,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ItemList() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_0(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
   ItemList *arg1 = (ItemList *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
@@ -81479,7 +81479,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_0(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
   ItemList *arg1 = (ItemList *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
@@ -81496,7 +81496,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_1(void * jarg1, char 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_2(void * jarg1, wchar_t * jarg2) {
   ItemList *arg1 = (ItemList *) 0 ;
   String *arg2 = 0 ;
   
@@ -81533,7 +81533,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_icon_item__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_text(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_text(void * jarg1, int jarg2, wchar_t * jarg3) {
   ItemList *arg1 = (ItemList *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -81731,7 +81731,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ItemList_get_item_custom_bg_color(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_tooltip(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_tooltip(void * jarg1, int jarg2, wchar_t * jarg3) {
   ItemList *arg1 = (ItemList *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -82244,7 +82244,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Label_get_valign(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Label_set_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Label_set_text(void * jarg1, wchar_t * jarg2) {
   Label *arg1 = (Label *) 0 ;
   String *arg2 = 0 ;
   
@@ -82700,7 +82700,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_select_all(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_set_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_set_text(void * jarg1, wchar_t * jarg2) {
   LineEdit *arg1 = (LineEdit *) 0 ;
   String *arg2 = 0 ;
   
@@ -82815,7 +82815,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_LineEdit_get_max_length(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_append_at_cursor(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_append_at_cursor(void * jarg1, wchar_t * jarg2) {
   LineEdit *arg1 = (LineEdit *) 0 ;
   String *arg2 = 0 ;
   
@@ -86264,7 +86264,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_PopupMenu() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_0(void * jarg1, void * jarg2, char * jarg3, int jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4, int jarg5) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86285,7 +86285,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_0(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_1(void * jarg1, void * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86304,7 +86304,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_1(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_2(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86321,7 +86321,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_2(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_0(void * jarg1, char * jarg2, int jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -86340,7 +86340,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_0(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_1(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -86357,7 +86357,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_1(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_2(void * jarg1, wchar_t * jarg2) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   
@@ -86372,7 +86372,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_2(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_0(void * jarg1, void * jarg2, char * jarg3, int jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4, int jarg5) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86393,7 +86393,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_0(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_1(void * jarg1, void * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86412,7 +86412,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_1(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_2(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86429,7 +86429,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_2(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_0(void * jarg1, char * jarg2, int jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -86448,7 +86448,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_1(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -86465,7 +86465,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_2(void * jarg1, wchar_t * jarg2) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   
@@ -86480,7 +86480,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_2(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_0(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -86504,7 +86504,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_0(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -86622,7 +86622,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_shortcut__SWIG_1(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_text(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_text(void * jarg1, int jarg2, wchar_t * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -86715,7 +86715,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_shortcut(void * jarg1, int
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_submenu(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_submenu(void * jarg1, int jarg2, wchar_t * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -87141,7 +87141,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ProximityGroup() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_set_group_name(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_set_group_name(void * jarg1, wchar_t * jarg2) {
   ProximityGroup *arg1 = (ProximityGroup *) 0 ;
   String *arg2 = 0 ;
   
@@ -87156,7 +87156,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_set_group_name(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_broadcast(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_broadcast(void * jarg1, wchar_t * jarg2, void * jarg3) {
   ProximityGroup *arg1 = (ProximityGroup *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -88037,7 +88037,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_RichTextLabel() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_add_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_add_text(void * jarg1, wchar_t * jarg2) {
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
   
@@ -88326,7 +88326,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_RichTextLabel_is_selection_enabled(vo
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_parse_bbcode(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_parse_bbcode(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
@@ -88345,7 +88345,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_parse_bbcode(void * jarg1, char 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_append_bbcode(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_append_bbcode(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
@@ -88364,7 +88364,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_append_bbcode(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_set_bbcode(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_set_bbcode(void * jarg1, wchar_t * jarg2) {
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
   
@@ -88989,7 +88989,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Skeleton() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Skeleton_add_bone(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Skeleton_add_bone(void * jarg1, wchar_t * jarg2) {
   Skeleton *arg1 = (Skeleton *) 0 ;
   String *arg2 = 0 ;
   
@@ -89004,7 +89004,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Skeleton_add_bone(void * jarg1, char * jarg2)
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Skeleton_find_bone(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Skeleton_find_bone(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   Skeleton *arg1 = (Skeleton *) 0 ;
   String *arg2 = 0 ;
@@ -89407,7 +89407,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SpinBox() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_suffix(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_suffix(void * jarg1, wchar_t * jarg2) {
   SpinBox *arg1 = (SpinBox *) 0 ;
   String *arg2 = 0 ;
   
@@ -89434,7 +89434,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpinBox_get_suffix(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_prefix(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_prefix(void * jarg1, wchar_t * jarg2) {
   SpinBox *arg1 = (SpinBox *) 0 ;
   String *arg2 = 0 ;
   
@@ -90236,7 +90236,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TabContainer_are_tabs_visible(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TabContainer_set_tab_title(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TabContainer_set_tab_title(void * jarg1, int jarg2, wchar_t * jarg3) {
   TabContainer *arg1 = (TabContainer *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -90362,7 +90362,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Tabs_get_current_tab(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_set_tab_title(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_set_tab_title(void * jarg1, int jarg2, wchar_t * jarg3) {
   Tabs *arg1 = (Tabs *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -90432,7 +90432,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_remove_tab(void * jarg1, int jarg2) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_add_tab(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_add_tab(void * jarg1, wchar_t * jarg2, void * jarg3) {
   Tabs *arg1 = (Tabs *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
@@ -90501,7 +90501,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_TextEdit() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_set_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_set_text(void * jarg1, wchar_t * jarg2) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   
@@ -90516,7 +90516,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_set_text(void * jarg1, char * jarg2)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_insert_text_at_cursor(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_insert_text_at_cursor(void * jarg1, wchar_t * jarg2) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   
@@ -90843,7 +90843,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_get_word_under_cursor(void * jarg1
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_search(void * jarg1, char * jarg2, int jarg3, int jarg4, int jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_search(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4, int jarg5) {
   void * jresult ;
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
@@ -90914,7 +90914,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TextEdit_is_syntax_coloring_enabled(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_keyword_color(void * jarg1, char * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_keyword_color(void * jarg1, wchar_t * jarg2, void * jarg3) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   Color *arg3 = 0 ;
@@ -90935,7 +90935,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_keyword_color(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg1, char * jarg2, char * jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4, unsigned int jarg5) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -90965,7 +90965,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_1(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -92072,7 +92072,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TouchScreenButton_get_bitmask(void * jarg1)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TouchScreenButton_set_action(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TouchScreenButton_set_action(void * jarg1, wchar_t * jarg2) {
   TouchScreenButton *arg1 = (TouchScreenButton *) 0 ;
   String *arg2 = 0 ;
   
@@ -92473,7 +92473,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tree_are_column_titles_visible(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Tree_set_column_title(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Tree_set_column_title(void * jarg1, int jarg2, wchar_t * jarg3) {
   Tree *arg1 = (Tree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -93226,7 +93226,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_WindowDialog() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_WindowDialog_set_title(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_WindowDialog_set_title(void * jarg1, wchar_t * jarg2) {
   WindowDialog *arg1 = (WindowDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -93353,7 +93353,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AcceptDialog_get_hide_on_ok(void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3, char * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3, wchar_t * jarg4) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
@@ -93381,7 +93381,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_0(void * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg1, char * jarg2, unsigned int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
@@ -93402,7 +93402,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_2(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_2(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
@@ -93421,7 +93421,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_2(void * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_cancel(void * jarg1, char * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_cancel(void * jarg1, wchar_t * jarg2) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
@@ -93454,7 +93454,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_register_text_enter(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AcceptDialog_set_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AcceptDialog_set_text(void * jarg1, wchar_t * jarg2) {
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -93516,7 +93516,7 @@ SWIGEXPORT SpriteFrames* SWIGSTDCALL CSharp_AnimatedSprite_get_sprite_frames(voi
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_set_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_set_animation(void * jarg1, wchar_t * jarg2) {
   AnimatedSprite *arg1 = (AnimatedSprite *) 0 ;
   String *arg2 = 0 ;
   
@@ -93543,7 +93543,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimatedSprite_get_animation(void * jarg1) 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_play__SWIG_0(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_play__SWIG_0(void * jarg1, wchar_t * jarg2) {
   AnimatedSprite *arg1 = (AnimatedSprite *) 0 ;
   String *arg2 = 0 ;
   
@@ -93761,7 +93761,7 @@ SWIGEXPORT SpriteFrames* SWIGSTDCALL CSharp_AnimatedSprite3D_get_sprite_frames(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_set_animation(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_set_animation(void * jarg1, wchar_t * jarg2) {
   AnimatedSprite3D *arg1 = (AnimatedSprite3D *) 0 ;
   String *arg2 = 0 ;
   
@@ -93788,7 +93788,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimatedSprite3D_get_animation(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_play__SWIG_0(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_play__SWIG_0(void * jarg1, wchar_t * jarg2) {
   AnimatedSprite3D *arg1 = (AnimatedSprite3D *) 0 ;
   String *arg2 = 0 ;
   
@@ -94477,7 +94477,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Button() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Button_set_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Button_set_text(void * jarg1, wchar_t * jarg2) {
   Button *arg1 = (Button *) 0 ;
   String *arg2 = 0 ;
   
@@ -94595,7 +94595,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Button_is_flat(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_button(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_button(void * jarg1, wchar_t * jarg2) {
   ButtonArray *arg1 = (ButtonArray *) 0 ;
   String *arg2 = 0 ;
   
@@ -94610,7 +94610,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_button(void * jarg1, char * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_icon_button__SWIG_0(void * jarg1, void * jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_icon_button__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3) {
   ButtonArray *arg1 = (ButtonArray *) 0 ;
   Texture *arg2 = (Texture *) 0 ;
   String *arg3 = 0 ;
@@ -94637,7 +94637,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_icon_button__SWIG_1(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_set_button_text(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_set_button_text(void * jarg1, int jarg2, wchar_t * jarg3) {
   ButtonArray *arg1 = (ButtonArray *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -95768,7 +95768,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_clear_filters(void * jarg1) 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_add_filter(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_add_filter(void * jarg1, wchar_t * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -95819,7 +95819,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorFileDialog_get_current_path(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_dir(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_dir(void * jarg1, wchar_t * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -95834,7 +95834,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_dir(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_file(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_file(void * jarg1, wchar_t * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -95849,7 +95849,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_file(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_path(void * jarg1, wchar_t * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -96012,7 +96012,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_clear_filters(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_add_filter(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_add_filter(void * jarg1, wchar_t * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -96063,7 +96063,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_FileDialog_get_current_path(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_dir(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_dir(void * jarg1, wchar_t * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -96078,7 +96078,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_dir(void * jarg1, char
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_file(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_file(void * jarg1, wchar_t * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -96093,7 +96093,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_file(void * jarg1, cha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_path(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_path(void * jarg1, wchar_t * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
@@ -96370,7 +96370,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GraphNode() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GraphNode_set_title(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GraphNode_set_title(void * jarg1, wchar_t * jarg2) {
   GraphNode *arg1 = (GraphNode *) 0 ;
   String *arg2 = 0 ;
   
@@ -97646,7 +97646,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_LinkButton() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_LinkButton_set_text(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_LinkButton_set_text(void * jarg1, wchar_t * jarg2) {
   LinkButton *arg1 = (LinkButton *) 0 ;
   String *arg2 = 0 ;
   
@@ -97958,7 +97958,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_OptionButton() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -97975,7 +97975,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_0(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_1(void * jarg1, wchar_t * jarg2) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   String *arg2 = 0 ;
   
@@ -97990,7 +97990,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_1(void * jarg1, c
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_icon_item(void * jarg1, void * jarg2, char * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_icon_item(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   Texture *arg2 = (Texture *) 0 ;
   String *arg3 = 0 ;
@@ -98009,7 +98009,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_icon_item(void * jarg1, void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_set_item_text(void * jarg1, int jarg2, char * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_set_item_text(void * jarg1, int jarg2, wchar_t * jarg3) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -99094,7 +99094,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_get_polyphony(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
   int jresult ;
   SamplePlayer2D *arg1 = (SamplePlayer2D *) 0 ;
   String *arg2 = 0 ;
@@ -99115,7 +99115,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, char
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_1(void * jarg1, char * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_1(void * jarg1, wchar_t * jarg2) {
   int jresult ;
   SamplePlayer2D *arg1 = (SamplePlayer2D *) 0 ;
   String *arg2 = 0 ;
