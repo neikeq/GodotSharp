@@ -87,8 +87,19 @@ MonoObject *variant_to_managed_of_type(const Variant* p_var, MonoType *p_type)
 			return BOX_DOUBLE(val);
 		}
 
-		case MONO_TYPE_STRING:
-			break; // TODO String marshalling
+		case MONO_TYPE_STRING: {
+			String val_str = p_var->operator String();
+
+			MonoString* mono_string = NULL;
+
+			if (sizeof(CharType) == 2) {
+				mono_string = mono_string_from_utf16((mono_unichar2*)val_str.c_str());
+			} else {
+				mono_string = mono_string_new(mono_domain_get(), val_str.utf8().get_data());
+			}
+
+			return (MonoObject*)mono_string;
+		} break;
 
 		case MONO_TYPE_VALUETYPE: {
 			// TODO Cache this...
@@ -206,8 +217,19 @@ void mono_field_set_from_variant(MonoObject* p_object, MonoClassField* p_field, 
 			mono_field_set_value(p_object, p_field, &val);
 		} break;
 
-		case MONO_TYPE_STRING:
-			break; // TODO String marshalling
+		case MONO_TYPE_STRING: {
+			String val_str = p_var->operator String();
+
+			MonoString* mono_string = NULL;
+
+			if (sizeof(CharType) == 2) {
+				mono_string = mono_string_from_utf16((mono_unichar2*)val_str.c_str());
+			} else {
+				mono_string = mono_string_new(mono_domain_get(), val_str.utf8().get_data());
+			}
+
+			mono_field_set_value(p_object, p_field, mono_string);
+		} break;
 
 		case MONO_TYPE_VALUETYPE: {
 			// TODO Cache this...
@@ -298,8 +320,16 @@ Variant managed_to_variant(MonoObject* p_var, MonoType *p_type)
 		case MONO_TYPE_R8:
 			return UNBOX_DOUBLE(p_var);
 
-		case MONO_TYPE_STRING:
-			break; // TODO String marshalling
+		case MONO_TYPE_STRING: {
+			MonoObject *exec = NULL;
+			MonoString *mono_string = mono_object_to_string(p_var, &exec);
+
+			if (exec) {
+				mono_print_unhandled_exception(exec);
+			} else {
+				return String::utf8(mono_string_to_utf8(mono_string));
+			}
+		} break;
 
 		case MONO_TYPE_VALUETYPE: {
 			// TODO Cache this...
