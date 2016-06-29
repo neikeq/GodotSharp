@@ -43,6 +43,13 @@ public class GridContainer : Container {
 
 
 
+  public GridContainer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_GridContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_columns(int columns) {
     GodotEnginePINVOKE.GridContainer_set_columns(swigCPtr, columns);
   }
@@ -50,13 +57,6 @@ public class GridContainer : Container {
   public int get_columns() {
     int ret = GodotEnginePINVOKE.GridContainer_get_columns(swigCPtr);
     return ret;
-  }
-
-  public GridContainer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_GridContainer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

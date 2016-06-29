@@ -55,6 +55,13 @@ public class HTTPRequest : Node {
 
 
 
+  public HTTPRequest() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_HTTPRequest());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int request(string url, SWIGTYPE_p_StringArray custom_headers, bool ssl_validate_domain) {
     int ret = GodotEnginePINVOKE.HTTPRequest_request__SWIG_0(swigCPtr, url, SWIGTYPE_p_StringArray.getCPtr(custom_headers), ssl_validate_domain);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -127,13 +134,6 @@ public class HTTPRequest : Node {
   public int get_body_size() {
     int ret = GodotEnginePINVOKE.HTTPRequest_get_body_size(swigCPtr);
     return ret;
-  }
-
-  public HTTPRequest() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_HTTPRequest());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

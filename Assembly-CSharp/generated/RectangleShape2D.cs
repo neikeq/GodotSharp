@@ -47,6 +47,13 @@ public class RectangleShape2D : Shape2D {
 
 
 
+  public RectangleShape2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RectangleShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_extents(Vector2 extents) {
     GodotEnginePINVOKE.RectangleShape2D_set_extents(swigCPtr, ref extents);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -56,13 +63,6 @@ public class RectangleShape2D : Shape2D {
     Vector2 ret = GodotEnginePINVOKE.RectangleShape2D_get_extents(swigCPtr);
     return ret;
 }
-
-  public RectangleShape2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RectangleShape2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

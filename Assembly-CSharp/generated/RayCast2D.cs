@@ -43,6 +43,13 @@ public class RayCast2D : Node2D {
 
 
 
+  public RayCast2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RayCast2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_enabled(bool enabled) {
     GodotEnginePINVOKE.RayCast2D_set_enabled(swigCPtr, enabled);
   }
@@ -128,13 +135,6 @@ public class RayCast2D : Node2D {
   public int get_type_mask() {
     int ret = GodotEnginePINVOKE.RayCast2D_get_type_mask(swigCPtr);
     return ret;
-  }
-
-  public RayCast2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RayCast2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

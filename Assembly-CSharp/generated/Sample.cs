@@ -53,6 +53,13 @@ public class Sample : Resource {
 
 
 
+  public Sample() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Sample());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void create(int format, bool stereo, int length) {
     GodotEnginePINVOKE.Sample_create(swigCPtr, format, stereo, length);
   }
@@ -116,13 +123,6 @@ public class Sample : Resource {
   public int get_loop_end() {
     int ret = GodotEnginePINVOKE.Sample_get_loop_end(swigCPtr);
     return ret;
-  }
-
-  public Sample() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Sample());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

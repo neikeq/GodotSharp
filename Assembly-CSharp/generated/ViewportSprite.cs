@@ -43,6 +43,13 @@ public class ViewportSprite : Node2D {
 
 
 
+  public ViewportSprite() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ViewportSprite());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_viewport_path(NodePath path) {
     GodotEnginePINVOKE.ViewportSprite_set_viewport_path(swigCPtr, NodePath.getCPtr(path));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -80,13 +87,6 @@ public class ViewportSprite : Node2D {
   public SWIGTYPE_p_Color get_modulate() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.ViewportSprite_get_modulate(swigCPtr), true);
     return ret;
-  }
-
-  public ViewportSprite() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ViewportSprite());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

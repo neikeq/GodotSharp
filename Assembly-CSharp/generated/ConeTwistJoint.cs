@@ -49,6 +49,13 @@ public class ConeTwistJoint : Joint {
 
 
 
+  public ConeTwistJoint() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ConeTwistJoint());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_param(int param, float value) {
     GodotEnginePINVOKE.ConeTwistJoint_set_param(swigCPtr, param, value);
   }
@@ -56,13 +63,6 @@ public class ConeTwistJoint : Joint {
   public float get_param(int param) {
     float ret = GodotEnginePINVOKE.ConeTwistJoint_get_param(swigCPtr, param);
     return ret;
-  }
-
-  public ConeTwistJoint() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ConeTwistJoint());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

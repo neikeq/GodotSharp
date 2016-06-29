@@ -59,6 +59,13 @@ public class Node : Object {
 
 
 
+  public Node() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Node());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _enter_tree() {
     GodotEnginePINVOKE.Node__enter_tree(swigCPtr);
   }
@@ -423,13 +430,6 @@ public class Node : Object {
 
   public void queue_free() {
     GodotEnginePINVOKE.Node_queue_free(swigCPtr);
-  }
-
-  public Node() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Node());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

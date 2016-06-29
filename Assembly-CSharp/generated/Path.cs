@@ -43,6 +43,13 @@ public class Path : Spatial {
 
 
 
+  public Path() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Path());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_curve(Curve3D curve) {
     GodotEnginePINVOKE.Path_set_curve(swigCPtr, Curve3D.getCPtr(curve));
   }
@@ -54,13 +61,6 @@ public class Path : Spatial {
     Curve3D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve3D;
     return ret;
 }
-
-  public Path() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Path());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

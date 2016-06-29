@@ -43,6 +43,13 @@ public class BakedLightInstance : VisualInstance {
 
 
 
+  public BakedLightInstance() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_BakedLightInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_baked_light(Object baked_light) {
     GodotEnginePINVOKE.BakedLightInstance_set_baked_light(swigCPtr, Object.getCPtr(baked_light));
   }
@@ -58,13 +65,6 @@ public class BakedLightInstance : VisualInstance {
   public SWIGTYPE_p_RID get_baked_light_instance() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.BakedLightInstance_get_baked_light_instance(swigCPtr), true);
     return ret;
-  }
-
-  public BakedLightInstance() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_BakedLightInstance());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

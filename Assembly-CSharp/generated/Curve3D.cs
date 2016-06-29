@@ -47,6 +47,13 @@ public class Curve3D : Resource {
 
 
 
+  public Curve3D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Curve3D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int get_point_count() {
     int ret = GodotEnginePINVOKE.Curve3D_get_point_count(swigCPtr);
     return ret;
@@ -172,13 +179,6 @@ public class Curve3D : Resource {
   public SWIGTYPE_p_Vector3Array tesselate() {
     SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Curve3D_tesselate__SWIG_2(swigCPtr), true);
     return ret;
-  }
-
-  public Curve3D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Curve3D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -50,6 +50,13 @@ public class CanvasItemMaterial : Resource {
 
 
 
+  public CanvasItemMaterial() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CanvasItemMaterial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shader(Shader shader) {
     GodotEnginePINVOKE.CanvasItemMaterial_set_shader(swigCPtr, Shader.getCPtr(shader));
   }
@@ -79,13 +86,6 @@ public class CanvasItemMaterial : Resource {
   public int get_shading_mode() {
     int ret = GodotEnginePINVOKE.CanvasItemMaterial_get_shading_mode(swigCPtr);
     return ret;
-  }
-
-  public CanvasItemMaterial() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CanvasItemMaterial());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

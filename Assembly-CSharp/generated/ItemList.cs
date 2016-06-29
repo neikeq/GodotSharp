@@ -47,6 +47,13 @@ public class ItemList : Control {
 
 
 
+  public ItemList() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ItemList());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_item(string text, Texture icon, bool selectable) {
     GodotEnginePINVOKE.ItemList_add_item__SWIG_0(swigCPtr, text, Texture.getCPtr(icon), selectable);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -279,13 +286,6 @@ public class ItemList : Control {
 
   public void ensure_current_is_visible() {
     GodotEnginePINVOKE.ItemList_ensure_current_is_visible(swigCPtr);
-  }
-
-  public ItemList() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ItemList());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

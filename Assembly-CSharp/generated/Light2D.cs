@@ -47,6 +47,13 @@ public class Light2D : Node2D {
 
 
 
+  public Light2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Light2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_enabled(bool enabled) {
     GodotEnginePINVOKE.Light2D_set_enabled(swigCPtr, enabled);
   }
@@ -213,13 +220,6 @@ public class Light2D : Node2D {
   public SWIGTYPE_p_Color get_shadow_color() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.Light2D_get_shadow_color(swigCPtr), true);
     return ret;
-  }
-
-  public Light2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Light2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -44,6 +44,13 @@ public class GridMap : Spatial {
 
 
 
+  public GridMap() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_GridMap());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_theme(MeshLibrary theme) {
     GodotEnginePINVOKE.GridMap_set_theme(swigCPtr, MeshLibrary.getCPtr(theme));
   }
@@ -221,13 +228,6 @@ public class GridMap : Spatial {
 
   public void clear() {
     GodotEnginePINVOKE.GridMap_clear(swigCPtr);
-  }
-
-  public GridMap() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_GridMap());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

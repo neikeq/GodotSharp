@@ -47,6 +47,13 @@ public class PCKPacker : Reference {
 
 
 
+  public PCKPacker() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PCKPacker());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int pck_start(string pck_name, int alignment) {
     int ret = GodotEnginePINVOKE.PCKPacker_pck_start(swigCPtr, pck_name, alignment);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -62,13 +69,6 @@ public class PCKPacker : Reference {
   public int flush(bool verbose) {
     int ret = GodotEnginePINVOKE.PCKPacker_flush(swigCPtr, verbose);
     return ret;
-  }
-
-  public PCKPacker() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PCKPacker());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

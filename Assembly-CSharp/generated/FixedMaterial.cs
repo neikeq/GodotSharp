@@ -68,6 +68,13 @@ public class FixedMaterial : Material {
 
 
 
+  public FixedMaterial() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_FixedMaterial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_parameter(int param, Variant value) {
     GodotEnginePINVOKE.FixedMaterial_set_parameter(swigCPtr, param, Variant.getCPtr(value));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -133,13 +140,6 @@ public class FixedMaterial : Material {
   public float get_point_size() {
     float ret = GodotEnginePINVOKE.FixedMaterial_get_point_size(swigCPtr);
     return ret;
-  }
-
-  public FixedMaterial() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_FixedMaterial());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

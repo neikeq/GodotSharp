@@ -45,6 +45,13 @@ public class SpatialSamplePlayer : SpatialPlayer {
 
 
 
+  public SpatialSamplePlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SpatialSamplePlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_sample_library(SampleLibrary library) {
     GodotEnginePINVOKE.SpatialSamplePlayer_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
   }
@@ -97,13 +104,6 @@ public class SpatialSamplePlayer : SpatialPlayer {
 
   public void stop_all() {
     GodotEnginePINVOKE.SpatialSamplePlayer_stop_all(swigCPtr);
-  }
-
-  public SpatialSamplePlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SpatialSamplePlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

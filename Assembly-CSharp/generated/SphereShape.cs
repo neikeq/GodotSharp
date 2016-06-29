@@ -47,6 +47,13 @@ public class SphereShape : Shape {
 
 
 
+  public SphereShape() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SphereShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_radius(float radius) {
     GodotEnginePINVOKE.SphereShape_set_radius(swigCPtr, radius);
   }
@@ -54,13 +61,6 @@ public class SphereShape : Shape {
   public float get_radius() {
     float ret = GodotEnginePINVOKE.SphereShape_get_radius(swigCPtr);
     return ret;
-  }
-
-  public SphereShape() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SphereShape());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -47,6 +47,13 @@ public class StyleBoxImageMask : StyleBox {
 
 
 
+  public StyleBoxImageMask() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_StyleBoxImageMask());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_image(SWIGTYPE_p_Image image) {
     GodotEnginePINVOKE.StyleBoxImageMask_set_image(swigCPtr, SWIGTYPE_p_Image.getCPtr(image));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -73,13 +80,6 @@ public class StyleBoxImageMask : StyleBox {
   public float get_expand_margin_size(int margin) {
     float ret = GodotEnginePINVOKE.StyleBoxImageMask_get_expand_margin_size(swigCPtr, margin);
     return ret;
-  }
-
-  public StyleBoxImageMask() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_StyleBoxImageMask());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

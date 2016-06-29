@@ -47,6 +47,13 @@ public class ResourceImportMetadata : Reference {
 
 
 
+  public ResourceImportMetadata() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ResourceImportMetadata());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_editor(string name) {
     GodotEnginePINVOKE.ResourceImportMetadata_set_editor(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -104,13 +111,6 @@ public class ResourceImportMetadata : Reference {
   public SWIGTYPE_p_StringArray get_options() {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.ResourceImportMetadata_get_options(swigCPtr), true);
     return ret;
-  }
-
-  public ResourceImportMetadata() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ResourceImportMetadata());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

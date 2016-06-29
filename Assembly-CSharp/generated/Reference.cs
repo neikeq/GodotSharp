@@ -47,6 +47,13 @@ public class Reference : Object {
 
 
 
+  public Reference() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Reference());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public bool init_ref() {
     bool ret = GodotEnginePINVOKE.Reference_init_ref(swigCPtr);
     return ret;
@@ -59,13 +66,6 @@ public class Reference : Object {
   public bool unreference() {
     bool ret = GodotEnginePINVOKE.Reference_unreference(swigCPtr);
     return ret;
-  }
-
-  public Reference() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Reference());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

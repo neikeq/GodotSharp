@@ -45,6 +45,13 @@ public class AnimationPlayer : Node {
 
 
 
+  public AnimationPlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_AnimationPlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int add_animation(string name, Animation animation) {
     int ret = GodotEnginePINVOKE.AnimationPlayer_add_animation(swigCPtr, name, Animation.getCPtr(animation));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -267,13 +274,6 @@ public class AnimationPlayer : Node {
 
   public void advance(float delta) {
     GodotEnginePINVOKE.AnimationPlayer_advance(swigCPtr, delta);
-  }
-
-  public AnimationPlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_AnimationPlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

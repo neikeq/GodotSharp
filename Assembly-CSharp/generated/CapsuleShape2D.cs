@@ -47,6 +47,13 @@ public class CapsuleShape2D : Shape2D {
 
 
 
+  public CapsuleShape2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CapsuleShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_radius(float radius) {
     GodotEnginePINVOKE.CapsuleShape2D_set_radius(swigCPtr, radius);
   }
@@ -63,13 +70,6 @@ public class CapsuleShape2D : Shape2D {
   public float get_height() {
     float ret = GodotEnginePINVOKE.CapsuleShape2D_get_height(swigCPtr);
     return ret;
-  }
-
-  public CapsuleShape2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CapsuleShape2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

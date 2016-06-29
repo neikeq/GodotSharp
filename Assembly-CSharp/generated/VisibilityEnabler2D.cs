@@ -50,6 +50,13 @@ public class VisibilityEnabler2D : VisibilityNotifier2D {
 
 
 
+  public VisibilityEnabler2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_VisibilityEnabler2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_enabler(int enabler, bool enabled) {
     GodotEnginePINVOKE.VisibilityEnabler2D_set_enabler(swigCPtr, enabler, enabled);
   }
@@ -57,13 +64,6 @@ public class VisibilityEnabler2D : VisibilityNotifier2D {
   public bool is_enabler_enabled(int enabler) {
     bool ret = GodotEnginePINVOKE.VisibilityEnabler2D_is_enabler_enabled(swigCPtr, enabler);
     return ret;
-  }
-
-  public VisibilityEnabler2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_VisibilityEnabler2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

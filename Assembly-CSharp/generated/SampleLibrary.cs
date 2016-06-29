@@ -47,6 +47,13 @@ public class SampleLibrary : Resource {
 
 
 
+  public SampleLibrary() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SampleLibrary());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_sample(string name, Sample sample) {
     GodotEnginePINVOKE.SampleLibrary_add_sample(swigCPtr, name, Sample.getCPtr(sample));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -92,13 +99,6 @@ public class SampleLibrary : Resource {
     float ret = GodotEnginePINVOKE.SampleLibrary_sample_get_pitch_scale(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public SampleLibrary() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SampleLibrary());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

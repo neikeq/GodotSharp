@@ -47,6 +47,13 @@ public class SurfaceTool : Reference {
 
 
 
+  public SurfaceTool() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SurfaceTool());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void begin(int primitive) {
     GodotEnginePINVOKE.SurfaceTool_begin(swigCPtr, primitive);
   }
@@ -159,13 +166,6 @@ public class SurfaceTool : Reference {
 
   public void clear() {
     GodotEnginePINVOKE.SurfaceTool_clear(swigCPtr);
-  }
-
-  public SurfaceTool() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SurfaceTool());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

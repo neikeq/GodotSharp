@@ -47,6 +47,13 @@ public class DynamicFontData : Resource {
 
 
 
+  public DynamicFontData() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_DynamicFontData());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_font_path(string path) {
     GodotEnginePINVOKE.DynamicFontData_set_font_path(swigCPtr, path);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -55,13 +62,6 @@ public class DynamicFontData : Resource {
   public string get_font_path() {
     string ret = GodotEnginePINVOKE.DynamicFontData_get_font_path(swigCPtr);
     return ret;
-  }
-
-  public DynamicFontData() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_DynamicFontData());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

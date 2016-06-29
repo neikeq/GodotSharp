@@ -43,6 +43,13 @@ public class Navigation : Spatial {
 
 
 
+  public Navigation() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Navigation());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int navmesh_create(NavigationMesh mesh, SWIGTYPE_p_Transform xform, Object owner) {
     int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_0(swigCPtr, NavigationMesh.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform), Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -117,13 +124,6 @@ public class Navigation : Spatial {
   public SWIGTYPE_p_Vector3 get_up_vector() {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Navigation_get_up_vector(swigCPtr), true);
     return ret;
-  }
-
-  public Navigation() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Navigation());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -50,6 +50,13 @@ public class OccluderPolygon2D : Resource {
 
 
 
+  public OccluderPolygon2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_OccluderPolygon2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_closed(bool closed) {
     GodotEnginePINVOKE.OccluderPolygon2D_set_closed(swigCPtr, closed);
   }
@@ -76,13 +83,6 @@ public class OccluderPolygon2D : Resource {
   public SWIGTYPE_p_Vector2Array get_polygon() {
     SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.OccluderPolygon2D_get_polygon(swigCPtr), true);
     return ret;
-  }
-
-  public OccluderPolygon2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_OccluderPolygon2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

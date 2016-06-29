@@ -59,6 +59,13 @@ public class EditorPlugin : Node {
 
 
 
+  public EditorPlugin() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorPlugin());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void apply_changes() {
     GodotEnginePINVOKE.EditorPlugin_apply_changes(swigCPtr);
   }
@@ -203,13 +210,6 @@ public class EditorPlugin : Node {
     EditorSettings ret = InternalHelpers.UnmanagedGetManaged(cPtr) as EditorSettings;
     return ret;
 }
-
-  public EditorPlugin() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorPlugin());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

@@ -43,6 +43,13 @@ public class ScrollContainer : Container {
 
 
 
+  public ScrollContainer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ScrollContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_enable_h_scroll(bool enable) {
     GodotEnginePINVOKE.ScrollContainer_set_enable_h_scroll(swigCPtr, enable);
   }
@@ -77,13 +84,6 @@ public class ScrollContainer : Container {
   public int get_v_scroll() {
     int ret = GodotEnginePINVOKE.ScrollContainer_get_v_scroll(swigCPtr);
     return ret;
-  }
-
-  public ScrollContainer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ScrollContainer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

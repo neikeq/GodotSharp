@@ -43,6 +43,13 @@ public class AnimatedSprite : Node2D {
 
 
 
+  public AnimatedSprite() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_AnimatedSprite());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_sprite_frames(SpriteFrames sprite_frames) {
     GodotEnginePINVOKE.AnimatedSprite_set_sprite_frames(swigCPtr, SpriteFrames.getCPtr(sprite_frames));
   }
@@ -137,13 +144,6 @@ public class AnimatedSprite : Node2D {
   public SWIGTYPE_p_Color get_modulate() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.AnimatedSprite_get_modulate(swigCPtr), true);
     return ret;
-  }
-
-  public AnimatedSprite() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_AnimatedSprite());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

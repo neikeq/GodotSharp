@@ -55,6 +55,13 @@ public class HingeJoint : Joint {
 
 
 
+  public HingeJoint() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_HingeJoint());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_param(int param, float value) {
     GodotEnginePINVOKE.HingeJoint_set_param(swigCPtr, param, value);
   }
@@ -71,13 +78,6 @@ public class HingeJoint : Joint {
   public bool get_flag(int flag) {
     bool ret = GodotEnginePINVOKE.HingeJoint_get_flag(swigCPtr, flag);
     return ret;
-  }
-
-  public HingeJoint() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_HingeJoint());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

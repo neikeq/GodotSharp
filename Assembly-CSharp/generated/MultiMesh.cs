@@ -47,6 +47,13 @@ public class MultiMesh : Resource {
 
 
 
+  public MultiMesh() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MultiMesh());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_mesh(Mesh mesh) {
     GodotEnginePINVOKE.MultiMesh_set_mesh(swigCPtr, Mesh.getCPtr(mesh));
   }
@@ -100,13 +107,6 @@ public class MultiMesh : Resource {
 
   public void generate_aabb() {
     GodotEnginePINVOKE.MultiMesh_generate_aabb(swigCPtr);
-  }
-
-  public MultiMesh() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MultiMesh());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

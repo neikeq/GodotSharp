@@ -47,6 +47,13 @@ public class CircleShape2D : Shape2D {
 
 
 
+  public CircleShape2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CircleShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_radius(float radius) {
     GodotEnginePINVOKE.CircleShape2D_set_radius(swigCPtr, radius);
   }
@@ -54,13 +61,6 @@ public class CircleShape2D : Shape2D {
   public float get_radius() {
     float ret = GodotEnginePINVOKE.CircleShape2D_get_radius(swigCPtr);
     return ret;
-  }
-
-  public CircleShape2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CircleShape2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

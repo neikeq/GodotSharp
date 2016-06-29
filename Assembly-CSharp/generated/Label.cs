@@ -51,6 +51,13 @@ public class Label : Control {
 
 
 
+  public Label() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Label());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_align(int align) {
     GodotEnginePINVOKE.Label_set_align(swigCPtr, align);
   }
@@ -155,13 +162,6 @@ public class Label : Control {
   public int get_max_lines_visible() {
     int ret = GodotEnginePINVOKE.Label_get_max_lines_visible(swigCPtr);
     return ret;
-  }
-
-  public Label() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Label());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

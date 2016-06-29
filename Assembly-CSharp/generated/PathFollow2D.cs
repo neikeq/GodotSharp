@@ -43,6 +43,13 @@ public class PathFollow2D : Node2D {
 
 
 
+  public PathFollow2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PathFollow2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_offset(float offset) {
     GodotEnginePINVOKE.PathFollow2D_set_offset(swigCPtr, offset);
   }
@@ -104,13 +111,6 @@ public class PathFollow2D : Node2D {
   public bool has_loop() {
     bool ret = GodotEnginePINVOKE.PathFollow2D_has_loop(swigCPtr);
     return ret;
-  }
-
-  public PathFollow2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PathFollow2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

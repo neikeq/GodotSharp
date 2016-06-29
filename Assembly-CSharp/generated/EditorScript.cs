@@ -47,6 +47,13 @@ public class EditorScript : Reference {
 
 
 
+  public EditorScript() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorScript());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _run() {
     GodotEnginePINVOKE.EditorScript__run(swigCPtr);
   }
@@ -61,13 +68,6 @@ public class EditorScript : Reference {
       return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
-  }
-
-  public EditorScript() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorScript());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

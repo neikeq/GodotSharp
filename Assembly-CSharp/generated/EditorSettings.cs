@@ -47,6 +47,13 @@ public class EditorSettings : Resource {
 
 
 
+  public EditorSettings() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorSettings());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void erase(string property) {
     GodotEnginePINVOKE.EditorSettings_erase(swigCPtr, property);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -80,13 +87,6 @@ public class EditorSettings : Resource {
   public SWIGTYPE_p_StringArray get_recent_dirs() {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.EditorSettings_get_recent_dirs(swigCPtr), true);
     return ret;
-  }
-
-  public EditorSettings() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorSettings());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

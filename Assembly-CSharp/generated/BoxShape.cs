@@ -47,6 +47,13 @@ public class BoxShape : Shape {
 
 
 
+  public BoxShape() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_BoxShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_extents(SWIGTYPE_p_Vector3 extents) {
     GodotEnginePINVOKE.BoxShape_set_extents(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(extents));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -55,13 +62,6 @@ public class BoxShape : Shape {
   public SWIGTYPE_p_Vector3 get_extents() {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.BoxShape_get_extents(swigCPtr), true);
     return ret;
-  }
-
-  public BoxShape() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_BoxShape());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

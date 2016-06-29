@@ -43,6 +43,13 @@ public class ProgressBar : Range {
 
 
 
+  public ProgressBar() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ProgressBar());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_percent_visible(bool visible) {
     GodotEnginePINVOKE.ProgressBar_set_percent_visible(swigCPtr, visible);
   }
@@ -50,13 +57,6 @@ public class ProgressBar : Range {
   public bool is_percent_visible() {
     bool ret = GodotEnginePINVOKE.ProgressBar_is_percent_visible(swigCPtr);
     return ret;
-  }
-
-  public ProgressBar() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ProgressBar());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

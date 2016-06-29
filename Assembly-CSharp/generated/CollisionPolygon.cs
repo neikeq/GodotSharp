@@ -43,6 +43,13 @@ public class CollisionPolygon : Spatial {
 
 
 
+  public CollisionPolygon() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CollisionPolygon());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_build_mode(int build_mode) {
     GodotEnginePINVOKE.CollisionPolygon_set_build_mode(swigCPtr, build_mode);
   }
@@ -79,13 +86,6 @@ public class CollisionPolygon : Spatial {
   public int get_collision_object_last_shape() {
     int ret = GodotEnginePINVOKE.CollisionPolygon_get_collision_object_last_shape(swigCPtr);
     return ret;
-  }
-
-  public CollisionPolygon() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CollisionPolygon());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

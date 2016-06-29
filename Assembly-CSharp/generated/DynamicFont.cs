@@ -47,6 +47,13 @@ public class DynamicFont : Font {
 
 
 
+  public DynamicFont() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_DynamicFont());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_font_data(DynamicFontData data) {
     GodotEnginePINVOKE.DynamicFont_set_font_data(swigCPtr, DynamicFontData.getCPtr(data));
   }
@@ -91,13 +98,6 @@ public class DynamicFont : Font {
   public int get_fallback_count() {
     int ret = GodotEnginePINVOKE.DynamicFont_get_fallback_count(swigCPtr);
     return ret;
-  }
-
-  public DynamicFont() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_DynamicFont());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

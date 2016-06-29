@@ -43,6 +43,13 @@ public class TouchScreenButton : Node2D {
 
 
 
+  public TouchScreenButton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TouchScreenButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_texture(Object texture) {
     GodotEnginePINVOKE.TouchScreenButton_set_texture(swigCPtr, Object.getCPtr(texture));
   }
@@ -110,13 +117,6 @@ public class TouchScreenButton : Node2D {
   public bool is_pressed() {
     bool ret = GodotEnginePINVOKE.TouchScreenButton_is_pressed(swigCPtr);
     return ret;
-  }
-
-  public TouchScreenButton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TouchScreenButton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

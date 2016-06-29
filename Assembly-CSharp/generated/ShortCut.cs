@@ -47,6 +47,13 @@ public class ShortCut : Resource {
 
 
 
+  public ShortCut() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ShortCut());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shortcut(SWIGTYPE_p_InputEvent arg0) {
     GodotEnginePINVOKE.ShortCut_set_shortcut(swigCPtr, SWIGTYPE_p_InputEvent.getCPtr(arg0));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -71,13 +78,6 @@ public class ShortCut : Resource {
   public string get_as_text() {
     string ret = GodotEnginePINVOKE.ShortCut_get_as_text(swigCPtr);
     return ret;
-  }
-
-  public ShortCut() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ShortCut());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

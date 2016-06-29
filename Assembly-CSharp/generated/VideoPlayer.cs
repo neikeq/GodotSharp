@@ -43,6 +43,13 @@ public class VideoPlayer : Control {
 
 
 
+  public VideoPlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_VideoPlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_stream(VideoStream stream) {
     GodotEnginePINVOKE.VideoPlayer_set_stream(swigCPtr, VideoStream.getCPtr(stream));
   }
@@ -148,13 +155,6 @@ public class VideoPlayer : Control {
     Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
 }
-
-  public VideoPlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_VideoPlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

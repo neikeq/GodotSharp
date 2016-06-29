@@ -43,6 +43,13 @@ public class VisibilityNotifier2D : Node2D {
 
 
 
+  public VisibilityNotifier2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_VisibilityNotifier2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_rect(SWIGTYPE_p_Rect2 rect) {
     GodotEnginePINVOKE.VisibilityNotifier2D_set_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -56,13 +63,6 @@ public class VisibilityNotifier2D : Node2D {
   public bool is_on_screen() {
     bool ret = GodotEnginePINVOKE.VisibilityNotifier2D_is_on_screen(swigCPtr);
     return ret;
-  }
-
-  public VisibilityNotifier2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_VisibilityNotifier2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

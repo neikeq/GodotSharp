@@ -47,6 +47,13 @@ public class Semaphore : Reference {
 
 
 
+  public Semaphore() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Semaphore());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int wait() {
     int ret = GodotEnginePINVOKE.Semaphore_wait(swigCPtr);
     return ret;
@@ -55,13 +62,6 @@ public class Semaphore : Reference {
   public int post() {
     int ret = GodotEnginePINVOKE.Semaphore_post(swigCPtr);
     return ret;
-  }
-
-  public Semaphore() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Semaphore());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

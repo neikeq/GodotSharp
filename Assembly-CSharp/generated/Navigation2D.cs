@@ -43,6 +43,13 @@ public class Navigation2D : Node2D {
 
 
 
+  public Navigation2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Navigation2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int navpoly_create(NavigationPolygon mesh, Matrix32 xform, Object owner) {
     int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform.elements, Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -89,13 +96,6 @@ public class Navigation2D : Node2D {
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public Navigation2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Navigation2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

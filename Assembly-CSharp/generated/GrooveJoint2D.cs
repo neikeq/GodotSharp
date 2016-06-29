@@ -43,6 +43,13 @@ public class GrooveJoint2D : Joint2D {
 
 
 
+  public GrooveJoint2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_GrooveJoint2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_length(float length) {
     GodotEnginePINVOKE.GrooveJoint2D_set_length(swigCPtr, length);
   }
@@ -59,13 +66,6 @@ public class GrooveJoint2D : Joint2D {
   public float get_initial_offset() {
     float ret = GodotEnginePINVOKE.GrooveJoint2D_get_initial_offset(swigCPtr);
     return ret;
-  }
-
-  public GrooveJoint2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_GrooveJoint2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

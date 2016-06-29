@@ -43,6 +43,13 @@ public class ImmediateGeometry : GeometryInstance {
 
 
 
+  public ImmediateGeometry() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ImmediateGeometry());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void begin(int primitive, Texture texture) {
     GodotEnginePINVOKE.ImmediateGeometry_begin(swigCPtr, primitive, Texture.getCPtr(texture));
   }
@@ -87,13 +94,6 @@ public class ImmediateGeometry : GeometryInstance {
 
   public void clear() {
     GodotEnginePINVOKE.ImmediateGeometry_clear(swigCPtr);
-  }
-
-  public ImmediateGeometry() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ImmediateGeometry());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

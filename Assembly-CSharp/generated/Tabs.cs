@@ -49,6 +49,13 @@ public class Tabs : Control {
 
 
 
+  public Tabs() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Tabs());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int get_tab_count() {
     int ret = GodotEnginePINVOKE.Tabs_get_tab_count(swigCPtr);
     return ret;
@@ -105,13 +112,6 @@ public class Tabs : Control {
 
   public void ensure_tab_visible(int idx) {
     GodotEnginePINVOKE.Tabs_ensure_tab_visible(swigCPtr, idx);
-  }
-
-  public Tabs() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Tabs());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

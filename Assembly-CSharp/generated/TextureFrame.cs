@@ -50,6 +50,13 @@ public class TextureFrame : Control {
 
 
 
+  public TextureFrame() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TextureFrame());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_texture(Object texture) {
     GodotEnginePINVOKE.TextureFrame_set_texture(swigCPtr, Object.getCPtr(texture));
   }
@@ -88,13 +95,6 @@ public class TextureFrame : Control {
   public int get_stretch_mode() {
     int ret = GodotEnginePINVOKE.TextureFrame_get_stretch_mode(swigCPtr);
     return ret;
-  }
-
-  public TextureFrame() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TextureFrame());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

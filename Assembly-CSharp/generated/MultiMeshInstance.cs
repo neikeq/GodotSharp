@@ -43,6 +43,13 @@ public class MultiMeshInstance : GeometryInstance {
 
 
 
+  public MultiMeshInstance() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MultiMeshInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_multimesh(Object multimesh) {
     GodotEnginePINVOKE.MultiMeshInstance_set_multimesh(swigCPtr, Object.getCPtr(multimesh));
   }
@@ -53,13 +60,6 @@ public class MultiMeshInstance : GeometryInstance {
       return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
-  }
-
-  public MultiMeshInstance() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MultiMeshInstance());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -44,6 +44,13 @@ public class Skeleton : Spatial {
 
 
 
+  public Skeleton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Skeleton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_bone(string name) {
     GodotEnginePINVOKE.Skeleton_add_bone(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -147,13 +154,6 @@ public class Skeleton : Spatial {
   public SWIGTYPE_p_Transform get_bone_transform(int bone_idx) {
     SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Skeleton_get_bone_transform(swigCPtr, bone_idx), true);
     return ret;
-  }
-
-  public Skeleton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Skeleton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

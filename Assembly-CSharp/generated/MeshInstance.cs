@@ -43,6 +43,13 @@ public class MeshInstance : GeometryInstance {
 
 
 
+  public MeshInstance() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MeshInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_mesh(Mesh mesh) {
     GodotEnginePINVOKE.MeshInstance_set_mesh(swigCPtr, Mesh.getCPtr(mesh));
   }
@@ -76,13 +83,6 @@ public class MeshInstance : GeometryInstance {
 
   public void create_convex_collision() {
     GodotEnginePINVOKE.MeshInstance_create_convex_collision(swigCPtr);
-  }
-
-  public MeshInstance() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MeshInstance());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

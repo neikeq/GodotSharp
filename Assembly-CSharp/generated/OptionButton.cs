@@ -43,6 +43,13 @@ public class OptionButton : Button {
 
 
 
+  public OptionButton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_OptionButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_item(string label, int id) {
     GodotEnginePINVOKE.OptionButton_add_item__SWIG_0(swigCPtr, label, id);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -140,13 +147,6 @@ public class OptionButton : Button {
 
   public void remove_item(int idx) {
     GodotEnginePINVOKE.OptionButton_remove_item(swigCPtr, idx);
-  }
-
-  public OptionButton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_OptionButton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

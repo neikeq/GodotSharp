@@ -47,6 +47,13 @@ public class NavigationMesh : Resource {
 
 
 
+  public NavigationMesh() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_NavigationMesh());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_vertices(SWIGTYPE_p_Vector3Array vertices) {
     GodotEnginePINVOKE.NavigationMesh_set_vertices(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(vertices));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -74,13 +81,6 @@ public class NavigationMesh : Resource {
 
   public void clear_polygons() {
     GodotEnginePINVOKE.NavigationMesh_clear_polygons(swigCPtr);
-  }
-
-  public NavigationMesh() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_NavigationMesh());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

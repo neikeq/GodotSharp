@@ -47,15 +47,15 @@ public class EditorScenePostImport : Reference {
 
 
 
-  public void post_import(Object scene) {
-    GodotEnginePINVOKE.EditorScenePostImport_post_import(swigCPtr, Object.getCPtr(scene));
-  }
-
   public EditorScenePostImport() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorScenePostImport());
       InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
+  }
+
+  public void post_import(Object scene) {
+    GodotEnginePINVOKE.EditorScenePostImport_post_import(swigCPtr, Object.getCPtr(scene));
   }
 
 }

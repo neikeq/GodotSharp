@@ -43,6 +43,13 @@ public class Room : VisualInstance {
 
 
 
+  public Room() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Room());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_room(Room room) {
     GodotEnginePINVOKE.Room_set_room(swigCPtr, Room.getCPtr(room));
   }
@@ -66,13 +73,6 @@ public class Room : VisualInstance {
   public bool is_simulating_acoustics() {
     bool ret = GodotEnginePINVOKE.Room_is_simulating_acoustics(swigCPtr);
     return ret;
-  }
-
-  public Room() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Room());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

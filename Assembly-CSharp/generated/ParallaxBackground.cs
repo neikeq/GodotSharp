@@ -43,6 +43,13 @@ public class ParallaxBackground : CanvasLayer {
 
 
 
+  public ParallaxBackground() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ParallaxBackground());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_scroll_offset(Vector2 ofs) {
     GodotEnginePINVOKE.ParallaxBackground_set_scroll_offset(swigCPtr, ref ofs);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -100,13 +107,6 @@ public class ParallaxBackground : CanvasLayer {
   public bool is_ignore_camera_zoom() {
     bool ret = GodotEnginePINVOKE.ParallaxBackground_is_ignore_camera_zoom(swigCPtr);
     return ret;
-  }
-
-  public ParallaxBackground() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ParallaxBackground());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

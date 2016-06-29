@@ -43,6 +43,13 @@ public class EventPlayer : Node {
 
 
 
+  public EventPlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EventPlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_stream(EventStream stream) {
     GodotEnginePINVOKE.EventPlayer_set_stream(swigCPtr, EventStream.getCPtr(stream));
   }
@@ -167,13 +174,6 @@ public class EventPlayer : Node {
   public float get_channel_last_note_time(int channel) {
     float ret = GodotEnginePINVOKE.EventPlayer_get_channel_last_note_time(swigCPtr, channel);
     return ret;
-  }
-
-  public EventPlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EventPlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

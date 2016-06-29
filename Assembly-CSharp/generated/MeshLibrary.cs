@@ -47,6 +47,13 @@ public class MeshLibrary : Resource {
 
 
 
+  public MeshLibrary() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MeshLibrary());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void create_item(int id) {
     GodotEnginePINVOKE.MeshLibrary_create_item(swigCPtr, id);
   }
@@ -113,13 +120,6 @@ public class MeshLibrary : Resource {
   public int get_last_unused_item_id() {
     int ret = GodotEnginePINVOKE.MeshLibrary_get_last_unused_item_id(swigCPtr);
     return ret;
-  }
-
-  public MeshLibrary() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MeshLibrary());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

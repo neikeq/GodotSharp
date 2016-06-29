@@ -47,6 +47,13 @@ public class SpriteFrames : Resource {
 
 
 
+  public SpriteFrames() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SpriteFrames());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_animation(string anim) {
     GodotEnginePINVOKE.SpriteFrames_add_animation(swigCPtr, anim);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -132,13 +139,6 @@ public class SpriteFrames : Resource {
 
   public void clear_all() {
     GodotEnginePINVOKE.SpriteFrames_clear_all(swigCPtr);
-  }
-
-  public SpriteFrames() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SpriteFrames());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

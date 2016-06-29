@@ -47,6 +47,13 @@ public class PathFollow : Spatial {
 
 
 
+  public PathFollow() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PathFollow());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_offset(float offset) {
     GodotEnginePINVOKE.PathFollow_set_offset(swigCPtr, offset);
   }
@@ -108,13 +115,6 @@ public class PathFollow : Spatial {
   public bool has_loop() {
     bool ret = GodotEnginePINVOKE.PathFollow_has_loop(swigCPtr);
     return ret;
-  }
-
-  public PathFollow() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PathFollow());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

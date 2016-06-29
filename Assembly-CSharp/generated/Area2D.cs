@@ -43,6 +43,13 @@ public class Area2D : CollisionObject2D {
 
 
 
+  public Area2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Area2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_space_override_mode(int enable) {
     GodotEnginePINVOKE.Area2D_set_space_override_mode(swigCPtr, enable);
   }
@@ -188,13 +195,6 @@ public class Area2D : CollisionObject2D {
   public bool overlaps_area(Object area) {
     bool ret = GodotEnginePINVOKE.Area2D_overlaps_area(swigCPtr, Object.getCPtr(area));
     return ret;
-  }
-
-  public Area2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Area2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

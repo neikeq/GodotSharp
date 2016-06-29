@@ -56,6 +56,13 @@ public class Animation : Resource {
 
 
 
+  public Animation() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Animation());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int add_track(int type, int at_pos) {
     int ret = GodotEnginePINVOKE.Animation_add_track__SWIG_0(swigCPtr, type, at_pos);
     return ret;
@@ -256,13 +263,6 @@ public class Animation : Resource {
 
   public void clear() {
     GodotEnginePINVOKE.Animation_clear(swigCPtr);
-  }
-
-  public Animation() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Animation());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

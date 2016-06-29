@@ -46,6 +46,13 @@ public class BackBufferCopy : Node2D {
 
 
 
+  public BackBufferCopy() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_BackBufferCopy());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_rect(SWIGTYPE_p_Rect2 rect) {
     GodotEnginePINVOKE.BackBufferCopy_set_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -63,13 +70,6 @@ public class BackBufferCopy : Node2D {
   public int get_copy_mode() {
     int ret = GodotEnginePINVOKE.BackBufferCopy_get_copy_mode(swigCPtr);
     return ret;
-  }
-
-  public BackBufferCopy() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_BackBufferCopy());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class ParticleAttractor2D : Node2D {
 
 
 
+  public ParticleAttractor2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ParticleAttractor2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_enabled(bool enabled) {
     GodotEnginePINVOKE.ParticleAttractor2D_set_enabled(swigCPtr, enabled);
   }
@@ -96,13 +103,6 @@ public class ParticleAttractor2D : Node2D {
   public NodePath get_particles_path() {
     NodePath ret = new NodePath(GodotEnginePINVOKE.ParticleAttractor2D_get_particles_path(swigCPtr), true);
     return ret;
-  }
-
-  public ParticleAttractor2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ParticleAttractor2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

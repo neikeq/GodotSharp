@@ -49,6 +49,13 @@ public class Tree : Control {
 
 
 
+  public Tree() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Tree());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void clear() {
     GodotEnginePINVOKE.Tree_clear(swigCPtr);
   }
@@ -238,13 +245,6 @@ public class Tree : Control {
   public bool get_single_select_cell_editing_only_when_already_selected() {
     bool ret = GodotEnginePINVOKE.Tree_get_single_select_cell_editing_only_when_already_selected(swigCPtr);
     return ret;
-  }
-
-  public Tree() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Tree());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -47,6 +47,13 @@ public class RayShape2D : Shape2D {
 
 
 
+  public RayShape2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RayShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_length(float length) {
     GodotEnginePINVOKE.RayShape2D_set_length(swigCPtr, length);
   }
@@ -54,13 +61,6 @@ public class RayShape2D : Shape2D {
   public float get_length() {
     float ret = GodotEnginePINVOKE.RayShape2D_get_length(swigCPtr);
     return ret;
-  }
-
-  public RayShape2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RayShape2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

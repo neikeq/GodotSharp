@@ -47,6 +47,13 @@ public class Spatial : Node {
 
 
 
+  public Spatial() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Spatial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_transform(SWIGTYPE_p_Transform local) {
     GodotEnginePINVOKE.Spatial_set_transform(swigCPtr, SWIGTYPE_p_Transform.getCPtr(local));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -231,13 +238,6 @@ public class Spatial : Node {
   public void look_at_from_pos(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 target, SWIGTYPE_p_Vector3 up) {
     GodotEnginePINVOKE.Spatial_look_at_from_pos(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(target), SWIGTYPE_p_Vector3.getCPtr(up));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public Spatial() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Spatial());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

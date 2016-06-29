@@ -46,6 +46,13 @@ public class Button : BaseButton {
 
 
 
+  public Button() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Button());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_text(string text) {
     GodotEnginePINVOKE.Button_set_text(swigCPtr, text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -93,13 +100,6 @@ public class Button : BaseButton {
   public bool is_flat() {
     bool ret = GodotEnginePINVOKE.Button_is_flat(swigCPtr);
     return ret;
-  }
-
-  public Button() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Button());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

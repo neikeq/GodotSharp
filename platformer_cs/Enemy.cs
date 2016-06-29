@@ -15,28 +15,13 @@ public class Enemy : RigidBody2D
 	private RayCast2D rc_right;
 	private int WALK_SPEED = 50;
 
-	/*Vector2 test_get_vector()
+	new void _ready()
 	{
-		return new Vector2 (25, 80);
-	}
-
-	Node test_get_this()
-	{
-		return this;
-	}*/
-
-    void _ready()
-    {
 		rc_left = get_node("raycast_left") as RayCast2D;
 		rc_right = get_node("raycast_right") as RayCast2D;
+	}
 
-		/*Vector2 test_vector = call ("test_get_vector");
-		Console.WriteLine ("test_get_vector: " + (test_vector.x == 25 && test_vector.y == 80 ? "Success " : "Fail"));
-		Enemy test_this = ((GodotEngine.Object)call ("test_get_this")) as Enemy;
-		Console.WriteLine ("test_get_this: " + (test_this != null ? "Success " : "Fail"));*/
-    }
-
-	void _integrate_forces(Physics2DDirectBodyState s)
+	new void _integrate_forces(Physics2DDirectBodyState s)
 	{
 		Vector2 lv = s.get_linear_velocity();
 		string new_anim = current_anim;

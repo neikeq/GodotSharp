@@ -47,6 +47,13 @@ public class PackedScene : Resource {
 
 
 
+  public PackedScene() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PackedScene());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int pack(Node path) {
     int ret = GodotEnginePINVOKE.PackedScene_pack(swigCPtr, Node.getCPtr(path));
     return ret;
@@ -80,13 +87,6 @@ public class PackedScene : Resource {
     SceneState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as SceneState;
     return ret;
 }
-
-  public PackedScene() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PackedScene());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

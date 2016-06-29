@@ -53,6 +53,13 @@ public class TextEdit : Control {
 
 
 
+  public TextEdit() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TextEdit());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_text(string text) {
     GodotEnginePINVOKE.TextEdit_set_text(swigCPtr, text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -255,13 +262,6 @@ public class TextEdit : Control {
       return null;
     PopupMenu ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PopupMenu;
     return ret;
-  }
-
-  public TextEdit() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TextEdit());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

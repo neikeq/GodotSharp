@@ -47,6 +47,13 @@ public class GDScript : Script {
 
 
 
+  public GDScript() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_GDScript());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _new() {
     GodotEnginePINVOKE.GDScript__new(swigCPtr);
   }
@@ -54,13 +61,6 @@ public class GDScript : Script {
   public SWIGTYPE_p_RawArray get_as_byte_code() {
     SWIGTYPE_p_RawArray ret = new SWIGTYPE_p_RawArray(GodotEnginePINVOKE.GDScript_get_as_byte_code(swigCPtr), true);
     return ret;
-  }
-
-  public GDScript() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_GDScript());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

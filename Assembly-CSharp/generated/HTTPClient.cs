@@ -115,6 +115,13 @@ public class HTTPClient : Reference {
 
 
 
+  public HTTPClient() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_HTTPClient());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int connect(string host, int port, bool use_ssl, bool verify_host) {
     int ret = GodotEnginePINVOKE.HTTPClient_connect__SWIG_0(swigCPtr, host, port, use_ssl, verify_host);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -241,13 +248,6 @@ public class HTTPClient : Reference {
     string ret = GodotEnginePINVOKE.HTTPClient_query_string_from_dict(swigCPtr, SWIGTYPE_p_Dictionary.getCPtr(fields));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public HTTPClient() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_HTTPClient());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

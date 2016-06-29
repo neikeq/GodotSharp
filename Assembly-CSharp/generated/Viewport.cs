@@ -47,6 +47,13 @@ public class Viewport : Node {
 
 
 
+  public Viewport() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Viewport());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_rect(SWIGTYPE_p_Rect2 rect) {
     GodotEnginePINVOKE.Viewport_set_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -327,13 +334,6 @@ public class Viewport : Node {
   public bool is_input_disabled() {
     bool ret = GodotEnginePINVOKE.Viewport_is_input_disabled(swigCPtr);
     return ret;
-  }
-
-  public Viewport() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Viewport());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

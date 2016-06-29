@@ -43,6 +43,13 @@ public class Listener : Spatial {
 
 
 
+  public Listener() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Listener());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void make_current() {
     GodotEnginePINVOKE.Listener_make_current(swigCPtr);
   }
@@ -59,13 +66,6 @@ public class Listener : Spatial {
   public SWIGTYPE_p_Transform get_listener_transform() {
     SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Listener_get_listener_transform(swigCPtr), true);
     return ret;
-  }
-
-  public Listener() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Listener());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

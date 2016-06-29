@@ -43,19 +43,19 @@ public class MenuButton : Button {
 
 
 
+  public MenuButton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MenuButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public PopupMenu get_popup() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.MenuButton_get_popup(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
       return null;
     PopupMenu ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PopupMenu;
     return ret;
-  }
-
-  public MenuButton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MenuButton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

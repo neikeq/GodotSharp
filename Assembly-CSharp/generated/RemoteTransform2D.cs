@@ -43,6 +43,13 @@ public class RemoteTransform2D : Node2D {
 
 
 
+  public RemoteTransform2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RemoteTransform2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_remote_node(NodePath path) {
     GodotEnginePINVOKE.RemoteTransform2D_set_remote_node(swigCPtr, NodePath.getCPtr(path));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -51,13 +58,6 @@ public class RemoteTransform2D : Node2D {
   public NodePath get_remote_node() {
     NodePath ret = new NodePath(GodotEnginePINVOKE.RemoteTransform2D_get_remote_node(swigCPtr), true);
     return ret;
-  }
-
-  public RemoteTransform2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RemoteTransform2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

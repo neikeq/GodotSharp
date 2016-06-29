@@ -43,6 +43,13 @@ public class KinematicBody2D : PhysicsBody2D {
 
 
 
+  public KinematicBody2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_KinematicBody2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public Vector2 move(Vector2 rel_vec) {
     Vector2 ret = GodotEnginePINVOKE.KinematicBody2D_move(swigCPtr, ref rel_vec);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -115,13 +122,6 @@ public class KinematicBody2D : PhysicsBody2D {
   public float get_collision_margin() {
     float ret = GodotEnginePINVOKE.KinematicBody2D_get_collision_margin(swigCPtr);
     return ret;
-  }
-
-  public KinematicBody2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_KinematicBody2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class ButtonGroup : BoxContainer {
 
 
 
+  public ButtonGroup() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ButtonGroup());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public BaseButton get_pressed_button() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ButtonGroup_get_pressed_button(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
@@ -71,13 +78,6 @@ public class ButtonGroup : BoxContainer {
 
   public void set_pressed_button(BaseButton button) {
     GodotEnginePINVOKE.ButtonGroup_set_pressed_button(swigCPtr, BaseButton.getCPtr(button));
-  }
-
-  public ButtonGroup() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ButtonGroup());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

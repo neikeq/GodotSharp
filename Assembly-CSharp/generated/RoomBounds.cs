@@ -47,6 +47,13 @@ public class RoomBounds : Resource {
 
 
 
+  public RoomBounds() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RoomBounds());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_bounds(SWIGTYPE_p_Dictionary bsp_tree) {
     GodotEnginePINVOKE.RoomBounds_set_bounds(swigCPtr, SWIGTYPE_p_Dictionary.getCPtr(bsp_tree));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -73,13 +80,6 @@ public class RoomBounds : Resource {
 
   public void regenerate_bsp_cubic() {
     GodotEnginePINVOKE.RoomBounds_regenerate_bsp_cubic(swigCPtr);
-  }
-
-  public RoomBounds() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RoomBounds());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

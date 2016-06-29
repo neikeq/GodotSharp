@@ -29,17 +29,13 @@ public class Player : RigidBody2D
 	float floor_h_velocity = 0.0f;
 	PackedScene enemy;
 
-	TestResource _test_res;
-
-    void _ready()
-    {
-		TestResource test_res = new TestResource ();
-		_test_res = new TestResource ();
+	new void _ready()
+	{
 		enemy = ResourceLoader.Instance.load("res://enemy.tscn") as PackedScene;
 		bullet = ResourceLoader.Instance.load("res://bullet.tscn") as PackedScene;
-    }
+	}
 
-	void _integrate_forces(Physics2DDirectBodyState s)
+	new void _integrate_forces(Physics2DDirectBodyState s)
 	{
 		Vector2 lv = s.get_linear_velocity();
 		float step = s.get_step();
@@ -258,16 +254,5 @@ public class Player : RigidBody2D
 		// Finally, apply gravity and set back the linear velocity
 		lv += s.get_total_gravity() * step;
 		s.set_linear_velocity(lv);
-	}
-}
-
-public class TestResource : Resource
-{
-	void _notification(int what)
-	{
-		if (what == 1)
-		{
-			Console.WriteLine ("PREDELETE!");
-		}
 	}
 }

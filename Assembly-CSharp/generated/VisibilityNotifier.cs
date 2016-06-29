@@ -43,6 +43,13 @@ public class VisibilityNotifier : Spatial {
 
 
 
+  public VisibilityNotifier() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_VisibilityNotifier());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_aabb(SWIGTYPE_p_AABB rect) {
     GodotEnginePINVOKE.VisibilityNotifier_set_aabb(swigCPtr, SWIGTYPE_p_AABB.getCPtr(rect));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -56,13 +63,6 @@ public class VisibilityNotifier : Spatial {
   public bool is_on_screen() {
     bool ret = GodotEnginePINVOKE.VisibilityNotifier_is_on_screen(swigCPtr);
     return ret;
-  }
-
-  public VisibilityNotifier() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_VisibilityNotifier());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

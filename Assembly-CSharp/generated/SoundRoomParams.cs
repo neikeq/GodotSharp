@@ -43,6 +43,13 @@ public class SoundRoomParams : Node {
 
 
 
+  public SoundRoomParams() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SoundRoomParams());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_param(int param, float value) {
     GodotEnginePINVOKE.SoundRoomParams_set_param(swigCPtr, param, value);
   }
@@ -68,13 +75,6 @@ public class SoundRoomParams : Node {
   public bool is_forcing_params_to_all_sources() {
     bool ret = GodotEnginePINVOKE.SoundRoomParams_is_forcing_params_to_all_sources(swigCPtr);
     return ret;
-  }
-
-  public SoundRoomParams() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SoundRoomParams());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

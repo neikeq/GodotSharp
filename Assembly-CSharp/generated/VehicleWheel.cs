@@ -43,6 +43,13 @@ public class VehicleWheel : Spatial {
 
 
 
+  public VehicleWheel() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_VehicleWheel());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_radius(float length) {
     GodotEnginePINVOKE.VehicleWheel_set_radius(swigCPtr, length);
   }
@@ -131,13 +138,6 @@ public class VehicleWheel : Spatial {
   public float get_friction_slip() {
     float ret = GodotEnginePINVOKE.VehicleWheel_get_friction_slip(swigCPtr);
     return ret;
-  }
-
-  public VehicleWheel() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_VehicleWheel());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

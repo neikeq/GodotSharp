@@ -47,6 +47,13 @@ public class ConfigFile : Reference {
 
 
 
+  public ConfigFile() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ConfigFile());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_value(string section, string key, Variant value) {
     GodotEnginePINVOKE.ConfigFile_set_value(swigCPtr, section, key, Variant.getCPtr(value));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -97,13 +104,6 @@ public class ConfigFile : Reference {
     int ret = GodotEnginePINVOKE.ConfigFile_save(swigCPtr, path);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public ConfigFile() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ConfigFile());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

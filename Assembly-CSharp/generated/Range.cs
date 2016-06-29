@@ -43,6 +43,13 @@ public class Range : Control {
 
 
 
+  public Range() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Range());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public float get_val() {
     float ret = GodotEnginePINVOKE.Range_get_val(swigCPtr);
     return ret;
@@ -130,13 +137,6 @@ public class Range : Control {
 
   public void unshare() {
     GodotEnginePINVOKE.Range_unshare(swigCPtr);
-  }
-
-  public Range() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Range());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

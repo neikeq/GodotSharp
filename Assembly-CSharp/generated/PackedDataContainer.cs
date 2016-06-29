@@ -47,6 +47,13 @@ public class PackedDataContainer : Resource {
 
 
 
+  public PackedDataContainer() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PackedDataContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int pack(Variant value) {
     int ret = GodotEnginePINVOKE.PackedDataContainer_pack(swigCPtr, Variant.getCPtr(value));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -56,13 +63,6 @@ public class PackedDataContainer : Resource {
   public int size() {
     int ret = GodotEnginePINVOKE.PackedDataContainer_size(swigCPtr);
     return ret;
-  }
-
-  public PackedDataContainer() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PackedDataContainer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

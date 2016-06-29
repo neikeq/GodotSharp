@@ -57,6 +57,13 @@ public class SamplePlayer : Node {
 
 
 
+  public SamplePlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SamplePlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_sample_library(SampleLibrary library) {
     GodotEnginePINVOKE.SamplePlayer_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
   }
@@ -325,13 +332,6 @@ public class SamplePlayer : Node {
   public bool is_voice_active(int voice) {
     bool ret = GodotEnginePINVOKE.SamplePlayer_is_voice_active(swigCPtr, voice);
     return ret;
-  }
-
-  public SamplePlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SamplePlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class NavigationMeshInstance : Spatial {
 
 
 
+  public NavigationMeshInstance() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_NavigationMeshInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_navigation_mesh(Object navmesh) {
     GodotEnginePINVOKE.NavigationMeshInstance_set_navigation_mesh(swigCPtr, Object.getCPtr(navmesh));
   }
@@ -62,13 +69,6 @@ public class NavigationMeshInstance : Spatial {
   public bool is_enabled() {
     bool ret = GodotEnginePINVOKE.NavigationMeshInstance_is_enabled(swigCPtr);
     return ret;
-  }
-
-  public NavigationMeshInstance() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_NavigationMeshInstance());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

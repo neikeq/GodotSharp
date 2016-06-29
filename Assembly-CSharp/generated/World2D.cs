@@ -47,6 +47,13 @@ public class World2D : Resource {
 
 
 
+  public World2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_World2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public SWIGTYPE_p_RID get_canvas() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.World2D_get_canvas(swigCPtr), true);
     return ret;
@@ -68,13 +75,6 @@ public class World2D : Resource {
       return null;
     Physics2DDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Physics2DDirectSpaceState;
     return ret;
-  }
-
-  public World2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_World2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

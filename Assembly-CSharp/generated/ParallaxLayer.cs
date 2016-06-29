@@ -43,6 +43,13 @@ public class ParallaxLayer : Node2D {
 
 
 
+  public ParallaxLayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ParallaxLayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_motion_scale(Vector2 scale) {
     GodotEnginePINVOKE.ParallaxLayer_set_motion_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -62,13 +69,6 @@ public class ParallaxLayer : Node2D {
     Vector2 ret = GodotEnginePINVOKE.ParallaxLayer_get_mirroring(swigCPtr);
     return ret;
 }
-
-  public ParallaxLayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ParallaxLayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

@@ -43,6 +43,13 @@ public class NavigationPolygonInstance : Node2D {
 
 
 
+  public NavigationPolygonInstance() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_NavigationPolygonInstance());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_navigation_polygon(NavigationPolygon navpoly) {
     GodotEnginePINVOKE.NavigationPolygonInstance_set_navigation_polygon(swigCPtr, NavigationPolygon.getCPtr(navpoly));
   }
@@ -62,13 +69,6 @@ public class NavigationPolygonInstance : Node2D {
   public bool is_enabled() {
     bool ret = GodotEnginePINVOKE.NavigationPolygonInstance_is_enabled(swigCPtr);
     return ret;
-  }
-
-  public NavigationPolygonInstance() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_NavigationPolygonInstance());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -47,6 +47,13 @@ public class LargeTexture : Texture {
 
 
 
+  public LargeTexture() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_LargeTexture());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int add_piece(Vector2 ofs, Texture texture) {
     int ret = GodotEnginePINVOKE.LargeTexture_add_piece(swigCPtr, ref ofs, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -88,13 +95,6 @@ public class LargeTexture : Texture {
     Texture ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Texture;
     return ret;
 }
-
-  public LargeTexture() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_LargeTexture());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

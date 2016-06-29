@@ -54,6 +54,13 @@ public class LineEdit : Control {
 
 
 
+  public LineEdit() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_LineEdit());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_align(int align) {
     GodotEnginePINVOKE.LineEdit_set_align(swigCPtr, align);
   }
@@ -162,13 +169,6 @@ public class LineEdit : Control {
       return null;
     PopupMenu ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PopupMenu;
     return ret;
-  }
-
-  public LineEdit() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_LineEdit());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

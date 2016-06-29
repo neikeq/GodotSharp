@@ -47,6 +47,13 @@ public class Physics2DTestMotionResult : Reference {
 
 
 
+  public Physics2DTestMotionResult() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Physics2DTestMotionResult());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public Vector2 get_motion() {
     Vector2 ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_motion(swigCPtr);
     return ret;
@@ -93,13 +100,6 @@ public class Physics2DTestMotionResult : Reference {
   public int get_collider_shape() {
     int ret = GodotEnginePINVOKE.Physics2DTestMotionResult_get_collider_shape(swigCPtr);
     return ret;
-  }
-
-  public Physics2DTestMotionResult() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Physics2DTestMotionResult());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

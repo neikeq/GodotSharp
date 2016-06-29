@@ -50,6 +50,13 @@ public class Thread : Reference {
 
 
 
+  public Thread() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Thread());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int start(Object instance, string method, Variant userdata, int priority) {
     int ret = GodotEnginePINVOKE.Thread_start__SWIG_0(swigCPtr, Object.getCPtr(instance), method, Variant.getCPtr(userdata), priority);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -81,13 +88,6 @@ public class Thread : Reference {
   public Variant wait_to_finish() {
     Variant ret = new Variant(GodotEnginePINVOKE.Thread_wait_to_finish(swigCPtr), true);
     return ret;
-  }
-
-  public Thread() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Thread());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

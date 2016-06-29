@@ -61,6 +61,13 @@ public class RichTextLabel : Control {
 
 
 
+  public RichTextLabel() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RichTextLabel());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_text(string text) {
     GodotEnginePINVOKE.RichTextLabel_add_text(swigCPtr, text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -224,13 +231,6 @@ public class RichTextLabel : Control {
   public bool is_using_bbcode() {
     bool ret = GodotEnginePINVOKE.RichTextLabel_is_using_bbcode(swigCPtr);
     return ret;
-  }
-
-  public RichTextLabel() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RichTextLabel());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

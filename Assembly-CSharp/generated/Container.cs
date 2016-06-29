@@ -44,6 +44,13 @@ public class Container : Control {
 
 
 
+  public Container() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Container());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void queue_sort() {
     GodotEnginePINVOKE.Container_queue_sort(swigCPtr);
   }
@@ -51,13 +58,6 @@ public class Container : Control {
   public void fit_child_in_rect(Control child, SWIGTYPE_p_Rect2 rect) {
     GodotEnginePINVOKE.Container_fit_child_in_rect(swigCPtr, Control.getCPtr(child), SWIGTYPE_p_Rect2.getCPtr(rect));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public Container() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Container());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

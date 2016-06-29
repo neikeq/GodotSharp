@@ -47,6 +47,13 @@ public class Theme : Resource {
 
 
 
+  public Theme() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Theme());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_icon(string name, string type, Texture texture) {
     GodotEnginePINVOKE.Theme_set_icon(swigCPtr, name, type, Texture.getCPtr(texture));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -221,13 +228,6 @@ public class Theme : Resource {
 
   public void copy_default_theme() {
     GodotEnginePINVOKE.Theme_copy_default_theme(swigCPtr);
-  }
-
-  public Theme() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Theme());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

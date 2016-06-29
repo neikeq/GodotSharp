@@ -54,6 +54,13 @@ public class BakedLight : Resource {
 
 
 
+  public BakedLight() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_BakedLight());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_mode(int mode) {
     GodotEnginePINVOKE.BakedLight_set_mode(swigCPtr, mode);
   }
@@ -276,13 +283,6 @@ public class BakedLight : Resource {
   public bool get_bake_flag(int flag) {
     bool ret = GodotEnginePINVOKE.BakedLight_get_bake_flag(swigCPtr, flag);
     return ret;
-  }
-
-  public BakedLight() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_BakedLight());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

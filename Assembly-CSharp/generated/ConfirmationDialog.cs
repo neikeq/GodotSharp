@@ -43,19 +43,19 @@ public class ConfirmationDialog : AcceptDialog {
 
 
 
+  public ConfirmationDialog() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ConfirmationDialog());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public Button get_cancel() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.ConfirmationDialog_get_cancel(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
       return null;
     Button ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Button;
     return ret;
-  }
-
-  public ConfirmationDialog() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ConfirmationDialog());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

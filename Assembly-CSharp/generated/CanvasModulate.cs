@@ -43,6 +43,13 @@ public class CanvasModulate : Node2D {
 
 
 
+  public CanvasModulate() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CanvasModulate());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_color(SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.CanvasModulate_set_color(swigCPtr, SWIGTYPE_p_Color.getCPtr(color));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -51,13 +58,6 @@ public class CanvasModulate : Node2D {
   public SWIGTYPE_p_Color get_color() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.CanvasModulate_get_color(swigCPtr), true);
     return ret;
-  }
-
-  public CanvasModulate() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CanvasModulate());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

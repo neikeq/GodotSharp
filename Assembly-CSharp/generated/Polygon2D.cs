@@ -43,6 +43,13 @@ public class Polygon2D : Node2D {
 
 
 
+  public Polygon2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Polygon2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_polygon(SWIGTYPE_p_Vector2Array polygon) {
     GodotEnginePINVOKE.Polygon2D_set_polygon(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(polygon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -151,13 +158,6 @@ public class Polygon2D : Node2D {
     Vector2 ret = GodotEnginePINVOKE.Polygon2D_get_offset(swigCPtr);
     return ret;
 }
-
-  public Polygon2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Polygon2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

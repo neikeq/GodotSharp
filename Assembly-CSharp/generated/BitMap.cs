@@ -47,6 +47,13 @@ public class BitMap : Resource {
 
 
 
+  public BitMap() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_BitMap());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void create(Vector2 size) {
     GodotEnginePINVOKE.BitMap_create(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -82,13 +89,6 @@ public class BitMap : Resource {
     Vector2 ret = GodotEnginePINVOKE.BitMap_get_size(swigCPtr);
     return ret;
 }
-
-  public BitMap() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_BitMap());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

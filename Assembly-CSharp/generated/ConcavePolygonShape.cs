@@ -47,6 +47,13 @@ public class ConcavePolygonShape : Shape {
 
 
 
+  public ConcavePolygonShape() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ConcavePolygonShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_faces(SWIGTYPE_p_Vector3Array faces) {
     GodotEnginePINVOKE.ConcavePolygonShape_set_faces(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(faces));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -55,13 +62,6 @@ public class ConcavePolygonShape : Shape {
   public SWIGTYPE_p_Vector3Array get_faces() {
     SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.ConcavePolygonShape_get_faces(swigCPtr), true);
     return ret;
-  }
-
-  public ConcavePolygonShape() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ConcavePolygonShape());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

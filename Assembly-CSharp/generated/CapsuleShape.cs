@@ -47,6 +47,13 @@ public class CapsuleShape : Shape {
 
 
 
+  public CapsuleShape() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CapsuleShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_radius(float radius) {
     GodotEnginePINVOKE.CapsuleShape_set_radius(swigCPtr, radius);
   }
@@ -63,13 +70,6 @@ public class CapsuleShape : Shape {
   public float get_height() {
     float ret = GodotEnginePINVOKE.CapsuleShape_get_height(swigCPtr);
     return ret;
-  }
-
-  public CapsuleShape() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CapsuleShape());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

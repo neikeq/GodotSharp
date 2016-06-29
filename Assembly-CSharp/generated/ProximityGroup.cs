@@ -43,6 +43,13 @@ public class ProximityGroup : Spatial {
 
 
 
+  public ProximityGroup() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ProximityGroup());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_group_name(string name) {
     GodotEnginePINVOKE.ProximityGroup_set_group_name(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -65,13 +72,6 @@ public class ProximityGroup : Spatial {
   public SWIGTYPE_p_Vector3 get_grid_radius() {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.ProximityGroup_get_grid_radius(swigCPtr), true);
     return ret;
-  }
-
-  public ProximityGroup() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ProximityGroup());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

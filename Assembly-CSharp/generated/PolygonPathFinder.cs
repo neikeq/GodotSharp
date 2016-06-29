@@ -47,6 +47,13 @@ public class PolygonPathFinder : Resource {
 
 
 
+  public PolygonPathFinder() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PolygonPathFinder());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void setup(SWIGTYPE_p_Vector2Array points, SWIGTYPE_p_IntArray connections) {
     GodotEnginePINVOKE.PolygonPathFinder_setup(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(points), SWIGTYPE_p_IntArray.getCPtr(connections));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -88,13 +95,6 @@ public class PolygonPathFinder : Resource {
   public SWIGTYPE_p_Rect2 get_bounds() {
     SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.PolygonPathFinder_get_bounds(swigCPtr), true);
     return ret;
-  }
-
-  public PolygonPathFinder() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PolygonPathFinder());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

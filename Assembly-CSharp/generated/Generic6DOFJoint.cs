@@ -62,6 +62,13 @@ public class Generic6DOFJoint : Joint {
 
 
 
+  public Generic6DOFJoint() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Generic6DOFJoint());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_param_x(int param, float value) {
     GodotEnginePINVOKE.Generic6DOFJoint_set_param_x(swigCPtr, param, value);
   }
@@ -114,13 +121,6 @@ public class Generic6DOFJoint : Joint {
   public bool get_flag_z(int flag) {
     bool ret = GodotEnginePINVOKE.Generic6DOFJoint_get_flag_z(swigCPtr, flag);
     return ret;
-  }
-
-  public Generic6DOFJoint() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Generic6DOFJoint());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

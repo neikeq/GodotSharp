@@ -43,6 +43,13 @@ public class Node2D : CanvasItem {
 
 
 
+  public Node2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Node2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_pos(Vector2 pos) {
     GodotEnginePINVOKE.Node2D_set_pos(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -174,13 +181,6 @@ public class Node2D : CanvasItem {
     Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Node2D_get_relative_transform_to_parent(swigCPtr, Object.getCPtr(parent)));
     return ret;
 }
-
-  public Node2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Node2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

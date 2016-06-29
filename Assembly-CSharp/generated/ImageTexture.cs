@@ -50,6 +50,13 @@ public class ImageTexture : Texture {
 
 
 
+  public ImageTexture() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ImageTexture());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void create(int width, int height, int format, int flags) {
     GodotEnginePINVOKE.ImageTexture_create__SWIG_0(swigCPtr, width, height, format, flags);
   }
@@ -125,13 +132,6 @@ public class ImageTexture : Texture {
   public void set_size_override(Vector2 size) {
     GodotEnginePINVOKE.ImageTexture_set_size_override(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public ImageTexture() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ImageTexture());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

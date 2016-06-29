@@ -47,6 +47,13 @@ public class FuncRef : Reference {
 
 
 
+  public FuncRef() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_FuncRef());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void call_func(Variant arg0_, Variant arg1_, Variant arg2_, Variant arg3_, Variant arg4_, Variant arg5_, Variant arg6_, Variant arg7_, Variant arg8_, Variant arg9_) {
     GodotEnginePINVOKE.FuncRef_call_func__SWIG_0(swigCPtr, Variant.getCPtr(arg0_), Variant.getCPtr(arg1_), Variant.getCPtr(arg2_), Variant.getCPtr(arg3_), Variant.getCPtr(arg4_), Variant.getCPtr(arg5_), Variant.getCPtr(arg6_), Variant.getCPtr(arg7_), Variant.getCPtr(arg8_), Variant.getCPtr(arg9_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -108,13 +115,6 @@ public class FuncRef : Reference {
   public void set_function(string name) {
     GodotEnginePINVOKE.FuncRef_set_function(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public FuncRef() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_FuncRef());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

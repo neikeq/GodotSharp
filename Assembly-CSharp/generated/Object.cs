@@ -50,6 +50,85 @@ public class Object : global::System.IDisposable {
 
 
 
+  public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4, Variant p_arg5) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_0(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4), Variant.getCPtr(p_arg5)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_1(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_2(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public Variant call(string p_name, Variant p_arg1, Variant p_arg2) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_3(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public Variant call(string p_name, Variant p_arg1) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_4(swigCPtr, p_name, Variant.getCPtr(p_arg1)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public Variant call(string p_name) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_5(swigCPtr, p_name), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4, Variant p_arg5) {
+    GodotEnginePINVOKE.Object_call_deferred__SWIG_0(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4), Variant.getCPtr(p_arg5));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4) {
+    GodotEnginePINVOKE.Object_call_deferred__SWIG_1(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2, Variant p_arg3) {
+    GodotEnginePINVOKE.Object_call_deferred__SWIG_2(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2) {
+    GodotEnginePINVOKE.Object_call_deferred__SWIG_3(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void call_deferred(string p_method, Variant p_arg1) {
+    GodotEnginePINVOKE.Object_call_deferred__SWIG_4(swigCPtr, p_method, Variant.getCPtr(p_arg1));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void call_deferred(string p_method) {
+    GodotEnginePINVOKE.Object_call_deferred__SWIG_5(swigCPtr, p_method);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant callv(string p_method, SWIGTYPE_p_Array p_args) {
+    Variant ret = new Variant(GodotEnginePINVOKE.Object_callv(swigCPtr, p_method, SWIGTYPE_p_Array.getCPtr(p_args)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+  }
+
+  public Object() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Object());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _get(string property) {
     GodotEnginePINVOKE.Object__get(swigCPtr, property);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -283,85 +362,6 @@ public class Object : global::System.IDisposable {
   public bool is_queued_for_deletion() {
     bool ret = GodotEnginePINVOKE.Object_is_queued_for_deletion(swigCPtr);
     return ret;
-  }
-
-  public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4, Variant p_arg5) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_0(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4), Variant.getCPtr(p_arg5)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_1(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Variant call(string p_name, Variant p_arg1, Variant p_arg2, Variant p_arg3) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_2(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Variant call(string p_name, Variant p_arg1, Variant p_arg2) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_3(swigCPtr, p_name, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Variant call(string p_name, Variant p_arg1) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_4(swigCPtr, p_name, Variant.getCPtr(p_arg1)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Variant call(string p_name) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_call__SWIG_5(swigCPtr, p_name), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4, Variant p_arg5) {
-    GodotEnginePINVOKE.Object_call_deferred__SWIG_0(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4), Variant.getCPtr(p_arg5));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2, Variant p_arg3, Variant p_arg4) {
-    GodotEnginePINVOKE.Object_call_deferred__SWIG_1(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3), Variant.getCPtr(p_arg4));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2, Variant p_arg3) {
-    GodotEnginePINVOKE.Object_call_deferred__SWIG_2(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2), Variant.getCPtr(p_arg3));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public void call_deferred(string p_method, Variant p_arg1, Variant p_arg2) {
-    GodotEnginePINVOKE.Object_call_deferred__SWIG_3(swigCPtr, p_method, Variant.getCPtr(p_arg1), Variant.getCPtr(p_arg2));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public void call_deferred(string p_method, Variant p_arg1) {
-    GodotEnginePINVOKE.Object_call_deferred__SWIG_4(swigCPtr, p_method, Variant.getCPtr(p_arg1));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public void call_deferred(string p_method) {
-    GodotEnginePINVOKE.Object_call_deferred__SWIG_5(swigCPtr, p_method);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public Variant callv(string p_method, SWIGTYPE_p_Array p_args) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Object_callv(swigCPtr, p_method, SWIGTYPE_p_Array.getCPtr(p_args)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Object() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Object());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -50,6 +50,13 @@ public class RigidBody2D : PhysicsBody2D {
 
 
 
+  public RigidBody2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RigidBody2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _integrate_forces(Physics2DDirectBodyState state) {
     GodotEnginePINVOKE.RigidBody2D__integrate_forces(swigCPtr, Physics2DDirectBodyState.getCPtr(state));
   }
@@ -263,13 +270,6 @@ public class RigidBody2D : PhysicsBody2D {
   public SWIGTYPE_p_Array get_colliding_bodies() {
     SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.RigidBody2D_get_colliding_bodies(swigCPtr), true);
     return ret;
-  }
-
-  public RigidBody2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RigidBody2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

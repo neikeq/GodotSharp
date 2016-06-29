@@ -47,6 +47,13 @@ public class StyleBoxTexture : StyleBox {
 
 
 
+  public StyleBoxTexture() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_StyleBoxTexture());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_texture(Texture texture) {
     GodotEnginePINVOKE.StyleBoxTexture_set_texture(swigCPtr, Texture.getCPtr(texture));
   }
@@ -94,13 +101,6 @@ public class StyleBoxTexture : StyleBox {
   public bool get_draw_center() {
     bool ret = GodotEnginePINVOKE.StyleBoxTexture_get_draw_center(swigCPtr);
     return ret;
-  }
-
-  public StyleBoxTexture() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_StyleBoxTexture());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

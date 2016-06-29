@@ -47,19 +47,19 @@ public class WeakRef : Reference {
 
 
 
+  public WeakRef() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_WeakRef());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public Object get_ref() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.WeakRef_get_ref(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
       return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
-  }
-
-  public WeakRef() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_WeakRef());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

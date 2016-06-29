@@ -43,6 +43,13 @@ public class Portal : VisualInstance {
 
 
 
+  public Portal() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Portal());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shape(SWIGTYPE_p_Vector2Array points) {
     GodotEnginePINVOKE.Portal_set_shape(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(points));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -88,13 +95,6 @@ public class Portal : VisualInstance {
   public float get_connect_range() {
     float ret = GodotEnginePINVOKE.Portal_get_connect_range(swigCPtr);
     return ret;
-  }
-
-  public Portal() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Portal());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

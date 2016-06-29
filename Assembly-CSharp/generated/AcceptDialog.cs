@@ -43,6 +43,13 @@ public class AcceptDialog : WindowDialog {
 
 
 
+  public AcceptDialog() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_AcceptDialog());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public Object get_ok() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.AcceptDialog_get_ok(swigCPtr);
     if (cPtr == global::System.IntPtr.Zero)
@@ -120,13 +127,6 @@ public class AcceptDialog : WindowDialog {
   public string get_text() {
     string ret = GodotEnginePINVOKE.AcceptDialog_get_text(swigCPtr);
     return ret;
-  }
-
-  public AcceptDialog() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_AcceptDialog());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

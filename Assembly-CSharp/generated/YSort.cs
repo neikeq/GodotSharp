@@ -43,6 +43,13 @@ public class YSort : Node2D {
 
 
 
+  public YSort() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_YSort());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_sort_enabled(bool enabled) {
     GodotEnginePINVOKE.YSort_set_sort_enabled(swigCPtr, enabled);
   }
@@ -50,13 +57,6 @@ public class YSort : Node2D {
   public bool is_sort_enabled() {
     bool ret = GodotEnginePINVOKE.YSort_is_sort_enabled(swigCPtr);
     return ret;
-  }
-
-  public YSort() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_YSort());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

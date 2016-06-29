@@ -280,16 +280,39 @@ SWIGEXPORT void SWIGSTDCALL SWIGRegisterStringCallback_GodotEngine(SWIG_CSharpSt
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentOutOfRangeException, msg, ""); return nullreturn; } else
 
 
-/* Callback for returning strings to C# without leaking memory */
-typedef void * (SWIGSTDCALL* SWIG_CSharpWStringHelperCallback)(const wchar_t *);
-static SWIG_CSharpWStringHelperCallback SWIG_csharp_wstring_callback = NULL;
+/* Callback for returning godot strings to C# without leaking memory */
+typedef void * (SWIGSTDCALL* CSharpGDStringHelperCallback)(const char *, int);
+static CSharpGDStringHelperCallback csharp_gdstring_callback = NULL;
+
+void gdstring_from_utf16(String& r_str, const uint16_t *p_cstr)
+{
+	int len=0;
+	const uint16_t *ptr=p_cstr;
+	while (*(ptr++)!=0)
+		len++;
+
+	if (len==0) {
+
+		r_str.resize(0);
+		return;
+	}
+
+	r_str.resize(len+1); // include 0
+
+	CharType *dst = r_str.ptr();
+
+	for (int i=0;i<len+1;i++) {
+
+		dst[i]=p_cstr[i];
+	}
+}
 
 
 #ifdef __cplusplus
 extern "C"
 #endif
-SWIGEXPORT void SWIGSTDCALL SWIGRegisterWStringCallback_GodotEngine(SWIG_CSharpWStringHelperCallback callback) {
-  SWIG_csharp_wstring_callback = callback;
+SWIGEXPORT void SWIGSTDCALL RegisterGodotStringCallback_GodotEngine(CSharpGDStringHelperCallback callback) {
+  csharp_gdstring_callback = callback;
 }
 
 
@@ -33560,17 +33583,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_NodePath__SWIG_0() {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_NodePath__SWIG_1(wchar_t * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_NodePath__SWIG_1(char * jarg1) {
   void * jresult ;
   String *arg1 = 0 ;
   NodePath *result = 0 ;
+  
   
   if (!jarg1) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg1_str = jarg1;
-  arg1 = &arg1_str; 
+  String arg1_str;
+  gdstring_from_utf16(arg1_str, (const uint16_t*)jarg1);
+  arg1 = &arg1_str;
+  
   result = (NodePath *)memnew(NodePath((String const &)*arg1));
   jresult = (void *)result; 
   return jresult;
@@ -33664,7 +33690,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Variant_operator_to_String(void * jarg1) {
   
   arg1 = (Variant *)jarg1; 
   result = ((Variant const *)arg1)->operator String();
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -33775,17 +33804,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Variant__SWIG_3(float jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_new_Variant__SWIG_4(wchar_t * jarg1) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_new_Variant__SWIG_4(char * jarg1) {
   void * jresult ;
   String *arg1 = 0 ;
   Variant *result = 0 ;
+  
   
   if (!jarg1) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg1_str = jarg1;
-  arg1 = &arg1_str; 
+  String arg1_str;
+  gdstring_from_utf16(arg1_str, (const uint16_t*)jarg1);
+  arg1 = &arg1_str;
+  
   result = (Variant *)memnew(Variant((String const &)*arg1));
   jresult = (void *)result; 
   return jresult;
@@ -33844,7 +33876,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Variant(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33856,12 +33888,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, wchar_t *
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -33893,7 +33928,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_0(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33904,12 +33939,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, wchar_t *
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -33936,7 +33974,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_1(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33946,12 +33984,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, wchar_t *
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -33973,7 +34014,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_2(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, char * jarg2, void * jarg3, void * jarg4) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -33982,12 +34023,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, wchar_t *
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34004,7 +34048,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_3(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, char * jarg2, void * jarg3) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34012,12 +34056,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, wchar_t *
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34029,26 +34076,29 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_4(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_5(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_call__SWIG_5(void * jarg1, char * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (arg1)->call((String const &)*arg2);
   jresult = memnew(Variant((const Variant &)result));
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34058,12 +34108,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, wc
   Variant *arg7 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34093,7 +34146,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_0(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34102,12 +34155,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, wc
   Variant *arg6 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34132,7 +34188,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_1(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34140,12 +34196,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, wc
   Variant *arg5 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34165,19 +34224,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_2(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_3(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_3(void * jarg1, char * jarg2, void * jarg3, void * jarg4) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   Variant *arg4 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34192,18 +34254,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_3(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_4(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_4(void * jarg1, char * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34213,22 +34278,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_4(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_5(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_call_deferred__SWIG_5(void * jarg1, char * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   (arg1)->call_deferred((String const &)*arg2);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_callv(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_callv(void * jarg1, char * jarg2, void * jarg3) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34236,12 +34304,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_callv(void * jarg1, wchar_t * jarg2,
   Variant result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Array *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Array const & type is null", 0);
@@ -34263,17 +34334,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Object() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object__get(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object__get(void * jarg1, char * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Object__get(arg1,(String const &)*arg2);
 }
 
@@ -34308,18 +34382,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object__notification(void * jarg1, int jarg2)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object__set(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object__set(void * jarg1, char * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34344,42 +34421,51 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_type(void * jarg1) {
   
   arg1 = (Object *)jarg1; 
   result = Object_get_type(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_type(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_type(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Object_is_type(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_set(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_set(void * jarg1, char * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34389,17 +34475,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_set(void * jarg1, wchar_t * jarg2, voi
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_get(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_get(void * jarg1, char * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Object_get(arg1,(String const &)*arg2);
 }
 
@@ -34487,18 +34576,21 @@ SWIGEXPORT Script* SWIGSTDCALL CSharp_Object_get_script(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_set_meta(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_set_meta(void * jarg1, char * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34508,34 +34600,40 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_set_meta(void * jarg1, wchar_t * jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_get_meta(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_get_meta(void * jarg1, char * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Object_get_meta(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_meta(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_meta(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Object_has_meta(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -34554,18 +34652,21 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_meta_list(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_0(void * jarg1, char * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Array *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Array *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Array const & type is null", 0);
@@ -34575,41 +34676,47 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_add_user_signal__SWIG_1(void * jarg1, char * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Object_add_user_signal__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_user_signal(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_user_signal(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Object_has_user_signal(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34619,12 +34726,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, wcha
   Variant *arg7 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34654,7 +34764,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_0(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34663,12 +34773,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, wcha
   Variant *arg6 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34693,7 +34806,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_1(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, char * jarg2, void * jarg3, void * jarg4, void * jarg5) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
@@ -34701,12 +34814,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, wcha
   Variant *arg5 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34726,19 +34842,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_2(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_3(void * jarg1, wchar_t * jarg2, void * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_3(void * jarg1, char * jarg2, void * jarg3, void * jarg4) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   Variant *arg4 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34753,18 +34872,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_3(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_4(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_4(void * jarg1, char * jarg2, void * jarg3) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -34774,34 +34896,40 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_4(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_5(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_emit_signal__SWIG_5(void * jarg1, char * jarg2) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Object_emit_signal__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_method(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_has_method(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Object_has_method(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -34820,26 +34948,29 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_list(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_connection_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_get_signal_connection_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Array result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Object_get_signal_connection_list(arg1,(String const &)*arg2);
   jresult = memnew(Array((const Array &)result));
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5, int jarg6) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5, int jarg6) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34850,19 +34981,25 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, wchar_t *
   int result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Array *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Array const & type is null", 0);
@@ -34875,7 +35012,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_0(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, char * jarg2, void * jarg3, char * jarg4, void * jarg5) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34885,19 +35022,25 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, wchar_t *
   int result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Array *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Array const & type is null", 0);
@@ -34909,7 +35052,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_1(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_2(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_2(void * jarg1, char * jarg2, void * jarg3, char * jarg4) {
   int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34918,50 +35061,62 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Object_connect__SWIG_2(void * jarg1, wchar_t *
   int result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (int)Object_connect__SWIG_0(arg1,(String const &)*arg2,arg3,(String const &)*arg4);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Object_disconnect(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Object_disconnect(void * jarg1, char * jarg2, void * jarg3, char * jarg4) {
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
   String *arg4 = 0 ;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   Object_disconnect(arg1,(String const &)*arg2,arg3,(String const &)*arg4);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_connected(void * jarg1, wchar_t * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_connected(void * jarg1, char * jarg2, void * jarg3, char * jarg4) {
   unsigned int jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
@@ -34970,19 +35125,25 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_connected(void * jarg1, wch
   bool result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (bool)Object_is_connected(arg1,(String const &)*arg2,arg3,(String const &)*arg4);
   jresult = result; 
   return jresult;
@@ -35041,40 +35202,52 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Object_property_list_changed_notify(void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_XL_MESSAGE(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_XL_MESSAGE(void * jarg1, char * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Object_XL_MESSAGE(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Object_tr(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Object_tr(void * jarg1, char * jarg2) {
   void * jresult ;
   Object *arg1 = (Object *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (Object *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Object_tr(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -35091,106 +35264,133 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Object_is_queued_for_deletion(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_0(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   String *arg4 = 0 ;
   
   arg1 = (PathRemap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   PathRemap_add_remap__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3,(String const &)*arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_add_remap__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (PathRemap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   PathRemap_add_remap__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PathRemap_has_remap(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PathRemap_has_remap(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (PathRemap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)PathRemap_has_remap(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_PathRemap_get_remap(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_PathRemap_get_remap(void * jarg1, char * jarg2) {
   void * jresult ;
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (PathRemap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = PathRemap_get_remap(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_erase_remap(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PathRemap_erase_remap(void * jarg1, char * jarg2) {
   PathRemap *arg1 = (PathRemap *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (PathRemap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   PathRemap_erase_remap(arg1,(String const &)*arg2);
 }
 
@@ -36479,7 +36679,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Physics2DServer_area_get_object_instance_ID(vo
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   Physics2DServer *arg1 = (Physics2DServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -36492,12 +36692,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_area_set_monitor_callback(voi
     return ;
   } 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   Physics2DServer_area_set_monitor_callback(arg1,(RID const &)*arg2,arg3,(String const &)*arg4);
 }
 
@@ -37334,7 +37537,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Physics2DServer_body_is_omitting_forc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, char * jarg4, void * jarg5) {
   Physics2DServer *arg1 = (Physics2DServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -37348,12 +37551,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_ca
     return ;
   } 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -37363,7 +37569,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_ca
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   Physics2DServer *arg1 = (Physics2DServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -37376,12 +37582,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Physics2DServer_body_set_force_integration_ca
     return ;
   } 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   Physics2DServer_body_set_force_integration_callback__SWIG_0(arg1,(RID const &)*arg2,arg3,(String const &)*arg4);
 }
 
@@ -38990,7 +39199,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PhysicsServer_area_get_object_instance_ID(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_area_set_monitor_callback(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   PhysicsServer *arg1 = (PhysicsServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -39003,12 +39212,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_area_set_monitor_callback(void 
     return ;
   } 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   PhysicsServer_area_set_monitor_callback(arg1,(RID const &)*arg2,arg3,(String const &)*arg4);
 }
 
@@ -39743,7 +39955,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_PhysicsServer_body_is_omitting_force_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_0(void * jarg1, void * jarg2, void * jarg3, char * jarg4, void * jarg5) {
   PhysicsServer *arg1 = (PhysicsServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -39757,12 +39969,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_call
     return ;
   } 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -39772,7 +39987,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_call
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_callback__SWIG_1(void * jarg1, void * jarg2, void * jarg3, char * jarg4) {
   PhysicsServer *arg1 = (PhysicsServer *) 0 ;
   RID *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
@@ -39785,12 +40000,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PhysicsServer_body_set_force_integration_call
     return ;
   } 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   PhysicsServer_body_set_force_integration_callback__SWIG_0(arg1,(RID const &)*arg2,arg3,(String const &)*arg4);
 }
 
@@ -40519,7 +40737,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_RegEx() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40527,12 +40745,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, wchar_t * 
   int result;
   
   arg1 = (RegEx *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)RegEx_compile__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -40540,26 +40761,29 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_0(void * jarg1, wchar_t * 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_compile__SWIG_1(void * jarg1, char * jarg2) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (RegEx *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)RegEx_compile__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, char * jarg2, int jarg3, int jarg4) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40568,12 +40792,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, wchar_t * jar
   int result;
   
   arg1 = (RegEx *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = (int)jarg4; 
   result = (int)RegEx_find__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
@@ -40582,7 +40809,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_0(void * jarg1, wchar_t * jar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
@@ -40590,12 +40817,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, wchar_t * jar
   int result;
   
   arg1 = (RegEx *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)RegEx_find__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -40603,19 +40833,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_1(void * jarg1, wchar_t * jar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RegEx_find__SWIG_2(void * jarg1, char * jarg2) {
   int jresult ;
   RegEx *arg1 = (RegEx *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (RegEx *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)RegEx_find__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -40663,7 +40896,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_RegEx_get_capture(void * jarg1, int jarg2) 
   arg1 = (RegEx *)jarg1; 
   arg2 = (int)jarg2; 
   result = RegEx_get_capture(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -40712,32 +40948,38 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Resource() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_path(void * jarg1, char * jarg2) {
   Resource *arg1 = (Resource *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Resource *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Resource_set_path(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Resource_take_over_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Resource_take_over_path(void * jarg1, char * jarg2) {
   Resource *arg1 = (Resource *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Resource *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Resource_take_over_path(arg1,(String const &)*arg2);
 }
 
@@ -40749,22 +40991,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Resource_get_path(void * jarg1) {
   
   arg1 = (Resource *)jarg1; 
   result = Resource_get_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_name(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Resource_set_name(void * jarg1, char * jarg2) {
   Resource *arg1 = (Resource *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Resource *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Resource_set_name(arg1,(String const &)*arg2);
 }
 
@@ -40776,7 +41024,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Resource_get_name(void * jarg1) {
   
   arg1 = (Resource *)jarg1; 
   result = Resource_get_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -40859,17 +41110,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ResourceImportMetadata() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_editor(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_editor(void * jarg1, char * jarg2) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ResourceImportMetadata *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ResourceImportMetadata_set_editor(arg1,(String const &)*arg2);
 }
 
@@ -40881,44 +41135,56 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceImportMetadata_get_editor(void * ja
   
   arg1 = (ResourceImportMetadata *)jarg1; 
   result = ResourceImportMetadata_get_editor(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (ResourceImportMetadata *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ResourceImportMetadata_add_source__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_add_source__SWIG_1(void * jarg1, char * jarg2) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ResourceImportMetadata *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ResourceImportMetadata_add_source__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -40932,7 +41198,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceImportMetadata_get_source_path(void
   arg1 = (ResourceImportMetadata *)jarg1; 
   arg2 = (int)jarg2; 
   result = ResourceImportMetadata_get_source_path(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -40946,24 +41215,30 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceImportMetadata_get_source_md5(void 
   arg1 = (ResourceImportMetadata *)jarg1; 
   arg2 = (int)jarg2; 
   result = ResourceImportMetadata_get_source_md5(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_source_md5(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_source_md5(void * jarg1, int jarg2, char * jarg3) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (ResourceImportMetadata *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ResourceImportMetadata_set_source_md5(arg1,arg2,(String const &)*arg3);
 }
 
@@ -40990,18 +41265,21 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ResourceImportMetadata_get_source_count(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_option(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_option(void * jarg1, char * jarg2, void * jarg3) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (ResourceImportMetadata *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -41011,17 +41289,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_set_option(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_get_option(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourceImportMetadata_get_option(void * jarg1, char * jarg2) {
   ResourceImportMetadata *arg1 = (ResourceImportMetadata *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ResourceImportMetadata *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ResourceImportMetadata_get_option(arg1,(String const &)*arg2);
 }
 
@@ -41392,36 +41673,42 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SampleLibrary() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_add_sample(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_add_sample(void * jarg1, char * jarg2, void * jarg3) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   Sample *arg3 = (Sample *) 0 ;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Sample *)jarg3; 
   SampleLibrary_add_sample(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT Sample* SWIGSTDCALL CSharp_SampleLibrary_get_sample(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Sample* SWIGSTDCALL CSharp_SampleLibrary_get_sample(void * jarg1, char * jarg2) {
   Sample* jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   Ref< Sample > result;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = SampleLibrary_get_sample(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -41431,106 +41718,124 @@ SWIGEXPORT Sample* SWIGSTDCALL CSharp_SampleLibrary_get_sample(void * jarg1, wch
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SampleLibrary_has_sample(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SampleLibrary_has_sample(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)SampleLibrary_has_sample(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_remove_sample(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_remove_sample(void * jarg1, char * jarg2) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   SampleLibrary_remove_sample(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_volume_db(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_volume_db(void * jarg1, char * jarg2, float jarg3) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   SampleLibrary_sample_set_volume_db(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_volume_db(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_volume_db(void * jarg1, char * jarg2) {
   float jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)SampleLibrary_sample_get_volume_db(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_pitch_scale(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SampleLibrary_sample_set_pitch_scale(void * jarg1, char * jarg2, float jarg3) {
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   SampleLibrary_sample_set_pitch_scale(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_pitch_scale(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_SampleLibrary_sample_get_pitch_scale(void * jarg1, char * jarg2) {
   float jresult ;
   SampleLibrary *arg1 = (SampleLibrary *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (SampleLibrary *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)SampleLibrary_sample_get_pitch_scale(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -41566,7 +41871,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneState_get_node_type(void * jarg1, int 
   arg1 = (SceneState *)jarg1; 
   arg2 = (int)jarg2; 
   result = SceneState_get_node_type(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -41580,7 +41888,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneState_get_node_name(void * jarg1, int 
   arg1 = (SceneState *)jarg1; 
   arg2 = (int)jarg2; 
   result = SceneState_get_node_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -41652,7 +41963,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneState_get_node_instance_placeholder(vo
   arg1 = (SceneState *)jarg1; 
   arg2 = (int)jarg2; 
   result = SceneState_get_node_instance_placeholder(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -41713,7 +42027,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneState_get_node_property_name(void * ja
   arg2 = (int)jarg2; 
   arg3 = (int)jarg3; 
   result = SceneState_get_node_property_name(arg1,arg2,arg3);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -41765,7 +42082,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneState_get_connection_signal(void * jar
   arg1 = (SceneState *)jarg1; 
   arg2 = (int)jarg2; 
   result = SceneState_get_connection_signal(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -41793,7 +42113,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneState_get_connection_method(void * jar
   arg1 = (SceneState *)jarg1; 
   arg2 = (int)jarg2; 
   result = SceneState_get_connection_method(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -41879,22 +42202,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Script_get_source_code(void * jarg1) {
   
   arg1 = (Script *)jarg1; 
   result = Script_get_source_code(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Script_set_source_code(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Script_set_source_code(void * jarg1, char * jarg2) {
   Script *arg1 = (Script *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Script *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Script_set_source_code(arg1,(String const &)*arg2);
 }
 
@@ -41945,7 +42274,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Shader_get_mode(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4, int jarg5, int jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_0(void * jarg1, char * jarg2, char * jarg3, char * jarg4, int jarg5, int jarg6) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -41954,31 +42283,40 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_0(void * jarg1, wchar_t
   int arg6 ;
   
   arg1 = (Shader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (int)jarg5; 
   arg6 = (int)jarg6; 
   Shader_set_code__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3,(String const &)*arg4,arg5,arg6);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_1(void * jarg1, char * jarg2, char * jarg3, char * jarg4, int jarg5) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -41986,54 +42324,72 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_1(void * jarg1, wchar_t
   int arg5 ;
   
   arg1 = (Shader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (int)jarg5; 
   Shader_set_code__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3,(String const &)*arg4,arg5);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_2(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_code__SWIG_2(void * jarg1, char * jarg2, char * jarg3, char * jarg4) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   String *arg4 = 0 ;
   
   arg1 = (Shader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   Shader_set_code__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3,(String const &)*arg4);
 }
 
@@ -42045,7 +42401,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Shader_get_vertex_code(void * jarg1) {
   
   arg1 = (Shader *)jarg1; 
   result = Shader_get_vertex_code(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -42057,7 +42416,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Shader_get_fragment_code(void * jarg1) {
   
   arg1 = (Shader *)jarg1; 
   result = Shader_get_fragment_code(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -42069,41 +42431,50 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Shader_get_light_code(void * jarg1) {
   
   arg1 = (Shader *)jarg1; 
   result = Shader_get_light_code(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_default_texture_param(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Shader_set_default_texture_param(void * jarg1, char * jarg2, void * jarg3) {
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
   
   arg1 = (Shader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Texture *)jarg3; 
   Shader_set_default_texture_param(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Shader_get_default_texture_param(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Shader_get_default_texture_param(void * jarg1, char * jarg2) {
   Texture* jresult ;
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   Ref< Texture > result;
   
   arg1 = (Shader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Shader_get_default_texture_param(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -42113,19 +42484,22 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Shader_get_default_texture_param(void * j
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Shader_has_param(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Shader_has_param(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Shader *arg1 = (Shader *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Shader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Shader_has_param(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -42666,7 +43040,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ShaderGraph_vec_func_node_get_function(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_input_node_set_name(void * jarg1, int jarg2, int jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_input_node_set_name(void * jarg1, int jarg2, int jarg3, char * jarg4) {
   ShaderGraph *arg1 = (ShaderGraph *) 0 ;
   int arg2 ;
   int arg3 ;
@@ -42675,12 +43049,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_input_node_set_name(void * jarg1,
   arg1 = (ShaderGraph *)jarg1; 
   arg2 = (int)jarg2; 
   arg3 = (int)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   ShaderGraph_input_node_set_name(arg1,arg2,arg3,(String const &)*arg4);
 }
 
@@ -42696,7 +43073,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ShaderGraph_input_node_get_name(void * jarg
   arg2 = (int)jarg2; 
   arg3 = (int)jarg3; 
   result = ShaderGraph_input_node_get_name(arg1,arg2,arg3);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -42899,7 +43279,7 @@ SWIGEXPORT CubeMap* SWIGSTDCALL CSharp_ShaderGraph_cubemap_input_node_get_value(
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_comment_node_set_text(void * jarg1, int jarg2, int jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_comment_node_set_text(void * jarg1, int jarg2, int jarg3, char * jarg4) {
   ShaderGraph *arg1 = (ShaderGraph *) 0 ;
   int arg2 ;
   int arg3 ;
@@ -42908,12 +43288,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ShaderGraph_comment_node_set_text(void * jarg
   arg1 = (ShaderGraph *)jarg1; 
   arg2 = (int)jarg2; 
   arg3 = (int)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   ShaderGraph_comment_node_set_text(arg1,arg2,arg3,(String const &)*arg4);
 }
 
@@ -42929,7 +43312,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ShaderGraph_comment_node_get_text(void * ja
   arg2 = (int)jarg2; 
   arg3 = (int)jarg3; 
   result = ShaderGraph_comment_node_get_text(arg1,arg2,arg3);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -43391,7 +43777,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ShortCut_get_as_text(void * jarg1) {
   
   arg1 = (ShortCut *)jarg1; 
   result = ShortCut_get_as_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -43482,205 +43871,241 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SpriteFrames() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_animation(void * jarg1, char * jarg2) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   SpriteFrames_add_animation(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_has_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_has_animation(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)SpriteFrames_has_animation(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_animation(void * jarg1, char * jarg2) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   SpriteFrames_remove_animation(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_rename_animation(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_rename_animation(void * jarg1, char * jarg2, char * jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   SpriteFrames_rename_animation(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_speed(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_speed(void * jarg1, char * jarg2, float jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   SpriteFrames_set_animation_speed(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_SpriteFrames_get_animation_speed(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_SpriteFrames_get_animation_speed(void * jarg1, char * jarg2) {
   float jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)SpriteFrames_get_animation_speed(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_loop(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_animation_loop(void * jarg1, char * jarg2, unsigned int jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   SpriteFrames_set_animation_loop(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_get_animation_loop(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SpriteFrames_get_animation_loop(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)SpriteFrames_get_animation_loop(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_0(void * jarg1, char * jarg2, void * jarg3, int jarg4) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
   int arg4 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
   arg4 = (int)jarg4; 
   SpriteFrames_add_frame__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_add_frame__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
   SpriteFrames_add_frame__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SpriteFrames_get_frame_count(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SpriteFrames_get_frame_count(void * jarg1, char * jarg2) {
   int jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)SpriteFrames_get_frame_count(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, char * jarg2, int jarg3) {
   void * jresult ;
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
@@ -43688,12 +44113,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, wchar_
   Object *result = 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (Object *)SpriteFrames_get_frame(arg1,(String const &)*arg2,arg3);
   jresult = (void *)result; 
@@ -43701,53 +44129,62 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpriteFrames_get_frame(void * jarg1, wchar_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_frame(void * jarg1, wchar_t * jarg2, int jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_set_frame(void * jarg1, char * jarg2, int jarg3, void * jarg4) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   Object *arg4 = (Object *) 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = (Object *)jarg4; 
   SpriteFrames_set_frame(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_frame(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_remove_frame(void * jarg1, char * jarg2, int jarg3) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   SpriteFrames_remove_frame(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_clear(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpriteFrames_clear(void * jarg1, char * jarg2) {
   SpriteFrames *arg1 = (SpriteFrames *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (SpriteFrames *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   SpriteFrames_clear(arg1,(String const &)*arg2);
 }
 
@@ -43966,17 +44403,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_StreamPeer_put_double(void * jarg1, float jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_StreamPeer_put_utf8_string(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_StreamPeer_put_utf8_string(void * jarg1, char * jarg2) {
   StreamPeer *arg1 = (StreamPeer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (StreamPeer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   StreamPeer_put_utf8_string(arg1,(String const &)*arg2);
 }
 
@@ -44124,7 +44564,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_StreamPeer_get_string(void * jarg1, int jar
   arg1 = (StreamPeer *)jarg1; 
   arg2 = (int)jarg2; 
   result = StreamPeer_get_string(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -44138,7 +44581,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_StreamPeer_get_utf8_string(void * jarg1, in
   arg1 = (StreamPeer *)jarg1; 
   arg2 = (int)jarg2; 
   result = StreamPeer_get_utf8_string(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -44177,7 +44623,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_accept(void * jarg1, void * jarg
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_connect__SWIG_0(void * jarg1, void * jarg2, unsigned int jarg3, wchar_t * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_connect__SWIG_0(void * jarg1, void * jarg2, unsigned int jarg3, char * jarg4) {
   int jresult ;
   StreamPeerSSL *arg1 = (StreamPeerSSL *) 0 ;
   StreamPeer *arg2 = (StreamPeer *) 0 ;
@@ -44188,12 +44634,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerSSL_connect__SWIG_0(void * jarg1, vo
   arg1 = (StreamPeerSSL *)jarg1; 
   arg2 = (StreamPeer *)jarg2; 
   arg3 = jarg3 ? true : false; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (int)StreamPeerSSL_connect__SWIG_0(arg1,arg2,arg3,(String const &)*arg4);
   jresult = result; 
   return jresult;
@@ -44268,7 +44717,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_StreamPeerSSL(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerTCP_connect(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerTCP_connect(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   StreamPeerTCP *arg1 = (StreamPeerTCP *) 0 ;
   String *arg2 = 0 ;
@@ -44276,12 +44725,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_StreamPeerTCP_connect(void * jarg1, wchar_t * 
   int result;
   
   arg1 = (StreamPeerTCP *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)StreamPeerTCP_connect(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -44320,7 +44772,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_StreamPeerTCP_get_connected_host(void * jar
   
   arg1 = (StreamPeerTCP *)jarg1; 
   result = StreamPeerTCP_get_connected_host(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -45734,31 +46189,37 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Theme() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_icon(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   Texture *arg4 = (Texture *) 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Texture *)jarg4; 
   Theme_set_icon(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, char * jarg2, char * jarg3) {
   Texture* jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45766,18 +46227,24 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, wchar_t * ja
   Ref< Texture > result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Theme_get_icon(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -45787,7 +46254,7 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Theme_get_icon(void * jarg1, wchar_t * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_icon(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45795,90 +46262,111 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_icon(void * jarg1, wchar_t 
   bool result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Theme_has_icon(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_icon(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_icon(void * jarg1, char * jarg2, char * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Theme_clear_icon(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_icon_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_icon_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Theme_get_icon_list(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_stylebox(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   StyleBox *arg4 = (StyleBox *) 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (StyleBox *)jarg4; 
   Theme_set_stylebox(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, char * jarg2, char * jarg3) {
   StyleBox* jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45886,18 +46374,24 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, wchar_t
   Ref< StyleBox > result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Theme_get_stylebox(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -45907,7 +46401,7 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Theme_get_stylebox(void * jarg1, wchar_t
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_stylebox(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -45915,59 +46409,74 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_stylebox(void * jarg1, wcha
   bool result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Theme_has_stylebox(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_stylebox(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_stylebox(void * jarg1, char * jarg2, char * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Theme_clear_stylebox(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_stylebox_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_stylebox_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Theme_get_stylebox_list(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
@@ -45986,31 +46495,37 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_stylebox_types(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_font(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   Font *arg4 = (Font *) 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Font *)jarg4; 
   Theme_set_font(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, char * jarg2, char * jarg3) {
   Font* jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46018,18 +46533,24 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, wchar_t * jarg2
   Ref< Font > result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Theme_get_font(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -46039,7 +46560,7 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Theme_get_font(void * jarg1, wchar_t * jarg2
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_font(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46047,84 +46568,105 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_font(void * jarg1, wchar_t 
   bool result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Theme_has_font(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_font(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_font(void * jarg1, char * jarg2, char * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Theme_clear_font(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_font_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_font_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Theme_get_font_list(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_color(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   Color *arg4 = 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Color *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -46134,7 +46676,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_color(void * jarg1, wchar_t * jarg2
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color(void * jarg1, char * jarg2, char * jarg3) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46142,25 +46684,31 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color(void * jarg1, wchar_t * jar
   Color result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Theme_get_color(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = memnew(Color((const Color &)result));
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_color(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46168,90 +46716,111 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_color(void * jarg1, wchar_t
   bool result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Theme_has_color(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_color(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_color(void * jarg1, char * jarg2, char * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Theme_clear_color(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_color_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Theme_get_color_list(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_set_constant(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   int arg4 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   Theme_set_constant(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Theme_get_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Theme_get_constant(void * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46259,25 +46828,31 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Theme_get_constant(void * jarg1, wchar_t * jar
   int result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)Theme_get_constant(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_constant(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
@@ -46285,59 +46860,74 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Theme_has_constant(void * jarg1, wcha
   bool result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Theme_has_constant(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_constant(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Theme_clear_constant(void * jarg1, char * jarg2, char * jarg3) {
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Theme_clear_constant(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_constant_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_constant_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Theme_get_constant_list(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
@@ -46366,19 +46956,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_default_font(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_type_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Theme_get_type_list(void * jarg1, char * jarg2) {
   void * jresult ;
   Theme *arg1 = (Theme *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (Theme *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Theme_get_type_list(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
@@ -46421,19 +47014,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TileSet_create_tile(void * jarg1, int jarg2) 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TileSet_tile_set_name(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TileSet_tile_set_name(void * jarg1, int jarg2, char * jarg3) {
   TileSet *arg1 = (TileSet *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (TileSet *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   TileSet_tile_set_name(arg1,arg2,(String const &)*arg3);
 }
 
@@ -46447,7 +47043,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TileSet_tile_get_name(void * jarg1, int jar
   arg1 = (TileSet *)jarg1; 
   arg2 = (int)jarg2; 
   result = TileSet_tile_get_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -46807,19 +47406,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_TileSet_get_last_unused_tile_id(void * jarg1) 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_TileSet_find_tile_by_name(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_TileSet_find_tile_by_name(void * jarg1, char * jarg2) {
   int jresult ;
   TileSet *arg1 = (TileSet *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (TileSet *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)TileSet_find_tile_by_name(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -46856,17 +47458,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Translation() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Translation_set_locale(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Translation_set_locale(void * jarg1, char * jarg2) {
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Translation *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Translation_set_locale(arg1,(String const &)*arg2);
 }
 
@@ -46878,63 +47483,81 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_locale(void * jarg1) {
   
   arg1 = (Translation *)jarg1; 
   result = Translation_get_locale(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Translation_add_message(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Translation_add_message(void * jarg1, char * jarg2, char * jarg3) {
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (Translation *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Translation_add_message(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_message(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Translation_get_message(void * jarg1, char * jarg2) {
   void * jresult ;
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (Translation *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Translation_get_message(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Translation_erase_message(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Translation_erase_message(void * jarg1, char * jarg2) {
   Translation *arg1 = (Translation *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Translation *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Translation_erase_message(arg1,(String const &)*arg2);
 }
 
@@ -46971,17 +47594,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Translation(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TranslationServer_set_locale(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TranslationServer_set_locale(void * jarg1, char * jarg2) {
   TranslationServer *arg1 = (TranslationServer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (TranslationServer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   TranslationServer_set_locale(arg1,(String const &)*arg2);
 }
 
@@ -46993,26 +47619,35 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TranslationServer_get_locale(void * jarg1) 
   
   arg1 = (TranslationServer *)jarg1; 
   result = TranslationServer_get_locale(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_TranslationServer_translate(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_TranslationServer_translate(void * jarg1, char * jarg2) {
   void * jresult ;
   TranslationServer *arg1 = (TranslationServer *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (TranslationServer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = TranslationServer_translate(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -47107,19 +47742,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TreeItem_is_checked(void * jarg1, int
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_text(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_text(void * jarg1, int jarg2, char * jarg3) {
   TreeItem *arg1 = (TreeItem *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (TreeItem *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   TreeItem_set_text(arg1,arg2,(String const &)*arg3);
 }
 
@@ -47133,7 +47771,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TreeItem_get_text(void * jarg1, int jarg2) 
   arg1 = (TreeItem *)jarg1; 
   arg2 = (int)jarg2; 
   result = TreeItem_get_text(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -47323,7 +47964,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_get_metadata(void * jarg1, int jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_custom_draw(void * jarg1, int jarg2, void * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_custom_draw(void * jarg1, int jarg2, void * jarg3, char * jarg4) {
   TreeItem *arg1 = (TreeItem *) 0 ;
   int arg2 ;
   Object *arg3 = (Object *) 0 ;
@@ -47332,12 +47973,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_custom_draw(void * jarg1, int ja
   arg1 = (TreeItem *)jarg1; 
   arg2 = (int)jarg2; 
   arg3 = (Object *)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   TreeItem_set_custom_draw(arg1,arg2,arg3,(String const &)*arg4);
 }
 
@@ -47723,19 +48367,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TreeItem_is_button_disabled(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_tooltip(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TreeItem_set_tooltip(void * jarg1, int jarg2, char * jarg3) {
   TreeItem *arg1 = (TreeItem *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (TreeItem *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   TreeItem_set_tooltip(arg1,arg2,(String const &)*arg3);
 }
 
@@ -47749,7 +48396,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TreeItem_get_tooltip(void * jarg1, int jarg
   arg1 = (TreeItem *)jarg1; 
   arg2 = (int)jarg2; 
   result = TreeItem_get_tooltip(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -47780,34 +48430,40 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_UndoRedo() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
   
   arg1 = (UndoRedo *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   UndoRedo_create_action__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_create_action__SWIG_1(void * jarg1, char * jarg2) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (UndoRedo *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   UndoRedo_create_action__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -47820,7 +48476,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_commit_action(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47832,12 +48488,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, 
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -47867,7 +48526,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47878,12 +48537,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, 
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -47908,7 +48570,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47918,12 +48580,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, 
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -47943,7 +48608,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_2(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47952,12 +48617,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, 
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -47972,7 +48640,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_3(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -47980,12 +48648,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, 
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -47995,24 +48666,27 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_4(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_5(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_method__SWIG_5(void * jarg1, void * jarg2, char * jarg3) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   UndoRedo_add_do_method__SWIG_0(arg1,arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48024,12 +48698,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48059,7 +48736,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48070,12 +48747,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48100,7 +48780,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, void * jarg6) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48110,12 +48790,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48135,7 +48818,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_2(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48144,12 +48827,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48164,7 +48850,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_3(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48172,12 +48858,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48187,24 +48876,27 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_4(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_5(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_method__SWIG_5(void * jarg1, void * jarg2, char * jarg3) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   UndoRedo_add_undo_method__SWIG_0(arg1,arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48212,12 +48904,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void *
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48227,7 +48922,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_do_property(void * jarg1, void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_property(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_property(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   UndoRedo *arg1 = (UndoRedo *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -48235,12 +48930,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_UndoRedo_add_undo_property(void * jarg1, void
   
   arg1 = (UndoRedo *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48285,7 +48983,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_UndoRedo_get_current_action_name(void * jar
   
   arg1 = (UndoRedo *)jarg1; 
   result = UndoRedo_get_current_action_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -48550,7 +49251,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_VisualServer_material_get_shader(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   VisualServer *arg1 = (VisualServer *) 0 ;
   RID *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -48562,12 +49263,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1,
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "RID const & type is null", 0);
     return ;
   } 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -48577,7 +49281,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_set_param(void * jarg1,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_get_param(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_get_param(void * jarg1, void * jarg2, char * jarg3) {
   VisualServer *arg1 = (VisualServer *) 0 ;
   RID *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -48588,12 +49292,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_VisualServer_material_get_param(void * jarg1,
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "RID const & type is null", 0);
     return ;
   } 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   VisualServer_material_get_param(arg1,(RID const &)*arg2,(String const &)*arg3);
 }
 
@@ -51894,7 +52601,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_node_name(void * jarg1) {
   
   arg1 = (XMLParser *)jarg1; 
   result = XMLParser_get_node_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -51906,7 +52616,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_node_data(void * jarg1) {
   
   arg1 = (XMLParser *)jarg1; 
   result = XMLParser_get_node_data(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -51944,7 +52657,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_attribute_name(void * jarg1, 
   arg1 = (XMLParser *)jarg1; 
   arg2 = (int)jarg2; 
   result = XMLParser_get_attribute_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -51958,64 +52674,82 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_attribute_value(void * jarg1,
   arg1 = (XMLParser *)jarg1; 
   arg2 = (int)jarg2; 
   result = XMLParser_get_attribute_value(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_XMLParser_has_attribute(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_XMLParser_has_attribute(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (XMLParser *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)XMLParser_has_attribute(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value(void * jarg1, char * jarg2) {
   void * jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (XMLParser *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = XMLParser_get_named_attribute_value(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value_safe(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_XMLParser_get_named_attribute_value_safe(void * jarg1, char * jarg2) {
   void * jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (XMLParser *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = XMLParser_get_named_attribute_value_safe(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -52066,19 +52800,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_XMLParser_seek(void * jarg1, int jarg2) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_XMLParser_open(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_XMLParser_open(void * jarg1, char * jarg2) {
   int jresult ;
   XMLParser *arg1 = (XMLParser *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (XMLParser *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)XMLParser_open(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -52121,19 +52858,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Directory() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_open(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_open(void * jarg1, char * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_Directory_open(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -52159,7 +52899,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Directory_get_next(void * jarg1) {
   
   arg1 = (_Directory *)jarg1; 
   result = _Directory_get_next(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -52205,24 +52948,30 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Directory_get_drive(void * jarg1, int jarg2
   arg1 = (_Directory *)jarg1; 
   arg2 = (int)jarg2; 
   result = _Directory_get_drive(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_change_dir(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_change_dir(void * jarg1, char * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_Directory_change_dir(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -52236,81 +52985,96 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Directory_get_current_dir(void * jarg1) {
   
   arg1 = (_Directory *)jarg1; 
   result = _Directory_get_current_dir(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir(void * jarg1, char * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_Directory_make_dir(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir_recursive(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_make_dir_recursive(void * jarg1, char * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_Directory_make_dir_recursive(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_file_exists(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_file_exists(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)_Directory_file_exists(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_dir_exists(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Directory_dir_exists(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)_Directory_dir_exists(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -52329,7 +53093,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_get_space_left(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_copy(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_copy(void * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52337,25 +53101,31 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_copy(void * jarg1, wchar_t * jarg2, 
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)_Directory_copy(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_rename(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_rename(void * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
@@ -52363,37 +53133,46 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Directory_rename(void * jarg1, wchar_t * jarg2
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)_Directory_rename(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Directory_remove(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Directory_remove(void * jarg1, char * jarg2) {
   int jresult ;
   _Directory *arg1 = (_Directory *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_Directory *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_Directory_remove(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -52418,7 +53197,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_File() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, wchar_t * jarg2, int jarg3, void * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, char * jarg2, int jarg3, void * jarg4) {
   int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52427,12 +53206,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, wchar_t * ja
   int result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = (RawArray *)jarg4;
   if (!arg4) {
@@ -52445,7 +53227,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted(void * jarg1, wchar_t * ja
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted_with_pass(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted_with_pass(void * jarg1, char * jarg2, int jarg3, char * jarg4) {
   int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52454,26 +53236,32 @@ SWIGEXPORT int SWIGSTDCALL CSharp_File_open_encrypted_with_pass(void * jarg1, wc
   int result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (int)_File_open_encrypted_with_pass(arg1,(String const &)*arg2,arg3,(String const &)*arg4);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_File_open(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_File_open(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
@@ -52481,12 +53269,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_File_open(void * jarg1, wchar_t * jarg2, int j
   int result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)_File_open(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -52683,7 +53474,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_line(void * jarg1) {
   
   arg1 = (_File *)jarg1; 
   result = _File_get_line(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -52695,45 +53489,60 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_as_text(void * jarg1) {
   
   arg1 = (_File *)jarg1; 
   result = _File_get_as_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_md5(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_md5(void * jarg1, char * jarg2) {
   void * jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _File_get_md5(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_sha256(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_sha256(void * jarg1, char * jarg2) {
   void * jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _File_get_sha256(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -52780,19 +53589,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_get_var(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_csv_line__SWIG_0(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_csv_line__SWIG_0(void * jarg1, char * jarg2) {
   void * jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _File_get_csv_line__SWIG_0(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
@@ -52895,32 +53707,38 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_store_buffer(void * jarg1, void * jarg2)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_File_store_line(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_File_store_line(void * jarg1, char * jarg2) {
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _File_store_line(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_File_store_string(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_File_store_string(void * jarg1, char * jarg2) {
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _File_store_string(arg1,(String const &)*arg2);
 }
 
@@ -52939,17 +53757,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_File_store_var(void * jarg1, void * jarg2) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_File_store_pascal_string(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_File_store_pascal_string(void * jarg1, char * jarg2) {
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _File_store_pascal_string(arg1,(String const &)*arg2);
 }
 
@@ -52961,24 +53782,30 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_File_get_pascal_string(void * jarg1) {
   
   arg1 = (_File *)jarg1; 
   result = _File_get_pascal_string(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_File_file_exists(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_File_file_exists(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   _File *arg1 = (_File *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (_File *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)_File_file_exists(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -53536,24 +54363,30 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_variant_to_base64(void * jarg1, v
     return 0;
   } 
   result = _Marshalls_variant_to_base64(arg1,(Variant const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_variant(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_variant(void * jarg1, char * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
   Variant result;
   
   arg1 = (_Marshalls *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _Marshalls_base64_to_variant(arg1,(String const &)*arg2);
   jresult = memnew(Variant((const Variant &)result));
   return jresult;
@@ -53573,64 +54406,82 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_raw_to_base64(void * jarg1, void 
     return 0;
   } 
   result = _Marshalls_raw_to_base64(arg1,(RawArray const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_raw(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_raw(void * jarg1, char * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
   RawArray result;
   
   arg1 = (_Marshalls *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _Marshalls_base64_to_raw(arg1,(String const &)*arg2);
   jresult = memnew(RawArray((const RawArray &)result));
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_utf8_to_base64(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_utf8_to_base64(void * jarg1, char * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (_Marshalls *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _Marshalls_utf8_to_base64(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_utf8(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Marshalls_base64_to_utf8(void * jarg1, char * jarg2) {
   void * jresult ;
   _Marshalls *arg1 = (_Marshalls *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (_Marshalls *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _Marshalls_base64_to_utf8(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -53699,17 +54550,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_Mutex(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_clipboard(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_clipboard(void * jarg1, char * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _OS_set_clipboard(arg1,(String const &)*arg2);
 }
 
@@ -53721,7 +54575,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_clipboard(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_clipboard(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54264,17 +55121,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_has_touchscreen_ui_hint(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_window_title(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_window_title(void * jarg1, char * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _OS_set_window_title(arg1,(String const &)*arg2);
 }
 
@@ -54320,12 +55180,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_executable_path(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_executable_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4, void * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4, void * jarg5) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54335,12 +55198,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, wchar_t * jar
   int result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (StringArray *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
@@ -54358,7 +55224,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_0(void * jarg1, wchar_t * jar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_1(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -54367,12 +55233,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_execute__SWIG_1(void * jarg1, wchar_t * jar
   int result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (StringArray *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
@@ -54399,19 +55268,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_kill(void * jarg1, int jarg2) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_shell_open(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_shell_open(void * jarg1, char * jarg2) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_OS_shell_open(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -54430,38 +55302,47 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_get_process_ID(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_environment(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_environment(void * jarg1, char * jarg2) {
   void * jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _OS_get_environment(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_has_environment(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_has_environment(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)_OS_has_environment(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -54475,7 +55356,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_name(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54715,7 +55599,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_locale(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_locale(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54727,7 +55614,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_model_name(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_model_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54739,7 +55629,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_custom_level(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_custom_level(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54804,32 +55697,38 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_is_debug_build(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_memory_to_file(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_memory_to_file(void * jarg1, char * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _OS_dump_memory_to_file(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_resources_to_file(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_dump_resources_to_file(void * jarg1, char * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _OS_dump_resources_to_file(arg1,(String const &)*arg2);
 }
 
@@ -54852,17 +55751,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_resources_in_use__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_all_resources__SWIG_0(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_all_resources__SWIG_0(void * jarg1, char * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _OS_print_all_resources__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -54918,7 +55820,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_data_dir(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_data_dir(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54932,7 +55837,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_system_dir(void * jarg1, int jarg2) 
   arg1 = (_OS *)jarg1; 
   arg2 = (int)jarg2; 
   result = _OS_get_system_dir(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54944,7 +55852,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_unique_ID(void * jarg1) {
   
   arg1 = (_OS *)jarg1; 
   result = _OS_get_unique_ID(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -54995,7 +55906,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_print_resources_by_type(void * jarg1, void
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_native_video_play(void * jarg1, wchar_t * jarg2, float jarg3, wchar_t * jarg4, wchar_t * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_native_video_play(void * jarg1, char * jarg2, float jarg3, char * jarg4, char * jarg5) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
@@ -55005,25 +55916,34 @@ SWIGEXPORT int SWIGSTDCALL CSharp_OS_native_video_play(void * jarg1, wchar_t * j
   int result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   result = (int)_OS_native_video_play(arg1,(String const &)*arg2,arg3,(String const &)*arg4,(String const &)*arg5);
   jresult = result; 
   return jresult;
@@ -55075,7 +55995,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_get_scancode_string(void * jarg1, int ja
   arg1 = (_OS *)jarg1; 
   arg2 = (int)jarg2; 
   result = _OS_get_scancode_string(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -55094,19 +56017,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_OS_is_scancode_unicode(void * jarg1, 
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_find_scancode_from_string(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_find_scancode_from_string(void * jarg1, char * jarg2) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_OS_find_scancode_from_string(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -55123,56 +56049,68 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OS_set_use_file_access_save_and_swap(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   _OS_alert__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OS_alert__SWIG_1(void * jarg1, char * jarg2) {
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   _OS_alert__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_OS_set_thread_name(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_OS_set_thread_name(void * jarg1, char * jarg2) {
   int jresult ;
   _OS *arg1 = (_OS *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (_OS *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)_OS_set_thread_name(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -55211,7 +56149,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OS_SingletonGetInstance() {
 }
 
 
-SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   ResourceInteractiveLoader* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55219,18 +56157,24 @@ SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_int
   Ref< ResourceInteractiveLoader > result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = _ResourceLoader_load_interactive__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -55240,19 +56184,22 @@ SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_int
 }
 
 
-SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_interactive__SWIG_1(void * jarg1, char * jarg2) {
   ResourceInteractiveLoader* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
   Ref< ResourceInteractiveLoader > result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _ResourceLoader_load_interactive__SWIG_0(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -55262,7 +56209,7 @@ SWIGEXPORT ResourceInteractiveLoader* SWIGSTDCALL CSharp_ResourceLoader_load_int
 }
 
 
-SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, unsigned int jarg4) {
+SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1, char * jarg2, char * jarg3, unsigned int jarg4) {
   Resource* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55271,18 +56218,24 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1
   Ref< Resource > result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = jarg4 ? true : false; 
   result = _ResourceLoader_load__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
   
@@ -55293,7 +56246,7 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_0(void * jarg1
 }
 
 
-SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
   Resource* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
@@ -55301,18 +56254,24 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1
   Ref< Resource > result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = _ResourceLoader_load__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -55322,19 +56281,22 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_1(void * jarg1
 }
 
 
-SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_2(void * jarg1, char * jarg2) {
   Resource* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
   Ref< Resource > result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _ResourceLoader_load__SWIG_0(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -55344,19 +56306,22 @@ SWIGEXPORT Resource* SWIGSTDCALL CSharp_ResourceLoader_load__SWIG_2(void * jarg1
 }
 
 
-SWIGEXPORT ResourceImportMetadata* SWIGSTDCALL CSharp_ResourceLoader_load_import_metadata(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT ResourceImportMetadata* SWIGSTDCALL CSharp_ResourceLoader_load_import_metadata(void * jarg1, char * jarg2) {
   ResourceImportMetadata* jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
   Ref< ResourceImportMetadata > result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _ResourceLoader_load_import_metadata(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -55366,19 +56331,22 @@ SWIGEXPORT ResourceImportMetadata* SWIGSTDCALL CSharp_ResourceLoader_load_import
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_recognized_extensions_for_type(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_recognized_extensions_for_type(void * jarg1, char * jarg2) {
   void * jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _ResourceLoader_get_recognized_extensions_for_type(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
@@ -55395,38 +56363,44 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ResourceLoader_set_abort_on_missing_resources
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_dependencies(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_get_dependencies(void * jarg1, char * jarg2) {
   void * jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = _ResourceLoader_get_dependencies(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourceLoader_has(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourceLoader_has(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   _ResourceLoader *arg1 = (_ResourceLoader *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (_ResourceLoader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)_ResourceLoader_has(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -55443,7 +56417,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ResourceLoader_SingletonGetInstance() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, char * jarg2, void * jarg3, int jarg4) {
   int jresult ;
   _ResourceSaver *arg1 = (_ResourceSaver *) 0 ;
   String *arg2 = 0 ;
@@ -55452,12 +56426,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, wchar
   int result;
   
   arg1 = (_ResourceSaver *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Resource *)jarg3; 
   arg4 = (int)jarg4; 
   result = (int)_ResourceSaver_save__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
@@ -55466,7 +56443,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_0(void * jarg1, wchar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
   int jresult ;
   _ResourceSaver *arg1 = (_ResourceSaver *) 0 ;
   String *arg2 = 0 ;
@@ -55474,12 +56451,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ResourceSaver_save__SWIG_1(void * jarg1, wchar
   int result;
   
   arg1 = (_ResourceSaver *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Resource *)jarg3; 
   result = (int)_ResourceSaver_save__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -55563,7 +56543,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Thread() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, int jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, int jarg5) {
   int jresult ;
   _Thread *arg1 = (_Thread *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -55574,12 +56554,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg
   
   arg1 = (_Thread *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -55592,7 +56575,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_0(void * jarg1, void * jarg
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4) {
   int jresult ;
   _Thread *arg1 = (_Thread *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -55602,12 +56585,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg
   
   arg1 = (_Thread *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -55619,7 +56605,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_1(void * jarg1, void * jarg
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_2(void * jarg1, void * jarg2, char * jarg3) {
   int jresult ;
   _Thread *arg1 = (_Thread *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -55628,12 +56614,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Thread_start__SWIG_2(void * jarg1, void * jarg
   
   arg1 = (_Thread *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)_Thread_start__SWIG_0(arg1,arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -55647,7 +56636,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Thread_get_id(void * jarg1) {
   
   arg1 = (_Thread *)jarg1; 
   result = _Thread_get_id(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -56189,7 +57181,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Animation_method_track_get_name(void * jarg
   arg2 = (int)jarg2; 
   arg3 = (int)jarg3; 
   result = Animation_method_track_get_name(arg1,arg2,arg3);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -56427,7 +57422,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AudioServer_sample_create(void * jarg1, int
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AudioServer_sample_set_description(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AudioServer_sample_set_description(void * jarg1, void * jarg2, char * jarg3) {
   AudioServer *arg1 = (AudioServer *) 0 ;
   RID *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -56438,12 +57433,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AudioServer_sample_set_description(void * jar
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "RID const & type is null", 0);
     return ;
   } 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   AudioServer_sample_set_description(arg1,(RID const &)*arg2,(String const &)*arg3);
 }
 
@@ -56461,7 +57459,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AudioServer_sample_get_description(void * j
     return 0;
   } 
   result = AudioServer_sample_get_description(arg1,(RID const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -58269,18 +59270,21 @@ SWIGEXPORT Shader* SWIGSTDCALL CSharp_CanvasItemMaterial_get_shader(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_set_shader_param(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_set_shader_param(void * jarg1, char * jarg2, void * jarg3) {
   CanvasItemMaterial *arg1 = (CanvasItemMaterial *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (CanvasItemMaterial *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -58290,17 +59294,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_set_shader_param(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_get_shader_param(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItemMaterial_get_shader_param(void * jarg1, char * jarg2) {
   CanvasItemMaterial *arg1 = (CanvasItemMaterial *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (CanvasItemMaterial *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   CanvasItemMaterial_get_shader_param(arg1,(String const &)*arg2);
 }
 
@@ -58811,25 +59818,31 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ConfigFile() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ConfigFile_set_value(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ConfigFile_set_value(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   Variant *arg4 = 0 ;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -58839,7 +59852,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ConfigFile_set_value(void * jarg1, wchar_t * 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   void * jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58848,18 +59861,24 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, 
   Variant result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -58871,7 +59890,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
   void * jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58879,44 +59898,53 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_value__SWIG_1(void * jarg1, 
   Variant result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = ConfigFile_get_value__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = memnew(Variant((const Variant &)result));
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)ConfigFile_has_section(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section_key(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section_key(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
@@ -58924,18 +59952,24 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ConfigFile_has_section_key(void * jar
   bool result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)ConfigFile_has_section_key(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -58954,57 +59988,66 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_sections(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_section_keys(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ConfigFile_get_section_keys(void * jarg1, char * jarg2) {
   void * jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
   StringArray result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = ConfigFile_get_section_keys(arg1,(String const &)*arg2);
   jresult = memnew(StringArray((const StringArray &)result));
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_load(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_load(void * jarg1, char * jarg2) {
   int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)ConfigFile_load(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_save(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_ConfigFile_save(void * jarg1, char * jarg2) {
   int jresult ;
   ConfigFile *arg1 = (ConfigFile *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (ConfigFile *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)ConfigFile_save(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -60051,17 +61094,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_DynamicFontData() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_DynamicFontData_set_font_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_DynamicFontData_set_font_path(void * jarg1, char * jarg2) {
   DynamicFontData *arg1 = (DynamicFontData *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (DynamicFontData *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   DynamicFontData_set_font_path(arg1,(String const &)*arg2);
 }
 
@@ -60073,7 +61119,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_DynamicFontData_get_font_path(void * jarg1)
   
   arg1 = (DynamicFontData *)jarg1; 
   result = DynamicFontData_get_font_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -60096,7 +61145,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_EditorExportPlugin() {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorExportPlugin_custom_export(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorExportPlugin_custom_export(void * jarg1, char * jarg2, void * jarg3) {
   void * jresult ;
   EditorExportPlugin *arg1 = (EditorExportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60104,12 +61153,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorExportPlugin_custom_export(void * jar
   Variant result;
   
   arg1 = (EditorExportPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (EditorExportPlatform *)jarg3; 
   result = EditorExportPlugin_custom_export(arg1,(String const &)*arg2,arg3);
   jresult = memnew(Variant((const Variant &)result));
@@ -60147,7 +61199,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_EditorImportPlugin_can_reimport_multi
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_custom_export(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_custom_export(void * jarg1, char * jarg2, void * jarg3) {
   void * jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60155,12 +61207,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_custom_export(void * jar
   RawArray result;
   
   arg1 = (EditorImportPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (EditorExportPlatform *)jarg3; 
   result = EditorImportPlugin_custom_export(arg1,(String const &)*arg2,arg3);
   jresult = memnew(RawArray((const RawArray &)result));
@@ -60175,7 +61230,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_get_name(void * jarg1) {
   
   arg1 = (EditorImportPlugin *)jarg1; 
   result = EditorImportPlugin_get_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -60187,12 +61245,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_get_visible_name(void * 
   
   arg1 = (EditorImportPlugin *)jarg1; 
   result = EditorImportPlugin_get_visible_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, char * jarg2, void * jarg3) {
   int jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
@@ -60200,12 +61261,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, wchar_
   int result;
   
   arg1 = (EditorImportPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (ResourceImportMetadata *)jarg3; 
   result = (int)EditorImportPlugin_import(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -60213,22 +61277,25 @@ SWIGEXPORT int SWIGSTDCALL CSharp_EditorImportPlugin_import(void * jarg1, wchar_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_dialog(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_dialog(void * jarg1, char * jarg2) {
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorImportPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorImportPlugin_import_dialog(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_from_drop(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_from_drop(void * jarg1, void * jarg2, char * jarg3) {
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   StringArray *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -60239,12 +61306,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_import_from_drop(void * ja
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
     return ;
   } 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   EditorImportPlugin_import_from_drop(arg1,(StringArray const &)*arg2,(String const &)*arg3);
 }
 
@@ -60263,40 +61333,52 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorImportPlugin_reimport_multiple_files(vo
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_validate_source_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_validate_source_path(void * jarg1, char * jarg2) {
   void * jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (EditorImportPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = EditorImportPlugin_validate_source_path(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_expand_source_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_EditorImportPlugin_expand_source_path(void * jarg1, char * jarg2) {
   void * jresult ;
   EditorImportPlugin *arg1 = (EditorImportPlugin *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (EditorImportPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = EditorImportPlugin_expand_source_path(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -60445,17 +61527,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_EditorSettings() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorSettings_erase(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorSettings_erase(void * jarg1, char * jarg2) {
   EditorSettings *arg1 = (EditorSettings *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorSettings *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorSettings_erase(arg1,(String const &)*arg2);
 }
 
@@ -60467,7 +61552,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorSettings_get_settings_path(void * jar
   
   arg1 = (EditorSettings *)jarg1; 
   result = EditorSettings_get_settings_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -60479,7 +61567,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorSettings_get_project_settings_path(vo
   
   arg1 = (EditorSettings *)jarg1; 
   result = EditorSettings_get_project_settings_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -60581,7 +61672,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorSpatialGizmo_get_handle_name(void * j
   arg1 = (EditorSpatialGizmo *)jarg1; 
   arg2 = (int)jarg2; 
   result = EditorSpatialGizmo_get_handle_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -60956,7 +62050,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_EventStreamChibi(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5, int jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5, int jarg6) {
   Font *arg1 = (Font *) 0 ;
   RID *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -60975,12 +62069,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2,
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return ;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Color *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -60991,7 +62088,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_0(void * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5) {
   Font *arg1 = (Font *) 0 ;
   RID *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -61009,12 +62106,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2,
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return ;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Color *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -61024,7 +62124,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_1(void * jarg1, void * jarg2,
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4) {
   Font *arg1 = (Font *) 0 ;
   RID *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
@@ -61041,12 +62141,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Font_draw__SWIG_2(void * jarg1, void * jarg2,
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return ;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   Font_draw__SWIG_0(arg1,(RID const &)*arg2,(Vector2 const &)*arg3,(String const &)*arg4);
 }
 
@@ -61099,19 +62202,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Font_is_distance_field_hint(void * ja
 }
 
 
-SWIGEXPORT Vector2 SWIGSTDCALL CSharp_Font_get_string_size(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Vector2 SWIGSTDCALL CSharp_Font_get_string_size(void * jarg1, char * jarg2) {
   Vector2 jresult ;
   Font *arg1 = (Font *) 0 ;
   String *arg2 = 0 ;
   Vector2 result;
   
   arg1 = (Font *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return Vector2();
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Font_get_string_size(arg1,(String const &)*arg2);
   return result;
   return jresult;
@@ -61652,17 +62758,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_FuncRef_set_instance(void * jarg1, void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FuncRef_set_function(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FuncRef_set_function(void * jarg1, char * jarg2) {
   FuncRef *arg1 = (FuncRef *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (FuncRef *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   FuncRef_set_function(arg1,(String const &)*arg2);
 }
 
@@ -61763,146 +62872,176 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_GDScript(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Globals_has(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_order(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_order(void * jarg1, char * jarg2, int jarg3) {
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   Globals_set_order(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Globals_get_order(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Globals_get_order(void * jarg1, char * jarg2) {
   int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)Globals_get_order(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_persisting(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Globals_set_persisting(void * jarg1, char * jarg2, unsigned int jarg3) {
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   Globals_set_persisting(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_is_persisting(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_is_persisting(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Globals_is_persisting(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Globals_clear(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Globals_clear(void * jarg1, char * jarg2) {
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Globals_clear(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_localize_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_localize_path(void * jarg1, char * jarg2) {
   void * jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Globals_localize_path(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_globalize_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_globalize_path(void * jarg1, char * jarg2) {
   void * jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Globals_globalize_path(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -61919,76 +63058,88 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Globals_save(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has_singleton(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_has_singleton(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Globals_has_singleton(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_get_singleton(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Globals_get_singleton(void * jarg1, char * jarg2) {
   void * jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   Object *result = 0 ;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (Object *)Globals_get_singleton(arg1,(String const &)*arg2);
   jresult = (void *)result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_load_resource_pack(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Globals_load_resource_pack(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Globals_load_resource_pack(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Globals_save_custom(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Globals_save_custom(void * jarg1, char * jarg2) {
   int jresult ;
   Globals *arg1 = (Globals *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (Globals *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)Globals_save_custom(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -62015,7 +63166,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_HTTPClient() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, unsigned int jarg4, unsigned int jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, char * jarg2, int jarg3, unsigned int jarg4, unsigned int jarg5) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62025,12 +63176,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, wchar
   int result;
   
   arg1 = (HTTPClient *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = jarg4 ? true : false; 
   arg5 = jarg5 ? true : false; 
@@ -62040,7 +63194,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_0(void * jarg1, wchar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3, unsigned int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, char * jarg2, int jarg3, unsigned int jarg4) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62049,12 +63203,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, wchar
   int result;
   
   arg1 = (HTTPClient *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = jarg4 ? true : false; 
   result = (int)HTTPClient_connect__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
@@ -62063,7 +63220,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_1(void * jarg1, wchar
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_2(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_2(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
@@ -62071,12 +63228,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_connect__SWIG_2(void * jarg1, wchar
   int result;
   
   arg1 = (HTTPClient *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)HTTPClient_connect__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -62109,7 +63269,7 @@ SWIGEXPORT StreamPeer* SWIGSTDCALL CSharp_HTTPClient_get_connection(void * jarg1
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2, char * jarg3, void * jarg4, void * jarg5) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   int arg2 ;
@@ -62120,12 +63280,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2
   
   arg1 = (HTTPClient *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (StringArray *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
@@ -62142,7 +63305,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request_raw(void * jarg1, int jarg2
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_0(void * jarg1, int jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_0(void * jarg1, int jarg2, char * jarg3, void * jarg4, char * jarg5) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   int arg2 ;
@@ -62153,30 +63316,36 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_0(void * jarg1, int j
   
   arg1 = (HTTPClient *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (StringArray *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
     return 0;
   } 
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   result = (int)HTTPClient_request__SWIG_0(arg1,arg2,(String const &)*arg3,(StringArray const &)*arg4,(String const &)*arg5);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int jarg2, char * jarg3, void * jarg4) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   int arg2 ;
@@ -62186,12 +63355,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int j
   
   arg1 = (HTTPClient *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (StringArray *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
@@ -62203,19 +63375,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_request__SWIG_1(void * jarg1, int j
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_send_body_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPClient_send_body_text(void * jarg1, char * jarg2) {
   int jresult ;
   HTTPClient *arg1 = (HTTPClient *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (HTTPClient *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)HTTPClient_send_body_text(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -62401,7 +63576,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_HTTPClient_query_string_from_dict(void * ja
     return 0;
   } 
   result = HTTPClient_query_string_from_dict(arg1,(Dictionary const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -62414,38 +63592,47 @@ SWIGEXPORT void SWIGSTDCALL CSharp_delete_HTTPClient(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_IP_resolve_hostname(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_IP_resolve_hostname(void * jarg1, char * jarg2) {
   void * jresult ;
   IP *arg1 = (IP *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (IP *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = IP_resolve_hostname(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_IP_resolve_hostname_queue_item(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_IP_resolve_hostname_queue_item(void * jarg1, char * jarg2) {
   int jresult ;
   IP *arg1 = (IP *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (IP *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)IP_resolve_hostname_queue_item(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -62475,7 +63662,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_IP_get_resolve_item_address(void * jarg1, i
   arg1 = (IP *)jarg1; 
   arg2 = (int)jarg2; 
   result = IP_get_resolve_item_address(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -62594,17 +63784,20 @@ SWIGEXPORT int SWIGSTDCALL CSharp_ImageTexture_get_format(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ImageTexture_load(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ImageTexture_load(void * jarg1, char * jarg2) {
   ImageTexture *arg1 = (ImageTexture *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ImageTexture *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ImageTexture_load(arg1,(String const &)*arg2);
 }
 
@@ -62777,68 +63970,80 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_joy_button_pressed(void * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_action_pressed(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Input_is_action_pressed(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Input *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Input_is_action_pressed(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
   
   arg1 = (Input *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   Input_add_joy_mapping__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_add_joy_mapping__SWIG_1(void * jarg1, char * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Input *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Input_add_joy_mapping__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_remove_joy_mapping(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_remove_joy_mapping(void * jarg1, char * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Input *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Input_remove_joy_mapping(arg1,(String const &)*arg2);
 }
 
@@ -62882,7 +64087,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Input_get_joy_name(void * jarg1, int jarg2)
   arg1 = (Input *)jarg1; 
   arg2 = (int)jarg2; 
   result = Input_get_joy_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -62896,7 +64104,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Input_get_joy_guid(void * jarg1, int jarg2)
   arg1 = (Input *)jarg1; 
   arg2 = (int)jarg2; 
   result = Input_get_joy_guid(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -63053,32 +64264,38 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Input_warp_mouse_pos(void * jarg1, Vector2* j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_press(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_press(void * jarg1, char * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Input *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Input_action_press(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_release(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Input_action_release(void * jarg1, char * jarg2) {
   Input *arg1 = (Input *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Input *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Input_action_release(arg1,(String const &)*arg2);
 }
 
@@ -63119,38 +64336,44 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Input_SingletonGetInstance() {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_has_action(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_has_action(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)InputMap_has_action(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_InputMap_get_action_id(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_InputMap_get_action_id(void * jarg1, char * jarg2) {
   int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)InputMap_get_action_id(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -63166,7 +64389,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_action_from_id(void * jarg1, i
   arg1 = (InputMap *)jarg1; 
   arg2 = (int)jarg2; 
   result = InputMap_get_action_from_id(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -63183,48 +64409,57 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_actions(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_add_action(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_add_action(void * jarg1, char * jarg2) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   InputMap_add_action(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_erase_action(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_erase_action(void * jarg1, char * jarg2) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   InputMap_erase_action(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_add_event(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_add_event(void * jarg1, char * jarg2, void * jarg3) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   InputEvent *arg3 = 0 ;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (InputEvent *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "InputEvent const & type is null", 0);
@@ -63234,7 +64469,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_add_event(void * jarg1, wchar
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg1, char * jarg2, void * jarg3) {
   unsigned int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
@@ -63242,12 +64477,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg
   bool result;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (InputEvent *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "InputEvent const & type is null", 0);
@@ -63259,18 +64497,21 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_action_has_event(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_erase_event(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_erase_event(void * jarg1, char * jarg2, void * jarg3) {
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   InputEvent *arg3 = 0 ;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (InputEvent *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "InputEvent const & type is null", 0);
@@ -63280,26 +64521,29 @@ SWIGEXPORT void SWIGSTDCALL CSharp_InputMap_action_erase_event(void * jarg1, wch
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_action_list(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_InputMap_get_action_list(void * jarg1, char * jarg2) {
   void * jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   String *arg2 = 0 ;
   Array result;
   
   arg1 = (InputMap *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = InputMap_get_action_list(arg1,(String const &)*arg2);
   jresult = memnew(Array((const Array &)result));
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_event_is_action(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_event_is_action(void * jarg1, void * jarg2, char * jarg3) {
   unsigned int jresult ;
   InputMap *arg1 = (InputMap *) 0 ;
   InputEvent *arg2 = 0 ;
@@ -63312,12 +64556,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_InputMap_event_is_action(void * jarg1
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "InputEvent const & type is null", 0);
     return 0;
   } 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)InputMap_event_is_action(arg1,(InputEvent const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -63605,17 +64852,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop__input_event(void * jarg1, void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop__input_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop__input_text(void * jarg1, char * jarg2) {
   MainLoop *arg1 = (MainLoop *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (MainLoop *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   MainLoop__input_text(arg1,(String const &)*arg2);
 }
 
@@ -63644,17 +64894,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop_input_event(void * jarg1, void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop_input_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MainLoop_input_text(void * jarg1, char * jarg2) {
   MainLoop *arg1 = (MainLoop *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (MainLoop *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   MainLoop_input_text(arg1,(String const &)*arg2);
 }
 
@@ -63849,17 +65102,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Mesh() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_add_morph_target(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_add_morph_target(void * jarg1, char * jarg2) {
   Mesh *arg1 = (Mesh *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Mesh *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Mesh_add_morph_target(arg1,(String const &)*arg2);
 }
 
@@ -63885,7 +65141,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Mesh_get_morph_target_name(void * jarg1, in
   arg1 = (Mesh *)jarg1; 
   arg2 = (int)jarg2; 
   result = Mesh_get_morph_target_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -64089,19 +65348,22 @@ SWIGEXPORT Material* SWIGSTDCALL CSharp_Mesh_surface_get_material(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_surface_set_name(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Mesh_surface_set_name(void * jarg1, int jarg2, char * jarg3) {
   Mesh *arg1 = (Mesh *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (Mesh *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Mesh_surface_set_name(arg1,arg2,(String const &)*arg3);
 }
 
@@ -64115,7 +65377,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Mesh_surface_get_name(void * jarg1, int jar
   arg1 = (Mesh *)jarg1; 
   arg2 = (int)jarg2; 
   result = Mesh_surface_get_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -64738,19 +66003,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_MeshLibrary_create_item(void * jarg1, int jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_MeshLibrary_set_item_name(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_MeshLibrary_set_item_name(void * jarg1, int jarg2, char * jarg3) {
   MeshLibrary *arg1 = (MeshLibrary *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (MeshLibrary *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   MeshLibrary_set_item_name(arg1,arg2,(String const &)*arg3);
 }
 
@@ -64800,7 +66068,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_MeshLibrary_get_item_name(void * jarg1, int
   arg1 = (MeshLibrary *)jarg1; 
   arg2 = (int)jarg2; 
   result = MeshLibrary_get_item_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -65443,17 +66714,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node__unhandled_key_input(void * jarg1, void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_name(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_name(void * jarg1, char * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
   arg2 = &arg2_str;
+  
   Node_set_name(arg1,(String const &)*arg2);
 }
 
@@ -65465,7 +66739,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_get_name(void * jarg1) {
   
   arg1 = (Node *)jarg1; 
   result = Node_get_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -65588,7 +66865,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_get_parent(void * jarg1) {
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3, unsigned int jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3, unsigned int jarg4) {
   void * jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
@@ -65597,12 +66874,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, wchar_
   Node *result = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   arg4 = jarg4 ? true : false; 
   result = (Node *)Node_find_node__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
@@ -65611,7 +66891,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_0(void * jarg1, wchar_
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, char * jarg2, unsigned int jarg3) {
   void * jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
@@ -65619,12 +66899,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, wchar_
   Node *result = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   result = (Node *)Node_find_node__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = (void *)result; 
@@ -65632,19 +66915,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_1(void * jarg1, wchar_
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Node_find_node__SWIG_2(void * jarg1, char * jarg2) {
   void * jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   Node *result = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (Node *)Node_find_node__SWIG_0(arg1,(String const &)*arg2);
   jresult = (void *)result; 
   return jresult;
@@ -65753,66 +67039,78 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_get_path_to(void * jarg1, void * jarg2
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   Node_add_to_group__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_add_to_group__SWIG_1(void * jarg1, char * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Node_add_to_group__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_remove_from_group(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_remove_from_group(void * jarg1, char * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Node_remove_from_group(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Node_is_in_group(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Node_is_in_group(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Node_is_in_group(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -65901,17 +67199,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Node_print_tree(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_filename(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Node_set_filename(void * jarg1, char * jarg2) {
   Node *arg1 = (Node *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Node *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Node_set_filename(arg1,(String const &)*arg2);
 }
 
@@ -65923,7 +67224,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Node_get_filename(void * jarg1) {
   
   arg1 = (Node *)jarg1; 
   result = Node_get_filename(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -66326,7 +67630,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_PCKPacker() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   PCKPacker *arg1 = (PCKPacker *) 0 ;
   String *arg2 = 0 ;
@@ -66334,12 +67638,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, wchar_t * ja
   int result;
   
   arg1 = (PCKPacker *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)PCKPacker_pck_start(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -66347,7 +67654,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_pck_start(void * jarg1, wchar_t * ja
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_add_file(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_add_file(void * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   PCKPacker *arg1 = (PCKPacker *) 0 ;
   String *arg2 = 0 ;
@@ -66355,18 +67662,24 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PCKPacker_add_file(void * jarg1, wchar_t * jar
   int result;
   
   arg1 = (PCKPacker *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)PCKPacker_add_file(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -66765,7 +68078,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_PacketPeerUDP_get_packet_ip(void * jarg1) {
   
   arg1 = (PacketPeerUDP *)jarg1; 
   result = PacketPeerUDP_get_packet_ip(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -66794,7 +68110,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_get_packet_port(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_set_send_address(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_set_send_address(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   PacketPeerUDP *arg1 = (PacketPeerUDP *) 0 ;
   String *arg2 = 0 ;
@@ -66802,12 +68118,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_PacketPeerUDP_set_send_address(void * jarg1, w
   int result;
   
   arg1 = (PacketPeerUDP *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)PacketPeerUDP_set_send_address(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -67827,92 +69146,110 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ResourcePreloader() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_add_resource(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_add_resource(void * jarg1, char * jarg2, void * jarg3) {
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   Object *arg3 = (Object *) 0 ;
   
   arg1 = (ResourcePreloader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Object *)jarg3; 
   ResourcePreloader_add_resource(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_remove_resource(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_remove_resource(void * jarg1, char * jarg2) {
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ResourcePreloader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ResourcePreloader_remove_resource(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_rename_resource(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ResourcePreloader_rename_resource(void * jarg1, char * jarg2, char * jarg3) {
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (ResourcePreloader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ResourcePreloader_rename_resource(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourcePreloader_has_resource(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_ResourcePreloader_has_resource(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (ResourcePreloader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)ResourcePreloader_has_resource(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ResourcePreloader_get_resource(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ResourcePreloader_get_resource(void * jarg1, char * jarg2) {
   void * jresult ;
   ResourcePreloader *arg1 = (ResourcePreloader *) 0 ;
   String *arg2 = 0 ;
   Object *result = 0 ;
   
   arg1 = (ResourcePreloader *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (Object *)ResourcePreloader_get_resource(arg1,(String const &)*arg2);
   jresult = (void *)result; 
   return jresult;
@@ -67988,7 +69325,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_get_polyphony(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3) {
   int jresult ;
   SamplePlayer *arg1 = (SamplePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -67996,12 +69333,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, wchar_
   int result;
   
   arg1 = (SamplePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   result = (int)SamplePlayer_play__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -68009,19 +69349,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_0(void * jarg1, wchar_
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer_play__SWIG_1(void * jarg1, char * jarg2) {
   int jresult ;
   SamplePlayer *arg1 = (SamplePlayer *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (SamplePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)SamplePlayer_play__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -68702,7 +70045,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SceneTree() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_notify_group(void * jarg1, int jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_notify_group(void * jarg1, int jarg2, char * jarg3, int jarg4) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -68710,18 +70053,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_notify_group(void * jarg1, int jarg
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   SceneTree_notify_group(arg1,arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -68730,18 +70076,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, 
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -68751,19 +70103,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_set_group(void * jarg1, int jarg2, 
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_nodes_in_group(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_nodes_in_group(void * jarg1, char * jarg2) {
   void * jresult ;
   SceneTree *arg1 = (SceneTree *) 0 ;
   String *arg2 = 0 ;
   Array result;
   
   arg1 = (SceneTree *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = SceneTree_get_nodes_in_group(arg1,(String const &)*arg2);
   jresult = memnew(Array((const Array &)result));
   return jresult;
@@ -68782,19 +70137,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_root(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SceneTree_has_group(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_SceneTree_has_group(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   SceneTree *arg1 = (SceneTree *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (SceneTree *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)SceneTree_has_group(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -68989,7 +70347,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_queue_delete(void * jarg1, void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69002,18 +70360,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, in
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -69043,7 +70407,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_0(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69055,18 +70419,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, in
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -69091,7 +70461,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_1(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69102,18 +70472,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, in
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -69133,7 +70509,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_2(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5, void * jarg6) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69143,18 +70519,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, in
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -69169,7 +70551,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_3(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, int jarg2, char * jarg3, char * jarg4, void * jarg5) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69178,18 +70560,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, in
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -69199,7 +70587,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_4(void * jarg1, in
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_5(void * jarg1, int jarg2, wchar_t * jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_5(void * jarg1, int jarg2, char * jarg3, char * jarg4) {
   SceneTree *arg1 = (SceneTree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
@@ -69207,18 +70595,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_SceneTree_call_group__SWIG_5(void * jarg1, in
   
   arg1 = (SceneTree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   SceneTree_call_group__SWIG_0(arg1,arg2,(String const &)*arg3,(String const &)*arg4);
 }
 
@@ -69245,19 +70639,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SceneTree_get_current_scene(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SceneTree_change_scene(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SceneTree_change_scene(void * jarg1, char * jarg2) {
   int jresult ;
   SceneTree *arg1 = (SceneTree *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (SceneTree *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)SceneTree_change_scene(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -69395,18 +70792,21 @@ SWIGEXPORT Shader* SWIGSTDCALL CSharp_ShaderMaterial_get_shader(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ShaderMaterial_set_shader_param(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ShaderMaterial_set_shader_param(void * jarg1, char * jarg2, void * jarg3) {
   ShaderMaterial *arg1 = (ShaderMaterial *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (ShaderMaterial *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -69416,19 +70816,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ShaderMaterial_set_shader_param(void * jarg1,
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_ShaderMaterial_get_shader_param(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_ShaderMaterial_get_shader_param(void * jarg1, char * jarg2) {
   void * jresult ;
   ShaderMaterial *arg1 = (ShaderMaterial *) 0 ;
   String *arg2 = 0 ;
   Variant result;
   
   arg1 = (ShaderMaterial *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = ShaderMaterial_get_shader_param(arg1,(String const &)*arg2);
   jresult = memnew(Variant((const Variant &)result));
   return jresult;
@@ -70088,7 +71491,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_get_polyphony(void * jarg1
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   SpatialSamplePlayer *arg1 = (SpatialSamplePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -70096,12 +71499,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1,
   int result;
   
   arg1 = (SpatialSamplePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)SpatialSamplePlayer_play__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -70109,19 +71515,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_0(void * jarg1,
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SpatialSamplePlayer_play__SWIG_1(void * jarg1, char * jarg2) {
   int jresult ;
   SpatialSamplePlayer *arg1 = (SpatialSamplePlayer *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (SpatialSamplePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)SpatialSamplePlayer_play__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -70396,7 +71805,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpatialStreamPlayer_get_stream_name(void * 
   
   arg1 = (SpatialStreamPlayer *)jarg1; 
   result = SpatialStreamPlayer_get_stream_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -70681,7 +72093,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_StreamPlayer_get_stream_name(void * jarg1) 
   
   arg1 = (StreamPlayer *)jarg1; 
   result = StreamPlayer_get_stream_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -71012,7 +72427,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_start(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset(void * jarg1, void * jarg2, char * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71021,12 +72436,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset(void * jarg1, void * jarg
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Tween_reset(arg1,arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -71045,7 +72463,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_reset_all(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop(void * jarg1, void * jarg2, char * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71054,12 +72472,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop(void * jarg1, void * jarg2
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Tween_stop(arg1,arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -71078,7 +72499,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_stop_all(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume(void * jarg1, void * jarg2, char * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71087,12 +72508,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume(void * jarg1, void * jar
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Tween_resume(arg1,arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -71111,7 +72535,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_resume_all(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_remove(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_remove(void * jarg1, void * jarg2, char * jarg3) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71120,12 +72544,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_remove(void * jarg1, void * jar
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Tween_remove(arg1,arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -71182,7 +72609,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_Tween_get_runtime(void * jarg1) {
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71197,12 +72624,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(vo
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71223,7 +72653,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_0(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71237,12 +72667,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(vo
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71262,7 +72695,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_property__SWIG_1(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8, float jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71277,12 +72710,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71303,7 +72739,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_0(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, float jarg6, int jarg7, int jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71317,12 +72753,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71342,7 +72781,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_method__SWIG_1(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71358,12 +72797,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(vo
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71395,7 +72837,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_0(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71410,12 +72852,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(vo
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71442,7 +72887,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_1(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71456,12 +72901,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(vo
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71483,7 +72931,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_2(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71496,12 +72944,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(vo
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71518,7 +72969,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_3(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71530,12 +72981,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(vo
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71547,7 +73001,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_4(vo
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, char * jarg4) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71558,19 +73012,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_callback__SWIG_5(vo
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (bool)Tween_interpolate_callback__SWIG_0(arg1,arg2,arg3,(String const &)*arg4);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_0(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8, void * jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71586,12 +73043,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71623,7 +73083,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_1(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7, void * jarg8) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71638,12 +73098,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71670,7 +73133,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6, void * jarg7) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_2(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6, void * jarg7) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71684,12 +73147,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71711,7 +73177,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5, void * jarg6) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_3(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5, void * jarg6) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71724,12 +73190,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71746,7 +73215,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_4(void * jarg1, void * jarg2, float jarg3, char * jarg4, void * jarg5) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71758,12 +73227,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Variant *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -71775,7 +73247,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, wchar_t * jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__SWIG_5(void * jarg1, void * jarg2, float jarg3, char * jarg4) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71786,19 +73258,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_interpolate_deferred_callback__
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
   arg3 = (float)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (bool)Tween_interpolate_deferred_callback__SWIG_0(arg1,arg2,arg3,(String const &)*arg4);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71814,24 +73289,30 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * 
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
     return 0;
   } 
   arg5 = (Object *)jarg5; 
+  
   if (!jarg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg6_str = jarg6;
-  arg6 = &arg6_str; 
+  String arg6_str;
+  gdstring_from_utf16(arg6_str, (const uint16_t*)jarg6);
+  arg6 = &arg6_str;
+  
   arg7 = (float)jarg7; 
   arg8 = (int)jarg8; 
   arg9 = (int)jarg9; 
@@ -71842,7 +73323,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_0(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71857,24 +73338,30 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * 
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
     return 0;
   } 
   arg5 = (Object *)jarg5; 
+  
   if (!jarg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg6_str = jarg6;
-  arg6 = &arg6_str; 
+  String arg6_str;
+  gdstring_from_utf16(arg6_str, (const uint16_t*)jarg6);
+  arg6 = &arg6_str;
+  
   arg7 = (float)jarg7; 
   arg8 = (int)jarg8; 
   arg9 = (int)jarg9; 
@@ -71884,7 +73371,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_property__SWIG_1(void * 
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71900,24 +73387,30 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * ja
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
     return 0;
   } 
   arg5 = (Object *)jarg5; 
+  
   if (!jarg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg6_str = jarg6;
-  arg6 = &arg6_str; 
+  String arg6_str;
+  gdstring_from_utf16(arg6_str, (const uint16_t*)jarg6);
+  arg6 = &arg6_str;
+  
   arg7 = (float)jarg7; 
   arg8 = (int)jarg8; 
   arg9 = (int)jarg9; 
@@ -71928,7 +73421,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_0(void * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5, wchar_t * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, void * jarg5, char * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71943,24 +73436,30 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * ja
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Variant *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
     return 0;
   } 
   arg5 = (Object *)jarg5; 
+  
   if (!jarg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg6_str = jarg6;
-  arg6 = &arg6_str; 
+  String arg6_str;
+  gdstring_from_utf16(arg6_str, (const uint16_t*)jarg6);
+  arg6 = &arg6_str;
+  
   arg7 = (float)jarg7; 
   arg8 = (int)jarg8; 
   arg9 = (int)jarg9; 
@@ -71970,7 +73469,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_follow_method__SWIG_1(void * ja
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -71986,19 +73485,25 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Object *)jarg4; 
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   arg6 = (Variant *)jarg6;
   if (!arg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -72014,7 +73519,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_0(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -72029,19 +73534,25 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Object *)jarg4; 
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   arg6 = (Variant *)jarg6;
   if (!arg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -72056,7 +73567,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_property__SWIG_1(void
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9, float jarg10) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -72072,19 +73583,25 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void *
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Object *)jarg4; 
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   arg6 = (Variant *)jarg6;
   if (!arg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -72100,7 +73617,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_0(void *
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, void * jarg4, wchar_t * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_1(void * jarg1, void * jarg2, char * jarg3, void * jarg4, char * jarg5, void * jarg6, float jarg7, int jarg8, int jarg9) {
   unsigned int jresult ;
   Tween *arg1 = (Tween *) 0 ;
   Object *arg2 = (Object *) 0 ;
@@ -72115,19 +73632,25 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tween_targeting_method__SWIG_1(void *
   
   arg1 = (Tween *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Object *)jarg4; 
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   arg6 = (Variant *)jarg6;
   if (!arg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -73193,7 +74716,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_AnimationPlayer() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, char * jarg2, void * jarg3) {
   int jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73201,12 +74724,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, wc
   int result;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Animation *)jarg3; 
   result = (int)AnimationPlayer_add_animation(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -73214,75 +74740,90 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationPlayer_add_animation(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_remove_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_remove_animation(void * jarg1, char * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationPlayer_remove_animation(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_rename_animation(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_rename_animation(void * jarg1, char * jarg2, char * jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   AnimationPlayer_rename_animation(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_has_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_has_animation(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)AnimationPlayer_has_animation(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationPlayer_get_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationPlayer_get_animation(void * jarg1, char * jarg2) {
   Animation* jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   Ref< Animation > result;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = AnimationPlayer_get_animation(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -73304,72 +74845,90 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_get_animation_list(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_animation_set_next(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_animation_set_next(void * jarg1, char * jarg2, char * jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   AnimationPlayer_animation_set_next(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_animation_get_next(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_animation_get_next(void * jarg1, char * jarg2) {
   void * jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = AnimationPlayer_animation_get_next(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_blend_time(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, float jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_blend_time(void * jarg1, char * jarg2, char * jarg3, float jarg4) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   float arg4 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (float)jarg4; 
   AnimationPlayer_set_blend_time(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_blend_time(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_blend_time(void * jarg1, char * jarg2, char * jarg3) {
   float jresult ;
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73377,18 +74936,24 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_blend_time(void * jarg1,
   float result;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (float)AnimationPlayer_get_blend_time(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
@@ -73417,7 +74982,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_default_blend_time(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, wchar_t * jarg2, float jarg3, float jarg4, unsigned int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, char * jarg2, float jarg3, float jarg4, unsigned int jarg5) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
@@ -73425,12 +74990,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, wc
   bool arg5 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   arg4 = (float)jarg4; 
   arg5 = jarg5 ? true : false; 
@@ -73438,53 +75006,62 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_0(void * jarg1, wc
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_1(void * jarg1, wchar_t * jarg2, float jarg3, float jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_1(void * jarg1, char * jarg2, float jarg3, float jarg4) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   float arg4 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   arg4 = (float)jarg4; 
   AnimationPlayer_play__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_2(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_2(void * jarg1, char * jarg2, float jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationPlayer_play__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_3(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_3(void * jarg1, char * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationPlayer_play__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -73497,34 +75074,40 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play__SWIG_4(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_0(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_0(void * jarg1, char * jarg2, float jarg3) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationPlayer_play_backwards__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_play_backwards__SWIG_1(void * jarg1, char * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationPlayer_play_backwards__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -73575,17 +75158,20 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationPlayer_is_playing(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_current_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_current_animation(void * jarg1, char * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationPlayer_set_current_animation(arg1,(String const &)*arg2);
 }
 
@@ -73597,22 +75183,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_get_current_animation(void 
   
   arg1 = (AnimationPlayer *)jarg1; 
   result = AnimationPlayer_get_current_animation(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_queue(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_queue(void * jarg1, char * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationPlayer_queue(arg1,(String const &)*arg2);
 }
 
@@ -73669,17 +75261,20 @@ SWIGEXPORT float SWIGSTDCALL CSharp_AnimationPlayer_get_speed(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_autoplay(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationPlayer_set_autoplay(void * jarg1, char * jarg2) {
   AnimationPlayer *arg1 = (AnimationPlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationPlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationPlayer_set_autoplay(arg1,(String const &)*arg2);
 }
 
@@ -73691,7 +75286,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_get_autoplay(void * jarg1) 
   
   arg1 = (AnimationPlayer *)jarg1; 
   result = AnimationPlayer_get_autoplay(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -73765,7 +75363,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationPlayer_find_animation(void * jarg1
   arg1 = (AnimationPlayer *)jarg1; 
   arg2 = (Animation *)jarg2; 
   result = AnimationPlayer_find_animation(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -73844,43 +75445,49 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_AnimationTreePlayer() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_add_node(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_add_node(void * jarg1, int jarg2, char * jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   AnimationTreePlayer_add_node(arg1,arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_node_exists(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_node_exists(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)AnimationTreePlayer_node_exists(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_rename(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_rename(void * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73888,63 +75495,75 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_rename(void * jarg1, 
   int result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)AnimationTreePlayer_node_rename(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_type(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_type(void * jarg1, char * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)AnimationTreePlayer_node_get_type(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_count(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_count(void * jarg1, char * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)AnimationTreePlayer_node_get_input_count(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_source(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_source(void * jarg1, char * jarg2, int jarg3) {
   void * jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -73952,49 +75571,61 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_input_source(v
   String result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = AnimationTreePlayer_node_get_input_source(arg1,(String const &)*arg2,arg3);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_animation(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_animation(void * jarg1, char * jarg2, void * jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Animation *arg3 = (Animation *) 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Animation *)jarg3; 
   AnimationTreePlayer_animation_node_set_animation(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_animation(void * jarg1, char * jarg2) {
   Animation* jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Ref< Animation > result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = AnimationTreePlayer_animation_node_get_animation(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -74004,60 +75635,75 @@ SWIGEXPORT Animation* SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_master_animation(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_master_animation(void * jarg1, char * jarg2, char * jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   AnimationTreePlayer_animation_node_set_master_animation(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_master_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_get_master_animation(void * jarg1, char * jarg2) {
   void * jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   String result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = AnimationTreePlayer_animation_node_get_master_animation(arg1,(String const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_filter_path(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_filter_path(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   NodePath *arg3 = 0 ;
   bool arg4 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (NodePath *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "NodePath const & type is null", 0);
@@ -74068,248 +75714,290 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_animation_node_set_filter
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadein_time(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadein_time(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_oneshot_node_set_fadein_time(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadein_time(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadein_time(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_oneshot_node_get_fadein_time(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadeout_time(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_fadeout_time(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_oneshot_node_set_fadeout_time(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadeout_time(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_fadeout_time(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_oneshot_node_get_fadeout_time(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart(void * jarg1, char * jarg2, unsigned int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   bool arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   AnimationTreePlayer_oneshot_node_set_autorestart(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_delay(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_delay(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_oneshot_node_set_autorestart_delay(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_random_delay(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_autorestart_random_delay(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_oneshot_node_set_autorestart_random_delay(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_has_autorestart(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_has_autorestart(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)AnimationTreePlayer_oneshot_node_has_autorestart(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_delay(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_delay(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_oneshot_node_get_autorestart_delay(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_random_delay(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_get_autorestart_random_delay(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_oneshot_node_get_autorestart_random_delay(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_start(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_start(void * jarg1, char * jarg2) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationTreePlayer_oneshot_node_start(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_stop(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_stop(void * jarg1, char * jarg2) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationTreePlayer_oneshot_node_stop(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_is_active(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_is_active(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)AnimationTreePlayer_oneshot_node_is_active(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_filter_path(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_filter_path(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   NodePath *arg3 = 0 ;
   bool arg4 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (NodePath *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "NodePath const & type is null", 0);
@@ -74320,91 +76008,106 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_oneshot_node_set_filter_p
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_set_amount(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_set_amount(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_mix_node_set_amount(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_get_amount(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_mix_node_get_amount(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_mix_node_get_amount(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_amount(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_amount(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_blend2_node_set_amount(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_get_amount(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_get_amount(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_blend2_node_get_amount(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_filter_path(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_filter_path(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   NodePath *arg3 = 0 ;
   bool arg4 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (NodePath *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "NodePath const & type is null", 0);
@@ -74415,54 +76118,63 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend2_node_set_filter_pa
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_set_amount(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_set_amount(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_blend3_node_set_amount(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_get_amount(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_blend3_node_get_amount(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_blend3_node_get_amount(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_set_amount(void * jarg1, wchar_t * jarg2, Vector2* jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_set_amount(void * jarg1, char * jarg2, Vector2* jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Vector2 *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
@@ -74472,151 +76184,175 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_set_amount(vo
 }
 
 
-SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_get_amount(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_blend4_node_get_amount(void * jarg1, char * jarg2) {
   Vector2 jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Vector2 result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return Vector2();
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = AnimationTreePlayer_blend4_node_get_amount(arg1,(String const &)*arg2);
   return result;
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_set_scale(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_set_scale(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_timescale_node_set_scale(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_get_scale(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_timescale_node_get_scale(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_timescale_node_get_scale(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timeseek_node_seek(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_timeseek_node_seek(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_timeseek_node_seek(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_count(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_count(void * jarg1, char * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   AnimationTreePlayer_transition_node_set_input_count(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_input_count(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_input_count(void * jarg1, char * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)AnimationTreePlayer_transition_node_get_input_count(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_delete_input(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_delete_input(void * jarg1, char * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   AnimationTreePlayer_transition_node_delete_input(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_auto_advance(void * jarg1, wchar_t * jarg2, int jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_input_auto_advance(void * jarg1, char * jarg2, int jarg3, unsigned int jarg4) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   bool arg4 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = jarg4 ? true : false; 
   AnimationTreePlayer_transition_node_set_input_auto_advance(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_has_input_auto_advance(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_has_input_auto_advance(void * jarg1, char * jarg2, int jarg3) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74624,12 +76360,15 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_h
   bool result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (bool)AnimationTreePlayer_transition_node_has_input_auto_advance(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -74637,90 +76376,105 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_h
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_xfade_time(void * jarg1, wchar_t * jarg2, float jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_xfade_time(void * jarg1, char * jarg2, float jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (float)jarg3; 
   AnimationTreePlayer_transition_node_set_xfade_time(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_xfade_time(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT float SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_xfade_time(void * jarg1, char * jarg2) {
   float jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   float result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (float)AnimationTreePlayer_transition_node_get_xfade_time(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_current(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_set_current(void * jarg1, char * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   AnimationTreePlayer_transition_node_set_current(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_current(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_transition_node_get_current(void * jarg1, char * jarg2) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)AnimationTreePlayer_transition_node_get_current(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_node_set_pos(void * jarg1, wchar_t * jarg2, Vector2* jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_node_set_pos(void * jarg1, char * jarg2, Vector2* jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Vector2 *arg3 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Vector2 *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
@@ -74730,41 +76484,47 @@ SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_node_set_pos(void * jarg1
 }
 
 
-SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_pos(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Vector2 SWIGSTDCALL CSharp_AnimationTreePlayer_node_get_pos(void * jarg1, char * jarg2) {
   Vector2 jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   Vector2 result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return Vector2();
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = AnimationTreePlayer_node_get_pos(arg1,(String const &)*arg2);
   return result;
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_remove_node(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_remove_node(void * jarg1, char * jarg2) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimationTreePlayer_remove_node(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
   int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74773,18 +76533,24 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, wcha
   int result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   result = (int)AnimationTreePlayer_connect(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
   jresult = result; 
@@ -74792,7 +76558,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_AnimationTreePlayer_connect(void * jarg1, wcha
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
   unsigned int jresult ;
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
@@ -74801,18 +76567,24 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void
   bool result;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   result = (bool)AnimationTreePlayer_is_connected(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
   jresult = result; 
@@ -74820,18 +76592,21 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AnimationTreePlayer_is_connected(void
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_disconnect(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimationTreePlayer_disconnect(void * jarg1, char * jarg2, int jarg3) {
   AnimationTreePlayer *arg1 = (AnimationTreePlayer *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (AnimationTreePlayer *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   AnimationTreePlayer_disconnect(arg1,(String const &)*arg2,arg3);
 }
@@ -75083,19 +76858,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_BitmapFont() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_BitmapFont_create_from_fnt(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_BitmapFont_create_from_fnt(void * jarg1, char * jarg2) {
   int jresult ;
   BitmapFont *arg1 = (BitmapFont *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (BitmapFont *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)BitmapFont_create_from_fnt(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -76476,7 +78254,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_colored_polygon__SWIG_2(void 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5, int jarg6) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5, int jarg6) {
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
   Vector2 *arg3 = 0 ;
@@ -76491,12 +78269,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, 
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return ;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Color *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -76507,7 +78288,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_0(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, void * jarg5) {
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
   Vector2 *arg3 = 0 ;
@@ -76521,12 +78302,15 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, 
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return ;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (Color *)jarg5;
   if (!arg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -76536,7 +78320,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_2(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4) {
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
   Vector2 *arg3 = 0 ;
@@ -76549,17 +78333,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_CanvasItem_draw_string__SWIG_2(void * jarg1, 
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return ;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   CanvasItem_draw_string__SWIG_0(arg1,arg2,(Vector2 const &)*arg3,(String const &)*arg4);
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, wchar_t * jarg5, void * jarg6) {
+SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, char * jarg5, void * jarg6) {
   float jresult ;
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
@@ -76576,18 +78363,24 @@ SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, v
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return 0;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   arg6 = (Color *)jarg6;
   if (!arg6) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -76599,7 +78392,7 @@ SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_0(void * jarg1, v
 }
 
 
-SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, wchar_t * jarg4, wchar_t * jarg5) {
+SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_1(void * jarg1, void * jarg2, Vector2* jarg3, char * jarg4, char * jarg5) {
   float jresult ;
   CanvasItem *arg1 = (CanvasItem *) 0 ;
   Font *arg2 = (Font *) 0 ;
@@ -76615,18 +78408,24 @@ SWIGEXPORT float SWIGSTDCALL CSharp_CanvasItem_draw_char__SWIG_1(void * jarg1, v
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Vector2 const & type is null", 0);
     return 0;
   } 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
+  
   if (!jarg5) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg5_str = jarg5;
-  arg5 = &arg5_str; 
+  String arg5_str;
+  gdstring_from_utf16(arg5_str, (const uint16_t*)jarg5);
+  arg5 = &arg5_str;
+  
   result = (float)CanvasItem_draw_char__SWIG_0(arg1,arg2,(Vector2 const &)*arg3,(String const &)*arg4,(String const &)*arg5);
   jresult = result; 
   return jresult;
@@ -78099,86 +79898,101 @@ SWIGEXPORT Theme* SWIGSTDCALL CSharp_Control_get_theme(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_icon_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_icon_override(void * jarg1, char * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Texture *)jarg3; 
   Control_add_icon_override(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_shader_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_shader_override(void * jarg1, char * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Shader *arg3 = (Shader *) 0 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Shader *)jarg3; 
   Control_add_shader_override(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_style_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_style_override(void * jarg1, char * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   StyleBox *arg3 = (StyleBox *) 0 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (StyleBox *)jarg3; 
   Control_add_style_override(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_font_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_font_override(void * jarg1, char * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Font *arg3 = (Font *) 0 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Font *)jarg3; 
   Control_add_font_override(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_color_override(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_color_override(void * jarg1, char * jarg2, void * jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Color *arg3 = 0 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Color *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -78188,24 +80002,27 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_color_override(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_constant_override(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_add_constant_override(void * jarg1, char * jarg2, int jarg3) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   Control_add_constant_override(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   Texture* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78213,18 +80030,24 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, wc
   Ref< Texture > result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Control_get_icon__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -78234,19 +80057,22 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_0(void * jarg1, wc
 }
 
 
-SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_1(void * jarg1, char * jarg2) {
   Texture* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Ref< Texture > result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Control_get_icon__SWIG_0(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -78256,7 +80082,7 @@ SWIGEXPORT Texture* SWIGSTDCALL CSharp_Control_get_icon__SWIG_1(void * jarg1, wc
 }
 
 
-SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   StyleBox* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78264,18 +80090,24 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg
   Ref< StyleBox > result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Control_get_stylebox__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -78285,19 +80117,22 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_0(void * jarg
 }
 
 
-SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_1(void * jarg1, char * jarg2) {
   StyleBox* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Ref< StyleBox > result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Control_get_stylebox__SWIG_0(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -78307,7 +80142,7 @@ SWIGEXPORT StyleBox* SWIGSTDCALL CSharp_Control_get_stylebox__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   Font* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78315,18 +80150,24 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, wchar
   Ref< Font > result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Control_get_font__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   
   jresult = (&result)->ptr();
@@ -78336,19 +80177,22 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_0(void * jarg1, wchar
 }
 
 
-SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_1(void * jarg1, char * jarg2) {
   Font* jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Ref< Font > result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return NULL;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Control_get_font__SWIG_0(arg1,(String const &)*arg2);
   
   jresult = (&result)->ptr();
@@ -78358,7 +80202,7 @@ SWIGEXPORT Font* SWIGSTDCALL CSharp_Control_get_font__SWIG_1(void * jarg1, wchar
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   void * jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78366,44 +80210,53 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_0(void * jarg1, wch
   Color result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = Control_get_color__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = memnew(Color((const Color &)result));
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_color__SWIG_1(void * jarg1, char * jarg2) {
   void * jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   Color result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = Control_get_color__SWIG_0(arg1,(String const &)*arg2);
   jresult = memnew(Color((const Color &)result));
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78411,139 +80264,163 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_0(void * jarg1, wch
   int result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (int)Control_get_constant__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Control_get_constant__SWIG_1(void * jarg1, char * jarg2) {
   int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)Control_get_constant__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon_override(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon_override(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_icon_override(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox_override(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox_override(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_stylebox_override(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font_override(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font_override(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_font_override(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color_override(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color_override(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_color_override(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant_override(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant_override(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_constant_override(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78551,44 +80428,53 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_0(void * jarg1
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Control_has_icon__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_icon__SWIG_1(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_icon__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78596,44 +80482,53 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_0(void * j
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Control_has_stylebox__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_stylebox__SWIG_1(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_stylebox__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78641,44 +80536,53 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_0(void * jarg1
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Control_has_font__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_font__SWIG_1(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_font__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78686,44 +80590,53 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_0(void * jarg
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Control_has_color__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_color__SWIG_1(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_color__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_0(void * jarg1, char * jarg2, char * jarg3) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
@@ -78731,37 +80644,46 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_0(void * j
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   result = (bool)Control_has_constant__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Control_has_constant__SWIG_1(void * jarg1, char * jarg2) {
   unsigned int jresult ;
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   bool result;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (bool)Control_has_constant__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -78780,17 +80702,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_parent_control(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Control_set_tooltip(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Control_set_tooltip(void * jarg1, char * jarg2) {
   Control *arg1 = (Control *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Control *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Control_set_tooltip(arg1,(String const &)*arg2);
 }
 
@@ -78808,7 +80733,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_tooltip__SWIG_0(void * jarg1, V
     return 0;
   } 
   result = Control_get_tooltip__SWIG_0(arg1,(Vector2 const &)*arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -78820,7 +80748,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Control_get_tooltip__SWIG_1(void * jarg1) {
   
   arg1 = (Control *)jarg1; 
   result = Control_get_tooltip__SWIG_0(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -79253,7 +81184,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorPlugin_get_name(void * jarg1) {
   
   arg1 = (EditorPlugin *)jarg1; 
   result = EditorPlugin_get_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -79332,19 +81266,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_control_to_container(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_control_to_bottom_panel(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_control_to_bottom_panel(void * jarg1, void * jarg2, char * jarg3) {
   EditorPlugin *arg1 = (EditorPlugin *) 0 ;
   Control *arg2 = (Control *) 0 ;
   String *arg3 = 0 ;
   
   arg1 = (EditorPlugin *)jarg1; 
   arg2 = (Control *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   EditorPlugin_add_control_to_bottom_panel(arg1,arg2,(String const &)*arg3);
 }
 
@@ -79381,7 +81318,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_remove_control_from_bottom_panel
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_custom_type(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4, void * jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_custom_type(void * jarg1, char * jarg2, char * jarg3, void * jarg4, void * jarg5) {
   EditorPlugin *arg1 = (EditorPlugin *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -79389,35 +81326,44 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_add_custom_type(void * jarg1, wc
   Texture *arg5 = (Texture *) 0 ;
   
   arg1 = (EditorPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Script *)jarg4; 
   arg5 = (Texture *)jarg5; 
   EditorPlugin_add_custom_type(arg1,(String const &)*arg2,(String const &)*arg3,arg4,arg5);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_remove_custom_type(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorPlugin_remove_custom_type(void * jarg1, char * jarg2) {
   EditorPlugin *arg1 = (EditorPlugin *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorPlugin *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorPlugin_remove_custom_type(arg1,(String const &)*arg2);
 }
 
@@ -79715,7 +81661,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EventPlayer_get_stream_name(void * jarg1) {
   
   arg1 = (EventPlayer *)jarg1; 
   result = EventPlayer_get_stream_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -80191,7 +82140,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GraphEdit() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4, int jarg5) {
+SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, char * jarg2, int jarg3, char * jarg4, int jarg5) {
   int jresult ;
   GraphEdit *arg1 = (GraphEdit *) 0 ;
   String *arg2 = 0 ;
@@ -80201,19 +82150,25 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, wchar_t *
   int result;
   
   arg1 = (GraphEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (int)jarg5; 
   result = (int)GraphEdit_connect_node(arg1,(String const &)*arg2,arg3,(String const &)*arg4,arg5);
   jresult = result; 
@@ -80221,7 +82176,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_GraphEdit_connect_node(void * jarg1, wchar_t *
 }
 
 
-SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4, int jarg5) {
+SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * jarg1, char * jarg2, int jarg3, char * jarg4, int jarg5) {
   unsigned int jresult ;
   GraphEdit *arg1 = (GraphEdit *) 0 ;
   String *arg2 = 0 ;
@@ -80231,19 +82186,25 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * ja
   bool result;
   
   arg1 = (GraphEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (int)jarg5; 
   result = (bool)GraphEdit_is_node_connected(arg1,(String const &)*arg2,arg3,(String const &)*arg4,arg5);
   jresult = result; 
@@ -80251,7 +82212,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_GraphEdit_is_node_connected(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GraphEdit_disconnect_node(void * jarg1, wchar_t * jarg2, int jarg3, wchar_t * jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GraphEdit_disconnect_node(void * jarg1, char * jarg2, int jarg3, char * jarg4, int jarg5) {
   GraphEdit *arg1 = (GraphEdit *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
@@ -80259,19 +82220,25 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GraphEdit_disconnect_node(void * jarg1, wchar
   int arg5 ;
   
   arg1 = (GraphEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   arg5 = (int)jarg5; 
   GraphEdit_disconnect_node(arg1,(String const &)*arg2,arg3,(String const &)*arg4,arg5);
 }
@@ -80690,19 +82657,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_GridMap_area_set_exterior_portal(void * jarg1
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GridMap_area_set_name(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GridMap_area_set_name(void * jarg1, int jarg2, char * jarg3) {
   GridMap *arg1 = (GridMap *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (GridMap *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   GridMap_area_set_name(arg1,arg2,(String const &)*arg3);
 }
 
@@ -80716,7 +82686,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GridMap_area_get_name(void * jarg1, int jar
   arg1 = (GridMap *)jarg1; 
   arg2 = (int)jarg2; 
   result = GridMap_area_get_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -80861,7 +82834,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_HTTPRequest() {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   int jresult ;
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
@@ -80870,12 +82843,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, wcha
   int result;
   
   arg1 = (HTTPRequest *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (StringArray *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
@@ -80888,7 +82864,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_0(void * jarg1, wcha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
   int jresult ;
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
@@ -80896,12 +82872,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, wcha
   int result;
   
   arg1 = (HTTPRequest *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (StringArray *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "StringArray const & type is null", 0);
@@ -80913,19 +82892,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_1(void * jarg1, wcha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_request__SWIG_2(void * jarg1, char * jarg2) {
   int jresult ;
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (HTTPRequest *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)HTTPRequest_request__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -81018,17 +83000,20 @@ SWIGEXPORT int SWIGSTDCALL CSharp_HTTPRequest_get_max_redirects(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_HTTPRequest_set_download_file(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_HTTPRequest_set_download_file(void * jarg1, char * jarg2) {
   HTTPRequest *arg1 = (HTTPRequest *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (HTTPRequest *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   HTTPRequest_set_download_file(arg1,(String const &)*arg2);
 }
 
@@ -81040,7 +83025,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_HTTPRequest_get_download_file(void * jarg1)
   
   arg1 = (HTTPRequest *)jarg1; 
   result = HTTPRequest_get_download_file(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -81230,7 +83218,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_InstancePlaceholder_get_instance_path(void 
   
   arg1 = (InstancePlaceholder *)jarg1; 
   result = InstancePlaceholder_get_instance_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -81335,17 +83326,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_InverseKinematics() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_InverseKinematics_set_bone_name(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_InverseKinematics_set_bone_name(void * jarg1, char * jarg2) {
   InverseKinematics *arg1 = (InverseKinematics *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (InverseKinematics *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   InverseKinematics_set_bone_name(arg1,(String const &)*arg2);
 }
 
@@ -81357,7 +83351,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_InverseKinematics_get_bone_name(void * jarg
   
   arg1 = (InverseKinematics *)jarg1; 
   result = InverseKinematics_get_bone_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -81460,53 +83457,62 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ItemList() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_0(void * jarg1, wchar_t * jarg2, void * jarg3, unsigned int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_0(void * jarg1, char * jarg2, void * jarg3, unsigned int jarg4) {
   ItemList *arg1 = (ItemList *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
   bool arg4 ;
   
   arg1 = (ItemList *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Texture *)jarg3; 
   arg4 = jarg4 ? true : false; 
   ItemList_add_item__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_1(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_1(void * jarg1, char * jarg2, void * jarg3) {
   ItemList *arg1 = (ItemList *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
   
   arg1 = (ItemList *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Texture *)jarg3; 
   ItemList_add_item__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_item__SWIG_2(void * jarg1, char * jarg2) {
   ItemList *arg1 = (ItemList *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ItemList *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ItemList_add_item__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -81533,19 +83539,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_add_icon_item__SWIG_1(void * jarg1, 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_text(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_text(void * jarg1, int jarg2, char * jarg3) {
   ItemList *arg1 = (ItemList *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (ItemList *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ItemList_set_item_text(arg1,arg2,(String const &)*arg3);
 }
 
@@ -81559,7 +83568,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ItemList_get_item_text(void * jarg1, int ja
   arg1 = (ItemList *)jarg1; 
   arg2 = (int)jarg2; 
   result = ItemList_get_item_text(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -81731,19 +83743,22 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ItemList_get_item_custom_bg_color(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_tooltip(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ItemList_set_item_tooltip(void * jarg1, int jarg2, char * jarg3) {
   ItemList *arg1 = (ItemList *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (ItemList *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ItemList_set_item_tooltip(arg1,arg2,(String const &)*arg3);
 }
 
@@ -81757,7 +83772,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ItemList_get_item_tooltip(void * jarg1, int
   arg1 = (ItemList *)jarg1; 
   arg2 = (int)jarg2; 
   result = ItemList_get_item_tooltip(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -82244,17 +84262,20 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Label_get_valign(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Label_set_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Label_set_text(void * jarg1, char * jarg2) {
   Label *arg1 = (Label *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Label *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Label_set_text(arg1,(String const &)*arg2);
 }
 
@@ -82266,7 +84287,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Label_get_text(void * jarg1) {
   
   arg1 = (Label *)jarg1; 
   result = Label_get_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -82700,17 +84724,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_select_all(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_set_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_set_text(void * jarg1, char * jarg2) {
   LineEdit *arg1 = (LineEdit *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (LineEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   LineEdit_set_text(arg1,(String const &)*arg2);
 }
 
@@ -82722,7 +84749,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_LineEdit_get_text(void * jarg1) {
   
   arg1 = (LineEdit *)jarg1; 
   result = LineEdit_get_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -82815,17 +84845,20 @@ SWIGEXPORT int SWIGSTDCALL CSharp_LineEdit_get_max_length(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_append_at_cursor(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_LineEdit_append_at_cursor(void * jarg1, char * jarg2) {
   LineEdit *arg1 = (LineEdit *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (LineEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   LineEdit_append_at_cursor(arg1,(String const &)*arg2);
 }
 
@@ -86264,7 +88297,7 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_PopupMenu() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_0(void * jarg1, void * jarg2, char * jarg3, int jarg4, int jarg5) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86273,19 +88306,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_0(void * jarg1,
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   arg5 = (int)jarg5; 
   PopupMenu_add_icon_item__SWIG_0(arg1,arg2,(String const &)*arg3,arg4,arg5);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_1(void * jarg1, void * jarg2, char * jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86293,86 +88329,101 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_1(void * jarg1,
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   PopupMenu_add_icon_item__SWIG_0(arg1,arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_item__SWIG_2(void * jarg1, void * jarg2, char * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   PopupMenu_add_icon_item__SWIG_0(arg1,arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_0(void * jarg1, char * jarg2, int jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   int arg4 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = (int)jarg4; 
   PopupMenu_add_item__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_1(void * jarg1, char * jarg2, int jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   PopupMenu_add_item__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_item__SWIG_2(void * jarg1, char * jarg2) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   PopupMenu_add_item__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4, int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_0(void * jarg1, void * jarg2, char * jarg3, int jarg4, int jarg5) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86381,19 +88432,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_0(void * 
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   arg5 = (int)jarg5; 
   PopupMenu_add_icon_check_item__SWIG_0(arg1,arg2,(String const &)*arg3,arg4,arg5);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_1(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_1(void * jarg1, void * jarg2, char * jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
@@ -86401,127 +88455,154 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_1(void * 
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   PopupMenu_add_icon_check_item__SWIG_0(arg1,arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_2(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_icon_check_item__SWIG_2(void * jarg1, void * jarg2, char * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   Object *arg2 = (Object *) 0 ;
   String *arg3 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (Object *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   PopupMenu_add_icon_check_item__SWIG_0(arg1,arg2,(String const &)*arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_0(void * jarg1, char * jarg2, int jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   int arg4 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = (int)jarg4; 
   PopupMenu_add_check_item__SWIG_0(arg1,(String const &)*arg2,arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_1(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_1(void * jarg1, char * jarg2, int jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   PopupMenu_add_check_item__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_item__SWIG_2(void * jarg1, char * jarg2) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   PopupMenu_add_check_item__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_0(void * jarg1, char * jarg2, char * jarg3, int jarg4) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   int arg4 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   PopupMenu_add_submenu_item__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_submenu_item__SWIG_1(void * jarg1, char * jarg2, char * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   PopupMenu_add_submenu_item__SWIG_0(arg1,(String const &)*arg2,(String const &)*arg3);
 }
 
@@ -86622,19 +88703,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_add_check_shortcut__SWIG_1(void * j
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_text(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_text(void * jarg1, int jarg2, char * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   PopupMenu_set_item_text(arg1,arg2,(String const &)*arg3);
 }
 
@@ -86715,19 +88799,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_shortcut(void * jarg1, int
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_submenu(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_PopupMenu_set_item_submenu(void * jarg1, int jarg2, char * jarg3) {
   PopupMenu *arg1 = (PopupMenu *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   PopupMenu_set_item_submenu(arg1,arg2,(String const &)*arg3);
 }
 
@@ -86777,7 +88864,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_PopupMenu_get_item_text(void * jarg1, int j
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (int)jarg2; 
   result = PopupMenu_get_item_text(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -86846,7 +88936,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_PopupMenu_get_item_submenu(void * jarg1, in
   arg1 = (PopupMenu *)jarg1; 
   arg2 = (int)jarg2; 
   result = PopupMenu_get_item_submenu(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -87141,33 +89234,39 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_ProximityGroup() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_set_group_name(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_set_group_name(void * jarg1, char * jarg2) {
   ProximityGroup *arg1 = (ProximityGroup *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ProximityGroup *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ProximityGroup_set_group_name(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_broadcast(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ProximityGroup_broadcast(void * jarg1, char * jarg2, void * jarg3) {
   ProximityGroup *arg1 = (ProximityGroup *) 0 ;
   String *arg2 = 0 ;
   Variant *arg3 = 0 ;
   
   arg1 = (ProximityGroup *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Variant *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Variant const & type is null", 0);
@@ -88037,17 +90136,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_RichTextLabel() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_add_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_add_text(void * jarg1, char * jarg2) {
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (RichTextLabel *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   RichTextLabel_add_text(arg1,(String const &)*arg2);
 }
 
@@ -88326,55 +90428,64 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_RichTextLabel_is_selection_enabled(vo
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_parse_bbcode(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_parse_bbcode(void * jarg1, char * jarg2) {
   int jresult ;
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (RichTextLabel *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)RichTextLabel_parse_bbcode(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_append_bbcode(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_RichTextLabel_append_bbcode(void * jarg1, char * jarg2) {
   int jresult ;
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (RichTextLabel *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)RichTextLabel_append_bbcode(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_set_bbcode(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_RichTextLabel_set_bbcode(void * jarg1, char * jarg2) {
   RichTextLabel *arg1 = (RichTextLabel *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (RichTextLabel *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   RichTextLabel_set_bbcode(arg1,(String const &)*arg2);
 }
 
@@ -88386,7 +90497,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_RichTextLabel_get_bbcode(void * jarg1) {
   
   arg1 = (RichTextLabel *)jarg1; 
   result = RichTextLabel_get_bbcode(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -88989,34 +91103,40 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Skeleton() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Skeleton_add_bone(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Skeleton_add_bone(void * jarg1, char * jarg2) {
   Skeleton *arg1 = (Skeleton *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Skeleton *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Skeleton_add_bone(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_Skeleton_find_bone(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_Skeleton_find_bone(void * jarg1, char * jarg2) {
   int jresult ;
   Skeleton *arg1 = (Skeleton *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (Skeleton *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)Skeleton_find_bone(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;
@@ -89032,7 +91152,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Skeleton_get_bone_name(void * jarg1, int ja
   arg1 = (Skeleton *)jarg1; 
   arg2 = (int)jarg2; 
   result = Skeleton_get_bone_name(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -89407,17 +91530,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_SpinBox() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_suffix(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_suffix(void * jarg1, char * jarg2) {
   SpinBox *arg1 = (SpinBox *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (SpinBox *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   SpinBox_set_suffix(arg1,(String const &)*arg2);
 }
 
@@ -89429,22 +91555,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpinBox_get_suffix(void * jarg1) {
   
   arg1 = (SpinBox *)jarg1; 
   result = SpinBox_get_suffix(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_prefix(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_SpinBox_set_prefix(void * jarg1, char * jarg2) {
   SpinBox *arg1 = (SpinBox *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (SpinBox *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   SpinBox_set_prefix(arg1,(String const &)*arg2);
 }
 
@@ -89456,7 +91588,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_SpinBox_get_prefix(void * jarg1) {
   
   arg1 = (SpinBox *)jarg1; 
   result = SpinBox_get_prefix(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -90236,19 +92371,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TabContainer_are_tabs_visible(void * 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TabContainer_set_tab_title(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TabContainer_set_tab_title(void * jarg1, int jarg2, char * jarg3) {
   TabContainer *arg1 = (TabContainer *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (TabContainer *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   TabContainer_set_tab_title(arg1,arg2,(String const &)*arg3);
 }
 
@@ -90262,7 +92400,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TabContainer_get_tab_title(void * jarg1, in
   arg1 = (TabContainer *)jarg1; 
   arg2 = (int)jarg2; 
   result = TabContainer_get_tab_title(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -90362,19 +92503,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_Tabs_get_current_tab(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_set_tab_title(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_set_tab_title(void * jarg1, int jarg2, char * jarg3) {
   Tabs *arg1 = (Tabs *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (Tabs *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Tabs_set_tab_title(arg1,arg2,(String const &)*arg3);
 }
 
@@ -90388,7 +92532,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Tabs_get_tab_title(void * jarg1, int jarg2)
   arg1 = (Tabs *)jarg1; 
   arg2 = (int)jarg2; 
   result = Tabs_get_tab_title(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -90432,18 +92579,21 @@ SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_remove_tab(void * jarg1, int jarg2) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_add_tab(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Tabs_add_tab(void * jarg1, char * jarg2, void * jarg3) {
   Tabs *arg1 = (Tabs *) 0 ;
   String *arg2 = 0 ;
   Texture *arg3 = (Texture *) 0 ;
   
   arg1 = (Tabs *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Texture *)jarg3; 
   Tabs_add_tab(arg1,(String const &)*arg2,arg3);
 }
@@ -90501,32 +92651,38 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_TextEdit() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_set_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_set_text(void * jarg1, char * jarg2) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (TextEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   TextEdit_set_text(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_insert_text_at_cursor(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_insert_text_at_cursor(void * jarg1, char * jarg2) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (TextEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   TextEdit_insert_text_at_cursor(arg1,(String const &)*arg2);
 }
 
@@ -90550,7 +92706,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_get_text(void * jarg1) {
   
   arg1 = (TextEdit *)jarg1; 
   result = TextEdit_get_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -90564,7 +92723,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_get_line(void * jarg1, int jarg2) 
   arg1 = (TextEdit *)jarg1; 
   arg2 = (int)jarg2; 
   result = TextEdit_get_line(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -90826,7 +92988,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_get_selection_text(void * jarg1) {
   
   arg1 = (TextEdit *)jarg1; 
   result = TextEdit_get_selection_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -90838,12 +93003,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_get_word_under_cursor(void * jarg1
   
   arg1 = (TextEdit *)jarg1; 
   result = TextEdit_get_word_under_cursor(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_search(void * jarg1, wchar_t * jarg2, int jarg3, int jarg4, int jarg5) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_search(void * jarg1, char * jarg2, int jarg3, int jarg4, int jarg5) {
   void * jresult ;
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
@@ -90853,12 +93021,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TextEdit_search(void * jarg1, wchar_t * jar
   IntArray result;
   
   arg1 = (TextEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   arg4 = (int)jarg4; 
   arg5 = (int)jarg5; 
@@ -90914,18 +93085,21 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_TextEdit_is_syntax_coloring_enabled(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_keyword_color(void * jarg1, wchar_t * jarg2, void * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_keyword_color(void * jarg1, char * jarg2, void * jarg3) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   Color *arg3 = 0 ;
   
   arg1 = (TextEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (Color *)jarg3;
   if (!arg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -90935,7 +93109,7 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_keyword_color(void * jarg1, wcha
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4, unsigned int jarg5) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg1, char * jarg2, char * jarg3, void * jarg4, unsigned int jarg5) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
@@ -90943,18 +93117,24 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg
   bool arg5 ;
   
   arg1 = (TextEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Color *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -90965,25 +93145,31 @@ SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_0(void * jarg
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_1(void * jarg1, wchar_t * jarg2, wchar_t * jarg3, void * jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TextEdit_add_color_region__SWIG_1(void * jarg1, char * jarg2, char * jarg3, void * jarg4) {
   TextEdit *arg1 = (TextEdit *) 0 ;
   String *arg2 = 0 ;
   String *arg3 = 0 ;
   Color *arg4 = 0 ;
   
   arg1 = (TextEdit *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (Color *)jarg4;
   if (!arg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "Color const & type is null", 0);
@@ -92072,17 +94258,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TouchScreenButton_get_bitmask(void * jarg1)
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_TouchScreenButton_set_action(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_TouchScreenButton_set_action(void * jarg1, char * jarg2) {
   TouchScreenButton *arg1 = (TouchScreenButton *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (TouchScreenButton *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   TouchScreenButton_set_action(arg1,(String const &)*arg2);
 }
 
@@ -92094,7 +94283,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_TouchScreenButton_get_action(void * jarg1) 
   
   arg1 = (TouchScreenButton *)jarg1; 
   result = TouchScreenButton_get_action(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -92473,19 +94665,22 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Tree_are_column_titles_visible(void *
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Tree_set_column_title(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Tree_set_column_title(void * jarg1, int jarg2, char * jarg3) {
   Tree *arg1 = (Tree *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (Tree *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   Tree_set_column_title(arg1,arg2,(String const &)*arg3);
 }
 
@@ -92499,7 +94694,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Tree_get_column_title(void * jarg1, int jar
   arg1 = (Tree *)jarg1; 
   arg2 = (int)jarg2; 
   result = Tree_get_column_title(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -92924,7 +95122,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_VideoPlayer_get_stream_name(void * jarg1) {
   
   arg1 = (VideoPlayer *)jarg1; 
   result = VideoPlayer_get_stream_name(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -93226,17 +95427,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_WindowDialog() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_WindowDialog_set_title(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_WindowDialog_set_title(void * jarg1, char * jarg2) {
   WindowDialog *arg1 = (WindowDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (WindowDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   WindowDialog_set_title(arg1,(String const &)*arg2);
 }
 
@@ -93248,7 +95452,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_WindowDialog_get_title(void * jarg1) {
   
   arg1 = (WindowDialog *)jarg1; 
   result = WindowDialog_get_title(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -93353,7 +95560,7 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_AcceptDialog_get_hide_on_ok(void * ja
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_0(void * jarg1, wchar_t * jarg2, unsigned int jarg3, wchar_t * jarg4) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_0(void * jarg1, char * jarg2, unsigned int jarg3, char * jarg4) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
@@ -93362,26 +95569,32 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_0(void * jarg
   Button *result = 0 ;
   
   arg1 = (AcceptDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
+  
   if (!jarg4) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg4_str = jarg4;
-  arg4 = &arg4_str; 
+  String arg4_str;
+  gdstring_from_utf16(arg4_str, (const uint16_t*)jarg4);
+  arg4 = &arg4_str;
+  
   result = (Button *)AcceptDialog_add_button__SWIG_0(arg1,(String const &)*arg2,arg3,(String const &)*arg4);
   jresult = (void *)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg1, wchar_t * jarg2, unsigned int jarg3) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg1, char * jarg2, unsigned int jarg3) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
@@ -93389,12 +95602,15 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg
   Button *result = 0 ;
   
   arg1 = (AcceptDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = jarg3 ? true : false; 
   result = (Button *)AcceptDialog_add_button__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = (void *)result; 
@@ -93402,38 +95618,44 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_1(void * jarg
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_2(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_button__SWIG_2(void * jarg1, char * jarg2) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
   Button *result = 0 ;
   
   arg1 = (AcceptDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (Button *)AcceptDialog_add_button__SWIG_0(arg1,(String const &)*arg2);
   jresult = (void *)result; 
   return jresult;
 }
 
 
-SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_cancel(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_add_cancel(void * jarg1, char * jarg2) {
   void * jresult ;
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
   Button *result = 0 ;
   
   arg1 = (AcceptDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (Button *)AcceptDialog_add_cancel(arg1,(String const &)*arg2);
   jresult = (void *)result; 
   return jresult;
@@ -93454,17 +95676,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_register_text_enter(void * jar
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AcceptDialog_set_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AcceptDialog_set_text(void * jarg1, char * jarg2) {
   AcceptDialog *arg1 = (AcceptDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AcceptDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AcceptDialog_set_text(arg1,(String const &)*arg2);
 }
 
@@ -93476,7 +95701,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AcceptDialog_get_text(void * jarg1) {
   
   arg1 = (AcceptDialog *)jarg1; 
   result = AcceptDialog_get_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -93516,17 +95744,20 @@ SWIGEXPORT SpriteFrames* SWIGSTDCALL CSharp_AnimatedSprite_get_sprite_frames(voi
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_set_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_set_animation(void * jarg1, char * jarg2) {
   AnimatedSprite *arg1 = (AnimatedSprite *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimatedSprite *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimatedSprite_set_animation(arg1,(String const &)*arg2);
 }
 
@@ -93538,22 +95769,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimatedSprite_get_animation(void * jarg1) 
   
   arg1 = (AnimatedSprite *)jarg1; 
   result = AnimatedSprite_get_animation(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_play__SWIG_0(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite_play__SWIG_0(void * jarg1, char * jarg2) {
   AnimatedSprite *arg1 = (AnimatedSprite *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimatedSprite *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimatedSprite_play__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -93761,17 +95998,20 @@ SWIGEXPORT SpriteFrames* SWIGSTDCALL CSharp_AnimatedSprite3D_get_sprite_frames(v
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_set_animation(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_set_animation(void * jarg1, char * jarg2) {
   AnimatedSprite3D *arg1 = (AnimatedSprite3D *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimatedSprite3D *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimatedSprite3D_set_animation(arg1,(String const &)*arg2);
 }
 
@@ -93783,22 +96023,28 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_AnimatedSprite3D_get_animation(void * jarg1
   
   arg1 = (AnimatedSprite3D *)jarg1; 
   result = AnimatedSprite3D_get_animation(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_play__SWIG_0(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_AnimatedSprite3D_play__SWIG_0(void * jarg1, char * jarg2) {
   AnimatedSprite3D *arg1 = (AnimatedSprite3D *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (AnimatedSprite3D *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   AnimatedSprite3D_play__SWIG_0(arg1,(String const &)*arg2);
 }
 
@@ -94477,17 +96723,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_Button() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_Button_set_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_Button_set_text(void * jarg1, char * jarg2) {
   Button *arg1 = (Button *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (Button *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   Button_set_text(arg1,(String const &)*arg2);
 }
 
@@ -94499,7 +96748,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_Button_get_text(void * jarg1) {
   
   arg1 = (Button *)jarg1; 
   result = Button_get_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -94595,34 +96847,40 @@ SWIGEXPORT unsigned int SWIGSTDCALL CSharp_Button_is_flat(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_button(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_button(void * jarg1, char * jarg2) {
   ButtonArray *arg1 = (ButtonArray *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (ButtonArray *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   ButtonArray_add_button(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_icon_button__SWIG_0(void * jarg1, void * jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_icon_button__SWIG_0(void * jarg1, void * jarg2, char * jarg3) {
   ButtonArray *arg1 = (ButtonArray *) 0 ;
   Texture *arg2 = (Texture *) 0 ;
   String *arg3 = 0 ;
   
   arg1 = (ButtonArray *)jarg1; 
   arg2 = (Texture *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ButtonArray_add_icon_button__SWIG_0(arg1,arg2,(String const &)*arg3);
 }
 
@@ -94637,19 +96895,22 @@ SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_add_icon_button__SWIG_1(void * ja
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_set_button_text(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_ButtonArray_set_button_text(void * jarg1, int jarg2, char * jarg3) {
   ButtonArray *arg1 = (ButtonArray *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (ButtonArray *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   ButtonArray_set_button_text(arg1,arg2,(String const &)*arg3);
 }
 
@@ -94675,7 +96936,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_ButtonArray_get_button_text(void * jarg1, i
   arg1 = (ButtonArray *)jarg1; 
   arg2 = (int)jarg2; 
   result = ButtonArray_get_button_text(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -95768,17 +98032,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_clear_filters(void * jarg1) 
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_add_filter(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_add_filter(void * jarg1, char * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorFileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorFileDialog_add_filter(arg1,(String const &)*arg2);
 }
 
@@ -95790,7 +98057,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorFileDialog_get_current_dir(void * jar
   
   arg1 = (EditorFileDialog *)jarg1; 
   result = EditorFileDialog_get_current_dir(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -95802,7 +98072,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorFileDialog_get_current_file(void * ja
   
   arg1 = (EditorFileDialog *)jarg1; 
   result = EditorFileDialog_get_current_file(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -95814,52 +98087,64 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_EditorFileDialog_get_current_path(void * ja
   
   arg1 = (EditorFileDialog *)jarg1; 
   result = EditorFileDialog_get_current_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_dir(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_dir(void * jarg1, char * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorFileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorFileDialog_set_current_dir(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_file(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_file(void * jarg1, char * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorFileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorFileDialog_set_current_file(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_EditorFileDialog_set_current_path(void * jarg1, char * jarg2) {
   EditorFileDialog *arg1 = (EditorFileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (EditorFileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   EditorFileDialog_set_current_path(arg1,(String const &)*arg2);
 }
 
@@ -96012,17 +98297,20 @@ SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_clear_filters(void * jarg1) {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_add_filter(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_add_filter(void * jarg1, char * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (FileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   FileDialog_add_filter(arg1,(String const &)*arg2);
 }
 
@@ -96034,7 +98322,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_FileDialog_get_current_dir(void * jarg1) {
   
   arg1 = (FileDialog *)jarg1; 
   result = FileDialog_get_current_dir(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -96046,7 +98337,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_FileDialog_get_current_file(void * jarg1) {
   
   arg1 = (FileDialog *)jarg1; 
   result = FileDialog_get_current_file(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -96058,52 +98352,64 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_FileDialog_get_current_path(void * jarg1) {
   
   arg1 = (FileDialog *)jarg1; 
   result = FileDialog_get_current_path(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_dir(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_dir(void * jarg1, char * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (FileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   FileDialog_set_current_dir(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_file(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_file(void * jarg1, char * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (FileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   FileDialog_set_current_file(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_path(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_FileDialog_set_current_path(void * jarg1, char * jarg2) {
   FileDialog *arg1 = (FileDialog *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (FileDialog *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   FileDialog_set_current_path(arg1,(String const &)*arg2);
 }
 
@@ -96370,17 +98676,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_GraphNode() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_GraphNode_set_title(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_GraphNode_set_title(void * jarg1, char * jarg2) {
   GraphNode *arg1 = (GraphNode *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (GraphNode *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   GraphNode_set_title(arg1,(String const &)*arg2);
 }
 
@@ -96392,7 +98701,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_GraphNode_get_title(void * jarg1) {
   
   arg1 = (GraphNode *)jarg1; 
   result = GraphNode_get_title(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -97646,17 +99958,20 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_LinkButton() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_LinkButton_set_text(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_LinkButton_set_text(void * jarg1, char * jarg2) {
   LinkButton *arg1 = (LinkButton *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (LinkButton *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   LinkButton_set_text(arg1,(String const &)*arg2);
 }
 
@@ -97668,7 +99983,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_LinkButton_get_text(void * jarg1) {
   
   arg1 = (LinkButton *)jarg1; 
   result = LinkButton_get_text(arg1);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -97958,39 +100276,45 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_new_OptionButton() {
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   String *arg2 = 0 ;
   int arg3 ;
   
   arg1 = (OptionButton *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   OptionButton_add_item__SWIG_0(arg1,(String const &)*arg2,arg3);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_item__SWIG_1(void * jarg1, char * jarg2) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   String *arg2 = 0 ;
   
   arg1 = (OptionButton *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   OptionButton_add_item__SWIG_0(arg1,(String const &)*arg2);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_icon_item(void * jarg1, void * jarg2, wchar_t * jarg3, int jarg4) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_icon_item(void * jarg1, void * jarg2, char * jarg3, int jarg4) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   Texture *arg2 = (Texture *) 0 ;
   String *arg3 = 0 ;
@@ -97998,30 +100322,36 @@ SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_add_icon_item(void * jarg1, void
   
   arg1 = (OptionButton *)jarg1; 
   arg2 = (Texture *)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   arg4 = (int)jarg4; 
   OptionButton_add_icon_item(arg1,arg2,(String const &)*arg3,arg4);
 }
 
 
-SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_set_item_text(void * jarg1, int jarg2, wchar_t * jarg3) {
+SWIGEXPORT void SWIGSTDCALL CSharp_OptionButton_set_item_text(void * jarg1, int jarg2, char * jarg3) {
   OptionButton *arg1 = (OptionButton *) 0 ;
   int arg2 ;
   String *arg3 = 0 ;
   
   arg1 = (OptionButton *)jarg1; 
   arg2 = (int)jarg2; 
+  
   if (!jarg3) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return ;
   }
-  String arg3_str = jarg3;
-  arg3 = &arg3_str; 
+  String arg3_str;
+  gdstring_from_utf16(arg3_str, (const uint16_t*)jarg3);
+  arg3 = &arg3_str;
+  
   OptionButton_set_item_text(arg1,arg2,(String const &)*arg3);
 }
 
@@ -98087,7 +100417,10 @@ SWIGEXPORT void * SWIGSTDCALL CSharp_OptionButton_get_item_text(void * jarg1, in
   arg1 = (OptionButton *)jarg1; 
   arg2 = (int)jarg2; 
   result = OptionButton_get_item_text(arg1,arg2);
-  jresult = SWIG_csharp_wstring_callback((&result)->c_str()); 
+  
+  CharString result_utf8 = (&result)->utf8();
+  jresult = csharp_gdstring_callback(result_utf8.get_data(), result_utf8.length());
+  
   return jresult;
 }
 
@@ -99094,7 +101427,7 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_get_polyphony(void * jarg1) {
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, wchar_t * jarg2, int jarg3) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, char * jarg2, int jarg3) {
   int jresult ;
   SamplePlayer2D *arg1 = (SamplePlayer2D *) 0 ;
   String *arg2 = 0 ;
@@ -99102,12 +101435,15 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, wcha
   int result;
   
   arg1 = (SamplePlayer2D *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   arg3 = (int)jarg3; 
   result = (int)SamplePlayer2D_play__SWIG_0(arg1,(String const &)*arg2,arg3);
   jresult = result; 
@@ -99115,19 +101451,22 @@ SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_0(void * jarg1, wcha
 }
 
 
-SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_1(void * jarg1, wchar_t * jarg2) {
+SWIGEXPORT int SWIGSTDCALL CSharp_SamplePlayer2D_play__SWIG_1(void * jarg1, char * jarg2) {
   int jresult ;
   SamplePlayer2D *arg1 = (SamplePlayer2D *) 0 ;
   String *arg2 = 0 ;
   int result;
   
   arg1 = (SamplePlayer2D *)jarg1; 
+  
   if (!jarg2) {
     SWIG_CSharpSetPendingExceptionArgument(SWIG_CSharpArgumentNullException, "null String", 0);
     return 0;
   }
-  String arg2_str = jarg2;
-  arg2 = &arg2_str; 
+  String arg2_str;
+  gdstring_from_utf16(arg2_str, (const uint16_t*)jarg2);
+  arg2 = &arg2_str;
+  
   result = (int)SamplePlayer2D_play__SWIG_0(arg1,(String const &)*arg2);
   jresult = result; 
   return jresult;

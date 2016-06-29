@@ -45,6 +45,13 @@ public class Camera2D : Node2D {
 
 
 
+  public Camera2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Camera2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_offset(Vector2 offset) {
     GodotEnginePINVOKE.Camera2D_set_offset(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -180,13 +187,6 @@ public class Camera2D : Node2D {
 
   public void force_update_scroll() {
     GodotEnginePINVOKE.Camera2D_force_update_scroll(swigCPtr);
-  }
-
-  public Camera2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Camera2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -77,6 +77,13 @@ public class Control : CanvasItem {
 
 
 
+  public Control() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Control());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _input_event(SWIGTYPE_p_InputEvent arg0) {
     GodotEnginePINVOKE.Control__input_event(swigCPtr, SWIGTYPE_p_InputEvent.getCPtr(arg0));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -624,13 +631,6 @@ public class Control : CanvasItem {
 
   public void minimum_size_changed() {
     GodotEnginePINVOKE.Control_minimum_size_changed(swigCPtr);
-  }
-
-  public Control() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Control());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

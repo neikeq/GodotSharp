@@ -47,15 +47,15 @@ public class PHashTranslation : Translation {
 
 
 
-  public void generate(Translation from) {
-    GodotEnginePINVOKE.PHashTranslation_generate(swigCPtr, Translation.getCPtr(from));
-  }
-
   public PHashTranslation() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PHashTranslation());
       InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
+  }
+
+  public void generate(Translation from) {
+    GodotEnginePINVOKE.PHashTranslation_generate(swigCPtr, Translation.getCPtr(from));
   }
 
 }

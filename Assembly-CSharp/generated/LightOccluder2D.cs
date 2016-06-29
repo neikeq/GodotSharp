@@ -43,6 +43,13 @@ public class LightOccluder2D : Node2D {
 
 
 
+  public LightOccluder2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_LightOccluder2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_occluder_polygon(OccluderPolygon2D polygon) {
     GodotEnginePINVOKE.LightOccluder2D_set_occluder_polygon(swigCPtr, OccluderPolygon2D.getCPtr(polygon));
   }
@@ -62,13 +69,6 @@ public class LightOccluder2D : Node2D {
   public int get_occluder_light_mask() {
     int ret = GodotEnginePINVOKE.LightOccluder2D_get_occluder_light_mask(swigCPtr);
     return ret;
-  }
-
-  public LightOccluder2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_LightOccluder2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

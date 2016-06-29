@@ -45,6 +45,13 @@ public class Popup : Control {
 
 
 
+  public Popup() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Popup());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void popup_centered(Vector2 size) {
     GodotEnginePINVOKE.Popup_popup_centered__SWIG_0(swigCPtr, ref size);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -82,13 +89,6 @@ public class Popup : Control {
   public bool is_exclusive() {
     bool ret = GodotEnginePINVOKE.Popup_is_exclusive(swigCPtr);
     return ret;
-  }
-
-  public Popup() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Popup());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -47,6 +47,13 @@ public class Physics2DShapeQueryParameters : Reference {
 
 
 
+  public Physics2DShapeQueryParameters() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Physics2DShapeQueryParameters());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shape(Shape2D shape) {
     GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_shape(swigCPtr, Shape2D.getCPtr(shape));
   }
@@ -116,13 +123,6 @@ public class Physics2DShapeQueryParameters : Reference {
   public SWIGTYPE_p_Array get_exclude() {
     SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_exclude(swigCPtr), true);
     return ret;
-  }
-
-  public Physics2DShapeQueryParameters() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Physics2DShapeQueryParameters());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -60,6 +60,13 @@ public class CubeMap : Resource {
 
 
 
+  public CubeMap() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CubeMap());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int get_width() {
     int ret = GodotEnginePINVOKE.CubeMap_get_width(swigCPtr);
     return ret;
@@ -110,13 +117,6 @@ public class CubeMap : Resource {
   public float get_lossy_storage_quality() {
     float ret = GodotEnginePINVOKE.CubeMap_get_lossy_storage_quality(swigCPtr);
     return ret;
-  }
-
-  public CubeMap() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CubeMap());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class InterpolatedCamera : Camera {
 
 
 
+  public InterpolatedCamera() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_InterpolatedCamera());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_target_path(NodePath target_path) {
     GodotEnginePINVOKE.InterpolatedCamera_set_target_path(swigCPtr, NodePath.getCPtr(target_path));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -73,13 +80,6 @@ public class InterpolatedCamera : Camera {
   public bool is_interpolation_enabled() {
     bool ret = GodotEnginePINVOKE.InterpolatedCamera_is_interpolation_enabled(swigCPtr);
     return ret;
-  }
-
-  public InterpolatedCamera() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_InterpolatedCamera());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

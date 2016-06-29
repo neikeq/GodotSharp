@@ -54,6 +54,13 @@ public class XMLParser : Reference {
 
 
 
+  public XMLParser() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_XMLParser());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int read() {
     int ret = GodotEnginePINVOKE.XMLParser_read(swigCPtr);
     return ret;
@@ -141,13 +148,6 @@ public class XMLParser : Reference {
     int ret = GodotEnginePINVOKE.XMLParser_open_buffer(swigCPtr, SWIGTYPE_p_RawArray.getCPtr(buffer));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public XMLParser() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_XMLParser());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

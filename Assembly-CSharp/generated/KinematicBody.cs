@@ -43,6 +43,13 @@ public class KinematicBody : PhysicsBody {
 
 
 
+  public KinematicBody() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_KinematicBody());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public SWIGTYPE_p_Vector3 move(SWIGTYPE_p_Vector3 rel_vec) {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.KinematicBody_move(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(rel_vec)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -137,13 +144,6 @@ public class KinematicBody : PhysicsBody {
   public float get_collision_margin() {
     float ret = GodotEnginePINVOKE.KinematicBody_get_collision_margin(swigCPtr);
     return ret;
-  }
-
-  public KinematicBody() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_KinematicBody());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

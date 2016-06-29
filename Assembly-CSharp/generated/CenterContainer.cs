@@ -43,6 +43,13 @@ public class CenterContainer : Container {
 
 
 
+  public CenterContainer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CenterContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_use_top_left(bool enable) {
     GodotEnginePINVOKE.CenterContainer_set_use_top_left(swigCPtr, enable);
   }
@@ -50,13 +57,6 @@ public class CenterContainer : Container {
   public bool is_using_top_left() {
     bool ret = GodotEnginePINVOKE.CenterContainer_is_using_top_left(swigCPtr);
     return ret;
-  }
-
-  public CenterContainer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CenterContainer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

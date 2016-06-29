@@ -54,6 +54,13 @@ public class SceneTree : MainLoop {
 
 
 
+  public SceneTree() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SceneTree());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void notify_group(int call_flags, string group, int notification) {
     GodotEnginePINVOKE.SceneTree_notify_group(swigCPtr, call_flags, group, notification);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -219,13 +226,6 @@ public class SceneTree : MainLoop {
   public int reload_current_scene() {
     int ret = GodotEnginePINVOKE.SceneTree_reload_current_scene(swigCPtr);
     return ret;
-  }
-
-  public SceneTree() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SceneTree());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

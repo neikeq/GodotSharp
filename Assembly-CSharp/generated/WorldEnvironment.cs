@@ -43,6 +43,13 @@ public class WorldEnvironment : Spatial {
 
 
 
+  public WorldEnvironment() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_WorldEnvironment());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_environment(Environment env) {
     GodotEnginePINVOKE.WorldEnvironment_set_environment(swigCPtr, Environment.getCPtr(env));
   }
@@ -54,13 +61,6 @@ public class WorldEnvironment : Spatial {
     Environment ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Environment;
     return ret;
 }
-
-  public WorldEnvironment() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_WorldEnvironment());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

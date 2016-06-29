@@ -43,6 +43,13 @@ public class PinJoint2D : Joint2D {
 
 
 
+  public PinJoint2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PinJoint2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_softness(float softness) {
     GodotEnginePINVOKE.PinJoint2D_set_softness(swigCPtr, softness);
   }
@@ -50,13 +57,6 @@ public class PinJoint2D : Joint2D {
   public float get_softness() {
     float ret = GodotEnginePINVOKE.PinJoint2D_get_softness(swigCPtr);
     return ret;
-  }
-
-  public PinJoint2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PinJoint2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

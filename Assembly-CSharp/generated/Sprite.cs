@@ -43,6 +43,13 @@ public class Sprite : Node2D {
 
 
 
+  public Sprite() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Sprite());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_texture(Texture texture) {
     GodotEnginePINVOKE.Sprite_set_texture(swigCPtr, Texture.getCPtr(texture));
   }
@@ -146,13 +153,6 @@ public class Sprite : Node2D {
   public SWIGTYPE_p_Color get_modulate() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.Sprite_get_modulate(swigCPtr), true);
     return ret;
-  }
-
-  public Sprite() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Sprite());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

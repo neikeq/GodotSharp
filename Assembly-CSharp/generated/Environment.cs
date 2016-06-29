@@ -105,6 +105,13 @@ public class Environment : Resource {
 
 
 
+  public Environment() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Environment());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_background(int bgmode) {
     GodotEnginePINVOKE.Environment_set_background(swigCPtr, bgmode);
   }
@@ -139,13 +146,6 @@ public class Environment : Resource {
 
   public void fx_get_param(int param) {
     GodotEnginePINVOKE.Environment_fx_get_param(swigCPtr, param);
-  }
-
-  public Environment() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Environment());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

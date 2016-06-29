@@ -47,6 +47,13 @@ public class ConvexPolygonShape : Shape {
 
 
 
+  public ConvexPolygonShape() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ConvexPolygonShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_points(SWIGTYPE_p_Vector3Array points) {
     GodotEnginePINVOKE.ConvexPolygonShape_set_points(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(points));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -55,13 +62,6 @@ public class ConvexPolygonShape : Shape {
   public SWIGTYPE_p_Vector3Array get_points() {
     SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.ConvexPolygonShape_get_points(swigCPtr), true);
     return ret;
-  }
-
-  public ConvexPolygonShape() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ConvexPolygonShape());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class StreamPlayer : Node {
 
 
 
+  public StreamPlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_StreamPlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_stream(AudioStream stream) {
     GodotEnginePINVOKE.StreamPlayer_set_stream(swigCPtr, AudioStream.getCPtr(stream));
   }
@@ -157,13 +164,6 @@ public class StreamPlayer : Node {
   public float get_length() {
     float ret = GodotEnginePINVOKE.StreamPlayer_get_length(swigCPtr);
     return ret;
-  }
-
-  public StreamPlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_StreamPlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

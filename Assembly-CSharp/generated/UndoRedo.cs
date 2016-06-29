@@ -43,6 +43,13 @@ public class UndoRedo : Object {
 
 
 
+  public UndoRedo() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_UndoRedo());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void create_action(string name, bool mergeable) {
     GodotEnginePINVOKE.UndoRedo_create_action__SWIG_0(swigCPtr, name, mergeable);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -147,13 +154,6 @@ public class UndoRedo : Object {
   public int get_version() {
     int ret = GodotEnginePINVOKE.UndoRedo_get_version(swigCPtr);
     return ret;
-  }
-
-  public UndoRedo() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_UndoRedo());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

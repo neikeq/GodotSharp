@@ -43,6 +43,13 @@ public class ColorPicker : BoxContainer {
 
 
 
+  public ColorPicker() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ColorPicker());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_color(SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.ColorPicker_set_color(swigCPtr, SWIGTYPE_p_Color.getCPtr(color));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -74,13 +81,6 @@ public class ColorPicker : BoxContainer {
   public void add_preset(SWIGTYPE_p_Color arg0_) {
     GodotEnginePINVOKE.ColorPicker_add_preset(swigCPtr, SWIGTYPE_p_Color.getCPtr(arg0_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public ColorPicker() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ColorPicker());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class CanvasLayer : Node {
 
 
 
+  public CanvasLayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CanvasLayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_layer(int layer) {
     GodotEnginePINVOKE.CanvasLayer_set_layer(swigCPtr, layer);
   }
@@ -111,13 +118,6 @@ public class CanvasLayer : Node {
   public SWIGTYPE_p_RID get_viewport() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.CanvasLayer_get_viewport(swigCPtr), true);
     return ret;
-  }
-
-  public CanvasLayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CanvasLayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

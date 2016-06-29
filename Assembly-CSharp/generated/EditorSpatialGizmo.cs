@@ -47,6 +47,13 @@ public class EditorSpatialGizmo : SpatialGizmo {
 
 
 
+  public EditorSpatialGizmo() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorSpatialGizmo());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void commit_handle(int index, Variant restore, bool cancel) {
     GodotEnginePINVOKE.EditorSpatialGizmo_commit_handle(swigCPtr, index, Variant.getCPtr(restore), cancel);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -128,13 +135,6 @@ public class EditorSpatialGizmo : SpatialGizmo {
 
   public void set_spatial_node(Spatial node) {
     GodotEnginePINVOKE.EditorSpatialGizmo_set_spatial_node(swigCPtr, Spatial.getCPtr(node));
-  }
-
-  public EditorSpatialGizmo() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorSpatialGizmo());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

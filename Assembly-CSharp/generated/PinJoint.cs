@@ -46,6 +46,13 @@ public class PinJoint : Joint {
 
 
 
+  public PinJoint() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PinJoint());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_param(int param, float value) {
     GodotEnginePINVOKE.PinJoint_set_param(swigCPtr, param, value);
   }
@@ -53,13 +60,6 @@ public class PinJoint : Joint {
   public float get_param(int param) {
     float ret = GodotEnginePINVOKE.PinJoint_get_param(swigCPtr, param);
     return ret;
-  }
-
-  public PinJoint() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PinJoint());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

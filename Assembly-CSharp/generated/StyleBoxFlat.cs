@@ -47,6 +47,13 @@ public class StyleBoxFlat : StyleBox {
 
 
 
+  public StyleBoxFlat() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_StyleBoxFlat());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_bg_color(SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.StyleBoxFlat_set_bg_color(swigCPtr, SWIGTYPE_p_Color.getCPtr(color));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -102,13 +109,6 @@ public class StyleBoxFlat : StyleBox {
   public bool get_draw_center() {
     bool ret = GodotEnginePINVOKE.StyleBoxFlat_get_draw_center(swigCPtr);
     return ret;
-  }
-
-  public StyleBoxFlat() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_StyleBoxFlat());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

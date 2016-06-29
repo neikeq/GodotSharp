@@ -47,6 +47,13 @@ public class PlaneShape : Shape {
 
 
 
+  public PlaneShape() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PlaneShape());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_plane(SWIGTYPE_p_Plane plane) {
     GodotEnginePINVOKE.PlaneShape_set_plane(swigCPtr, SWIGTYPE_p_Plane.getCPtr(plane));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -55,13 +62,6 @@ public class PlaneShape : Shape {
   public SWIGTYPE_p_Plane get_plane() {
     SWIGTYPE_p_Plane ret = new SWIGTYPE_p_Plane(GodotEnginePINVOKE.PlaneShape_get_plane(swigCPtr), true);
     return ret;
-  }
-
-  public PlaneShape() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PlaneShape());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

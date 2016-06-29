@@ -43,6 +43,13 @@ public class WindowDialog : Popup {
 
 
 
+  public WindowDialog() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_WindowDialog());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_title(string title) {
     GodotEnginePINVOKE.WindowDialog_set_title(swigCPtr, title);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -59,13 +66,6 @@ public class WindowDialog : Popup {
       return null;
     TextureButton ret = InternalHelpers.UnmanagedGetManaged(cPtr) as TextureButton;
     return ret;
-  }
-
-  public WindowDialog() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_WindowDialog());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

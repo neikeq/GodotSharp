@@ -47,6 +47,13 @@ public class Translation : Resource {
 
 
 
+  public Translation() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Translation());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_locale(string locale) {
     GodotEnginePINVOKE.Translation_set_locale(swigCPtr, locale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -81,13 +88,6 @@ public class Translation : Resource {
   public int get_message_count() {
     int ret = GodotEnginePINVOKE.Translation_get_message_count(swigCPtr);
     return ret;
-  }
-
-  public Translation() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Translation());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -43,6 +43,13 @@ public class PopupMenu : Popup {
 
 
 
+  public PopupMenu() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_PopupMenu());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_icon_item(Object texture, string label, int id, int accel) {
     GodotEnginePINVOKE.PopupMenu_add_icon_item__SWIG_0(swigCPtr, Object.getCPtr(texture), label, id, accel);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -272,13 +279,6 @@ public class PopupMenu : Popup {
 
   public void clear() {
     GodotEnginePINVOKE.PopupMenu_clear(swigCPtr);
-  }
-
-  public PopupMenu() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_PopupMenu());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

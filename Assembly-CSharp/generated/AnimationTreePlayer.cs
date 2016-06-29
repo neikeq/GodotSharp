@@ -53,6 +53,13 @@ public class AnimationTreePlayer : Node {
 
 
 
+  public AnimationTreePlayer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_AnimationTreePlayer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_node(int type, string id) {
     GodotEnginePINVOKE.AnimationTreePlayer_add_node(swigCPtr, type, id);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -394,13 +401,6 @@ public class AnimationTreePlayer : Node {
 
   public void recompute_caches() {
     GodotEnginePINVOKE.AnimationTreePlayer_recompute_caches(swigCPtr);
-  }
-
-  public AnimationTreePlayer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_AnimationTreePlayer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

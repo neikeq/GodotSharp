@@ -43,6 +43,13 @@ public class Path2D : Node2D {
 
 
 
+  public Path2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Path2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_curve(Curve2D curve) {
     GodotEnginePINVOKE.Path2D_set_curve(swigCPtr, Curve2D.getCPtr(curve));
   }
@@ -54,13 +61,6 @@ public class Path2D : Node2D {
     Curve2D ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Curve2D;
     return ret;
 }
-
-  public Path2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Path2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

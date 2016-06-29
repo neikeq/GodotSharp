@@ -60,6 +60,13 @@ public class Tween : Node {
 
 
 
+  public Tween() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Tween());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public bool is_active() {
     bool ret = GodotEnginePINVOKE.Tween_is_active(swigCPtr);
     return ret;
@@ -302,13 +309,6 @@ public class Tween : Node {
     bool ret = GodotEnginePINVOKE.Tween_targeting_method__SWIG_1(swigCPtr, Object.getCPtr(arg0), method, Object.getCPtr(initial), initial_method, Variant.getCPtr(final_val), times_in_sec, trans_type, ease_type);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public Tween() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Tween());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

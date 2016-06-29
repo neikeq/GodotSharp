@@ -47,6 +47,13 @@ public class AtlasTexture : Texture {
 
 
 
+  public AtlasTexture() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_AtlasTexture());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_atlas(Texture atlas) {
     GodotEnginePINVOKE.AtlasTexture_set_atlas(swigCPtr, Texture.getCPtr(atlas));
   }
@@ -77,13 +84,6 @@ public class AtlasTexture : Texture {
   public SWIGTYPE_p_Rect2 get_margin() {
     SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.AtlasTexture_get_margin(swigCPtr), true);
     return ret;
-  }
-
-  public AtlasTexture() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_AtlasTexture());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

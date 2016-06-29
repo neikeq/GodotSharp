@@ -47,6 +47,13 @@ public class EditorImportPlugin : Reference {
 
 
 
+  public EditorImportPlugin() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorImportPlugin());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public bool can_reimport_multiple_files() {
     bool ret = GodotEnginePINVOKE.EditorImportPlugin_can_reimport_multiple_files(swigCPtr);
     return ret;
@@ -99,13 +106,6 @@ public class EditorImportPlugin : Reference {
     string ret = GodotEnginePINVOKE.EditorImportPlugin_expand_source_path(swigCPtr, path);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public EditorImportPlugin() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorImportPlugin());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

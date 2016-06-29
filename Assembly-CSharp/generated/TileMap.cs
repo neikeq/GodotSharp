@@ -52,6 +52,13 @@ public class TileMap : Node2D {
 
 
 
+  public TileMap() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TileMap());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_tileset(TileSet tileset) {
     GodotEnginePINVOKE.TileMap_set_tileset(swigCPtr, TileSet.getCPtr(tileset));
   }
@@ -289,13 +296,6 @@ public class TileMap : Node2D {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
 }
-
-  public TileMap() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TileMap());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

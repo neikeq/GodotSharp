@@ -8,7 +8,7 @@ public class MovingPlatform : Node2D
 
 	private float accum = 0.0f;
 
-	void _fixed_process(float delta)
+	new void _fixed_process(float delta)
 	{
 		accum += delta * (1.0f / cycle) * Mathf.PI * 2.0f;
 		accum = accum % (Mathf.PI * 2.0f);
@@ -19,7 +19,7 @@ public class MovingPlatform : Node2D
 		platform.set_transform(xf);
 	}
 
-    void _ready()
+	new void _ready()
 	{
 		set_fixed_process (true);
 

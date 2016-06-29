@@ -45,6 +45,13 @@ public class SamplePlayer2D : SoundPlayer2D {
 
 
 
+  public SamplePlayer2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_SamplePlayer2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_sample_library(SampleLibrary library) {
     GodotEnginePINVOKE.SamplePlayer2D_set_sample_library(swigCPtr, SampleLibrary.getCPtr(library));
   }
@@ -106,13 +113,6 @@ public class SamplePlayer2D : SoundPlayer2D {
   public float get_random_pitch_scale() {
     float ret = GodotEnginePINVOKE.SamplePlayer2D_get_random_pitch_scale(swigCPtr);
     return ret;
-  }
-
-  public SamplePlayer2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_SamplePlayer2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

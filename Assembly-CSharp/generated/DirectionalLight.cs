@@ -50,6 +50,13 @@ public class DirectionalLight : Light {
 
 
 
+  public DirectionalLight() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_DirectionalLight());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shadow_mode(int mode) {
     GodotEnginePINVOKE.DirectionalLight_set_shadow_mode(swigCPtr, mode);
   }
@@ -66,13 +73,6 @@ public class DirectionalLight : Light {
   public float get_shadow_param(int param) {
     float ret = GodotEnginePINVOKE.DirectionalLight_get_shadow_param(swigCPtr, param);
     return ret;
-  }
-
-  public DirectionalLight() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_DirectionalLight());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

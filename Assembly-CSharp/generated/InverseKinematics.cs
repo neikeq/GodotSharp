@@ -43,6 +43,13 @@ public class InverseKinematics : Spatial {
 
 
 
+  public InverseKinematics() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_InverseKinematics());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_bone_name(string ik_bone) {
     GodotEnginePINVOKE.InverseKinematics_set_bone_name(swigCPtr, ik_bone);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -87,13 +94,6 @@ public class InverseKinematics : Spatial {
   public float get_speed() {
     float ret = GodotEnginePINVOKE.InverseKinematics_get_speed(swigCPtr);
     return ret;
-  }
-
-  public InverseKinematics() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_InverseKinematics());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

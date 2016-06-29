@@ -47,6 +47,13 @@ public class RegEx : Reference {
 
 
 
+  public RegEx() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RegEx());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int compile(string pattern, int capture) {
     int ret = GodotEnginePINVOKE.RegEx_compile__SWIG_0(swigCPtr, pattern, capture);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -104,13 +111,6 @@ public class RegEx : Reference {
   public SWIGTYPE_p_StringArray get_captures() {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.RegEx_get_captures(swigCPtr), true);
     return ret;
-  }
-
-  public RegEx() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RegEx());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

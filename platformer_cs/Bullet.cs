@@ -10,11 +10,11 @@ public class Bullet : RigidBody2D
 		get { return disabled; }
 	}
 
-    void _ready()
-    {
+	new void _ready()
+	{
 		Timer timer = get_node("Timer") as Timer;
 		timer.start();
-    }
+	}
 
 	public void disable()
 	{

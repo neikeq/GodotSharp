@@ -47,6 +47,13 @@ public class ShaderMaterial : Material {
 
 
 
+  public ShaderMaterial() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ShaderMaterial());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shader(Shader shader) {
     GodotEnginePINVOKE.ShaderMaterial_set_shader(swigCPtr, Shader.getCPtr(shader));
   }
@@ -68,13 +75,6 @@ public class ShaderMaterial : Material {
     Variant ret = new Variant(GodotEnginePINVOKE.ShaderMaterial_get_shader_param(swigCPtr, param), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public ShaderMaterial() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ShaderMaterial());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

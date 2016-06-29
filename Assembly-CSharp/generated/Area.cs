@@ -43,6 +43,13 @@ public class Area : CollisionObject {
 
 
 
+  public Area() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Area());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_space_override_mode(int enable) {
     GodotEnginePINVOKE.Area_set_space_override_mode(swigCPtr, enable);
   }
@@ -188,13 +195,6 @@ public class Area : CollisionObject {
   public bool overlaps_area(Object area) {
     bool ret = GodotEnginePINVOKE.Area_overlaps_area(swigCPtr, Object.getCPtr(area));
     return ret;
-  }
-
-  public Area() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Area());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -47,15 +47,15 @@ public class PacketPeerStream : PacketPeer {
 
 
 
-  public void set_stream_peer(StreamPeer peer) {
-    GodotEnginePINVOKE.PacketPeerStream_set_stream_peer(swigCPtr, StreamPeer.getCPtr(peer));
-  }
-
   public PacketPeerStream() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_PacketPeerStream());
       InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
+  }
+
+  public void set_stream_peer(StreamPeer peer) {
+    GodotEnginePINVOKE.PacketPeerStream_set_stream_peer(swigCPtr, StreamPeer.getCPtr(peer));
   }
 
 }

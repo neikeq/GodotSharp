@@ -43,6 +43,13 @@ public class VehicleBody : PhysicsBody {
 
 
 
+  public VehicleBody() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_VehicleBody());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_mass(float mass) {
     GodotEnginePINVOKE.VehicleBody_set_mass(swigCPtr, mass);
   }
@@ -91,13 +98,6 @@ public class VehicleBody : PhysicsBody {
   public SWIGTYPE_p_Vector3 get_linear_velocity() {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.VehicleBody_get_linear_velocity(swigCPtr), true);
     return ret;
-  }
-
-  public VehicleBody() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_VehicleBody());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

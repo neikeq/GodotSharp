@@ -51,6 +51,13 @@ public class EditorFileDialog : ConfirmationDialog {
 
 
 
+  public EditorFileDialog() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorFileDialog());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void clear_filters() {
     GodotEnginePINVOKE.EditorFileDialog_clear_filters(swigCPtr);
   }
@@ -145,13 +152,6 @@ public class EditorFileDialog : ConfirmationDialog {
 
   public void invalidate() {
     GodotEnginePINVOKE.EditorFileDialog_invalidate(swigCPtr);
-  }
-
-  public EditorFileDialog() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorFileDialog());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

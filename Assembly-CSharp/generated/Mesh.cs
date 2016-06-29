@@ -74,6 +74,13 @@ public class Mesh : Resource {
 
 
 
+  public Mesh() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Mesh());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_morph_target(string name) {
     GodotEnginePINVOKE.Mesh_add_morph_target(swigCPtr, name);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -184,13 +191,6 @@ public class Mesh : Resource {
   public SWIGTYPE_p_AABB get_custom_aabb() {
     SWIGTYPE_p_AABB ret = new SWIGTYPE_p_AABB(GodotEnginePINVOKE.Mesh_get_custom_aabb(swigCPtr), true);
     return ret;
-  }
-
-  public Mesh() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Mesh());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

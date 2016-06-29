@@ -43,6 +43,13 @@ public class GraphNode : Container {
 
 
 
+  public GraphNode() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_GraphNode());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_title(string title) {
     GodotEnginePINVOKE.GraphNode_set_title(swigCPtr, title);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -153,13 +160,6 @@ public class GraphNode : Container {
   public bool is_close_button_visible() {
     bool ret = GodotEnginePINVOKE.GraphNode_is_close_button_visible(swigCPtr);
     return ret;
-  }
-
-  public GraphNode() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_GraphNode());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

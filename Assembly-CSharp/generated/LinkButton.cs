@@ -45,6 +45,13 @@ public class LinkButton : BaseButton {
 
 
 
+  public LinkButton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_LinkButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_text(string text) {
     GodotEnginePINVOKE.LinkButton_set_text(swigCPtr, text);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -62,13 +69,6 @@ public class LinkButton : BaseButton {
   public int get_underline_mode() {
     int ret = GodotEnginePINVOKE.LinkButton_get_underline_mode(swigCPtr);
     return ret;
-  }
-
-  public LinkButton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_LinkButton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

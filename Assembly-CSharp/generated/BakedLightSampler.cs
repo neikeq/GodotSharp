@@ -48,6 +48,13 @@ public class BakedLightSampler : VisualInstance {
 
 
 
+  public BakedLightSampler() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_BakedLightSampler());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_param(int param, float value) {
     GodotEnginePINVOKE.BakedLightSampler_set_param(swigCPtr, param, value);
   }
@@ -64,13 +71,6 @@ public class BakedLightSampler : VisualInstance {
   public int get_resolution() {
     int ret = GodotEnginePINVOKE.BakedLightSampler_get_resolution(swigCPtr);
     return ret;
-  }
-
-  public BakedLightSampler() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_BakedLightSampler());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

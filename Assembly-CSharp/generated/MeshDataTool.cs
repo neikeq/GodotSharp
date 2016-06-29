@@ -47,6 +47,13 @@ public class MeshDataTool : Reference {
 
 
 
+  public MeshDataTool() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MeshDataTool());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void clear() {
     GodotEnginePINVOKE.MeshDataTool_clear(swigCPtr);
   }
@@ -233,13 +240,6 @@ public class MeshDataTool : Reference {
       return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
     return ret;
-  }
-
-  public MeshDataTool() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MeshDataTool());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

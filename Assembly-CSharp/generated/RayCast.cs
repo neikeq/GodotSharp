@@ -43,6 +43,13 @@ public class RayCast : Spatial {
 
 
 
+  public RayCast() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_RayCast());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_enabled(bool enabled) {
     GodotEnginePINVOKE.RayCast_set_enabled(swigCPtr, enabled);
   }
@@ -128,13 +135,6 @@ public class RayCast : Spatial {
   public int get_type_mask() {
     int ret = GodotEnginePINVOKE.RayCast_get_type_mask(swigCPtr);
     return ret;
-  }
-
-  public RayCast() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_RayCast());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

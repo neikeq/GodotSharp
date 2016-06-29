@@ -43,6 +43,13 @@ public class GraphEdit : Control {
 
 
 
+  public GraphEdit() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_GraphEdit());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int connect_node(string from, int from_port, string to, int to_port) {
     int ret = GodotEnginePINVOKE.GraphEdit_connect_node(swigCPtr, from, from_port, to, to_port);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -86,13 +93,6 @@ public class GraphEdit : Control {
   public bool is_right_disconnects_enabled() {
     bool ret = GodotEnginePINVOKE.GraphEdit_is_right_disconnects_enabled(swigCPtr);
     return ret;
-  }
-
-  public GraphEdit() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_GraphEdit());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

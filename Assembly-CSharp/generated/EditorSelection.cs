@@ -43,6 +43,13 @@ public class EditorSelection : Object {
 
 
 
+  public EditorSelection() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_EditorSelection());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void clear() {
     GodotEnginePINVOKE.EditorSelection_clear(swigCPtr);
   }
@@ -58,13 +65,6 @@ public class EditorSelection : Object {
   public SWIGTYPE_p_Array get_selected_nodes() {
     SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.EditorSelection_get_selected_nodes(swigCPtr), true);
     return ret;
-  }
-
-  public EditorSelection() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_EditorSelection());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

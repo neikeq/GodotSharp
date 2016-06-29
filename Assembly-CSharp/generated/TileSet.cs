@@ -47,6 +47,13 @@ public class TileSet : Resource {
 
 
 
+  public TileSet() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TileSet());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void create_tile(int id) {
     GodotEnginePINVOKE.TileSet_create_tile(swigCPtr, id);
   }
@@ -203,13 +210,6 @@ public class TileSet : Resource {
   public SWIGTYPE_p_Array get_tiles_ids() {
     SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.TileSet_get_tiles_ids(swigCPtr), true);
     return ret;
-  }
-
-  public TileSet() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TileSet());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -49,6 +49,13 @@ public class TextureProgress : Range {
 
 
 
+  public TextureProgress() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TextureProgress());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_under_texture(Object tex) {
     GodotEnginePINVOKE.TextureProgress_set_under_texture(swigCPtr, Object.getCPtr(tex));
   }
@@ -120,13 +127,6 @@ public class TextureProgress : Range {
   public float get_fill_degrees() {
     float ret = GodotEnginePINVOKE.TextureProgress_get_fill_degrees(swigCPtr);
     return ret;
-  }
-
-  public TextureProgress() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TextureProgress());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

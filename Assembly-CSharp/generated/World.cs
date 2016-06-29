@@ -47,6 +47,13 @@ public class World : Resource {
 
 
 
+  public World() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_World());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public SWIGTYPE_p_RID get_space() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.World_get_space(swigCPtr), true);
     return ret;
@@ -80,13 +87,6 @@ public class World : Resource {
       return null;
     PhysicsDirectSpaceState ret = InternalHelpers.UnmanagedGetManaged(cPtr) as PhysicsDirectSpaceState;
     return ret;
-  }
-
-  public World() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_World());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

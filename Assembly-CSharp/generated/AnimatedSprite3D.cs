@@ -43,6 +43,13 @@ public class AnimatedSprite3D : SpriteBase3D {
 
 
 
+  public AnimatedSprite3D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_AnimatedSprite3D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_sprite_frames(SpriteFrames sprite_frames) {
     GodotEnginePINVOKE.AnimatedSprite3D_set_sprite_frames(swigCPtr, SpriteFrames.getCPtr(sprite_frames));
   }
@@ -90,13 +97,6 @@ public class AnimatedSprite3D : SpriteBase3D {
   public int get_frame() {
     int ret = GodotEnginePINVOKE.AnimatedSprite3D_get_frame(swigCPtr);
     return ret;
-  }
-
-  public AnimatedSprite3D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_AnimatedSprite3D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

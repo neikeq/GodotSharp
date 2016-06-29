@@ -43,6 +43,13 @@ public class TabContainer : Control {
 
 
 
+  public TabContainer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TabContainer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int get_tab_count() {
     int ret = GodotEnginePINVOKE.TabContainer_get_tab_count(swigCPtr);
     return ret;
@@ -123,13 +130,6 @@ public class TabContainer : Control {
       return null;
     Popup ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Popup;
     return ret;
-  }
-
-  public TabContainer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TabContainer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

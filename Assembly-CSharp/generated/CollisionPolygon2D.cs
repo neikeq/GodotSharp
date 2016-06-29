@@ -43,6 +43,13 @@ public class CollisionPolygon2D : Node2D {
 
 
 
+  public CollisionPolygon2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CollisionPolygon2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_polygon(SWIGTYPE_p_Vector2Array polygon) {
     GodotEnginePINVOKE.CollisionPolygon2D_set_polygon(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(polygon));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -79,13 +86,6 @@ public class CollisionPolygon2D : Node2D {
   public int get_collision_object_last_shape() {
     int ret = GodotEnginePINVOKE.CollisionPolygon2D_get_collision_object_last_shape(swigCPtr);
     return ret;
-  }
-
-  public CollisionPolygon2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CollisionPolygon2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

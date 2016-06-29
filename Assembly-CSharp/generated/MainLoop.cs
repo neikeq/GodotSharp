@@ -50,6 +50,13 @@ public class MainLoop : Object {
 
 
 
+  public MainLoop() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_MainLoop());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _drop_files(SWIGTYPE_p_StringArray files, int screen) {
     GodotEnginePINVOKE.MainLoop__drop_files(swigCPtr, SWIGTYPE_p_StringArray.getCPtr(files), screen);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -107,13 +114,6 @@ public class MainLoop : Object {
 
   public void finish() {
     GodotEnginePINVOKE.MainLoop_finish(swigCPtr);
-  }
-
-  public MainLoop() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_MainLoop());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

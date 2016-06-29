@@ -43,6 +43,13 @@ public class ResourcePreloader : Node {
 
 
 
+  public ResourcePreloader() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ResourcePreloader());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void add_resource(string name, Object resource) {
     GodotEnginePINVOKE.ResourcePreloader_add_resource(swigCPtr, name, Object.getCPtr(resource));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -76,13 +83,6 @@ public class ResourcePreloader : Node {
   public SWIGTYPE_p_StringArray get_resource_list() {
     SWIGTYPE_p_StringArray ret = new SWIGTYPE_p_StringArray(GodotEnginePINVOKE.ResourcePreloader_get_resource_list(swigCPtr), true);
     return ret;
-  }
-
-  public ResourcePreloader() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ResourcePreloader());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

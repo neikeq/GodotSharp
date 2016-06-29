@@ -314,6 +314,11 @@ public class CanvasItem : Node {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
+  public void draw_set_transform_matrix(Matrix32 xform) {
+    GodotEnginePINVOKE.CanvasItem_draw_set_transform_matrix(swigCPtr, ref xform.elements);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
   public Matrix32 get_transform() {
     Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasItem_get_transform(swigCPtr));
     return ret;

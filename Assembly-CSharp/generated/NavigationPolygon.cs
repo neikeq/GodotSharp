@@ -47,6 +47,13 @@ public class NavigationPolygon : Resource {
 
 
 
+  public NavigationPolygon() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_NavigationPolygon());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_vertices(SWIGTYPE_p_Vector2Array vertices) {
     GodotEnginePINVOKE.NavigationPolygon_set_vertices(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(vertices));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -111,13 +118,6 @@ public class NavigationPolygon : Resource {
 
   public void make_polygons_from_outlines() {
     GodotEnginePINVOKE.NavigationPolygon_make_polygons_from_outlines(swigCPtr);
-  }
-
-  public NavigationPolygon() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_NavigationPolygon());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

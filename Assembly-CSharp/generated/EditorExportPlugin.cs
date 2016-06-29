@@ -47,17 +47,17 @@ public class EditorExportPlugin : Reference {
 
 
 
-  public Variant custom_export(string name, SWIGTYPE_p_EditorExportPlatform platform) {
-    Variant ret = new Variant(GodotEnginePINVOKE.EditorExportPlugin_custom_export(swigCPtr, name, SWIGTYPE_p_EditorExportPlatform.getCPtr(platform)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
   public EditorExportPlugin() : this(true) {
     if (swigCPtr.Handle == global::System.IntPtr.Zero) {
       internal_init(GodotEnginePINVOKE.new_EditorExportPlugin());
       InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
     }
+  }
+
+  public Variant custom_export(string name, SWIGTYPE_p_EditorExportPlatform platform) {
+    Variant ret = new Variant(GodotEnginePINVOKE.EditorExportPlugin_custom_export(swigCPtr, name, SWIGTYPE_p_EditorExportPlatform.getCPtr(platform)), true);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
   }
 
 }

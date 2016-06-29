@@ -51,6 +51,13 @@ public class File : Reference {
 
 
 
+  public File() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_File());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public int open_encrypted(string path, int mode_flags, SWIGTYPE_p_RawArray key) {
     int ret = GodotEnginePINVOKE.File_open_encrypted(swigCPtr, path, mode_flags, SWIGTYPE_p_RawArray.getCPtr(key));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -258,13 +265,6 @@ public class File : Reference {
     bool ret = GodotEnginePINVOKE.File_file_exists(swigCPtr, path);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
-
-  public File() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_File());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

@@ -47,6 +47,13 @@ public class Camera : Spatial {
 
 
 
+  public Camera() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Camera());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public SWIGTYPE_p_Vector3 project_ray_normal(Vector2 screen_point) {
     SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Camera_project_ray_normal(swigCPtr, ref screen_point), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -162,13 +169,6 @@ public class Camera : Spatial {
   public int get_keep_aspect_mode() {
     int ret = GodotEnginePINVOKE.Camera_get_keep_aspect_mode(swigCPtr);
     return ret;
-  }
-
-  public Camera() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Camera());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

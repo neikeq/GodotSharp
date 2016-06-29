@@ -61,6 +61,13 @@ public class Particles2D : Node2D {
 
 
 
+  public Particles2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Particles2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_emitting(bool active) {
     GodotEnginePINVOKE.Particles2D_set_emitting(swigCPtr, active);
   }
@@ -303,13 +310,6 @@ public class Particles2D : Node2D {
   public SWIGTYPE_p_Vector2Array get_emission_points() {
     SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.Particles2D_get_emission_points(swigCPtr), true);
     return ret;
-  }
-
-  public Particles2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Particles2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

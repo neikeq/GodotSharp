@@ -43,6 +43,13 @@ public class CollisionShape2D : Node2D {
 
 
 
+  public CollisionShape2D() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_CollisionShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_shape(Object shape) {
     GodotEnginePINVOKE.CollisionShape2D_set_shape(swigCPtr, Object.getCPtr(shape));
   }
@@ -67,13 +74,6 @@ public class CollisionShape2D : Node2D {
   public int get_collision_object_shape_index() {
     int ret = GodotEnginePINVOKE.CollisionShape2D_get_collision_object_shape_index(swigCPtr);
     return ret;
-  }
-
-  public CollisionShape2D() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_CollisionShape2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

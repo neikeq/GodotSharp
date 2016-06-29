@@ -43,6 +43,13 @@ public class Patch9Frame : Control {
 
 
 
+  public Patch9Frame() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Patch9Frame());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_texture(Object texture) {
     GodotEnginePINVOKE.Patch9Frame_set_texture(swigCPtr, Object.getCPtr(texture));
   }
@@ -91,13 +98,6 @@ public class Patch9Frame : Control {
   public bool get_draw_center() {
     bool ret = GodotEnginePINVOKE.Patch9Frame_get_draw_center(swigCPtr);
     return ret;
-  }
-
-  public Patch9Frame() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Patch9Frame());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

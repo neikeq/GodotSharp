@@ -43,6 +43,13 @@ public class TextureButton : BaseButton {
 
 
 
+  public TextureButton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_TextureButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_normal_texture(Texture texture) {
     GodotEnginePINVOKE.TextureButton_set_normal_texture(swigCPtr, Texture.getCPtr(texture));
   }
@@ -133,13 +140,6 @@ public class TextureButton : BaseButton {
   public SWIGTYPE_p_Color get_modulate() {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.TextureButton_get_modulate(swigCPtr), true);
     return ret;
-  }
-
-  public TextureButton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_TextureButton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

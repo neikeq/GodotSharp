@@ -43,6 +43,13 @@ public class StaticBody : PhysicsBody {
 
 
 
+  public StaticBody() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_StaticBody());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_constant_linear_velocity(SWIGTYPE_p_Vector3 vel) {
     GodotEnginePINVOKE.StaticBody_set_constant_linear_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(vel));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -79,13 +86,6 @@ public class StaticBody : PhysicsBody {
   public float get_bounce() {
     float ret = GodotEnginePINVOKE.StaticBody_get_bounce(swigCPtr);
     return ret;
-  }
-
-  public StaticBody() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_StaticBody());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

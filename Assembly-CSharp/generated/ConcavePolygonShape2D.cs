@@ -47,6 +47,13 @@ public class ConcavePolygonShape2D : Shape2D {
 
 
 
+  public ConcavePolygonShape2D() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ConcavePolygonShape2D());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_segments(SWIGTYPE_p_Vector2Array segments) {
     GodotEnginePINVOKE.ConcavePolygonShape2D_set_segments(swigCPtr, SWIGTYPE_p_Vector2Array.getCPtr(segments));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -55,13 +62,6 @@ public class ConcavePolygonShape2D : Shape2D {
   public SWIGTYPE_p_Vector2Array get_segments() {
     SWIGTYPE_p_Vector2Array ret = new SWIGTYPE_p_Vector2Array(GodotEnginePINVOKE.ConcavePolygonShape2D_get_segments(swigCPtr), true);
     return ret;
-  }
-
-  public ConcavePolygonShape2D() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ConcavePolygonShape2D());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

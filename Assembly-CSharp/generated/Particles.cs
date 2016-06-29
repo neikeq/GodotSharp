@@ -57,6 +57,13 @@ public class Particles : GeometryInstance {
 
 
 
+  public Particles() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Particles());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_amount(int amount) {
     GodotEnginePINVOKE.Particles_set_amount(swigCPtr, amount);
   }
@@ -208,13 +215,6 @@ public class Particles : GeometryInstance {
   public int get_color_phases() {
     int ret = GodotEnginePINVOKE.Particles_get_color_phases(swigCPtr);
     return ret;
-  }
-
-  public Particles() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Particles());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

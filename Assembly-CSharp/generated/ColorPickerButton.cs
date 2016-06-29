@@ -43,6 +43,13 @@ public class ColorPickerButton : Button {
 
 
 
+  public ColorPickerButton() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_ColorPickerButton());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_color(SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.ColorPickerButton_set_color(swigCPtr, SWIGTYPE_p_Color.getCPtr(color));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
@@ -68,13 +75,6 @@ public class ColorPickerButton : Button {
   public bool is_editing_alpha() {
     bool ret = GodotEnginePINVOKE.ColorPickerButton_is_editing_alpha(swigCPtr);
     return ret;
-  }
-
-  public ColorPickerButton() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_ColorPickerButton());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

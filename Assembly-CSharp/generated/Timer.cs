@@ -45,6 +45,13 @@ public class Timer : Node {
 
 
 
+  public Timer() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Timer());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_wait_time(float time_sec) {
     GodotEnginePINVOKE.Timer_set_wait_time(swigCPtr, time_sec);
   }
@@ -101,13 +108,6 @@ public class Timer : Node {
   public int get_timer_process_mode() {
     int ret = GodotEnginePINVOKE.Timer_get_timer_process_mode(swigCPtr);
     return ret;
-  }
-
-  public Timer() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Timer());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }

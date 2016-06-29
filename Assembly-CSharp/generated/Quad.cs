@@ -43,6 +43,13 @@ public class Quad : GeometryInstance {
 
 
 
+  public Quad() : this(false) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Quad());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void set_axis(int axis) {
     GodotEnginePINVOKE.Quad_set_axis(swigCPtr, axis);
   }
@@ -80,13 +87,6 @@ public class Quad : GeometryInstance {
     Vector2 ret = GodotEnginePINVOKE.Quad_get_offset(swigCPtr);
     return ret;
 }
-
-  public Quad() : this(false) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Quad());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
-  }
 
 }
 

@@ -47,6 +47,13 @@ public class Mutex : Reference {
 
 
 
+  public Mutex() : this(true) {
+    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
+      internal_init(GodotEnginePINVOKE.new_Mutex());
+      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
+    }
+  }
+
   public void _lock() {
     GodotEnginePINVOKE.Mutex__lock(swigCPtr);
   }
@@ -58,13 +65,6 @@ public class Mutex : Reference {
 
   public void unlock() {
     GodotEnginePINVOKE.Mutex_unlock(swigCPtr);
-  }
-
-  public Mutex() : this(true) {
-    if (swigCPtr.Handle == global::System.IntPtr.Zero) {
-      internal_init(GodotEnginePINVOKE.new_Mutex());
-      InternalHelpers.TieManagedToUnmanaged(this, swigCPtr.Handle);
-    }
   }
 
 }
