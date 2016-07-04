@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* register_types.cpp                                                             */
+/* register_types.h                                                               */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -24,38 +24,5 @@
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
 
-#include "register_types.h"
-
-#include "csharp_script.h"
-#include "bindings/wrappers/cs_wrappers.cpp"
-
-CSharpLanguage *script_language_cs = NULL;
-ResourceFormatLoaderCSharpScript *resource_loader_cs = NULL;
-ResourceFormatSaverCSharpScript *resource_saver_cs = NULL;
-
-// TODO EditorExportPlugin?
-
-void register_csharp_types()
-{
-	ObjectTypeDB::register_type<CSharpScript>();
-
-	script_language_cs = memnew(CSharpLanguage);
-	ScriptServer::register_language(script_language_cs);
-
-	resource_loader_cs = memnew(ResourceFormatLoaderCSharpScript);
-	ResourceLoader::add_resource_format_loader(resource_loader_cs);
-	resource_saver_cs = memnew(ResourceFormatSaverCSharpScript);
-	ResourceSaver::add_resource_format_saver(resource_saver_cs);
-}
-
-void unregister_csharp_types()
-{
-	ScriptServer::unregister_language(script_language_cs);
-
-	if (script_language_cs)
-		memdelete(script_language_cs);
-	if (resource_loader_cs)
-		memdelete(resource_loader_cs);
-	if (resource_saver_cs)
-		memdelete(resource_saver_cs);
-}
+void register_mono_types();
+void unregister_mono_types();

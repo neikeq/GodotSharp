@@ -33,7 +33,7 @@ def remove_file_if_exists(file_path):
 SWIG = 'swig3.0'
 CPP_OUT = 'wrappers'
 CS_OUT = 'generated'
-WRAPPER_FILE = 'cs_wrappers.cpp'
+WRAPPER_FILE = 'mono_glue.cpp'
 FILE = 'GodotEngine.i'
 
 OPTIONS = ['-c++', '-csharp', '-dllimport', '__Internal', '-namespace', 'GodotEngine']

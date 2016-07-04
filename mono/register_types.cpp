@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* register_types.h                                                               */
+/* register_types.cpp                                                             */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -24,5 +24,38 @@
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
 
-void register_csharp_types();
-void unregister_csharp_types();
+#include "register_types.h"
+
+#include "csharp_script.h"
+#include "bindings/wrappers/mono_glue.cpp"
+
+CSharpLanguage *script_language_cs = NULL;
+ResourceFormatLoaderCSharpScript *resource_loader_cs = NULL;
+ResourceFormatSaverCSharpScript *resource_saver_cs = NULL;
+
+// TODO EditorExportPlugin?
+
+void register_mono_types()
+{
+	ObjectTypeDB::register_type<CSharpScript>();
+
+	script_language_cs = memnew(CSharpLanguage);
+	ScriptServer::register_language(script_language_cs);
+
+	resource_loader_cs = memnew(ResourceFormatLoaderCSharpScript);
+	ResourceLoader::add_resource_format_loader(resource_loader_cs);
+	resource_saver_cs = memnew(ResourceFormatSaverCSharpScript);
+	ResourceSaver::add_resource_format_saver(resource_saver_cs);
+}
+
+void unregister_mono_types()
+{
+	ScriptServer::unregister_language(script_language_cs);
+
+	if (script_language_cs)
+		memdelete(script_language_cs);
+	if (resource_loader_cs)
+		memdelete(resource_loader_cs);
+	if (resource_saver_cs)
+		memdelete(resource_saver_cs);
+}

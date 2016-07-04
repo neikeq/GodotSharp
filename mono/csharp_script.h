@@ -43,9 +43,6 @@ class CSharpScript;
 class CSharpInstance;
 class CSharpLanguage;
 
-// TODO Cache stuff
-// TODO Define "stuff" :P
-
 class CSharpScript : public Script
 {
 	OBJ_TYPE(CSharpScript,Script)
