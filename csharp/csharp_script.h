@@ -168,6 +168,8 @@ friend class CSharpGCHandle;
 
 	bool mono_jit_cleaned;
 
+	//THREAD_LOCAL MonoThread* _mono_thread;
+
 public:
 	MonoDomain *get_domain() const { return domain; }
 	MonoImage *get_game_image() const { return game_image; }
@@ -231,6 +233,10 @@ public:
 
 	/* LOADER FUNCTIONS */
 	virtual void get_recognized_extensions(List<String> *p_extensions) const;
+
+	/* THREAD ATTACHING */
+	void thread_enter();
+	void thread_exit();
 
 	CSharpLanguage();
 	~CSharpLanguage();

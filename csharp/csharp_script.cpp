@@ -334,6 +334,18 @@ void CSharpLanguage::get_recognized_extensions(List<String> *p_extensions) const
 	p_extensions->push_back("cs");
 }
 
+void CSharpLanguage::thread_enter()
+{
+	//_mono_thread = mono_thread_attach(domain);
+}
+
+void CSharpLanguage::thread_exit()
+{
+	/*if (_mono_thread) {
+		mono_thread_detach(_mono_thread);
+	}*/
+}
+
 bool CSharpLanguage::debug_break_parse(const String& p_file, int p_line, const String& p_error)
 {
 	// Break because of parse error
@@ -371,6 +383,7 @@ CSharpLanguage::CSharpLanguage()
 	domain = NULL;
 	game_image = NULL;
 	api_image = NULL;
+	//_mono_thread = NULL;
 
 	mono_jit_cleaned = false;
 }
