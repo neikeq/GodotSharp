@@ -28,7 +28,7 @@ void GDMono::initialize(const String& p_assemblies_path)
 
 	if (!corlib_assembly) {
 		corlib_assembly = memnew(GDMonoAssembly("corlib"));
-		Error error = corlib_assembly->wrap_from_image(mono_get_corlib());
+		Error error = corlib_assembly->wrap_image(mono_get_corlib());
 
 		if (error != OK) {
 			memdelete(corlib_assembly);

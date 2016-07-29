@@ -35,7 +35,7 @@ void CSharpGCHandle::release()
 {
 	CSharpLanguage* script_lang = CSharpLanguage::get_singleton();
 
-	if (!released && script_lang && !script_lang->mono_jit_cleaned) {
+	if (!released && script_lang && !GDMono::get_singleton()->is_initialized()) {
 		mono_gchandle_free(handle);
 		released = true;
 	}

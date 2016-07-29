@@ -22,6 +22,8 @@ class GDMono
 public:
 	static GDMono* get_singleton() { return singleton; }
 
+	inline bool is_initialized() const { return initialized; }
+
 	inline MonoDomain* get_domain() { return domain; }
 
 	inline GDMonoAssembly* get_corlib_assembly() const { return corlib_assembly; }

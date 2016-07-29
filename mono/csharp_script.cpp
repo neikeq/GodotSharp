@@ -596,9 +596,6 @@ bool CSharpScript::_update_exports()
 #ifdef TOOLS_ENABLED
 	bool changed=false;
 
-	// TODO Implement export attributes?
-	// Will need a C# parser or some way to reload assemblies
-
 	if (placeholders.size()) {
 		// Update placeholders if any
 		Map<StringName,Variant> values;

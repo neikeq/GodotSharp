@@ -48,7 +48,7 @@ Error GDMonoAssembly::load(MonoDomain *p_domain)
 	return OK;
 }
 
-Error GDMonoAssembly::wrap_from_image(MonoImage *p_image)
+Error GDMonoAssembly::wrap_image(MonoImage *p_image)
 {
 	ERR_FAIL_COND_V(loaded, ERR_FILE_ALREADY_IN_USE);
 

@@ -156,15 +156,9 @@ friend class CSharpGCHandle;
 
 	GDMono* mono;
 
-	MonoImage *api_image;
-
-	bool mono_jit_cleaned;
-
 	//THREAD_LOCAL MonoThread* _mono_thread;
 
 public:
-	MonoImage *get_api_image() const { return api_image; }
-
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
 
     bool debug_break(const String& p_error, bool p_allow_continue = true);
