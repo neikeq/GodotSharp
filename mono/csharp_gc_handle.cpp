@@ -47,9 +47,9 @@ CSharpGCHandle::CSharpGCHandle(MonoObject *p_object, bool weak)
 
 	if (weak) {
 		// track_resurrection must be TRUE to be able to call _notification(NOTIFICATION_PREDELETE) while disposing
-		handle = mono_gchandle_new_weakref(p_object, TRUE);
+		handle = mono_gchandle_new_weakref(p_object, true);
 	} else {
-		handle = mono_gchandle_new(p_object, TRUE);
+		handle = mono_gchandle_new(p_object, true);
 	}
 }
 

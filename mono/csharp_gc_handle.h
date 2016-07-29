@@ -27,6 +27,8 @@
 #ifndef CSHARP_GC_HANDLE_H
 #define CSHARP_GC_HANDLE_H
 
+#include <mono/jit/jit.h>
+
 class CSharpGCHandle;
 
 #include "csharp_script.h"

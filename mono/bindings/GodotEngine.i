@@ -67,7 +67,7 @@
 #include "scene/resources/baked_light.h"
 #include "scene/resources/bit_mask.h"
 #include "scene/resources/box_shape.h"
-#include "modules/csharp/csharp_script.h"
+#include "modules/mono/csharp_script.h"
 #include "scene/2d/canvas_item.h"
 #include "scene/resources/capsule_shape.h"
 #include "scene/resources/capsule_shape_2d.h"

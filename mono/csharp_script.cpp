@@ -26,22 +26,19 @@
 
 #include "csharp_script.h"
 
-#include <mono/metadata/debug-helpers.h>
-#include <mono/metadata/tokentype.h>
-#include <mono/metadata/threads.h>
-
-#include "mono_utils.h"
 #include "core/globals.h"
 #include "os/file_access.h"
 #include "os/os.h"
 #include "os/thread.h"
 
 #ifdef TOOLS_ENABLED
-#include "scene/main/scene_main_loop.h"
 #ifdef DEBUG_METHODS_ENABLED
 #include "cs_bindings_generator.h"
 #endif
 #endif
+
+#include "extended_errors.h"
+#include "mono_wrapper/gd_mono_class.h"
 
 CSharpLanguage *CSharpLanguage::singleton = NULL;
 
@@ -66,18 +63,6 @@ Error CSharpLanguage::execute_file(const String &p_path)
 	return OK;
 }
 
-String CSharpLanguage::get_assemblies_path()
-{
-	// TODO should return a res:// path but currently we can't load assemblies from memory :(
-	return "bin/"
-#ifdef DEBUG_ENABLED
-	"Debug"
-#else
-	"Release"
-#endif
-	;
-}
-
 void CSharpLanguage::init()
 {
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
@@ -92,62 +77,22 @@ void CSharpLanguage::init()
 	}
 #endif
 
-	OS::get_singleton()->print("Mono: Initializing mono...\n");
+	mono = memnew(GDMono);
 
-	mono_config_parse(NULL);
-	domain = mono_jit_init_version("GodotEngineMono", "v4.0.30319");
-
-	ERR_EXPLAIN("Mono: Could not initialize jit");
-	ERR_FAIL_COND(!domain);
-
-	mono_thread_set_main(mono_thread_current());
-	register_mono_internal_calls();
-
-	String assemblies_path = get_assemblies_path();
-	String api_assembly_path = assemblies_path + "/Assembly-CSharp.dll";
-	String game_assembly_path = assemblies_path + "/" + Globals::get_singleton()->get("application/name") + ".dll";
-
-	if (FileAccess::exists("res://" + game_assembly_path)) {
-		if (!FileAccess::exists("res://" + api_assembly_path)) {
-			WARN_PRINT("Mono: Game assembly found but Assembly-CSharp.dll is missing");
-			return;
-		}
-
-		MonoAssembly *api_assembly = mono_domain_assembly_open(domain, api_assembly_path.utf8());
-		ERR_EXPLAIN("Mono: Failed to load Assembly-CSharp.dll");
-		ERR_FAIL_COND(!api_assembly);
-		api_image = mono_assembly_get_image(api_assembly);
-
-#ifdef TOOLS_ENABLED
-		String api_editor_assembly_path = assemblies_path + "/Assembly-CSharp-Editor.dll\n";
-
-		if (FileAccess::exists("res://" + api_editor_assembly_path)) {
-			if (SceneTree::get_singleton()->is_editor_hint()) {
-				MonoAssembly *api_editor_assembly = mono_domain_assembly_open(domain, api_editor_assembly_path.utf8());
-				ERR_EXPLAIN("Mono: Failed to load Assembly-CSharp-Editor.dll\n");
-				ERR_FAIL_COND(!api_editor_assembly);
-			}
-		}
+	String assemblies_path = "bin/"
+#ifdef DEBUG_ENABLED
+			"Debug"
+#else
+			"Release"
 #endif
+			;
 
-		MonoAssembly *game_assembly = mono_domain_assembly_open(domain, game_assembly_path.utf8());
-		ERR_EXPLAIN("Mono: Failed to load game assembly");
-		ERR_FAIL_COND(!game_assembly);
-		mono_assembly_set_main(game_assembly);
-		game_image = mono_assembly_get_image(game_assembly);
-
-		OS::get_singleton()->print("Mono: Successfully loaded assemblies\n");
-	} else {
-		OS::get_singleton()->print("Mono: Game assembly not found\n");
-	}
+	mono->initialize(assemblies_path);
 }
 
 void CSharpLanguage::finish()
 {
-	if (!mono_jit_cleaned) {
-		mono_jit_cleanup(domain);
-		mono_jit_cleaned = true;
-	}
+	memdelete(mono);
 }
 
 void CSharpLanguage::get_reserved_words(List<String> *p_words) const
@@ -258,9 +203,10 @@ void CSharpLanguage::get_reserved_words(List<String> *p_words) const
 		"var",
 		"where",
 		"yield",
-	0};
+		0
+	};
 
-	const char **w=_reserved_words;
+	const char **w = _reserved_words;
 
 	while (*w) {
 		p_words->push_back(*w);
@@ -285,14 +231,12 @@ String CSharpLanguage::get_template(const String &p_class_name, const String &p_
 	String _template = String() +
 	"using System;\n\n" +
 	"using GodotEngine;\n\n" +
-	"// Currently the class needs to be in the global namespace.\n" +
-	"// The class name must be the same as the file name.\n" +
 	"public class %CLASS_NAME% : %BASE_CLASS_NAME%\n" +
 	"{\n" +
 	"    // Member variables here, example:\n" +
 	"    // private int a = 2;\n" +
 	"    // private string b = \"textvar\";\n\n" +
-	"    void _ready()\n" +
+	"    new void _ready()\n" +
 	"    {\n" +
 	"        // Called every time the node is added to the scene.\n" +
 	"        // Initialization here\n" +
@@ -315,9 +259,8 @@ bool CSharpLanguage::has_named_classes() const
 
 String CSharpLanguage::make_function(const String &p_class, const String &p_name, const StringArray &p_args) const
 {
-	// TODO ScriptEditor API which adds this function is wrong.
-	// It will just append the function at the bottom of the file.
-	// For now the function is commented and the user must place it correctly...
+	// TODO Use some proper library for this
+	// For now this will just append the function at the bottom of the file and commented
 	String s = "/*private void " + p_name + "(";
 	for(int i = 0; i < p_args.size(); i++) {
 		if (i > 0)
@@ -380,12 +323,9 @@ CSharpLanguage::CSharpLanguage()
 	ERR_FAIL_COND(singleton);
 	singleton = this;
 
-	domain = NULL;
-	game_image = NULL;
-	api_image = NULL;
 	//_mono_thread = NULL;
 
-	mono_jit_cleaned = false;
+	mono = NULL;
 }
 
 CSharpLanguage::~CSharpLanguage()
@@ -394,13 +334,17 @@ CSharpLanguage::~CSharpLanguage()
 	singleton = NULL;
 }
 
-void CSharpInstance::_ml_call_reversed(MonoClass *clazz, const StringName &p_method, const Variant **p_args, int p_argcount)
+void CSharpInstance::_ml_call_reversed(GDMonoClass *klass, const StringName &p_method, const Variant **p_args, int p_argcount)
 {
-	MonoClass *base = mono_class_get_parent(clazz);
+	GDMonoClass *base = klass->get_parent_class();
 	if (base && base != script->native)
-		_ml_call_reversed(base,p_method,p_args,p_argcount);
+		_ml_call_reversed(base, p_method, p_args, p_argcount);
 
-	mono_void_call(clazz, get_mono_object(), p_method, p_args, p_argcount);
+	GDMonoMethod *method = klass->get_method(p_method, p_argcount);
+
+	if (method) {
+		method->invoke(get_mono_object(), p_args);
+	}
 }
 
 MonoObject *CSharpInstance::get_mono_object() const
@@ -423,14 +367,15 @@ void CSharpInstance::mono_object_disposed()
 
 bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 {
-	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
+	GDMonoField *field = script->script_class->get_field(p_name);
+
 	if (field) {
 		MonoObject *mono_object = get_mono_object();
 
 		ERR_EXPLAIN("Reference has been garbage collected?");
 		ERR_FAIL_COND_V(!mono_object, false);
 
-		mono_field_set_from_variant(mono_object, field, &p_value);
+		field->set_value(mono_object, p_value);
 	}
 
 	// TODO _set call must be multilevel
@@ -447,16 +392,16 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value)
 
 bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const
 {
-	MonoClassField *field = mono_class_get_field_from_name(script->script_class, String(p_name).utf8());
-	if (field) {
+	GDMonoField *field = script->script_class->get_field(p_name);
 
+	if (field) {
 		MonoObject *mono_object = get_mono_object();
 
 		ERR_EXPLAIN("Reference has been garbage collected?");
 		ERR_FAIL_COND_V(!mono_object, false);
 
-		MonoObject *value = mono_field_get_value_object(mono_domain_get(), field, mono_object);
-		r_ret = managed_to_variant(value, mono_field_get_type(field));
+		MonoObject *value = field->get_value(mono_object);
+		r_ret = GDMonoUtils::mono_object_to_variant(value, field->get_type());
 		return true;
 	}
 
@@ -479,17 +424,14 @@ bool CSharpInstance::has_method(const StringName &p_method) const
 	if (!script.ptr())
 		return false;
 
-	MonoClass *top = script->script_class;
+	GDMonoClass *top = script->script_class;
 
 	while (top) {
-		MonoMethod *m = NULL;
-		void *iter = NULL;
-		while ((m = mono_class_get_methods(top, &iter))) {
-			if (mono_method_get_name(m) == p_method)
-				return true;
+		if (top->has_method(p_method)) {
+			return true;
 		}
 
-		top = mono_class_get_parent(top);
+		top = top->get_parent_class();
 	}
 
 	return false;
@@ -504,64 +446,50 @@ Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p
 {
 	MonoObject *mono_object = get_mono_object();
 
-	ERR_EXPLAIN("Reference has been garbage collected?");
-	ERR_FAIL_COND_V(!mono_object, Variant());
+	ERR_FAIL_COND_V_EXPLAIN(!mono_object, Variant(), "Reference has been garbage collected?");
 
 	if (!script.ptr())
 		return Variant();
 
-	MonoClass *top = script->script_class;
+	GDMonoClass *top = script->script_class;
 
 	while (top) {
-		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
+		GDMonoMethod *method = top->get_method(p_method, p_argcount);
 
 		if (method) {
-			MonoMethodSignature *sig = mono_method_signature(method);
+			MonoObject* return_value = method->invoke(mono_object, p_args);
 
-			int i = 0;
-			gpointer iter = NULL;
-			MonoType *paramType;
-
-			MonoArray *args = mono_array_new(mono_domain_get(), mono_get_object_class(), p_argcount);
-
-			while ((paramType = mono_signature_get_params(sig, &iter))) {
-				MonoObject* boxed_arg = variant_to_managed_of_type(p_args[i], paramType);
-				mono_array_set(args, MonoObject*, i, boxed_arg);
-				i++;
-			}
-
-			MonoObject *exc = NULL;
-			MonoObject *result = mono_runtime_invoke_array(method, mono_object, args, &exc);
-
-			if (exc) {
-				mono_print_unhandled_exception(exc);
-				return Variant();
-			} else if (result) {
-				return managed_to_variant(result, mono_signature_get_return_type(sig));
-			} else { // return type is void?
+			if (return_value) {
+				return GDMonoUtils::mono_object_to_variant(return_value, method->get_return_type());
+			} else {
 				return Variant();
 			}
 		}
 
-		top = mono_class_get_parent(top);
+		top = top->get_parent_class();
 		if (top == script->native)
 			break;
 	}
 
 	r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
+
 	return Variant();
 }
 
 void CSharpInstance::call_multilevel(const StringName &p_method, const Variant **p_args, int p_argcount)
 {
 	if (script.ptr()) {
-		MonoClass *top = script->script_class;
+		MonoObject* mono_object = get_mono_object();
 
-		while (top) {
-			mono_void_call(top, get_mono_object(), p_method, p_args, p_argcount);
-			top = mono_class_get_parent(top);
-			if (top == script->native)
-				break;
+		GDMonoClass *top = script->script_class;
+
+		while (top && top != script->native) {
+			GDMonoMethod* method = top->get_method(p_method, p_argcount);
+
+			if (method)
+				method->invoke(mono_object, p_args);
+
+			top = top->get_parent_class();
 		}
 	}
 }
@@ -689,42 +617,22 @@ bool CSharpScript::_update_exports()
 
 Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error)
 {
-	MonoClass *top = script_class;
+	GDMonoClass *top = script_class;
 
 	while (top) {
-		MonoMethod *method = mono_class_get_method_from_name(top, String(p_method).utf8(), p_argcount);
+		GDMonoMethod *method = top->get_method(p_method, p_argcount);
 
-		if (method) {
-			MonoMethodSignature *sig = mono_method_signature(method);
+		if (method && method->is_instance_method()) {
+			MonoObject *result = method->invoke(NULL, p_args);
 
-			if (mono_signature_is_instance(sig) == FALSE) {
-				int i = 0;
-				gpointer iter = NULL;
-				MonoType *paramType;
-
-				MonoArray *args = mono_array_new(mono_domain_get(), mono_get_object_class(), p_argcount);
-
-				while ((paramType = mono_signature_get_params(sig, &iter))) {
-					MonoObject* boxed_arg = variant_to_managed_of_type(p_args[i], paramType);
-					mono_array_set(args, MonoObject*, i, boxed_arg);
-					i++;
-				}
-
-				MonoObject *exc = NULL;
-				MonoObject *result = mono_runtime_invoke_array(method, NULL, args, &exc);
-
-				if (exc) {
-					mono_print_unhandled_exception(exc);
-					return Variant();
-				} else if (result) {
-					return managed_to_variant(result, mono_signature_get_return_type(sig));
-				} else { // return type is void?
-					return Variant();
-				}
+			if (result) {
+				return GDMonoUtils::mono_object_to_variant(result, method->get_return_type());
+			} else {
+				return Variant();
 			}
 		}
 
-		top = mono_class_get_parent(top);
+		top = top->get_parent_class();
 		if (top == native)
 			break;
 	}
@@ -735,9 +643,25 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 
 void CSharpScript::_resource_path_changed()
 {
-	if (!builtin) {
+	String path = get_path();
+
+	if (!path.empty()) {
 		name = get_path().basename().get_file();
 	}
+}
+
+Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class)
+{
+	if (!p_class)
+		return NULL;
+
+	Ref<CSharpScript> script = memnew(CSharpScript());
+
+	script->name = p_class->get_name();
+	script->script_class = p_class;
+	script->native = GDMonoUtils::get_class_native_base(script->script_class);
+
+	return script;
 }
 
 bool CSharpScript::can_instance() const
@@ -748,14 +672,14 @@ bool CSharpScript::can_instance() const
 StringName CSharpScript::get_instance_base_type() const
 {
 	if (native)
-		return StringName(mono_class_get_name(native));
+		return native->get_name();
 	else
 		return StringName();
 }
 
 ScriptInstance *CSharpScript::instance_create(Object *p_this)
 {
-	if (!script_class)
+	if (!valid)
 		return NULL;
 
 	if (p_this->has_meta("__mono_gchandle__")) {
@@ -781,7 +705,7 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 	}
 
 	if (native) {
-		String native_name = mono_class_get_name(native);
+		String native_name = native->get_name();
 		if (!ObjectTypeDB::is_type(p_this->get_type_name(), native_name)) {
 			if (ScriptDebugger::get_singleton()) {
 				CSharpLanguage::get_singleton()->debug_break_parse(get_path(), 0, "Script inherits from native type '" + native_name + "', so it can't be instanced in object of type: '" + p_this->get_type() + "'");
@@ -801,7 +725,7 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 
 	/* STEP 2, INITIALIZE AND CONSTRUCT */
 
-	MonoObject *mono_object = mono_object_new(CSharpLanguage::get_singleton()->domain, script_class);
+	MonoObject *mono_object = mono_object_new(GDMono::get_singleton()->get_domain(), script_class->get_raw_class());
 
 	if (!mono_object) {
 		instance->script = Ref<CSharpScript>();
@@ -813,13 +737,11 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this)
 
 	if (native) {
 		// Initialize pointers in the native base classes before constructing the object
-		MonoMethodDesc *desc = mono_method_desc_new (":internal_init(intptr)", FALSE);
-		MonoMethod *native_base_init = mono_method_desc_search_in_class(desc, native);
-		mono_method_desc_free (desc);
+		GDMonoMethod* native_base_init = native->get_method_with_desc(":internal_init(intptr)", false);
 
-		void *args [1];
-		args [0] = &instance->owner;
-		mono_runtime_invoke(native_base_init, mono_object, args, NULL);
+		void *params[1];
+		params[0] = &instance->owner;
+		native_base_init->invoke_raw(mono_object, params);
 	}
 
 	// Call default constructor if any
@@ -859,20 +781,16 @@ void CSharpScript::set_source_code(const String &p_code)
 #endif*/
 }
 
-Error CSharpScript::reload()
+Error CSharpScript::reload(bool p_keep_state)
 {
-	MonoImage *game_image = CSharpLanguage::get_singleton()->game_image;
+	// TODO Assembly reloading
+	GDMonoAssembly *project_assembly = GDMono::get_singleton()->get_project_assembly();
 
-	if (game_image) {
-		/* Currently the class needs to be in the global namespace.
-		 * A possible workaround to allow script classes inside namespaces
-		 * could be to iterate through all the assembly namespaces
-		 * until we find the class with the name we are looking for.
-		 */
-		script_class = mono_class_from_name(game_image, "", name.utf8());
+	if (project_assembly) {
+		script_class = project_assembly->get_object_derived_class(name);
 
 		if (script_class) {
-			native = mono_class_get_native_class(script_class);
+			native = GDMonoUtils::get_class_native_base(script_class);
 			return OK;
 		}
 	}
@@ -925,31 +843,17 @@ String CSharpScript::get_script_name() const
 	return name;
 }
 
-void CSharpScript::_init()
+CSharpScript::CSharpScript()
 {
 	tool = false;
 
-	// TODO must be false by default and then validated
+	// TODO must be false by default and then validated?
 	valid = true;
 
 	native = NULL;
 	script_class = NULL;
-}
 
-CSharpScript::CSharpScript()
-{
-	_init();
-	builtin = false;
 	_resource_path_changed();
-}
-
-CSharpScript::CSharpScript(const String &p_class_name)
-{
-	// TODO I am not sure if this is the right way to make it work as a built-in script
-	_init();
-	builtin = true;
-	name = p_class_name;
-	reload();
 }
 
 /*************** RESOURCE ***************/
@@ -983,13 +887,13 @@ void ResourceFormatLoaderCSharpScript::get_recognized_extensions(List<String> *p
 
 bool ResourceFormatLoaderCSharpScript::handles_type(const String& p_type) const
 {
-	return (p_type=="Script" || p_type=="CSharpScript");
+	return p_type == "Script" || p_type == "CSharpScript";
 }
 
 String ResourceFormatLoaderCSharpScript::get_resource_type(const String &p_path) const
 {
 	String el = p_path.extension().to_lower();
-	if (el=="cs")
+	if (el == "cs")
 		return "CSharpScript";
 	return "";
 }
@@ -1020,7 +924,6 @@ void ResourceFormatSaverCSharpScript::get_recognized_extensions(const RES& p_res
 	if (p_resource->cast_to<CSharpScript>()) {
 		p_extensions->push_back("cs");
 	}
-
 }
 
 bool ResourceFormatSaverCSharpScript::recognize(const RES& p_resource) const

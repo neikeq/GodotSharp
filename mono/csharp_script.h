@@ -29,15 +29,13 @@
 
 #include "core/script_language.h"
 
-#include <glib.h>
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/mono-config.h>
-
 #include "io/resource_loader.h"
 #include "io/resource_saver.h"
 
 #include "csharp_gc_handle.h"
+
+#include "mono_wrapper/gd_mono.h"
+#include "mono_wrapper/gd_mono_header.h"
 
 class CSharpScript;
 class CSharpInstance;
@@ -55,8 +53,9 @@ friend class CSharpLanguage;
 
 	bool builtin;
 
-	MonoClass *native;
-	MonoClass *script_class;
+	GDMonoClass *native;
+	GDMonoClass *script_class;
+
 #ifdef TOOLS_ENABLED
 	void _update_exports_values(Map<StringName,Variant>& values, List<PropertyInfo> &propnames);
 #endif
@@ -73,13 +72,13 @@ friend class CSharpLanguage;
 
 	bool _update_exports();
 
-	void _init();
-
 protected:
 	Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
 	virtual void _resource_path_changed();
 
 public:
+	static Ref<CSharpScript> create_for_managed_type(GDMonoClass* p_class);
+
 	virtual bool can_instance() const;
 	virtual StringName get_instance_base_type() const;
 	virtual ScriptInstance *instance_create(Object *p_this);
@@ -87,7 +86,7 @@ public:
 	virtual bool has_source_code() const;
 	virtual String get_source_code() const;
 	virtual void set_source_code(const String &p_code);
-	virtual Error reload();
+	virtual Error reload(bool p_keep_state=false);
 	virtual bool is_tool() const { return tool; }
 	virtual String get_node_type() const;
 	virtual ScriptLanguage *get_language() const;
@@ -100,10 +99,7 @@ public:
 
 	String get_script_name() const;
 
-	/* TODO */ Error reload(bool p_keep_state) { return FAILED; }
-
 	CSharpScript();
-	CSharpScript(const String& p_class_name);
 };
 
 class CSharpInstance : public ScriptInstance
@@ -117,7 +113,7 @@ friend class CSharpLanguage;
 
 	bool holding_ref;
 
-	void _ml_call_reversed(MonoClass *clazz,const StringName& p_method,const Variant** p_args,int p_argcount);
+	void _ml_call_reversed(GDMonoClass *klass, const StringName& p_method, const Variant** p_args, int p_argcount);
 
 public:
 	MonoObject *get_mono_object() const;
@@ -158,9 +154,8 @@ friend class CSharpGCHandle;
 
 	static CSharpLanguage *singleton;
 
-	MonoDomain *domain;
+	GDMono* mono;
 
-	MonoImage *game_image;
 	MonoImage *api_image;
 
 	bool mono_jit_cleaned;
@@ -168,13 +163,9 @@ friend class CSharpGCHandle;
 	//THREAD_LOCAL MonoThread* _mono_thread;
 
 public:
-	MonoDomain *get_domain() const { return domain; }
-	MonoImage *get_game_image() const { return game_image; }
 	MonoImage *get_api_image() const { return api_image; }
 
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
-
-	String get_assemblies_path();
 
     bool debug_break(const String& p_error, bool p_allow_continue = true);
     bool debug_break_parse(const String& p_file, int p_line, const String& p_error);
