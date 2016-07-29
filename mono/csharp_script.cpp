@@ -658,6 +658,11 @@ Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class)
 	script->script_class = p_class;
 	script->native = GDMonoUtils::get_class_native_base(script->script_class);
 
+	GDMonoClass* base = script->script_class->get_parent_class();
+
+	if (base != script->native)
+		script->base = base;
+
 	return script;
 }
 
@@ -788,6 +793,12 @@ Error CSharpScript::reload(bool p_keep_state)
 
 		if (script_class) {
 			native = GDMonoUtils::get_class_native_base(script_class);
+
+			GDMonoClass* base_class = script_class->get_parent_class();
+
+			if (base_class != native)
+				base = base_class;
+
 			return OK;
 		}
 	}
@@ -847,6 +858,7 @@ CSharpScript::CSharpScript()
 	// TODO must be false by default and then validated?
 	valid = true;
 
+	base = NULL;
 	native = NULL;
 	script_class = NULL;
 

@@ -53,6 +53,7 @@ friend class CSharpLanguage;
 
 	bool builtin;
 
+	GDMonoClass *base;
 	GDMonoClass *native;
 	GDMonoClass *script_class;
 

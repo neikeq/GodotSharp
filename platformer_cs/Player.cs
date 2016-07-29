@@ -3,6 +3,7 @@ using GodotEngine;
 public class Player : RigidBody2D
 {
     string current_anim = "";
+
     bool siding_left = false;
     bool jumping = false;
     bool stopping_jump = false;
@@ -13,19 +14,17 @@ public class Player : RigidBody2D
     float WALK_MAX_VELOCITY = 200.0f;
     float AIR_ACCEL = 200.0f;
     float AIR_DEACCEL = 200.0f;
-    int JUMP_VELOCITY = 460;
     float STOP_JUMP_FORCE = 900.0f;
-
     float MAX_FLOOR_AIRBORNE_TIME = 0.15f;
+    float MAX_SHOOT_POSE_TIME = 0.3f;
+    
+    int JUMP_VELOCITY = 460;
 
     float airborne_time = 1e20f;
     float shoot_time = 1e20f;
-
-    float MAX_SHOOT_POSE_TIME = 0.3f;
-
-    PackedScene bullet;// = preload("res://bullet.tscn");
-
     float floor_h_velocity = 0.0f;
+
+    PackedScene bullet;
     PackedScene enemy;
 
     new void _ready()
