@@ -176,8 +176,6 @@
     <Compile Include="generated\Material.cs" />
     <Compile Include="generated\MaterialShader.cs" />
     <Compile Include="generated\MaterialShaderGraph.cs" />
-    <Compile Include="generated\Mathf.cs" />
-    <Compile Include="generated\Matrix32.cs" />
     <Compile Include="generated\MenuButton.cs" />
     <Compile Include="generated\Mesh.cs" />
     <Compile Include="generated\MeshDataTool.cs" />
@@ -378,7 +376,6 @@
     <Compile Include="generated\VSlider.cs" />
     <Compile Include="generated\VSplitContainer.cs" />
     <Compile Include="generated\Variant.cs" />
-    <Compile Include="generated\Vector2.cs" />
     <Compile Include="generated\VehicleBody.cs" />
     <Compile Include="generated\VehicleWheel.cs" />
     <Compile Include="generated\VideoPlayer.cs" />
@@ -399,6 +396,10 @@
     <Compile Include="generated\WorldEnvironment.cs" />
     <Compile Include="generated\XMLParser.cs" />
     <Compile Include="generated\YSort.cs" />
+    <Compile Include="core\Godot.cs" />
+    <Compile Include="core\Mathf.cs" />
+    <Compile Include="core\Matrix32.cs" />
+    <Compile Include="core\Vector2.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

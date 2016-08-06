@@ -25,11 +25,6 @@ def remove_file(file_path):
 		print(e)
 
 
-def remove_file_if_exists(file_path):
-	if os.path.exists(file_path):
-		remove_file(file_path)
-
-
 SWIG = 'swig3.0'
 CPP_OUT = 'wrappers'
 CS_OUT = 'generated'
@@ -49,8 +44,13 @@ else:
 if not os.path.exists(CPP_OUT):
 	os.makedirs(CPP_OUT)
 
-call([SWIG] + OPTIONS + ['-outdir', CS_OUT, '-o', CPP_OUT + '/' + WRAPPER_FILE, FILE])
+call([SWIG] + OPTIONS + ['-outdir', CS_OUT, '-o', os.path.join(CPP_OUT, WRAPPER_FILE), FILE])
 
+# Remove generated proxy classes for built-in types
+remove_file(os.path.join(CS_OUT, 'Vector2'))
+remove_file(os.path.join(CS_OUT, 'Matrix32'))
+
+# Fix generated C++ wrappers
 with open(CPP_OUT + '/' + WRAPPER_FILE, 'r+') as f:
 	output_lines = []
 	for line_idx, line in enumerate(f.read().splitlines()):
