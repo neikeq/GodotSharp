@@ -66,25 +66,25 @@ public class AtlasTexture : Texture {
     return ret;
 }
 
-  public void set_region(SWIGTYPE_p_Rect2 region) {
-    GodotEnginePINVOKE.AtlasTexture_set_region(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(region));
+  public void set_region(Rect2 region) {
+    GodotEnginePINVOKE.AtlasTexture_set_region(swigCPtr, ref region);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_region() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.AtlasTexture_get_region(swigCPtr), true);
+  public Rect2 get_region() {
+    Rect2 ret = GodotEnginePINVOKE.AtlasTexture_get_region(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_margin(SWIGTYPE_p_Rect2 margin) {
-    GodotEnginePINVOKE.AtlasTexture_set_margin(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(margin));
+  public void set_margin(Rect2 margin) {
+    GodotEnginePINVOKE.AtlasTexture_set_margin(swigCPtr, ref margin);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_margin() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.AtlasTexture_get_margin(swigCPtr), true);
+  public Rect2 get_margin() {
+    Rect2 ret = GodotEnginePINVOKE.AtlasTexture_get_margin(swigCPtr);
     return ret;
-  }
+}
 
 }
 

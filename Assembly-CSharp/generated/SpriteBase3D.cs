@@ -142,10 +142,10 @@ public class SpriteBase3D : GeometryInstance {
     return ret;
   }
 
-  public SWIGTYPE_p_Rect2 get_item_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.SpriteBase3D_get_item_rect(swigCPtr), true);
+  public Rect2 get_item_rect() {
+    Rect2 ret = GodotEnginePINVOKE.SpriteBase3D_get_item_rect(swigCPtr);
     return ret;
-  }
+}
 
 }
 

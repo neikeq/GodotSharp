@@ -242,15 +242,15 @@ public class Control : CanvasItem {
     return ret;
 }
 
-  public SWIGTYPE_p_Rect2 get_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Control_get_rect(swigCPtr), true);
+  public Rect2 get_rect() {
+    Rect2 ret = GodotEnginePINVOKE.Control_get_rect(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Rect2 get_global_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Control_get_global_rect(swigCPtr), true);
+  public Rect2 get_global_rect() {
+    Rect2 ret = GodotEnginePINVOKE.Control_get_global_rect(swigCPtr);
     return ret;
-  }
+}
 
   public void set_area_as_parent_rect(int margin) {
     GodotEnginePINVOKE.Control_set_area_as_parent_rect__SWIG_0(swigCPtr, margin);

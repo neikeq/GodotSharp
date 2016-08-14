@@ -50,20 +50,20 @@ public class KinematicBody : PhysicsBody {
     }
   }
 
-  public SWIGTYPE_p_Vector3 move(SWIGTYPE_p_Vector3 rel_vec) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.KinematicBody_move(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(rel_vec)), true);
+  public Vector3 move(Vector3 rel_vec) {
+    Vector3 ret = GodotEnginePINVOKE.KinematicBody_move(swigCPtr, ref rel_vec);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 move_to(SWIGTYPE_p_Vector3 position) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.KinematicBody_move_to(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(position)), true);
+  public Vector3 move_to(Vector3 position) {
+    Vector3 ret = GodotEnginePINVOKE.KinematicBody_move_to(swigCPtr, ref position);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public bool can_teleport_to(SWIGTYPE_p_Vector3 position) {
-    bool ret = GodotEnginePINVOKE.KinematicBody_can_teleport_to(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(position));
+  public bool can_teleport_to(Vector3 position) {
+    bool ret = GodotEnginePINVOKE.KinematicBody_can_teleport_to(swigCPtr, ref position);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -73,20 +73,20 @@ public class KinematicBody : PhysicsBody {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_collision_pos() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.KinematicBody_get_collision_pos(swigCPtr), true);
+  public Vector3 get_collision_pos() {
+    Vector3 ret = GodotEnginePINVOKE.KinematicBody_get_collision_pos(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_collision_normal() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.KinematicBody_get_collision_normal(swigCPtr), true);
+  public Vector3 get_collision_normal() {
+    Vector3 ret = GodotEnginePINVOKE.KinematicBody_get_collision_normal(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_collider_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.KinematicBody_get_collider_velocity(swigCPtr), true);
+  public Vector3 get_collider_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.KinematicBody_get_collider_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public Object get_collider() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.KinematicBody_get_collider(swigCPtr);

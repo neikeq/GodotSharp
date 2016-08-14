@@ -47,7 +47,7 @@ public class Enemy : RigidBody2D
                     set_mode(MODE_RIGID);
                     state = STATE_DYING;
                     lv = s.get_contact_local_normal(i) * 400;
-                    s.set_angular_velocity(Mathf.sign(dp.x) * 33.0f);
+                    s.set_angular_velocity(Mathf.Sign(dp.x) * 33.0f);
                     set_friction(1);
                     bullet.disable();
                     SamplePlayer2D sound = get_node("sound") as SamplePlayer2D;

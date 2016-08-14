@@ -90,15 +90,15 @@ public class TreeItem : Object {
     return ret;
 }
 
-  public void set_icon_region(int column, SWIGTYPE_p_Rect2 region) {
-    GodotEnginePINVOKE.TreeItem_set_icon_region(swigCPtr, column, SWIGTYPE_p_Rect2.getCPtr(region));
+  public void set_icon_region(int column, Rect2 region) {
+    GodotEnginePINVOKE.TreeItem_set_icon_region(swigCPtr, column, ref region);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_icon_region(int column) {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.TreeItem_get_icon_region(swigCPtr, column), true);
+  public Rect2 get_icon_region(int column) {
+    Rect2 ret = GodotEnginePINVOKE.TreeItem_get_icon_region(swigCPtr, column);
     return ret;
-  }
+}
 
   public void set_icon_max_width(int column, int width) {
     GodotEnginePINVOKE.TreeItem_set_icon_max_width(swigCPtr, column, width);

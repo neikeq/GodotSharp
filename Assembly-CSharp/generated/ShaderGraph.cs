@@ -206,15 +206,15 @@ public class ShaderGraph : Shader {
     return ret;
   }
 
-  public void vec_const_node_set_value(int shader_type, int id, SWIGTYPE_p_Vector3 value) {
-    GodotEnginePINVOKE.ShaderGraph_vec_const_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_Vector3.getCPtr(value));
+  public void vec_const_node_set_value(int shader_type, int id, Vector3 value) {
+    GodotEnginePINVOKE.ShaderGraph_vec_const_node_set_value(swigCPtr, shader_type, id, ref value);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 vec_const_node_get_value(int shader_type, int id) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.ShaderGraph_vec_const_node_get_value(swigCPtr, shader_type, id), true);
+  public Vector3 vec_const_node_get_value(int shader_type, int id) {
+    Vector3 ret = GodotEnginePINVOKE.ShaderGraph_vec_const_node_get_value(swigCPtr, shader_type, id);
     return ret;
-  }
+}
 
   public void rgb_const_node_set_value(int shader_type, int id, SWIGTYPE_p_Color value) {
     GodotEnginePINVOKE.ShaderGraph_rgb_const_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_Color.getCPtr(value));
@@ -226,15 +226,15 @@ public class ShaderGraph : Shader {
     return ret;
   }
 
-  public void xform_const_node_set_value(int shader_type, int id, SWIGTYPE_p_Transform value) {
-    GodotEnginePINVOKE.ShaderGraph_xform_const_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_Transform.getCPtr(value));
+  public void xform_const_node_set_value(int shader_type, int id, Transform value) {
+    GodotEnginePINVOKE.ShaderGraph_xform_const_node_set_value(swigCPtr, shader_type, id, ref value);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform xform_const_node_get_value(int shader_type, int id) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.ShaderGraph_xform_const_node_get_value(swigCPtr, shader_type, id), true);
+  public Transform xform_const_node_get_value(int shader_type, int id) {
+    Transform ret = GodotEnginePINVOKE.ShaderGraph_xform_const_node_get_value(swigCPtr, shader_type, id);
     return ret;
-  }
+}
 
   public void texture_node_set_filter_size(int shader_type, int id, int filter_size) {
     GodotEnginePINVOKE.ShaderGraph_texture_node_set_filter_size(swigCPtr, shader_type, id, filter_size);
@@ -336,15 +336,15 @@ public class ShaderGraph : Shader {
     return ret;
   }
 
-  public void vec_input_node_set_value(int shader_type, int id, SWIGTYPE_p_Vector3 value) {
-    GodotEnginePINVOKE.ShaderGraph_vec_input_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_Vector3.getCPtr(value));
+  public void vec_input_node_set_value(int shader_type, int id, Vector3 value) {
+    GodotEnginePINVOKE.ShaderGraph_vec_input_node_set_value(swigCPtr, shader_type, id, ref value);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 vec_input_node_get_value(int shader_type, int id) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.ShaderGraph_vec_input_node_get_value(swigCPtr, shader_type, id), true);
+  public Vector3 vec_input_node_get_value(int shader_type, int id) {
+    Vector3 ret = GodotEnginePINVOKE.ShaderGraph_vec_input_node_get_value(swigCPtr, shader_type, id);
     return ret;
-  }
+}
 
   public void rgb_input_node_set_value(int shader_type, int id, SWIGTYPE_p_Color value) {
     GodotEnginePINVOKE.ShaderGraph_rgb_input_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_Color.getCPtr(value));
@@ -356,15 +356,15 @@ public class ShaderGraph : Shader {
     return ret;
   }
 
-  public void xform_input_node_set_value(int shader_type, int id, SWIGTYPE_p_Transform value) {
-    GodotEnginePINVOKE.ShaderGraph_xform_input_node_set_value(swigCPtr, shader_type, id, SWIGTYPE_p_Transform.getCPtr(value));
+  public void xform_input_node_set_value(int shader_type, int id, Transform value) {
+    GodotEnginePINVOKE.ShaderGraph_xform_input_node_set_value(swigCPtr, shader_type, id, ref value);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform xform_input_node_get_value(int shader_type, int id) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.ShaderGraph_xform_input_node_get_value(swigCPtr, shader_type, id), true);
+  public Transform xform_input_node_get_value(int shader_type, int id) {
+    Transform ret = GodotEnginePINVOKE.ShaderGraph_xform_input_node_get_value(swigCPtr, shader_type, id);
     return ret;
-  }
+}
 
   public void texture_input_node_set_value(int shader_type, int id, Texture value) {
     GodotEnginePINVOKE.ShaderGraph_texture_input_node_set_value(swigCPtr, shader_type, id, Texture.getCPtr(value));

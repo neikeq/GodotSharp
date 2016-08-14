@@ -59,15 +59,15 @@ public class RayCast : Spatial {
     return ret;
   }
 
-  public void set_cast_to(SWIGTYPE_p_Vector3 local_point) {
-    GodotEnginePINVOKE.RayCast_set_cast_to(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(local_point));
+  public void set_cast_to(Vector3 local_point) {
+    GodotEnginePINVOKE.RayCast_set_cast_to(swigCPtr, ref local_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_cast_to() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.RayCast_get_cast_to(swigCPtr), true);
+  public Vector3 get_cast_to() {
+    Vector3 ret = GodotEnginePINVOKE.RayCast_get_cast_to(swigCPtr);
     return ret;
-  }
+}
 
   public bool is_colliding() {
     bool ret = GodotEnginePINVOKE.RayCast_is_colliding(swigCPtr);
@@ -87,15 +87,15 @@ public class RayCast : Spatial {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_collision_point() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.RayCast_get_collision_point(swigCPtr), true);
+  public Vector3 get_collision_point() {
+    Vector3 ret = GodotEnginePINVOKE.RayCast_get_collision_point(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_collision_normal() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.RayCast_get_collision_normal(swigCPtr), true);
+  public Vector3 get_collision_normal() {
+    Vector3 ret = GodotEnginePINVOKE.RayCast_get_collision_normal(swigCPtr);
     return ret;
-  }
+}
 
   public void add_exception_rid(SWIGTYPE_p_RID rid) {
     GodotEnginePINVOKE.RayCast_add_exception_rid(swigCPtr, SWIGTYPE_p_RID.getCPtr(rid));

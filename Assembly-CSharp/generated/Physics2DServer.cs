@@ -198,7 +198,7 @@ public class Physics2DServer : Object {
   }
 
   public void area_add_shape(SWIGTYPE_p_RID area, SWIGTYPE_p_RID shape, Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DServer_area_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), SWIGTYPE_p_RID.getCPtr(shape), ref transform.elements);
+    GodotEnginePINVOKE.Physics2DServer_area_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), SWIGTYPE_p_RID.getCPtr(shape), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -213,7 +213,7 @@ public class Physics2DServer : Object {
   }
 
   public void area_set_shape_transform(SWIGTYPE_p_RID area, int shape_idx, Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DServer_area_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx, ref transform.elements);
+    GodotEnginePINVOKE.Physics2DServer_area_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -230,7 +230,7 @@ public class Physics2DServer : Object {
   }
 
   public Matrix32 area_get_shape_transform(SWIGTYPE_p_RID area, int shape_idx) {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Physics2DServer_area_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx));
+    Matrix32 ret = GodotEnginePINVOKE.Physics2DServer_area_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
 }
@@ -261,7 +261,7 @@ public class Physics2DServer : Object {
   }
 
   public void area_set_transform(SWIGTYPE_p_RID area, Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DServer_area_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), ref transform.elements);
+    GodotEnginePINVOKE.Physics2DServer_area_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -271,7 +271,7 @@ public class Physics2DServer : Object {
   }
 
   public Matrix32 area_get_transform(SWIGTYPE_p_RID area) {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Physics2DServer_area_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area)));
+    Matrix32 ret = GodotEnginePINVOKE.Physics2DServer_area_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
 }
@@ -330,7 +330,7 @@ public class Physics2DServer : Object {
   }
 
   public void body_add_shape(SWIGTYPE_p_RID body, SWIGTYPE_p_RID shape, Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DServer_body_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), SWIGTYPE_p_RID.getCPtr(shape), ref transform.elements);
+    GodotEnginePINVOKE.Physics2DServer_body_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), SWIGTYPE_p_RID.getCPtr(shape), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -345,7 +345,7 @@ public class Physics2DServer : Object {
   }
 
   public void body_set_shape_transform(SWIGTYPE_p_RID body, int shape_idx, Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DServer_body_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx, ref transform.elements);
+    GodotEnginePINVOKE.Physics2DServer_body_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -367,7 +367,7 @@ public class Physics2DServer : Object {
   }
 
   public Matrix32 body_get_shape_transform(SWIGTYPE_p_RID body, int shape_idx) {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Physics2DServer_body_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx));
+    Matrix32 ret = GodotEnginePINVOKE.Physics2DServer_body_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
 }

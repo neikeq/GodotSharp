@@ -250,8 +250,21 @@ typedef DVector<uint8_t> RawArray;
 
 %include mString.i
 %include mNodePath.i
+
+%nodefaultctor;
+%nodefaultdtor;
+
 %include mVector2.i
+%include mRect2.i
 %include mMatrix32.i
+%include mVector3.i
+%include mMatrix3.i
+%include mQuat.i
+%include mTransform.i
+
+%clearnodefaultctor;
+%clearnodefaultdtor;
+
 %include mVariant.i
 
 %include "object_type/Include.i"

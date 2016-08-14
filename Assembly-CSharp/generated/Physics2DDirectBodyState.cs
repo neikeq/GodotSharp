@@ -89,12 +89,12 @@ public class Physics2DDirectBodyState : Object {
   }
 
   public void set_transform(Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DDirectBodyState_set_transform(swigCPtr, ref transform.elements);
+    GodotEnginePINVOKE.Physics2DDirectBodyState_set_transform(swigCPtr, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Matrix32 get_transform() {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Physics2DDirectBodyState_get_transform(swigCPtr));
+    Matrix32 ret = GodotEnginePINVOKE.Physics2DDirectBodyState_get_transform(swigCPtr);
     return ret;
 }
 

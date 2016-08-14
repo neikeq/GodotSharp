@@ -54,15 +54,15 @@ public class BoxShape : Shape {
     }
   }
 
-  public void set_extents(SWIGTYPE_p_Vector3 extents) {
-    GodotEnginePINVOKE.BoxShape_set_extents(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(extents));
+  public void set_extents(Vector3 extents) {
+    GodotEnginePINVOKE.BoxShape_set_extents(swigCPtr, ref extents);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_extents() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.BoxShape_get_extents(swigCPtr), true);
+  public Vector3 get_extents() {
+    Vector3 ret = GodotEnginePINVOKE.BoxShape_get_extents(swigCPtr);
     return ret;
-  }
+}
 
 }
 

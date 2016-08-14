@@ -50,20 +50,20 @@ public class Navigation : Spatial {
     }
   }
 
-  public int navmesh_create(NavigationMesh mesh, SWIGTYPE_p_Transform xform, Object owner) {
-    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_0(swigCPtr, NavigationMesh.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform), Object.getCPtr(owner));
+  public int navmesh_create(NavigationMesh mesh, Transform xform, Object owner) {
+    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_0(swigCPtr, NavigationMesh.getCPtr(mesh), ref xform, Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int navmesh_create(NavigationMesh mesh, SWIGTYPE_p_Transform xform) {
-    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_1(swigCPtr, NavigationMesh.getCPtr(mesh), SWIGTYPE_p_Transform.getCPtr(xform));
+  public int navmesh_create(NavigationMesh mesh, Transform xform) {
+    int ret = GodotEnginePINVOKE.Navigation_navmesh_create__SWIG_1(swigCPtr, NavigationMesh.getCPtr(mesh), ref xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public void navmesh_set_transform(int id, SWIGTYPE_p_Transform xform) {
-    GodotEnginePINVOKE.Navigation_navmesh_set_transform(swigCPtr, id, SWIGTYPE_p_Transform.getCPtr(xform));
+  public void navmesh_set_transform(int id, Transform xform) {
+    GodotEnginePINVOKE.Navigation_navmesh_set_transform(swigCPtr, id, ref xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -71,44 +71,44 @@ public class Navigation : Spatial {
     GodotEnginePINVOKE.Navigation_navmesh_remove(swigCPtr, id);
   }
 
-  public SWIGTYPE_p_Vector3Array get_simple_path(SWIGTYPE_p_Vector3 start, SWIGTYPE_p_Vector3 end, bool optimize) {
-    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Navigation_get_simple_path__SWIG_0(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(start), SWIGTYPE_p_Vector3.getCPtr(end), optimize), true);
+  public SWIGTYPE_p_Vector3Array get_simple_path(Vector3 start, Vector3 end, bool optimize) {
+    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Navigation_get_simple_path__SWIG_0(swigCPtr, ref start, ref end, optimize), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3Array get_simple_path(SWIGTYPE_p_Vector3 start, SWIGTYPE_p_Vector3 end) {
-    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Navigation_get_simple_path__SWIG_1(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(start), SWIGTYPE_p_Vector3.getCPtr(end)), true);
+  public SWIGTYPE_p_Vector3Array get_simple_path(Vector3 start, Vector3 end) {
+    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Navigation_get_simple_path__SWIG_1(swigCPtr, ref start, ref end), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_closest_point_to_segment(SWIGTYPE_p_Vector3 start, SWIGTYPE_p_Vector3 end, bool use_collision) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Navigation_get_closest_point_to_segment__SWIG_0(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(start), SWIGTYPE_p_Vector3.getCPtr(end), use_collision), true);
+  public Vector3 get_closest_point_to_segment(Vector3 start, Vector3 end, bool use_collision) {
+    Vector3 ret = GodotEnginePINVOKE.Navigation_get_closest_point_to_segment__SWIG_0(swigCPtr, ref start, ref end, use_collision);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_closest_point_to_segment(SWIGTYPE_p_Vector3 start, SWIGTYPE_p_Vector3 end) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Navigation_get_closest_point_to_segment__SWIG_1(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(start), SWIGTYPE_p_Vector3.getCPtr(end)), true);
+  public Vector3 get_closest_point_to_segment(Vector3 start, Vector3 end) {
+    Vector3 ret = GodotEnginePINVOKE.Navigation_get_closest_point_to_segment__SWIG_1(swigCPtr, ref start, ref end);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_closest_point(SWIGTYPE_p_Vector3 to_point) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Navigation_get_closest_point(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(to_point)), true);
+  public Vector3 get_closest_point(Vector3 to_point) {
+    Vector3 ret = GodotEnginePINVOKE.Navigation_get_closest_point(swigCPtr, ref to_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_closest_point_normal(SWIGTYPE_p_Vector3 to_point) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Navigation_get_closest_point_normal(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(to_point)), true);
+  public Vector3 get_closest_point_normal(Vector3 to_point) {
+    Vector3 ret = GodotEnginePINVOKE.Navigation_get_closest_point_normal(swigCPtr, ref to_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
-  public Object get_closest_point_owner(SWIGTYPE_p_Vector3 to_point) {
-    global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation_get_closest_point_owner(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(to_point));
+  public Object get_closest_point_owner(Vector3 to_point) {
+    global::System.IntPtr cPtr = GodotEnginePINVOKE.Navigation_get_closest_point_owner(swigCPtr, ref to_point);
     if (cPtr == global::System.IntPtr.Zero)
       return null;
     Object ret = InternalHelpers.UnmanagedGetManaged(cPtr) as Object;
@@ -116,15 +116,15 @@ public class Navigation : Spatial {
     return ret;
   }
 
-  public void set_up_vector(SWIGTYPE_p_Vector3 up) {
-    GodotEnginePINVOKE.Navigation_set_up_vector(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(up));
+  public void set_up_vector(Vector3 up) {
+    GodotEnginePINVOKE.Navigation_set_up_vector(swigCPtr, ref up);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_up_vector() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Navigation_get_up_vector(swigCPtr), true);
+  public Vector3 get_up_vector() {
+    Vector3 ret = GodotEnginePINVOKE.Navigation_get_up_vector(swigCPtr);
     return ret;
-  }
+}
 
 }
 

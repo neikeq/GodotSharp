@@ -135,15 +135,15 @@ public class Input : Object {
     GodotEnginePINVOKE.Input_stop_joy_vibration(swigCPtr, device);
   }
 
-  public SWIGTYPE_p_Vector3 get_accelerometer() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Input_get_accelerometer(swigCPtr), true);
+  public Vector3 get_accelerometer() {
+    Vector3 ret = GodotEnginePINVOKE.Input_get_accelerometer(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_magnetometer() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Input_get_magnetometer(swigCPtr), true);
+  public Vector3 get_magnetometer() {
+    Vector3 ret = GodotEnginePINVOKE.Input_get_magnetometer(swigCPtr);
     return ret;
-  }
+}
 
   public Vector2 get_mouse_speed() {
     Vector2 ret = GodotEnginePINVOKE.Input_get_mouse_speed(swigCPtr);

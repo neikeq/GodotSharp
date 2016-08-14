@@ -69,12 +69,12 @@ public class Physics2DShapeQueryParameters : Reference {
   }
 
   public void set_transform(Matrix32 transform) {
-    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_transform(swigCPtr, ref transform.elements);
+    GodotEnginePINVOKE.Physics2DShapeQueryParameters_set_transform(swigCPtr, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Matrix32 get_transform() {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_transform(swigCPtr));
+    Matrix32 ret = GodotEnginePINVOKE.Physics2DShapeQueryParameters_get_transform(swigCPtr);
     return ret;
 }
 

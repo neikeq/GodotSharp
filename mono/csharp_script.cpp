@@ -226,7 +226,7 @@ void CSharpLanguage::get_string_delimiters(List<String> *p_delimiters) const
 	p_delimiters->push_back("' '");
 }
 
-String CSharpLanguage::get_template(const String &p_class_name, const String &p_base_class_name) const
+Ref<Script> CSharpLanguage::get_template(const String &p_class_name, const String &p_base_class_name) const
 {
 	String _template = String() +
 	"using System;\n\n" +
@@ -244,7 +244,13 @@ String CSharpLanguage::get_template(const String &p_class_name, const String &p_
 	"    }\n" +
 	"}\n";
 
-	return _template.replace("%BASE_CLASS_NAME%", p_base_class_name).replace("%CLASS_NAME%", p_class_name);
+	_template = _template.replace("%BASE_CLASS_NAME%", p_base_class_name).replace("%CLASS_NAME%", p_class_name);
+
+	Ref<CSharpScript> script;
+	script.instance();
+	script->set_source_code(_template);
+
+	return script;
 }
 
 Script *CSharpLanguage::create_script() const

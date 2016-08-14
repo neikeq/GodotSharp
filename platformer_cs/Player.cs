@@ -68,7 +68,7 @@ public class Player : RigidBody2D
         for (int x = 0; x < s.get_contact_count(); x++)
         {
             Vector2 ci = s.get_contact_local_normal(x);
-            if (Vector2.dot(ci, new Vector2(0, -1)) > 0.6f)
+            if (ci.Dot(new Vector2(0, -1)) > 0.6f)
             {
                 found_floor = true;
                 floor_index = x;
@@ -139,11 +139,11 @@ public class Player : RigidBody2D
             }
             else
             {
-                float xv = Mathf.abs(lv.x);
+                float xv = Mathf.Abs(lv.x);
                 xv -= WALK_DEACCEL * step;
                 if (xv < 0)
                     xv = 0;
-                lv.x = Mathf.sign(lv.x) * xv;
+                lv.x = Mathf.Sign(lv.x) * xv;
             }
 
             // Check jump
@@ -166,7 +166,7 @@ public class Player : RigidBody2D
             {
                 new_anim = "jumping";
             }
-            else if (Mathf.abs(lv.x) < 0.1f)
+            else if (Mathf.Abs(lv.x) < 0.1f)
             {
                 if (shoot_time < MAX_SHOOT_POSE_TIME)
                     new_anim = "idle_weapon";
@@ -196,11 +196,11 @@ public class Player : RigidBody2D
             }
             else
             {
-                float xv = Mathf.abs(lv.x);
+                float xv = Mathf.Abs(lv.x);
                 xv -= AIR_DEACCEL * step;
                 if (xv < 0)
                     xv = 0;
-                lv.x = Mathf.sign(lv.x) * xv;
+                lv.x = Mathf.Sign(lv.x) * xv;
             }
 
             if (lv.y < 0)

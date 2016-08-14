@@ -50,15 +50,15 @@ public class VisibilityNotifier2D : Node2D {
     }
   }
 
-  public void set_rect(SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.VisibilityNotifier2D_set_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void set_rect(Rect2 rect) {
+    GodotEnginePINVOKE.VisibilityNotifier2D_set_rect(swigCPtr, ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.VisibilityNotifier2D_get_rect(swigCPtr), true);
+  public Rect2 get_rect() {
+    Rect2 ret = GodotEnginePINVOKE.VisibilityNotifier2D_get_rect(swigCPtr);
     return ret;
-  }
+}
 
   public bool is_on_screen() {
     bool ret = GodotEnginePINVOKE.VisibilityNotifier2D_is_on_screen(swigCPtr);

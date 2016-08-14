@@ -58,8 +58,8 @@ public class SurfaceTool : Reference {
     GodotEnginePINVOKE.SurfaceTool_begin(swigCPtr, primitive);
   }
 
-  public void add_vertex(SWIGTYPE_p_Vector3 vertex) {
-    GodotEnginePINVOKE.SurfaceTool_add_vertex(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(vertex));
+  public void add_vertex(Vector3 vertex) {
+    GodotEnginePINVOKE.SurfaceTool_add_vertex(swigCPtr, ref vertex);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -68,8 +68,8 @@ public class SurfaceTool : Reference {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_normal(SWIGTYPE_p_Vector3 normal) {
-    GodotEnginePINVOKE.SurfaceTool_add_normal(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(normal));
+  public void add_normal(Vector3 normal) {
+    GodotEnginePINVOKE.SurfaceTool_add_normal(swigCPtr, ref normal);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

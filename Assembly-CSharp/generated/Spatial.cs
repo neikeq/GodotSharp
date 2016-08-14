@@ -54,65 +54,65 @@ public class Spatial : Node {
     }
   }
 
-  public void set_transform(SWIGTYPE_p_Transform local) {
-    GodotEnginePINVOKE.Spatial_set_transform(swigCPtr, SWIGTYPE_p_Transform.getCPtr(local));
+  public void set_transform(Transform local) {
+    GodotEnginePINVOKE.Spatial_set_transform(swigCPtr, ref local);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Spatial_get_transform(swigCPtr), true);
+  public Transform get_transform() {
+    Transform ret = GodotEnginePINVOKE.Spatial_get_transform(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_translation(SWIGTYPE_p_Vector3 translation) {
-    GodotEnginePINVOKE.Spatial_set_translation(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(translation));
+  public void set_translation(Vector3 translation) {
+    GodotEnginePINVOKE.Spatial_set_translation(swigCPtr, ref translation);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_translation() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Spatial_get_translation(swigCPtr), true);
+  public Vector3 get_translation() {
+    Vector3 ret = GodotEnginePINVOKE.Spatial_get_translation(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_rotation(SWIGTYPE_p_Vector3 rotation_rad) {
-    GodotEnginePINVOKE.Spatial_set_rotation(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(rotation_rad));
+  public void set_rotation(Vector3 rotation_rad) {
+    GodotEnginePINVOKE.Spatial_set_rotation(swigCPtr, ref rotation_rad);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_rotation() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Spatial_get_rotation(swigCPtr), true);
+  public Vector3 get_rotation() {
+    Vector3 ret = GodotEnginePINVOKE.Spatial_get_rotation(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_rotation_deg(SWIGTYPE_p_Vector3 rotation_deg) {
-    GodotEnginePINVOKE.Spatial_set_rotation_deg(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(rotation_deg));
+  public void set_rotation_deg(Vector3 rotation_deg) {
+    GodotEnginePINVOKE.Spatial_set_rotation_deg(swigCPtr, ref rotation_deg);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_rotation_deg() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Spatial_get_rotation_deg(swigCPtr), true);
+  public Vector3 get_rotation_deg() {
+    Vector3 ret = GodotEnginePINVOKE.Spatial_get_rotation_deg(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_scale(SWIGTYPE_p_Vector3 scale) {
-    GodotEnginePINVOKE.Spatial_set_scale(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(scale));
+  public void set_scale(Vector3 scale) {
+    GodotEnginePINVOKE.Spatial_set_scale(swigCPtr, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_scale() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Spatial_get_scale(swigCPtr), true);
+  public Vector3 get_scale() {
+    Vector3 ret = GodotEnginePINVOKE.Spatial_get_scale(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_global_transform(SWIGTYPE_p_Transform global) {
-    GodotEnginePINVOKE.Spatial_set_global_transform(swigCPtr, SWIGTYPE_p_Transform.getCPtr(global));
+  public void set_global_transform(Transform global) {
+    GodotEnginePINVOKE.Spatial_set_global_transform(swigCPtr, ref global);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_global_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Spatial_get_global_transform(swigCPtr), true);
+  public Transform get_global_transform() {
+    Transform ret = GodotEnginePINVOKE.Spatial_get_global_transform(swigCPtr);
     return ret;
-  }
+}
 
   public Object get_parent_spatial() {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Spatial_get_parent_spatial(swigCPtr);
@@ -190,13 +190,13 @@ public class Spatial : Node {
     return ret;
   }
 
-  public void rotate(SWIGTYPE_p_Vector3 normal, float radians) {
-    GodotEnginePINVOKE.Spatial_rotate(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(normal), radians);
+  public void rotate(Vector3 normal, float radians) {
+    GodotEnginePINVOKE.Spatial_rotate(swigCPtr, ref normal, radians);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void global_rotate(SWIGTYPE_p_Vector3 normal, float radians) {
-    GodotEnginePINVOKE.Spatial_global_rotate(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(normal), radians);
+  public void global_rotate(Vector3 normal, float radians) {
+    GodotEnginePINVOKE.Spatial_global_rotate(swigCPtr, ref normal, radians);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -212,13 +212,13 @@ public class Spatial : Node {
     GodotEnginePINVOKE.Spatial_rotate_z(swigCPtr, radians);
   }
 
-  public void translate(SWIGTYPE_p_Vector3 offset) {
-    GodotEnginePINVOKE.Spatial_translate(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(offset));
+  public void translate(Vector3 offset) {
+    GodotEnginePINVOKE.Spatial_translate(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void global_translate(SWIGTYPE_p_Vector3 offset) {
-    GodotEnginePINVOKE.Spatial_global_translate(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(offset));
+  public void global_translate(Vector3 offset) {
+    GodotEnginePINVOKE.Spatial_global_translate(swigCPtr, ref offset);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -230,13 +230,13 @@ public class Spatial : Node {
     GodotEnginePINVOKE.Spatial_set_identity(swigCPtr);
   }
 
-  public void look_at(SWIGTYPE_p_Vector3 target, SWIGTYPE_p_Vector3 up) {
-    GodotEnginePINVOKE.Spatial_look_at(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(target), SWIGTYPE_p_Vector3.getCPtr(up));
+  public void look_at(Vector3 target, Vector3 up) {
+    GodotEnginePINVOKE.Spatial_look_at(swigCPtr, ref target, ref up);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void look_at_from_pos(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 target, SWIGTYPE_p_Vector3 up) {
-    GodotEnginePINVOKE.Spatial_look_at_from_pos(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(target), SWIGTYPE_p_Vector3.getCPtr(up));
+  public void look_at_from_pos(Vector3 pos, Vector3 target, Vector3 up) {
+    GodotEnginePINVOKE.Spatial_look_at_from_pos(swigCPtr, ref pos, ref target, ref up);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

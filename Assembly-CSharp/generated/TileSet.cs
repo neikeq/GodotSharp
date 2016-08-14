@@ -112,15 +112,15 @@ public class TileSet : Resource {
     return ret;
 }
 
-  public void tile_set_region(int id, SWIGTYPE_p_Rect2 region) {
-    GodotEnginePINVOKE.TileSet_tile_set_region(swigCPtr, id, SWIGTYPE_p_Rect2.getCPtr(region));
+  public void tile_set_region(int id, Rect2 region) {
+    GodotEnginePINVOKE.TileSet_tile_set_region(swigCPtr, id, ref region);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 tile_get_region(int id) {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.TileSet_tile_get_region(swigCPtr, id), true);
+  public Rect2 tile_get_region(int id) {
+    Rect2 ret = GodotEnginePINVOKE.TileSet_tile_get_region(swigCPtr, id);
     return ret;
-  }
+}
 
   public void tile_set_shape(int id, Shape2D shape) {
     GodotEnginePINVOKE.TileSet_tile_set_shape(swigCPtr, id, Shape2D.getCPtr(shape));

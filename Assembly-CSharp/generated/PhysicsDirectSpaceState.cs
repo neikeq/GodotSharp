@@ -50,26 +50,26 @@ public class PhysicsDirectSpaceState : Object {
   internal PhysicsDirectSpaceState() {}
 
 
-  public SWIGTYPE_p_Dictionary intersect_ray(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, SWIGTYPE_p_Array exclude, int layer_mask, int type_mask) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_0(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), SWIGTYPE_p_Array.getCPtr(exclude), layer_mask, type_mask), true);
+  public SWIGTYPE_p_Dictionary intersect_ray(Vector3 from, Vector3 to, SWIGTYPE_p_Array exclude, int layer_mask, int type_mask) {
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_0(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask, type_mask), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Dictionary intersect_ray(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, SWIGTYPE_p_Array exclude, int layer_mask) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_1(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), SWIGTYPE_p_Array.getCPtr(exclude), layer_mask), true);
+  public SWIGTYPE_p_Dictionary intersect_ray(Vector3 from, Vector3 to, SWIGTYPE_p_Array exclude, int layer_mask) {
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_1(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(exclude), layer_mask), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Dictionary intersect_ray(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, SWIGTYPE_p_Array exclude) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_2(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), SWIGTYPE_p_Array.getCPtr(exclude)), true);
+  public SWIGTYPE_p_Dictionary intersect_ray(Vector3 from, Vector3 to, SWIGTYPE_p_Array exclude) {
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_2(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(exclude)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Dictionary intersect_ray(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to) {
-    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_3(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to)), true);
+  public SWIGTYPE_p_Dictionary intersect_ray(Vector3 from, Vector3 to) {
+    SWIGTYPE_p_Dictionary ret = new SWIGTYPE_p_Dictionary(GodotEnginePINVOKE.PhysicsDirectSpaceState_intersect_ray__SWIG_3(swigCPtr, ref from, ref to), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -84,8 +84,8 @@ public class PhysicsDirectSpaceState : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Array cast_motion(PhysicsShapeQueryParameters shape, SWIGTYPE_p_Vector3 motion) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.PhysicsDirectSpaceState_cast_motion(swigCPtr, PhysicsShapeQueryParameters.getCPtr(shape), SWIGTYPE_p_Vector3.getCPtr(motion)), true);
+  public SWIGTYPE_p_Array cast_motion(PhysicsShapeQueryParameters shape, Vector3 motion) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.PhysicsDirectSpaceState_cast_motion(swigCPtr, PhysicsShapeQueryParameters.getCPtr(shape), ref motion), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

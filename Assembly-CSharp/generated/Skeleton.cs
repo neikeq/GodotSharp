@@ -85,13 +85,13 @@ public class Skeleton : Spatial {
     GodotEnginePINVOKE.Skeleton_unparent_bone_and_rest(swigCPtr, bone_idx);
   }
 
-  public SWIGTYPE_p_Transform get_bone_rest(int bone_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Skeleton_get_bone_rest(swigCPtr, bone_idx), true);
+  public Transform get_bone_rest(int bone_idx) {
+    Transform ret = GodotEnginePINVOKE.Skeleton_get_bone_rest(swigCPtr, bone_idx);
     return ret;
-  }
+}
 
-  public void set_bone_rest(int bone_idx, SWIGTYPE_p_Transform rest) {
-    GodotEnginePINVOKE.Skeleton_set_bone_rest(swigCPtr, bone_idx, SWIGTYPE_p_Transform.getCPtr(rest));
+  public void set_bone_rest(int bone_idx, Transform rest) {
+    GodotEnginePINVOKE.Skeleton_set_bone_rest(swigCPtr, bone_idx, ref rest);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -121,40 +121,40 @@ public class Skeleton : Spatial {
     GodotEnginePINVOKE.Skeleton_clear_bones(swigCPtr);
   }
 
-  public SWIGTYPE_p_Transform get_bone_pose(int bone_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Skeleton_get_bone_pose(swigCPtr, bone_idx), true);
+  public Transform get_bone_pose(int bone_idx) {
+    Transform ret = GodotEnginePINVOKE.Skeleton_get_bone_pose(swigCPtr, bone_idx);
     return ret;
-  }
+}
 
-  public void set_bone_pose(int bone_idx, SWIGTYPE_p_Transform pose) {
-    GodotEnginePINVOKE.Skeleton_set_bone_pose(swigCPtr, bone_idx, SWIGTYPE_p_Transform.getCPtr(pose));
+  public void set_bone_pose(int bone_idx, Transform pose) {
+    GodotEnginePINVOKE.Skeleton_set_bone_pose(swigCPtr, bone_idx, ref pose);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_bone_global_pose(int bone_idx, SWIGTYPE_p_Transform pose) {
-    GodotEnginePINVOKE.Skeleton_set_bone_global_pose(swigCPtr, bone_idx, SWIGTYPE_p_Transform.getCPtr(pose));
+  public void set_bone_global_pose(int bone_idx, Transform pose) {
+    GodotEnginePINVOKE.Skeleton_set_bone_global_pose(swigCPtr, bone_idx, ref pose);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_bone_global_pose(int bone_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Skeleton_get_bone_global_pose(swigCPtr, bone_idx), true);
+  public Transform get_bone_global_pose(int bone_idx) {
+    Transform ret = GodotEnginePINVOKE.Skeleton_get_bone_global_pose(swigCPtr, bone_idx);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Transform get_bone_custom_pose(int bone_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Skeleton_get_bone_custom_pose(swigCPtr, bone_idx), true);
+  public Transform get_bone_custom_pose(int bone_idx) {
+    Transform ret = GodotEnginePINVOKE.Skeleton_get_bone_custom_pose(swigCPtr, bone_idx);
     return ret;
-  }
+}
 
-  public void set_bone_custom_pose(int bone_idx, SWIGTYPE_p_Transform custom_pose) {
-    GodotEnginePINVOKE.Skeleton_set_bone_custom_pose(swigCPtr, bone_idx, SWIGTYPE_p_Transform.getCPtr(custom_pose));
+  public void set_bone_custom_pose(int bone_idx, Transform custom_pose) {
+    GodotEnginePINVOKE.Skeleton_set_bone_custom_pose(swigCPtr, bone_idx, ref custom_pose);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_bone_transform(int bone_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Skeleton_get_bone_transform(swigCPtr, bone_idx), true);
+  public Transform get_bone_transform(int bone_idx) {
+    Transform ret = GodotEnginePINVOKE.Skeleton_get_bone_transform(swigCPtr, bone_idx);
     return ret;
-  }
+}
 
 }
 

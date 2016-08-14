@@ -54,41 +54,41 @@ public class Camera : Spatial {
     }
   }
 
-  public SWIGTYPE_p_Vector3 project_ray_normal(Vector2 screen_point) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Camera_project_ray_normal(swigCPtr, ref screen_point), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public SWIGTYPE_p_Vector3 project_local_ray_normal(Vector2 screen_point) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Camera_project_local_ray_normal(swigCPtr, ref screen_point), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public SWIGTYPE_p_Vector3 project_ray_origin(Vector2 screen_point) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Camera_project_ray_origin(swigCPtr, ref screen_point), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public Vector2 unproject_position(SWIGTYPE_p_Vector3 world_point) {
-    Vector2 ret = GodotEnginePINVOKE.Camera_unproject_position(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(world_point));
+  public Vector3 project_ray_normal(Vector2 screen_point) {
+    Vector3 ret = GodotEnginePINVOKE.Camera_project_ray_normal(swigCPtr, ref screen_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
 }
 
-  public bool is_position_behind(SWIGTYPE_p_Vector3 world_point) {
-    bool ret = GodotEnginePINVOKE.Camera_is_position_behind(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(world_point));
+  public Vector3 project_local_ray_normal(Vector2 screen_point) {
+    Vector3 ret = GodotEnginePINVOKE.Camera_project_local_ray_normal(swigCPtr, ref screen_point);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+}
+
+  public Vector3 project_ray_origin(Vector2 screen_point) {
+    Vector3 ret = GodotEnginePINVOKE.Camera_project_ray_origin(swigCPtr, ref screen_point);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+}
+
+  public Vector2 unproject_position(Vector3 world_point) {
+    Vector2 ret = GodotEnginePINVOKE.Camera_unproject_position(swigCPtr, ref world_point);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+}
+
+  public bool is_position_behind(Vector3 world_point) {
+    bool ret = GodotEnginePINVOKE.Camera_is_position_behind(swigCPtr, ref world_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 project_position(Vector2 screen_point) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Camera_project_position(swigCPtr, ref screen_point), true);
+  public Vector3 project_position(Vector2 screen_point) {
+    Vector3 ret = GodotEnginePINVOKE.Camera_project_position(swigCPtr, ref screen_point);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void set_perspective(float fov, float z_near, float z_far) {
     GodotEnginePINVOKE.Camera_set_perspective(swigCPtr, fov, z_near, z_far);
@@ -111,10 +111,10 @@ public class Camera : Spatial {
     return ret;
   }
 
-  public SWIGTYPE_p_Transform get_camera_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Camera_get_camera_transform(swigCPtr), true);
+  public Transform get_camera_transform() {
+    Transform ret = GodotEnginePINVOKE.Camera_get_camera_transform(swigCPtr);
     return ret;
-  }
+}
 
   public float get_fov() {
     float ret = GodotEnginePINVOKE.Camera_get_fov(swigCPtr);

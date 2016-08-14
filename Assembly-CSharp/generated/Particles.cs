@@ -92,25 +92,25 @@ public class Particles : GeometryInstance {
     return ret;
   }
 
-  public void set_emission_half_extents(SWIGTYPE_p_Vector3 half_extents) {
-    GodotEnginePINVOKE.Particles_set_emission_half_extents(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(half_extents));
+  public void set_emission_half_extents(Vector3 half_extents) {
+    GodotEnginePINVOKE.Particles_set_emission_half_extents(swigCPtr, ref half_extents);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_emission_half_extents() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Particles_get_emission_half_extents(swigCPtr), true);
+  public Vector3 get_emission_half_extents() {
+    Vector3 ret = GodotEnginePINVOKE.Particles_get_emission_half_extents(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_emission_base_velocity(SWIGTYPE_p_Vector3 base_velocity) {
-    GodotEnginePINVOKE.Particles_set_emission_base_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(base_velocity));
+  public void set_emission_base_velocity(Vector3 base_velocity) {
+    GodotEnginePINVOKE.Particles_set_emission_base_velocity(swigCPtr, ref base_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_emission_base_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Particles_get_emission_base_velocity(swigCPtr), true);
+  public Vector3 get_emission_base_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.Particles_get_emission_base_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public void set_emission_points(SWIGTYPE_p_Vector3Array points) {
     GodotEnginePINVOKE.Particles_set_emission_points(swigCPtr, SWIGTYPE_p_Vector3Array.getCPtr(points));
@@ -122,15 +122,15 @@ public class Particles : GeometryInstance {
     return ret;
   }
 
-  public void set_gravity_normal(SWIGTYPE_p_Vector3 normal) {
-    GodotEnginePINVOKE.Particles_set_gravity_normal(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(normal));
+  public void set_gravity_normal(Vector3 normal) {
+    GodotEnginePINVOKE.Particles_set_gravity_normal(swigCPtr, ref normal);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_gravity_normal() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Particles_get_gravity_normal(swigCPtr), true);
+  public Vector3 get_gravity_normal() {
+    Vector3 ret = GodotEnginePINVOKE.Particles_get_gravity_normal(swigCPtr);
     return ret;
-  }
+}
 
   public void set_variable(int variable, float value) {
     GodotEnginePINVOKE.Particles_set_variable(swigCPtr, variable, value);

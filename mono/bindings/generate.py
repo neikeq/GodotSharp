@@ -27,7 +27,7 @@ def remove_file(file_path):
 
 SWIG = 'swig3.0'
 CPP_OUT = 'wrappers'
-CS_OUT = 'generated'
+CS_OUT = os.path.join(os.pardir, os.pardir, 'Assembly-CSharp', 'generated')
 WRAPPER_FILE = 'mono_glue.cpp'
 FILE = 'GodotEngine.i'
 
@@ -44,11 +44,20 @@ else:
 if not os.path.exists(CPP_OUT):
 	os.makedirs(CPP_OUT)
 
+# Generate proxy classes and C++ wrappers
 call([SWIG] + OPTIONS + ['-outdir', CS_OUT, '-o', os.path.join(CPP_OUT, WRAPPER_FILE), FILE])
 
 # Remove generated proxy classes for built-in types
-remove_file(os.path.join(CS_OUT, 'Vector2'))
-remove_file(os.path.join(CS_OUT, 'Matrix32'))
+# Exceptions:
+#   NodePath
+builtin_types = [
+	'Vector2', 'Rect2', 'Matrix32',
+	'Vector3', 'Matrix3', 'Quat',
+	'Transform'
+]
+
+for type in builtin_types:
+	remove_file(os.path.join(CS_OUT, type + '.cs'))
 
 # Fix generated C++ wrappers
 with open(CPP_OUT + '/' + WRAPPER_FILE, 'r+') as f:

@@ -84,15 +84,15 @@ public class StyleBoxTexture : StyleBox {
     return ret;
   }
 
-  public void set_region_rect(SWIGTYPE_p_Rect2 region) {
-    GodotEnginePINVOKE.StyleBoxTexture_set_region_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(region));
+  public void set_region_rect(Rect2 region) {
+    GodotEnginePINVOKE.StyleBoxTexture_set_region_rect(swigCPtr, ref region);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_region_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.StyleBoxTexture_get_region_rect(swigCPtr), true);
+  public Rect2 get_region_rect() {
+    Rect2 ret = GodotEnginePINVOKE.StyleBoxTexture_get_region_rect(swigCPtr);
     return ret;
-  }
+}
 
   public void set_draw_center(bool enable) {
     GodotEnginePINVOKE.StyleBoxTexture_set_draw_center(swigCPtr, enable);

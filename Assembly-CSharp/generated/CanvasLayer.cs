@@ -60,12 +60,12 @@ public class CanvasLayer : Node {
   }
 
   public void set_transform(Matrix32 transform) {
-    GodotEnginePINVOKE.CanvasLayer_set_transform(swigCPtr, ref transform.elements);
+    GodotEnginePINVOKE.CanvasLayer_set_transform(swigCPtr, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Matrix32 get_transform() {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CanvasLayer_get_transform(swigCPtr));
+    Matrix32 ret = GodotEnginePINVOKE.CanvasLayer_get_transform(swigCPtr);
     return ret;
 }
 

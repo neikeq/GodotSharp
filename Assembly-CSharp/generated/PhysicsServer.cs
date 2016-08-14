@@ -244,8 +244,8 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public void area_add_shape(SWIGTYPE_p_RID area, SWIGTYPE_p_RID shape, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsServer_area_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), SWIGTYPE_p_RID.getCPtr(shape), SWIGTYPE_p_Transform.getCPtr(transform));
+  public void area_add_shape(SWIGTYPE_p_RID area, SWIGTYPE_p_RID shape, Transform transform) {
+    GodotEnginePINVOKE.PhysicsServer_area_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), SWIGTYPE_p_RID.getCPtr(shape), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -259,8 +259,8 @@ public class PhysicsServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void area_set_shape_transform(SWIGTYPE_p_RID area, int shape_idx, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsServer_area_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void area_set_shape_transform(SWIGTYPE_p_RID area, int shape_idx, Transform transform) {
+    GodotEnginePINVOKE.PhysicsServer_area_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -276,11 +276,11 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Transform area_get_shape_transform(SWIGTYPE_p_RID area, int shape_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.PhysicsServer_area_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx), true);
+  public Transform area_get_shape_transform(SWIGTYPE_p_RID area, int shape_idx) {
+    Transform ret = GodotEnginePINVOKE.PhysicsServer_area_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void area_remove_shape(SWIGTYPE_p_RID area, int shape_idx) {
     GodotEnginePINVOKE.PhysicsServer_area_remove_shape(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), shape_idx);
@@ -307,8 +307,8 @@ public class PhysicsServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void area_set_transform(SWIGTYPE_p_RID area, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsServer_area_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), SWIGTYPE_p_Transform.getCPtr(transform));
+  public void area_set_transform(SWIGTYPE_p_RID area, Transform transform) {
+    GodotEnginePINVOKE.PhysicsServer_area_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -317,11 +317,11 @@ public class PhysicsServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform area_get_transform(SWIGTYPE_p_RID area) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.PhysicsServer_area_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area)), true);
+  public Transform area_get_transform(SWIGTYPE_p_RID area) {
+    Transform ret = GodotEnginePINVOKE.PhysicsServer_area_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(area));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void area_attach_object_instance_ID(SWIGTYPE_p_RID area, int id) {
     GodotEnginePINVOKE.PhysicsServer_area_attach_object_instance_ID(swigCPtr, SWIGTYPE_p_RID.getCPtr(area), id);
@@ -409,8 +409,8 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public void body_add_shape(SWIGTYPE_p_RID body, SWIGTYPE_p_RID shape, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsServer_body_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), SWIGTYPE_p_RID.getCPtr(shape), SWIGTYPE_p_Transform.getCPtr(transform));
+  public void body_add_shape(SWIGTYPE_p_RID body, SWIGTYPE_p_RID shape, Transform transform) {
+    GodotEnginePINVOKE.PhysicsServer_body_add_shape__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), SWIGTYPE_p_RID.getCPtr(shape), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -424,8 +424,8 @@ public class PhysicsServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void body_set_shape_transform(SWIGTYPE_p_RID body, int shape_idx, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsServer_body_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void body_set_shape_transform(SWIGTYPE_p_RID body, int shape_idx, Transform transform) {
+    GodotEnginePINVOKE.PhysicsServer_body_set_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -441,11 +441,11 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Transform body_get_shape_transform(SWIGTYPE_p_RID body, int shape_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.PhysicsServer_body_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx), true);
+  public Transform body_get_shape_transform(SWIGTYPE_p_RID body, int shape_idx) {
+    Transform ret = GodotEnginePINVOKE.PhysicsServer_body_get_shape_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void body_remove_shape(SWIGTYPE_p_RID body, int shape_idx) {
     GodotEnginePINVOKE.PhysicsServer_body_remove_shape(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), shape_idx);
@@ -500,13 +500,13 @@ public class PhysicsServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void body_apply_impulse(SWIGTYPE_p_RID body, SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 impulse) {
-    GodotEnginePINVOKE.PhysicsServer_body_apply_impulse(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(impulse));
+  public void body_apply_impulse(SWIGTYPE_p_RID body, Vector3 pos, Vector3 impulse) {
+    GodotEnginePINVOKE.PhysicsServer_body_apply_impulse(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), ref pos, ref impulse);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void body_set_axis_velocity(SWIGTYPE_p_RID body, SWIGTYPE_p_Vector3 axis_velocity) {
-    GodotEnginePINVOKE.PhysicsServer_body_set_axis_velocity(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), SWIGTYPE_p_Vector3.getCPtr(axis_velocity));
+  public void body_set_axis_velocity(SWIGTYPE_p_RID body, Vector3 axis_velocity) {
+    GodotEnginePINVOKE.PhysicsServer_body_set_axis_velocity(swigCPtr, SWIGTYPE_p_RID.getCPtr(body), ref axis_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -574,8 +574,8 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_RID joint_create_pin(SWIGTYPE_p_RID body_A, SWIGTYPE_p_Vector3 local_A, SWIGTYPE_p_RID body_B, SWIGTYPE_p_Vector3 local_B) {
-    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_pin(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), SWIGTYPE_p_Vector3.getCPtr(local_A), SWIGTYPE_p_RID.getCPtr(body_B), SWIGTYPE_p_Vector3.getCPtr(local_B)), true);
+  public SWIGTYPE_p_RID joint_create_pin(SWIGTYPE_p_RID body_A, Vector3 local_A, SWIGTYPE_p_RID body_B, Vector3 local_B) {
+    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_pin(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), ref local_A, SWIGTYPE_p_RID.getCPtr(body_B), ref local_B), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -591,30 +591,30 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public void pin_joint_set_local_A(SWIGTYPE_p_RID joint, SWIGTYPE_p_Vector3 local_A) {
-    GodotEnginePINVOKE.PhysicsServer_pin_joint_set_local_A(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint), SWIGTYPE_p_Vector3.getCPtr(local_A));
+  public void pin_joint_set_local_A(SWIGTYPE_p_RID joint, Vector3 local_A) {
+    GodotEnginePINVOKE.PhysicsServer_pin_joint_set_local_A(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint), ref local_A);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 pin_joint_get_local_A(SWIGTYPE_p_RID joint) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsServer_pin_joint_get_local_A(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint)), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public void pin_joint_set_local_B(SWIGTYPE_p_RID joint, SWIGTYPE_p_Vector3 local_B) {
-    GodotEnginePINVOKE.PhysicsServer_pin_joint_set_local_B(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint), SWIGTYPE_p_Vector3.getCPtr(local_B));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public SWIGTYPE_p_Vector3 pin_joint_get_local_B(SWIGTYPE_p_RID joint) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsServer_pin_joint_get_local_B(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint)), true);
+  public Vector3 pin_joint_get_local_A(SWIGTYPE_p_RID joint) {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsServer_pin_joint_get_local_A(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
+}
+
+  public void pin_joint_set_local_B(SWIGTYPE_p_RID joint, Vector3 local_B) {
+    GodotEnginePINVOKE.PhysicsServer_pin_joint_set_local_B(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint), ref local_B);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_RID joint_create_hinge(SWIGTYPE_p_RID body_A, SWIGTYPE_p_Transform hinge_A, SWIGTYPE_p_RID body_B, SWIGTYPE_p_Transform hinge_B) {
-    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_hinge(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), SWIGTYPE_p_Transform.getCPtr(hinge_A), SWIGTYPE_p_RID.getCPtr(body_B), SWIGTYPE_p_Transform.getCPtr(hinge_B)), true);
+  public Vector3 pin_joint_get_local_B(SWIGTYPE_p_RID joint) {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsServer_pin_joint_get_local_B(swigCPtr, SWIGTYPE_p_RID.getCPtr(joint));
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+}
+
+  public SWIGTYPE_p_RID joint_create_hinge(SWIGTYPE_p_RID body_A, Transform hinge_A, SWIGTYPE_p_RID body_B, Transform hinge_B) {
+    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_hinge(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), ref hinge_A, SWIGTYPE_p_RID.getCPtr(body_B), ref hinge_B), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -641,8 +641,8 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_RID joint_create_slider(SWIGTYPE_p_RID body_A, SWIGTYPE_p_Transform local_ref_A, SWIGTYPE_p_RID body_B, SWIGTYPE_p_Transform local_ref_B) {
-    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_slider(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), SWIGTYPE_p_Transform.getCPtr(local_ref_A), SWIGTYPE_p_RID.getCPtr(body_B), SWIGTYPE_p_Transform.getCPtr(local_ref_B)), true);
+  public SWIGTYPE_p_RID joint_create_slider(SWIGTYPE_p_RID body_A, Transform local_ref_A, SWIGTYPE_p_RID body_B, Transform local_ref_B) {
+    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_slider(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), ref local_ref_A, SWIGTYPE_p_RID.getCPtr(body_B), ref local_ref_B), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -658,8 +658,8 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_RID joint_create_cone_twist(SWIGTYPE_p_RID body_A, SWIGTYPE_p_Transform local_ref_A, SWIGTYPE_p_RID body_B, SWIGTYPE_p_Transform local_ref_B) {
-    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_cone_twist(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), SWIGTYPE_p_Transform.getCPtr(local_ref_A), SWIGTYPE_p_RID.getCPtr(body_B), SWIGTYPE_p_Transform.getCPtr(local_ref_B)), true);
+  public SWIGTYPE_p_RID joint_create_cone_twist(SWIGTYPE_p_RID body_A, Transform local_ref_A, SWIGTYPE_p_RID body_B, Transform local_ref_B) {
+    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_cone_twist(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), ref local_ref_A, SWIGTYPE_p_RID.getCPtr(body_B), ref local_ref_B), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -692,8 +692,8 @@ public class PhysicsServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_RID joint_create_generic_6dof(SWIGTYPE_p_RID body_A, SWIGTYPE_p_Transform local_ref_A, SWIGTYPE_p_RID body_B, SWIGTYPE_p_Transform local_ref_B) {
-    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_generic_6dof(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), SWIGTYPE_p_Transform.getCPtr(local_ref_A), SWIGTYPE_p_RID.getCPtr(body_B), SWIGTYPE_p_Transform.getCPtr(local_ref_B)), true);
+  public SWIGTYPE_p_RID joint_create_generic_6dof(SWIGTYPE_p_RID body_A, Transform local_ref_A, SWIGTYPE_p_RID body_B, Transform local_ref_B) {
+    SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.PhysicsServer_joint_create_generic_6dof(swigCPtr, SWIGTYPE_p_RID.getCPtr(body_A), ref local_ref_A, SWIGTYPE_p_RID.getCPtr(body_B), ref local_ref_B), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

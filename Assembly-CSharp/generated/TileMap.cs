@@ -90,12 +90,12 @@ public class TileMap : Node2D {
   }
 
   public void set_custom_transform(Matrix32 custom_transform) {
-    GodotEnginePINVOKE.TileMap_set_custom_transform(swigCPtr, ref custom_transform.elements);
+    GodotEnginePINVOKE.TileMap_set_custom_transform(swigCPtr, ref custom_transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public Matrix32 get_custom_transform() {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.TileMap_get_custom_transform(swigCPtr));
+    Matrix32 ret = GodotEnginePINVOKE.TileMap_get_custom_transform(swigCPtr);
     return ret;
 }
 

@@ -81,15 +81,15 @@ public class Patch9Frame : Control {
     return ret;
   }
 
-  public void set_region_rect(SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.Patch9Frame_set_region_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void set_region_rect(Rect2 rect) {
+    GodotEnginePINVOKE.Patch9Frame_set_region_rect(swigCPtr, ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_region_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Patch9Frame_get_region_rect(swigCPtr), true);
+  public Rect2 get_region_rect() {
+    Rect2 ret = GodotEnginePINVOKE.Patch9Frame_get_region_rect(swigCPtr);
     return ret;
-  }
+}
 
   public void set_draw_center(bool draw_center) {
     GodotEnginePINVOKE.Patch9Frame_set_draw_center(swigCPtr, draw_center);

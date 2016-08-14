@@ -365,8 +365,8 @@ public class VisualServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void multimesh_instance_set_transform(SWIGTYPE_p_RID arg0_, int arg1_, SWIGTYPE_p_Transform arg2_) {
-    GodotEnginePINVOKE.VisualServer_multimesh_instance_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, SWIGTYPE_p_Transform.getCPtr(arg2_));
+  public void multimesh_instance_set_transform(SWIGTYPE_p_RID arg0_, int arg1_, Transform arg2_) {
+    GodotEnginePINVOKE.VisualServer_multimesh_instance_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, ref arg2_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -387,11 +387,11 @@ public class VisualServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Transform multimesh_instance_get_transform(SWIGTYPE_p_RID arg0_, int arg1_) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.VisualServer_multimesh_instance_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_), true);
+  public Transform multimesh_instance_get_transform(SWIGTYPE_p_RID arg0_, int arg1_) {
+    Transform ret = GodotEnginePINVOKE.VisualServer_multimesh_instance_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Color multimesh_instance_get_color(SWIGTYPE_p_RID arg0_, int arg1_) {
     SWIGTYPE_p_Color ret = new SWIGTYPE_p_Color(GodotEnginePINVOKE.VisualServer_multimesh_instance_get_color(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_), true);
@@ -503,16 +503,16 @@ public class VisualServer : Object {
     return ret;
   }
 
-  public void particles_set_attractor_pos(SWIGTYPE_p_RID arg0_, int arg1_, SWIGTYPE_p_Vector3 arg2_) {
-    GodotEnginePINVOKE.VisualServer_particles_set_attractor_pos(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, SWIGTYPE_p_Vector3.getCPtr(arg2_));
+  public void particles_set_attractor_pos(SWIGTYPE_p_RID arg0_, int arg1_, Vector3 arg2_) {
+    GodotEnginePINVOKE.VisualServer_particles_set_attractor_pos(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, ref arg2_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 particles_get_attractor_pos(SWIGTYPE_p_RID arg0_, int arg1_) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.VisualServer_particles_get_attractor_pos(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_), true);
+  public Vector3 particles_get_attractor_pos(SWIGTYPE_p_RID arg0_, int arg1_) {
+    Vector3 ret = GodotEnginePINVOKE.VisualServer_particles_get_attractor_pos(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void particles_set_attractor_strength(SWIGTYPE_p_RID arg0_, int arg1_, float arg2_) {
     GodotEnginePINVOKE.VisualServer_particles_set_attractor_strength(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, arg2_);
@@ -628,16 +628,16 @@ public class VisualServer : Object {
     return ret;
   }
 
-  public void skeleton_bone_set_transform(SWIGTYPE_p_RID arg0_, int arg1_, SWIGTYPE_p_Transform arg2_) {
-    GodotEnginePINVOKE.VisualServer_skeleton_bone_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, SWIGTYPE_p_Transform.getCPtr(arg2_));
+  public void skeleton_bone_set_transform(SWIGTYPE_p_RID arg0_, int arg1_, Transform arg2_) {
+    GodotEnginePINVOKE.VisualServer_skeleton_bone_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, ref arg2_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform skeleton_bone_get_transform(SWIGTYPE_p_RID arg0_, int arg1_) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.VisualServer_skeleton_bone_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_), true);
+  public Transform skeleton_bone_get_transform(SWIGTYPE_p_RID arg0_, int arg1_) {
+    Transform ret = GodotEnginePINVOKE.VisualServer_skeleton_bone_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public SWIGTYPE_p_RID room_create() {
     SWIGTYPE_p_RID ret = new SWIGTYPE_p_RID(GodotEnginePINVOKE.VisualServer_room_create(swigCPtr), true);
@@ -719,8 +719,8 @@ public class VisualServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void camera_set_transform(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Transform arg1_) {
-    GodotEnginePINVOKE.VisualServer_camera_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Transform.getCPtr(arg1_));
+  public void camera_set_transform(SWIGTYPE_p_RID arg0_, Transform arg1_) {
+    GodotEnginePINVOKE.VisualServer_camera_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -729,16 +729,16 @@ public class VisualServer : Object {
     return ret;
   }
 
-  public void viewport_set_rect(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_) {
-    GodotEnginePINVOKE.VisualServer_viewport_set_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_));
+  public void viewport_set_rect(SWIGTYPE_p_RID arg0_, Rect2 arg1_) {
+    GodotEnginePINVOKE.VisualServer_viewport_set_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 viewport_get_rect(SWIGTYPE_p_RID arg0_) {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.VisualServer_viewport_get_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_)), true);
+  public Rect2 viewport_get_rect(SWIGTYPE_p_RID arg0_) {
+    Rect2 ret = GodotEnginePINVOKE.VisualServer_viewport_get_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void viewport_attach_camera(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_RID arg1_) {
     GodotEnginePINVOKE.VisualServer_viewport_attach_camera__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_RID.getCPtr(arg1_));
@@ -773,7 +773,7 @@ public class VisualServer : Object {
   }
 
   public void viewport_set_global_canvas_transform(SWIGTYPE_p_RID arg0_, Matrix32 arg1_) {
-    GodotEnginePINVOKE.VisualServer_viewport_set_global_canvas_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_.elements);
+    GodotEnginePINVOKE.VisualServer_viewport_set_global_canvas_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -804,16 +804,16 @@ public class VisualServer : Object {
     return ret;
   }
 
-  public void instance_set_transform(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Transform arg1_) {
-    GodotEnginePINVOKE.VisualServer_instance_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Transform.getCPtr(arg1_));
+  public void instance_set_transform(SWIGTYPE_p_RID arg0_, Transform arg1_) {
+    GodotEnginePINVOKE.VisualServer_instance_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform instance_get_transform(SWIGTYPE_p_RID arg0_) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.VisualServer_instance_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_)), true);
+  public Transform instance_get_transform(SWIGTYPE_p_RID arg0_) {
+    Transform ret = GodotEnginePINVOKE.VisualServer_instance_get_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
-  }
+}
 
   public void instance_attach_object_instance_ID(SWIGTYPE_p_RID arg0_, int arg1_) {
     GodotEnginePINVOKE.VisualServer_instance_attach_object_instance_ID(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_);
@@ -865,8 +865,8 @@ public class VisualServer : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Array instances_cull_ray(SWIGTYPE_p_Vector3 arg0_, SWIGTYPE_p_Vector3 arg1_, SWIGTYPE_p_RID arg2_) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.VisualServer_instances_cull_ray(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(arg0_), SWIGTYPE_p_Vector3.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_)), true);
+  public SWIGTYPE_p_Array instances_cull_ray(Vector3 arg0_, Vector3 arg1_, SWIGTYPE_p_RID arg2_) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.VisualServer_instances_cull_ray(swigCPtr, ref arg0_, ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -916,12 +916,12 @@ public class VisualServer : Object {
   }
 
   public void canvas_item_set_transform(SWIGTYPE_p_RID arg0_, Matrix32 arg1_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_.elements);
+    GodotEnginePINVOKE.VisualServer_canvas_item_set_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_set_custom_rect(SWIGTYPE_p_RID arg0_, bool arg1_, SWIGTYPE_p_Rect2 arg2_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_set_custom_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, SWIGTYPE_p_Rect2.getCPtr(arg2_));
+  public void canvas_item_set_custom_rect(SWIGTYPE_p_RID arg0_, bool arg1_, Rect2 arg2_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_set_custom_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), arg1_, ref arg2_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -967,48 +967,48 @@ public class VisualServer : Object {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_rect(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_Color arg2_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_Color.getCPtr(arg2_));
+  public void canvas_item_add_rect(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_Color arg2_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_rect(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_Color.getCPtr(arg2_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_texture_rect(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_RID arg2_, bool arg3_, SWIGTYPE_p_Color arg4_, bool arg5_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_), arg3_, SWIGTYPE_p_Color.getCPtr(arg4_), arg5_);
+  public void canvas_item_add_texture_rect(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_RID arg2_, bool arg3_, SWIGTYPE_p_Color arg4_, bool arg5_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_), arg3_, SWIGTYPE_p_Color.getCPtr(arg4_), arg5_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_texture_rect(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_RID arg2_, bool arg3_, SWIGTYPE_p_Color arg4_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_), arg3_, SWIGTYPE_p_Color.getCPtr(arg4_));
+  public void canvas_item_add_texture_rect(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_RID arg2_, bool arg3_, SWIGTYPE_p_Color arg4_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_), arg3_, SWIGTYPE_p_Color.getCPtr(arg4_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_texture_rect(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_RID arg2_, bool arg3_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_), arg3_);
+  public void canvas_item_add_texture_rect(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_RID arg2_, bool arg3_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_), arg3_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_texture_rect_region(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_RID arg2_, SWIGTYPE_p_Rect2 arg3_, SWIGTYPE_p_Color arg4_, bool arg5_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect_region__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_), SWIGTYPE_p_Rect2.getCPtr(arg3_), SWIGTYPE_p_Color.getCPtr(arg4_), arg5_);
+  public void canvas_item_add_texture_rect_region(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_RID arg2_, Rect2 arg3_, SWIGTYPE_p_Color arg4_, bool arg5_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect_region__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_), ref arg3_, SWIGTYPE_p_Color.getCPtr(arg4_), arg5_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_texture_rect_region(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_RID arg2_, SWIGTYPE_p_Rect2 arg3_, SWIGTYPE_p_Color arg4_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect_region__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_), SWIGTYPE_p_Rect2.getCPtr(arg3_), SWIGTYPE_p_Color.getCPtr(arg4_));
+  public void canvas_item_add_texture_rect_region(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_RID arg2_, Rect2 arg3_, SWIGTYPE_p_Color arg4_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect_region__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_), ref arg3_, SWIGTYPE_p_Color.getCPtr(arg4_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_texture_rect_region(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_RID arg2_, SWIGTYPE_p_Rect2 arg3_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect_region__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_RID.getCPtr(arg2_), SWIGTYPE_p_Rect2.getCPtr(arg3_));
+  public void canvas_item_add_texture_rect_region(SWIGTYPE_p_RID arg0_, Rect2 arg1_, SWIGTYPE_p_RID arg2_, Rect2 arg3_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_texture_rect_region__SWIG_2(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, SWIGTYPE_p_RID.getCPtr(arg2_), ref arg3_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_style_box(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_Rect2 arg2_, SWIGTYPE_p_RID arg3_, SWIGTYPE_p_RealArray arg4_, SWIGTYPE_p_Color arg5_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_style_box__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_Rect2.getCPtr(arg2_), SWIGTYPE_p_RID.getCPtr(arg3_), SWIGTYPE_p_RealArray.getCPtr(arg4_), SWIGTYPE_p_Color.getCPtr(arg5_));
+  public void canvas_item_add_style_box(SWIGTYPE_p_RID arg0_, Rect2 arg1_, Rect2 arg2_, SWIGTYPE_p_RID arg3_, SWIGTYPE_p_RealArray arg4_, SWIGTYPE_p_Color arg5_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_style_box__SWIG_0(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, ref arg2_, SWIGTYPE_p_RID.getCPtr(arg3_), SWIGTYPE_p_RealArray.getCPtr(arg4_), SWIGTYPE_p_Color.getCPtr(arg5_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void canvas_item_add_style_box(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_Rect2 arg1_, SWIGTYPE_p_Rect2 arg2_, SWIGTYPE_p_RID arg3_, SWIGTYPE_p_RealArray arg4_) {
-    GodotEnginePINVOKE.VisualServer_canvas_item_add_style_box__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_Rect2.getCPtr(arg1_), SWIGTYPE_p_Rect2.getCPtr(arg2_), SWIGTYPE_p_RID.getCPtr(arg3_), SWIGTYPE_p_RealArray.getCPtr(arg4_));
+  public void canvas_item_add_style_box(SWIGTYPE_p_RID arg0_, Rect2 arg1_, Rect2 arg2_, SWIGTYPE_p_RID arg3_, SWIGTYPE_p_RealArray arg4_) {
+    GodotEnginePINVOKE.VisualServer_canvas_item_add_style_box__SWIG_1(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), ref arg1_, ref arg2_, SWIGTYPE_p_RID.getCPtr(arg3_), SWIGTYPE_p_RealArray.getCPtr(arg4_));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -1018,7 +1018,7 @@ public class VisualServer : Object {
   }
 
   public void viewport_set_canvas_transform(SWIGTYPE_p_RID arg0_, SWIGTYPE_p_RID arg1_, Matrix32 arg2_) {
-    GodotEnginePINVOKE.VisualServer_viewport_set_canvas_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_RID.getCPtr(arg1_), ref arg2_.elements);
+    GodotEnginePINVOKE.VisualServer_viewport_set_canvas_transform(swigCPtr, SWIGTYPE_p_RID.getCPtr(arg0_), SWIGTYPE_p_RID.getCPtr(arg1_), ref arg2_);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

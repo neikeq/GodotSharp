@@ -50,7 +50,7 @@ public class CollisionObject2D : Node2D {
   }
 
   public void add_shape(Shape2D shape, Matrix32 transform) {
-    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_0(swigCPtr, Shape2D.getCPtr(shape), ref transform.elements);
+    GodotEnginePINVOKE.CollisionObject2D_add_shape__SWIG_0(swigCPtr, Shape2D.getCPtr(shape), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -68,7 +68,7 @@ public class CollisionObject2D : Node2D {
   }
 
   public void set_shape_transform(int shape_idx, Matrix32 transform) {
-    GodotEnginePINVOKE.CollisionObject2D_set_shape_transform(swigCPtr, shape_idx, ref transform.elements);
+    GodotEnginePINVOKE.CollisionObject2D_set_shape_transform(swigCPtr, shape_idx, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -85,7 +85,7 @@ public class CollisionObject2D : Node2D {
 }
 
   public Matrix32 get_shape_transform(int shape_idx) {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.CollisionObject2D_get_shape_transform(swigCPtr, shape_idx));
+    Matrix32 ret = GodotEnginePINVOKE.CollisionObject2D_get_shape_transform(swigCPtr, shape_idx);
     return ret;
 }
 

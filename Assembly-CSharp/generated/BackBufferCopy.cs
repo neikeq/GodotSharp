@@ -53,15 +53,15 @@ public class BackBufferCopy : Node2D {
     }
   }
 
-  public void set_rect(SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.BackBufferCopy_set_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void set_rect(Rect2 rect) {
+    GodotEnginePINVOKE.BackBufferCopy_set_rect(swigCPtr, ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.BackBufferCopy_get_rect(swigCPtr), true);
+  public Rect2 get_rect() {
+    Rect2 ret = GodotEnginePINVOKE.BackBufferCopy_get_rect(swigCPtr);
     return ret;
-  }
+}
 
   public void set_copy_mode(int copy_mode) {
     GodotEnginePINVOKE.BackBufferCopy_set_copy_mode(swigCPtr, copy_mode);

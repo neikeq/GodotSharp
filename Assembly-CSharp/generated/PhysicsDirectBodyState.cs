@@ -44,10 +44,10 @@ public class PhysicsDirectBodyState : Object {
   internal PhysicsDirectBodyState() {}
 
 
-  public SWIGTYPE_p_Vector3 get_total_gravity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_total_gravity(swigCPtr), true);
+  public Vector3 get_total_gravity() {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_total_gravity(swigCPtr);
     return ret;
-  }
+}
 
   public float get_total_linear_damp() {
     float ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_total_linear_damp(swigCPtr);
@@ -64,48 +64,48 @@ public class PhysicsDirectBodyState : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_inverse_inertia() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_inverse_inertia(swigCPtr), true);
+  public Vector3 get_inverse_inertia() {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_inverse_inertia(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_linear_velocity(SWIGTYPE_p_Vector3 velocity) {
-    GodotEnginePINVOKE.PhysicsDirectBodyState_set_linear_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(velocity));
+  public void set_linear_velocity(Vector3 velocity) {
+    GodotEnginePINVOKE.PhysicsDirectBodyState_set_linear_velocity(swigCPtr, ref velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_linear_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_linear_velocity(swigCPtr), true);
+  public Vector3 get_linear_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_linear_velocity(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_angular_velocity(SWIGTYPE_p_Vector3 velocity) {
-    GodotEnginePINVOKE.PhysicsDirectBodyState_set_angular_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(velocity));
+  public void set_angular_velocity(Vector3 velocity) {
+    GodotEnginePINVOKE.PhysicsDirectBodyState_set_angular_velocity(swigCPtr, ref velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_angular_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_angular_velocity(swigCPtr), true);
+  public Vector3 get_angular_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_angular_velocity(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_transform(SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsDirectBodyState_set_transform(swigCPtr, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void set_transform(Transform transform) {
+    GodotEnginePINVOKE.PhysicsDirectBodyState_set_transform(swigCPtr, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.PhysicsDirectBodyState_get_transform(swigCPtr), true);
+  public Transform get_transform() {
+    Transform ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_transform(swigCPtr);
     return ret;
-  }
+}
 
-  public void add_force(SWIGTYPE_p_Vector3 force, SWIGTYPE_p_Vector3 pos) {
-    GodotEnginePINVOKE.PhysicsDirectBodyState_add_force(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(force), SWIGTYPE_p_Vector3.getCPtr(pos));
+  public void add_force(Vector3 force, Vector3 pos) {
+    GodotEnginePINVOKE.PhysicsDirectBodyState_add_force(swigCPtr, ref force, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void apply_impulse(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 j) {
-    GodotEnginePINVOKE.PhysicsDirectBodyState_apply_impulse(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(j));
+  public void apply_impulse(Vector3 pos, Vector3 j) {
+    GodotEnginePINVOKE.PhysicsDirectBodyState_apply_impulse(swigCPtr, ref pos, ref j);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -123,15 +123,15 @@ public class PhysicsDirectBodyState : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_contact_local_pos(int contact_idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_local_pos(swigCPtr, contact_idx), true);
+  public Vector3 get_contact_local_pos(int contact_idx) {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_local_pos(swigCPtr, contact_idx);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_contact_local_normal(int contact_idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_local_normal(swigCPtr, contact_idx), true);
+  public Vector3 get_contact_local_normal(int contact_idx) {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_local_normal(swigCPtr, contact_idx);
     return ret;
-  }
+}
 
   public int get_contact_local_shape(int contact_idx) {
     int ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_local_shape(swigCPtr, contact_idx);
@@ -143,10 +143,10 @@ public class PhysicsDirectBodyState : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_contact_collider_pos(int contact_idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_collider_pos(swigCPtr, contact_idx), true);
+  public Vector3 get_contact_collider_pos(int contact_idx) {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_collider_pos(swigCPtr, contact_idx);
     return ret;
-  }
+}
 
   public int get_contact_collider_id(int contact_idx) {
     int ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_collider_id(swigCPtr, contact_idx);
@@ -166,10 +166,10 @@ public class PhysicsDirectBodyState : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_contact_collider_velocity_at_pos(int contact_idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_collider_velocity_at_pos(swigCPtr, contact_idx), true);
+  public Vector3 get_contact_collider_velocity_at_pos(int contact_idx) {
+    Vector3 ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_contact_collider_velocity_at_pos(swigCPtr, contact_idx);
     return ret;
-  }
+}
 
   public float get_step() {
     float ret = GodotEnginePINVOKE.PhysicsDirectBodyState_get_step(swigCPtr);

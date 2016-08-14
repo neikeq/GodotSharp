@@ -75,8 +75,8 @@ public class BitMap : Resource {
     return ret;
   }
 
-  public void set_bit_rect(SWIGTYPE_p_Rect2 p_rect, bool bit) {
-    GodotEnginePINVOKE.BitMap_set_bit_rect(swigCPtr, SWIGTYPE_p_Rect2.getCPtr(p_rect), bit);
+  public void set_bit_rect(Rect2 p_rect, bool bit) {
+    GodotEnginePINVOKE.BitMap_set_bit_rect(swigCPtr, ref p_rect, bit);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

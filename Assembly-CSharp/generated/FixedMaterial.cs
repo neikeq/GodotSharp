@@ -114,15 +114,15 @@ public class FixedMaterial : Material {
     return ret;
   }
 
-  public void set_uv_transform(SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.FixedMaterial_set_uv_transform(swigCPtr, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void set_uv_transform(Transform transform) {
+    GodotEnginePINVOKE.FixedMaterial_set_uv_transform(swigCPtr, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_uv_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.FixedMaterial_get_uv_transform(swigCPtr), true);
+  public Transform get_uv_transform() {
+    Transform ret = GodotEnginePINVOKE.FixedMaterial_get_uv_transform(swigCPtr);
     return ret;
-  }
+}
 
   public void set_light_shader(int shader) {
     GodotEnginePINVOKE.FixedMaterial_set_light_shader(swigCPtr, shader);

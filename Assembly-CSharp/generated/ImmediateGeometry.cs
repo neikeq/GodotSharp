@@ -54,8 +54,8 @@ public class ImmediateGeometry : GeometryInstance {
     GodotEnginePINVOKE.ImmediateGeometry_begin(swigCPtr, primitive, Texture.getCPtr(texture));
   }
 
-  public void set_normal(SWIGTYPE_p_Vector3 normal) {
-    GodotEnginePINVOKE.ImmediateGeometry_set_normal(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(normal));
+  public void set_normal(Vector3 normal) {
+    GodotEnginePINVOKE.ImmediateGeometry_set_normal(swigCPtr, ref normal);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -79,8 +79,8 @@ public class ImmediateGeometry : GeometryInstance {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_vertex(SWIGTYPE_p_Vector3 pos) {
-    GodotEnginePINVOKE.ImmediateGeometry_add_vertex(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos));
+  public void add_vertex(Vector3 pos) {
+    GodotEnginePINVOKE.ImmediateGeometry_add_vertex(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

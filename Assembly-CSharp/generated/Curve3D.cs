@@ -59,35 +59,35 @@ public class Curve3D : Resource {
     return ret;
   }
 
-  public void add_point(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 arg1, SWIGTYPE_p_Vector3 arg2, int atpos) {
-    GodotEnginePINVOKE.Curve3D_add_point__SWIG_0(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(arg1), SWIGTYPE_p_Vector3.getCPtr(arg2), atpos);
+  public void add_point(Vector3 pos, Vector3 arg1, Vector3 arg2, int atpos) {
+    GodotEnginePINVOKE.Curve3D_add_point__SWIG_0(swigCPtr, ref pos, ref arg1, ref arg2, atpos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_point(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 arg1, SWIGTYPE_p_Vector3 arg2) {
-    GodotEnginePINVOKE.Curve3D_add_point__SWIG_1(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(arg1), SWIGTYPE_p_Vector3.getCPtr(arg2));
+  public void add_point(Vector3 pos, Vector3 arg1, Vector3 arg2) {
+    GodotEnginePINVOKE.Curve3D_add_point__SWIG_1(swigCPtr, ref pos, ref arg1, ref arg2);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_point(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 arg1) {
-    GodotEnginePINVOKE.Curve3D_add_point__SWIG_2(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(arg1));
+  public void add_point(Vector3 pos, Vector3 arg1) {
+    GodotEnginePINVOKE.Curve3D_add_point__SWIG_2(swigCPtr, ref pos, ref arg1);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_point(SWIGTYPE_p_Vector3 pos) {
-    GodotEnginePINVOKE.Curve3D_add_point__SWIG_3(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos));
+  public void add_point(Vector3 pos) {
+    GodotEnginePINVOKE.Curve3D_add_point__SWIG_3(swigCPtr, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_point_pos(int idx, SWIGTYPE_p_Vector3 pos) {
-    GodotEnginePINVOKE.Curve3D_set_point_pos(swigCPtr, idx, SWIGTYPE_p_Vector3.getCPtr(pos));
+  public void set_point_pos(int idx, Vector3 pos) {
+    GodotEnginePINVOKE.Curve3D_set_point_pos(swigCPtr, idx, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_point_pos(int idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_get_point_pos(swigCPtr, idx), true);
+  public Vector3 get_point_pos(int idx) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_get_point_pos(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_point_tilt(int idx, float tilt) {
     GodotEnginePINVOKE.Curve3D_set_point_tilt(swigCPtr, idx, tilt);
@@ -98,39 +98,39 @@ public class Curve3D : Resource {
     return ret;
   }
 
-  public void set_point_in(int idx, SWIGTYPE_p_Vector3 pos) {
-    GodotEnginePINVOKE.Curve3D_set_point_in(swigCPtr, idx, SWIGTYPE_p_Vector3.getCPtr(pos));
+  public void set_point_in(int idx, Vector3 pos) {
+    GodotEnginePINVOKE.Curve3D_set_point_in(swigCPtr, idx, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_point_in(int idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_get_point_in(swigCPtr, idx), true);
+  public Vector3 get_point_in(int idx) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_get_point_in(swigCPtr, idx);
     return ret;
-  }
+}
 
-  public void set_point_out(int idx, SWIGTYPE_p_Vector3 pos) {
-    GodotEnginePINVOKE.Curve3D_set_point_out(swigCPtr, idx, SWIGTYPE_p_Vector3.getCPtr(pos));
+  public void set_point_out(int idx, Vector3 pos) {
+    GodotEnginePINVOKE.Curve3D_set_point_out(swigCPtr, idx, ref pos);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_point_out(int idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_get_point_out(swigCPtr, idx), true);
+  public Vector3 get_point_out(int idx) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_get_point_out(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void remove_point(int idx) {
     GodotEnginePINVOKE.Curve3D_remove_point(swigCPtr, idx);
   }
 
-  public SWIGTYPE_p_Vector3 interpolate(int idx, float t) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_interpolate(swigCPtr, idx, t), true);
+  public Vector3 interpolate(int idx, float t) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_interpolate(swigCPtr, idx, t);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 interpolatef(float fofs) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_interpolatef(swigCPtr, fofs), true);
+  public Vector3 interpolatef(float fofs) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_interpolatef(swigCPtr, fofs);
     return ret;
-  }
+}
 
   public void set_bake_interval(float distance) {
     GodotEnginePINVOKE.Curve3D_set_bake_interval(swigCPtr, distance);
@@ -146,15 +146,15 @@ public class Curve3D : Resource {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 interpolate_baked(float offset, bool cubic) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_interpolate_baked__SWIG_0(swigCPtr, offset, cubic), true);
+  public Vector3 interpolate_baked(float offset, bool cubic) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_interpolate_baked__SWIG_0(swigCPtr, offset, cubic);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 interpolate_baked(float offset) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Curve3D_interpolate_baked__SWIG_1(swigCPtr, offset), true);
+  public Vector3 interpolate_baked(float offset) {
+    Vector3 ret = GodotEnginePINVOKE.Curve3D_interpolate_baked__SWIG_1(swigCPtr, offset);
     return ret;
-  }
+}
 
   public SWIGTYPE_p_Vector3Array get_baked_points() {
     SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Curve3D_get_baked_points(swigCPtr), true);

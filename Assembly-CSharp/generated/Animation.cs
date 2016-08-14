@@ -120,8 +120,8 @@ public class Animation : Resource {
     return ret;
   }
 
-  public int transform_track_insert_key(int idx, float time, SWIGTYPE_p_Vector3 loc, SWIGTYPE_p_Quat rot, SWIGTYPE_p_Vector3 scale) {
-    int ret = GodotEnginePINVOKE.Animation_transform_track_insert_key(swigCPtr, idx, time, SWIGTYPE_p_Vector3.getCPtr(loc), SWIGTYPE_p_Quat.getCPtr(rot), SWIGTYPE_p_Vector3.getCPtr(scale));
+  public int transform_track_insert_key(int idx, float time, Vector3 loc, Quat rot, Vector3 scale) {
+    int ret = GodotEnginePINVOKE.Animation_transform_track_insert_key(swigCPtr, idx, time, ref loc, ref rot, ref scale);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

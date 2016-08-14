@@ -63,10 +63,10 @@ public class Listener : Spatial {
     return ret;
   }
 
-  public SWIGTYPE_p_Transform get_listener_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.Listener_get_listener_transform(swigCPtr), true);
+  public Transform get_listener_transform() {
+    Transform ret = GodotEnginePINVOKE.Listener_get_listener_transform(swigCPtr);
     return ret;
-  }
+}
 
 }
 

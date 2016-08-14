@@ -284,16 +284,12 @@
     <Compile Include="generated\SWIGTYPE_p_InputEvent.cs" />
     <Compile Include="generated\SWIGTYPE_p_IntArray.cs" />
     <Compile Include="generated\SWIGTYPE_p_Plane.cs" />
-    <Compile Include="generated\SWIGTYPE_p_Quat.cs" />
     <Compile Include="generated\SWIGTYPE_p_RID.cs" />
     <Compile Include="generated\SWIGTYPE_p_RawArray.cs" />
     <Compile Include="generated\SWIGTYPE_p_RealArray.cs" />
-    <Compile Include="generated\SWIGTYPE_p_Rect2.cs" />
     <Compile Include="generated\SWIGTYPE_p_StringArray.cs" />
-    <Compile Include="generated\SWIGTYPE_p_Transform.cs" />
     <Compile Include="generated\SWIGTYPE_p_TriangleMesh.cs" />
     <Compile Include="generated\SWIGTYPE_p_Vector2Array.cs" />
-    <Compile Include="generated\SWIGTYPE_p_Vector3.cs" />
     <Compile Include="generated\SWIGTYPE_p_Vector3Array.cs" />
     <Compile Include="generated\Sample.cs" />
     <Compile Include="generated\SampleLibrary.cs" />
@@ -398,11 +394,13 @@
     <Compile Include="generated\YSort.cs" />
     <Compile Include="core\Godot.cs" />
     <Compile Include="core\Mathf.cs" />
+    <Compile Include="core\Matrix3.cs" />
     <Compile Include="core\Matrix32.cs" />
+    <Compile Include="core\Quat.cs" />
+    <Compile Include="core\Rect2.cs" />
+    <Compile Include="core\Transform.cs" />
     <Compile Include="core\Vector2.cs" />
+    <Compile Include="core\Vector3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="generated\" />
-  </ItemGroup>
 </Project>

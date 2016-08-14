@@ -134,12 +134,12 @@ public class Node2D : CanvasItem {
 }
 
   public void set_transform(Matrix32 xform) {
-    GodotEnginePINVOKE.Node2D_set_transform(swigCPtr, ref xform.elements);
+    GodotEnginePINVOKE.Node2D_set_transform(swigCPtr, ref xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
   public void set_global_transform(Matrix32 xform) {
-    GodotEnginePINVOKE.Node2D_set_global_transform(swigCPtr, ref xform.elements);
+    GodotEnginePINVOKE.Node2D_set_global_transform(swigCPtr, ref xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -178,7 +178,7 @@ public class Node2D : CanvasItem {
   }
 
   public Matrix32 get_relative_transform_to_parent(Object parent) {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Node2D_get_relative_transform_to_parent(swigCPtr, Object.getCPtr(parent)));
+    Matrix32 ret = GodotEnginePINVOKE.Node2D_get_relative_transform_to_parent(swigCPtr, Object.getCPtr(parent));
     return ret;
 }
 

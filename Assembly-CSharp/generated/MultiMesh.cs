@@ -75,15 +75,15 @@ public class MultiMesh : Resource {
     return ret;
   }
 
-  public void set_instance_transform(int instance, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.MultiMesh_set_instance_transform(swigCPtr, instance, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void set_instance_transform(int instance, Transform transform) {
+    GodotEnginePINVOKE.MultiMesh_set_instance_transform(swigCPtr, instance, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_instance_transform(int instance) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.MultiMesh_get_instance_transform(swigCPtr, instance), true);
+  public Transform get_instance_transform(int instance) {
+    Transform ret = GodotEnginePINVOKE.MultiMesh_get_instance_transform(swigCPtr, instance);
     return ret;
-  }
+}
 
   public void set_instance_color(int instance, SWIGTYPE_p_Color color) {
     GodotEnginePINVOKE.MultiMesh_set_instance_color(swigCPtr, instance, SWIGTYPE_p_Color.getCPtr(color));

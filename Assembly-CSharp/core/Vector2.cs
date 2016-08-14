@@ -1,9 +1,9 @@
 using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace GodotEngine
 {
-    [Serializable]
     [StructLayout(LayoutKind.Sequential)]
     public struct Vector2 : IEquatable<Vector2>
     {
@@ -44,9 +44,9 @@ namespace GodotEngine
                         return x;
                     case 1:
                         return y;
+                    default:
+                        throw new IndexOutOfRangeException();
                 }
-
-                throw new IndexOutOfRangeException();
             }
             set
             {
@@ -58,135 +58,131 @@ namespace GodotEngine
                     case 1:
                         y = value;
                         return;
+                    default:
+                        throw new IndexOutOfRangeException();
                 }
-
-                throw new IndexOutOfRangeException();
             }
         }
 
-        public Vector2 abs()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void Normalize()
         {
-            return new Vector2(Mathf.abs(x), Mathf.abs(y));
-        }
-
-        public float angle()
-        {
-            return Mathf.atan2(x, y);
-        }
-
-        public float angle_to(Vector2 to)
-        {
-            return Mathf.atan2(tangent().dot(to), dot(to));
-        }
-
-        public float angle_to_point(Vector2 to)
-        {
-            return Mathf.atan2(x - to.x, y - to.y);
-        }
-
-        public Vector2 cubic_interpolate(Vector2 b, Vector2 pre_a, Vector2 post_b, float t)
-        {
-            float t2 = t * t;
-            float t3 = t2 * t;
-
-            Vector2 result = new Vector2();
-
-            result = 0.5f * ((this * 2.0f) + (-pre_a + b) * t +
-                    (2.0f * pre_a - 5.0f * this + 4f * b - post_b) * t2 +
-                    (-pre_a + 3.0f * this - 3.0f * b + post_b) * t3);
-
-            return result;
-        }
-
-        public float distance_squared_to(Vector2 to)
-        {
-            return (x - to.x) * (x - to.x) + (y - to.y) * (y - to.y);
-        }
-
-        public float distance_to(Vector2 to)
-        {
-            return Mathf.sqrt((x - to.x) * (x - to.x) + (y - to.y) * (y - to.y));
-        }
-
-        public float dot(Vector2 with)
-        {
-            return x * with.x + y * with.y;
-        }
-
-        public Vector2 floor()
-        {
-            return new Vector2(Mathf.floor(x), Mathf.floor(y));
-        }
-
-        // TODO: Unnecessary? Remove this one?
-        public Vector2 floorf()
-        {
-            return new Vector2(Mathf.floor(x), Mathf.floor(y));
-        }
-
-        public float get_aspect()
-        {
-            return x / y;
-        }
-
-        public float length()
-        {
-            return Mathf.sqrt(x * x + y * y);
-        }
-
-        public float length_squared()
-        {
-            return x * x + y * y;
-        }
-
-        public Vector2 linear_interpolate(Vector2 b, float t)
-        {
-            return this + new Vector2(t * (b.x - x), t * (b.y - y));
-        }
-
-        public Vector2 normalized()
-        {
-            Vector2 result = new Vector2();
-
             float length = x * x + y * y;
 
             if (length != 0f)
             {
-                length = Mathf.sqrt(length);
-                result.x /= length;
-                result.y /= length;
+                length = Mathf.Sqrt(length);
+                x /= length;
+                y /= length;
             }
+        }
 
+        public Vector2 Abs()
+        {
+            return new Vector2(Mathf.Abs(x), Mathf.Abs(y));
+        }
+
+        public float Angle()
+        {
+            return Mathf.Atan2(x, y);
+        }
+
+        public float AngleTo(Vector2 to)
+        {
+            return Mathf.Atan2(Tangent().Dot(to), Dot(to));
+        }
+
+        public float AngleToPoint(Vector2 to)
+        {
+            return Mathf.Atan2(x - to.x, y - to.y);
+        }
+
+        public Vector2 CubicInterpolate(Vector2 b, Vector2 preA, Vector2 postB, float t)
+        {
+            float t2 = t * t;
+            float t3 = t2 * t;
+
+            Vector2 ret = 0.5f * ((this * 2.0f) + (-preA + b) * t +
+                    (2.0f * preA - 5.0f * this + 4f * b - postB) * t2 +
+                    (-preA + 3.0f * this - 3.0f * b + postB) * t3);
+
+            return ret;
+        }
+
+        public float DistanceSquaredTo(Vector2 to)
+        {
+            return (x - to.x) * (x - to.x) + (y - to.y) * (y - to.y);
+        }
+
+        public float DistanceTo(Vector2 to)
+        {
+            return Mathf.Sqrt((x - to.x) * (x - to.x) + (y - to.y) * (y - to.y));
+        }
+
+        public float Dot(Vector2 with)
+        {
+            return x * with.x + y * with.y;
+        }
+
+        public Vector2 Floor()
+        {
+            return new Vector2(Mathf.Floor(x), Mathf.Floor(y));
+        }
+
+        public float GetAspect()
+        {
+            return x / y;
+        }
+
+        public float Length()
+        {
+            return Mathf.Sqrt(x * x + y * y);
+        }
+
+        public float LengthSquared()
+        {
+            return x * x + y * y;
+        }
+
+        public Vector2 LinearInterpolate(Vector2 b, float t)
+        {
+            return this + new Vector2(t * (b.x - x), t * (b.y - y));
+        }
+
+        public Vector2 Normalized()
+        {
+            Vector2 result = new Vector2();
+            result.Normalize();
             return result;
         }
 
-        public Vector2 reflect(Vector2 vec)
+        public Vector2 Reflect(Vector2 vec)
         {
-            return vec - this * dot(vec) * 2.0f;
+            return vec - this * Dot(vec) * 2.0f;
         }
 
-        public Vector2 rotated(float phi)
+        public Vector2 Rotated(float phi)
         {
-            float rads = angle() + phi;
-            return new Vector2(Mathf.sin(rads), Mathf.cos(rads)) * length();
+            float rads = Angle() + phi;
+            return new Vector2(Mathf.Sin(rads), Mathf.Cos(rads)) * Length();
         }
 
-        public Vector2 slide(Vector2 vec)
+        public Vector2 Slide(Vector2 vec)
         {
-            return vec - this * dot(vec);
+            return vec - this * Dot(vec);
         }
 
-        public Vector2 snapped(Vector2 by)
+        public Vector2 Snapped(Vector2 by)
         {
-            return new Vector2(Mathf.stepify(x, by.x), Mathf.stepify(y, by.y));
+            return new Vector2(Mathf.Stepify(x, by.x), Mathf.Stepify(y, by.y));
         }
 
-        public Vector2 tangent()
+        public Vector2 Tangent()
         {
             return new Vector2(y, -x);
         }
 
-        public Vector2(float x = 0f, float y = 0f)
+        public Vector2(float x, float y)
         {
             this.x = x;
             this.y = y;
@@ -236,9 +232,8 @@ namespace GodotEngine
 
         public static Vector2 operator /(Vector2 vec, float scale)
         {
-            float mult = 1.0f / scale;
-            vec.x *= mult;
-            vec.y *= mult;
+            vec.x /= scale;
+            vec.y /= scale;
             return vec;
         }
 
@@ -319,33 +314,26 @@ namespace GodotEngine
 
         public bool Equals(Vector2 other)
         {
-            // TODO: Replace with nearly equal comparison?
-            return x.Equals(other.x) && y.Equals(other.y);
+            return x == other.x && y == other.y;
         }
 
         public override int GetHashCode()
         {
-            unchecked
-            {
-                int hash = 17;
-                hash = hash * 29 + x.GetHashCode();
-                hash = hash * 29 + y.GetHashCode();
-                return hash;
-            }
+            return y.GetHashCode() ^ x.GetHashCode();
         }
 
         public override string ToString()
         {
-            return String.Format("({1}, {2}, {3})", new object[]
+            return String.Format("({1}, {2})", new object[]
             {
-                this.x,
-                this.y
+                this.x.ToString(),
+                this.y.ToString()
             });
         }
 
         public string ToString(string format)
         {
-            return String.Format("({1}, {2}, {3})", new object[]
+            return String.Format("({1}, {2})", new object[]
             {
                 this.x.ToString(format),
                 this.y.ToString(format)

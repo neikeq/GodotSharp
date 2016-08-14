@@ -50,25 +50,25 @@ public class StaticBody : PhysicsBody {
     }
   }
 
-  public void set_constant_linear_velocity(SWIGTYPE_p_Vector3 vel) {
-    GodotEnginePINVOKE.StaticBody_set_constant_linear_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(vel));
+  public void set_constant_linear_velocity(Vector3 vel) {
+    GodotEnginePINVOKE.StaticBody_set_constant_linear_velocity(swigCPtr, ref vel);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void set_constant_angular_velocity(SWIGTYPE_p_Vector3 vel) {
-    GodotEnginePINVOKE.StaticBody_set_constant_angular_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(vel));
+  public void set_constant_angular_velocity(Vector3 vel) {
+    GodotEnginePINVOKE.StaticBody_set_constant_angular_velocity(swigCPtr, ref vel);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_constant_linear_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.StaticBody_get_constant_linear_velocity(swigCPtr), true);
+  public Vector3 get_constant_linear_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.StaticBody_get_constant_linear_velocity(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Vector3 get_constant_angular_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.StaticBody_get_constant_angular_velocity(swigCPtr), true);
+  public Vector3 get_constant_angular_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.StaticBody_get_constant_angular_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public void set_friction(float friction) {
     GodotEnginePINVOKE.StaticBody_set_friction(swigCPtr, friction);

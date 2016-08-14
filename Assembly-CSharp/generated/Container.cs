@@ -55,8 +55,8 @@ public class Container : Control {
     GodotEnginePINVOKE.Container_queue_sort(swigCPtr);
   }
 
-  public void fit_child_in_rect(Control child, SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.Container_fit_child_in_rect(swigCPtr, Control.getCPtr(child), SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void fit_child_in_rect(Control child, Rect2 rect) {
+    GodotEnginePINVOKE.Container_fit_child_in_rect(swigCPtr, Control.getCPtr(child), ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

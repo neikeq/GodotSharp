@@ -95,10 +95,10 @@ public class VehicleBody : PhysicsBody {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_linear_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.VehicleBody_get_linear_velocity(swigCPtr), true);
+  public Vector3 get_linear_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.VehicleBody_get_linear_velocity(swigCPtr);
     return ret;
-  }
+}
 
 }
 

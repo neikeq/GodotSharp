@@ -99,15 +99,15 @@ public class ItemList : Control {
     return ret;
 }
 
-  public void set_item_icon_region(int idx, SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.ItemList_set_item_icon_region(swigCPtr, idx, SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void set_item_icon_region(int idx, Rect2 rect) {
+    GodotEnginePINVOKE.ItemList_set_item_icon_region(swigCPtr, idx, ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Rect2 get_item_icon_region(int idx) {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.ItemList_get_item_icon_region(swigCPtr, idx), true);
+  public Rect2 get_item_icon_region(int idx) {
+    Rect2 ret = GodotEnginePINVOKE.ItemList_get_item_icon_region(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_item_selectable(int idx, bool selectable) {
     GodotEnginePINVOKE.ItemList_set_item_selectable(swigCPtr, idx, selectable);

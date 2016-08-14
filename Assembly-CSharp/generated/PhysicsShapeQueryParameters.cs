@@ -68,15 +68,15 @@ public class PhysicsShapeQueryParameters : Reference {
     return ret;
   }
 
-  public void set_transform(SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.PhysicsShapeQueryParameters_set_transform(swigCPtr, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void set_transform(Transform transform) {
+    GodotEnginePINVOKE.PhysicsShapeQueryParameters_set_transform(swigCPtr, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Transform get_transform() {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.PhysicsShapeQueryParameters_get_transform(swigCPtr), true);
+  public Transform get_transform() {
+    Transform ret = GodotEnginePINVOKE.PhysicsShapeQueryParameters_get_transform(swigCPtr);
     return ret;
-  }
+}
 
   public void set_margin(float margin) {
     GodotEnginePINVOKE.PhysicsShapeQueryParameters_set_margin(swigCPtr, margin);

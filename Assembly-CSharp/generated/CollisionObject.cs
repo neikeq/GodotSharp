@@ -44,13 +44,13 @@ public class CollisionObject : Spatial {
   internal CollisionObject() {}
 
 
-  public void _input_event(Object camera, SWIGTYPE_p_InputEvent arg1, SWIGTYPE_p_Vector3 click_pos, SWIGTYPE_p_Vector3 click_normal, int shape_idx) {
-    GodotEnginePINVOKE.CollisionObject__input_event(swigCPtr, Object.getCPtr(camera), SWIGTYPE_p_InputEvent.getCPtr(arg1), SWIGTYPE_p_Vector3.getCPtr(click_pos), SWIGTYPE_p_Vector3.getCPtr(click_normal), shape_idx);
+  public void _input_event(Object camera, SWIGTYPE_p_InputEvent arg1, Vector3 click_pos, Vector3 click_normal, int shape_idx) {
+    GodotEnginePINVOKE.CollisionObject__input_event(swigCPtr, Object.getCPtr(camera), SWIGTYPE_p_InputEvent.getCPtr(arg1), ref click_pos, ref click_normal, shape_idx);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_shape(Shape shape, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.CollisionObject_add_shape__SWIG_0(swigCPtr, Shape.getCPtr(shape), SWIGTYPE_p_Transform.getCPtr(transform));
+  public void add_shape(Shape shape, Transform transform) {
+    GodotEnginePINVOKE.CollisionObject_add_shape__SWIG_0(swigCPtr, Shape.getCPtr(shape), ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -67,8 +67,8 @@ public class CollisionObject : Spatial {
     GodotEnginePINVOKE.CollisionObject_set_shape(swigCPtr, shape_idx, Shape.getCPtr(shape));
   }
 
-  public void set_shape_transform(int shape_idx, SWIGTYPE_p_Transform transform) {
-    GodotEnginePINVOKE.CollisionObject_set_shape_transform(swigCPtr, shape_idx, SWIGTYPE_p_Transform.getCPtr(transform));
+  public void set_shape_transform(int shape_idx, Transform transform) {
+    GodotEnginePINVOKE.CollisionObject_set_shape_transform(swigCPtr, shape_idx, ref transform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
@@ -89,10 +89,10 @@ public class CollisionObject : Spatial {
     return ret;
 }
 
-  public SWIGTYPE_p_Transform get_shape_transform(int shape_idx) {
-    SWIGTYPE_p_Transform ret = new SWIGTYPE_p_Transform(GodotEnginePINVOKE.CollisionObject_get_shape_transform(swigCPtr, shape_idx), true);
+  public Transform get_shape_transform(int shape_idx) {
+    Transform ret = GodotEnginePINVOKE.CollisionObject_get_shape_transform(swigCPtr, shape_idx);
     return ret;
-  }
+}
 
   public void remove_shape(int shape_idx) {
     GodotEnginePINVOKE.CollisionObject_remove_shape(swigCPtr, shape_idx);

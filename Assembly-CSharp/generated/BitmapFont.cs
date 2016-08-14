@@ -81,18 +81,18 @@ public class BitmapFont : Font {
     GodotEnginePINVOKE.BitmapFont_add_texture(swigCPtr, Texture.getCPtr(texture));
   }
 
-  public void add_char(int character, int texture, SWIGTYPE_p_Rect2 rect, Vector2 align, float advance) {
-    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_0(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect), ref align, advance);
+  public void add_char(int character, int texture, Rect2 rect, Vector2 align, float advance) {
+    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_0(swigCPtr, character, texture, ref rect, ref align, advance);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_char(int character, int texture, SWIGTYPE_p_Rect2 rect, Vector2 align) {
-    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_1(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect), ref align);
+  public void add_char(int character, int texture, Rect2 rect, Vector2 align) {
+    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_1(swigCPtr, character, texture, ref rect, ref align);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void add_char(int character, int texture, SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_2(swigCPtr, character, texture, SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void add_char(int character, int texture, Rect2 rect) {
+    GodotEnginePINVOKE.BitmapFont_add_char__SWIG_2(swigCPtr, character, texture, ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

@@ -103,25 +103,25 @@ public class RigidBody : PhysicsBody {
     return ret;
   }
 
-  public void set_linear_velocity(SWIGTYPE_p_Vector3 linear_velocity) {
-    GodotEnginePINVOKE.RigidBody_set_linear_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(linear_velocity));
+  public void set_linear_velocity(Vector3 linear_velocity) {
+    GodotEnginePINVOKE.RigidBody_set_linear_velocity(swigCPtr, ref linear_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_linear_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.RigidBody_get_linear_velocity(swigCPtr), true);
+  public Vector3 get_linear_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.RigidBody_get_linear_velocity(swigCPtr);
     return ret;
-  }
+}
 
-  public void set_angular_velocity(SWIGTYPE_p_Vector3 angular_velocity) {
-    GodotEnginePINVOKE.RigidBody_set_angular_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(angular_velocity));
+  public void set_angular_velocity(Vector3 angular_velocity) {
+    GodotEnginePINVOKE.RigidBody_set_angular_velocity(swigCPtr, ref angular_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_angular_velocity() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.RigidBody_get_angular_velocity(swigCPtr), true);
+  public Vector3 get_angular_velocity() {
+    Vector3 ret = GodotEnginePINVOKE.RigidBody_get_angular_velocity(swigCPtr);
     return ret;
-  }
+}
 
   public void set_gravity_scale(float gravity_scale) {
     GodotEnginePINVOKE.RigidBody_set_gravity_scale(swigCPtr, gravity_scale);
@@ -186,13 +186,13 @@ public class RigidBody : PhysicsBody {
     return ret;
   }
 
-  public void set_axis_velocity(SWIGTYPE_p_Vector3 axis_velocity) {
-    GodotEnginePINVOKE.RigidBody_set_axis_velocity(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(axis_velocity));
+  public void set_axis_velocity(Vector3 axis_velocity) {
+    GodotEnginePINVOKE.RigidBody_set_axis_velocity(swigCPtr, ref axis_velocity);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public void apply_impulse(SWIGTYPE_p_Vector3 pos, SWIGTYPE_p_Vector3 impulse) {
-    GodotEnginePINVOKE.RigidBody_apply_impulse(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(pos), SWIGTYPE_p_Vector3.getCPtr(impulse));
+  public void apply_impulse(Vector3 pos, Vector3 impulse) {
+    GodotEnginePINVOKE.RigidBody_apply_impulse(swigCPtr, ref pos, ref impulse);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

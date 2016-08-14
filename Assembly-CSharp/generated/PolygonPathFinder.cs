@@ -92,10 +92,10 @@ public class PolygonPathFinder : Resource {
     return ret;
   }
 
-  public SWIGTYPE_p_Rect2 get_bounds() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.PolygonPathFinder_get_bounds(swigCPtr), true);
+  public Rect2 get_bounds() {
+    Rect2 ret = GodotEnginePINVOKE.PolygonPathFinder_get_bounds(swigCPtr);
     return ret;
-  }
+}
 
 }
 

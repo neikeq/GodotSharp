@@ -64,15 +64,15 @@ public class ProximityGroup : Spatial {
     GodotEnginePINVOKE.ProximityGroup_set_dispatch_mode(swigCPtr, mode);
   }
 
-  public void set_grid_radius(SWIGTYPE_p_Vector3 radius) {
-    GodotEnginePINVOKE.ProximityGroup_set_grid_radius(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(radius));
+  public void set_grid_radius(Vector3 radius) {
+    GodotEnginePINVOKE.ProximityGroup_set_grid_radius(swigCPtr, ref radius);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_grid_radius() {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.ProximityGroup_get_grid_radius(swigCPtr), true);
+  public Vector3 get_grid_radius() {
+    Vector3 ret = GodotEnginePINVOKE.ProximityGroup_get_grid_radius(swigCPtr);
     return ret;
-  }
+}
 
 }
 

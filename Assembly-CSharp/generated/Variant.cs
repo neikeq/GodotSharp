@@ -56,8 +56,28 @@ public class Variant : global::System.IDisposable {
     return from.operator_to_Vector2();
   }
   
+  public static implicit operator Rect2(Variant from) {
+    return from.operator_to_Rect2();
+  }
+  
   public static implicit operator Matrix32(Variant from) {
     return from.operator_to_Matrix32();
+  }
+  
+  public static implicit operator Vector3(Variant from) {
+    return from.operator_to_Vector3();
+  }
+  
+  public static implicit operator Matrix3(Variant from) {
+    return from.operator_to_Matrix3();
+  }
+  
+  public static implicit operator Quat(Variant from) {
+    return from.operator_to_Quat();
+  }
+  
+  public static implicit operator Transform(Variant from) {
+    return from.operator_to_Transform();
   }
   
   public static implicit operator Object(Variant from) {
@@ -90,7 +110,27 @@ public class Variant : global::System.IDisposable {
     return new Variant(from);
   }
   
+  public static implicit operator Variant(Rect2 from) {
+    return new Variant(from);
+  }
+  
   public static implicit operator Variant(Matrix32 from) {
+    return new Variant(from);
+  }
+  
+  public static implicit operator Variant(Vector3 from) {
+    return new Variant(from);
+  }
+  
+  public static implicit operator Variant(Matrix3 from) {
+    return new Variant(from);
+  }
+  
+  public static implicit operator Variant(Quat from) {
+    return new Variant(from);
+  }
+  
+  public static implicit operator Variant(Transform from) {
     return new Variant(from);
   }
   
@@ -127,8 +167,33 @@ public class Variant : global::System.IDisposable {
     return ret;
 }
 
+  public Rect2 operator_to_Rect2() {
+    Rect2 ret = GodotEnginePINVOKE.Variant_operator_to_Rect2(swigCPtr);
+    return ret;
+}
+
   public Matrix32 operator_to_Matrix32() {
-    Matrix32 ret = new Matrix32(GodotEnginePINVOKE.Variant_operator_to_Matrix32(swigCPtr));
+    Matrix32 ret = GodotEnginePINVOKE.Variant_operator_to_Matrix32(swigCPtr);
+    return ret;
+}
+
+  public Vector3 operator_to_Vector3() {
+    Vector3 ret = GodotEnginePINVOKE.Variant_operator_to_Vector3(swigCPtr);
+    return ret;
+}
+
+  public Matrix3 operator_to_Matrix3() {
+    Matrix3 ret = GodotEnginePINVOKE.Variant_operator_to_Matrix3(swigCPtr);
+    return ret;
+}
+
+  public Quat operator_to_Quat() {
+    Quat ret = GodotEnginePINVOKE.Variant_operator_to_Quat(swigCPtr);
+    return ret;
+}
+
+  public Transform operator_to_Transform() {
+    Transform ret = GodotEnginePINVOKE.Variant_operator_to_Transform(swigCPtr);
     return ret;
 }
 
@@ -156,7 +221,7 @@ public class Variant : global::System.IDisposable {
   public Variant(bool p_bool) : this(GodotEnginePINVOKE.new_Variant__SWIG_1(p_bool), true) {
   }
 
-  public Variant(int o_int) : this(GodotEnginePINVOKE.new_Variant__SWIG_2(o_int), true) {
+  public Variant(int p_int) : this(GodotEnginePINVOKE.new_Variant__SWIG_2(p_int), true) {
   }
 
   public Variant(float p_float) : this(GodotEnginePINVOKE.new_Variant__SWIG_3(p_float), true) {
@@ -166,15 +231,35 @@ public class Variant : global::System.IDisposable {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public Variant(Object p_object) : this(GodotEnginePINVOKE.new_Variant__SWIG_5(Object.getCPtr(p_object)), true) {
-  }
-
-  public Variant(Matrix32 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_6(ref p_transform.elements), true) {
+  public Variant(Vector2 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_5(ref p_transform), true) {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public Variant(Vector2 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_7(ref p_transform), true) {
+  public Variant(Rect2 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_6(ref p_transform), true) {
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Matrix32 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_7(ref p_transform), true) {
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Vector3 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_8(ref p_transform), true) {
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Matrix3 p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_9(ref p_transform), true) {
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Quat p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_10(ref p_transform), true) {
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Transform p_transform) : this(GodotEnginePINVOKE.new_Variant__SWIG_11(ref p_transform), true) {
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public Variant(Object p_object) : this(GodotEnginePINVOKE.new_Variant__SWIG_12(Object.getCPtr(p_object)), true) {
   }
 
 }

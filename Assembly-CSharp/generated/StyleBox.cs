@@ -48,8 +48,8 @@ public class StyleBox : Resource {
   internal StyleBox() {}
 
 
-  public bool test_mask(Vector2 point, SWIGTYPE_p_Rect2 rect) {
-    bool ret = GodotEnginePINVOKE.StyleBox_test_mask(swigCPtr, ref point, SWIGTYPE_p_Rect2.getCPtr(rect));
+  public bool test_mask(Vector2 point, Rect2 rect) {
+    bool ret = GodotEnginePINVOKE.StyleBox_test_mask(swigCPtr, ref point, ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -83,8 +83,8 @@ public class StyleBox : Resource {
     return ret;
 }
 
-  public void draw(SWIGTYPE_p_RID canvas_item, SWIGTYPE_p_Rect2 rect) {
-    GodotEnginePINVOKE.StyleBox_draw(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), SWIGTYPE_p_Rect2.getCPtr(rect));
+  public void draw(SWIGTYPE_p_RID canvas_item, Rect2 rect) {
+    GodotEnginePINVOKE.StyleBox_draw(swigCPtr, SWIGTYPE_p_RID.getCPtr(canvas_item), ref rect);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

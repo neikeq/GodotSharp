@@ -87,6 +87,8 @@ public:
 	virtual bool has_source_code() const;
 	virtual String get_source_code() const;
 	virtual void set_source_code(const String &p_code);
+	/* TODO */ bool has_method(const StringName &p_method) const { return false; }
+	/* TODO */ MethodInfo get_method_info(const StringName &p_method) const { return MethodInfo(); }
 	virtual Error reload(bool p_keep_state=false);
 	virtual bool is_tool() const { return tool; }
 	virtual String get_node_type() const;
@@ -95,6 +97,7 @@ public:
 	/* TODO */ virtual void get_script_signal_list(List<MethodInfo> *r_signals) const {}
 	/* TODO */ virtual bool get_property_default_value(const StringName &p_property, Variant &r_value) const { return false; }
 	/* TODO */ virtual void update_exports() {}
+	/* TODO */ virtual void get_method_list(List<MethodInfo> *p_list) const {}
 
 	Error load_source_code(const String& p_path);
 
@@ -178,7 +181,7 @@ public:
 	virtual void get_reserved_words(List<String> *p_words) const;
 	virtual void get_comment_delimiters(List<String> *p_delimiters) const;
 	virtual void get_string_delimiters(List<String> *p_delimiters) const;
-	virtual String get_template(const String &p_class_name, const String &p_base_class_name) const;
+	virtual Ref<Script> get_template(const String &p_class_name, const String &p_base_class_name) const;
 	/* TODO */ virtual bool validate(const String &p_script, int &r_line_error, int &r_col_error, String &r_test_error, const String &p_path, List<String> *r_functions) const { return true; }
 	virtual Script *create_script() const;
 	virtual bool has_named_classes() const;

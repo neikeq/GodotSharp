@@ -58,25 +58,25 @@ public class Shape2D : Resource {
   }
 
   public bool collide(Matrix32 local_xform, Shape2D with_shape, Matrix32 shape_xform) {
-    bool ret = GodotEnginePINVOKE.Shape2D_collide(swigCPtr, ref local_xform.elements, Shape2D.getCPtr(with_shape), ref shape_xform.elements);
+    bool ret = GodotEnginePINVOKE.Shape2D_collide(swigCPtr, ref local_xform, Shape2D.getCPtr(with_shape), ref shape_xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public bool collide_with_motion(Matrix32 local_xform, Vector2 local_motion, Shape2D with_shape, Matrix32 shape_xform, Vector2 shape_motion) {
-    bool ret = GodotEnginePINVOKE.Shape2D_collide_with_motion(swigCPtr, ref local_xform.elements, ref local_motion, Shape2D.getCPtr(with_shape), ref shape_xform.elements, ref shape_motion);
+    bool ret = GodotEnginePINVOKE.Shape2D_collide_with_motion(swigCPtr, ref local_xform, ref local_motion, Shape2D.getCPtr(with_shape), ref shape_xform, ref shape_motion);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Variant collide_and_get_contacts(Matrix32 local_xform, Shape2D with_shape, Matrix32 shape_xform) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_and_get_contacts(swigCPtr, ref local_xform.elements, Shape2D.getCPtr(with_shape), ref shape_xform.elements), true);
+    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_and_get_contacts(swigCPtr, ref local_xform, Shape2D.getCPtr(with_shape), ref shape_xform), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public Variant collide_with_motion_and_get_contacts(Matrix32 local_xform, Vector2 local_motion, Shape2D with_shape, Matrix32 shape_xform, Vector2 shape_motion) {
-    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_with_motion_and_get_contacts(swigCPtr, ref local_xform.elements, ref local_motion, Shape2D.getCPtr(with_shape), ref shape_xform.elements, ref shape_motion), true);
+    Variant ret = new Variant(GodotEnginePINVOKE.Shape2D_collide_with_motion_and_get_contacts(swigCPtr, ref local_xform, ref local_motion, Shape2D.getCPtr(with_shape), ref shape_xform, ref shape_motion), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

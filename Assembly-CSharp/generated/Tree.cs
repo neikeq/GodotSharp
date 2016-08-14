@@ -153,20 +153,20 @@ public class Tree : Control {
     return ret;
   }
 
-  public SWIGTYPE_p_Rect2 get_custom_popup_rect() {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Tree_get_custom_popup_rect(swigCPtr), true);
+  public Rect2 get_custom_popup_rect() {
+    Rect2 ret = GodotEnginePINVOKE.Tree_get_custom_popup_rect(swigCPtr);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Rect2 get_item_area_rect(TreeItem item, int column) {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Tree_get_item_area_rect__SWIG_0(swigCPtr, TreeItem.getCPtr(item), column), true);
+  public Rect2 get_item_area_rect(TreeItem item, int column) {
+    Rect2 ret = GodotEnginePINVOKE.Tree_get_item_area_rect__SWIG_0(swigCPtr, TreeItem.getCPtr(item), column);
     return ret;
-  }
+}
 
-  public SWIGTYPE_p_Rect2 get_item_area_rect(TreeItem item) {
-    SWIGTYPE_p_Rect2 ret = new SWIGTYPE_p_Rect2(GodotEnginePINVOKE.Tree_get_item_area_rect__SWIG_1(swigCPtr, TreeItem.getCPtr(item)), true);
+  public Rect2 get_item_area_rect(TreeItem item) {
+    Rect2 ret = GodotEnginePINVOKE.Tree_get_item_area_rect__SWIG_1(swigCPtr, TreeItem.getCPtr(item));
     return ret;
-  }
+}
 
   public TreeItem get_item_at_pos(Vector2 pos) {
     global::System.IntPtr cPtr = GodotEnginePINVOKE.Tree_get_item_at_pos(swigCPtr, ref pos);

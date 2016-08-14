@@ -54,8 +54,8 @@ public class Geometry : Object {
   internal Geometry() {}
 
 
-  public SWIGTYPE_p_Array build_box_planes(SWIGTYPE_p_Vector3 extents) {
-    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Geometry_build_box_planes(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(extents)), true);
+  public SWIGTYPE_p_Array build_box_planes(Vector3 extents) {
+    SWIGTYPE_p_Array ret = new SWIGTYPE_p_Array(GodotEnginePINVOKE.Geometry_build_box_planes(swigCPtr, ref extents), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
@@ -97,48 +97,48 @@ public class Geometry : Object {
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3Array get_closest_points_between_segments(SWIGTYPE_p_Vector3 p1, SWIGTYPE_p_Vector3 p2, SWIGTYPE_p_Vector3 q1, SWIGTYPE_p_Vector3 q2) {
-    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_get_closest_points_between_segments(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(p1), SWIGTYPE_p_Vector3.getCPtr(p2), SWIGTYPE_p_Vector3.getCPtr(q1), SWIGTYPE_p_Vector3.getCPtr(q2)), true);
+  public SWIGTYPE_p_Vector3Array get_closest_points_between_segments(Vector3 p1, Vector3 p2, Vector3 q1, Vector3 q2) {
+    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_get_closest_points_between_segments(swigCPtr, ref p1, ref p2, ref q1, ref q2), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3 get_closest_point_to_segment(SWIGTYPE_p_Vector3 point, SWIGTYPE_p_Vector3 s1, SWIGTYPE_p_Vector3 s2) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.Geometry_get_closest_point_to_segment(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(point), SWIGTYPE_p_Vector3.getCPtr(s1), SWIGTYPE_p_Vector3.getCPtr(s2)), true);
+  public Vector3 get_closest_point_to_segment(Vector3 point, Vector3 s1, Vector3 s2) {
+    Vector3 ret = GodotEnginePINVOKE.Geometry_get_closest_point_to_segment(swigCPtr, ref point, ref s1, ref s2);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+    return ret;
+}
+
+  public int get_uv84_normal_bit(Vector3 normal) {
+    int ret = GodotEnginePINVOKE.Geometry_get_uv84_normal_bit(swigCPtr, ref normal);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public int get_uv84_normal_bit(SWIGTYPE_p_Vector3 normal) {
-    int ret = GodotEnginePINVOKE.Geometry_get_uv84_normal_bit(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(normal));
+  public void ray_intersects_triangle(Vector3 from, Vector3 dir, Vector3 a, Vector3 b, Vector3 c) {
+    GodotEnginePINVOKE.Geometry_ray_intersects_triangle(swigCPtr, ref from, ref dir, ref a, ref b, ref c);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public void segment_intersects_triangle(Vector3 from, Vector3 to, Vector3 a, Vector3 b, Vector3 c) {
+    GodotEnginePINVOKE.Geometry_segment_intersects_triangle(swigCPtr, ref from, ref to, ref a, ref b, ref c);
+    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
+  }
+
+  public SWIGTYPE_p_Vector3Array segment_intersects_sphere(Vector3 from, Vector3 to, Vector3 spos, float sradius) {
+    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_segment_intersects_sphere(swigCPtr, ref from, ref to, ref spos, sradius), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public void ray_intersects_triangle(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 dir, SWIGTYPE_p_Vector3 a, SWIGTYPE_p_Vector3 b, SWIGTYPE_p_Vector3 c) {
-    GodotEnginePINVOKE.Geometry_ray_intersects_triangle(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(dir), SWIGTYPE_p_Vector3.getCPtr(a), SWIGTYPE_p_Vector3.getCPtr(b), SWIGTYPE_p_Vector3.getCPtr(c));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public void segment_intersects_triangle(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, SWIGTYPE_p_Vector3 a, SWIGTYPE_p_Vector3 b, SWIGTYPE_p_Vector3 c) {
-    GodotEnginePINVOKE.Geometry_segment_intersects_triangle(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), SWIGTYPE_p_Vector3.getCPtr(a), SWIGTYPE_p_Vector3.getCPtr(b), SWIGTYPE_p_Vector3.getCPtr(c));
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-  }
-
-  public SWIGTYPE_p_Vector3Array segment_intersects_sphere(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, SWIGTYPE_p_Vector3 spos, float sradius) {
-    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_segment_intersects_sphere(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), SWIGTYPE_p_Vector3.getCPtr(spos), sradius), true);
+  public SWIGTYPE_p_Vector3Array segment_intersects_cylinder(Vector3 from, Vector3 to, float height, float radius) {
+    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_segment_intersects_cylinder(swigCPtr, ref from, ref to, height, radius), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
-  public SWIGTYPE_p_Vector3Array segment_intersects_cylinder(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, float height, float radius) {
-    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_segment_intersects_cylinder(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), height, radius), true);
-    if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
-    return ret;
-  }
-
-  public SWIGTYPE_p_Vector3Array segment_intersects_convex(SWIGTYPE_p_Vector3 from, SWIGTYPE_p_Vector3 to, SWIGTYPE_p_Array planes) {
-    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_segment_intersects_convex(swigCPtr, SWIGTYPE_p_Vector3.getCPtr(from), SWIGTYPE_p_Vector3.getCPtr(to), SWIGTYPE_p_Array.getCPtr(planes)), true);
+  public SWIGTYPE_p_Vector3Array segment_intersects_convex(Vector3 from, Vector3 to, SWIGTYPE_p_Array planes) {
+    SWIGTYPE_p_Vector3Array ret = new SWIGTYPE_p_Vector3Array(GodotEnginePINVOKE.Geometry_segment_intersects_convex(swigCPtr, ref from, ref to, SWIGTYPE_p_Array.getCPtr(planes)), true);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }

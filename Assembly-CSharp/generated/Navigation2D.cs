@@ -51,19 +51,19 @@ public class Navigation2D : Node2D {
   }
 
   public int navpoly_create(NavigationPolygon mesh, Matrix32 xform, Object owner) {
-    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform.elements, Object.getCPtr(owner));
+    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_0(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform, Object.getCPtr(owner));
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public int navpoly_create(NavigationPolygon mesh, Matrix32 xform) {
-    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_1(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform.elements);
+    int ret = GodotEnginePINVOKE.Navigation2D_navpoly_create__SWIG_1(swigCPtr, NavigationPolygon.getCPtr(mesh), ref xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
     return ret;
   }
 
   public void navpoly_set_transform(int id, Matrix32 xform) {
-    GodotEnginePINVOKE.Navigation2D_navpoly_set_transform(swigCPtr, id, ref xform.elements);
+    GodotEnginePINVOKE.Navigation2D_navpoly_set_transform(swigCPtr, id, ref xform);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 

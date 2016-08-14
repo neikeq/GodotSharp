@@ -88,25 +88,25 @@ public class MeshDataTool : Reference {
     return ret;
   }
 
-  public void set_vertex(int idx, SWIGTYPE_p_Vector3 vertex) {
-    GodotEnginePINVOKE.MeshDataTool_set_vertex(swigCPtr, idx, SWIGTYPE_p_Vector3.getCPtr(vertex));
+  public void set_vertex(int idx, Vector3 vertex) {
+    GodotEnginePINVOKE.MeshDataTool_set_vertex(swigCPtr, idx, ref vertex);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_vertex(int idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.MeshDataTool_get_vertex(swigCPtr, idx), true);
+  public Vector3 get_vertex(int idx) {
+    Vector3 ret = GodotEnginePINVOKE.MeshDataTool_get_vertex(swigCPtr, idx);
     return ret;
-  }
+}
 
-  public void set_vertex_normal(int idx, SWIGTYPE_p_Vector3 normal) {
-    GodotEnginePINVOKE.MeshDataTool_set_vertex_normal(swigCPtr, idx, SWIGTYPE_p_Vector3.getCPtr(normal));
+  public void set_vertex_normal(int idx, Vector3 normal) {
+    GodotEnginePINVOKE.MeshDataTool_set_vertex_normal(swigCPtr, idx, ref normal);
     if (GodotEnginePINVOKE.SWIGPendingException.Pending) throw GodotEnginePINVOKE.SWIGPendingException.Retrieve();
   }
 
-  public SWIGTYPE_p_Vector3 get_vertex_normal(int idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.MeshDataTool_get_vertex_normal(swigCPtr, idx), true);
+  public Vector3 get_vertex_normal(int idx) {
+    Vector3 ret = GodotEnginePINVOKE.MeshDataTool_get_vertex_normal(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_vertex_tangent(int idx, SWIGTYPE_p_Plane tangent) {
     GodotEnginePINVOKE.MeshDataTool_set_vertex_tangent(swigCPtr, idx, SWIGTYPE_p_Plane.getCPtr(tangent));
@@ -225,10 +225,10 @@ public class MeshDataTool : Reference {
     GodotEnginePINVOKE.MeshDataTool_get_face_meta(swigCPtr, idx);
   }
 
-  public SWIGTYPE_p_Vector3 get_face_normal(int idx) {
-    SWIGTYPE_p_Vector3 ret = new SWIGTYPE_p_Vector3(GodotEnginePINVOKE.MeshDataTool_get_face_normal(swigCPtr, idx), true);
+  public Vector3 get_face_normal(int idx) {
+    Vector3 ret = GodotEnginePINVOKE.MeshDataTool_get_face_normal(swigCPtr, idx);
     return ret;
-  }
+}
 
   public void set_material(Material material) {
     GodotEnginePINVOKE.MeshDataTool_set_material(swigCPtr, Material.getCPtr(material));
