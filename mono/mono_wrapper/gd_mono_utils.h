@@ -16,17 +16,22 @@ class GDMonoUtils
 public:
 	struct ClassCache
 	{
-		GDMonoClass* object_system;
-		GDMonoClass* handle_ref;
-		GDMonoClass* internal_helpers;
-		GDMonoClass* variant;
-		GDMonoClass* vector2;
-		GDMonoClass* matrix32;
-		GDMonoClass* node_path;
-		GDMonoClass* object_godot;
-		GDMonoClass* node;
-		GDMonoClass* control;
-		GDMonoClass* spatial;
+		GDMonoClass* MonoObject;
+		GDMonoClass* HandleRef;
+		GDMonoClass* InternalHelpers;
+		GDMonoClass* Variant;
+		GDMonoClass* Vector2;
+		GDMonoClass* Rect2;
+		GDMonoClass* Matrix32;
+		GDMonoClass* Vector3;
+		GDMonoClass* Matrix3;
+		GDMonoClass* Quat;
+		GDMonoClass* Transform;
+		GDMonoClass* NodePath;
+		GDMonoClass* GodotObject;
+		GDMonoClass* Node;
+		GDMonoClass* Control;
+		GDMonoClass* Spatial;
 
 		void clear();
 
@@ -46,6 +51,19 @@ public:
 		p_hash ^= HashMapHahserDefault::hash(p_key) + 0x9e3779b9 + (p_hash << 6) + (p_hash >> 2);
 	}
 
+	static String mono_to_utf8_string(MonoString* p_mono_string);
+	static String mono_to_utf16_string(MonoString* p_mono_string);
+
+	inline static MonoString* mono_from_utf8_string(const String& p_string)
+	{
+		return mono_string_new(mono_domain_get(), p_string.utf8().get_data());
+	}
+
+	inline static MonoString* mono_from_utf16_string(const String& p_string)
+	{
+		return mono_string_from_utf16((mono_unichar2*)p_string.c_str());
+	}
+
 	static void set_main_thread(MonoThread* p_thread);
 	static MonoThread* get_current_thread();
 
@@ -61,19 +79,24 @@ public:
 	static MonoObject* create_managed_for_unmanaged_object(GDMonoClass* p_class, GDMonoClass* p_native, Object* p_object);
 };
 
-#define UNBOX_DOUBLE( x )	*(double *)			mono_object_unbox( x )
-#define UNBOX_FLOAT( x )	*(float *)			mono_object_unbox( x )
-#define UNBOX_INT64( x )	*(int64_t *)		mono_object_unbox( x )
-#define UNBOX_INT32( x )	*(int32_t *)		mono_object_unbox( x )
-#define UNBOX_INT16( x )	*(int16_t *)		mono_object_unbox( x )
-#define UNBOX_INT8( x )		*(int8_t *)			mono_object_unbox( x )
-#define UNBOX_UINT64( x )	*(uint64_t *)		mono_object_unbox( x )
-#define UNBOX_UINT32( x )	*(uint32_t *)		mono_object_unbox( x )
-#define UNBOX_UINT16( x )	*(uint16_t *)		mono_object_unbox( x )
-#define UNBOX_UINT8( x )	*(uint8_t *)		mono_object_unbox( x )
-#define UNBOX_BOOLEAN( x )	*(MonoBoolean *)	mono_object_unbox( x )
-#define UNBOX_CHAR( x )		(wchar_t *)			mono_object_unbox( x )
-#define UNBOX_PTR( x )							mono_object_unbox( x )
+#define CACHED_CLASS(m_struct) GDMonoUtils::cache.m_struct
+#define RAW_CACHED_CLASS(m_struct) GDMonoUtils::cache.m_struct->get_raw_class()
+
+#define UNBOX_FLOAT_PTR( x ) (float*) mono_object_unbox( x )
+
+#define UNBOX_DOUBLE( x )	*(double*)		mono_object_unbox( x )
+#define UNBOX_FLOAT( x )	*(float*)		mono_object_unbox( x )
+#define UNBOX_INT64( x )	*(int64_t*)		mono_object_unbox( x )
+#define UNBOX_INT32( x )	*(int32_t*)		mono_object_unbox( x )
+#define UNBOX_INT16( x )	*(int16_t*)		mono_object_unbox( x )
+#define UNBOX_INT8( x )		*(int8_t*)		mono_object_unbox( x )
+#define UNBOX_UINT64( x )	*(uint64_t*)	mono_object_unbox( x )
+#define UNBOX_UINT32( x )	*(uint32_t*)	mono_object_unbox( x )
+#define UNBOX_UINT16( x )	*(uint16_t*)	mono_object_unbox( x )
+#define UNBOX_UINT8( x )	*(uint8_t*)		mono_object_unbox( x )
+#define UNBOX_BOOLEAN( x )	*(MonoBoolean*)	mono_object_unbox( x )
+#define UNBOX_CHAR( x )		(wchar_t*)		mono_object_unbox( x )
+#define UNBOX_PTR( x )						mono_object_unbox( x )
 
 #define BOX_DOUBLE( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_double_class(),	&x)
 #define BOX_FLOAT( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_single_class(),	&x)

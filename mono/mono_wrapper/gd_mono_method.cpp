@@ -64,7 +64,7 @@ ManagedType GDMonoMethod::get_return_type()
 MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params)
 {
 	if (get_return_type().type_encoding != MONO_TYPE_VOID || get_parameters_count() > 0) {
-		MonoArray *params = mono_array_new(GDMono::get_singleton()->get_domain(), GDMonoUtils::cache.object_system->get_raw_class(), get_parameters_count());
+		MonoArray *params = mono_array_new(GDMono::get_singleton()->get_domain(), RAW_CACHED_CLASS(MonoObject), get_parameters_count());
 
 		for (int i = 0; i < params_count; i++) {
 			MonoObject* boxed_param = GDMonoUtils::variant_to_mono_object(p_params[i], param_types[i]);

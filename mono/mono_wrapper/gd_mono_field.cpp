@@ -60,24 +60,75 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value)
 		} break;
 
 		case MONO_TYPE_STRING: {
-			String val_str = p_value.operator String();
-
 			MonoString* mono_string = NULL;
 
 			if (sizeof(CharType) == 2) {
-				mono_string = mono_string_from_utf16((mono_unichar2*)val_str.c_str());
+				mono_string = GDMonoUtils::mono_from_utf16_string(p_value);
 			} else {
-				mono_string = mono_string_new(mono_domain_get(), val_str.utf8().get_data());
+				mono_string = GDMonoUtils::mono_from_utf8_string(p_value);
 			}
 
 			mono_field_set_value(p_object, mono_field, mono_string);
 		} break;
 
 		case MONO_TYPE_VALUETYPE: {
-			// Vector2
-			if (GDMonoUtils::cache.vector2 == type.type_class) {
+			GDMonoClass *tclass = type.type_class;
+
+			if (tclass == CACHED_CLASS(Vector2)) {
 				Vector2 val = p_value.operator Vector2();
-				mono_field_set_value(p_object, mono_field, &val);
+				real_t raw[2] = { val.x, val.y };
+				mono_field_set_value(p_object, mono_field, raw);
+				break;
+			}
+
+			if (tclass == CACHED_CLASS(Rect2)) {
+				Rect2 val = p_value.operator Rect2();
+				real_t raw[4] = { val.pos.x, val.pos.y, val.size.width, val.size.height };
+				mono_field_set_value(p_object, mono_field, raw);
+				break;
+			}
+
+			if (tclass == CACHED_CLASS(Matrix32)) {
+				Matrix32 val = p_value.operator Matrix32();
+				real_t raw[6] = { val[0].x, val[0].y, val[1].x, val[1].y, val[2].x, val[2].y };
+				mono_field_set_value(p_object, mono_field, raw);
+				break;
+			}
+
+			if (tclass == CACHED_CLASS(Vector3)) {
+				Vector3 val = p_value.operator Vector3();
+				real_t raw[3] = { val.x, val.y, val.z };
+				mono_field_set_value(p_object, mono_field, raw);
+				break;
+			}
+
+			if (tclass == CACHED_CLASS(Matrix3)) {
+				Matrix3 val = p_value.operator Matrix3();
+				real_t raw[9] = {
+					val[0].x, val[0].y, val[0].z,
+					val[1].x, val[1].y, val[1].z,
+					val[2].x, val[2].y, val[2].z
+				};
+				mono_field_set_value(p_object, mono_field, raw);
+				break;
+			}
+
+			if (tclass == CACHED_CLASS(Quat)) {
+				Quat val = p_value.operator Quat();
+				real_t raw[4] = { val.x, val.y, val.z, val.w };
+				mono_field_set_value(p_object, mono_field, raw);
+				break;
+			}
+
+			if (tclass == CACHED_CLASS(Transform)) {
+				Transform val = p_value.operator Transform();
+				real_t raw[12] = {
+					val.basis[0].x, val.basis[0].y, val.basis[0].z,
+					val.basis[1].x, val.basis[1].y, val.basis[1].z,
+					val.basis[2].x, val.basis[2].y, val.basis[2].z,
+					val.origin.x, val.origin.y, val.origin.z
+				};
+				mono_field_set_value(p_object, mono_field, raw);
 				break;
 			}
 		} break;
@@ -86,7 +137,7 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value)
 			GDMonoClass* type_class = type.type_class;
 
 			// Object
-			if (GDMonoUtils::cache.object_godot->is_assignable_from(type_class)) {
+			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
 				Object* unmanaged = p_value.operator Object *();
 				MonoObject* managed = unmanaged_get_managed(unmanaged);
 
@@ -106,7 +157,7 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value)
 			}
 
 			// Variant
-			if (GDMonoUtils::cache.variant->is_assignable_from(type_class)) {
+			if (CACHED_CLASS(Variant)->is_assignable_from(type_class)) {
 				MonoObject* managed =  GDMonoUtils::variant_to_managed_variant(&p_value);
 				mono_field_set_value(p_object, mono_field, managed);
 				break;

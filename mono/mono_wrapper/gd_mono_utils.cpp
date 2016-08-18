@@ -10,37 +10,78 @@ GDMonoUtils::ClassCache GDMonoUtils::cache;
 
 void GDMonoUtils::ClassCache::clear()
 {
-	cache.object_system = NULL;
-	cache.handle_ref = NULL;
-	cache.internal_helpers = NULL;
-	cache.variant = NULL;
-	cache.vector2 = NULL;
-	cache.matrix32 = NULL;
-	cache.node_path = NULL;
-	cache.object_godot = NULL;
-	cache.node = NULL;
-	cache.control = NULL;
-	cache.spatial = NULL;
+	cache.MonoObject = NULL;
+	cache.HandleRef = NULL;
+	cache.InternalHelpers = NULL;
+	cache.Variant = NULL;
+	cache.Vector2 = NULL;
+	cache.Matrix32 = NULL;
+	cache.NodePath = NULL;
+	cache.GodotObject = NULL;
+	cache.Node = NULL;
+	cache.Control = NULL;
+	cache.Spatial = NULL;
 }
 
 void GDMonoUtils::update_cache()
 {
-	cache.object_system = GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_object_class());
-	cache.handle_ref = GDMono::get_singleton()->get_corlib_assembly()->get_class("System", "HandleRef");
-	cache.internal_helpers = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "InternalHelpers");
-	cache.variant = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Variant");
-	cache.vector2 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Vector2");
-	cache.matrix32 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Matrix32");
-	cache.node_path = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "NodePath");
-	cache.object_godot = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Object");
-	cache.node = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Node");
-	cache.control = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Control");
-	cache.spatial = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Spatial");
+	cache.MonoObject = GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_object_class());
+	cache.HandleRef = GDMono::get_singleton()->get_corlib_assembly()->get_class("System", "HandleRef");
+	cache.InternalHelpers = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "InternalHelpers");
+	cache.Variant = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Variant");
+	cache.Vector2 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Vector2");
+	cache.Rect2 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Rect2");
+	cache.Matrix32 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Matrix32");
+	cache.Vector3 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Vector3");
+	cache.Matrix3 = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Matrix3");
+	cache.Quat = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Quat");
+	cache.Transform = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Transform");
+	cache.NodePath = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "NodePath");
+	cache.GodotObject = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Object");
+	cache.Node = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Node");
+	cache.Control = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Control");
+	cache.Spatial = GDMono::get_singleton()->get_api_assembly()->get_class("GodotEngine", "Spatial");
 }
 
 void GDMonoUtils::clear_cache()
 {
 	cache.clear();
+}
+
+String GDMonoUtils::mono_to_utf16_string(MonoString *p_mono_string)
+{
+	int len = mono_string_length(p_mono_string);
+	String ret;
+
+	if (len == 0)
+		return ret;
+
+	ret.resize(len + 1);
+	ret.set(len, 0);
+
+	CharType* src = (CharType*)mono_string_chars(p_mono_string);
+	CharType *dst = &(ret.operator[](0));
+
+	for (int i = 0; i < len; i++) {
+		dst[i] = src[i];
+	}
+
+	return ret;
+}
+
+String GDMonoUtils::mono_to_utf8_string(MonoString *p_mono_string)
+{
+	MonoError error;
+	char* utf8 = mono_string_to_utf8_checked(p_mono_string, &error);
+
+	ERR_EXPLAIN("Conversion of MonoString to UTF8 failed.");
+	ERR_FAIL_COND_V(!mono_error_ok(&error), String());
+
+	String ret = String::utf8(utf8);
+
+	mono_free(utf8);
+
+	return ret;
 }
 
 void GDMonoUtils::set_main_thread(MonoThread *p_thread)
@@ -83,7 +124,7 @@ GDMonoClass *GDMonoUtils::get_class_native_base(GDMonoClass* p_class)
 
 MonoObject *GDMonoUtils::variant_to_managed_variant(const Variant *p_var)
 {
-	MonoObject *mono_object = mono_object_new(mono_domain_get(), cache.variant->get_raw_class());
+	MonoObject *mono_object = mono_object_new(mono_domain_get(), cache.Variant->get_raw_class());
 
 	if (!mono_object)
 		return NULL;
@@ -91,7 +132,7 @@ MonoObject *GDMonoUtils::variant_to_managed_variant(const Variant *p_var)
 	// Call default constructor if any
 	mono_runtime_object_init(mono_object);
 
-	GDMonoMethod* ctor_method = cache.variant->get_method_with_desc(":.ctor(intptr,bool)", false);
+	GDMonoMethod* ctor_method = cache.Variant->get_method_with_desc(":.ctor(intptr,bool)", false);
 
 	bool memown = true;
 
@@ -160,24 +201,67 @@ MonoObject *GDMonoUtils::variant_to_mono_object(const Variant *p_var, const Mana
 		}
 
 		case MONO_TYPE_STRING: {
-			String val_str = p_var->operator String();
-
-			MonoString* mono_string = NULL;
+			const String& varstr = p_var->operator String();
 
 			if (sizeof(CharType) == 2) {
-				mono_string = mono_string_from_utf16((mono_unichar2*)val_str.c_str());
-			} else {
-				mono_string = mono_string_new(mono_domain_get(), val_str.utf8().get_data());
+				return (MonoObject*)mono_from_utf16_string(varstr);
 			}
 
-			return (MonoObject*)mono_string;
+			return (MonoObject*)mono_from_utf8_string(varstr);
 		} break;
 
 		case MONO_TYPE_VALUETYPE: {
-			// Vector2
-			if (p_type.type_class == GDMonoUtils::cache.vector2) {
+			GDMonoClass *tclass = p_type.type_class;
+
+			if (tclass == CACHED_CLASS(Vector2)) {
 				Vector2 val = p_var->operator Vector2();
-				return mono_value_box(mono_domain_get(), GDMonoUtils::cache.vector2->get_raw_class(), &val);
+				real_t raw[2] = { val.x, val.y };
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Vector2), raw);
+			}
+
+			if (tclass == CACHED_CLASS(Rect2)) {
+				Rect2 val = p_var->operator Rect2();
+				real_t raw[4] = { val.pos.x, val.pos.y, val.size.width, val.size.height };
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Rect2), raw);
+			}
+
+			if (tclass == CACHED_CLASS(Matrix32)) {
+				Matrix32 val = p_var->operator Matrix32();
+				real_t raw[6] = { val[0].x, val[0].y, val[1].x, val[1].y, val[2].x, val[2].y };
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Matrix32), raw);
+			}
+
+			if (tclass == CACHED_CLASS(Vector3)) {
+				Vector3 val = p_var->operator Vector3();
+				real_t raw[3] = { val.x, val.y, val.z };
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Vector3), raw);
+			}
+
+			if (tclass == CACHED_CLASS(Matrix3)) {
+				Matrix3 val = p_var->operator Matrix3();
+				real_t raw[9] = {
+					val[0].x, val[0].y, val[0].z,
+					val[1].x, val[1].y, val[1].z,
+					val[2].x, val[2].y, val[2].z
+				};
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Matrix3), raw);
+			}
+
+			if (tclass == CACHED_CLASS(Quat)) {
+				Quat val = p_var->operator Quat();
+				real_t raw[4] = { val.x, val.y, val.z, val.w };
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Quat), raw);
+			}
+
+			if (tclass == CACHED_CLASS(Transform)) {
+				Transform val = p_var->operator Transform();
+				real_t raw[12] = {
+					val.basis[0].x, val.basis[0].y, val.basis[0].z,
+					val.basis[1].x, val.basis[1].y, val.basis[1].z,
+					val.basis[2].x, val.basis[2].y, val.basis[2].z,
+					val.origin.x, val.origin.y, val.origin.z
+				};
+				return mono_value_box(mono_domain_get(), RAW_CACHED_CLASS(Transform), raw);
 			}
 		} break;
 
@@ -185,7 +269,7 @@ MonoObject *GDMonoUtils::variant_to_mono_object(const Variant *p_var, const Mana
 			GDMonoClass *type_class = p_type.type_class;
 
 			// Object
-			if (GDMonoUtils::cache.object_system->is_assignable_from(type_class)) {
+			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
 				Object* unmanaged = p_var->operator Object *();
 				MonoObject* managed = unmanaged_get_managed(unmanaged);
 
@@ -205,7 +289,7 @@ MonoObject *GDMonoUtils::variant_to_mono_object(const Variant *p_var, const Mana
 			}
 
 			// Variant
-			if (GDMonoUtils::cache.variant->is_assignable_from(type_class)) {
+			if (CACHED_CLASS(Variant)->is_assignable_from(type_class)) {
 				return variant_to_managed_variant(p_var);
 			}
 		} break;
@@ -247,22 +331,63 @@ Variant GDMonoUtils::mono_object_to_variant(MonoObject *p_var, const ManagedType
 			return UNBOX_DOUBLE(p_var);
 
 		case MONO_TYPE_STRING: {
-			MonoObject *exec = NULL;
-			MonoString *mono_string = mono_object_to_string(p_var, &exec);
-
-			if (exec) {
-				mono_print_unhandled_exception(exec);
-			} else {
-				return String::utf8(mono_string_to_utf8(mono_string));
+			if (sizeof(CharType) == 2) {
+				return mono_to_utf16_string((MonoString*)p_var);
 			}
+
+			return mono_to_utf8_string((MonoString*)p_var);
 		} break;
 
 		case MONO_TYPE_VALUETYPE: {
-			GDMonoClass *type_class = p_type.type_class;
+			GDMonoClass *tclass = p_type.type_class;
 
-			// Vector2
-			if (cache.vector2 == type_class) {
-				return *static_cast<Vector2*>(mono_object_unbox(p_var));
+			if (tclass == CACHED_CLASS(Vector2)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				return Vector2(raw[0], raw[1]);
+			}
+
+			if (tclass == CACHED_CLASS(Rect2)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				return Rect2(raw[0], raw[1], raw[2], raw[3]);
+			}
+
+			if (tclass == CACHED_CLASS(Matrix32)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				Matrix32 m;
+				m[0][0] = raw[0];
+				m[0][1] = raw[1];
+				m[1][0] = raw[2];
+				m[1][1] = raw[3];
+				m[2][0] = raw[4];
+				m[2][1] = raw[5];
+				return m;
+			}
+
+			if (tclass == CACHED_CLASS(Vector3)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				return Vector3(raw[0], raw[1], raw[2]);
+			}
+
+			if (tclass == CACHED_CLASS(Matrix3)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				Matrix3 m;
+				m.set(raw[0], raw[1], raw[2], raw[3], raw[4], raw[5], raw[6], raw[7], raw[8]);
+				return m;
+			}
+
+			if (tclass == CACHED_CLASS(Quat)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				return Quat(raw[0], raw[1], raw[2], raw[3]);
+			}
+
+			if (tclass == CACHED_CLASS(Transform)) {
+				float* raw = UNBOX_FLOAT_PTR(p_var);
+				Transform t;
+				t.basis.set(raw[0], raw[1], raw[2], raw[3], raw[4], raw[5], raw[6], raw[7], raw[8]);
+				t.origin.x = raw[9];
+				t.origin.y = raw[10];
+				t.origin.z = raw[11];
+				return t;
 			}
 		} break;
 
@@ -270,13 +395,13 @@ Variant GDMonoUtils::mono_object_to_variant(MonoObject *p_var, const ManagedType
 			GDMonoClass *type_class = p_type.type_class;
 
 			// Object
-			if (cache.object_godot->is_assignable_from(type_class)) {
-				GDMonoField *cptr_field = cache.object_godot->get_field("swigCPtr");
+			if (cache.GodotObject->is_assignable_from(type_class)) {
+				GDMonoField *cptr_field = cache.GodotObject->get_field("swigCPtr");
 
 				ERR_FAIL_COND_V(!cptr_field, Variant());
 
 				MonoObject *handle_ref = cptr_field->get_value(p_var);
-				GDMonoField *ptr_field = cache.handle_ref->get_field("handle");
+				GDMonoField *ptr_field = cache.HandleRef->get_field("handle");
 				MonoObject *ptr_to_unmanaged = ptr_field->get_value(handle_ref);
 
 				if (!ptr_to_unmanaged)
@@ -291,13 +416,13 @@ Variant GDMonoUtils::mono_object_to_variant(MonoObject *p_var, const ManagedType
 			}
 
 			// Variant
-			if (cache.variant->is_assignable_from(type_class)) {
+			if (cache.Variant->is_assignable_from(type_class)) {
 				GDMonoField *cptr_field = type_class->get_field("swigCPtr");
 
 				ERR_FAIL_COND_V(!cptr_field, Variant());
 
 				MonoObject *handle_ref = cptr_field->get_value(p_var);
-				GDMonoField *ptr_field = cache.handle_ref->get_field("handle");
+				GDMonoField *ptr_field = cache.HandleRef->get_field("handle");
 				MonoObject *ptr_to_unmanaged = ptr_field->get_value(handle_ref);
 
 				if (!ptr_to_unmanaged)

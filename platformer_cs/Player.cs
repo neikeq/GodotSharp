@@ -17,7 +17,7 @@ public class Player : RigidBody2D
     float STOP_JUMP_FORCE = 900.0f;
     float MAX_FLOOR_AIRBORNE_TIME = 0.15f;
     float MAX_SHOOT_POSE_TIME = 0.3f;
-    
+
     int JUMP_VELOCITY = 460;
 
     float airborne_time = 1e20f;

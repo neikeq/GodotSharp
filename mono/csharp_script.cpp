@@ -37,7 +37,6 @@
 #endif
 #endif
 
-#include "extended_errors.h"
 #include "mono_wrapper/gd_mono_class.h"
 
 CSharpLanguage *CSharpLanguage::singleton = NULL;
@@ -452,7 +451,8 @@ Variant CSharpInstance::call_const(const StringName &p_method, const Variant **p
 {
 	MonoObject *mono_object = get_mono_object();
 
-	ERR_FAIL_COND_V_EXPLAIN(!mono_object, Variant(), "Reference has been garbage collected?");
+	ERR_EXPLAIN("Reference has been garbage collected?");
+	ERR_FAIL_COND_V(!mono_object, Variant());
 
 	if (!script.ptr())
 		return Variant();

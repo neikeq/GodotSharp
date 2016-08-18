@@ -149,7 +149,7 @@ namespace GodotEngine
 
         public override string ToString()
         {
-            return String.Format("{1} - {2}", new object[]
+            return String.Format("{0} - {1}", new object[]
             {
                 this.basis.ToString(),
                 this.origin.ToString()
@@ -158,7 +158,7 @@ namespace GodotEngine
 
         public string ToString(string format)
         {
-            return String.Format("{1} - {2}", new object[]
+            return String.Format("{0} - {1}", new object[]
             {
                 this.basis.ToString(format),
                 this.origin.ToString(format)

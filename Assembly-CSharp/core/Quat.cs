@@ -307,7 +307,7 @@ namespace GodotEngine
 
         public override string ToString()
         {
-            return String.Format("({1}, {2}, {3}, {4})", new object[]
+            return String.Format("({0}, {1}, {2}, {3})", new object[]
             {
                 this.x.ToString(),
                 this.y.ToString(),
@@ -318,7 +318,7 @@ namespace GodotEngine
 
         public string ToString(string format)
         {
-            return String.Format("({1}, {2}, {3}, {4})", new object[]
+            return String.Format("({0}, {1}, {2}, {3})", new object[]
             {
                 this.x.ToString(format),
                 this.y.ToString(format),

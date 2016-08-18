@@ -145,7 +145,7 @@ GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class)
 		for(int i = 1; i < rows; i++) {
 			MonoClass* mono_class = mono_class_get(image, (i + 1) | MONO_TOKEN_TYPE_DEF);
 
-			if (!mono_class_is_assignable_from(GDMonoUtils::cache.object_godot->get_raw_class(), mono_class))
+			if (!mono_class_is_assignable_from(RAW_CACHED_CLASS(GodotObject), mono_class))
 				continue;
 
 			GDMonoClass* current = get_class(mono_class);
