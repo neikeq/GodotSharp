@@ -28,7 +28,7 @@ class GDMonoClass
 			}
 		};
 
-		inline bool operator==(const MethodKey& p_a) const
+		_FORCE_INLINE_ bool operator==(const MethodKey& p_a) const
 		{
 			return p_a.params_count == params_count && p_a.name == name;
 		}
@@ -51,31 +51,44 @@ class GDMonoClass
 	MonoClass* mono_class;
 	GDMonoAssembly* assembly;
 
+	bool attrs_updated;
+	MonoCustomAttrInfo* attrs;
+
 	Map<String, GDMonoField*> fields;
 	HashMap<MethodKey, GDMonoMethod*, MethodKey::Hasher> methods;
+
+	bool has_all_fields;
+	Vector<GDMonoField*> all_fields;
 
 friend class GDMonoAssembly;
 	GDMonoClass(const String& p_namespace, const String& p_name, MonoClass* p_class, GDMonoAssembly* p_assembly);
 
 public:
+	static MonoType* get_raw_type(GDMonoClass* p_class);
+
 	bool is_assignable_from(GDMonoClass* p_from) const;
 
-	String get_namespace() const { return namespace_name; }
-	String get_name() const { return class_name; }
+	_FORCE_INLINE_ String get_namespace() const { return namespace_name; }
+	_FORCE_INLINE_ String get_name() const { return class_name; }
 
-	inline MonoClass* get_raw_class() { return mono_class; }
-	inline const GDMonoAssembly* get_assembly() const { return assembly; }
+	_FORCE_INLINE_ MonoClass* get_raw() const { return mono_class; }
+	_FORCE_INLINE_ const GDMonoAssembly* get_assembly() const { return assembly; }
 
 	GDMonoClass* get_parent_class();
 
 	bool has_method(const String& p_name);
 	bool has_method(const String& p_name, int p_params_count);
 
+	bool has_attribute(GDMonoClass* p_attr_class);
+	MonoObject* get_attribute(GDMonoClass* p_attr_class);
+	void update_attrs();
+
 	GDMonoMethod* get_method(MonoMethod* p_raw_method);
 	GDMonoMethod* get_method(const String& p_name, int p_params_count);
 	GDMonoMethod* get_method_with_desc(const String& p_description, bool p_includes_namespace);
 
 	GDMonoField* get_field(const String& p_name);
+	Vector<GDMonoField*> get_all_fields();
 
 	~GDMonoClass();
 };

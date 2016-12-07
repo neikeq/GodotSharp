@@ -37,13 +37,19 @@
 #include "mono_wrapper/gd_mono.h"
 #include "mono_wrapper/gd_mono_header.h"
 
+#ifdef NO_SAFE_CAST
+#define castCSharpInstance(m_inst) ((m_inst->get_language() == CSharpLanguage::get_singleton()) ? static_cast<CSharpInstance*>(m_inst) : NULL)
+#else
+#define castCSharpInstance(m_inst) dynamic_cast<CSharpInstance*>(m_inst)
+#endif
+
 class CSharpScript;
 class CSharpInstance;
 class CSharpLanguage;
 
 class CSharpScript : public Script
 {
-	OBJ_TYPE(CSharpScript,Script)
+	OBJ_TYPE(CSharpScript, Script)
 
 friend class CSharpInstance;
 friend class CSharpLanguage;
@@ -67,9 +73,13 @@ friend class CSharpLanguage;
 	String name;
 
 #ifdef TOOLS_ENABLED
+	Map<StringName,Variant> member_default_values;
+
 	Set<PlaceHolderScriptInstance*> placeholders;
 	virtual void _placeholder_erased(PlaceHolderScriptInstance *p_placeholder);
 #endif
+
+	Map<StringName, PropertyInfo> properties_info;
 
 	bool _update_exports();
 
@@ -95,9 +105,13 @@ public:
 	virtual ScriptLanguage *get_language() const;
 	/* TODO */ virtual bool has_script_signal(const StringName &p_signal) const { return false; }
 	/* TODO */ virtual void get_script_signal_list(List<MethodInfo> *r_signals) const {}
-	/* TODO */ virtual bool get_property_default_value(const StringName &p_property, Variant &r_value) const { return false; }
-	/* TODO */ virtual void update_exports() {}
+	/* TODO */ virtual bool get_property_default_value(const StringName &p_property, Variant &r_value) const { return true; }
+	virtual void update_exports();
 	/* TODO */ virtual void get_method_list(List<MethodInfo> *p_list) const {}
+
+	/* TODO */ virtual Ref<Script> get_base_script() const { return Ref<Script>(); }
+	/* TODO */ virtual void get_script_method_list(List<MethodInfo> *p_list) const {}
+	virtual void get_script_property_list(List<PropertyInfo> *p_list) const;
 
 	Error load_source_code(const String& p_path);
 
@@ -128,8 +142,8 @@ public:
 
 	virtual bool set(const StringName &p_name, const Variant &p_value);
 	virtual bool get(const StringName &p_name, Variant &r_ret) const;
-	/* TODO */ virtual void get_property_list(List<PropertyInfo> *p_properties) const {}
-	/* TODO */ virtual Variant::Type get_property_type(const StringName &p_name, bool *r_is_valid) const { return Variant::NIL; }
+	virtual void get_property_list(List<PropertyInfo> *p_properties) const;
+	virtual Variant::Type get_property_type(const StringName &p_name, bool *r_is_valid) const;
 
 	/* TODO */ virtual void get_method_list(List<MethodInfo> *p_list) const {}
 	virtual bool has_method(const StringName &p_method) const;
@@ -139,6 +153,9 @@ public:
 
 	void refcount_incremented();
 	bool refcount_decremented();
+
+	/* TODO */ RPCMode get_rpc_mode(const StringName &p_method) const { return RPC_MODE_DISABLED; }
+	/* TODO */ RPCMode get_rset_mode(const StringName &p_variable) const { return RPC_MODE_DISABLED; }
 
 	virtual void notification(int p_notification);
 
@@ -160,13 +177,11 @@ friend class CSharpGCHandle;
 
 	GDMono* mono;
 
-	//THREAD_LOCAL MonoThread* _mono_thread;
-
 public:
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
 
-    bool debug_break(const String& p_error, bool p_allow_continue = true);
-    bool debug_break_parse(const String& p_file, int p_line, const String& p_error);
+	bool debug_break(const String& p_error, bool p_allow_continue = true);
+	bool debug_break_parse(const String& p_file, int p_line, const String& p_error);
 
 	virtual String get_name() const;
 

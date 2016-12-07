@@ -26,16 +26,14 @@
 
 #include "csharp_gc_handle.h"
 
-MonoObject *CSharpGCHandle::get_object() const
+MonoObject *CSharpGCHandle::get_target() const
 {
 	return mono_gchandle_get_target(handle);
 }
 
 void CSharpGCHandle::release()
 {
-	CSharpLanguage* script_lang = CSharpLanguage::get_singleton();
-
-	if (!released && script_lang && !GDMono::get_singleton()->is_initialized()) {
+	if (!released && !GDMono::get_singleton()->is_initialized()) {
 		mono_gchandle_free(handle);
 		released = true;
 	}
@@ -46,10 +44,15 @@ CSharpGCHandle::CSharpGCHandle(MonoObject *p_object, bool weak)
 	released = false;
 
 	if (weak) {
-		// track_resurrection must be TRUE to be able to call _notification(NOTIFICATION_PREDELETE) while disposing
-		handle = mono_gchandle_new_weakref(p_object, true);
+		handle = mono_gchandle_new_weakref(
+			p_object,
+			true /* track_resurrection: allows us to invoke _notification(NOTIFICATION_PREDELETE) while disposing */
+		);
 	} else {
-		handle = mono_gchandle_new(p_object, true);
+		handle = mono_gchandle_new(
+			p_object,
+			false /* do not pin the object */
+		);
 	}
 }
 

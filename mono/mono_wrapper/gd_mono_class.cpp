@@ -2,6 +2,11 @@
 
 #include "gd_mono_assembly.h"
 
+MonoType *GDMonoClass::get_raw_type(GDMonoClass *p_class)
+{
+	return mono_class_get_type(p_class->get_raw());
+}
+
 bool GDMonoClass::is_assignable_from(GDMonoClass *p_from) const
 {
 	return mono_class_is_assignable_from(mono_class, p_from->mono_class);
@@ -28,6 +33,38 @@ bool GDMonoClass::has_method(const String &p_name)
 bool GDMonoClass::has_method(const String &p_name, int p_params_count)
 {
 	return mono_class_get_method_from_name(mono_class, p_name.utf8().get_data(), p_params_count);
+}
+
+bool GDMonoClass::has_attribute(GDMonoClass *p_attr_class)
+{
+	ERR_FAIL_COND_V(!p_attr_class, false);
+
+	if (!attrs_updated)
+		update_attrs();
+
+	if (!attrs)
+		return false;
+
+	return mono_custom_attrs_has_attr(attrs, p_attr_class->get_raw());
+}
+
+MonoObject* GDMonoClass::get_attribute(GDMonoClass *p_attr_class)
+{
+	ERR_FAIL_COND_V(!p_attr_class, NULL);
+
+	if (!attrs_updated)
+		update_attrs();
+
+	if (!attrs)
+		return NULL;
+
+	return mono_custom_attrs_get_attr(attrs, p_attr_class->get_raw());
+}
+
+void GDMonoClass::update_attrs()
+{
+	attrs = mono_custom_attrs_from_class(get_raw());
+	attrs_updated = true;
 }
 
 GDMonoMethod *GDMonoClass::get_method(MonoMethod *p_raw_method)
@@ -80,7 +117,7 @@ GDMonoField *GDMonoClass::get_field(const String &p_name)
 	MonoClassField* raw_field = mono_class_get_field_from_name(mono_class, p_name.utf8().get_data());
 
 	if (raw_field) {
-		GDMonoField* field = memnew(GDMonoField(raw_field));
+		GDMonoField* field = memnew(GDMonoField(raw_field, this));
 		fields.insert(p_name, field);
 
 		return field;
@@ -89,12 +126,37 @@ GDMonoField *GDMonoClass::get_field(const String &p_name)
 	return NULL;
 }
 
+Vector<GDMonoField*> GDMonoClass::get_all_fields()
+{
+	void* iter = NULL;
+	MonoClassField* raw_field = NULL;
+	while ((raw_field = mono_class_get_fields(get_raw(), &iter)) != NULL) {
+		String name = mono_field_get_name(raw_field);
+
+		Map<String, GDMonoField*>::Element *match = fields.find(name);
+
+		if (match) {
+			all_fields.push_back(match->get());
+		} else {
+			GDMonoField* field = memnew(GDMonoField(raw_field, this));
+			fields.insert(name, field);
+			all_fields.push_back(field);
+		}
+	}
+
+	return all_fields;
+}
+
 GDMonoClass::GDMonoClass(const String &p_namespace, const String &p_name, MonoClass *p_class, GDMonoAssembly *p_assembly)
 {
 	namespace_name = p_namespace;
 	class_name = p_name;
 	mono_class = p_class;
 	assembly = p_assembly;
+
+	attrs_updated = false;
+	attrs = NULL;
+	has_all_fields = false;
 }
 
 GDMonoClass::~GDMonoClass()

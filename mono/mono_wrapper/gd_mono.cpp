@@ -1,14 +1,13 @@
 #include "gd_mono.h"
 
 #include <mono/metadata/mono-config.h>
-#include <mono/metadata/threads.h>
 
 #include "globals.h"
 #include "os/file_access.h"
 #include "os/os.h"
 
 #include "gd_mono_utils.h"
-#include "csharp_script.h"
+#include "../csharp_script.h"
 
 GDMono* GDMono::singleton = NULL;
 
@@ -45,7 +44,7 @@ void GDMono::initialize(const String& p_assemblies_path)
 		GDMonoUtils::clear_cache();
 
 		// Load API assembly
-		String api_assembly_name = "Assembly-CSharp";
+		String api_assembly_name = "GodotSharp";
 		String api_assembly_path = p_assemblies_path + "/" + api_assembly_name + ".dll";
 
 		ERR_EXPLAIN("Mono: Game assembly found but the API assembly is missing");
@@ -85,10 +84,18 @@ void GDMono::initialize(const String& p_assemblies_path)
 	}
 }
 
+#ifndef MONO_GLUE_DISABLED
+namespace GodotSharpBindings
+{
+void register_generated_icalls();
+}
+#endif
+
 void GDMono::register_internal_calls()
 {
-	mono_add_internal_call("GodotEngine.InternalHelpers::UnmanagedGetManaged(intptr)", (const void*)unmanaged_get_managed);
-	mono_add_internal_call("GodotEngine.InternalHelpers::TieManagedToUnmanaged(object,intptr)", (const void*)tie_managed_to_unmanaged);
+#ifndef MONO_GLUE_DISABLED
+	GodotSharpBindings::register_generated_icalls();
+#endif
 }
 
 GDMonoClass *GDMono::get_class(MonoClass *p_class)
@@ -129,71 +136,4 @@ GDMono::~GDMono()
 	}
 
 	initialized = false;
-}
-
-MonoObject *unmanaged_get_managed(void *unmanaged)
-{
-	Object *object = (Object *) unmanaged;
-
-	if (object) {
-		Reference *ref = object->cast_to<Reference>();
-
-		ScriptInstance *script_instance = object->get_script_instance();
-
-		if (script_instance) {
-			CSharpInstance *cs_instance = dynamic_cast<CSharpInstance*>(script_instance);
-
-			if (cs_instance) {
-				if (ref) {
-					// reference() was called previously to temporally avoid deleting the reference,
-					// but a reference declared in the managed world must not reference the unmanaged side
-					// in order to avoid a circular reference. The script will take responsibility of deleting
-					// the unmanaged reference when the managed side gets GCed.
-					ref->unreference();
-				}
-
-				return cs_instance->get_mono_object();
-			}
-		}
-
-		if (object->has_meta("__mono_gchandle__")) {
-			Ref<CSharpGCHandle> gchandle = object->get_meta("__mono_gchandle__");
-
-			if (gchandle.is_valid())
-				return gchandle->get_object();
-		}
-
-		GDMonoClass *type_class = GDMonoUtils::type_get_proxy_class(object->get_type());
-
-		if (type_class)
-			return GDMonoUtils::create_managed_for_unmanaged_object(type_class, type_class, object);
-	}
-
-	return NULL;
-}
-
-void tie_managed_to_unmanaged(MonoObject* managed, void *unmanaged)
-{
-	Object *object = (Object*) unmanaged;
-	if (object) {
-		Reference *ref = object->cast_to<Reference>();
-
-		Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(managed)));
-		object->set_meta("__mono_gchandle__", gchandle);
-
-		if (object->get_script().is_null()) {
-			// All mono objects whose state needs to be kept must have a script
-			GDMonoClass* klass = GDMonoUtils::get_object_class(managed);
-			Ref<CSharpScript> script = CSharpScript::create_for_managed_type(klass);
-			object->set_script(script.get_ref_ptr());
-		}
-
-		if (ref) {
-			// reference() was called previously to temporally avoid deleting the reference,
-			// but a reference declared in the managed world must not reference the unmanaged side
-			// in order to avoid a circular reference. The script will take responsibility of deleting
-			// the unmanaged reference when the managed side gets GCed.
-			ref->unreference();
-		}
-	}
 }

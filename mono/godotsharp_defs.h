@@ -1,0 +1,7 @@
+#ifndef GODOTSHARP_DEFS_H
+#define GODOTSHARP_DEFS_H
+
+#define BINDINGS_NAMESPACE "GodotEngine"
+#define BINDINGS_PTR_FIELD "ptr"
+
+#endif // GODOTSHARP_DEFS_H

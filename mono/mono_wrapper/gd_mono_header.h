@@ -1,7 +1,6 @@
 #ifndef GD_MONO_HEADER_H
 #define GD_MONO_HEADER_H
 
-class GDMonoUtils;
 class GDMonoAssembly;
 class GDMonoClass;
 class GDMonoMethod;

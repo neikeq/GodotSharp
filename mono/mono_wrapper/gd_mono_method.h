@@ -24,6 +24,8 @@ public:
 	int get_parameters_count();
 	ManagedType get_return_type();
 
+	void* get_thunk();
+
 	MonoObject* invoke(MonoObject* p_object, const Variant **p_params);
 	MonoObject* invoke_raw(MonoObject* p_object, void **p_params);
 

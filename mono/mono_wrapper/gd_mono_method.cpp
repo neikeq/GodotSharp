@@ -1,6 +1,7 @@
 #include "gd_mono_method.h"
 
 #include "gd_mono_class.h"
+#include "gd_mono_marshal.h"
 
 void GDMonoMethod::update_signature()
 {
@@ -61,32 +62,36 @@ ManagedType GDMonoMethod::get_return_type()
 	return return_type;
 }
 
+void *GDMonoMethod::get_thunk()
+{
+	return mono_method_get_unmanaged_thunk(mono_method);
+}
+
 MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params)
 {
 	if (get_return_type().type_encoding != MONO_TYPE_VOID || get_parameters_count() > 0) {
-		MonoArray *params = mono_array_new(GDMono::get_singleton()->get_domain(), RAW_CACHED_CLASS(MonoObject), get_parameters_count());
+		MonoArray *params = mono_array_new(GDMONO_DOMAIN, CACHED_CLASS_RAW(MonoObject), get_parameters_count());
 
 		for (int i = 0; i < params_count; i++) {
-			MonoObject* boxed_param = GDMonoUtils::variant_to_mono_object(p_params[i], param_types[i]);
+			MonoObject* boxed_param = GDMonoMarshal::variant_to_mono_object(p_params[i], param_types[i]);
 			mono_array_set(params, MonoObject*, i, boxed_param);
 		}
 
-		MonoObject* exception = NULL;
-		MonoObject* return_value = mono_runtime_invoke_array(mono_method, p_object, params, &exception);
+		MonoObject* exc = NULL;
+		MonoObject* return_value = mono_runtime_invoke_array(mono_method, p_object, params, &exc);
 
-		if (exception) {
-			mono_print_unhandled_exception(exception);
+		if (exc) {
+			mono_print_unhandled_exception(exc);
 			return NULL;
 		}
 
 		return return_value;
 	} else {
-		MonoObject *exception = NULL;
-		mono_runtime_invoke(mono_method, p_object, NULL, &exception);
+		MonoObject *exc = NULL;
+		mono_runtime_invoke(mono_method, p_object, NULL, &exc);
 
-		if (exception) {
-			mono_print_unhandled_exception(exception);
-		}
+		if (exc)
+			mono_print_unhandled_exception(exc);
 
 		return NULL;
 	}
@@ -94,12 +99,11 @@ MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params)
 
 MonoObject *GDMonoMethod::invoke_raw(MonoObject *p_object, void **p_params)
 {
-	MonoObject *exception = NULL;
-	MonoObject *return_value = mono_runtime_invoke(mono_method, p_object, p_params, &exception);
+	MonoObject *exc = NULL;
+	MonoObject *return_value = mono_runtime_invoke(mono_method, p_object, p_params, &exc);
 
-	if (exception) {
-		mono_print_unhandled_exception(exception);
-	}
+	if (exc)
+		mono_print_unhandled_exception(exc);
 
 	return return_value;
 }

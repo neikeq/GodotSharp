@@ -27,7 +27,6 @@
 #include "register_types.h"
 
 #include "csharp_script.h"
-#include "bindings/wrappers/mono_glue.cpp"
 
 CSharpLanguage *script_language_cs = NULL;
 ResourceFormatLoaderCSharpScript *resource_loader_cs = NULL;

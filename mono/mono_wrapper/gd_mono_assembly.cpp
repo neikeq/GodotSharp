@@ -1,4 +1,4 @@
-#include "mono_wrapper/gd_mono_assembly.h"
+#include "gd_mono_assembly.h"
 
 #include <mono/metadata/mono-debug.h>
 #include <mono/metadata/tokentype.h>
@@ -19,10 +19,10 @@ Error GDMonoAssembly::load(MonoDomain *p_domain)
 
 	MonoImageOpenStatus status;
 
-    image = mono_image_open_from_data_with_name(
-        (char*) &data[0], data.size(),
-        true, &status, false,
-        image_name.utf8().get_data()
+	image = mono_image_open_from_data_with_name(
+		(char*) &data[0], data.size(),
+		true, &status, false,
+		image_name.utf8().get_data()
 	);
 
 	ERR_FAIL_COND_V(status != MONO_IMAGE_OK || image == NULL, ERR_FILE_CANT_OPEN);
@@ -145,7 +145,7 @@ GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class)
 		for(int i = 1; i < rows; i++) {
 			MonoClass* mono_class = mono_class_get(image, (i + 1) | MONO_TOKEN_TYPE_DEF);
 
-			if (!mono_class_is_assignable_from(RAW_CACHED_CLASS(GodotObject), mono_class))
+			if (!mono_class_is_assignable_from(CACHED_CLASS_RAW(GodotObject), mono_class))
 				continue;
 
 			GDMonoClass* current = get_class(mono_class);
@@ -165,7 +165,7 @@ GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class)
 				void* iter = NULL;
 
 				while (true) {
-					MonoClass* raw_nested = mono_class_get_nested_types(current_nested->get_raw_class(), &iter);
+					MonoClass* raw_nested = mono_class_get_nested_types(current_nested->get_raw(), &iter);
 
 					if (!raw_nested)
 						break;

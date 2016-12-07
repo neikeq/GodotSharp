@@ -4,112 +4,110 @@
 #include <mono/metadata/threads.h>
 
 #include "core/object.h"
-
 #include "gd_mono_header.h"
 
 class GDMonoClass;
 
-class GDMonoUtils
+namespace GDMonoUtils
 {
-	GDMonoUtils();
 
-public:
-	struct ClassCache
+typedef MonoReflectionType* (*GetDictTypeFunc)(MonoObject**);
+typedef MonoObject* (*DictToArraysFunc)(MonoObject*, MonoArray**, MonoArray**, MonoObject**);
+typedef MonoObject* (*ArraysToDictFunc)(MonoArray*, MonoArray*, MonoObject**);
+
+struct Cache
+{
+	GDMonoClass* class_MonoObject;
+	GDMonoClass* class_int32_t;
+	GDMonoClass* class_uint8_t;
+	GDMonoClass* class_float;
+	GDMonoClass* class_double;
+	GDMonoClass* class_String;
+	GDMonoClass* class_Vector2;
+	GDMonoClass* class_Rect2;
+	GDMonoClass* class_Matrix32;
+	GDMonoClass* class_Vector3;
+	GDMonoClass* class_Matrix3;
+	GDMonoClass* class_Quat;
+	GDMonoClass* class_Transform;
+	GDMonoClass* class_AABB;
+	GDMonoClass* class_Color;
+	GDMonoClass* class_Plane;
+	GDMonoClass* class_InputEvent;
+	GDMonoClass* class_NodePath;
+	GDMonoClass* class_Image;
+	GDMonoClass* class_RID;
+	GDMonoClass* class_GodotObject;
+	GDMonoClass* class_Node;
+	GDMonoClass* class_Control;
+	GDMonoClass* class_Spatial;
+	GDMonoClass* class_WeakRef;
+	GDMonoClass* class_List;
+	GDMonoClass* class_PropertyInfo;
+	GDMonoClass* class_Tool;
+	GDMonoClass* class_MarshalUtils;
+
+	GDMonoField* field_GodotObject_ptr;
+	GDMonoField* field_NodePath_ptr;
+	GDMonoField* field_Image_ptr;
+	GDMonoField* field_RID_ptr;
+	GDMonoField* field_PropertyInfo_type;
+	GDMonoField* field_PropertyInfo_hint;
+	GDMonoField* field_PropertyInfo_hint_string;
+	GDMonoField* field_PropertyInfo_usage;
+
+	GetDictTypeFunc thunk_MarshalUtils_GetDictionaryType;
+	DictToArraysFunc thunk_MarshalUtils_DictionaryToArrays;
+	ArraysToDictFunc thunk_MarshalUtils_ArraysToDictionary;
+
+	MonoClass* rawclass_Dictionary;
+
+	void clear();
+
+	Cache()
 	{
-		GDMonoClass* MonoObject;
-		GDMonoClass* HandleRef;
-		GDMonoClass* InternalHelpers;
-		GDMonoClass* Variant;
-		GDMonoClass* Vector2;
-		GDMonoClass* Rect2;
-		GDMonoClass* Matrix32;
-		GDMonoClass* Vector3;
-		GDMonoClass* Matrix3;
-		GDMonoClass* Quat;
-		GDMonoClass* Transform;
-		GDMonoClass* NodePath;
-		GDMonoClass* GodotObject;
-		GDMonoClass* Node;
-		GDMonoClass* Control;
-		GDMonoClass* Spatial;
-
-		void clear();
-
-		ClassCache()
-		{
-			cache.clear();
-		}
-	};
-
-	static ClassCache cache;
-
-	static void update_cache();
-	static void clear_cache();
-
-	template<typename T> static void hash_combine(uint32_t& p_hash, const T& p_key)
-	{
-		p_hash ^= HashMapHahserDefault::hash(p_key) + 0x9e3779b9 + (p_hash << 6) + (p_hash >> 2);
+		clear();
 	}
-
-	static String mono_to_utf8_string(MonoString* p_mono_string);
-	static String mono_to_utf16_string(MonoString* p_mono_string);
-
-	inline static MonoString* mono_from_utf8_string(const String& p_string)
-	{
-		return mono_string_new(mono_domain_get(), p_string.utf8().get_data());
-	}
-
-	inline static MonoString* mono_from_utf16_string(const String& p_string)
-	{
-		return mono_string_from_utf16((mono_unichar2*)p_string.c_str());
-	}
-
-	static void set_main_thread(MonoThread* p_thread);
-	static MonoThread* get_current_thread();
-
-	static GDMonoClass* get_object_class(MonoObject* p_object);
-	static GDMonoClass* type_get_proxy_class(const String& p_type);
-	static GDMonoClass* get_class_native_base(GDMonoClass* p_class);
-
-	static MonoObject* variant_to_managed_variant(const Variant* p_var);
-
-	static MonoObject* variant_to_mono_object(const Variant* p_var, const ManagedType& p_type);
-	static Variant mono_object_to_variant(MonoObject* p_var, const ManagedType& p_type);
-
-	static MonoObject* create_managed_for_unmanaged_object(GDMonoClass* p_class, GDMonoClass* p_native, Object* p_object);
 };
 
-#define CACHED_CLASS(m_struct) GDMonoUtils::cache.m_struct
-#define RAW_CACHED_CLASS(m_struct) GDMonoUtils::cache.m_struct->get_raw_class()
+extern Cache cache;
 
-#define UNBOX_FLOAT_PTR( x ) (float*) mono_object_unbox( x )
+void update_cache();
+void clear_cache();
 
-#define UNBOX_DOUBLE( x )	*(double*)		mono_object_unbox( x )
-#define UNBOX_FLOAT( x )	*(float*)		mono_object_unbox( x )
-#define UNBOX_INT64( x )	*(int64_t*)		mono_object_unbox( x )
-#define UNBOX_INT32( x )	*(int32_t*)		mono_object_unbox( x )
-#define UNBOX_INT16( x )	*(int16_t*)		mono_object_unbox( x )
-#define UNBOX_INT8( x )		*(int8_t*)		mono_object_unbox( x )
-#define UNBOX_UINT64( x )	*(uint64_t*)	mono_object_unbox( x )
-#define UNBOX_UINT32( x )	*(uint32_t*)	mono_object_unbox( x )
-#define UNBOX_UINT16( x )	*(uint16_t*)	mono_object_unbox( x )
-#define UNBOX_UINT8( x )	*(uint8_t*)		mono_object_unbox( x )
-#define UNBOX_BOOLEAN( x )	*(MonoBoolean*)	mono_object_unbox( x )
-#define UNBOX_CHAR( x )		(wchar_t*)		mono_object_unbox( x )
-#define UNBOX_PTR( x )						mono_object_unbox( x )
+template<typename T> void hash_combine(uint32_t& p_hash, const T& p_key)
+{
+	p_hash ^= HashMapHahserDefault::hash(p_key) + 0x9e3779b9 + (p_hash << 6) + (p_hash >> 2);
+}
 
-#define BOX_DOUBLE( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_double_class(),	&x)
-#define BOX_FLOAT( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_single_class(),	&x)
-#define BOX_INT64( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_int64_class(),	&x)
-#define BOX_INT32( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_int32_class(),	&x)
-#define BOX_INT16( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_int16_class(),	&x)
-#define BOX_INT8( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_sbyte_class(),	&x)
-#define BOX_UINT64( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_uint64_class(),	&x)
-#define BOX_UINT32( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_uint32_class(),	&x)
-#define BOX_UINT16( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_uint16_class(),	&x)
-#define BOX_UINT8( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_byte_class(),	&x)
-#define BOX_BOOLEAN( x )	mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_boolean_class(),	&x)
-#define BOX_CHAR( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_char_class(),	&x)
-#define BOX_PTR( x )		mono_value_box(GDMono::get_singleton()->get_domain(), mono_get_intptr_class(),	x)
+MonoObject *unmanaged_get_managed(Object *unmanaged);
+void tie_managed_to_unmanaged(MonoObject* managed, Object *unmanaged);
+
+void set_main_thread(MonoThread* p_thread);
+MonoThread* get_current_thread();
+
+GDMonoClass* get_object_class(MonoObject* p_object);
+GDMonoClass* type_get_proxy_class(const String& p_type);
+GDMonoClass* get_class_native_base(GDMonoClass* p_class);
+
+MonoObject* create_managed_for_godot_object(GDMonoClass* p_class, const String& p_native, Object* p_object);
+
+MonoObject *create_managed_from(const NodePath& p_from);
+MonoObject *create_managed_from(const Image& p_from);
+MonoObject *create_managed_from(const RID& p_from);
+
+}
+
+#define CACHED_CLASS(m_class) (GDMonoUtils::cache.class_ ## m_class)
+#define CACHED_CLASS_RAW(m_class) (GDMonoUtils::cache.class_ ## m_class->get_raw())
+#define CACHED_RAW_MONO_CLASS(m_class) (GDMonoUtils::cache.rawclass_ ## m_class)
+#define CACHED_FIELD(m_class, m_field) (GDMonoUtils::cache.field_ ## m_class ## _ ## m_field)
+#define CACHED_METHOD_THUNK(m_class, m_method) (GDMonoUtils::cache.thunk_ ## m_class ## _ ## m_method)
+
+#ifdef REAL_T_IS_DOUBLE
+#define real_t_MonoClass CACHED_CLASS_RAW(double)
+#else
+#define real_t_MonoClass CACHED_CLASS_RAW(float)
+#endif
 
 #endif // GD_MONOUTILS_H

@@ -26,7 +26,7 @@ class GDMonoAssembly
 			}
 		};
 
-		inline bool operator==(const ClassKey& p_a) const
+		_FORCE_INLINE_ bool operator==(const ClassKey& p_a) const
 		{
 			return p_a.class_name == class_name && p_a.namespace_name == namespace_name;
 		}
@@ -67,8 +67,8 @@ public:
 	Error wrap_image(MonoImage* p_image);
 	void unload();
 
-	inline bool is_loaded() const { return loaded; }
-	inline MonoImage* get_image() const { return image; }
+	_FORCE_INLINE_ bool is_loaded() const { return loaded; }
+	_FORCE_INLINE_ MonoImage* get_image() const { return image; }
 
 	GDMonoClass* get_class(const String& p_namespace, const String& p_class);
 	GDMonoClass* get_class(MonoClass* p_mono_class);

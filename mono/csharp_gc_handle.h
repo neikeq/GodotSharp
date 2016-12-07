@@ -41,7 +41,7 @@ class CSharpGCHandle : public Reference
 	uint32_t handle;
 
 public:
-	MonoObject* get_object() const;
+	MonoObject* get_target() const;
 
 	void release();
 
