@@ -1,4 +1,11 @@
 # GodotSharp
-Test module to integrate C# with the Godot Engine using Mono
+Mono integration with the Godot Engine
 
-Check the [Todo List](https://github.com/neikeq/GodotSharp/wiki/Todo-List) if you are interested.
+[Building](https://github.com/neikeq/GodotSharp/wiki/Building)
+----------------------------------------------------------
+
+[API-Differences](https://github.com/neikeq/GodotSharp/wiki/API-Differences)
+----------------------------------------------------------
+
+[Demos](https://github.com/neikeq/GodotSharpDemos)
+----------------------------------------------------------
