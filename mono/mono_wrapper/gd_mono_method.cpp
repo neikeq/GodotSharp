@@ -38,12 +38,12 @@ void GDMonoMethod::update_signature()
 	sig_updated = true;
 }
 
-bool GDMonoMethod::is_instance_method()
+bool GDMonoMethod::is_static()
 {
 	if (!sig_updated)
 		update_signature();
 
-	return instance;
+	return !instance;
 }
 
 int GDMonoMethod::get_parameters_count()
@@ -95,6 +95,21 @@ MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params)
 
 		return NULL;
 	}
+}
+
+MonoObject *GDMonoMethod::invoke(MonoObject *p_object)
+{
+	ERR_FAIL_COND_V(get_parameters_count() > 0, NULL);
+
+	MonoObject *exc = NULL;
+	MonoObject* return_value = mono_runtime_invoke(mono_method, p_object, NULL, &exc);
+
+	if (exc) {
+		mono_print_unhandled_exception(exc);
+		return NULL;
+	}
+
+	return return_value;
 }
 
 MonoObject *GDMonoMethod::invoke_raw(MonoObject *p_object, void **p_params)

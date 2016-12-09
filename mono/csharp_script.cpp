@@ -108,7 +108,7 @@ void CSharpLanguage::finish()
 
 void CSharpLanguage::get_reserved_words(List<String> *p_words) const
 {
-	static const char *_reserved_words[]={
+	static const char *_reserved_words[] = {
 		// Reserved keywords
 		"abstract",
 		"as",
@@ -680,7 +680,41 @@ void CSharpScript::_update_exports_values(Map<StringName,Variant>& values, List<
 bool CSharpScript::_update_exports()
 {
 #ifdef TOOLS_ENABLED
-	bool changed=false;
+	if (!valid)
+		return false;
+
+	bool changed = true;
+
+	if (source_changed_cache) {
+		source_changed_cache = false;
+
+		// TODO Unfinished
+
+		properties_info.clear();
+
+		Vector<GDMonoField*> fields = script_class->get_all_fields();
+
+		for (int i = 0; i < fields.size(); i++) {
+			GDMonoField* field = fields[i];
+
+			if (field->is_static() || field->get_visibility() != GDMono::PUBLIC)
+				continue;
+
+			if (field->has_attribute(CACHED_CLASS(PropertyInfo))) {
+				MonoObject* attr = field->get_attribute(CACHED_CLASS(PropertyInfo));
+
+				int type = CACHED_FIELD(PropertyInfo, type)->get_int_value(attr);
+				String name = field->get_name();
+				int hint = CACHED_FIELD(PropertyInfo, hint)->get_int_value(attr);
+				String hint_string = CACHED_FIELD(PropertyInfo, hint_string)->get_string_value(attr);
+				int usage = CACHED_FIELD(PropertyInfo, usage)->get_int_value(attr);
+
+				properties_info[name] = PropertyInfo(Variant::Type(type), name, PropertyHint(hint), hint_string, PropertyUsageFlags(usage));
+			}
+		}
+
+		changed=true;
+	}
 
 	if (placeholders.size()) {
 		// Update placeholders if any
@@ -705,7 +739,7 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 	while (top) {
 		GDMonoMethod *method = top->get_method(p_method, p_argcount);
 
-		if (method && method->is_instance_method()) {
+		if (method && method->is_static()) {
 			MonoObject *result = method->invoke(NULL, p_args);
 
 			if (result) {
@@ -858,9 +892,9 @@ void CSharpScript::set_source_code(const String &p_code)
 	if (source == p_code)
 		return;
 	source = p_code;
-/*#ifdef TOOLS_ENABLED
-	source_changed_cache=true;
-#endif*/
+#ifdef TOOLS_ENABLED
+	source_changed_cache = true;
+#endif
 }
 
 Error CSharpScript::reload(bool p_keep_state)
@@ -871,6 +905,7 @@ Error CSharpScript::reload(bool p_keep_state)
 
 	if (project_assembly) {
 		script_class = project_assembly->get_object_derived_class(name);
+		valid = script_class != NULL;
 
 		if (script_class) {
 			tool = script_class->has_attribute(CACHED_CLASS(Tool));
@@ -901,28 +936,7 @@ ScriptLanguage *CSharpScript::get_language() const
 
 void CSharpScript::update_exports()
 {
-	properties_info.clear();
-
-	Vector<GDMonoField*> fields = script_class->get_all_fields();
-
-	for (int i = 0; i < fields.size(); i++) {
-		GDMonoField* field = fields[i];
-
-		if (field->is_static() || field->get_visibility() != GDMono::PUBLIC)
-			continue;
-
-		if (field->has_attribute(CACHED_CLASS(PropertyInfo))) {
-			MonoObject* attr = field->get_attribute(CACHED_CLASS(PropertyInfo));
-
-			int type = CACHED_FIELD(PropertyInfo, type)->get_int_value(attr);
-			String name = field->get_name();
-			int hint = CACHED_FIELD(PropertyInfo, hint)->get_int_value(attr);
-			String hint_string = CACHED_FIELD(PropertyInfo, hint_string)->get_string_value(attr);
-			int usage = CACHED_FIELD(PropertyInfo, usage)->get_int_value(attr);
-
-			properties_info[name] = PropertyInfo(Variant::Type(type), name, PropertyHint(hint), hint_string, PropertyUsageFlags(usage));
-		}
-	}
+	_update_exports();
 
 	if (placeholders.size()) {
 		Map<StringName, Variant> values;
@@ -966,9 +980,11 @@ Error CSharpScript::load_source_code(const String &p_path)
 	}
 
 	source = s;
-/*#ifdef TOOLS_ENABLED
-	source_changed_cache=true;
-#endif*/
+
+#ifdef TOOLS_ENABLED
+	source_changed_cache = true;
+#endif
+
 	return OK;
 }
 
@@ -980,13 +996,15 @@ String CSharpScript::get_script_name() const
 CSharpScript::CSharpScript()
 {
 	tool = false;
-
-	// TODO is this flag even needed is out case?
-	valid = true;
+	valid = false;
 
 	base = NULL;
 	native = NULL;
 	script_class = NULL;
+
+#ifdef TOOLS_ENABLED
+	source_changed_cache = false;
+#endif
 
 	_resource_path_changed();
 }

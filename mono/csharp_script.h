@@ -54,7 +54,7 @@ class CSharpScript : public Script
 friend class CSharpInstance;
 friend class CSharpLanguage;
 
-	/* TODO */ bool tool;
+	bool tool;
 	/* TODO */ bool valid;
 
 	bool builtin;
@@ -63,10 +63,6 @@ friend class CSharpLanguage;
 	GDMonoClass *native;
 	GDMonoClass *script_class;
 
-#ifdef TOOLS_ENABLED
-	void _update_exports_values(Map<StringName,Variant>& values, List<PropertyInfo> &propnames);
-#endif
-
 	Set<Object*> instances;
 
 	String source;
@@ -74,8 +70,10 @@ friend class CSharpLanguage;
 
 #ifdef TOOLS_ENABLED
 	Map<StringName,Variant> member_default_values;
-
 	Set<PlaceHolderScriptInstance*> placeholders;
+	bool source_changed_cache;
+
+	void _update_exports_values(Map<StringName,Variant>& values, List<PropertyInfo> &propnames);
 	virtual void _placeholder_erased(PlaceHolderScriptInstance *p_placeholder);
 #endif
 
