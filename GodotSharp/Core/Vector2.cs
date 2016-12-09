@@ -151,7 +151,7 @@ namespace GodotEngine
 
         public Vector2 normalized()
         {
-            Vector2 result = new Vector2();
+            Vector2 result = this;
             result.normalize();
             return result;
         }
