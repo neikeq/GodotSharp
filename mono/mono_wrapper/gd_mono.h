@@ -18,7 +18,7 @@ class GDMono
 	GDMonoAssembly* api_assembly;
 	GDMonoAssembly* project_assembly;
 
-	Map<String, GDMonoAssembly*> assemblies;
+	HashMap<String, GDMonoAssembly*> assemblies;
 
 	void register_internal_calls();
 

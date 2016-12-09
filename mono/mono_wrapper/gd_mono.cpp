@@ -71,8 +71,8 @@ void GDMono::initialize(const String& p_assemblies_path)
 
 		mono_assembly_set_main(project_assembly->assembly);
 
-		assemblies.insert(api_assembly_name, api_assembly);
-		assemblies.insert(project_assembly_name, project_assembly);
+		assemblies.set(api_assembly_name, api_assembly);
+		assemblies.set(project_assembly_name, project_assembly);
 
 		GDMonoUtils::update_cache();
 
@@ -102,8 +102,10 @@ GDMonoClass *GDMono::get_class(MonoClass *p_class)
 {
 	GDMonoClass* mono_class = NULL;
 
-	for (Map<String, GDMonoAssembly*>::Element* E = assemblies.front(); E; E = E->next()) {
-		mono_class = E->value()->get_class(p_class);
+	const String* k = NULL;
+
+	while ((k = assemblies.next(k))) {
+		mono_class = assemblies.get(*k)->get_class(p_class);
 
 		if(mono_class)
 			return mono_class;
@@ -126,9 +128,13 @@ GDMono::GDMono()
 
 GDMono::~GDMono()
 {
-	for (Map<String, GDMonoAssembly*>::Element* E = assemblies.front(); E; E = E->next()) {
-		memdelete(E->value());
+	const String* k = NULL;
+
+	while ((k = assemblies.next(k))) {
+		memdelete(assemblies.get(*k));
 	}
+
+	assemblies.clear();
 
 	if (initialized) {
 		mono_jit_cleanup(domain);
