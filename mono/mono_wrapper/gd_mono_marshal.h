@@ -134,8 +134,8 @@ MonoObject* Dictionary_to_mono_object(const Dictionary& p_dict);
 Dictionary mono_object_to_Dictionary(MonoObject* p_dict);
 
 #ifdef YOLO_COPY
-#define MARSHALLED_OUT(m_t, m_in, m_out) m_t* m_out = &m_in;
-#define MARSHALLED_IN(m_t, m_in, m_out) m_t m_out = *static_cast<m_t*>(m_in);
+#define MARSHALLED_OUT(m_t, m_in, m_out) m_t* m_out = (m_t*)&m_in;
+#define MARSHALLED_IN(m_t, m_in, m_out) m_t m_out = *reinterpret_cast<m_t*>(m_in);
 #else
 // Expects m_in to be a char* for InputEvent and float* for all the other the types
 

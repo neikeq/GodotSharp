@@ -9,6 +9,9 @@
 #include "godotsharp_defs.h"
 #include "mono_wrapper/gd_mono_marshal.h"
 
+#define _STRINGIFY(m_s) #m_s
+#define STRINGIFY(m_s) _STRINGIFY(m_s)
+
 #define CS_INDENT "    "
 
 #define INDENT1 CS_INDENT
@@ -1210,7 +1213,7 @@ void BindingsGenerator::generate_builtin_types()
 		itype.out = "\tMARSHALLED_OUT(" #m_type ", %1, ret_out)\n" \
 					"\treturn mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(%0), ret_out);\n"; \
 		itype.call_arg_in = STRUCT_IN(m_type); \
-		itype.type_in = STRUCT_TYPE_IN(m_type, m_type_in); \
+		itype.type_in = STRINGIFY(STRUCT_TYPE_IN(m_type, m_type_in)); \
 		itype.cs_in = "ref %s"; \
 		itype.cs_out = "return (" #m_type ")%0;"; \
 		itype.im_type_out = "object"; \
