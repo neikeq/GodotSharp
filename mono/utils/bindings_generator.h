@@ -1,7 +1,7 @@
 #ifndef CS_BINDINGS_GENERATOR_H
 #define CS_BINDINGS_GENERATOR_H
 
-#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED) || 1
+#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 
 #include "core/globals.h"
 #include "core/reference.h"

@@ -1,6 +1,6 @@
 #include "bindings_generator.h"
 
-#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED) || 1
+#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 
 #include "os/os.h"
 #include "tools/doc/doc_data.h"
