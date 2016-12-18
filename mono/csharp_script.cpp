@@ -72,7 +72,7 @@ void CSharpLanguage::init()
 	List<String>::Element *F = args.find("--mono-generate-cs");
 
 	if (E || F) {
-		BindingsGenerator bindings;
+		BindingsGenerator bindings(args.find("--tools"));
 
 		if (E && E->next()) {
 			Error error = bindings.generate_glue(E->next()->get());
