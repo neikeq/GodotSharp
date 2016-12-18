@@ -936,6 +936,7 @@ ScriptLanguage *CSharpScript::get_language() const
 
 void CSharpScript::update_exports()
 {
+#ifdef TOOLS_ENABLED
 	_update_exports();
 
 	if (placeholders.size()) {
@@ -947,6 +948,7 @@ void CSharpScript::update_exports()
 			E->get()->update(propnames, values);
 		}
 	}
+#endif
 }
 
 void CSharpScript::get_script_property_list(List<PropertyInfo> *p_list) const
