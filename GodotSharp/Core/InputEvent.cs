@@ -7,11 +7,11 @@ namespace GodotEngine
     public struct InputEvent : IEquatable<InputEvent>
     {
         [FieldOffset(0)]
-        public Type type;
-        [FieldOffset(4)]
-        public int device;
-        [FieldOffset(8)]
         public int ID;
+        [FieldOffset(4)]
+        public Type type;
+        [FieldOffset(8)]
+        public int device;
 
         [FieldOffset(12)]
         public InputEventAction action;
