@@ -32,7 +32,7 @@
 #include "os/thread.h"
 
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
-#include "bindings_generator.h"
+#include "utils/bindings_generator.h"
 #endif
 
 #include "mono_wrapper/gd_mono_class.h"
@@ -1024,7 +1024,6 @@ RES ResourceFormatLoaderCSharpScript::load(const String &p_path, const String& p
 	ERR_FAIL_COND_V(err != OK, RES());
 
 	script->set_path(p_original_path);
-
 	script->reload();
 
 	if (r_error)
@@ -1045,10 +1044,7 @@ bool ResourceFormatLoaderCSharpScript::handles_type(const String& p_type) const
 
 String ResourceFormatLoaderCSharpScript::get_resource_type(const String &p_path) const
 {
-	String el = p_path.extension().to_lower();
-	if (el == "cs")
-		return "CSharpScript";
-	return "";
+	return p_path.extension().to_lower() == "cs" ? "CSharpScript" : "";
 }
 
 Error ResourceFormatSaverCSharpScript::save(const String &p_path,const RES& p_resource,uint32_t p_flags)

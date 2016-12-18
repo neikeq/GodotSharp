@@ -4,6 +4,8 @@ Import('env')
 
 env.add_source_files(env.modules_sources, '*.cpp')
 env.add_source_files(env.modules_sources, 'mono_wrapper/*.cpp')
+env.add_source_files(env.modules_sources, 'utils/*.cpp')
+env.add_source_files(env.modules_sources, 'utils/tinyxml2/tinyxml2.cpp')
 
 vars = Variables()
 vars.Add(BoolVariable('mono_glue', 'Build with the mono glue code', True))

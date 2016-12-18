@@ -55,7 +55,7 @@ friend class CSharpInstance;
 friend class CSharpLanguage;
 
 	bool tool;
-	/* TODO */ bool valid;
+	bool valid;
 
 	bool builtin;
 

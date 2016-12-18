@@ -121,9 +121,9 @@ namespace GodotEngine
         /// <summary>
         /// Return the body that collided with this one.
         /// </summary>
-        public Object get_collider()
+        public object get_collider()
         {
-            return NativeCalls.godot_icall_0_12(method_bind_7, Object.GetPtr(this));
+            return NativeCalls.godot_icall_0_126(method_bind_7, Object.GetPtr(this));
         }
 
         private IntPtr method_bind_8 = NativeCalls.godot_icall_TypeDB_get_method(nativeName, "get_collider_shape");

@@ -6,11 +6,9 @@
 #include "tools/doc/doc_data.h"
 #include "tools/editor/editor_help.h"
 
-#include "godotsharp_defs.h"
-#include "mono_wrapper/gd_mono_marshal.h"
-
-#define _STRINGIFY(m_s) #m_s
-#define STRINGIFY(m_s) _STRINGIFY(m_s)
+#include "string_format.h"
+#include "../godotsharp_defs.h"
+#include "../mono_wrapper/gd_mono_marshal.h"
 
 #define CS_INDENT "    "
 
@@ -70,103 +68,6 @@
 #define array_c_out "_to_mono_array"
 #define dictionary_c_in "mono_object_to_Dictionary"
 #define dictionary_c_out "Dictionary_to_mono_object"
-
-static int sfind(const String &p_text, int p_from)
-{
-	if (p_from < 0)
-		return -1;
-
-	int src_len = 2;
-	int len = p_text.length();
-
-	if (src_len == 0 || len == 0)
-		return -1;
-
-	const CharType *src = p_text.c_str();
-
-	for (int i = p_from; i <= (len - src_len); i++) {
-		bool found = true;
-
-		for (int j = 0; j < src_len; j++) {
-			int read_pos = i + j;
-
-			if (read_pos >= len) {
-				ERR_PRINT("read_pos >= len");
-				return -1;
-			};
-
-			switch (j) {
-				case 0:
-					found = src[read_pos] == '%';
-					break;
-				case 1: {
-					CharType c = src[read_pos];
-					found = src[read_pos] == 's' || (c >= '0' || c <= '4');
-					break;
-				}
-				default:
-					found = false;
-			}
-
-			if (!found) {
-				break;
-			}
-		}
-
-		if (found)
-			return i;
-	}
-
-	return -1;
-}
-
-static String sformat(const String &p_text, const Variant &p1 = Variant(), const Variant &p2 = Variant(), const Variant &p3 = Variant(), const Variant &p4 = Variant(), const Variant &p5 = Variant())
-{
-	if (p_text.length() < 2)
-		return p_text;
-
-	Array args;
-
-	if (p1.get_type() != Variant::NIL) {
-		args.push_back(p1);
-
-		if (p2.get_type() != Variant::NIL) {
-			args.push_back(p2);
-
-			if (p3.get_type() != Variant::NIL) {
-				args.push_back(p3);
-
-				if (p4.get_type() != Variant::NIL) {
-					args.push_back(p4);
-
-					if (p5.get_type() != Variant::NIL) {
-						args.push_back(p5);
-					}
-				}
-			}
-		}
-	}
-
-	String new_string;
-
-	int findex = 0;
-	int search_from = 0;
-	int result = 0;
-
-	while ((result = sfind(p_text, search_from)) >= 0) {
-		CharType c = p_text[result + 1];
-
-		int req_index = (c == 's' ? findex++ : c - '0');
-
-		new_string += p_text.substr(search_from, result - search_from);
-		new_string += args[req_index].operator String();
-		search_from = result + 2;
-	}
-
-	new_string += p_text.substr(search_from, p_text.length() - search_from);
-
-	return new_string;
-}
 
 static bool is_csharp_keyword(const String& p_name)
 {
@@ -958,7 +859,7 @@ Error BindingsGenerator::save_file(const String &path, const List<String> &conte
 {
 	FileAccess* file = FileAccess::open(path, FileAccess::WRITE);
 
-	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_OPEN);
+	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
 
 	for (const List<String>::Element *E = content.front(); E; E = E->next()) {
 		file->store_string(E->get());
@@ -998,15 +899,11 @@ void BindingsGenerator::generate_obj_types()
 	while (type_list.size()) {
 		StringName type_cname = type_list.front()->get();
 
-		{
-			bool tools = true;
+		ObjectTypeDB::APIType api_type = ObjectTypeDB::get_api_type(type_cname);
 
-			ObjectTypeDB::APIType api_type = ObjectTypeDB::get_api_type(type_cname);
-
-			if (api_type == ObjectTypeDB::API_NONE || (!editor_api && api_type == ObjectTypeDB::API_EDITOR)) {
-				type_list.pop_front();
-				continue;
-			}
+		if (api_type == ObjectTypeDB::API_NONE || (!editor_api && api_type == ObjectTypeDB::API_EDITOR)) {
+			type_list.pop_front();
+			continue;
 		}
 
 		TypeInterface itype = TypeInterface::create_object_type(type_cname);
@@ -1199,21 +1096,13 @@ void BindingsGenerator::generate_builtin_types()
 
 	TypeInterface itype;
 
-	#ifdef YOLO_COPY
-	#define STRUCT_TYPE_IN(m_type, m_alt) m_type*
-	#define STRUCT_IN(m_type) "%s_in"
-	#else
-	#define STRUCT_TYPE_IN(m_type, m_alt) m_alt
-	#define STRUCT_IN(m_type) "&%s_in"
-	#endif
-
 	#define INSERT_STRUCT_TYPE(m_type, m_type_in) { \
 		itype = TypeInterface::create_atomic_type(#m_type); \
 		itype.in = "\tMARSHALLED_IN(" #m_type ", %1, %1_in);\n"; \
 		itype.out = "\tMARSHALLED_OUT(" #m_type ", %1, ret_out)\n" \
 					"\treturn mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(%0), ret_out);\n"; \
-		itype.call_arg_in = STRUCT_IN(m_type); \
-		itype.type_in = STRINGIFY(STRUCT_TYPE_IN(m_type, m_type_in)); \
+		itype.call_arg_in = "&%s_in"; \
+		itype.type_in = m_type_in; \
 		itype.cs_in = "ref %s"; \
 		itype.cs_out = "return (" #m_type ")%0;"; \
 		itype.im_type_out = "object"; \
