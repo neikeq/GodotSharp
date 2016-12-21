@@ -61,8 +61,6 @@ Error CSharpLanguage::execute_file(const String &p_path)
 	return OK;
 }
 
-#include "scene/main/scene_main_loop.h"
-
 void CSharpLanguage::init()
 {
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)

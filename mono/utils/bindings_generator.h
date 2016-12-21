@@ -1,13 +1,11 @@
-#ifndef CS_BINDINGS_GENERATOR_H
-#define CS_BINDINGS_GENERATOR_H
+#ifndef BINDINGS_GENERATOR_H
+#define BINDINGS_GENERATOR_H
+
+#include "core/object_type_db.h"
 
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 
-#include "core/globals.h"
-#include "core/reference.h"
 #include "core/ustring.h"
-#include "os/dir_access.h"
-#include "os/file_access.h"
 
 class BindingsGenerator
 {
@@ -240,9 +238,8 @@ public:
 	Error generate_glue(String p_output_dir);
 
 	BindingsGenerator(bool p_editor_api = true);
-
 };
 
 #endif
 
-#endif // CS_BINDINGS_GENERATOR_H
+#endif // BINDINGS_GENERATOR_H

@@ -2,7 +2,11 @@
 
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 
+#include "globals.h"
+#include "os/dir_access.h"
+#include "os/file_access.h"
 #include "os/os.h"
+
 #include "tools/doc/doc_data.h"
 #include "tools/editor/editor_help.h"
 
