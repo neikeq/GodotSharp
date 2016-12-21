@@ -210,7 +210,7 @@ Dictionary mono_object_to_Dictionary(MonoObject* p_dict);
 
 #define _sizeof_InputEvent sizeof(InputEvent)
 #define _sizeof_InputEventPre 12
-#define _sizeof_InputModifierState 5
+#define _sizeof_InputModifierState 4
 #define _sizeof_InputEventMod const_sum<_sizeof_InputEventPre, _sizeof_InputModifierState>::value
 #define _sizeof_InputEventPre_Mouse const_sum<_sizeof_InputEventMod, 24>::value
 
@@ -304,16 +304,16 @@ Dictionary mono_object_to_Dictionary(MonoObject* p_dict);
 
 #ifdef APPLE_STYLE_KEYS
 #define MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, m_idx) m_out.m_var.mod.shift = m_in[m_idx]; \
-	m_out.m_var.mod.alt = m_in[const_sum<m_idx, 1>::value]; \
-	m_out.m_var.mod.command = m_in[const_sum<m_idx, 2>::value]; \
-	m_out.m_var.mod.meta = m_in[const_sum<m_idx, 3>::value]; \
-	m_out.m_var.mod.control = m_in[const_sum<m_idx, 4>::value];
+	m_out.m_var.mod.alt = m_in[m_idx]; \
+	m_out.m_var.mod.command = m_in[const_sum<m_idx, 1>::value]; \
+	m_out.m_var.mod.meta = m_in[const_sum<m_idx, 2>::value]; \
+	m_out.m_var.mod.control = m_in[const_sum<m_idx, 3>::value];
 #else
 #define MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, m_idx) m_out.m_var.mod.shift = m_in[m_idx]; \
-	m_out.m_var.mod.alt = m_in[const_sum<m_idx, 1>::value]; \
-	m_out.m_var.mod.command = m_in[const_sum<m_idx, 2>::value]; \
-	m_out.m_var.mod.control = m_in[const_sum<m_idx, 3>::value]; \
-	m_out.m_var.mod.meta = m_in[const_sum<m_idx, 4>::value];
+	m_out.m_var.mod.alt = m_in[m_idx]; \
+	m_out.m_var.mod.command = m_in[const_sum<m_idx, 1>::value]; \
+	m_out.m_var.mod.control = m_in[const_sum<m_idx, 2>::value]; \
+	m_out.m_var.mod.meta = m_in[const_sum<m_idx, 3>::value];
 #endif
 
 #define MARSHALLED_IN_InputEvent(m_in, m_out) InputEvent m_out; \
