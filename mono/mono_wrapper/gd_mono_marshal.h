@@ -209,109 +209,111 @@ Dictionary mono_object_to_Dictionary(MonoObject* p_dict);
 // OUT
 
 #define _sizeof_InputEvent sizeof(InputEvent)
-#define _sizeof_InputEventPre 12
-#define _sizeof_InputModifierState 4
-#define _sizeof_InputEventMod const_sum<_sizeof_InputEventPre, _sizeof_InputModifierState>::value
-#define _sizeof_InputEventPre_Mouse const_sum<_sizeof_InputEventMod, 24>::value
-
-#define MARSHALLED_OUT_InputEventMouse(m_in, m_out, m_var) MARSHALLED_OUT_InputModifierState(m_in, m_out, m_var, _sizeof_InputEventPre) \
-	m_out[_sizeof_InputEventMod] = m_in.m_var.button_mask; \
-	m_out[const_sum<_sizeof_InputEventMod, 4>::value] = m_in.m_var.x; \
-	m_out[const_sum<_sizeof_InputEventMod, 8>::value] = m_in.m_var.y; \
-	m_out[const_sum<_sizeof_InputEventMod, 12>::value] = m_in.m_var.global_x; \
-	m_out[const_sum<_sizeof_InputEventMod, 16>::value] = m_in.m_var.global_y; \
-	m_out[const_sum<_sizeof_InputEventMod, 20>::value] = m_in.m_var.pointer_index;
+#define _sizeof_InputEventBase 12 /* ID, type, device */
+#define _sizeof_InputModifierState 4 /* shift, alt, control, meta */
+#define _sizeof_InputEventBaseMod const_sum<_sizeof_InputEventBase, _sizeof_InputModifierState>::value /* ID, type, device, InputModifierState */
+#define _sizeof_InputEventMouse 24 /* InputModifierState, button_mask, x, y, global_x, global_y, pointer_index */
+#define _sizeof_InputEventBaseMouse const_sum<_sizeof_InputEventBaseMod, _sizeof_InputEventMouse>::value /* ID, type, device, InputModifierState, InputEventMouse */
 
 #ifdef APPLE_STYLE_KEYS
-#define MARSHALLED_OUT_InputModifierState(m_in, m_out, m_var, m_idx) m_out[m_idx] = m_in.m_var.mod.shift; \
+#define MARSHALLED_OUT_InputModifierState(m_in, m_out, m_var, m_idx) \
+	m_out[m_idx] = m_in.m_var.mod.shift; \
 	m_out[const_sum<m_idx, 1>::value] = m_in.m_var.mod.alt; \
-	m_out[const_sum<m_idx, 2>::value] = m_in.m_var.mod.command; \
-	m_out[const_sum<m_idx, 3>::value] = m_in.m_var.mod.meta; \
-	m_out[const_sum<m_idx, 4>::value] = m_in.m_var.mod.control;
+	m_out[const_sum<m_idx, 2>::value] = m_in.m_var.mod.meta; \
+	m_out[const_sum<m_idx, 3>::value] = m_in.m_var.mod.control;
 #else
-#define MARSHALLED_OUT_InputModifierState(m_in, m_out, m_var, m_idx) m_out[m_idx] = m_in.m_var.mod.shift; \
+#define MARSHALLED_OUT_InputModifierState(m_in, m_out, m_var, m_idx) \
+	m_out[m_idx] = m_in.m_var.mod.shift; \
 	m_out[const_sum<m_idx, 1>::value] = m_in.m_var.mod.alt; \
-	m_out[const_sum<m_idx, 2>::value] = m_in.m_var.mod.command; \
-	m_out[const_sum<m_idx, 3>::value] = m_in.m_var.mod.control; \
-	m_out[const_sum<m_idx, 4>::value] = m_in.m_var.mod.meta;
+	m_out[const_sum<m_idx, 2>::value] = m_in.m_var.mod.control; \
+	m_out[const_sum<m_idx, 3>::value] = m_in.m_var.mod.meta;
 #endif
 
+#define MARSHALLED_OUT_InputEventMouse(m_in, m_out, m_var) \
+	MARSHALLED_OUT_InputModifierState(m_in, m_out, m_var, _sizeof_InputEventBase) \
+	*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBaseMod) = m_in.m_var.button_mask; \
+	*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 4>::value) = m_in.m_var.x; \
+	*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 8>::value) = m_in.m_var.y; \
+	*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 12>::value) = m_in.m_var.global_x; \
+	*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 16>::value) = m_in.m_var.global_y; \
+	*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 20>::value) = m_in.m_var.pointer_index;
+
 #define MARSHALLED_OUT_InputEvent(m_in, m_out) char m_out[_sizeof_InputEvent]; \
-	m_out[0] = m_in.ID; \
-	m_out[4] = m_in.type; \
-	m_out[8] = m_in.device; \
+	*reinterpret_cast<uint32_t*>(m_out + 0) = m_in.ID; \
+	*reinterpret_cast<uint32_t*>(m_out + 4) = m_in.type; \
+	*reinterpret_cast<uint32_t*>(m_out + 8) = m_in.device; \
 	switch (m_in.type) { \
 		case InputEvent::KEY: \
-			MARSHALLED_OUT_InputModifierState(m_in, m_out, key, _sizeof_InputEventPre) \
-			m_out[_sizeof_InputEventMod] = m_in.key.pressed; \
-			m_out[const_sum<_sizeof_InputEventMod, 1>::value] = m_in.key.scancode; \
-			m_out[const_sum<_sizeof_InputEventMod, 5>::value] = m_in.key.unicode; \
-			m_out[const_sum<_sizeof_InputEventMod, 9>::value] = m_in.key.echo; \
+			MARSHALLED_OUT_InputModifierState(m_in, m_out, key, _sizeof_InputEventBase) \
+			m_out[_sizeof_InputEventBaseMod] = m_in.key.pressed; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 1>::value) = m_in.key.scancode; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMod, 5>::value) = m_in.key.unicode; \
+			m_out[const_sum<_sizeof_InputEventBaseMod, 9>::value] = m_in.key.echo; \
 			break; \
 		case InputEvent::MOUSE_MOTION: \
 			MARSHALLED_OUT_InputEventMouse(m_in, m_out, mouse_motion) \
-			m_out[_sizeof_InputEventPre_Mouse] = m_in.mouse_motion.relative_x; \
-			m_out[const_sum<_sizeof_InputEventPre_Mouse, 4>::value] = m_in.mouse_motion.relative_y; \
-			m_out[const_sum<_sizeof_InputEventPre_Mouse, 8>::value] = m_in.mouse_motion.speed_x; \
-			m_out[const_sum<_sizeof_InputEventPre_Mouse, 12>::value] = m_in.mouse_motion.speed_y; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBaseMouse) = m_in.mouse_motion.relative_x; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBaseMouse, 4>::value) = m_in.mouse_motion.relative_y; \
+			*reinterpret_cast<float*>(m_out + const_sum<_sizeof_InputEventBaseMouse, 8>::value) = m_in.mouse_motion.speed_x; \
+			*reinterpret_cast<float*>(m_out + const_sum<_sizeof_InputEventBaseMouse, 12>::value) = m_in.mouse_motion.speed_y; \
 			break; \
 		case InputEvent::MOUSE_BUTTON: \
 			MARSHALLED_OUT_InputEventMouse(m_in, m_out, mouse_button) \
-			m_out[_sizeof_InputEventPre_Mouse] = m_in.mouse_button.button_index; \
-			m_out[const_sum<_sizeof_InputEventPre_Mouse, 4>::value] = m_in.mouse_button.pressed; \
-			m_out[const_sum<_sizeof_InputEventPre_Mouse, 5>::value] = m_in.mouse_button.doubleclick; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBaseMouse) = m_in.mouse_button.button_index; \
+			m_out[const_sum<_sizeof_InputEventBaseMouse, 4>::value] = m_in.mouse_button.pressed; \
+			m_out[const_sum<_sizeof_InputEventBaseMouse, 5>::value] = m_in.mouse_button.doubleclick; \
 			break; \
 		case InputEvent::JOYSTICK_MOTION: \
-			m_out[_sizeof_InputEventPre] = m_in.joy_motion.axis; \
-			m_out[const_sum<_sizeof_InputEventPre, 4>::value] = m_in.joy_motion.axis_value; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBase) = m_in.joy_motion.axis; \
+			*reinterpret_cast<float*>(m_out + const_sum<_sizeof_InputEventBase, 4>::value) = m_in.joy_motion.axis_value; \
 			break; \
 		case InputEvent::JOYSTICK_BUTTON: \
-			m_out[_sizeof_InputEventPre] = m_in.joy_button.button_index; \
-			m_out[const_sum<_sizeof_InputEventPre, 4>::value] = m_in.joy_button.pressed; \
-			m_out[const_sum<_sizeof_InputEventPre, 5>::value] = m_in.joy_button.pressure; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBase) = m_in.joy_button.button_index; \
+			m_out[const_sum<_sizeof_InputEventBase, 4>::value] = m_in.joy_button.pressed; \
+			*reinterpret_cast<float*>(m_out + const_sum<_sizeof_InputEventBase, 5>::value) = m_in.joy_button.pressure; \
 			break; \
 		case InputEvent::SCREEN_TOUCH: \
-			m_out[_sizeof_InputEventPre] = m_in.screen_touch.index; \
-			m_out[const_sum<_sizeof_InputEventPre, 4>::value] = m_in.screen_touch.x; \
-			m_out[const_sum<_sizeof_InputEventPre, 8>::value] = m_in.screen_touch.y; \
-			m_out[const_sum<_sizeof_InputEventPre, 12>::value] = m_in.screen_touch.pressed; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBase) = m_in.screen_touch.index; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBase, 4>::value) = m_in.screen_touch.x; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBase, 8>::value) = m_in.screen_touch.y; \
+			m_out[const_sum<_sizeof_InputEventBase, 12>::value] = m_in.screen_touch.pressed; \
 			break; \
 		case InputEvent::SCREEN_DRAG: \
-			m_out[_sizeof_InputEventPre] = m_in.screen_drag.index; \
-			m_out[const_sum<_sizeof_InputEventPre, 4>::value] = m_in.screen_drag.x; \
-			m_out[const_sum<_sizeof_InputEventPre, 8>::value] = m_in.screen_drag.y; \
-			m_out[const_sum<_sizeof_InputEventPre, 12>::value] = m_in.screen_drag.relative_x; \
-			m_out[const_sum<_sizeof_InputEventPre, 16>::value] = m_in.screen_drag.relative_y; \
-			m_out[const_sum<_sizeof_InputEventPre, 20>::value] = m_in.screen_drag.speed_x; \
-			m_out[const_sum<_sizeof_InputEventPre, 24>::value] = m_in.screen_drag.speed_y; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBase) = m_in.screen_drag.index; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBase, 4>::value) = m_in.screen_drag.x; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBase, 8>::value) = m_in.screen_drag.y; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBase, 12>::value) = m_in.screen_drag.relative_x; \
+			*reinterpret_cast<uint32_t*>(m_out + const_sum<_sizeof_InputEventBase, 16>::value) = m_in.screen_drag.relative_y; \
+			*reinterpret_cast<float*>(m_out + const_sum<_sizeof_InputEventBase, 20>::value) = m_in.screen_drag.speed_x; \
+			*reinterpret_cast<float*>(m_out + const_sum<_sizeof_InputEventBase, 24>::value) = m_in.screen_drag.speed_y; \
 			break; \
 		case InputEvent::ACTION: \
-			m_out[_sizeof_InputEventPre] = m_in.action.action; \
-			m_out[const_sum<_sizeof_InputEventPre, 4>::value] = m_in.action.pressed; \
+			*reinterpret_cast<uint32_t*>(m_out + _sizeof_InputEventBase) = m_in.action.action; \
+			m_out[const_sum<_sizeof_InputEventBase, 4>::value] = m_in.action.pressed; \
 			break; \
 		default: break; \
 	}
 
 // IN
 
-#define MARSHALLED_IN_InputEventMouse(m_in, m_out, m_var) MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, _sizeof_InputEventPre) \
-	m_out.m_var.button_mask = *reinterpret_cast<int*>(m_in + _sizeof_InputEventMod); \
-	m_out.m_var.x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventMod, 4>::value); \
-	m_out.m_var.y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventMod, 8>::value); \
-	m_out.m_var.global_x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventMod, 12>::value); \
-	m_out.m_var.global_y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventMod, 16>::value); \
-	m_out.m_var.pointer_index = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventMod, 20>::value);
+#define MARSHALLED_IN_InputEventMouse(m_in, m_out, m_var) MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, _sizeof_InputEventBase) \
+	m_out.m_var.button_mask = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBaseMod); \
+	m_out.m_var.x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBaseMod, 4>::value); \
+	m_out.m_var.y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBaseMod, 8>::value); \
+	m_out.m_var.global_x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBaseMod, 12>::value); \
+	m_out.m_var.global_y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBaseMod, 16>::value); \
+	m_out.m_var.pointer_index = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBaseMod, 20>::value);
 
 #ifdef APPLE_STYLE_KEYS
-#define MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, m_idx) m_out.m_var.mod.shift = m_in[m_idx]; \
-	m_out.m_var.mod.alt = m_in[m_idx]; \
-	m_out.m_var.mod.command = m_in[const_sum<m_idx, 1>::value]; \
+#define MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, m_idx) \
+	m_out.m_var.mod.shift = m_in[m_idx]; \
+	m_out.m_var.mod.alt = m_in[const_sum<m_idx, 1>::value]; \
 	m_out.m_var.mod.meta = m_in[const_sum<m_idx, 2>::value]; \
 	m_out.m_var.mod.control = m_in[const_sum<m_idx, 3>::value];
 #else
-#define MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, m_idx) m_out.m_var.mod.shift = m_in[m_idx]; \
-	m_out.m_var.mod.alt = m_in[m_idx]; \
-	m_out.m_var.mod.command = m_in[const_sum<m_idx, 1>::value]; \
+#define MARSHALLED_IN_InputModifierState(m_in, m_out, m_var, m_idx) \
+	m_out.m_var.mod.shift = m_in[m_idx]; \
+	m_out.m_var.mod.alt = m_in[const_sum<m_idx, 1>::value]; \
 	m_out.m_var.mod.control = m_in[const_sum<m_idx, 2>::value]; \
 	m_out.m_var.mod.meta = m_in[const_sum<m_idx, 3>::value];
 #endif
@@ -322,52 +324,52 @@ Dictionary mono_object_to_Dictionary(MonoObject* p_dict);
 	m_out.device = *reinterpret_cast<int*>(m_in + 8); \
 	switch (m_out.type) { \
 		case InputEvent::KEY: \
-			MARSHALLED_IN_InputModifierState(m_in, m_out, key, _sizeof_InputEventPre) \
-			m_out.key.pressed = m_in[_sizeof_InputEventMod]; \
-			m_out.key.scancode = *reinterpret_cast<uint32_t*>(m_in + const_sum<_sizeof_InputEventMod, 1>::value); \
-			m_out.key.unicode = *reinterpret_cast<uint32_t*>(m_in + const_sum<_sizeof_InputEventMod, 5>::value); \
-			m_out.key.echo = m_in[const_sum<_sizeof_InputEventMod, 9>::value]; \
+			MARSHALLED_IN_InputModifierState(m_in, m_out, key, _sizeof_InputEventBase) \
+			m_out.key.pressed = m_in[_sizeof_InputEventBaseMod]; \
+			m_out.key.scancode = *reinterpret_cast<uint32_t*>(m_in + const_sum<_sizeof_InputEventBaseMod, 1>::value); \
+			m_out.key.unicode = *reinterpret_cast<uint32_t*>(m_in + const_sum<_sizeof_InputEventBaseMod, 5>::value); \
+			m_out.key.echo = m_in[const_sum<_sizeof_InputEventBaseMod, 9>::value]; \
 			break; \
 		case InputEvent::MOUSE_MOTION: \
 			MARSHALLED_IN_InputEventMouse(m_in, m_out, mouse_motion) \
-			m_out.mouse_motion.relative_x = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre_Mouse); \
-			m_out.mouse_motion.relative_y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre_Mouse, 4>::value); \
-			m_out.mouse_motion.speed_x = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventPre_Mouse, 8>::value); \
-			m_out.mouse_motion.speed_y = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventPre_Mouse, 12>::value); \
+			m_out.mouse_motion.relative_x = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBaseMouse); \
+			m_out.mouse_motion.relative_y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBaseMouse, 4>::value); \
+			m_out.mouse_motion.speed_x = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventBaseMouse, 8>::value); \
+			m_out.mouse_motion.speed_y = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventBaseMouse, 12>::value); \
 			break; \
 		case InputEvent::MOUSE_BUTTON: \
 			MARSHALLED_IN_InputEventMouse(m_in, m_out, mouse_button) \
-			m_out.mouse_button.button_index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre_Mouse); \
-			m_out.mouse_button.pressed = m_in[const_sum<_sizeof_InputEventPre_Mouse, 4>::value]; \
-			m_out.mouse_button.doubleclick = m_in[const_sum<_sizeof_InputEventPre_Mouse, 5>::value]; \
+			m_out.mouse_button.button_index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBaseMouse); \
+			m_out.mouse_button.pressed = m_in[const_sum<_sizeof_InputEventBaseMouse, 4>::value]; \
+			m_out.mouse_button.doubleclick = m_in[const_sum<_sizeof_InputEventBaseMouse, 5>::value]; \
 			break; \
 		case InputEvent::JOYSTICK_MOTION: \
-			m_out.joy_motion.axis = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre); \
-			m_out.joy_motion.axis_value = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventPre, 4>::value); \
+			m_out.joy_motion.axis = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBase); \
+			m_out.joy_motion.axis_value = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventBase, 4>::value); \
 			break; \
 		case InputEvent::JOYSTICK_BUTTON: \
-			m_out.joy_button.button_index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre); \
-			m_out.joy_button.pressed = m_in[const_sum<_sizeof_InputEventPre, 4>::value]; \
-			m_out.joy_button.pressure = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventPre, 5>::value); \
+			m_out.joy_button.button_index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBase); \
+			m_out.joy_button.pressed = m_in[const_sum<_sizeof_InputEventBase, 4>::value]; \
+			m_out.joy_button.pressure = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventBase, 5>::value); \
 			break; \
 		case InputEvent::SCREEN_TOUCH: \
-			m_out.screen_touch.index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre); \
-			m_out.screen_touch.x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre, 4>::value); \
-			m_out.screen_touch.y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre, 8>::value); \
-			m_out.screen_touch.pressed = m_in[const_sum<_sizeof_InputEventPre, 12>::value]; \
+			m_out.screen_touch.index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBase); \
+			m_out.screen_touch.x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBase, 4>::value); \
+			m_out.screen_touch.y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBase, 8>::value); \
+			m_out.screen_touch.pressed = m_in[const_sum<_sizeof_InputEventBase, 12>::value]; \
 			break; \
 		case InputEvent::SCREEN_DRAG: \
-			m_out.screen_drag.index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre); \
-			m_out.screen_drag.x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre, 4>::value); \
-			m_out.screen_drag.y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre, 8>::value); \
-			m_out.screen_drag.relative_x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre, 12>::value); \
-			m_out.screen_drag.relative_y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventPre, 16>::value); \
-			m_out.screen_drag.speed_x = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventPre, 20>::value); \
-			m_out.screen_drag.speed_y = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventPre, 24>::value); \
+			m_out.screen_drag.index = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBase); \
+			m_out.screen_drag.x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBase, 4>::value); \
+			m_out.screen_drag.y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBase, 8>::value); \
+			m_out.screen_drag.relative_x = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBase, 12>::value); \
+			m_out.screen_drag.relative_y = *reinterpret_cast<int*>(m_in + const_sum<_sizeof_InputEventBase, 16>::value); \
+			m_out.screen_drag.speed_x = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventBase, 20>::value); \
+			m_out.screen_drag.speed_y = *reinterpret_cast<float*>(m_in + const_sum<_sizeof_InputEventBase, 24>::value); \
 			break; \
 		case InputEvent::ACTION: \
-			m_out.action.action = *reinterpret_cast<int*>(m_in + _sizeof_InputEventPre); \
-			m_out.action.pressed = m_in[const_sum<_sizeof_InputEventPre, 4>::value]; \
+			m_out.action.action = *reinterpret_cast<int*>(m_in + _sizeof_InputEventBase); \
+			m_out.action.pressed = m_in[const_sum<_sizeof_InputEventBase, 4>::value]; \
 			break; \
 		default: break; \
 	}

@@ -387,15 +387,21 @@ namespace GodotEngine
         }
     }
 
+    [StructLayout(LayoutKind.Explicit)]
     public struct InputEventKey : IEquatable<InputEventKey>
     {
+        [FieldOffset(0)]
         public InputModifierState mod;
 
+        [FieldOffset(4)]
         public bool pressed;
 
+        [FieldOffset(5)]
         public int scancode;
+        [FieldOffset(9)]
         public int unicode;
 
+        [FieldOffset(13)]
         public bool echo;
 
         public int get_scancode_with_modifiers()
@@ -453,18 +459,29 @@ namespace GodotEngine
         }
     }
 
+    [StructLayout(LayoutKind.Explicit)]
     public struct InputEventMouseButton : IEquatable<InputEventMouseButton>
     {
+        [FieldOffset(0)]
         public InputModifierState mod;
+        [FieldOffset(4)]
         public int button_mask;
+        [FieldOffset(8)]
         public int x;
+        [FieldOffset(12)]
         public int y;
+        [FieldOffset(16)]
         public int global_x;
+        [FieldOffset(20)]
         public int global_y;
+        [FieldOffset(24)]
         public int pointer_index;
 
+        [FieldOffset(28)]
         public int button_index;
+        [FieldOffset(32)]
         public bool pressed;
+        [FieldOffset(33)]
         public bool doubleclick;
 
         public static bool operator ==(InputEventMouseButton left, InputEventMouseButton right)
@@ -514,19 +531,31 @@ namespace GodotEngine
         }
     }
 
+    [StructLayout(LayoutKind.Explicit)]
     public struct InputEventMouseMotion : IEquatable<InputEventMouseMotion>
     {
+        [FieldOffset(0)]
         public InputModifierState mod;
+        [FieldOffset(4)]
         public int button_mask;
+        [FieldOffset(8)]
         public int x;
+        [FieldOffset(12)]
         public int y;
+        [FieldOffset(16)]
         public int global_x;
+        [FieldOffset(20)]
         public int global_y;
+        [FieldOffset(24)]
         public int pointer_index;
 
+        [FieldOffset(28)]
         public int relative_x;
+        [FieldOffset(32)]
         public int relative_y;
+        [FieldOffset(36)]
         public float speed_x;
+        [FieldOffset(40)]
         public float speed_y;
 
         public static bool operator ==(InputEventMouseMotion left, InputEventMouseMotion right)
