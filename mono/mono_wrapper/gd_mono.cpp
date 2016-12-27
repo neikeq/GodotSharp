@@ -44,7 +44,7 @@ void GDMono::initialize(const String& p_assemblies_path)
 		GDMonoUtils::clear_cache();
 
 		// Load API assembly
-		String api_assembly_name = "GodotSharp";
+		String api_assembly_name = API_ASSEMBLY_NAME;
 		String api_assembly_path = p_assemblies_path + "/" + api_assembly_name + ".dll";
 
 		ERR_EXPLAIN("Mono: Game assembly found but the API assembly is missing");

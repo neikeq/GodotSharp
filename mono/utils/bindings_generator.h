@@ -229,7 +229,7 @@ class BindingsGenerator
 	void generate_obj_types();
 	void generate_builtin_types();
 
-	Error generate_cs_type(const TypeInterface& itype, const String& p_output_dir);
+	Error generate_cs_type(const TypeInterface& itype, const String& p_output_file);
 
 	Error save_file(const String& path, const List<String>& content);
 

@@ -29,16 +29,23 @@
 	"\t\t{%s}.Release|Any CPU.ActiveCfg = Release|Any CPU\n" \
 	"\t\t{%s}.Release|Any CPU.Build.0 = Release|Any CPU"
 
-void NETSolution::add_project(CSharpProject p_project)
+CSharpProject& NETSolution::add_new_project(const String& p_name)
 {
-	ERR_FAIL_COND(projects.has(p_project.name));
+	if (projects.has(p_name))
+		WARN_PRINT("Overriding existing project.");
 
-	if (projects.size())
-		p_project.path = path_join(path, p_project.name);
+	projects[p_name] = CSharpProject::create_new(p_name);
+
+	CSharpProject& project = projects[p_name];
+
+	if (projects.size() > 1)
+		project.set_path(path_join(path, p_name));
 	else
-		p_project.path = path;
+		project.set_path(path);
 
-	projects[p_project.name] = p_project;
+	CSharpProject ppp = projects[p_name];
+
+	return project;
 }
 
 Error NETSolution::save()
@@ -52,8 +59,8 @@ Error NETSolution::save()
 
 	for (Map<String, CSharpProject>::Element *E = projects.front(); E; E = E->next()) {
 		CSharpProject project = E->value();
-		projs_decl += sformat(PROJECT_DECLARATION, project.name, project.name, project.guid);
-		projs_plt += String(PROJECT_PLATFORMS_CONFIG).replace("%s", project.guid);
+		projs_decl += sformat(PROJECT_DECLARATION, project.get_name(), project.get_name() + ".csproj", project.get_guid());
+		projs_plt += String(PROJECT_PLATFORMS_CONFIG).replace("%s", project.get_guid());
 
 		project.save_assembly_info();
 		project.save_csproj();
@@ -67,4 +74,9 @@ Error NETSolution::save()
 	file->close();
 
 	return OK;
+}
+
+NETSolution::NETSolution(const String &p_name)
+{
+	name = p_name;
 }

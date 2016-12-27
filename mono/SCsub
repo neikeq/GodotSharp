@@ -2,6 +2,46 @@
 
 Import('env')
 
+
+def make_cs_files_header(src, dst):
+    with open(dst, 'wb') as header:
+        header.write('/* This is an automatically generated file; DO NOT EDIT! OK THX */\n')
+        header.write('#ifndef _CS_FILES_DATA_H\n')
+        header.write('#define _CS_FILES_DATA_H\n\n')
+        header.write('#include "map.h"\n')
+        header.write('#include "ustring.h"\n')
+        inserted_files = ''
+        import os
+        for file in os.listdir(src):
+            if file.endswith('.cs'):
+                with open(os.path.join(src, file), 'rb') as f:
+                    buf = f.read()
+                    decomp_size = len(buf)
+                    import zlib
+                    buf = zlib.compress(buf)
+                    name = os.path.splitext(file)[0]
+                    header.write('\nstatic const int _cs_' + name + '_compressed_size = ' + str(len(buf)) + ';\n')
+                    header.write('static const int _cs_' + name + '_uncompressed_size = ' + str(decomp_size) + ';\n')
+                    header.write('static const unsigned char _cs_' + name + '_compressed[] = { ')
+                    for i, buf_idx in enumerate(range(len(buf))):
+                        if i > 0:
+                            header.write(', ')
+                        header.write(str(ord(buf[buf_idx])))
+                    inserted_files += '\tr_files.insert(\"' + file + '\", ' \
+                                        'CompressedFile(_cs_' + name + '_compressed_size, ' \
+                                        '_cs_' + name + '_uncompressed_size, ' \
+                                        '_cs_' + name + '_compressed));\n'
+                    header.write(' };\n')
+        header.write('\nstruct CompressedFile\n' '{\n'
+            '\tint compressed_size;\n' '\tint uncompressed_size;\n' '\tconst unsigned char* data;\n'
+            '\n\tCompressedFile(int p_comp_size, int p_uncomp_size, const unsigned char* p_data)\n'
+            '\t{\n' '\t\tcompressed_size = p_comp_size;\n' '\t\tuncompressed_size = p_uncomp_size;\n'
+            '\t\tdata = p_data;\n' '\t}\n' '\n\tCompressedFile() {}\n' '};\n'
+            '\nvoid get_compressed_files(Map<String, CompressedFile>& r_files)\n' '{\n' + inserted_files + '}\n'
+            )
+        header.write('#endif // _CS_FILES_DATA_H')
+
+
 env.add_source_files(env.modules_sources, '*.cpp')
 env.add_source_files(env.modules_sources, 'mono_wrapper/*.cpp')
 env.add_source_files(env.modules_sources, 'utils/*.cpp')
@@ -16,6 +56,9 @@ if env['mono_glue']:
     env.add_source_files(env.modules_sources, 'bindings/mono_glue.cpp')
 else:
     env.Append(CPPDEFINES = [ 'MONO_GLUE_DISABLED' ])
+
+if env['tools']:
+    make_cs_files_header('bindings/cs_files', 'bindings/cs_compressed.h')
 
 if ARGUMENTS.get('yolo_copy', False):
     env.Append(CPPDEFINES = [ 'YOLO_COPY' ])

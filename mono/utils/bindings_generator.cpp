@@ -3,14 +3,18 @@
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 
 #include "globals.h"
+#include "io/compression.h"
 #include "os/dir_access.h"
 #include "os/file_access.h"
 #include "os/os.h"
-
 #include "tools/doc/doc_data.h"
 #include "tools/editor/editor_help.h"
 
+#include "csharp_project.h"
+#include "net_solution.h"
+#include "path_utils.h"
 #include "string_format.h"
+#include "../bindings/cs_compressed.h"
 #include "../godotsharp_defs.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
 
@@ -170,26 +174,70 @@ void BindingsGenerator::generate_header_icalls()
 
 Error BindingsGenerator::generate_cs_project(String p_output_dir)
 {
-	if (!p_output_dir.ends_with("/")) {
-		p_output_dir += "/";
+	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
+
+	if (!DirAccess::exists(p_output_dir)) {
+		Error err = da->make_dir_recursive(p_output_dir);
+		ERR_FAIL_COND_V(err != OK, ERR_CANT_CREATE);
 	}
 
-	bool dir_exists = DirAccess::exists(p_output_dir);
-	ERR_EXPLAIN("The output directory does not exist.");
-	ERR_FAIL_COND_V(!dir_exists, ERR_FILE_BAD_PATH);
+	da->change_dir(p_output_dir);
+	da->make_dir("Core");
+	da->make_dir("ObjectType");
+
+	String core_dir = path_join(p_output_dir, "Core");
+	String obj_type_dir = path_join(p_output_dir, "ObjectType");
+
+	NETSolution solution(API_ASSEMBLY_NAME);
+	solution.path = p_output_dir;
+	CSharpProject& project = solution.add_new_project(API_ASSEMBLY_NAME);
+	project.add_reference("System");
 
 	EditorHelp::generate_doc();
 	generate_header_icalls();
 
 	for (Map<String, TypeInterface>::Element *E = obj_types.front(); E; E = E->next()) {
-		Error err = generate_cs_type(E->get(), p_output_dir);
+		String output_file = path_join(obj_type_dir, E->get().proxy_name + ".cs");
+		Error err = generate_cs_type(E->get(), output_file);
+		if (err == ERR_SKIP)
+			continue;
 		if (err != OK)
 			return err;
+		project.add_file(output_file);
 	}
 
-	generate_cs_type(builtin_types["Image"], p_output_dir);
-	generate_cs_type(builtin_types["NodePath"], p_output_dir);
-	generate_cs_type(builtin_types["RID"], p_output_dir);
+#define GENERATE_BUILTIN_TYPE(m_name) { \
+	String output_file = path_join(core_dir, #m_name ".cs"); \
+	Error err = generate_cs_type(builtin_types[#m_name], output_file); \
+	if (err != OK) \
+		return err; \
+	project.add_file(output_file); \
+}
+
+	GENERATE_BUILTIN_TYPE(Image);
+	GENERATE_BUILTIN_TYPE(NodePath);
+	GENERATE_BUILTIN_TYPE(RID);
+
+#undef GENERATE_BUILTIN_TYPE
+
+	Map<String, CompressedFile> compressed_files;
+	get_compressed_files(compressed_files);
+
+	for (Map<String, CompressedFile>::Element *E = compressed_files.front(); E; E = E->next()) {
+		String output_file = path_join(core_dir, E->key());
+
+		Vector<uint8_t> data;
+		data.resize(E->value().uncompressed_size);
+		Compression::decompress(data.ptr(), E->value().uncompressed_size, E->value().data, E->value().compressed_size, Compression::MODE_DEFLATE);
+
+		FileAccessRef file = FileAccess::open(output_file, FileAccess::WRITE);
+		ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
+		file->store_buffer(data.ptr(), data.size());
+		file->close();
+
+		project.add_file(output_file);
+	}
 
 	List<String> cs_icalls_content;
 
@@ -217,10 +265,24 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir)
 
 	cs_icalls_content.push_back(INDENT1 CLOSE_BLOCK CLOSE_BLOCK);
 
-	return save_file(p_output_dir + internal_methods_class + ".cs", cs_icalls_content);
+	String internal_methods_file = path_join(core_dir, internal_methods_class ".cs");
+
+	Error err = save_file(internal_methods_file, cs_icalls_content);
+	if (err != OK)
+		return err;
+
+	project.add_file(internal_methods_file);
+
+	Error sln_error = solution.save();
+	if (sln_error != OK) {
+		ERR_PRINT("Could not to save .NET solution.");
+		return sln_error;
+	}
+
+	return OK;
 }
 
-Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const String& p_output_dir)
+Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const String& p_output_file)
 {
 	DocData* doc_data = EditorHelp::get_doc_data();
 
@@ -229,7 +291,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 	bool is_derived_type = itype.base_name.length();
 
 	if (is_derived_type && obj_types[itype.base_name].is_singleton && is_singleton_black_listed(itype.name))
-		return OK;
+		return ERR_SKIP;
 
 	OS::get_singleton()->print(String("Generating " + itype.name + "...\n").utf8());
 
@@ -613,15 +675,11 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 
 	cs_file.push_back(INDENT1 CLOSE_BLOCK CLOSE_BLOCK);
 
-	return save_file(p_output_dir + itype.proxy_name + ".cs", cs_file);
+	return save_file(p_output_file, cs_file);
 }
 
 Error BindingsGenerator::generate_glue(String p_output_dir)
 {
-	if (!p_output_dir.ends_with("/")) {
-		p_output_dir += "/";
-	}
-
 	bool dir_exists = DirAccess::exists(p_output_dir);
 	ERR_EXPLAIN("The output directory does not exist.");
 	ERR_FAIL_COND_V(!dir_exists, ERR_FILE_BAD_PATH);
@@ -856,12 +914,12 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 
 	cpp_file.push_back(CLOSE_BLOCK "}\n");
 
-	return save_file(p_output_dir + "mono_glue.cpp", cpp_file);
+	return save_file(path_join(p_output_dir, "mono_glue.cpp"), cpp_file);
 }
 
 Error BindingsGenerator::save_file(const String &path, const List<String> &content)
 {
-	FileAccess* file = FileAccess::open(path, FileAccess::WRITE);
+	FileAccessRef file = FileAccess::open(path, FileAccess::WRITE);
 
 	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
 
@@ -870,7 +928,6 @@ Error BindingsGenerator::save_file(const String &path, const List<String> &conte
 	}
 
 	file->close();
-	memdelete(file);
 
 	return OK;
 }

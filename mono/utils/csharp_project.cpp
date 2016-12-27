@@ -47,9 +47,9 @@
 	"    <Platform Condition=\" '$(Platform)' == '' \">AnyCPU</Platform>\n" \
 	"    <ProjectGuid>{%0}</ProjectGuid>\n" \
 	"    <OutputType>Library</OutputType>\n" \
-	"    <RootNamespace>{%1}</RootNamespace>\n" \
-	"    <AssemblyName>{%2}</AssemblyName>\n" \
-	"    <TargetFrameworkVersion>{%3}</TargetFrameworkVersion>\n" \
+	"    <RootNamespace>%1</RootNamespace>\n" \
+	"    <AssemblyName>%2</AssemblyName>\n" \
+	"    <TargetFrameworkVersion>%3</TargetFrameworkVersion>\n" \
 	"  </PropertyGroup>\n" \
 	"  <PropertyGroup Condition=\" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' \">\n" \
 	"    <DebugSymbols>true</DebugSymbols>\n" \
@@ -123,12 +123,19 @@ _FORCE_INLINE_ static const char* to_str(const TargetFramework& tf)
 
 Error CSharpProject::save_csproj()
 {
-	FileAccessRef file = FileAccess::open(path_join(path, name + ".csproj"), FileAccess::WRITE);
+	FileAccessRef file = FileAccess::open(path_join(data->path, data->name + ".csproj"), FileAccess::WRITE);
 	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
 
 	XMLPrinter printer;
-	doc->Print(&printer);
+	data->doc->Print(&printer);
+#if 0
 	file->store_string(printer.CStr());
+#else
+	// tinyxml2 does not allow optionally disabling entities...
+	// not sure if a big deal. msbuild parses it correctly and makes the convertion
+	// but just to be sure...
+	file->store_string(String(printer.CStr()).replace("&apos;", "\'"));
+#endif
 	file->close();
 
 	return OK;
@@ -136,27 +143,46 @@ Error CSharpProject::save_csproj()
 
 Error CSharpProject::save_assembly_info()
 {
-	String props_dir = path_join(path, "Properties");
+	String props_dir = path_join(data->path, "Properties");
 
-	if (DirAccess::exists(props_dir)) {
+	if (!DirAccess::exists(props_dir)) {
 		DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
-
 		ERR_FAIL_COND_V(da->make_dir(props_dir) != OK, ERR_CANT_CREATE);
 	}
 
 	FileAccessRef file = FileAccess::open(path_join(props_dir, "AssemblyInfo.cs"), FileAccess::WRITE);
 	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
-	file->store_string(sformat(ASSEMBLY_INFO_TEMPLATE, name));
+	file->store_string(sformat(ASSEMBLY_INFO_TEMPLATE, data->name));
 	file->close();
 
 	return OK;
 }
 
+void CSharpProject::set_path(const String &p_path)
+{
+	data->path = p_path;
+}
+
+void CSharpProject::set_name(const String& p_name)
+{
+	data->name = p_name;
+}
+
+void CSharpProject::set_guid(const String &p_guid)
+{
+	data->guid = p_guid;
+}
+
+void CSharpProject::set_target_framework(TargetFramework p_target_framework)
+{
+	data->target_framework = p_target_framework;
+}
+
 bool CSharpProject::has_file(const String &p_path)
 {
-	String file = make_relative_win_path(p_path);
+	String file = make_relative_win_path(data->path, p_path);
 
-	XMLElement* proj = doc->FirstChildElement("Project");
+	XMLElement* proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND_V(!proj, false);
 
 	XMLElement* item_group = proj->FirstChildElement("ItemGroup");
@@ -165,7 +191,7 @@ bool CSharpProject::has_file(const String &p_path)
 		XMLElement* item = item_group->FirstChildElement();
 
 		while (item) {
-			if (item && item->Attribute("Include") == file)
+			if (item->Attribute("Include") == file)
 				return true;
 
 			item = item->NextSiblingElement();
@@ -179,49 +205,45 @@ bool CSharpProject::has_file(const String &p_path)
 
 void CSharpProject::add_file(const String &p_path)
 {
-	String file = make_relative_win_path(p_path);
+	String file = make_relative_win_path(data->path, p_path);
 
-	XMLElement* proj = doc->FirstChildElement("Project");
+	XMLElement* proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND(!proj);
 
 	XMLNode* prev = NULL;
 	XMLNode* item_group = proj->FirstChildElement("ItemGroup");
-	const char* item_name = "Compile";
 
 	while (item_group) {
-		XMLElement* item = item_group->FirstChildElement();
+		XMLElement* item = item_group->FirstChildElement("Compile");
 
-		while (item) {
-			if (item && String(item->Attribute("Include")).ends_with(".cs")) {
-				item_name = item->Name();
-				break;
-			}
-
-			item = item->NextSiblingElement();
-		}
+		if (item)
+			break;
 
 		prev = item_group;
 		item_group = item_group->NextSiblingElement("ItemGroup");
 	}
 
 	if (!item_group) {
-		if (prev)
-			item_group = proj->InsertAfterChild(prev, doc->NewElement("ItemGroup"));
-		else
-			item_group = proj->InsertEndChild(doc->NewElement("ItemGroup"));
+		if (prev) {
+			// Got to the end without finding any Compile item
+			item_group = proj->InsertAfterChild(prev, data->doc->NewElement("ItemGroup"));
+		} else {
+			// There was no ItemGroup at all
+			item_group = proj->InsertEndChild(data->doc->NewElement("ItemGroup"));
+		}
 		ERR_FAIL_COND(!item_group);
 	}
 
-	XMLElement* file_elem = doc->NewElement(item_name);
+	XMLElement* file_elem = data->doc->NewElement("Compile");
 	file_elem->SetAttribute("Include", file.utf8());
 	item_group->InsertEndChild(file_elem);
 }
 
 void CSharpProject::remove_file(const String &p_path)
 {
-	String file = make_relative_win_path(p_path);
+	String file = make_relative_win_path(data->path, p_path);
 
-	XMLElement* proj = doc->FirstChildElement("Project");
+	XMLElement* proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND(!proj);
 
 	XMLElement* item_group = proj->FirstChildElement("ItemGroup");
@@ -230,7 +252,7 @@ void CSharpProject::remove_file(const String &p_path)
 		XMLElement* item = item_group->FirstChildElement();
 
 		while (item) {
-			if (item && item->Attribute("Include") == file) {
+			if (item->Attribute("Include") == file) {
 				item_group->DeleteChild(item);
 				break;
 			}
@@ -242,23 +264,23 @@ void CSharpProject::remove_file(const String &p_path)
 	}
 }
 
-void CSharpProject::get_all_files(const String &p_pattern, List<String> r_paths)
+void CSharpProject::get_files(const String& p_include_pattern, List<String>* r_paths)
 {
-	XMLElement* proj = doc->FirstChildElement("Project");
+	XMLElement* proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND(!proj);
 
 	XMLElement* item_group = proj->FirstChildElement("ItemGroup");
 
 	while (item_group) {
-		XMLElement* item = item_group->FirstChildElement();
+		XMLElement* item = item_group->FirstChildElement("Compile");
 
 		while (item) {
 			const String& incl = item->Attribute("Include");
 
-			if (incl.match(p_pattern))
-				r_paths.push_back(make_local_godot_path(incl));
+			if (incl.match(p_include_pattern))
+				r_paths->push_back(make_local_godot_path(incl));
 
-			item = item->NextSiblingElement();
+			item = item->NextSiblingElement("Compile");
 		}
 
 		item_group = item_group->NextSiblingElement("ItemGroup");
@@ -267,7 +289,9 @@ void CSharpProject::get_all_files(const String &p_pattern, List<String> r_paths)
 
 bool CSharpProject::has_reference(const String &p_name)
 {
-	XMLElement* proj = doc->FirstChildElement("Project");
+	String name = p_name.replace("/", "\\");
+
+	XMLElement* proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND_V(!proj, false);
 
 	XMLElement* item_group = proj->FirstChildElement("ItemGroup");
@@ -276,7 +300,7 @@ bool CSharpProject::has_reference(const String &p_name)
 		XMLElement* item = item_group->FirstChildElement("Reference");
 
 		while (item) {
-			if (item && item->Attribute("Include") == p_name) // TODO Safe assembly path comparison
+			if (String(item->Attribute("Include")).get_file() == name)
 				return true;
 
 			item = item->NextSiblingElement("Reference");
@@ -288,14 +312,95 @@ bool CSharpProject::has_reference(const String &p_name)
 	return false;
 }
 
-void CSharpProject::add_reference(const String &p_name, const String &p_hint_path)
+XMLNode* CSharpProject::add_reference(const String &p_name)
 {
+	String name = p_name.replace("/", "\\");
 
+	XMLElement* proj = data->doc->FirstChildElement("Project");
+	ERR_FAIL_COND_V(!proj, NULL);
+
+	XMLNode* prev = NULL;
+	XMLNode* item_group = proj->FirstChildElement("ItemGroup");
+
+	while (item_group) {
+		XMLElement* item = item_group->FirstChildElement("Reference");
+
+		if (item)
+			break;
+
+		prev = item_group;
+		item_group = item_group->NextSiblingElement("ItemGroup");
+	}
+
+	if (!item_group) {
+		if (prev) {
+			// Got to the end without finding any Reference item
+			item_group = proj->InsertAfterChild(prev, data->doc->NewElement("ItemGroup"));
+		} else {
+			// There was no ItemGroup at all
+			item_group = proj->InsertEndChild(data->doc->NewElement("ItemGroup"));
+		}
+		ERR_FAIL_COND_V(!item_group, NULL);
+	}
+
+	XMLElement* file_elem = data->doc->NewElement("Reference");
+	file_elem->SetAttribute("Include", name.utf8());
+	return item_group->InsertEndChild(file_elem);
+}
+
+XMLNode *CSharpProject::get_reference(const String &p_name)
+{
+	String name = p_name.replace("/", "\\");
+
+	XMLElement* proj = data->doc->FirstChildElement("Project");
+	ERR_FAIL_COND_V(!proj, NULL);
+
+	XMLElement* item_group = proj->FirstChildElement("ItemGroup");
+
+	while (item_group) {
+		XMLElement* item = item_group->FirstChildElement("Reference");
+
+		while (item) {
+			if (String(item->Attribute("Include")).get_file() == name)
+				return item;
+
+			item = item->NextSiblingElement("Reference");
+		}
+
+		item_group = item_group->NextSiblingElement("ItemGroup");
+	}
+
+	return NULL;
+}
+
+void CSharpProject::get_references(XMLNode **p_iter)
+{
+	if ((*p_iter) == NULL) {
+		XMLElement* proj = data->doc->FirstChildElement("Project");
+		ERR_FAIL_COND(!proj);
+
+		XMLElement* item_group = proj->FirstChildElement("ItemGroup");
+
+		while (item_group) {
+			XMLElement* item = item_group->FirstChildElement("Reference");
+
+			if (item) {
+				*p_iter = item;
+				return;
+			}
+
+			item_group = item_group->NextSiblingElement("ItemGroup");
+		}
+	} else {
+		*p_iter = (*p_iter)->NextSiblingElement("Reference");
+	}
 }
 
 void CSharpProject::remove_reference(const String &p_name)
 {
-	XMLElement* proj = doc->FirstChildElement("Project");
+	String name = p_name.replace("/", "\\");
+
+	XMLElement* proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND(!proj);
 
 	XMLElement* item_group = proj->FirstChildElement("ItemGroup");
@@ -304,7 +409,7 @@ void CSharpProject::remove_reference(const String &p_name)
 		XMLElement* item = item_group->FirstChildElement("Reference");
 
 		while (item) {
-			if (item && item->Attribute("Include") == p_name) {
+			if (String(item->Attribute("Include")).get_file() == name) {
 				item_group->DeleteChild(item);
 				break;
 			}
@@ -316,19 +421,87 @@ void CSharpProject::remove_reference(const String &p_name)
 	}
 }
 
-void CSharpProject::get_all_references(const String &p_pattern, Map<String, String> r_references)
+XMLNode* CSharpProject::add_hint_path(XMLNode *p_ref, const String &p_path)
 {
+	XMLElement* file_elem = data->doc->NewElement("HintPath");
+	file_elem->SetText(p_path.utf8());
+	return p_ref->InsertEndChild(file_elem);
+}
 
+XMLNode* CSharpProject::add_hint_path(XMLNode *p_ref, const String &p_path, const String &p_condition)
+{
+	XMLElement* file_elem = data->doc->NewElement("HintPath");
+	file_elem->SetText(p_path.utf8());
+	file_elem->Attribute("Condition", p_condition.utf8());
+	return p_ref->InsertEndChild(file_elem);
+}
+
+void CSharpProject::get_hint_paths(XMLNode *p_ref, XMLNode **p_iter)
+{
+	if ((*p_iter) == NULL) {
+		ERR_FAIL_COND(!p_ref);
+		*p_iter = p_ref->FirstChildElement("HintPath");
+	} else {
+		*p_iter = (*p_iter)->NextSiblingElement("HintPath");
+	}
 }
 
 CSharpProject CSharpProject::create_new(const String& p_name)
 {
 	CSharpProject proj;
 
-	proj.name = p_name;
-	proj.guid = _new_guid();
-	proj.target_framework = DOTNET_45;
-	proj.doc->Parse(sformat(PROJECT_TEMPLATE, proj.guid, proj.name, proj.name, to_str(proj.target_framework)).utf8());
+	proj.set_name(p_name);
+	proj.set_guid(_new_guid());
+	proj.set_target_framework(DOTNET_45);
+	proj.data->doc->Parse(sformat(PROJECT_TEMPLATE, proj.get_guid(), proj.get_name(), proj.get_name(), to_str(proj.get_target_framework())).utf8());
 
 	return proj;
+}
+
+void CSharpProject::operator=(const CSharpProject &p_project)
+{
+	unref();
+
+	if (p_project.data && p_project.data->refcount.ref()) {
+		data = p_project.data;
+	}
+}
+
+CSharpProject::CSharpProject()
+{
+	data = memnew(Data);
+}
+
+CSharpProject::CSharpProject(const CSharpProject &p_project)
+{
+	data = NULL;
+
+	if (p_project.data && p_project.data->refcount.ref()) {
+		data = p_project.data;
+	}
+}
+
+CSharpProject::~CSharpProject()
+{
+	unref();
+}
+
+void CSharpProject::unref()
+{
+	if (data && data->refcount.unref()) {
+		memdelete(data);
+	}
+
+	data = NULL;
+}
+
+CSharpProject::Data::Data()
+{
+	doc = memnew(tinyxml2::XMLDocument);
+	refcount.init();
+}
+
+CSharpProject::Data::~Data()
+{
+	memdelete(doc);
 }

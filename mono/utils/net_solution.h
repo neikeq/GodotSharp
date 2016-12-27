@@ -8,14 +8,14 @@ class CSharpProject;
 
 struct NETSolution
 {
-	String name; // TODO private?
+	String name;
 	String path;
 
-	void add_project(CSharpProject p_project);
+	CSharpProject& add_new_project(const String& p_name);
 
 	Error save();
 
-	NETSolution() {}
+	NETSolution(const String& p_name);
 
 private:
 	Map<String, CSharpProject> projects;

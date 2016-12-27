@@ -63,6 +63,18 @@ Error CSharpLanguage::execute_file(const String &p_path)
 
 void CSharpLanguage::init()
 {
+	mono = memnew(GDMono);
+
+	String assemblies_path = "bin/"
+#ifdef DEBUG_ENABLED
+			"Debug"
+#else
+			"Release"
+#endif
+			;
+
+	mono->initialize(assemblies_path);
+
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 	List<String> args = OS::get_singleton()->get_cmdline_args();
 
@@ -85,18 +97,6 @@ void CSharpLanguage::init()
 		}
 	}
 #endif
-
-	mono = memnew(GDMono);
-
-	String assemblies_path = "bin/"
-#ifdef DEBUG_ENABLED
-			"Debug"
-#else
-			"Release"
-#endif
-			;
-
-	mono->initialize(assemblies_path);
 }
 
 void CSharpLanguage::finish()
