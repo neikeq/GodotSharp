@@ -32,7 +32,7 @@ namespace GodotEngine
 
         public static float atan2(float x, float y)
         {
-            return (float)Math.Atan2(y, x);
+            return (float)Math.Atan2(x, y);
         }
 
         public static float ceil(float s)
