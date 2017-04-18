@@ -1,16 +1,42 @@
+/**********************************************************************************/
+/* gd_mono_assembly.cpp                                                           */
+/**********************************************************************************/
+/* The MIT License (MIT)                                                          */
+/*                                                                                */
+/* Copyright (c) 2016 Ignacio Etcheverry                                          */
+/*                                                                                */
+/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
+/* of this software and associated documentation files (the "Software"), to deal  */
+/* in the Software without restriction, including without limitation the rights   */
+/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
+/* copies of the Software, and to permit persons to whom the Software is          */
+/* furnished to do so, subject to the following conditions:                       */
+/*                                                                                */
+/* The above copyright notice and this permission notice shall be included in all */
+/* copies or substantial portions of the Software.                                */
+/*                                                                                */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
+/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
+/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
+/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
+/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
+/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
+/* SOFTWARE.                                                                      */
+/**********************************************************************************/
 #include "gd_mono_assembly.h"
 
 #include <mono/metadata/mono-debug.h>
 #include <mono/metadata/tokentype.h>
 
-#include "core/os/file_access.h"
-#include "core/list.h"
+#include "list.h"
+#include "os/file_access.h"
 
 #include "gd_mono_class.h"
 
-Error GDMonoAssembly::load(MonoDomain *p_domain)
-{
+Error GDMonoAssembly::load(MonoDomain *p_domain) {
 	ERR_FAIL_COND_V(loaded, ERR_FILE_ALREADY_IN_USE);
+
+	uint64_t last_modified_time = FileAccess::get_modified_time(path);
 
 	Vector<uint8_t> data = FileAccess::get_file_as_array(path);
 	ERR_FAIL_COND_V(data.empty(), ERR_FILE_CANT_READ);
@@ -20,10 +46,9 @@ Error GDMonoAssembly::load(MonoDomain *p_domain)
 	MonoImageOpenStatus status;
 
 	image = mono_image_open_from_data_with_name(
-		(char*) &data[0], data.size(),
-		true, &status, false,
-		image_name.utf8().get_data()
-	);
+			(char *)&data[0], data.size(),
+			true, &status, false,
+			image_name.utf8().get_data());
 
 	ERR_FAIL_COND_V(status != MONO_IMAGE_OK || image == NULL, ERR_FILE_CANT_OPEN);
 
@@ -44,12 +69,12 @@ Error GDMonoAssembly::load(MonoDomain *p_domain)
 	mono_jit_exec(p_domain, assembly, 0, NULL);
 
 	loaded = true;
+	modified_time = last_modified_time;
 
 	return OK;
 }
 
-Error GDMonoAssembly::wrap_image(MonoImage *p_image)
-{
+Error GDMonoAssembly::wrap_image(MonoImage *p_image) {
 	ERR_FAIL_COND_V(loaded, ERR_FILE_ALREADY_IN_USE);
 
 	assembly = mono_image_get_assembly(p_image);
@@ -62,8 +87,7 @@ Error GDMonoAssembly::wrap_image(MonoImage *p_image)
 	return OK;
 }
 
-void GDMonoAssembly::unload()
-{
+void GDMonoAssembly::unload() {
 	ERR_FAIL_COND(!loaded);
 
 #ifdef DEBUG_ENABLED
@@ -73,7 +97,7 @@ void GDMonoAssembly::unload()
 	}
 #endif
 
-	for (Map<MonoClass*, GDMonoClass*>::Element *E = cached_raw.front(); E; E = E->next()) {
+	for (Map<MonoClass *, GDMonoClass *>::Element *E = cached_raw.front(); E; E = E->next()) {
 		memdelete(E->value());
 	}
 
@@ -85,34 +109,32 @@ void GDMonoAssembly::unload()
 	loaded = false;
 }
 
-GDMonoClass *GDMonoAssembly::get_class(const String &p_namespace, const String &p_name)
-{
+GDMonoClass *GDMonoAssembly::get_class(const String &p_namespace, const String &p_name) {
 	ERR_FAIL_COND_V(!loaded, NULL);
 
 	ClassKey key(p_namespace, p_name);
 
-	GDMonoClass** match = cached_classes.getptr(key);
+	GDMonoClass **match = cached_classes.getptr(key);
 
 	if (match)
 		return *match;
 
-	MonoClass* mono_class = mono_class_from_name(image, p_namespace.utf8(), p_name.utf8());
+	MonoClass *mono_class = mono_class_from_name(image, p_namespace.utf8(), p_name.utf8());
 
 	if (!mono_class)
 		return NULL;
 
-	GDMonoClass* wrapped_class = memnew(GDMonoClass(p_namespace, p_name, mono_class, this));
+	GDMonoClass *wrapped_class = memnew(GDMonoClass(p_namespace, p_name, mono_class, this));
 	cached_classes[key] = wrapped_class;
 	cached_raw[mono_class] = wrapped_class;
 
 	return wrapped_class;
 }
 
-GDMonoClass *GDMonoAssembly::get_class(MonoClass *p_mono_class)
-{
+GDMonoClass *GDMonoAssembly::get_class(MonoClass *p_mono_class) {
 	ERR_FAIL_COND_V(!loaded, NULL);
 
-	Map<MonoClass*, GDMonoClass*>::Element *match = cached_raw.find(p_mono_class);
+	Map<MonoClass *, GDMonoClass *>::Element *match = cached_raw.find(p_mono_class);
 
 	if (match)
 		return match->value();
@@ -120,7 +142,7 @@ GDMonoClass *GDMonoAssembly::get_class(MonoClass *p_mono_class)
 	String namespace_name = mono_class_get_namespace(p_mono_class);
 	String class_name = mono_class_get_name(p_mono_class);
 
-	GDMonoClass* wrapped_class = memnew(GDMonoClass(namespace_name, class_name, p_mono_class, this));
+	GDMonoClass *wrapped_class = memnew(GDMonoClass(namespace_name, class_name, p_mono_class, this));
 
 	cached_classes[ClassKey(namespace_name, class_name)] = wrapped_class;
 	cached_raw[p_mono_class] = wrapped_class;
@@ -128,27 +150,26 @@ GDMonoClass *GDMonoAssembly::get_class(MonoClass *p_mono_class)
 	return wrapped_class;
 }
 
-GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class)
-{
-	GDMonoClass* match = NULL;
+GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class) {
+	GDMonoClass *match = NULL;
 
 	if (object_classes_updated) {
-		Map<String, GDMonoClass*>::Element* result = cached_object_classes.find(p_class);
+		Map<String, GDMonoClass *>::Element *result = cached_object_classes.find(p_class);
 
 		if (result)
 			match = result->get();
 	} else {
-		List<GDMonoClass*> nested_classes;
+		List<GDMonoClass *> nested_classes;
 
 		int rows = mono_image_get_table_rows(image, MONO_TABLE_TYPEDEF);
 
-		for(int i = 1; i < rows; i++) {
-			MonoClass* mono_class = mono_class_get(image, (i + 1) | MONO_TOKEN_TYPE_DEF);
+		for (int i = 1; i < rows; i++) {
+			MonoClass *mono_class = mono_class_get(image, (i + 1) | MONO_TOKEN_TYPE_DEF);
 
 			if (!mono_class_is_assignable_from(CACHED_CLASS_RAW(GodotObject), mono_class))
 				continue;
 
-			GDMonoClass* current = get_class(mono_class);
+			GDMonoClass *current = get_class(mono_class);
 
 			if (!current)
 				continue;
@@ -159,18 +180,18 @@ GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class)
 				match = current;
 
 			while (!nested_classes.empty()) {
-				GDMonoClass* current_nested = nested_classes.front()->get();
+				GDMonoClass *current_nested = nested_classes.front()->get();
 				nested_classes.pop_back();
 
-				void* iter = NULL;
+				void *iter = NULL;
 
 				while (true) {
-					MonoClass* raw_nested = mono_class_get_nested_types(current_nested->get_raw(), &iter);
+					MonoClass *raw_nested = mono_class_get_nested_types(current_nested->get_raw(), &iter);
 
 					if (!raw_nested)
 						break;
 
-					GDMonoClass* nested_class = get_class(raw_nested);
+					GDMonoClass *nested_class = get_class(raw_nested);
 
 					if (nested_class) {
 						cached_object_classes.insert(nested_class->get_name(), nested_class);
@@ -188,17 +209,16 @@ GDMonoClass *GDMonoAssembly::get_object_derived_class(const String &p_class)
 	return match;
 }
 
-GDMonoAssembly::GDMonoAssembly(const String &p_path)
-{
+GDMonoAssembly::GDMonoAssembly(const String &p_path) {
 	loaded = false;
 	object_classes_updated = false;
 	path = p_path;
+	modified_time = 0;
 	assembly = NULL;
 	image = NULL;
 }
 
-GDMonoAssembly::~GDMonoAssembly()
-{
+GDMonoAssembly::~GDMonoAssembly() {
 	if (loaded)
 		unload();
 }

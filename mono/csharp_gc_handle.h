@@ -33,19 +33,18 @@ class CSharpGCHandle;
 
 #include "csharp_script.h"
 
-class CSharpGCHandle : public Reference
-{
-	OBJ_TYPE(CSharpGCHandle, Reference);
+class CSharpGCHandle : public Reference {
+	GDCLASS(CSharpGCHandle, Reference);
 
 	bool released;
 	uint32_t handle;
 
 public:
-	MonoObject* get_target() const;
+	MonoObject *get_target() const;
 
 	void release();
 
-	CSharpGCHandle(MonoObject* p_object, bool weak=false);
+	CSharpGCHandle(MonoObject *p_object, bool weak = false);
 	~CSharpGCHandle();
 };
 

@@ -6,18 +6,18 @@ namespace GodotEngine
     [StructLayout(LayoutKind.Sequential)]
     public struct Transform : IEquatable<Transform>
     {
-        public Matrix3 basis;
+        public Basis basis;
         public Vector3 origin;
 
         public Transform affine_inverse()
         {
-            Matrix3 basisInv = basis.inverse();
+            Basis basisInv = basis.inverse();
             return new Transform(basisInv, basisInv.xform(-origin));
         }
 
         public Transform inverse()
         {
-            Matrix3 basisTr = basis.transposed();
+            Basis basisTr = basis.transposed();
             return new Transform(basisTr, basisTr.xform(-origin));
         }
 
@@ -35,7 +35,7 @@ namespace GodotEngine
 
         public Transform rotated(Vector3 axis, float phi)
         {
-            return this * new Transform(new Matrix3(axis, phi), new Vector3());
+            return this * new Transform(new Basis(axis, phi), new Vector3());
         }
 
         public Transform scaled(Vector3 scale)
@@ -61,7 +61,7 @@ namespace GodotEngine
             xAxis.normalize();
             yAxis.normalize();
 
-            basis = Matrix3.create_from_axes(xAxis, yAxis, zAxis);
+            basis = Basis.create_from_axes(xAxis, yAxis, zAxis);
 
             origin = eye;
         }
@@ -100,11 +100,11 @@ namespace GodotEngine
 
         public Transform(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis, Vector3 origin)
         {
-            this.basis = Matrix3.create_from_axes(xAxis, yAxis, zAxis);
+            this.basis = Basis.create_from_axes(xAxis, yAxis, zAxis);
             this.origin = origin;
         }
 
-        public Transform(Matrix3 basis, Vector3 origin)
+        public Transform(Basis basis, Vector3 origin)
         {
             this.basis = basis;
             this.origin = origin;

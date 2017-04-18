@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* path_utils.h                                                                   */
+/* build_config.cpp                                                               */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -23,31 +23,18 @@
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
-#ifndef PATH_UTILS_H
-#define PATH_UTILS_H
+#include "build_config.h"
 
-#include "ustring.h"
-
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2) {
-	return e1.plus_file(e2);
+String get_assemblies_path(BuildConfig p_target) {
+	switch (p_target) {
+		case DEBUG:
+			return "bin/Debug";
+		case RELEASE:
+			return "bin/Release";
+		case TOOL: // TODO is editor hint?
+			return "bin/Debug"; // bin/Tool
+		default:
+			ERR_PRINTS("Invalid build config");
+			return "";
+	}
 }
-
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String &e3) {
-	return e1.plus_file(e2).plus_file(e3);
-}
-
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String &e3, const String &e4) {
-	return e1.plus_file(e2).plus_file(e3).plus_file(e4);
-}
-
-_FORCE_INLINE_ String make_local_godot_path(const String &p_path) {
-	return "res://" + p_path.replace("\\", "/");
-}
-
-String make_relative_win_path(const String &p_location, const String &p_path);
-
-Vector<String> path_which(const String &p_name);
-
-void fix_path(const String &p_path, String &r_out);
-
-#endif // PATH_UTILS_H

@@ -4,9 +4,9 @@ using System.Runtime.InteropServices;
 namespace GodotEngine
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix32 : IEquatable<Matrix32>
+    public struct Transform2D : IEquatable<Transform2D>
     {
-        private static readonly Matrix32 identity = new Matrix32
+        private static readonly Transform2D identity = new Transform2D
         (
             new Vector2(1f, 0f),
             new Vector2(0f, 1f),
@@ -17,7 +17,7 @@ namespace GodotEngine
         public Vector2 y;
         public Vector2 o;
 
-        public static Matrix32 Identity
+        public static Transform2D Identity
         {
             get { return identity; }
         }
@@ -103,15 +103,15 @@ namespace GodotEngine
             }
         }
 
-        public Matrix32 affine_inverse()
+        public Transform2D affine_inverse()
         {
-            Matrix32 inv = this;
+            Transform2D inv = this;
 
             float det = this[0, 0] * this[1, 1] - this[1, 0] * this[0, 1];
 
             if (det == 0)
             {
-                return new Matrix32
+                return new Transform2D
                 (
                     float.NaN, float.NaN,
                     float.NaN, float.NaN,
@@ -143,7 +143,7 @@ namespace GodotEngine
             return new Vector2(x.dot(v), y.dot(v));
         }
 
-        public Matrix32 interpolate_with(Matrix32 m, float c)
+        public Transform2D interpolate_with(Transform2D m, float c)
         {
             float r1 = Rotation;
             float r2 = m.Rotation;
@@ -179,7 +179,7 @@ namespace GodotEngine
             Vector2 p2 = m.Origin;
 
             // Construct matrix
-            Matrix32 res = new Matrix32(Mathf.atan2(v.y, v.x), p1.linear_interpolate(p2, c));
+            Transform2D res = new Transform2D(Mathf.atan2(v.y, v.x), p1.linear_interpolate(p2, c));
             Vector2 scale = s1.linear_interpolate(s2, c);
             res.x *= scale;
             res.y *= scale;
@@ -187,9 +187,9 @@ namespace GodotEngine
             return res;
         }
 
-        public Matrix32 inverse()
+        public Transform2D inverse()
         {
-            Matrix32 inv = this;
+            Transform2D inv = this;
 
             // Swap
             float temp = inv.x.y;
@@ -201,9 +201,9 @@ namespace GodotEngine
             return inv;
         }
 
-        public Matrix32 orthonormalized()
+        public Transform2D orthonormalized()
         {
-            Matrix32 on = this;
+            Transform2D on = this;
 
             Vector2 onX = on.x;
             Vector2 onY = on.y;
@@ -218,14 +218,14 @@ namespace GodotEngine
             return on;
         }
 
-        public Matrix32 rotated(float phi)
+        public Transform2D rotated(float phi)
         {
-            return this * new Matrix32(phi, new Vector2());
+            return this * new Transform2D(phi, new Vector2());
         }
 
-        public Matrix32 scaled(Vector2 scale)
+        public Transform2D scaled(Vector2 scale)
         {
-            Matrix32 copy = this;
+            Transform2D copy = this;
             copy.x *= scale;
             copy.y *= scale;
             copy.o *= scale;
@@ -242,9 +242,9 @@ namespace GodotEngine
             return this[0, 1] * with[0] + this[1, 1] * with[1];
         }
 
-        public Matrix32 translated(Vector2 offset)
+        public Transform2D translated(Vector2 offset)
         {
-            Matrix32 copy = this;
+            Transform2D copy = this;
             copy.o += copy.basis_xform(offset);
             return copy;
         }
@@ -260,20 +260,20 @@ namespace GodotEngine
             return new Vector2(x.dot(vInv), y.dot(vInv));
         }
 
-        public Matrix32(Vector2 xAxis, Vector2 yAxis, Vector2 origin)
+        public Transform2D(Vector2 xAxis, Vector2 yAxis, Vector2 origin)
         {
             this.x = xAxis;
             this.y = yAxis;
             this.o = origin;
         }
-        public Matrix32(float xx, float xy, float yx, float yy, float ox, float oy)
+        public Transform2D(float xx, float xy, float yx, float yy, float ox, float oy)
         {
             this.x = new Vector2(xx, xy);
             this.y = new Vector2(yx, yy);
             this.o = new Vector2(ox, oy);
         }
 
-        public Matrix32(float rot, Vector2 pos)
+        public Transform2D(float rot, Vector2 pos)
         {
             float cr = Mathf.cos(rot);
             float sr = Mathf.sin(rot);
@@ -284,7 +284,7 @@ namespace GodotEngine
             o = pos;
         }
 
-        public static Matrix32 operator *(Matrix32 left, Matrix32 right)
+        public static Transform2D operator *(Transform2D left, Transform2D right)
         {
             left.o = left.xform(right.o);
 
@@ -303,27 +303,27 @@ namespace GodotEngine
             return left;
         }
 
-        public static bool operator ==(Matrix32 left, Matrix32 right)
+        public static bool operator ==(Transform2D left, Transform2D right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Matrix32 left, Matrix32 right)
+        public static bool operator !=(Transform2D left, Transform2D right)
         {
             return !left.Equals(right);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Matrix32)
+            if (obj is Transform2D)
             {
-                return Equals((Matrix32)obj);
+                return Equals((Transform2D)obj);
             }
 
             return false;
         }
 
-        public bool Equals(Matrix32 other)
+        public bool Equals(Transform2D other)
         {
             return x.Equals(other.x) && y.Equals(other.y) && o.Equals(other.o);
         }

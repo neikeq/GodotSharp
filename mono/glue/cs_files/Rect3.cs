@@ -2,7 +2,7 @@ using System;
 
 namespace GodotEngine
 {
-    public struct AABB : IEquatable<AABB>
+    public struct Rect3 : IEquatable<Rect3>
     {
         public Vector3 pos;
         public Vector3 size;
@@ -15,7 +15,7 @@ namespace GodotEngine
             }
         }
 
-        public bool encloses(AABB with)
+        public bool encloses(Rect3 with)
         {
             Vector3 src_min = pos;
             Vector3 src_max = pos + size;
@@ -30,7 +30,7 @@ namespace GodotEngine
             (src_max.z > dst_max.z);
         }
 
-        public AABB expand(Vector3 to_point)
+        public Rect3 expand(Vector3 to_point)
         {
             Vector3 begin = pos;
             Vector3 end = pos + size;
@@ -49,7 +49,7 @@ namespace GodotEngine
             if (to_point.z > end.z)
                 end.z = to_point.z;
 
-            return new AABB(begin, end - begin);
+            return new Rect3(begin, end - begin);
         }
 
         public float get_area()
@@ -200,9 +200,9 @@ namespace GodotEngine
                 (dir.z > 0f) ? -half_extents.z : half_extents.z);
         }
 
-        public AABB grow(float by)
+        public Rect3 grow(float by)
         {
-            AABB res = this;
+            Rect3 res = this;
 
             res.pos.x -= by;
             res.pos.y -= by;
@@ -242,7 +242,7 @@ namespace GodotEngine
             return true;
         }
 
-        public AABB intersection(AABB with)
+        public Rect3 intersection(Rect3 with)
         {
             Vector3 src_min = pos;
             Vector3 src_max = pos + size;
@@ -253,7 +253,7 @@ namespace GodotEngine
 
             if (src_min.x > dst_max.x || src_max.x < dst_min.x)
             {
-                return new AABB();
+                return new Rect3();
             }
             else
             {
@@ -263,7 +263,7 @@ namespace GodotEngine
 
             if (src_min.y > dst_max.y || src_max.y < dst_min.y)
             {
-                return new AABB();
+                return new Rect3();
             }
             else
             {
@@ -273,7 +273,7 @@ namespace GodotEngine
 
             if (src_min.z > dst_max.z || src_max.z < dst_min.z)
             {
-                return new AABB();
+                return new Rect3();
             }
             else
             {
@@ -281,10 +281,10 @@ namespace GodotEngine
                 max.z = (src_max.z < dst_max.z) ? src_max.z : dst_max.z;
             }
 
-            return new AABB(min, max - min);
+            return new Rect3(min, max - min);
         }
 
-        public bool intersects(AABB with)
+        public bool intersects(Rect3 with)
         {
             if (pos.x >= (with.pos.x + with.size.x))
                 return false;
@@ -334,8 +334,6 @@ namespace GodotEngine
         {
             float min = 0f;
             float max = 1f;
-            int axis = 0;
-            float sign = 0f;
 
             for (int i = 0; i < 3; i++)
             {
@@ -344,7 +342,6 @@ namespace GodotEngine
                 float box_begin = pos[i];
                 float box_end = box_begin + size[i];
                 float cmin, cmax;
-                float csign;
 
                 if (seg_from < seg_to)
                 {
@@ -354,7 +351,6 @@ namespace GodotEngine
                     float length = seg_to - seg_from;
                     cmin = seg_from < box_begin ? (box_begin - seg_from) / length : 0f;
                     cmax = seg_to > box_end ? (box_end - seg_from) / length : 1f;
-                    csign = -1.0f;
                 }
                 else
                 {
@@ -364,14 +360,11 @@ namespace GodotEngine
                     float length = seg_to - seg_from;
                     cmin = seg_from > box_end ? (box_end - seg_from) / length : 0f;
                     cmax = seg_to < box_begin ? (box_begin - seg_from) / length : 1f;
-                    csign = 1.0f;
                 }
 
                 if (cmin > min)
                 {
                     min = cmin;
-                    axis = i;
-                    sign = csign;
                 }
 
                 if (cmax < max)
@@ -383,7 +376,7 @@ namespace GodotEngine
             return true;
         }
 
-        public AABB merge(AABB with)
+        public Rect3 merge(Rect3 with)
         {
             Vector3 beg_1 = pos;
             Vector3 beg_2 = with.pos;
@@ -402,36 +395,36 @@ namespace GodotEngine
                               (end_1.z > end_2.z) ? end_1.z : end_2.z
                           );
 
-            return new AABB(min, max - min);
+            return new Rect3(min, max - min);
         }
 
-        public AABB(Vector3 pos, Vector3 size)
+        public Rect3(Vector3 pos, Vector3 size)
         {
             this.pos = pos;
             this.size = size;
         }
 
-        public static bool operator ==(AABB left, AABB right)
+        public static bool operator ==(Rect3 left, Rect3 right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(AABB left, AABB right)
+        public static bool operator !=(Rect3 left, Rect3 right)
         {
             return !left.Equals(right);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is AABB)
+            if (obj is Rect3)
             {
-                return Equals((AABB)obj);
+                return Equals((Rect3)obj);
             }
 
             return false;
         }
 
-        public bool Equals(AABB other)
+        public bool Equals(Rect3 other)
         {
             return pos == other.pos && size == other.size;
         }

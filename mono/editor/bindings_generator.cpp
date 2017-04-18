@@ -1,22 +1,47 @@
+/**********************************************************************************/
+/* bindings_generator.cpp                                                         */
+/**********************************************************************************/
+/* The MIT License (MIT)                                                          */
+/*                                                                                */
+/* Copyright (c) 2016 Ignacio Etcheverry                                          */
+/*                                                                                */
+/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
+/* of this software and associated documentation files (the "Software"), to deal  */
+/* in the Software without restriction, including without limitation the rights   */
+/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
+/* copies of the Software, and to permit persons to whom the Software is          */
+/* furnished to do so, subject to the following conditions:                       */
+/*                                                                                */
+/* The above copyright notice and this permission notice shall be included in all */
+/* copies or substantial portions of the Software.                                */
+/*                                                                                */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
+/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
+/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
+/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
+/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
+/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
+/* SOFTWARE.                                                                      */
+/**********************************************************************************/
 #include "bindings_generator.h"
 
-#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
+#ifdef DEBUG_METHODS_ENABLED
 
-#include "globals.h"
+#include "editor/doc/doc_data.h"
+#include "editor/editor_help.h"
+#include "global_config.h"
 #include "io/compression.h"
 #include "os/dir_access.h"
 #include "os/file_access.h"
 #include "os/os.h"
-#include "tools/doc/doc_data.h"
-#include "tools/editor/editor_help.h"
 
-#include "csharp_project.h"
-#include "net_solution.h"
-#include "path_utils.h"
-#include "string_format.h"
-#include "../bindings/cs_compressed.h"
+#include "../glue/cs_compressed.h"
 #include "../godotsharp_defs.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
+#include "../utils/path_utils.h"
+#include "../utils/string_utils.h"
+#include "csharp_project.h"
+#include "net_solution.h"
 
 #define CS_INDENT "    "
 
@@ -32,14 +57,10 @@
 #define OPEN_BLOCK "{\n"
 #define CLOSE_BLOCK "}\n"
 
-#define OPEN_BLOCK2 INDENT2 OPEN_BLOCK
-#define OPEN_BLOCK3 INDENT3 OPEN_BLOCK
-#define OPEN_BLOCK4 INDENT4 OPEN_BLOCK
-#define OPEN_BLOCK5 INDENT5 OPEN_BLOCK
-#define OPEN_BLOCK2I OPEN_BLOCK2 INDENT3
-#define OPEN_BLOCK3I OPEN_BLOCK3 INDENT4
-#define OPEN_BLOCK4I OPEN_BLOCK4 INDENT5
-#define OPEN_BLOCK5I OPEN_BLOCK5 INDENT6
+#define OPEN_BLOCK2 INDENT2 OPEN_BLOCK INDENT3
+#define OPEN_BLOCK3 INDENT3 OPEN_BLOCK INDENT4
+#define OPEN_BLOCK4 INDENT4 OPEN_BLOCK INDENT5
+#define OPEN_BLOCK5 INDENT5 OPEN_BLOCK INDENT6
 #define CLOSE_BLOCK2 INDENT2 CLOSE_BLOCK
 #define CLOSE_BLOCK3 INDENT3 CLOSE_BLOCK
 #define CLOSE_BLOCK4 INDENT4 CLOSE_BLOCK
@@ -58,14 +79,15 @@
 #define icall_prefix "godot_icall_"
 #define singleton_icall_suffix "_get_singleton"
 #define method_bind_provider icall_prefix "TypeDB_get_method"
+#define dtor_icall icall_prefix "Object_Dtor"
 #define ptrcall_args_var "call_args"
 #define ret_var "ret"
 #define object_ctor_macro "GODOTSHARP_INSTANCE_OBJECT"
-#define ref_dtor_macro "GODOTSHARP_DISPOSE_REFERENCE"
 
 #define utils_namespace "GDMonoUtils"
 #define tie_lifetime_method utils_namespace "::tie_managed_to_unmanaged"
 #define gdobject_to_managed_method utils_namespace "::unmanaged_get_managed"
+#define gdref_to_managed_method utils_namespace "::reference_get_managed_unsafe"
 
 #define marshalling_namespace "GDMonoMarshal"
 #define variant_c_in marshalling_namespace "::mono_object_to_variant"
@@ -77,75 +99,60 @@
 #define dictionary_c_in "mono_object_to_Dictionary"
 #define dictionary_c_out "Dictionary_to_mono_object"
 
-static bool is_csharp_keyword(const String& p_name)
-{
+static bool is_csharp_keyword(const String &p_name) {
 	return
-		// Reserved keywords
+			// Reserved keywords
 
-		p_name == "abstract" || p_name == "as" || p_name == "base" || p_name == "bool" ||
-		p_name == "break" || p_name == "byte" || p_name == "case" || p_name == "catch" ||
-		p_name == "char" || p_name == "checked" || p_name == "class" || p_name == "const" ||
-		p_name == "continue" || p_name == "decimal" || p_name == "default" || p_name == "delegate" ||
-		p_name == "do" || p_name == "double" || p_name == "else" || p_name == "enum" ||
-		p_name == "event" || p_name == "explicit" || p_name == "extern" || p_name == "false" ||
-		p_name == "finally" || p_name == "fixed" || p_name == "float" || p_name == "for" ||
-		p_name == "forech" || p_name == "goto" || p_name == "if" || p_name == "implicit" ||
-		p_name == "in" || p_name == "int" || p_name == "interface" || p_name == "internal" ||
-		p_name == "is" || p_name == "lock" || p_name == "long" || p_name == "namespace" ||
-		p_name == "new" || p_name == "null" || p_name == "object" || p_name == "operator" ||
-		p_name == "out" || p_name == "override" || p_name == "params" || p_name == "private" ||
-		p_name == "protected" || p_name == "public" || p_name == "readonly" || p_name == "ref" ||
-		p_name == "return" || p_name == "sbyte" || p_name == "sealed" || p_name == "short" ||
-		p_name == "sizeof" || p_name == "stackalloc" || p_name == "static" || p_name == "string" ||
-		p_name == "struct" || p_name == "switch" || p_name == "this" || p_name == "throw" ||
-		p_name == "true" || p_name == "try" || p_name == "typeof" || p_name == "uint" ||p_name == "ulong" ||
-		p_name == "unchecked" || p_name == "unsafe" || p_name == "ushort" || p_name == "using" ||
-		p_name == "virtual" || p_name == "volatile" || p_name == "void" || p_name == "while"
-
-		||
-
-		// Let's include contextual keywords too, just in case..
-
-		p_name == "add" || p_name == "ascending" || p_name == "by" || p_name == "descending" ||
-		p_name == "dynamic" || p_name == "equals" || p_name == "from" || p_name == "get" ||
-		p_name == "global" || p_name == "group" || p_name == "in" || p_name == "into" ||
-		p_name == "join" || p_name == "let" || p_name == "on" || p_name == "orderby" ||
-		p_name == "partial" || p_name == "remove" || p_name == "select" || p_name == "set" ||
-		p_name == "value" || p_name == "var" || p_name == "where" || p_name == "yield";
+			p_name == "abstract" || p_name == "as" || p_name == "base" || p_name == "bool" ||
+			p_name == "break" || p_name == "byte" || p_name == "case" || p_name == "catch" ||
+			p_name == "char" || p_name == "checked" || p_name == "class" || p_name == "const" ||
+			p_name == "continue" || p_name == "decimal" || p_name == "default" || p_name == "delegate" ||
+			p_name == "do" || p_name == "double" || p_name == "else" || p_name == "enum" ||
+			p_name == "event" || p_name == "explicit" || p_name == "extern" || p_name == "false" ||
+			p_name == "finally" || p_name == "fixed" || p_name == "float" || p_name == "for" ||
+			p_name == "forech" || p_name == "goto" || p_name == "if" || p_name == "implicit" ||
+			p_name == "in" || p_name == "int" || p_name == "interface" || p_name == "internal" ||
+			p_name == "is" || p_name == "lock" || p_name == "long" || p_name == "namespace" ||
+			p_name == "new" || p_name == "null" || p_name == "object" || p_name == "operator" ||
+			p_name == "out" || p_name == "override" || p_name == "params" || p_name == "private" ||
+			p_name == "protected" || p_name == "public" || p_name == "readonly" || p_name == "ref" ||
+			p_name == "return" || p_name == "sbyte" || p_name == "sealed" || p_name == "short" ||
+			p_name == "sizeof" || p_name == "stackalloc" || p_name == "static" || p_name == "string" ||
+			p_name == "struct" || p_name == "switch" || p_name == "this" || p_name == "throw" ||
+			p_name == "true" || p_name == "try" || p_name == "typeof" || p_name == "uint" || p_name == "ulong" ||
+			p_name == "unchecked" || p_name == "unsafe" || p_name == "ushort" || p_name == "using" ||
+			p_name == "virtual" || p_name == "volatile" || p_name == "void" || p_name == "while";
 }
 
-static bool is_creatable_type(const String& p_type)
-{
+static bool is_creatable_type(const String &p_type) {
 	return p_type == "StreamPeerSSL" || p_type == "StreamPeerTCP" || p_type == "TCP_Server" || p_type == "PacketPeerUDP";
 }
 
-static bool is_singleton_black_listed(const String &p_type)
-{
+static bool is_singleton_black_listed(const String &p_type) {
 	return p_type == "IP_Unix" || p_type == "InputDefault" || p_type == "AudioServerSW" || p_type == "PhysicsServerSW" ||
-			p_type == "Physics2DServerSW" || p_type == "SpatialSoundServerSW" || p_type == "SpatialSound2DServerSW";
+		   p_type == "Physics2DServerSW" || p_type == "SpatialSoundServerSW" || p_type == "SpatialSound2DServerSW";
 }
 
-inline static String escape_csharp_keyword(const String& p_name)
-{
+inline static String escape_csharp_keyword(const String &p_name) {
 	return is_csharp_keyword(p_name) ? "@" + p_name : p_name;
 }
 
-void BindingsGenerator::generate_header_icalls()
-{
+void BindingsGenerator::generate_header_icalls() {
 	custom_icalls.clear();
 
 	custom_icalls.push_back(InternalCall(method_bind_provider, "IntPtr", "string type, string method"));
+	custom_icalls.push_back(InternalCall(dtor_icall, "void", "IntPtr ptr"));
 
 	custom_icalls.push_back(InternalCall(icall_prefix "Image_Ctor", "IntPtr"));
 	custom_icalls.push_back(InternalCall(icall_prefix "Image_Ctor_2", "IntPtr", "int width, int height, bool mipmaps, int format"));
-	custom_icalls.push_back(InternalCall(icall_prefix "Image_Dtor", "IntPtr", "IntPtr ptr"));
+	custom_icalls.push_back(InternalCall(icall_prefix "Image_Dtor", "void", "IntPtr ptr"));
 
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Ctor", "IntPtr", "string path"));
-	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Dtor", "IntPtr", "IntPtr ptr"));
+	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Dtor", "void", "IntPtr ptr"));
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_operator_String", "string", "IntPtr ptr"));
 
 	custom_icalls.push_back(InternalCall(icall_prefix "RID_Ctor", "IntPtr", "IntPtr from"));
-	custom_icalls.push_back(InternalCall(icall_prefix "RID_Dtor", "IntPtr", "IntPtr ptr"));
+	custom_icalls.push_back(InternalCall(icall_prefix "RID_Dtor", "void", "IntPtr ptr"));
 
 	custom_icalls.push_back(InternalCall(icall_prefix "String_md5_buffer", "byte[]", "string str"));
 	custom_icalls.push_back(InternalCall(icall_prefix "String_md5_text", "string", "string str"));
@@ -172,8 +179,7 @@ void BindingsGenerator::generate_header_icalls()
 	custom_icalls.push_back(InternalCall(icall_prefix "Godot_weakref", "WeakRef", "IntPtr obj"));
 }
 
-Error BindingsGenerator::generate_cs_project(String p_output_dir)
-{
+Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
 
@@ -191,8 +197,9 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir)
 
 	NETSolution solution(API_ASSEMBLY_NAME);
 	solution.path = p_output_dir;
-	CSharpProject& project = solution.add_new_project(API_ASSEMBLY_NAME);
-	project.add_reference("System");
+	CSharpProject &project = solution.add_new_project(API_ASSEMBLY_NAME);
+	if (!project.has_reference("System"))
+		project.add_reference("System");
 
 	EditorHelp::generate_doc();
 	generate_header_icalls();
@@ -207,13 +214,14 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir)
 		project.add_file(output_file);
 	}
 
-#define GENERATE_BUILTIN_TYPE(m_name) { \
-	String output_file = path_join(core_dir, #m_name ".cs"); \
-	Error err = generate_cs_type(builtin_types[#m_name], output_file); \
-	if (err != OK) \
-		return err; \
-	project.add_file(output_file); \
-}
+#define GENERATE_BUILTIN_TYPE(m_name)                                      \
+	{                                                                      \
+		String output_file = path_join(core_dir, #m_name ".cs");           \
+		Error err = generate_cs_type(builtin_types[#m_name], output_file); \
+		if (err != OK)                                                     \
+			return err;                                                    \
+		project.add_file(output_file);                                     \
+	}
 
 	GENERATE_BUILTIN_TYPE(Image);
 	GENERATE_BUILTIN_TYPE(NodePath);
@@ -248,12 +256,13 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir)
 	cs_icalls_content.push_back("namespace " BINDINGS_NAMESPACE "\n" OPEN_BLOCK);
 	cs_icalls_content.push_back(INDENT1 "internal static class " internal_methods_class "\n" INDENT1 OPEN_BLOCK);
 
-#define ADD_INTERNAL_CALL(m_icall) { \
+#define ADD_INTERNAL_CALL(m_icall)                                                             \
+	{                                                                                          \
 		cs_icalls_content.push_back(INDENT2 "[MethodImpl(MethodImplOptions.InternalCall)]\n"); \
-		cs_icalls_content.push_back(INDENT2 "internal extern static "); \
-		cs_icalls_content.push_back(m_icall.return_type + " "); \
-		cs_icalls_content.push_back(m_icall.name + "("); \
-		cs_icalls_content.push_back(m_icall.im_sig + ");\n"); \
+		cs_icalls_content.push_back(INDENT2 "internal extern static ");                        \
+		cs_icalls_content.push_back(m_icall.return_type + " ");                                \
+		cs_icalls_content.push_back(m_icall.name + "(");                                       \
+		cs_icalls_content.push_back(m_icall.im_sig + ");\n");                                  \
 	}
 
 	for (const List<InternalCall>::Element *E = custom_icalls.front(); E; E = E->next())
@@ -282,9 +291,11 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir)
 	return OK;
 }
 
-Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const String& p_output_file)
-{
-	DocData* doc_data = EditorHelp::get_doc_data();
+// TODO Finalizers can be called from any thread. In such cases, queue the internal call
+// TODO throw ObjectDisposedException from a ptr getter
+// TODO use SafeHandle + IntPtr fields
+Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const String &p_output_file) {
+	DocData *doc_data = EditorHelp::get_doc_data();
 
 	int method_bind_count = 0;
 
@@ -296,7 +307,6 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 	OS::get_singleton()->print(String("Generating " + itype.name + "...\n").utf8());
 
 	String ctor_method(icall_prefix + itype.proxy_name + "_Ctor");
-	String dtor_method(icall_prefix + itype.proxy_name + "_Dtor");
 
 	List<String> cs_file;
 
@@ -376,25 +386,34 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 
 	if (!itype.is_object_type) {
 		cs_file.push_back(MEMBER_BEGIN "private const string " native_name_field " = \"" + itype.name + "\";\n");
-		cs_file.push_back(MEMBER_BEGIN "internal IntPtr " BINDINGS_PTR_FIELD ";\n"
-						  MEMBER_BEGIN "internal static IntPtr " static_ptr_getter "(");
+		cs_file.push_back(MEMBER_BEGIN "private bool disposed = false;\n");
+		cs_file.push_back(MEMBER_BEGIN "internal IntPtr " BINDINGS_PTR_FIELD ";\n");
+
+		cs_file.push_back(MEMBER_BEGIN "internal static IntPtr " static_ptr_getter "(");
 		cs_file.push_back(itype.proxy_name);
-		cs_file.push_back(" instance)\n" OPEN_BLOCK2I "return instance == null ? IntPtr.Zero : instance." BINDINGS_PTR_FIELD ";\n"
-						  CLOSE_BLOCK2 MEMBER_BEGIN "~");
+		cs_file.push_back(" instance)\n" OPEN_BLOCK2 "return instance == null ? IntPtr.Zero : instance." BINDINGS_PTR_FIELD ";\n" CLOSE_BLOCK2);
+
+		// Add Destructor
+		cs_file.push_back(MEMBER_BEGIN "~");
 		cs_file.push_back(itype.proxy_name);
-		cs_file.push_back("()\n" OPEN_BLOCK2I "Dispose();\n" CLOSE_BLOCK2
-						  MEMBER_BEGIN"public virtual void Dispose()\n"
-						  OPEN_BLOCK2I "lock (this)\n" OPEN_BLOCK3
-						  INDENT4 "if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n"
-						  OPEN_BLOCK4
-						  INDENT5 "NativeCalls.godot_icall_");
+		cs_file.push_back("()\n" OPEN_BLOCK2 "Dispose(false);\n" CLOSE_BLOCK2);
+
+		// Add the Dispose from IDisposable
+		cs_file.push_back(MEMBER_BEGIN "public void Dispose()\n" OPEN_BLOCK2 "Dispose(true);\n" INDENT3 "GC.SuppressFinalize(this);\n" CLOSE_BLOCK2);
+
+		// Add the virtual Dispose
+		cs_file.push_back(MEMBER_BEGIN "public virtual void Dispose(bool disposing)\n" OPEN_BLOCK2
+									   "if (disposed) return;\n" INDENT3
+											   INDENT3 "if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n" OPEN_BLOCK3 "NativeCalls.godot_icall_");
 		cs_file.push_back(itype.proxy_name);
-		cs_file.push_back("_Dtor(" BINDINGS_PTR_FIELD ");\n" INDENT5 BINDINGS_PTR_FIELD" = IntPtr.Zero;\n" CLOSE_BLOCK4 "\n"
-						  INDENT4 "GC.SuppressFinalize(this);\n" CLOSE_BLOCK3 CLOSE_BLOCK2 MEMBER_BEGIN "internal ");
+		cs_file.push_back("_Dtor(" BINDINGS_PTR_FIELD ");\n" INDENT5 BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK3 "\n" INDENT4 "GC.SuppressFinalize(this);\n" INDENT4 "disposed = true;\n" CLOSE_BLOCK2);
+
+		cs_file.push_back(MEMBER_BEGIN "internal ");
 		cs_file.push_back(itype.proxy_name);
-		cs_file.push_back("(IntPtr " BINDINGS_PTR_FIELD ")\n" OPEN_BLOCK2I "this." BINDINGS_PTR_FIELD" = " BINDINGS_PTR_FIELD ";\n" CLOSE_BLOCK2);
-		cs_file.push_back(MEMBER_BEGIN "public bool HasValidHandle()\n" OPEN_BLOCK2I
-							"return " BINDINGS_PTR_FIELD " == IntPtr.Zero;\n" CLOSE_BLOCK2);
+		cs_file.push_back("(IntPtr " BINDINGS_PTR_FIELD ")\n" OPEN_BLOCK2 "this." BINDINGS_PTR_FIELD " = " BINDINGS_PTR_FIELD ";\n" CLOSE_BLOCK2);
+
+		cs_file.push_back(MEMBER_BEGIN "public bool HasValidHandle()\n" OPEN_BLOCK2
+									   "return " BINDINGS_PTR_FIELD " == IntPtr.Zero;\n" CLOSE_BLOCK2);
 	} else if (itype.is_singleton) {
 		// Add the type name and the singleton pointer as static fields
 
@@ -415,6 +434,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 		// Only the base class stores the pointer to the native object
 		// This pointer is expected to be and must be of type Object*
 		if (!is_derived_type) {
+			cs_file.push_back(MEMBER_BEGIN "private bool disposed = false;\n");
 			cs_file.push_back(INDENT2 "internal IntPtr " BINDINGS_PTR_FIELD ";\n");
 			cs_file.push_back(INDENT2 "internal bool " memory_own_field ";\n");
 		}
@@ -429,8 +449,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 			// The default constructor may also be called by the engine when instancing existing native objects
 			// The engine will initialize the pointer field of the managed side before calling the constructor
 			// This is why we only allocate a new native object from the constructor if the pointer field is not set
-			cs_file.push_back(")\n" OPEN_BLOCK2 INDENT3 "if (" BINDINGS_PTR_FIELD" == IntPtr.Zero)\n"
-								INDENT4 BINDINGS_PTR_FIELD " = " internal_methods_class ".");
+			cs_file.push_back(")\n" OPEN_BLOCK2 "if (" BINDINGS_PTR_FIELD " == IntPtr.Zero)\n" INDENT4 BINDINGS_PTR_FIELD " = " internal_methods_class ".");
 			cs_file.push_back(ctor_method);
 			cs_file.push_back("(this);\n" CLOSE_BLOCK2);
 		} else {
@@ -446,41 +465,35 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 		if (is_derived_type) {
 			cs_file.push_back("(bool " memory_own_field ") : base(" memory_own_field ") {}\n");
 		} else {
-			cs_file.push_back("(bool " memory_own_field ")\n" OPEN_BLOCK2I
-								"this." memory_own_field " = " memory_own_field ";\n" CLOSE_BLOCK2);
+			cs_file.push_back("(bool " memory_own_field ")\n" OPEN_BLOCK2
+							  "this." memory_own_field " = " memory_own_field ";\n" CLOSE_BLOCK2);
 		}
 
 		// Add methods
 
 		if (!is_derived_type) {
-			cs_file.push_back(MEMBER_BEGIN "public bool HasValidHandle()\n" OPEN_BLOCK2I
-								"return " BINDINGS_PTR_FIELD " == IntPtr.Zero;\n" CLOSE_BLOCK2);
+			cs_file.push_back(MEMBER_BEGIN "public bool HasValidHandle()\n" OPEN_BLOCK2
+										   "return " BINDINGS_PTR_FIELD " == IntPtr.Zero;\n" CLOSE_BLOCK2);
 
-			cs_file.push_back(MEMBER_BEGIN "internal static IntPtr " static_ptr_getter "(Object instance)\n" OPEN_BLOCK2I
-								"return instance == null ? IntPtr.Zero : instance." BINDINGS_PTR_FIELD ";\n" CLOSE_BLOCK2);
+			cs_file.push_back(MEMBER_BEGIN "internal static IntPtr " static_ptr_getter "(Object instance)\n" OPEN_BLOCK2
+										   "return instance == null ? IntPtr.Zero : instance." BINDINGS_PTR_FIELD ";\n" CLOSE_BLOCK2);
 		}
 
-		{
+		if (!is_derived_type) {
 			// Add destructor
 			cs_file.push_back(MEMBER_BEGIN "~");
 			cs_file.push_back(itype.proxy_name);
-			cs_file.push_back("()\n" OPEN_BLOCK2I "Dispose();\n" CLOSE_BLOCK2);
+			cs_file.push_back("()\n" OPEN_BLOCK2 "Dispose(false);\n" CLOSE_BLOCK2);
 
-			// Add the Dispose method
-			cs_file.push_back(MEMBER_BEGIN "public ");
-			cs_file.push_back(is_derived_type ? "override" : "virtual");
-			cs_file.push_back(" void Dispose()\n" OPEN_BLOCK2I "lock (this)\n" OPEN_BLOCK3I
-								"if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n" OPEN_BLOCK4I
-								"if (" memory_own_field ")\n" OPEN_BLOCK5I memory_own_field " = false;\n");
+			// Add the Dispose from IDisposable
+			cs_file.push_back(MEMBER_BEGIN "public void Dispose()\n" OPEN_BLOCK2 "Dispose(true);\n" INDENT3 "GC.SuppressFinalize(this);\n" CLOSE_BLOCK2);
 
-			if (itype.memory_own) {
-				cs_file.push_back(INDENT5 internal_methods_class ".");
-				cs_file.push_back(dtor_method);
-				cs_file.push_back("(" BINDINGS_PTR_FIELD ");\n");
-			}
-
-			cs_file.push_back(INDENT6 BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK5 CLOSE_BLOCK4
-								"\n" INDENT4 "GC.SuppressFinalize(this);\n" CLOSE_BLOCK3 CLOSE_BLOCK2);
+			// Add the virtual Dispose
+			cs_file.push_back(MEMBER_BEGIN "public virtual void Dispose(bool disposing)\n" OPEN_BLOCK2
+										   "if (disposed) return;\n" INDENT3
+										   "if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n" OPEN_BLOCK3
+										   "if (" memory_own_field ")\n" OPEN_BLOCK4 memory_own_field " = false;\n" INDENT5 internal_methods_class "." dtor_icall "(" BINDINGS_PTR_FIELD ");\n" INDENT5 BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK4 CLOSE_BLOCK3
+												   INDENT3 "GC.SuppressFinalize(this);\n" INDENT3 "disposed = true;\n" CLOSE_BLOCK2);
 		}
 	}
 
@@ -544,7 +557,6 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 				String arg_in = iarg.name;
 				arg_in += "_in";
 
-				cs_in_statements += INDENT3;
 				cs_in_statements += arg_type.cs_type;
 				cs_in_statements += " ";
 				cs_in_statements += arg_in;
@@ -566,7 +578,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 				String def_arg = sformat(iarg.default_argument, arg_type.cs_type);
 
 				cs_in_statements += def_arg;
-				cs_in_statements += ";\n";
+				cs_in_statements += ";\n" INDENT3;
 
 				icall_params += arg_type.cs_in.empty() ? arg_in : sformat(arg_type.cs_in, arg_in);
 
@@ -644,8 +656,6 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 			if (imethod.arguments.size())
 				cs_file.push_back(cs_in_statements);
 
-			cs_file.push_back(INDENT3);
-
 			if (return_type.name == "void") {
 				cs_file.push_back(im_call);
 			} else if (return_type.cs_out.empty()) {
@@ -667,9 +677,6 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 	if (itype.is_singleton)
 		custom_icalls.push_back(InternalCall(icall_prefix + itype.name + singleton_icall_suffix, "IntPtr"));
 
-	if (itype.memory_own)
-		custom_icalls.push_back(InternalCall(dtor_method, "void", "IntPtr ptr"));
-
 	if (itype.is_instantiable)
 		custom_icalls.push_back(InternalCall(ctor_method, "IntPtr", itype.proxy_name + " obj"));
 
@@ -678,8 +685,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface& itype, const Stri
 	return save_file(p_output_file, cs_file);
 }
 
-Error BindingsGenerator::generate_glue(String p_output_dir)
-{
+Error BindingsGenerator::generate_glue(String p_output_dir) {
 	bool dir_exists = DirAccess::exists(p_output_dir);
 	ERR_EXPLAIN("The output directory does not exist.");
 	ERR_FAIL_COND_V(!dir_exists, ERR_FILE_BAD_PATH);
@@ -689,7 +695,7 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 	List<String> cpp_file;
 
 	cpp_file.push_back("#include \"" glue_header_file "\"\n"
-						"\n");
+					   "\n");
 
 	for (Map<String, TypeInterface>::Element *E = obj_types.front(); E; E = E->next()) {
 		TypeInterface itype = E->get();
@@ -700,10 +706,11 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 		OS::get_singleton()->print(String("Generating " + itype.name + "...\n").utf8());
 
 		String ctor_method(icall_prefix + itype.proxy_name + "_Ctor");
-		String dtor_method(icall_prefix + itype.proxy_name + "_Dtor");
 
 		for (List<MethodInterface>::Element *E = itype.methods.front(); E; E = E->next()) {
 			MethodInterface imethod = E->get();
+
+			bool ret_void = imethod.return_type == "void";
 
 			TypeInterface return_type = get_type_by_name(imethod.return_type);
 
@@ -770,20 +777,21 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 
 				// Generate wrapper function
 
-				cpp_file.push_back(imethod.return_type == "void" ? "void " : return_type.type_out + " ");
-				cpp_file.push_back(icall_method + "(" + c_func_sig + ") " OPEN_BLOCK);
+				cpp_file.push_back(ret_void ? "void " : return_type.type_out + " ");
+				cpp_file.push_back(icall_method);
+				cpp_file.push_back("(");
+				cpp_file.push_back(c_func_sig);
+				cpp_file.push_back(") " OPEN_BLOCK);
 
-				if (imethod.return_type != "void") {
+				String fail_ret = ret_void ? "" : ", " + (return_type.type_out.ends_with("*") ? "NULL" : return_type.type_out + "()");
+
+				if (!ret_void) {
 					String ptrcall_return_type;
 					String initialization;
 
 					if (return_type.is_object_type) {
-						if (return_type.is_reference) {
-							ptrcall_return_type = "Ref<" + return_type.name + ">";
-						} else {
-							ptrcall_return_type = return_type.name + "*";
-							initialization = " = NULL";
-						}
+						ptrcall_return_type = return_type.is_reference ? "Reference*" : "Object*";
+						initialization = " = NULL";
 					} else {
 						ptrcall_return_type = return_type.type;
 					}
@@ -791,11 +799,16 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 					cpp_file.push_back("\t" + ptrcall_return_type);
 					cpp_file.push_back(" " ret_var);
 					cpp_file.push_back(initialization + ";\n");
+					cpp_file.push_back("\tERR_FAIL_NULL_V(" instance_param);
+					cpp_file.push_back(fail_ret);
+					cpp_file.push_back(");\n");
+				} else {
+					cpp_file.push_back("\tERR_FAIL_NULL(" instance_param ");\n");
 				}
 
 				if (imethod.arguments.size()) {
 					if (imethod.has_vararg) {
-						String fail_ret = return_type.type_out.ends_with("*") ? "NULL" : return_type.type_out + "()";
+						String err_fail_macro = ret_void ? "ERR_FAIL_COND" : "ERR_FAIL_COND_V";
 						String vararg_arg = "arg" + argc_str;
 						String real_argc_str = itos(imethod.arguments.size() - 1); // Arguments count without vararg
 
@@ -804,11 +817,13 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 						cpp_file.push_back(vararg_arg);
 						cpp_file.push_back(");\n\tint total_length = ");
 						cpp_file.push_back(real_argc_str);
-						cpp_file.push_back(" + vararg_length;\n"
-										   "\tERR_FAIL_COND_V(varargs.resize(vararg_length) != OK, ");
+						cpp_file.push_back(" + vararg_length;\n\t");
+						cpp_file.push_back(err_fail_macro);
+						cpp_file.push_back("(varargs.resize(vararg_length) != OK");
 						cpp_file.push_back(fail_ret);
-						cpp_file.push_back(");\n\tVector<Variant*> " ptrcall_args_var ";\n"
-											"\tERR_FAIL_COND_V(call_args.resize(total_length) != OK, ");
+						cpp_file.push_back(");\n\tVector<Variant*> " ptrcall_args_var ";\n\t");
+						cpp_file.push_back(err_fail_macro);
+						cpp_file.push_back("(call_args.resize(total_length) != OK");
 						cpp_file.push_back(fail_ret);
 						cpp_file.push_back(");\n");
 						cpp_file.push_back(c_in_statements);
@@ -831,7 +846,7 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 				if (imethod.has_vararg) {
 					cpp_file.push_back("\tVariant::CallError vcall_error;\n\t");
 
-					if (imethod.return_type != "void")
+					if (!ret_void)
 						cpp_file.push_back(ret_var " = ");
 
 					cpp_file.push_back(method_bind_param "->call(" instance_param ", ");
@@ -840,10 +855,10 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 				} else {
 					cpp_file.push_back("\t" method_bind_param "->ptrcall(" instance_param ", ");
 					cpp_file.push_back(imethod.arguments.size() ? ptrcall_args_var ", " : "NULL, ");
-					cpp_file.push_back(imethod.return_type != "void" ? "&" ret_var ");\n" : "NULL);\n");
+					cpp_file.push_back(!ret_void ? "&" ret_var ");\n" : "NULL);\n");
 				}
 
-				if (imethod.return_type != "void") {
+				if (!ret_void) {
 					if (return_type.out.empty())
 						cpp_file.push_back("\treturn " ret_var ";\n");
 					else
@@ -861,22 +876,9 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 
 			cpp_file.push_back("Object* ");
 			cpp_file.push_back(singleton_icall);
-			cpp_file.push_back("() " OPEN_BLOCK "\treturn ");
-			cpp_file.push_back(itype.name);
-			cpp_file.push_back("::get_singleton();\n" CLOSE_BLOCK "\n");
-		}
-
-		if (itype.memory_own) {
-			custom_icalls.push_back(InternalCall(dtor_method, "void", "IntPtr ptr"));
-
-			cpp_file.push_back("void ");
-			cpp_file.push_back(dtor_method + "(Object* ptr) " OPEN_BLOCK);
-
-			if (itype.is_reference) {
-				cpp_file.push_back("\t" ref_dtor_macro "(ptr);\n" CLOSE_BLOCK);
-			} else {
-				cpp_file.push_back("\tmemdelete(ptr);\n" CLOSE_BLOCK "\n");
-			}
+			cpp_file.push_back("() " OPEN_BLOCK "\treturn GlobalConfig::get_singleton()->get_singleton_object(\"");
+			cpp_file.push_back(itype.proxy_name);
+			cpp_file.push_back("\");\n" CLOSE_BLOCK "\n");
 		}
 
 		if (itype.is_instantiable) {
@@ -894,15 +896,16 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 	}
 
 	cpp_file.push_back("namespace GodotSharpBindings\n" OPEN_BLOCK
-						"void register_generated_icalls() " OPEN_BLOCK);
+					   "void register_generated_icalls() " OPEN_BLOCK);
 
-#define ADD_INTERNAL_CALL_REGISTRATION(m_icall) { \
-		cpp_file.push_back("\tmono_add_internal_call("); \
+#define ADD_INTERNAL_CALL_REGISTRATION(m_icall)                                      \
+	{                                                                                \
+		cpp_file.push_back("\tmono_add_internal_call(");                             \
 		cpp_file.push_back("\"" BINDINGS_NAMESPACE "." internal_methods_class "::"); \
-		cpp_file.push_back(m_icall.name); \
-		cpp_file.push_back("\", (void*)"); \
-		cpp_file.push_back(m_icall.name); \
-		cpp_file.push_back(");\n"); \
+		cpp_file.push_back(m_icall.name);                                            \
+		cpp_file.push_back("\", (void*)");                                           \
+		cpp_file.push_back(m_icall.name);                                            \
+		cpp_file.push_back(");\n");                                                  \
 	}
 
 	for (const List<InternalCall>::Element *E = custom_icalls.front(); E; E = E->next())
@@ -917,8 +920,7 @@ Error BindingsGenerator::generate_glue(String p_output_dir)
 	return save_file(path_join(p_output_dir, "mono_glue.cpp"), cpp_file);
 }
 
-Error BindingsGenerator::save_file(const String &path, const List<String> &content)
-{
+Error BindingsGenerator::save_file(const String &path, const List<String> &content) {
 	FileAccessRef file = FileAccess::open(path, FileAccess::WRITE);
 
 	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);
@@ -932,8 +934,7 @@ Error BindingsGenerator::save_file(const String &path, const List<String> &conte
 	return OK;
 }
 
-BindingsGenerator::TypeInterface BindingsGenerator::get_type_by_name(const String &name)
-{
+BindingsGenerator::TypeInterface BindingsGenerator::get_type_by_name(const String &name) {
 	const Map<String, TypeInterface>::Element *match = builtin_types.find(name);
 
 	if (match)
@@ -949,42 +950,36 @@ BindingsGenerator::TypeInterface BindingsGenerator::get_type_by_name(const Strin
 	return TypeInterface::create_placeholder_type(name);
 }
 
-void BindingsGenerator::generate_obj_types()
-{
+void BindingsGenerator::generate_obj_types() {
 	obj_types.clear();
 
-	List<StringName> type_list;
-	ObjectTypeDB::get_type_list(&type_list);
-	type_list.sort_custom<StringName::AlphCompare>();
+	List<StringName> class_list;
+	ClassDB::get_class_list(&class_list);
+	class_list.sort_custom<StringName::AlphCompare>();
 
-	while (type_list.size()) {
-		StringName type_cname = type_list.front()->get();
+	StringName refclass_name = String("Reference");
 
-		ObjectTypeDB::APIType api_type = ObjectTypeDB::get_api_type(type_cname);
+	while (class_list.size()) {
+		StringName type_cname = class_list.front()->get();
 
-		if (api_type == ObjectTypeDB::API_NONE || (!editor_api && api_type == ObjectTypeDB::API_EDITOR)) {
-			type_list.pop_front();
+		ClassDB::APIType api_type = ClassDB::get_api_type(type_cname);
+
+		if (api_type == ClassDB::API_NONE || (api_type == ClassDB::API_EDITOR && !editor_api)) {
+			class_list.pop_front();
 			continue;
 		}
 
 		TypeInterface itype = TypeInterface::create_object_type(type_cname);
 
-		itype.base_name = ObjectTypeDB::type_inherits_from(type_cname);
-		itype.is_singleton = Globals::get_singleton()->has_singleton(itype.proxy_name);
-		itype.is_instantiable = ObjectTypeDB::can_instance(type_cname) && !itype.is_singleton;
+		itype.base_name = ClassDB::get_parent_class(type_cname);
+		itype.is_singleton = GlobalConfig::get_singleton()->has_singleton(itype.proxy_name);
+		itype.is_instantiable = ClassDB::can_instance(type_cname) && !itype.is_singleton;
 		itype.is_creatable = itype.is_instantiable && is_creatable_type(itype.name);
-		itype.is_reference = ObjectTypeDB::is_type(type_cname, "Reference");
-		itype.memory_own = itype.is_reference && !itype.is_singleton;
+		itype.is_reference = ClassDB::is_parent_class(type_cname, refclass_name);
 
-		itype.out = "\treturn " gdobject_to_managed_method "(%1";
-
-		if (itype.is_reference) {
-			itype.out += ".ptr()->cast_to<Object>());\n";
-		} else if (itype.name != "Object") {
-			itype.out += "->cast_to<Object>());\n";
-		} else {
-			itype.out += ");\n";
-		}
+		itype.out = "\treturn ";
+		itype.out += itype.is_reference ? gdref_to_managed_method : gdobject_to_managed_method;
+		itype.out += "(%1);\n";
 
 		itype.cs_in = itype.is_singleton ? BINDINGS_PTR_FIELD : "Object." static_ptr_getter "(%0)";
 
@@ -996,18 +991,18 @@ void BindingsGenerator::generate_obj_types()
 		itype.im_type_out = itype.proxy_name;
 
 		List<MethodInfo> method_list;
-		ObjectTypeDB::get_method_list(type_cname, &method_list, true);
+		ClassDB::get_method_list(type_cname, &method_list, true);
 		method_list.sort();
 
-		for(List<MethodInfo>::Element *E = method_list.front(); E; E = E->next()) {
-			const MethodInfo& method_info = E->get();
+		for (List<MethodInfo>::Element *E = method_list.front(); E; E = E->next()) {
+			const MethodInfo &method_info = E->get();
 
 			int argc = method_info.arguments.size();
 
 			if (method_info.name.empty() || method_info.name[0] == '_' || (method_info.flags & METHOD_FLAG_VIRTUAL))
 				continue;
 
-			MethodBind *m = ObjectTypeDB::get_method(type_cname, method_info.name);
+			MethodBind *m = ClassDB::get_method(type_cname, method_info.name);
 
 			MethodInterface imethod;
 			imethod.name = method_info.name;
@@ -1022,10 +1017,11 @@ void BindingsGenerator::generate_obj_types()
 				imethod.name = imethod.name.get_slice(":", 0);
 			} else if (return_info.type != Variant::NIL) {
 				imethod.return_type = return_info.hint == PROPERTY_HINT_RESOURCE_TYPE ?
-						return_info.hint_string : Variant::get_type_name(return_info.type);
+											  return_info.hint_string :
+											  Variant::get_type_name(return_info.type);
 			}
 
-			if (!itype.requires_collections && (imethod.return_type.ends_with("Array") || imethod.return_type == "Dictionary"))
+			if (!itype.requires_collections && imethod.return_type == "Dictionary")
 				itype.requires_collections = true;
 
 			for (int i = 0; i < argc; i++) {
@@ -1045,7 +1041,7 @@ void BindingsGenerator::generate_obj_types()
 					iarg.type = Variant::get_type_name(arg_info.type);
 				}
 
-				if (!itype.requires_collections && (iarg.type.ends_with("Array") || iarg.type == "Dictionary"))
+				if (!itype.requires_collections && iarg.type == "Dictionary")
 					itype.requires_collections = true;
 
 				if (m && m->has_default_argument(i)) {
@@ -1067,17 +1063,16 @@ void BindingsGenerator::generate_obj_types()
 		}
 
 		obj_types.insert(itype.name, itype);
-		type_list.pop_front();
+		class_list.pop_front();
 	}
 }
 
-void BindingsGenerator::default_argument_from_variant(const Variant& p_val, ArgumentInterface& r_iarg)
-{
+void BindingsGenerator::default_argument_from_variant(const Variant &p_val, ArgumentInterface &r_iarg) {
 	r_iarg.default_argument = p_val;
 
-	switch(p_val.get_type()) {
+	switch (p_val.get_type()) {
 		case Variant::NIL:
-			if (ObjectTypeDB::type_exists(r_iarg.type)) {
+			if (ClassDB::class_exists(r_iarg.type)) {
 				// Object type
 				r_iarg.default_argument = "null";
 			} else {
@@ -1096,9 +1091,9 @@ void BindingsGenerator::default_argument_from_variant(const Variant& p_val, Argu
 			r_iarg.default_argument += "f";
 #endif
 			break;
-		case Variant::STRING: // 15
-		case Variant::NODE_PATH: // 15
-			r_iarg.default_argument = "\""+r_iarg.default_argument+"\"";
+		case Variant::STRING:
+		case Variant::NODE_PATH:
+			r_iarg.default_argument = "\"" + r_iarg.default_argument + "\"";
 			break;
 		case Variant::TRANSFORM:
 			if (p_val.operator Transform() == Transform())
@@ -1107,39 +1102,42 @@ void BindingsGenerator::default_argument_from_variant(const Variant& p_val, Argu
 			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_VAL;
 			break;
 		case Variant::PLANE:
-		case Variant::_AABB: // 10
+		case Variant::RECT3:
 		case Variant::COLOR:
 			r_iarg.default_argument = "new Color(1, 1, 1, 1)";
 			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_VAL;
 			break;
-		case Variant::VECTOR2: // 5
+		case Variant::VECTOR2:
 		case Variant::RECT2:
 		case Variant::VECTOR3:
-				r_iarg.default_argument = "new %s" + r_iarg.default_argument;
-				r_iarg.def_param_mode = ArgumentInterface::NULLABLE_VAL;
-				break;
+			r_iarg.default_argument = "new %s" + r_iarg.default_argument;
+			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_VAL;
+			break;
 		case Variant::OBJECT:
 			if (p_val.is_zero()) {
 				r_iarg.default_argument = "null";
 				break;
 			}
 		case Variant::INPUT_EVENT:
-		case Variant::DICTIONARY: // 20
-		case Variant::ARRAY:
+		case Variant::DICTIONARY:
 		case Variant::_RID:
 		case Variant::IMAGE:
-		case Variant::RAW_ARRAY:
-		case Variant::INT_ARRAY:
-		case Variant::REAL_ARRAY:
-		case Variant::STRING_ARRAY:	// 25
-		case Variant::VECTOR2_ARRAY:
-		case Variant::VECTOR3_ARRAY:
-		case Variant::COLOR_ARRAY:
 			r_iarg.default_argument = "new %s()";
 			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_REF;
 			break;
-		case Variant::MATRIX32:
-		case Variant::MATRIX3:
+		case Variant::ARRAY:
+		case Variant::POOL_BYTE_ARRAY:
+		case Variant::POOL_INT_ARRAY:
+		case Variant::POOL_REAL_ARRAY:
+		case Variant::POOL_STRING_ARRAY:
+		case Variant::POOL_VECTOR2_ARRAY:
+		case Variant::POOL_VECTOR3_ARRAY:
+		case Variant::POOL_COLOR_ARRAY:
+			r_iarg.default_argument = "new %s {}";
+			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_REF;
+			break;
+		case Variant::TRANSFORM2D:
+		case Variant::BASIS:
 		case Variant::QUAT:
 			r_iarg.default_argument = Variant::get_type_name(p_val.get_type()) + ".Identity";
 			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_VAL;
@@ -1151,61 +1149,62 @@ void BindingsGenerator::default_argument_from_variant(const Variant& p_val, Argu
 		r_iarg.def_param_mode = ArgumentInterface::NULLABLE_REF;
 }
 
-void BindingsGenerator::generate_builtin_types()
-{
+void BindingsGenerator::generate_builtin_types() {
 	builtin_types.clear();
 
 	TypeInterface itype;
 
-	#define INSERT_STRUCT_TYPE(m_type, m_type_in) { \
-		itype = TypeInterface::create_atomic_type(#m_type); \
-		itype.in = "\tMARSHALLED_IN(" #m_type ", %1, %1_in);\n"; \
-		itype.out = "\tMARSHALLED_OUT(" #m_type ", %1, ret_out)\n" \
+#define INSERT_STRUCT_TYPE(m_type, m_type_in)                                                       \
+	{                                                                                               \
+		itype = TypeInterface::create_atomic_type(#m_type);                                         \
+		itype.in = "\tMARSHALLED_IN(" #m_type ", %1, %1_in);\n";                                    \
+		itype.out = "\tMARSHALLED_OUT(" #m_type ", %1, ret_out)\n"                                  \
 					"\treturn mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(%0), ret_out);\n"; \
-		itype.call_arg_in = "&%s_in"; \
-		itype.type_in = m_type_in; \
-		itype.cs_in = "ref %s"; \
-		itype.cs_out = "return (" #m_type ")%0;"; \
-		itype.im_type_out = "object"; \
-		builtin_types.insert(#m_type, itype); \
+		itype.call_arg_in = "&%s_in";                                                               \
+		itype.type_in = m_type_in;                                                                  \
+		itype.cs_in = "ref %s";                                                                     \
+		itype.cs_out = "return (" #m_type ")%0;";                                                   \
+		itype.im_type_out = "object";                                                               \
+		builtin_types.insert(#m_type, itype);                                                       \
 	}
 
 	INSERT_STRUCT_TYPE(Vector2, "real_t*")
 	INSERT_STRUCT_TYPE(Rect2, "real_t*")
-	INSERT_STRUCT_TYPE(Matrix32, "real_t*")
+	INSERT_STRUCT_TYPE(Transform2D, "real_t*")
 	INSERT_STRUCT_TYPE(Vector3, "real_t*")
-	INSERT_STRUCT_TYPE(Matrix3, "real_t*")
+	INSERT_STRUCT_TYPE(Basis, "real_t*")
 	INSERT_STRUCT_TYPE(Quat, "real_t*")
 	INSERT_STRUCT_TYPE(Transform, "real_t*")
-	INSERT_STRUCT_TYPE(AABB, "real_t*")
+	INSERT_STRUCT_TYPE(Rect3, "real_t*")
 	INSERT_STRUCT_TYPE(Color, "real_t*")
 	INSERT_STRUCT_TYPE(Plane, "real_t*")
 	INSERT_STRUCT_TYPE(InputEvent, "char*")
 
-	#undef INSERT_STRUCT_TYPE
+#undef INSERT_STRUCT_TYPE
 
-	#define INSERT_PRIMITIVE_TYPE(m_type) { \
+#define INSERT_PRIMITIVE_TYPE(m_type)                       \
+	{                                                       \
 		itype = TypeInterface::create_atomic_type(#m_type); \
-		itype.call_arg_in = "&%s"; \
-		itype.type_in = #m_type; \
-		itype.type_out = #m_type; \
-		itype.im_type_in = #m_type; \
-		itype.im_type_out = #m_type; \
-		builtin_types.insert(#m_type, itype); \
+		itype.call_arg_in = "&%s";                          \
+		itype.type_in = #m_type;                            \
+		itype.type_out = #m_type;                           \
+		itype.im_type_in = #m_type;                         \
+		itype.im_type_out = #m_type;                        \
+		builtin_types.insert(#m_type, itype);               \
 	}
 
 	INSERT_PRIMITIVE_TYPE(bool)
 	INSERT_PRIMITIVE_TYPE(int)
 
-	#undef INSERT_PRIMITIVE_TYPE
+#undef INSERT_PRIMITIVE_TYPE
 
 	// real_t
 	itype = TypeInterface();
-	#ifdef REAL_T_IS_DOUBLE
+#ifdef REAL_T_IS_DOUBLE
 	itype.name = "double";
-	#else
+#else
 	itype.name = "float";
-	#endif
+#endif
 	itype.proxy_name = itype.name;
 	itype.call_arg_in = "&%s";
 	itype.type = "real_t";
@@ -1245,13 +1244,11 @@ void BindingsGenerator::generate_builtin_types()
 	itype.im_type_in = "IntPtr";
 	itype.im_type_out = "IntPtr";
 	populate_builtin_type(itype, Variant::NODE_PATH);
-	extra_members.insert(itype.name, MEMBER_BEGIN "public NodePath() : this(string.Empty) {}\n"
-						 MEMBER_BEGIN "public NodePath(string path)\n" OPEN_BLOCK2I
-						 "this." BINDINGS_PTR_FIELD " = NativeCalls.godot_icall_NodePath_Ctor(path);\n" CLOSE_BLOCK2
-						 MEMBER_BEGIN "public static implicit operator NodePath(string from)\n"
-						 OPEN_BLOCK2I "return new NodePath(from);\n" CLOSE_BLOCK2
-						 MEMBER_BEGIN "public static implicit operator string(NodePath from)\n" OPEN_BLOCK2I
-						 "return NativeCalls." icall_prefix "NodePath_operator_String(NodePath." static_ptr_getter "(from));\n" CLOSE_BLOCK2);
+	extra_members.insert(itype.name, MEMBER_BEGIN "public NodePath() : this(string.Empty) {}\n" MEMBER_BEGIN "public NodePath(string path)\n" OPEN_BLOCK2
+												  "this." BINDINGS_PTR_FIELD " = NativeCalls.godot_icall_NodePath_Ctor(path);\n" CLOSE_BLOCK2
+														  MEMBER_BEGIN "public static implicit operator NodePath(string from)\n" OPEN_BLOCK2 "return new NodePath(from);\n" CLOSE_BLOCK2
+																  MEMBER_BEGIN "public static implicit operator string(NodePath from)\n" OPEN_BLOCK2
+												  "return NativeCalls." icall_prefix "NodePath_operator_String(NodePath." static_ptr_getter "(from));\n" CLOSE_BLOCK2);
 	builtin_types.insert(itype.name, itype);
 
 	// Image
@@ -1268,10 +1265,10 @@ void BindingsGenerator::generate_builtin_types()
 	itype.im_type_in = "IntPtr";
 	itype.im_type_out = "IntPtr";
 	populate_builtin_type(itype, Variant::IMAGE);
-	extra_members.insert(itype.name, MEMBER_BEGIN "public Image()\n" OPEN_BLOCK2I
-						 "this." BINDINGS_PTR_FIELD " = NativeCalls." icall_prefix "Image_Ctor();\n" CLOSE_BLOCK2
-						 MEMBER_BEGIN "public Image(int width, int height, bool mipmaps, int format)" OPEN_BLOCK2I
-						 "this." BINDINGS_PTR_FIELD " = NativeCalls." icall_prefix "Image_Ctor_2(width, height, mipmaps, format);\n" CLOSE_BLOCK2);
+	extra_members.insert(itype.name, MEMBER_BEGIN "public Image()\n" OPEN_BLOCK2
+												  "this." BINDINGS_PTR_FIELD " = NativeCalls." icall_prefix "Image_Ctor();\n" CLOSE_BLOCK2
+														  MEMBER_BEGIN "public Image(int width, int height, bool mipmaps, int format)" OPEN_BLOCK2
+												  "this." BINDINGS_PTR_FIELD " = NativeCalls." icall_prefix "Image_Ctor_2(width, height, mipmaps, format);\n" CLOSE_BLOCK2);
 	builtin_types.insert(itype.name, itype);
 
 	// RID
@@ -1288,8 +1285,8 @@ void BindingsGenerator::generate_builtin_types()
 	itype.im_type_in = "IntPtr";
 	itype.im_type_out = "IntPtr";
 	populate_builtin_type(itype, Variant::_RID);
-	extra_members.insert(itype.name, MEMBER_BEGIN "internal RID()\n" OPEN_BLOCK2I
-							   "this." BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK2);
+	extra_members.insert(itype.name, MEMBER_BEGIN "internal RID()\n" OPEN_BLOCK2
+												  "this." BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK2);
 	builtin_types.insert(itype.name, itype);
 
 	// Variant
@@ -1303,7 +1300,6 @@ void BindingsGenerator::generate_builtin_types()
 	itype.type_in = "MonoObject*";
 	itype.type_out = "MonoObject*";
 	itype.cs_type = itype.proxy_name;
-	itype.cs_in = "%0";
 	itype.im_type_in = "object";
 	itype.im_type_out = itype.proxy_name;
 	builtin_types.insert(itype.name, itype);
@@ -1320,43 +1316,42 @@ void BindingsGenerator::generate_builtin_types()
 	itype.im_type_in = "object[]";
 	builtin_types.insert(itype.name, itype);
 
-	#define INSERT_ARRAY_FULL(m_name, m_type, m_proxy_t) { \
-		itype = TypeInterface(); \
-		itype.name = #m_name; \
-		itype.proxy_name = "List<" #m_proxy_t ">"; \
+#define INSERT_ARRAY_FULL(m_name, m_type, m_proxy_t)                                        \
+	{                                                                                       \
+		itype = TypeInterface();                                                            \
+		itype.name = #m_name;                                                               \
+		itype.proxy_name = #m_proxy_t "[]";                                                 \
 		itype.in = "\t%0 %1_in = " marshalling_namespace "::" array_c_in #m_type "(%1);\n"; \
-		itype.out = "\treturn " marshalling_namespace "::" #m_type array_c_out "(%1);\n"; \
-		itype.call_arg_in = "&%s_in"; \
-		itype.type = #m_type; \
-		itype.type_in = "MonoArray*"; \
-		itype.type_out = "MonoArray*"; \
-		itype.cs_type = itype.proxy_name; \
-		itype.cs_in = "%0.ToArray()"; \
-		itype.cs_out = "return new " + itype.proxy_name + "(%s);"; \
-		itype.im_type_in = #m_proxy_t "[]"; \
-		itype.im_type_out = #m_proxy_t "[]"; \
-		builtin_types.insert(itype.name, itype); \
+		itype.out = "\treturn " marshalling_namespace "::" #m_type array_c_out "(%1);\n";   \
+		itype.call_arg_in = "&%s_in";                                                       \
+		itype.type = #m_type;                                                               \
+		itype.type_in = "MonoArray*";                                                       \
+		itype.type_out = "MonoArray*";                                                      \
+		itype.cs_type = itype.proxy_name;                                                   \
+		itype.im_type_in = itype.proxy_name;                                                \
+		itype.im_type_out = itype.proxy_name;                                               \
+		builtin_types.insert(itype.name, itype);                                            \
 	}
 
-	#define INSERT_ARRAY(m_type, m_proxy_t) INSERT_ARRAY_FULL(m_type, m_type, m_proxy_t)
+#define INSERT_ARRAY(m_type, m_proxy_t) INSERT_ARRAY_FULL(m_type, m_type, m_proxy_t)
 
 	INSERT_ARRAY(Array, object);
-	INSERT_ARRAY(IntArray, int);
-	INSERT_ARRAY_FULL(RawArray, ByteArray, byte);
+	INSERT_ARRAY(PoolIntArray, int);
+	INSERT_ARRAY_FULL(PoolByteArray, PoolByteArray, byte);
 
-	#ifdef REAL_T_IS_DOUBLE
-	INSERT_ARRAY(RealArray, double);
-	#else
-	INSERT_ARRAY(RealArray, float);
-	#endif
+#ifdef REAL_T_IS_DOUBLE
+	INSERT_ARRAY(PoolRealArray, double);
+#else
+	INSERT_ARRAY(PoolRealArray, float);
+#endif
 
-	INSERT_ARRAY(StringArray, string);
+	INSERT_ARRAY(PoolStringArray, string);
 
-	INSERT_ARRAY(ColorArray, Color);
-	INSERT_ARRAY(Vector2Array, Vector2);
-	INSERT_ARRAY(Vector3Array, Vector3);
+	INSERT_ARRAY(PoolColorArray, Color);
+	INSERT_ARRAY(PoolVector2Array, Vector2);
+	INSERT_ARRAY(PoolVector3Array, Vector3);
 
-	#undef INSERT_ARRAY
+#undef INSERT_ARRAY
 
 	// Dictionary
 	itype = TypeInterface();
@@ -1400,8 +1395,7 @@ void BindingsGenerator::generate_builtin_types()
 	builtin_types.insert(itype.name, itype);
 }
 
-void BindingsGenerator::populate_builtin_type(TypeInterface& r_itype, Variant::Type vtype)
-{
+void BindingsGenerator::populate_builtin_type(TypeInterface &r_itype, Variant::Type vtype) {
 	Variant::CallError cerror;
 	Variant v = Variant::construct(vtype, NULL, 0, cerror);
 
@@ -1409,14 +1403,14 @@ void BindingsGenerator::populate_builtin_type(TypeInterface& r_itype, Variant::T
 	v.get_method_list(&method_list);
 	method_list.sort();
 
-	for(List<MethodInfo>::Element *E = method_list.front(); E; E = E->next()) {
+	for (List<MethodInfo>::Element *E = method_list.front(); E; E = E->next()) {
 		MethodInfo &mi = E->get();
 		MethodInterface imethod;
 
 		imethod.name = mi.name;
 		imethod.proxy_name = mi.name;
 
-		for(int i = 0; i < mi.arguments.size(); i++) {
+		for (int i = 0; i < mi.arguments.size(); i++) {
 			ArgumentInterface iarg;
 			PropertyInfo pi = mi.arguments[i];
 
@@ -1427,7 +1421,7 @@ void BindingsGenerator::populate_builtin_type(TypeInterface& r_itype, Variant::T
 			else
 				iarg.type = Variant::get_type_name(pi.type);
 
-			if (!r_itype.requires_collections && (iarg.type.ends_with("Array") || iarg.type == "Dictionary"))
+			if (!r_itype.requires_collections && iarg.type == "Dictionary")
 				r_itype.requires_collections = true;
 
 			if ((mi.default_arguments.size() - mi.arguments.size() + i) >= 0)
@@ -1443,15 +1437,14 @@ void BindingsGenerator::populate_builtin_type(TypeInterface& r_itype, Variant::T
 			imethod.return_type = Variant::get_type_name(mi.return_val.type);
 		}
 
-		if (!r_itype.requires_collections && (imethod.return_type.ends_with("Array") || imethod.return_type == "Dictionary"))
+		if (!r_itype.requires_collections && imethod.return_type == "Dictionary")
 			r_itype.requires_collections = true;
 
 		r_itype.add_method(imethod);
 	}
 }
 
-BindingsGenerator::BindingsGenerator(bool p_editor_api)
-{
+BindingsGenerator::BindingsGenerator(bool p_editor_api) {
 	editor_api = p_editor_api;
 
 	generate_obj_types();

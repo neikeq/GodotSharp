@@ -1,3 +1,11 @@
+# Module generated files
+
+mono/bindings/cs_compressed.h
+
+# Python
+
+*.pyc
+
 # C++
 
 # Compiled Object files

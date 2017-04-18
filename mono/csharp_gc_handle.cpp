@@ -26,37 +26,33 @@
 
 #include "csharp_gc_handle.h"
 
-MonoObject *CSharpGCHandle::get_target() const
-{
+MonoObject *CSharpGCHandle::get_target() const {
 	return mono_gchandle_get_target(handle);
 }
 
-void CSharpGCHandle::release()
-{
+void CSharpGCHandle::release() {
 	if (!released && !GDMono::get_singleton()->is_initialized()) {
 		mono_gchandle_free(handle);
 		released = true;
 	}
 }
 
-CSharpGCHandle::CSharpGCHandle(MonoObject *p_object, bool weak)
-{
+CSharpGCHandle::CSharpGCHandle(MonoObject *p_object, bool weak) {
 	released = false;
 
 	if (weak) {
 		handle = mono_gchandle_new_weakref(
-			p_object,
-			true /* track_resurrection: allows us to invoke _notification(NOTIFICATION_PREDELETE) while disposing */
-		);
+				p_object,
+				true /* track_resurrection: allows us to invoke _notification(NOTIFICATION_PREDELETE) while disposing */
+				);
 	} else {
 		handle = mono_gchandle_new(
-			p_object,
-			false /* do not pin the object */
-		);
+				p_object,
+				false /* do not pin the object */
+				);
 	}
 }
 
-CSharpGCHandle::~CSharpGCHandle()
-{
+CSharpGCHandle::~CSharpGCHandle() {
 	release();
 }

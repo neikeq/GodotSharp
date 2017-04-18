@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* path_utils.h                                                                   */
+/* build_config.h                                                                 */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -23,31 +23,27 @@
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
-#ifndef PATH_UTILS_H
-#define PATH_UTILS_H
+#ifndef BUILD_CONFIG_H
+#define BUILD_CONFIG_H
 
 #include "ustring.h"
 
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2) {
-	return e1.plus_file(e2);
-}
+enum BuildConfig {
+	DEBUG,
+	RELEASE,
+	TOOL
+};
 
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String &e3) {
-	return e1.plus_file(e2).plus_file(e3);
-}
+#ifdef TOOLS_ENABLED
+#define APP_BUILD_CONFIG TOOL
+#else
+#ifdef DEBUG_ENABLED
+#define APP_BUILD_CONFIG DEBUG
+#else
+#define APP_BUILD_CONFIG RELEASE
+#endif
+#endif
 
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String &e3, const String &e4) {
-	return e1.plus_file(e2).plus_file(e3).plus_file(e4);
-}
+String get_assemblies_path(BuildConfig p_target = APP_BUILD_CONFIG);
 
-_FORCE_INLINE_ String make_local_godot_path(const String &p_path) {
-	return "res://" + p_path.replace("\\", "/");
-}
-
-String make_relative_win_path(const String &p_location, const String &p_path);
-
-Vector<String> path_which(const String &p_name);
-
-void fix_path(const String &p_path, String &r_out);
-
-#endif // PATH_UTILS_H
+#endif // BUILD_CONFIG_H

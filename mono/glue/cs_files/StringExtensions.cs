@@ -81,13 +81,13 @@ namespace GodotEngine
         // <summary>
         // Return the bigrams (pairs of consecutive letters) of this string.
         // </summary>
-        public static List<string> bigrams(this string instance)
+        public static string[] bigrams(this string instance)
         {
-            List<string> b = new List<string>();
+            string[] b = new string[instance.Length - 1];
 
-            for (int i = 0; i < instance.Length - 1; i++)
+            for (int i = 0; i < b.Length; i++)
             {
-                b.Add(instance.Substring(i, 2));
+                b[i] = instance.Substring(i, 2);
             }
 
             return b;
@@ -803,11 +803,11 @@ namespace GodotEngine
                 return 0.0f;
             }
 
-            List<string> src_bigrams = instance.bigrams();
-            List<string> tgt_bigrams = text.bigrams();
+            string[] src_bigrams = instance.bigrams();
+            string[] tgt_bigrams = text.bigrams();
 
-            int src_size = src_bigrams.Count;
-            int tgt_size = tgt_bigrams.Count;
+            int src_size = src_bigrams.Length;
+            int tgt_size = tgt_bigrams.Length;
 
             float sum = src_size + tgt_size;
             float inter = 0;
@@ -896,7 +896,7 @@ namespace GodotEngine
         }
 
         // <summary>
-        // Convert the String (which is a character array) to RawArray (which is an array of bytes). The conversion is speeded up in comparison to to_utf8() with the assumption that all the characters the String contains are only ASCII characters.
+        // Convert the String (which is a character array) to PoolByteArray (which is an array of bytes). The conversion is speeded up in comparison to to_utf8() with the assumption that all the characters the String contains are only ASCII characters.
         // </summary>
         public static byte[] to_ascii(this string instance)
         {
@@ -936,7 +936,7 @@ namespace GodotEngine
         }
 
         // <summary>
-        // Convert the String (which is an array of characters) to RawArray (which is an array of bytes). The conversion is a bit slower than to_ascii(), but supports all UTF-8 characters. Therefore, you should prefer this function over to_ascii().
+        // Convert the String (which is an array of characters) to PoolByteArray (which is an array of bytes). The conversion is a bit slower than to_ascii(), but supports all UTF-8 characters. Therefore, you should prefer this function over to_ascii().
         // </summary>
         public static byte[] to_utf8(this string instance)
         {

@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* path_utils.h                                                                   */
+/* csharp_project.h                                                               */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -23,31 +23,74 @@
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
-#ifndef PATH_UTILS_H
-#define PATH_UTILS_H
+#ifndef CSHARP_PROJECT_H
+#define CSHARP_PROJECT_H
 
+#include "list.h"
 #include "ustring.h"
 
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2) {
-	return e1.plus_file(e2);
+namespace tinyxml2 {
+class XMLDocument;
+class XMLNode;
 }
 
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String &e3) {
-	return e1.plus_file(e2).plus_file(e3);
-}
+enum TargetFramework {
+	DOTNET_30,
+	DOTNET_35,
+	DOTNET_40,
+	DOTNET_45
+};
 
-_FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String &e3, const String &e4) {
-	return e1.plus_file(e2).plus_file(e3).plus_file(e4);
-}
+struct CSharpProject {
+	Error save_csproj();
+	Error save_assembly_info();
 
-_FORCE_INLINE_ String make_local_godot_path(const String &p_path) {
-	return "res://" + p_path.replace("\\", "/");
-}
+	void set_path(const String &p_path);
+	_FORCE_INLINE_ String get_path() const { return data->path; }
+	void set_name(const String &p_name);
+	_FORCE_INLINE_ String get_name() const { return data->name; }
+	void set_guid(const String &p_guid);
+	_FORCE_INLINE_ String get_guid() const { return data->guid; }
+	void set_target_framework(TargetFramework p_target_framework);
+	_FORCE_INLINE_ TargetFramework get_target_framework() const { return data->target_framework; }
 
-String make_relative_win_path(const String &p_location, const String &p_path);
+	bool has_file(const String &p_path);
+	void add_file(const String &p_path);
+	void remove_file(const String &p_path);
+	void get_files(const String &p_include_pattern, List<String> *r_paths);
 
-Vector<String> path_which(const String &p_name);
+	bool has_reference(const String &p_name);
+	tinyxml2::XMLNode *add_reference(const String &p_path);
+	void get_references(tinyxml2::XMLNode **p_iter);
+	tinyxml2::XMLNode *add_hint_path(tinyxml2::XMLNode *p_ref, const String &p_path);
+	tinyxml2::XMLNode *add_hint_path(tinyxml2::XMLNode *p_ref, const String &p_path, const String &p_condition);
+	void get_hint_paths(tinyxml2::XMLNode *p_ref, tinyxml2::XMLNode **p_iter);
 
-void fix_path(const String &p_path, String &r_out);
+	void operator=(const CSharpProject &p_project);
 
-#endif // PATH_UTILS_H
+	CSharpProject();
+	CSharpProject(const CSharpProject &p_project);
+	~CSharpProject();
+
+private:
+	struct Data {
+		String name;
+		String guid;
+		String path;
+		TargetFramework target_framework;
+		tinyxml2::XMLDocument *doc;
+		SafeRefCount refcount;
+
+		Data();
+		~Data();
+	};
+
+	Data *data;
+
+	void unref();
+
+	friend class NETSolution;
+	static CSharpProject create_new(const String &p_name);
+};
+
+#endif // CSHARP_PROJECT_H

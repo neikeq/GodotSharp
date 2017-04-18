@@ -179,7 +179,7 @@ namespace GodotEngine
 
         public Vector3 rotated(Vector3 axis, float phi)
         {
-            return new Matrix3(axis, phi).xform(this);
+            return new Basis(axis, phi).xform(this);
         }
 
         public Vector3 slide(Vector3 by)

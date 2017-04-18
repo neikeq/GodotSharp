@@ -1,18 +1,40 @@
+/**********************************************************************************/
+/* bindings_generator.h                                                           */
+/**********************************************************************************/
+/* The MIT License (MIT)                                                          */
+/*                                                                                */
+/* Copyright (c) 2016 Ignacio Etcheverry                                          */
+/*                                                                                */
+/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
+/* of this software and associated documentation files (the "Software"), to deal  */
+/* in the Software without restriction, including without limitation the rights   */
+/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
+/* copies of the Software, and to permit persons to whom the Software is          */
+/* furnished to do so, subject to the following conditions:                       */
+/*                                                                                */
+/* The above copyright notice and this permission notice shall be included in all */
+/* copies or substantial portions of the Software.                                */
+/*                                                                                */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
+/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
+/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
+/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
+/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
+/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
+/* SOFTWARE.                                                                      */
+/**********************************************************************************/
 #ifndef BINDINGS_GENERATOR_H
 #define BINDINGS_GENERATOR_H
 
-#include "core/object_type_db.h"
+#include "class_db.h"
 
-#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
+#ifdef DEBUG_METHODS_ENABLED
 
-#include "core/ustring.h"
+#include "ustring.h"
 
-class BindingsGenerator
-{
-	struct ArgumentInterface
-	{
-		enum DefaultParamMode
-		{
+class BindingsGenerator {
+	struct ArgumentInterface {
+		enum DefaultParamMode {
 			CONSTANT,
 			NULLABLE_VAL,
 			NULLABLE_REF
@@ -23,14 +45,12 @@ class BindingsGenerator
 		String default_argument;
 		DefaultParamMode def_param_mode;
 
-		ArgumentInterface()
-		{
+		ArgumentInterface() {
 			def_param_mode = CONSTANT;
 		}
 	};
 
-	struct MethodInterface
-	{
+	struct MethodInterface {
 		String name;
 		String proxy_name;
 		String return_type;
@@ -38,20 +58,17 @@ class BindingsGenerator
 
 		List<ArgumentInterface> arguments;
 
-		void add_argument(const ArgumentInterface& argument)
-		{
+		void add_argument(const ArgumentInterface &argument) {
 			arguments.push_back(argument);
 		}
 
-		MethodInterface()
-		{
+		MethodInterface() {
 			return_type = "void";
 			has_vararg = false;
 		}
 	};
 
-	struct TypeInterface
-	{
+	struct TypeInterface {
 		String name;
 		String proxy_name;
 		String base_name;
@@ -84,7 +101,7 @@ class BindingsGenerator
 
 		/// Actual expected type as in Variant copy constructors
 		/// Object types: <name>*
-		/// Atomic types: <name>
+		/// Non-Object types: <name>
 		String type;
 		/// Incoming parameter type
 		String type_in;
@@ -111,13 +128,11 @@ class BindingsGenerator
 
 		List<MethodInterface> methods;
 
-		void add_method(const MethodInterface& method)
-		{
+		void add_method(const MethodInterface &method) {
 			methods.push_back(method);
 		}
 
-		static TypeInterface create_atomic_type(const String& p_name)
-		{
+		static TypeInterface create_atomic_type(const String &p_name) {
 			TypeInterface itype;
 
 			itype.name = p_name;
@@ -133,8 +148,7 @@ class BindingsGenerator
 			return itype;
 		}
 
-		static TypeInterface create_object_type(const String& p_name)
-		{
+		static TypeInterface create_object_type(const String &p_name) {
 			TypeInterface itype;
 
 			itype.name = p_name;
@@ -144,8 +158,7 @@ class BindingsGenerator
 			return itype;
 		}
 
-		static TypeInterface create_placeholder_type(const String& p_name)
-		{
+		static TypeInterface create_placeholder_type(const String &p_name) {
 			TypeInterface itype;
 
 			itype.name = p_name;
@@ -161,8 +174,7 @@ class BindingsGenerator
 			return itype;
 		}
 
-		TypeInterface()
-		{
+		TypeInterface() {
 			is_object_type = false;
 
 			is_singleton = false;
@@ -176,8 +188,7 @@ class BindingsGenerator
 		}
 	};
 
-	struct InternalCall
-	{
+	struct InternalCall {
 		String name;
 		String im_sig; // Signature for the method declaration
 		String return_type; // Return type for the method declaration and used together with unique_siq
@@ -185,16 +196,14 @@ class BindingsGenerator
 
 		InternalCall() {}
 
-		InternalCall(const String& p_name, const String& p_ret_type, const String& p_im_sig = String(), const String& p_unique_sig = String())
-		{
+		InternalCall(const String &p_name, const String &p_ret_type, const String &p_im_sig = String(), const String &p_unique_sig = String()) {
 			name = p_name;
 			im_sig = p_im_sig;
 			return_type = p_ret_type;
 			unique_sig = p_unique_sig;
 		}
 
-		inline bool operator==(const InternalCall& p_a) const
-		{
+		inline bool operator==(const InternalCall &p_a) const {
 			return p_a.unique_sig == unique_sig;
 		}
 	};
@@ -209,8 +218,7 @@ class BindingsGenerator
 	List<InternalCall> method_icalls;
 	List<InternalCall> custom_icalls;
 
-	inline String get_unique_sig(const TypeInterface& p_type)
-	{
+	inline String get_unique_sig(const TypeInterface &p_type) {
 		if (p_type.is_reference)
 			return "Ref";
 		else if (p_type.is_object_type)
@@ -221,17 +229,17 @@ class BindingsGenerator
 
 	void generate_header_icalls();
 
-	TypeInterface get_type_by_name(const String& name);
+	TypeInterface get_type_by_name(const String &name);
 
-	void default_argument_from_variant(const Variant& p_var, ArgumentInterface& r_iarg);
-	void populate_builtin_type(TypeInterface& r_type, Variant::Type vtype);
+	void default_argument_from_variant(const Variant &p_var, ArgumentInterface &r_iarg);
+	void populate_builtin_type(TypeInterface &r_type, Variant::Type vtype);
 
 	void generate_obj_types();
 	void generate_builtin_types();
 
-	Error generate_cs_type(const TypeInterface& itype, const String& p_output_file);
+	Error generate_cs_type(const TypeInterface &itype, const String &p_output_file);
 
-	Error save_file(const String& path, const List<String>& content);
+	Error save_file(const String &path, const List<String> &content);
 
 public:
 	Error generate_cs_project(String p_output_dir);

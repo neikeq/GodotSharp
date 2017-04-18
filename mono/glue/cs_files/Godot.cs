@@ -652,15 +652,15 @@ namespace GodotEngine
         public const int TYPE_RECT2 = 6;
         /// <summary>Variable is of type Vector3.</summary>
         public const int TYPE_VECTOR3 = 7;
-        /// <summary>Variable is of type Matrix32.</summary>
+        /// <summary>Variable is of type Transform2D.</summary>
         public const int TYPE_MATRIX32 = 8;
         /// <summary>Variable is of type Plane.</summary>
         public const int TYPE_PLANE = 9;
         /// <summary>Variable is of type Quat.</summary>
         public const int TYPE_QUAT = 10;
-        /// <summary>Variable is of type AABB.</summary>
-        public const int TYPE_AABB = 11;
-        /// <summary>Variable is of type Matrix3.</summary>
+        /// <summary>Variable is of type Rect3.</summary>
+        public const int TYPE_Rect3 = 11;
+        /// <summary>Variable is of type Basis.</summary>
         public const int TYPE_MATRIX3 = 12;
         /// <summary>Variable is of type Transform.</summary>
         public const int TYPE_TRANSFORM = 13;

@@ -45,7 +45,11 @@ def make_cs_files_header(src, dst):
 env.add_source_files(env.modules_sources, '*.cpp')
 env.add_source_files(env.modules_sources, 'mono_wrapper/*.cpp')
 env.add_source_files(env.modules_sources, 'utils/*.cpp')
-env.add_source_files(env.modules_sources, 'utils/tinyxml2/tinyxml2.cpp')
+
+if env['tools']:
+    env.add_source_files(env.modules_sources, 'editor/*.cpp')
+    env.add_source_files(env.modules_sources, 'editor/thirdparty/tinyxml2/tinyxml2.cpp')
+    make_cs_files_header('glue/cs_files', 'glue/cs_compressed.h')
 
 vars = Variables()
 vars.Add(BoolVariable('mono_glue', 'Build with the mono glue code', True))
@@ -53,12 +57,9 @@ vars.Update(env)
 
 # Glue sources
 if env['mono_glue']:
-    env.add_source_files(env.modules_sources, 'bindings/mono_glue.cpp')
+    env.add_source_files(env.modules_sources, 'glue/mono_glue.cpp')
 else:
     env.Append(CPPDEFINES = [ 'MONO_GLUE_DISABLED' ])
-
-if env['tools']:
-    make_cs_files_header('bindings/cs_files', 'bindings/cs_compressed.h')
 
 if ARGUMENTS.get('yolo_copy', False):
     env.Append(CPPDEFINES = [ 'YOLO_COPY' ])

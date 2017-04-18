@@ -28,15 +28,17 @@
 
 #include "csharp_script.h"
 
+#ifdef TOOLS_ENABLED
+#include "editor/build_process.h"
+#include "editor/editor_node.h"
+#endif
+
 CSharpLanguage *script_language_cs = NULL;
 ResourceFormatLoaderCSharpScript *resource_loader_cs = NULL;
 ResourceFormatSaverCSharpScript *resource_saver_cs = NULL;
 
-// TODO EditorExportPlugin?
-
-void register_mono_types()
-{
-	ObjectTypeDB::register_type<CSharpScript>();
+void register_mono_types() {
+	ClassDB::register_class<CSharpScript>();
 
 	script_language_cs = memnew(CSharpLanguage);
 	ScriptServer::register_language(script_language_cs);
@@ -45,10 +47,13 @@ void register_mono_types()
 	ResourceLoader::add_resource_format_loader(resource_loader_cs);
 	resource_saver_cs = memnew(ResourceFormatSaverCSharpScript);
 	ResourceSaver::add_resource_format_saver(resource_saver_cs);
+
+#ifdef TOOLS_ENABLED
+//EditorNode::add_build_callback(mono_build_callback);
+#endif
 }
 
-void unregister_mono_types()
-{
+void unregister_mono_types() {
 	ScriptServer::unregister_language(script_language_cs);
 
 	if (script_language_cs)

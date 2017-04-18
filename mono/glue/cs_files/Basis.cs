@@ -4,48 +4,48 @@ using System.Runtime.InteropServices;
 namespace GodotEngine
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Matrix3 : IEquatable<Matrix3>
+    public struct Basis : IEquatable<Basis>
     {
-        private static readonly Matrix3 identity = new Matrix3
+        private static readonly Basis identity = new Basis
         (
             new Vector3(1f, 0f, 0f),
             new Vector3(0f, 1f, 0f),
             new Vector3(0f, 0f, 1f)
         );
 
-        private static readonly Matrix3[] orthoBases = new Matrix3[24]
+        private static readonly Basis[] orthoBases = new Basis[24]
         {
-            new Matrix3(1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f),
-            new Matrix3(0f, -1f, 0f, 1f, 0f, 0f, 0f, 0f, 1f),
-            new Matrix3(-1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f),
-            new Matrix3(0f, 1f, 0f, -1f, 0f, 0f, 0f, 0f, 1f),
-            new Matrix3(1f, 0f, 0f, 0f, 0f, -1f, 0f, 1f, 0f),
-            new Matrix3(0f, 0f, 1f, 1f, 0f, 0f, 0f, 1f, 0f),
-            new Matrix3(-1f, 0f, 0f, 0f, 0f, 1f, 0f, 1f, 0f),
-            new Matrix3(0f, 0f, -1f, -1f, 0f, 0f, 0f, 1f, 0f),
-            new Matrix3(1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, -1f),
-            new Matrix3(0f, 1f, 0f, 1f, 0f, 0f, 0f, 0f, -1f),
-            new Matrix3(-1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, -1f),
-            new Matrix3(0f, -1f, 0f, -1f, 0f, 0f, 0f, 0f, -1f),
-            new Matrix3(1f, 0f, 0f, 0f, 0f, 1f, 0f, -1f, 0f),
-            new Matrix3(0f, 0f, -1f, 1f, 0f, 0f, 0f, -1f, 0f),
-            new Matrix3(-1f, 0f, 0f, 0f, 0f, -1f, 0f, -1f, 0f),
-            new Matrix3(0f, 0f, 1f, -1f, 0f, 0f, 0f, -1f, 0f),
-            new Matrix3(0f, 0f, 1f, 0f, 1f, 0f, -1f, 0f, 0f),
-            new Matrix3(0f, -1f, 0f, 0f, 0f, 1f, -1f, 0f, 0f),
-            new Matrix3(0f, 0f, -1f, 0f, -1f, 0f, -1f, 0f, 0f),
-            new Matrix3(0f, 1f, 0f, 0f, 0f, -1f, -1f, 0f, 0f),
-            new Matrix3(0f, 0f, 1f, 0f, -1f, 0f, 1f, 0f, 0f),
-            new Matrix3(0f, 1f, 0f, 0f, 0f, 1f, 1f, 0f, 0f),
-            new Matrix3(0f, 0f, -1f, 0f, 1f, 0f, 1f, 0f, 0f),
-            new Matrix3(0f, -1f, 0f, 0f, 0f, -1f, 1f, 0f, 0f)
+            new Basis(1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 1f),
+            new Basis(0f, -1f, 0f, 1f, 0f, 0f, 0f, 0f, 1f),
+            new Basis(-1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, 1f),
+            new Basis(0f, 1f, 0f, -1f, 0f, 0f, 0f, 0f, 1f),
+            new Basis(1f, 0f, 0f, 0f, 0f, -1f, 0f, 1f, 0f),
+            new Basis(0f, 0f, 1f, 1f, 0f, 0f, 0f, 1f, 0f),
+            new Basis(-1f, 0f, 0f, 0f, 0f, 1f, 0f, 1f, 0f),
+            new Basis(0f, 0f, -1f, -1f, 0f, 0f, 0f, 1f, 0f),
+            new Basis(1f, 0f, 0f, 0f, -1f, 0f, 0f, 0f, -1f),
+            new Basis(0f, 1f, 0f, 1f, 0f, 0f, 0f, 0f, -1f),
+            new Basis(-1f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, -1f),
+            new Basis(0f, -1f, 0f, -1f, 0f, 0f, 0f, 0f, -1f),
+            new Basis(1f, 0f, 0f, 0f, 0f, 1f, 0f, -1f, 0f),
+            new Basis(0f, 0f, -1f, 1f, 0f, 0f, 0f, -1f, 0f),
+            new Basis(-1f, 0f, 0f, 0f, 0f, -1f, 0f, -1f, 0f),
+            new Basis(0f, 0f, 1f, -1f, 0f, 0f, 0f, -1f, 0f),
+            new Basis(0f, 0f, 1f, 0f, 1f, 0f, -1f, 0f, 0f),
+            new Basis(0f, -1f, 0f, 0f, 0f, 1f, -1f, 0f, 0f),
+            new Basis(0f, 0f, -1f, 0f, -1f, 0f, -1f, 0f, 0f),
+            new Basis(0f, 1f, 0f, 0f, 0f, -1f, -1f, 0f, 0f),
+            new Basis(0f, 0f, 1f, 0f, -1f, 0f, 1f, 0f, 0f),
+            new Basis(0f, 1f, 0f, 0f, 0f, 1f, 1f, 0f, 0f),
+            new Basis(0f, 0f, -1f, 0f, 1f, 0f, 1f, 0f, 0f),
+            new Basis(0f, -1f, 0f, 0f, 0f, -1f, 1f, 0f, 0f)
         };
 
         public Vector3 x;
         public Vector3 y;
         public Vector3 z;
 
-        public static Matrix3 Identity
+        public static Basis Identity
         {
             get { return identity; }
         }
@@ -133,9 +133,9 @@ namespace GodotEngine
             }
         }
 
-        internal static Matrix3 create_from_axes(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis)
+        internal static Basis create_from_axes(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis)
         {
-            return new Matrix3
+            return new Basis
             (
                 new Vector3(xAxis.x, yAxis.x, zAxis.x),
                 new Vector3(xAxis.y, yAxis.y, zAxis.y),
@@ -157,7 +157,7 @@ namespace GodotEngine
 
         public Vector3 get_euler()
         {
-            Matrix3 m = this.orthonormalized();
+            Basis m = this.orthonormalized();
 
             Vector3 euler;
 
@@ -187,7 +187,7 @@ namespace GodotEngine
 
         public int get_orthogonal_index()
         {
-            Matrix3 orth = this;
+            Basis orth = this;
 
             for (int i = 0; i < 3; i++)
             {
@@ -215,9 +215,9 @@ namespace GodotEngine
             return 0;
         }
 
-        public Matrix3 inverse()
+        public Basis inverse()
         {
-            Matrix3 inv = this;
+            Basis inv = this;
 
             float[] co = new float[3]
             {
@@ -230,7 +230,7 @@ namespace GodotEngine
 
             if (det == 0)
             {
-                return new Matrix3
+                return new Basis
                 (
                     float.NaN, float.NaN, float.NaN,
                     float.NaN, float.NaN, float.NaN,
@@ -240,7 +240,7 @@ namespace GodotEngine
 
             float s = 1.0f / det;
 
-            inv = new Matrix3
+            inv = new Basis
             (
                 co[0] * s,
                 inv[0, 2] * inv[2, 1] - inv[0, 1] * inv[2, 2] * s,
@@ -256,7 +256,7 @@ namespace GodotEngine
             return inv;
         }
 
-        public Matrix3 orthonormalized()
+        public Basis orthonormalized()
         {
             Vector3 xAxis = get_axis(0);
             Vector3 yAxis = get_axis(1);
@@ -268,17 +268,17 @@ namespace GodotEngine
             zAxis = (zAxis - xAxis * (xAxis.dot(zAxis)) - yAxis * (yAxis.dot(zAxis)));
             zAxis.normalize();
 
-            return Matrix3.create_from_axes(xAxis, yAxis, zAxis);
+            return Basis.create_from_axes(xAxis, yAxis, zAxis);
         }
 
-        public Matrix3 rotated(Vector3 axis, float phi)
+        public Basis rotated(Vector3 axis, float phi)
         {
-            return this * new Matrix3(axis, phi);
+            return this * new Basis(axis, phi);
         }
 
-        public Matrix3 scaled(Vector3 scale)
+        public Basis scaled(Vector3 scale)
         {
-            Matrix3 m = this;
+            Basis m = this;
 
             m[0, 0] *= scale.x;
             m[1, 0] *= scale.x;
@@ -308,9 +308,9 @@ namespace GodotEngine
             return this[0, 2] * with[0] + this[1, 2] * with[1] + this[2, 2] * with[2];
         }
 
-        public Matrix3 transposed()
+        public Basis transposed()
         {
-            Matrix3 tr = this;
+            Basis tr = this;
 
             float temp = this[0, 1];
             this[0, 1] = this[1, 0];
@@ -347,7 +347,7 @@ namespace GodotEngine
             );
         }
 
-        public Matrix3(Quat quat)
+        public Basis(Quat quat)
         {
             float s = 2.0f / quat.length_squared();
 
@@ -369,7 +369,7 @@ namespace GodotEngine
             this.z = new Vector3(xz - wy, yz + wx, 1.0f - (xx + yy));
         }
 
-        public Matrix3(Vector3 axis, float phi)
+        public Basis(Vector3 axis, float phi)
         {
             Vector3 axis_sq = new Vector3(axis.x * axis.x, axis.y * axis.y, axis.z * axis.z);
 
@@ -398,23 +398,23 @@ namespace GodotEngine
             );
         }
 
-        public Matrix3(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis)
+        public Basis(Vector3 xAxis, Vector3 yAxis, Vector3 zAxis)
         {
             this.x = xAxis;
             this.y = yAxis;
             this.z = zAxis;
         }
 
-        public Matrix3(float xx, float xy, float xz, float yx, float yy, float yz, float zx, float zy, float zz)
+        public Basis(float xx, float xy, float xz, float yx, float yy, float yz, float zx, float zy, float zz)
         {
             this.x = new Vector3(xx, xy, xz);
             this.y = new Vector3(yx, yy, yz);
             this.z = new Vector3(zx, zy, zz);
         }
 
-        public static Matrix3 operator *(Matrix3 left, Matrix3 right)
+        public static Basis operator *(Basis left, Basis right)
         {
-            return new Matrix3
+            return new Basis
             (
                 right.tdotx(left[0]), right.tdoty(left[0]), right.tdotz(left[0]),
                 right.tdotx(left[1]), right.tdoty(left[1]), right.tdotz(left[1]),
@@ -422,27 +422,27 @@ namespace GodotEngine
             );
         }
 
-        public static bool operator ==(Matrix3 left, Matrix3 right)
+        public static bool operator ==(Basis left, Basis right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Matrix3 left, Matrix3 right)
+        public static bool operator !=(Basis left, Basis right)
         {
             return !left.Equals(right);
         }
 
         public override bool Equals(object obj)
         {
-            if (obj is Matrix3)
+            if (obj is Basis)
             {
-                return Equals((Matrix3)obj);
+                return Equals((Basis)obj);
             }
 
             return false;
         }
 
-        public bool Equals(Matrix3 other)
+        public bool Equals(Basis other)
         {
             return x.Equals(other.x) && y.Equals(other.y) && z.Equals(other.z);
         }
