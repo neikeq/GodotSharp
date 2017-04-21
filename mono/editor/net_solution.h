@@ -33,15 +33,17 @@ class CSharpProject;
 
 struct NETSolution {
 	String name;
-	String path;
 
 	CSharpProject &add_new_project(const String &p_name);
 
 	Error save();
 
+	bool set_path(const String &p_existing_path);
+
 	NETSolution(const String &p_name);
 
 private:
+	String path;
 	Map<String, CSharpProject> projects;
 };
 

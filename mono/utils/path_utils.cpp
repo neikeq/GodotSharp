@@ -30,27 +30,27 @@
 #include "os/file_access.h"
 #include "os/os.h"
 
-#ifdef UNIX_ENABLED
-#define ENV_PATH_SEP ":"
-#else
+#ifdef WINDOWS_ENABLED
 #define ENV_PATH_SEP ";"
+#else
+#define ENV_PATH_SEP ":"
+#include <limits.h>
 #endif
+
+#include <stdlib.h>
 
 String make_relative_win_path(const String &p_location, const String &p_path) {
 	String ret = p_path;
 
 	bool loc_endswith_slash = p_location.ends_with("/");
 
-	if (ret.is_abs_path()) {
-		DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
+	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 
-		if (da->change_dir(p_path.get_base_dir()) == OK) {
-			String cwd = da->get_current_dir();
-			cwd = cwd.replace("\\", "/");
+	if (da->change_dir(p_path.get_base_dir()) == OK) {
+		String cwd = da->get_current_dir();
 
-			if (cwd.begins_with(loc_endswith_slash ? p_location : p_location + "/")) {
-				ret = path_join(cwd.replace_first(loc_endswith_slash ? p_location : p_location + "/", ""), p_path.get_file());
-			}
+		if (cwd.begins_with(loc_endswith_slash ? p_location : p_location + "/")) {
+			ret = path_join(cwd.replace_first(loc_endswith_slash ? p_location : p_location + "/", ""), p_path.get_file());
 		}
 	}
 
@@ -98,4 +98,30 @@ void fix_path(const String &p_path, String &r_out) {
 		else
 			r_out = compare;
 	}
+}
+
+bool rel_path_to_abs(const String &p_existing_path, String &r_abs_path) {
+#ifdef WINDOWS_ENABLED
+	CharType ret[_MAX_PATH];
+	if (_wfullpath(ret, p_existing_path.c_str(), _MAX_PATH)) {
+		String abspath = String(ret).replace("\\", "/");
+		int pos = abspath.find(":/");
+		if (pos != -1) {
+			r_abs_path = abspath.substr(pos - 1, abspath.length());
+		} else {
+			r_abs_path = abspath;
+		}
+		return true;
+	}
+#else
+	char ret[PATH_MAX];
+	if (realpath(p_existing_path.utf8().get_data(), ret)) {
+		String retstr;
+		if (!retstr.parse_utf8(ret)) {
+			r_abs_path = retstr;
+			return true;
+		}
+	}
+#endif
+	return false;
 }

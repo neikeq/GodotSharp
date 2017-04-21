@@ -50,4 +50,6 @@ Vector<String> path_which(const String &p_name);
 
 void fix_path(const String &p_path, String &r_out);
 
+bool rel_path_to_abs(const String &p_existing_path, String &r_abs_path);
+
 #endif // PATH_UTILS_H

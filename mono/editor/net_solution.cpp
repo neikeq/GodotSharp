@@ -67,8 +67,6 @@ CSharpProject &NETSolution::add_new_project(const String &p_name) {
 	else
 		project.set_path(path);
 
-	CSharpProject ppp = projects[p_name];
-
 	return project;
 }
 
@@ -97,6 +95,19 @@ Error NETSolution::save() {
 	file->close();
 
 	return OK;
+}
+
+bool NETSolution::set_path(const String &p_existing_path) {
+	if (p_existing_path.is_abs_path()) {
+		path = p_existing_path;
+	} else {
+		String abspath;
+		if (!rel_path_to_abs(p_existing_path, abspath))
+			return false;
+		path = abspath;
+	}
+
+	return true;
 }
 
 NETSolution::NETSolution(const String &p_name) {

@@ -196,7 +196,8 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 	String obj_type_dir = path_join(p_output_dir, "ObjectType");
 
 	NETSolution solution(API_ASSEMBLY_NAME);
-	solution.path = p_output_dir;
+	if (!solution.set_path(p_output_dir))
+		return ERR_FILE_NOT_FOUND;
 	CSharpProject &project = solution.add_new_project(API_ASSEMBLY_NAME);
 	if (!project.has_reference("System"))
 		project.add_reference("System");
