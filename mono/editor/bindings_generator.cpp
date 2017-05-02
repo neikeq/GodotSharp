@@ -67,7 +67,6 @@
 #define CLOSE_BLOCK5 INDENT5 CLOSE_BLOCK
 
 #define internal_methods_class "NativeCalls"
-#define native_name_field "nativeName"
 #define memory_own_field "memoryOwn"
 #define method_bind_param "method"
 #define instance_param "ptr"
@@ -386,7 +385,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 		cs_file.push_back("\n");
 
 	if (!itype.is_object_type) {
-		cs_file.push_back(MEMBER_BEGIN "private const string " native_name_field " = \"" + itype.name + "\";\n");
+		cs_file.push_back(MEMBER_BEGIN "private const string " BINDINGS_NATIVE_NAME_FIELD " = \"" + itype.name + "\";\n");
 		cs_file.push_back(MEMBER_BEGIN "private bool disposed = false;\n");
 		cs_file.push_back(MEMBER_BEGIN "internal IntPtr " BINDINGS_PTR_FIELD ";\n");
 
@@ -418,7 +417,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 	} else if (itype.is_singleton) {
 		// Add the type name and the singleton pointer as static fields
 
-		cs_file.push_back(MEMBER_BEGIN "private const string " native_name_field " = \"");
+		cs_file.push_back(MEMBER_BEGIN "private const string " BINDINGS_NATIVE_NAME_FIELD " = \"");
 		cs_file.push_back(itype.name);
 		cs_file.push_back("\";\n");
 
@@ -428,7 +427,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 	} else {
 		// Add member fields
 
-		cs_file.push_back(MEMBER_BEGIN "private const string " native_name_field " = \"");
+		cs_file.push_back(MEMBER_BEGIN "private const string " BINDINGS_NATIVE_NAME_FIELD " = \"");
 		cs_file.push_back(itype.name);
 		cs_file.push_back("\";\n");
 
@@ -612,7 +611,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 			cs_file.push_back(MEMBER_BEGIN "private ");
 			cs_file.push_back(itype.is_singleton ? "static IntPtr " : "IntPtr ");
 			cs_file.push_back(method_bind_field);
-			cs_file.push_back(" = " internal_methods_class "." method_bind_provider "(" native_name_field ", \"");
+			cs_file.push_back(" = " internal_methods_class "." method_bind_provider "(" BINDINGS_NATIVE_NAME_FIELD ", \"");
 			cs_file.push_back(imethod.name);
 			cs_file.push_back("\");\n");
 

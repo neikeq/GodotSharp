@@ -26,12 +26,8 @@
 
 #include "csharp_gc_handle.h"
 
-MonoObject *CSharpGCHandle::get_target() const {
-	return mono_gchandle_get_target(handle);
-}
-
 void CSharpGCHandle::release() {
-	if (!released && !GDMono::get_singleton()->is_initialized()) {
+	if (!released && !GDMono::get_singleton()->is_runtime_initialized()) {
 		mono_gchandle_free(handle);
 		released = true;
 	}

@@ -26,6 +26,7 @@
 #ifndef GDMONOMARSHAL_H
 #define GDMONOMARSHAL_H
 
+#include "gd_mono.h"
 #include "gd_mono_utils.h"
 #include "variant.h"
 
@@ -53,19 +54,19 @@ namespace GDMonoMarshal {
 #define UNBOX_CHAR(x) (CharType *)mono_object_unbox(x)
 #define UNBOX_PTR(x) mono_object_unbox(x)
 
-#define BOX_DOUBLE(x) mono_value_box(GDMONO_DOMAIN, mono_get_double_class(), &x)
-#define BOX_FLOAT(x) mono_value_box(GDMONO_DOMAIN, CACHED_CLASS_RAW(float), &x)
-#define BOX_INT64(x) mono_value_box(GDMONO_DOMAIN, mono_get_int64_class(), &x)
-#define BOX_INT32(x) mono_value_box(GDMONO_DOMAIN, CACHED_CLASS_RAW(int32_t), &x)
-#define BOX_INT16(x) mono_value_box(GDMONO_DOMAIN, mono_get_int16_class(), &x)
-#define BOX_INT8(x) mono_value_box(GDMONO_DOMAIN, mono_get_sbyte_class(), &x)
-#define BOX_UINT64(x) mono_value_box(GDMONO_DOMAIN, mono_get_uint64_class(), &x)
-#define BOX_UINT32(x) mono_value_box(GDMONO_DOMAIN, mono_get_uint32_class(), &x)
-#define BOX_UINT16(x) mono_value_box(GDMONO_DOMAIN, mono_get_uint16_class(), &x)
-#define BOX_UINT8(x) mono_value_box(GDMONO_DOMAIN, CACHED_CLASS_RAW(uint8_t), &x)
-#define BOX_BOOLEAN(x) mono_value_box(GDMONO_DOMAIN, CACHED_CLASS_RAW(double), &x)
-#define BOX_CHAR(x) mono_value_box(GDMONO_DOMAIN, mono_get_char_class(), &x)
-#define BOX_PTR(x) mono_value_box(GDMONO_DOMAIN, mono_get_intptr_class(), x)
+#define BOX_DOUBLE(x) mono_value_box(SCRIPT_DOMAIN, mono_get_double_class(), &x)
+#define BOX_FLOAT(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(float), &x)
+#define BOX_INT64(x) mono_value_box(SCRIPT_DOMAIN, mono_get_int64_class(), &x)
+#define BOX_INT32(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(int32_t), &x)
+#define BOX_INT16(x) mono_value_box(SCRIPT_DOMAIN, mono_get_int16_class(), &x)
+#define BOX_INT8(x) mono_value_box(SCRIPT_DOMAIN, mono_get_sbyte_class(), &x)
+#define BOX_UINT64(x) mono_value_box(SCRIPT_DOMAIN, mono_get_uint64_class(), &x)
+#define BOX_UINT32(x) mono_value_box(SCRIPT_DOMAIN, mono_get_uint32_class(), &x)
+#define BOX_UINT16(x) mono_value_box(SCRIPT_DOMAIN, mono_get_uint16_class(), &x)
+#define BOX_UINT8(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(uint8_t), &x)
+#define BOX_BOOLEAN(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(double), &x)
+#define BOX_CHAR(x) mono_value_box(SCRIPT_DOMAIN, mono_get_char_class(), &x)
+#define BOX_PTR(x) mono_value_box(SCRIPT_DOMAIN, mono_get_intptr_class(), x)
 
 // String
 

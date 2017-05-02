@@ -208,10 +208,12 @@ MonoObject *unmanaged_get_managed(Object *unmanaged) {
 			}
 		}
 
-		GDMonoClass *type_class = type_get_proxy_class(unmanaged->get_class());
+		String type_name = unmanaged->get_class();
+
+		GDMonoClass *type_class = type_get_proxy_class(type_name);
 
 		if (type_class) {
-			return create_managed_for_godot_object(type_class, type_class->get_name(), unmanaged);
+			return create_managed_for_godot_object(type_class, type_name, unmanaged);
 		}
 	}
 
@@ -237,11 +239,16 @@ void set_main_thread(MonoThread *p_thread) {
 }
 
 void attach_current_thread() {
-	mono_thread_attach(GDMONO_DOMAIN);
+	ERR_FAIL_COND(!GDMono::get_singleton()->is_runtime_initialized());
+	MonoThread *mono_thread = mono_thread_attach(SCRIPT_DOMAIN);
+	ERR_FAIL_COND(!mono_thread);
 }
 
-void detach_thread(MonoThread *p_thread) {
-	mono_thread_detach(p_thread);
+void detach_current_thread() {
+	ERR_FAIL_COND(!GDMono::get_singleton()->is_runtime_initialized());
+	MonoThread *mono_thread = mono_thread_current();
+	ERR_FAIL_COND(!mono_thread);
+	mono_thread_detach(mono_thread);
 }
 
 MonoThread *get_current_thread() {
@@ -284,7 +291,7 @@ MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const String &
 		ERR_FAIL_V(NULL);
 	}
 
-	MonoObject *mono_object = mono_object_new(GDMONO_DOMAIN, p_class->get_raw());
+	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, p_class->get_raw());
 	ERR_FAIL_COND_V(!mono_object, NULL);
 
 	cache.field_GodotObject_ptr->set_value_raw(mono_object, p_object);
@@ -311,7 +318,7 @@ MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const String &
 }
 
 MonoObject *create_managed_from(const NodePath &p_from) {
-	MonoObject *mono_object = mono_object_new(GDMONO_DOMAIN, CACHED_CLASS_RAW(NodePath));
+	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(NodePath));
 	ERR_FAIL_COND_V(!mono_object, NULL);
 
 	// Construct
@@ -324,7 +331,7 @@ MonoObject *create_managed_from(const NodePath &p_from) {
 }
 
 MonoObject *create_managed_from(const Image &p_from) {
-	MonoObject *mono_object = mono_object_new(GDMONO_DOMAIN, CACHED_CLASS_RAW(Image));
+	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(Image));
 	ERR_FAIL_COND_V(!mono_object, NULL);
 
 	// Construct
@@ -337,7 +344,7 @@ MonoObject *create_managed_from(const Image &p_from) {
 }
 
 MonoObject *create_managed_from(const RID &p_from) {
-	MonoObject *mono_object = mono_object_new(GDMONO_DOMAIN, CACHED_CLASS_RAW(RID));
+	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(RID));
 	ERR_FAIL_COND_V(!mono_object, NULL);
 
 	// Construct

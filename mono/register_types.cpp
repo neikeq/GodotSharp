@@ -54,6 +54,9 @@ void register_mono_types() {
 }
 
 void unregister_mono_types() {
+	if (script_language_cs)
+		script_language_cs->finish();
+
 	ScriptServer::unregister_language(script_language_cs);
 
 	if (script_language_cs)

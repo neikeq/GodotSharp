@@ -40,7 +40,9 @@ class CSharpGCHandle : public Reference {
 	uint32_t handle;
 
 public:
-	MonoObject *get_target() const;
+	_FORCE_INLINE_ MonoObject *get_target() const {
+		return released ? NULL : mono_gchandle_get_target(handle);
+	}
 
 	void release();
 

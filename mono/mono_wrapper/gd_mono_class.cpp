@@ -120,10 +120,10 @@ GDMonoMethod *GDMonoClass::get_method(const String &p_name, int p_params_count) 
 
 GDMonoMethod *GDMonoClass::get_method_with_desc(const String &p_description, bool p_include_namespace) {
 	MonoMethodDesc *desc = mono_method_desc_new(p_description.utf8().get_data(), p_include_namespace);
-	MonoMethod *native_base_init = mono_method_desc_search_in_class(desc, mono_class);
+	MonoMethod *method = mono_method_desc_search_in_class(desc, mono_class);
 	mono_method_desc_free(desc);
 
-	return get_method(native_base_init);
+	return get_method(method);
 }
 
 GDMonoField *GDMonoClass::get_field(const StringName &p_name) {

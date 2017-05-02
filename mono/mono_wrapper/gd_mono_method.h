@@ -53,9 +53,9 @@ public:
 
 	void *get_thunk();
 
-	MonoObject *invoke(MonoObject *p_object, const Variant **p_params);
-	MonoObject *invoke(MonoObject *p_object);
-	MonoObject *invoke_raw(MonoObject *p_object, void **p_params);
+	MonoObject *invoke(MonoObject *p_object, const Variant **p_params, MonoObject *r_exc = NULL);
+	MonoObject *invoke(MonoObject *p_object, MonoObject *r_exc = NULL);
+	MonoObject *invoke_raw(MonoObject *p_object, void **p_params, MonoObject *r_exc = NULL);
 
 	bool has_attribute(GDMonoClass *p_attr_class);
 	MonoObject *get_attribute(GDMonoClass *p_attr_class);

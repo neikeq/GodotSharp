@@ -35,6 +35,7 @@
 
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 #include "editor/bindings_generator.h"
+#include "editor/editor_node.h"
 #endif
 
 #include "mono_wrapper/gd_mono_class.h"
@@ -58,6 +59,16 @@ Error CSharpLanguage::execute_file(const String &p_path) {
 	// ??
 	return OK;
 }
+
+#ifdef TOOLS_ENABLED
+void gdsharp_editor_init_callback() {
+	EditorSettings *ed_settings = EditorSettings::get_singleton();
+	if (!ed_settings->has("godot_sharp/editor/external_editor")) {
+		ed_settings->set("godot_sharp/editor/external_editor", CSharpLanguage::EDITOR_NONE);
+		ed_settings->add_property_hint(PropertyInfo(Variant::INT, "godot_sharp/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
+	}
+}
+#endif
 
 void CSharpLanguage::init() {
 	mono = memnew(GDMono);
@@ -85,10 +96,17 @@ void CSharpLanguage::init() {
 		}
 	}
 #endif
+
+#ifdef TOOLS_ENABLED
+	EditorNode::add_init_callback(&gdsharp_editor_init_callback);
+#endif
 }
 
 void CSharpLanguage::finish() {
-	memdelete(mono);
+	if (mono) {
+		memdelete(mono);
+		mono = NULL;
+	}
 }
 
 void CSharpLanguage::get_reserved_words(List<String> *p_words) const {
@@ -292,9 +310,10 @@ struct CSharpScriptDepSort {
 
 void CSharpLanguage::reload_all_scripts() {
 #ifdef DEBUG_ENABLED
-	if (lock) {
-		lock->lock();
-	}
+
+#ifndef NO_THREADS
+	lock->lock();
+#endif
 
 	List<Ref<CSharpScript> > scripts;
 
@@ -306,9 +325,9 @@ void CSharpLanguage::reload_all_scripts() {
 		elem = elem->next();
 	}
 
-	if (lock) {
-		lock->unlock();
-	}
+#ifndef NO_THREADS
+	lock->unlock();
+#endif
 
 	//as scripts are going to be reloaded, must proceed without locking here
 
@@ -322,7 +341,7 @@ void CSharpLanguage::reload_all_scripts() {
 }
 
 void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {
-	if (mono->is_initialized()) {
+	if (mono->is_runtime_initialized()) {
 		GDMonoAssembly *proj_assembly = mono->get_project_assembly();
 		if (FileAccess::get_modified_time(proj_assembly->get_path()) <= proj_assembly->get_modified_time()) {
 			return;
@@ -330,9 +349,10 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 	}
 
 #ifdef DEBUG_ENABLED
-	if (lock) {
-		lock->lock();
-	}
+
+#ifndef NO_THREADS
+	lock->lock();
+#endif
 
 	List<Ref<CSharpScript> > scripts;
 
@@ -345,9 +365,9 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 		elem = elem->next();
 	}
 
-	if (lock) {
-		lock->unlock();
-	}
+#ifndef NO_THREADS
+	lock->unlock();
+#endif
 
 	//when someone asks you why dynamically typed languages are easier to write....
 
@@ -409,7 +429,7 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 		}
 	}
 
-	if (mono->reload_if_needed() != OK)
+	if (mono->reload_scripts_domain_if_needed() != OK)
 		return;
 
 	for (Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > >::Element *E = to_reload.front(); E; E = E->next()) {
@@ -453,14 +473,64 @@ void CSharpLanguage::get_recognized_extensions(List<String> *p_extensions) const
 	p_extensions->push_back("cs");
 }
 
+Error CSharpLanguage::open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col) {
+	ExternalEditor editor = (ExternalEditor)EditorSettings::get_singleton()->get("godot_sharp/editor/external_editor").operator int();
+
+	switch (editor) {
+		case EDITOR_CODE: {
+			List<String> args;
+			args.push_back(GlobalConfig::get_singleton()->get_resource_path());
+
+			String script_path = GlobalConfig::get_singleton()->globalize_path(p_script->get_path());
+
+			if (p_line >= 0) {
+				args.push_back("-g");
+				args.push_back(script_path + ":" + String::num_int64(p_line) + ":" + String::num_int64(p_col));
+			} else {
+				args.push_back(script_path);
+			}
+
+			String program = "code";
+
+			Vector<String> env_path = OS::get_singleton()->get_environment("PATH").split(":", false);
+
+			for (int i = 0; i < env_path.size(); i++) {
+				String p = env_path[i].plus_file(program);
+
+				if (FileAccess::exists(p)) {
+					program = p;
+					break;
+				}
+			}
+
+			Error err = OS::get_singleton()->execute(program, args, false); // code {project} {file}:{line}:{col}
+
+			if (err != OK) {
+				ERR_PRINT("GodotSharp: Could not execute external editor");
+				return err;
+			}
+		} break;
+		default:
+			return ERR_UNAVAILABLE;
+	}
+
+	return OK;
+}
+
 void CSharpLanguage::thread_enter() {
-	if (mono->is_initialized())
+#if 0
+	if (mono->is_runtime_initialized()) {
 		GDMonoUtils::attach_current_thread();
+	}
+#endif
 }
 
 void CSharpLanguage::thread_exit() {
-	if (mono->is_initialized())
-		GDMonoUtils::detach_thread(GDMonoUtils::get_current_thread());
+#if 0
+	if (mono->is_runtime_initialized()) {
+		GDMonoUtils::detach_current_thread();
+	}
+#endif
 }
 
 bool CSharpLanguage::debug_break_parse(const String &p_file, int p_line, const String &p_error) {
@@ -495,10 +565,22 @@ CSharpLanguage::CSharpLanguage() {
 	singleton = this;
 
 	mono = NULL;
+
+#ifdef NO_THREADS
+	lock = NULL;
+#else
+	lock = Mutex::create();
+#endif
 }
 
 CSharpLanguage::~CSharpLanguage() {
 	finish();
+
+	if (lock) {
+		memdelete(lock);
+		lock = NULL;
+	}
+
 	singleton = NULL;
 }
 
@@ -828,7 +910,15 @@ CSharpInstance::~CSharpInstance() {
 	gchandle->release(); // Make sure it's released
 
 	if (script.is_valid() && owner) {
+#ifndef NO_THREADS
+		CSharpLanguage::singleton->lock->lock();
+#endif
+
 		script->instances.erase(owner);
+
+#ifndef NO_THREADS
+		CSharpLanguage::singleton->lock->lock();
+#endif
 	}
 }
 
@@ -956,11 +1046,15 @@ void CSharpScript::_resource_path_changed() {
 	}
 }
 
+void CSharpScript::_bind_methods() {
+	ClassDB::bind_vararg_method(METHOD_FLAGS_DEFAULT, "new", &CSharpScript::_new, MethodInfo(Variant::OBJECT, "new"));
+}
+
 Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class) {
 	if (!p_class)
 		return NULL;
 
-	Ref<CSharpScript> script = memnew(CSharpScript());
+	Ref<CSharpScript> script = memnew(CSharpScript);
 
 	script->name = p_class->get_name();
 	script->script_class = p_class;
@@ -983,6 +1077,107 @@ StringName CSharpScript::get_instance_base_type() const {
 		return native->get_name();
 	else
 		return StringName();
+}
+
+CSharpInstance *CSharpScript::_create_instance(const Variant **p_args, int p_argcount, Object *p_owner, bool p_isref, Variant::CallError &r_error) {
+	/* STEP 1, CREATE */
+
+	CSharpInstance *instance = memnew(CSharpInstance);
+	instance->base_ref = p_isref;
+	instance->script = Ref<CSharpScript>(this);
+	instance->owner = p_owner;
+	instance->owner->set_script_instance(instance);
+
+	/* STEP 2, INITIALIZE AND CONSTRUCT */
+
+	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, script_class->get_raw());
+
+	if (!mono_object) {
+		instance->script = Ref<CSharpScript>();
+		instance->owner->set_script_instance(NULL);
+		r_error.error = Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL;
+		ERR_EXPLAIN("Failed to allocate memory for the object");
+		ERR_FAIL_V(NULL);
+	}
+
+#ifndef NO_THREADS
+	CSharpLanguage::singleton->lock->lock();
+#endif
+
+	instances.insert(instance->owner);
+
+#ifndef NO_THREADS
+	CSharpLanguage::singleton->lock->unlock();
+#endif
+
+	GDMonoUtils::cache.field_GodotObject_ptr->set_value_raw(mono_object, instance->owner);
+
+	// Construct
+	// TODO more precise ctor search, not only by arg count but also arg types
+	GDMonoMethod *ctor = script_class->get_method(".ctor", p_argcount);
+	MonoObject *exc = NULL;
+	ctor->invoke(mono_object, p_args, exc);
+
+	if (exc) {
+		instance->script = Ref<CSharpScript>();
+		instance->owner->set_script_instance(NULL);
+
+#ifndef NO_THREADS
+		CSharpLanguage::singleton->lock->lock();
+#endif
+		instances.erase(instance->owner);
+
+#ifndef NO_THREADS
+		CSharpLanguage::singleton->lock->unlock();
+#endif
+
+		r_error.error = Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL;
+		ERR_EXPLAIN("Exception was thrown while constructing the object");
+		ERR_FAIL_V(NULL);
+	}
+
+	// Tie managed to unmanaged
+	instance->gchandle = Ref<CSharpGCHandle>(memnew(CSharpGCHandle(mono_object)));
+	instance->owner->set_meta("__mono_gchandle__", instance->gchandle);
+
+	/* STEP 3, PARTY */
+
+	//@TODO make thread safe
+	return instance;
+}
+
+Variant CSharpScript::_new(const Variant **p_args, int p_argcount, Variant::CallError &r_error) {
+	if (!valid) {
+		r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
+		return Variant();
+	}
+
+	r_error.error = Variant::CallError::CALL_OK;
+	REF ref;
+	Object *owner = NULL;
+
+	ERR_FAIL_COND_V(!native, Variant());
+
+	owner = ClassDB::instance(NATIVE_GDMONOCLASS_NAME(native));
+
+	Reference *r = owner->cast_to<Reference>();
+	if (r) {
+		ref = REF(r);
+	}
+
+	CSharpInstance *instance = _create_instance(p_args, p_argcount, owner, r != NULL, r_error);
+	if (!instance) {
+		if (ref.is_null()) {
+			memdelete(owner); //no owner, sorry
+		}
+		return Variant();
+	}
+
+	if (ref.is_valid()) {
+		return ref;
+	} else {
+		return owner;
+	}
 }
 
 ScriptInstance *CSharpScript::instance_create(Object *p_this) {
@@ -1022,43 +1217,23 @@ ScriptInstance *CSharpScript::instance_create(Object *p_this) {
 		}
 	}
 
-	/* STEP 1, CREATE */
-
-	CSharpInstance *instance = memnew(CSharpInstance);
-	instance->base_ref = p_this->cast_to<Reference>();
-	instance->script = Ref<CSharpScript>(this);
-	instance->owner = p_this;
-	instance->owner->set_script_instance(instance);
-
-	/* STEP 2, INITIALIZE AND CONSTRUCT */
-
-	MonoObject *mono_object = mono_object_new(GDMONO_DOMAIN, script_class->get_raw());
-
-	if (!mono_object) {
-		// Error constructing
-		instance->script = Ref<CSharpScript>();
-		instance->owner->set_script_instance(NULL);
-		ERR_FAIL_COND_V(!mono_object, NULL);
-	}
-
-	instances.insert(instance->owner);
-
-	GDMonoUtils::cache.field_GodotObject_ptr->set_value_raw(mono_object, instance->owner);
-
-	// Construct
-	mono_runtime_object_init(mono_object);
-
-	// Tie managed to unmanaged
-	instance->gchandle = Ref<CSharpGCHandle>(memnew(CSharpGCHandle(mono_object)));
-	instance->owner->set_meta("__mono_gchandle__", instance->gchandle);
-
-	/* STEP 3, PARTY */
-
-	return instance;
+	Variant::CallError unchecked_error;
+	return _create_instance(NULL, 0, p_this, p_this->cast_to<Reference>(), unchecked_error);
 }
 
 bool CSharpScript::instance_has(const Object *p_this) const {
-	return instances.has((Object *)p_this);
+
+#ifndef NO_THREADS
+	CSharpLanguage::singleton->lock->lock();
+#endif
+
+	bool ret = instances.has((Object *)p_this);
+
+#ifndef NO_THREADS
+	CSharpLanguage::singleton->lock->unlock();
+#endif
+
+	return ret;
 }
 
 bool CSharpScript::has_source_code() const {
@@ -1083,6 +1258,19 @@ bool CSharpScript::has_method(const StringName &p_method) const {
 }
 
 Error CSharpScript::reload(bool p_keep_state) {
+
+#ifndef NO_THREADS
+	CSharpLanguage::singleton->lock->lock();
+#endif
+
+	bool has_instances = instances.size();
+
+#ifndef NO_THREADS
+	CSharpLanguage::singleton->lock->unlock();
+#endif
+
+	ERR_FAIL_COND_V(!p_keep_state && has_instances, ERR_ALREADY_IN_USE);
+
 	GDMonoAssembly *project_assembly = GDMono::get_singleton()->get_project_assembly();
 
 	if (project_assembly) {
@@ -1192,27 +1380,32 @@ CSharpScript::CSharpScript()
 	_resource_path_changed();
 
 #ifdef DEBUG_ENABLED
-	if (CSharpLanguage::get_singleton()->lock) {
-		CSharpLanguage::get_singleton()->lock->lock();
-	}
+
+#ifndef NO_THREADS
+	CSharpLanguage::get_singleton()->lock->lock();
+#endif
+
 	CSharpLanguage::get_singleton()->script_list.add(&script_list);
 
-	if (CSharpLanguage::get_singleton()->lock) {
-		CSharpLanguage::get_singleton()->lock->unlock();
-	}
+#ifndef NO_THREADS
+	CSharpLanguage::get_singleton()->lock->unlock();
 #endif
+
+#endif // DEBUG_ENABLED
 }
 
 CSharpScript::~CSharpScript() {
 #ifdef DEBUG_ENABLED
-	if (CSharpLanguage::get_singleton()->lock) {
-		CSharpLanguage::get_singleton()->lock->lock();
-	}
+
+#ifndef NO_THREADS
+	CSharpLanguage::get_singleton()->lock->lock();
+#endif
+
 	CSharpLanguage::get_singleton()->script_list.remove(&script_list);
 
-	if (CSharpLanguage::get_singleton()->lock) {
-		CSharpLanguage::get_singleton()->lock->unlock();
-	}
+#ifndef NO_THREADS
+	CSharpLanguage::get_singleton()->lock->unlock();
+#endif
 #endif
 }
 
@@ -1221,6 +1414,8 @@ CSharpScript::~CSharpScript() {
 RES ResourceFormatLoaderCSharpScript::load(const String &p_path, const String &p_original_path, Error *r_error) {
 	if (r_error)
 		*r_error = ERR_FILE_CANT_OPEN;
+
+	// TODO ignore anything inside bin/ and obj/ in tools builds?
 
 	CSharpScript *script = memnew(CSharpScript);
 

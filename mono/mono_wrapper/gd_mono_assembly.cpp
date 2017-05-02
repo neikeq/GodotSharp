@@ -66,7 +66,9 @@ Error GDMonoAssembly::load(MonoDomain *p_domain) {
 
 	ERR_FAIL_COND_V(status != MONO_IMAGE_OK || assembly == NULL, ERR_FILE_CANT_OPEN);
 
-	mono_jit_exec(p_domain, assembly, 0, NULL);
+	if (mono_image_get_entry_point(image)) {
+		mono_jit_exec(p_domain, assembly, 0, NULL);
+	}
 
 	loaded = true;
 	modified_time = last_modified_time;
@@ -103,6 +105,8 @@ void GDMonoAssembly::unload() {
 
 	cached_classes.clear();
 	cached_raw.clear();
+
+	mono_image_close(image);
 
 	assembly = NULL;
 	image = NULL;

@@ -83,11 +83,15 @@ class CSharpScript : public Script {
 
 	Map<StringName, PropertyInfo> properties_info;
 
-	bool _update_exports();
-
 	void _clear();
 
+	bool _update_exports();
+	CSharpInstance *_create_instance(const Variant **p_args, int p_argcount, Object *p_owner, bool p_isref, Variant::CallError &r_error);
+	Variant _new(const Variant **p_args, int p_argcount, Variant::CallError &r_error);
+
 protected:
+	static void _bind_methods();
+
 	Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
 	virtual void _resource_path_changed();
 
@@ -183,6 +187,15 @@ class CSharpLanguage : public ScriptLanguage {
 	Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > > to_reload;
 
 public:
+#ifdef TOOLS_ENABLED
+	enum ExternalEditor{
+		EDITOR_NONE,
+		EDITOR_MONODEVELOP,
+		EDITOR_VISUAL_STUDIO,
+		EDITOR_CODE,
+	};
+#endif
+
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
 
 	bool debug_break(const String &p_error, bool p_allow_continue = true);
@@ -240,6 +253,8 @@ public:
 
 	/* LOADER FUNCTIONS */
 	virtual void get_recognized_extensions(List<String> *p_extensions) const;
+
+	virtual Error open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col);
 
 	/* THREAD ATTACHING */
 	void thread_enter();

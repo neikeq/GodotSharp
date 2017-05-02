@@ -123,7 +123,7 @@ void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged);
 
 void set_main_thread(MonoThread *p_thread);
 void attach_current_thread();
-void detach_thread(MonoThread *p_thread);
+void detach_current_thread();
 MonoThread *get_current_thread();
 
 GDMonoClass *get_object_class(MonoObject *p_object);
@@ -138,6 +138,8 @@ MonoObject *create_managed_from(const RID &p_from);
 
 void expand_wildcard(const String &p_wildcard, List<String> *r_result);
 }
+
+#define NATIVE_GDMONOCLASS_NAME(m_class) (GDMonoMarshal::mono_string_to_godot((MonoString *)m_class->get_field("nativeName")->get_value(NULL)))
 
 #define CACHED_CLASS(m_class) (GDMonoUtils::cache.class_##m_class)
 #define CACHED_CLASS_RAW(m_class) (GDMonoUtils::cache.class_##m_class->get_raw())

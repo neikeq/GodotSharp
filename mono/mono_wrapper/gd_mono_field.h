@@ -49,7 +49,7 @@ public:
 	void set_value(MonoObject *p_object, const Variant &p_value);
 
 	_FORCE_INLINE_ MonoObject *get_value(MonoObject *p_object) {
-		return mono_field_get_value_object(GDMONO_DOMAIN, mono_field, p_object);
+		return mono_field_get_value_object(SCRIPT_DOMAIN, mono_field, p_object);
 	}
 
 	bool get_bool_value(MonoObject *p_object);

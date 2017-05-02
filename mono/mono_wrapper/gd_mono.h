@@ -29,15 +29,24 @@
 #include "../godotsharp_defs.h"
 #include "gd_mono_assembly.h"
 
-#define GDMONO_DOMAIN GDMono::get_singleton()->get_domain()
+#define SCRIPT_DOMAIN GDMono::get_singleton()->get_scripts_domain()
+
+#ifdef TOOLS_ENABLED
+#define EDITOR_TOOLS_DOMAIN GDMono::get_singleton()->get_editor_tools_domain()
+#endif
 
 class GDMono {
 	static GDMono *singleton;
 
-	bool initialized;
+	bool runtime_initialized;
+	bool unloading_script_domain;
 
-	MonoDomain *domain;
-	MonoDomain *domain_dummy;
+	MonoDomain *root_domain;
+	MonoDomain *scripts_domain;
+
+#ifdef TOOLS_ENABLED
+	MonoDomain *editor_tools_domain;
+#endif
 
 	GDMonoAssembly *corlib_assembly;
 	GDMonoAssembly *api_assembly;
@@ -45,9 +54,12 @@ class GDMono {
 
 	HashMap<String, GDMonoAssembly *> assemblies;
 
-	bool _load_assemblies();
-	void _clean_assemblies();
+	bool _load_script_assemblies();
+	void _unload_script_assemblies();
 	void _register_internal_calls();
+
+	Error _unload_scripts_domain();
+	Error _load_scripts_domain();
 
 public:
 	enum MemberVisibility {
@@ -60,9 +72,14 @@ public:
 
 	static GDMono *get_singleton() { return singleton; }
 
-	_FORCE_INLINE_ bool is_initialized() const { return initialized; }
+	_FORCE_INLINE_ bool is_runtime_initialized() const { return runtime_initialized; }
+	_FORCE_INLINE_ bool is_unloading_script_domain() const { return unloading_script_domain; }
 
-	_FORCE_INLINE_ MonoDomain *get_domain() { return domain; }
+	_FORCE_INLINE_ MonoDomain *get_scripts_domain() { return scripts_domain; }
+
+#ifdef TOOLS_ENABLED
+	_FORCE_INLINE_ MonoDomain *get_editor_tools_domain() { return editor_tools_domain; }
+#endif
 
 	_FORCE_INLINE_ GDMonoAssembly *get_corlib_assembly() const { return corlib_assembly; }
 	_FORCE_INLINE_ GDMonoAssembly *get_api_assembly() const { return api_assembly; }
@@ -70,7 +87,7 @@ public:
 
 	GDMonoClass *get_class(MonoClass *p_class);
 
-	Error reload_if_needed();
+	Error reload_scripts_domain_if_needed();
 
 	void initialize();
 

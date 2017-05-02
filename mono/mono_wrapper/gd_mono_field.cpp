@@ -191,7 +191,7 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 						native = GDMonoUtils::get_class_native_base(type_class);
 
 					if (native)
-						managed = GDMonoUtils::create_managed_for_godot_object(type_class, native->get_name(), unmanaged);
+						managed = GDMonoUtils::create_managed_for_godot_object(type_class, NATIVE_GDMONOCLASS_NAME(native), unmanaged);
 				}
 
 				mono_field_set_value(p_object, mono_field, &managed);
@@ -276,7 +276,7 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 							native = GDMonoUtils::get_class_native_base(type_class);
 
 						if (native)
-							managed = GDMonoUtils::create_managed_for_godot_object(type_class, native->get_name(), unmanaged);
+							managed = GDMonoUtils::create_managed_for_godot_object(type_class, NATIVE_GDMONOCLASS_NAME(native), unmanaged);
 					}
 
 					mono_field_set_value(p_object, mono_field, managed);
