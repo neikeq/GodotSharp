@@ -36,7 +36,6 @@
 #endif
 
 class GDMono {
-	static GDMono *singleton;
 
 	bool runtime_initialized;
 	bool unloading_script_domain;
@@ -60,6 +59,9 @@ class GDMono {
 
 	Error _unload_scripts_domain();
 	Error _load_scripts_domain();
+
+protected:
+	static GDMono *singleton;
 
 public:
 	enum MemberVisibility {
@@ -93,6 +95,26 @@ public:
 
 	GDMono();
 	~GDMono();
+};
+
+class _GodotSharp : public Object {
+	GDCLASS(_GodotSharp, Object)
+
+protected:
+	static _GodotSharp *singleton;
+	static void _bind_methods();
+
+public:
+	static _GodotSharp *get_singleton() { return singleton; }
+
+	void attach_thread();
+	void detach_thread();
+
+	bool is_unloading_domain();
+	bool is_domain_loaded();
+
+	_GodotSharp();
+	~_GodotSharp();
 };
 
 #endif // GD_MONO_H

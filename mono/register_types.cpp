@@ -37,8 +37,14 @@ CSharpLanguage *script_language_cs = NULL;
 ResourceFormatLoaderCSharpScript *resource_loader_cs = NULL;
 ResourceFormatSaverCSharpScript *resource_saver_cs = NULL;
 
+_GodotSharp *_godotsharp = NULL;
+
 void register_mono_types() {
 	ClassDB::register_class<CSharpScript>();
+
+	_godotsharp = memnew(_GodotSharp);
+
+	GlobalConfig::get_singleton()->add_singleton(GlobalConfig::Singleton("GodotSharp", _GodotSharp::get_singleton()));
 
 	script_language_cs = memnew(CSharpLanguage);
 	ScriptServer::register_language(script_language_cs);
@@ -54,6 +60,9 @@ void register_mono_types() {
 }
 
 void unregister_mono_types() {
+	if (_godotsharp)
+		memdelete(_godotsharp);
+
 	if (script_language_cs)
 		script_language_cs->finish();
 

@@ -257,7 +257,6 @@ Error GDMono::reload_scripts_domain_if_needed() {
 }
 
 GDMono::GDMono() {
-	ERR_FAIL_COND(singleton);
 	singleton = this;
 
 	runtime_initialized = false;
@@ -290,4 +289,47 @@ GDMono::~GDMono() {
 	}
 
 	unloading_script_domain = false;
+}
+_GodotSharp *_GodotSharp::singleton = NULL;
+
+void _GodotSharp::_bind_methods() {
+
+	ClassDB::bind_method(D_METHOD("attach_thread"), &_GodotSharp::attach_thread);
+	ClassDB::bind_method(D_METHOD("detach_thread"), &_GodotSharp::detach_thread);
+
+	ClassDB::bind_method(D_METHOD("is_unloading_domain"), &_GodotSharp::is_unloading_domain);
+	ClassDB::bind_method(D_METHOD("is_domain_loaded"), &_GodotSharp::is_domain_loaded);
+
+	ADD_SIGNAL(MethodInfo("about_to_unload_domain"));
+	ADD_SIGNAL(MethodInfo("domain_loaded"));
+}
+
+void _GodotSharp::attach_thread() {
+
+	GDMonoUtils::attach_current_thread();
+}
+
+void _GodotSharp::detach_thread() {
+
+	GDMonoUtils::detach_current_thread();
+}
+
+bool _GodotSharp::is_unloading_domain() {
+
+	return GDMono::get_singleton()->is_unloading_script_domain();
+}
+
+bool _GodotSharp::is_domain_loaded() {
+
+	return GDMono::get_singleton()->get_scripts_domain() != NULL;
+}
+
+_GodotSharp::_GodotSharp() {
+
+	singleton = this;
+}
+
+_GodotSharp::~_GodotSharp() {
+
+	singleton = NULL;
 }
