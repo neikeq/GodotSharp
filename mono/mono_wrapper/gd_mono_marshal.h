@@ -68,6 +68,21 @@ namespace GDMonoMarshal {
 #define BOX_CHAR(x) mono_value_box(SCRIPT_DOMAIN, mono_get_char_class(), &x)
 #define BOX_PTR(x) mono_value_box(SCRIPT_DOMAIN, mono_get_intptr_class(), x)
 
+#define BOX_DOUBLE_rvalue(obj, x) ({ double _aux_box = x; obj = BOX_DOUBLE(_aux_box); obj; })
+#define BOX_FLOAT_rvalue(obj, x) ({ float _aux_box = x; obj = BOX_FLOAT(_aux_box); obj; })
+#define BOX_MONO_DOUBLE_rvalue(obj, x) ({ mono_double _aux_box = x; obj = BOX_DOUBLE(_aux_box); obj; })
+#define BOX_MONO_FLOAT_rvalue(obj, x) ({ mono_float _aux_box = x; obj = BOX_FLOAT(_aux_box); obj; })
+#define BOX_INT64_rvalue(obj, x) ({ int64_t _aux_box = x; obj = BOX_INT64(_aux_box); obj; })
+#define BOX_INT32_rvalue(obj, x) ({ int32_t _aux_box = x; obj = BOX_INT32(_aux_box); obj; })
+#define BOX_INT16_rvalue(obj, x) ({ int16_t _aux_box = x; obj = BOX_INT16(_aux_box); obj; })
+#define BOX_INT8_rvalue(obj, x) ({ int8_t _aux_box = x; obj = BOX_INT8(_aux_box); obj; })
+#define BOX_UINT64_rvalue(obj, x) ({ uint64_t _aux_box = x; obj = BOX_UINT64(_aux_box); obj; })
+#define BOX_UINT32_rvalue(obj, x) ({ uint32_t _aux_box = x; obj = BOX_UINT32(_aux_box); obj; })
+#define BOX_UINT16_rvalue(obj, x) ({ uint16_t _aux_box = x; obj = BOX_UINT16(_aux_box); obj; })
+#define BOX_UINT8_rvalue(obj, x) ({ uint8_t _aux_box = x; obj = BOX_UINT8(_aux_box); obj; })
+#define BOX_BOOLEAN_rvalue(obj, x) ({ bool _aux_box = x; obj = BOX_BOOLEAN(_aux_box); obj; })
+#define BOX_CHAR_rvalue(obj, x) ({ char _aux_box = x; obj = BOX_CHAR(_aux_box); obj; })
+
 // String
 
 String mono_to_utf8_string(MonoString *p_mono_string);
