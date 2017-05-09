@@ -87,6 +87,7 @@
 	"    <ErrorReport>prompt</ErrorReport>\n"                                                                                 \
 	"    <WarningLevel>4</WarningLevel>\n"                                                                                    \
 	"    <ConsolePause>false</ConsolePause>\n"                                                                                \
+	"    <DocumentationFile>$(OutputPath)\\GodotSharp.xml</DocumentationFile>"                                                \
 	"  </PropertyGroup>\n"                                                                                                    \
 	"  <PropertyGroup Condition=\" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' \">\n"                                  \
 	"    <DebugType>full</DebugType>\n"                                                                                       \
@@ -95,6 +96,7 @@
 	"    <ErrorReport>prompt</ErrorReport>\n"                                                                                 \
 	"    <WarningLevel>4</WarningLevel>\n"                                                                                    \
 	"    <ConsolePause>false</ConsolePause>\n"                                                                                \
+	"    <DocumentationFile>$(OutputPath)\\GodotSharp.xml</DocumentationFile>"                                                \
 	"  </PropertyGroup>\n"                                                                                                    \
 	"  <ItemGroup>\n"                                                                                                         \
 	"    <Reference Include=\"System\" />\n"                                                                                  \
