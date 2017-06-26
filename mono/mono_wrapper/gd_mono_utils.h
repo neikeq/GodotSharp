@@ -49,11 +49,19 @@ struct Cache {
 	// Let's use the no-namespace format for these too
 	// -----------------------------------------------
 	GDMonoClass *class_MonoObject;
+	GDMonoClass *class_bool;
+	GDMonoClass *class_int8_t;
+	GDMonoClass *class_int16_t;
 	GDMonoClass *class_int32_t;
+	GDMonoClass *class_int64_t;
 	GDMonoClass *class_uint8_t;
+	GDMonoClass *class_uint16_t;
+	GDMonoClass *class_uint32_t;
+	GDMonoClass *class_uint64_t;
 	GDMonoClass *class_float;
 	GDMonoClass *class_double;
 	GDMonoClass *class_String;
+	GDMonoClass *class_IntPtr;
 	// -----------------------------------------------
 
 	GDMonoClass *class_Vector2;
@@ -66,9 +74,7 @@ struct Cache {
 	GDMonoClass *class_Rect3;
 	GDMonoClass *class_Color;
 	GDMonoClass *class_Plane;
-	GDMonoClass *class_InputEvent;
 	GDMonoClass *class_NodePath;
-	GDMonoClass *class_Image;
 	GDMonoClass *class_RID;
 	GDMonoClass *class_GodotObject;
 	GDMonoClass *class_Node;
@@ -133,7 +139,6 @@ GDMonoClass *get_class_native_base(GDMonoClass *p_class);
 MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const String &p_native, Object *p_object);
 
 MonoObject *create_managed_from(const NodePath &p_from);
-MonoObject *create_managed_from(const Image &p_from);
 MonoObject *create_managed_from(const RID &p_from);
 
 void expand_wildcard(const String &p_wildcard, List<String> *r_result);

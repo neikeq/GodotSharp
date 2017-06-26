@@ -51,6 +51,7 @@ class CSharpScript : public Script {
 
 	friend class CSharpInstance;
 	friend class CSharpLanguage;
+	friend class CSharpScriptDepSort;
 
 	bool tool;
 	bool valid;
@@ -61,6 +62,8 @@ class CSharpScript : public Script {
 	GDMonoClass *native;
 	GDMonoClass *script_class;
 
+	Ref<CSharpScript> base_cache; // TODO what's this for?
+
 	Set<Object *> instances;
 
 	String source;
@@ -69,7 +72,8 @@ class CSharpScript : public Script {
 	SelfList<CSharpScript> script_list;
 
 #ifdef TOOLS_ENABLED
-	Map<StringName, Variant> member_default_values;
+	List<PropertyInfo> exported_members_cache; // members_cache
+	Map<StringName, Variant> exported_members_defval_cache; // member_default_values_cache
 	Set<PlaceHolderScriptInstance *> placeholders;
 	bool source_changed_cache;
 
@@ -81,7 +85,7 @@ class CSharpScript : public Script {
 	Map<ObjectID, List<Pair<StringName, Variant> > > pending_reload_state;
 #endif
 
-	Map<StringName, PropertyInfo> properties_info;
+	Map<StringName, PropertyInfo> member_info;
 
 	void _clear();
 
@@ -113,7 +117,7 @@ public:
 	virtual ScriptLanguage *get_language() const;
 	/* TODO */ virtual bool has_script_signal(const StringName &p_signal) const { return false; }
 	/* TODO */ virtual void get_script_signal_list(List<MethodInfo> *r_signals) const {}
-	/* TODO */ virtual bool get_property_default_value(const StringName &p_property, Variant &r_value) const { return false; }
+	/* TODO */ virtual bool get_property_default_value(const StringName &p_property, Variant &r_value) const;
 	virtual void update_exports();
 	virtual Ref<Script> get_base_script() const;
 	/* TODO */ virtual void get_script_method_list(List<MethodInfo> *p_list) const {}

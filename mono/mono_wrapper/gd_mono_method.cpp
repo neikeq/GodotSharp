@@ -59,6 +59,8 @@ void GDMonoMethod::update_signature() {
 		param_types.push_back(param_type);
 	}
 
+	mono_metadata_free_method_signature(sig);
+
 	sig_updated = true;
 }
 
@@ -87,7 +89,7 @@ void *GDMonoMethod::get_thunk() {
 	return mono_method_get_unmanaged_thunk(mono_method);
 }
 
-MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params, MonoObject *r_exc) {
+MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params, MonoObject **r_exc) {
 	if (get_return_type().type_encoding != MONO_TYPE_VOID || get_parameters_count() > 0) {
 		MonoArray *params = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(MonoObject), get_parameters_count());
 
@@ -103,7 +105,7 @@ MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params,
 			mono_print_unhandled_exception(exc);
 
 			if (r_exc)
-				r_exc = exc;
+				*r_exc = exc;
 
 			return NULL;
 		}
@@ -117,19 +119,19 @@ MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params,
 			mono_print_unhandled_exception(exc);
 
 			if (r_exc)
-				r_exc = exc;
+				*r_exc = exc;
 		}
 
 		return NULL;
 	}
 }
 
-MonoObject *GDMonoMethod::invoke(MonoObject *p_object, MonoObject *r_exc) {
+MonoObject *GDMonoMethod::invoke(MonoObject *p_object, MonoObject **r_exc) {
 	ERR_FAIL_COND_V(get_parameters_count() > 0, NULL);
 	return invoke_raw(p_object, NULL, r_exc);
 }
 
-MonoObject *GDMonoMethod::invoke_raw(MonoObject *p_object, void **p_params, MonoObject *r_exc) {
+MonoObject *GDMonoMethod::invoke_raw(MonoObject *p_object, void **p_params, MonoObject **r_exc) {
 	MonoObject *exc = NULL;
 	MonoObject *return_value = mono_runtime_invoke(mono_method, p_object, p_params, &exc);
 
@@ -137,7 +139,7 @@ MonoObject *GDMonoMethod::invoke_raw(MonoObject *p_object, void **p_params, Mono
 		mono_print_unhandled_exception(exc);
 
 		if (r_exc)
-			r_exc = exc;
+			*r_exc = exc;
 
 		return NULL;
 	}

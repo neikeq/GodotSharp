@@ -294,14 +294,14 @@ struct CSharpScriptDepSort {
 	bool operator()(const Ref<CSharpScript> &A, const Ref<CSharpScript> &B) const {
 		if (A == B)
 			return false; // shouldn't happen but..
-		const CSharpScript *I = B->get_base_script().ptr()->cast_to<CSharpScript>();
+		GDMonoClass *I = B->base;
 		while (I) {
-			if (I == A.ptr()) {
+			if (I == A->script_class) {
 				// A is a base of B
 				return true;
 			}
 
-			I = I->get_base_script().ptr()->cast_to<CSharpScript>();
+			I = I->get_parent_class();
 		}
 
 		return false; // not a base
@@ -341,6 +341,7 @@ void CSharpLanguage::reload_all_scripts() {
 }
 
 void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {
+
 	if (mono->is_runtime_initialized()) {
 		GDMonoAssembly *proj_assembly = mono->get_project_assembly();
 		if (FileAccess::get_modified_time(proj_assembly->get_path()) <= proj_assembly->get_modified_time()) {
@@ -379,11 +380,6 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 
 	for (List<Ref<CSharpScript> >::Element *E = scripts.front(); E; E = E->next()) {
 
-		bool reload = E->get() == p_script || to_reload.has(E->get()->get_base_script());
-
-		if (!reload)
-			continue;
-
 		to_reload.insert(E->get(), Map<ObjectID, List<Pair<StringName, Variant> > >());
 
 		if (!p_soft_reload) {
@@ -398,7 +394,6 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 				if (obj->get_script_instance()) {
 
 					obj->get_script_instance()->get_property_state(state);
-					obj->get_script_instance()->set("something", 23);
 					castCSharpInstance(obj->get_script_instance())->gchandle->release();
 					map[obj->get_instance_ID()] = state;
 					obj->set_script(RefPtr());
@@ -413,7 +408,6 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 				//save instance info
 				List<Pair<StringName, Variant> > state;
 				if (obj->get_script_instance()) {
-
 					obj->get_script_instance()->get_property_state(state);
 					map[obj->get_instance_ID()] = state;
 					obj->set_script(RefPtr());
@@ -606,7 +600,7 @@ void CSharpInstance::mono_object_disposed() {
 
 	Reference *ref_owner = owner->cast_to<Reference>();
 
-	if (ref_owner->reference_get_count() == 0) {
+	if (holding_ref) {
 		memdelete(ref_owner);
 		owner = NULL;
 	}
@@ -700,16 +694,16 @@ bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const {
 }
 
 void CSharpInstance::get_property_list(List<PropertyInfo> *p_properties) const {
-	for (Map<StringName, PropertyInfo>::Element *E = script->properties_info.front(); E; E = E->next()) {
+	for (Map<StringName, PropertyInfo>::Element *E = script->member_info.front(); E; E = E->next()) {
 		p_properties->push_back(E->value());
 	}
 }
 
 Variant::Type CSharpInstance::get_property_type(const StringName &p_name, bool *r_is_valid) const {
-	if (script->properties_info.has(p_name)) {
+	if (script->member_info.has(p_name)) {
 		if (r_is_valid)
 			*r_is_valid = true;
-		return script->properties_info[p_name].type;
+		return script->member_info[p_name].type;
 	}
 
 	if (r_is_valid)
@@ -821,6 +815,8 @@ bool CSharpInstance::refcount_decremented() {
 		// If the unmanaged side is no longer referenced in the unmanaged world,
 		// the managed side takes responsibility of deleting it when GCed.
 
+		// TODO unsafely increase it back to 1, the managed side is holding the ref now
+
 		// Release the current strong handle and create a weak one.
 		Ref<CSharpGCHandle> weak_gchandle = memnew(CSharpGCHandle(gchandle->get_target(), true));
 		gchandle->release();
@@ -930,22 +926,17 @@ void CSharpScript::_placeholder_erased(PlaceHolderScriptInstance *p_placeholder)
 
 #ifdef TOOLS_ENABLED
 void CSharpScript::_update_exports_values(Map<StringName, Variant> &values, List<PropertyInfo> &propnames) {
-	// TODO
-	// Right now we are using the default value of the type, but the ideal is
-	// to analyze the assembly and find its initial value in the constructor.
-	{
-		/*for(Map<StringName, Variant>::Element *E = member_default_values.front(); E; E = E->next()) {
-			values[E->key()] = E->get();
-		}*/
 
-		for (Map<StringName, PropertyInfo>::Element *E = properties_info.front(); E; E = E->next()) {
-			Variant::CallError error;
-			values[E->key()] = Variant::construct(E->get().type, NULL, 0, error);
-		}
+	if (base_cache.is_valid()) {
+		base_cache->_update_exports_values(values, propnames);
 	}
 
-	for (Map<StringName, PropertyInfo>::Element *E = properties_info.front(); E; E = E->next()) {
-		propnames.push_back(E->value());
+	for (Map<StringName, Variant>::Element *E = exported_members_defval_cache.front(); E; E = E->next()) {
+		values[E->key()] = E->get();
+	}
+
+	for (List<PropertyInfo>::Element *E = exported_members_cache.front(); E; E = E->next()) {
+		propnames.push_back(E->get());
 	}
 }
 #endif
@@ -960,11 +951,30 @@ bool CSharpScript::_update_exports() {
 	if (source_changed_cache) {
 		source_changed_cache = false;
 
-		// TODO Unfinished?
-
-		properties_info.clear();
+		member_info.clear();
+		exported_members_cache.clear();
+		exported_members_defval_cache.clear();
 
 		Vector<GDMonoField *> fields = script_class->get_all_fields();
+
+		// We are creating a temporary new instance of the class here to get the default value
+		// TODO This is a workaround because alpha is happening soon, to focus on other stuff
+		// I should be done with ILOpcodeParser before stable
+
+		MonoObject *tmp_object = mono_object_new(SCRIPT_DOMAIN, script_class->get_raw());
+
+		if (tmp_object) {
+			GDMonoMethod *ctor = script_class->get_method(".ctor", 0);
+			MonoObject *exc = NULL;
+			ctor->invoke(tmp_object, NULL, &exc);
+
+			if (exc) {
+				ERR_PRINT("Exception thrown from constructor of temporary MonoObject");
+				tmp_object = NULL;
+			}
+		} else {
+			ERR_PRINT("Failed to create temporary MonoObject");
+		}
 
 		for (int i = 0; i < fields.size(); i++) {
 			GDMonoField *field = fields[i];
@@ -972,16 +982,27 @@ bool CSharpScript::_update_exports() {
 			if (field->is_static() || field->get_visibility() != GDMono::PUBLIC)
 				continue;
 
+			String name = field->get_name();
+			StringName cname = name;
+
 			if (field->has_attribute(CACHED_CLASS(PropertyInfo))) {
 				MonoObject *attr = field->get_attribute(CACHED_CLASS(PropertyInfo));
 
 				int type = CACHED_FIELD(PropertyInfo, type)->get_int_value(attr);
-				String name = field->get_name();
 				int hint = CACHED_FIELD(PropertyInfo, hint)->get_int_value(attr);
 				String hint_string = CACHED_FIELD(PropertyInfo, hint_string)->get_string_value(attr);
 				int usage = CACHED_FIELD(PropertyInfo, usage)->get_int_value(attr);
 
-				properties_info[name] = PropertyInfo(Variant::Type(type), name, PropertyHint(hint), hint_string, PropertyUsageFlags(usage));
+				PropertyInfo prop_info = PropertyInfo(Variant::Type(type), name, PropertyHint(hint), hint_string, PropertyUsageFlags(usage));
+
+				member_info[cname] = prop_info;
+				exported_members_cache.push_back(prop_info);
+
+				if (tmp_object) {
+					exported_members_defval_cache[cname] = GDMonoMarshal::mono_object_to_variant(field->get_value(tmp_object));
+				}
+			} else {
+				member_info[cname] = PropertyInfo(Variant::NIL, name, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_SCRIPT_VARIABLE);
 			}
 		}
 
@@ -1116,7 +1137,7 @@ CSharpInstance *CSharpScript::_create_instance(const Variant **p_args, int p_arg
 	// TODO more precise ctor search, not only by arg count but also arg types
 	GDMonoMethod *ctor = script_class->get_method(".ctor", p_argcount);
 	MonoObject *exc = NULL;
-	ctor->invoke(mono_object, p_args, exc);
+	ctor->invoke(mono_object, p_args, &exc);
 
 	if (exc) {
 		instance->script = Ref<CSharpScript>();
@@ -1302,6 +1323,24 @@ ScriptLanguage *CSharpScript::get_language() const {
 	return CSharpLanguage::get_singleton();
 }
 
+bool CSharpScript::get_property_default_value(const StringName &p_property, Variant &r_value) const {
+
+#ifdef TOOLS_ENABLED
+
+	const Map<StringName, Variant>::Element *E = exported_members_defval_cache.find(p_property);
+	if (E) {
+		r_value = E->get();
+		return true;
+	}
+
+	if (base_cache.is_valid()) {
+		return base_cache->get_property_default_value(p_property, r_value);
+	}
+
+#endif
+	return false;
+}
+
 void CSharpScript::update_exports() {
 #ifdef TOOLS_ENABLED
 	_update_exports();
@@ -1319,12 +1358,12 @@ void CSharpScript::update_exports() {
 }
 
 Ref<Script> CSharpScript::get_base_script() const {
-	// TODO search in the list of paths: namespaces
+	// TODO search in the list of { path: namespaces, ... }, not important any way?
 	return Ref<Script>();
 }
 
 void CSharpScript::get_script_property_list(List<PropertyInfo> *p_list) const {
-	for (Map<StringName, PropertyInfo>::Element *E = properties_info.front(); E; E = E->next()) {
+	for (Map<StringName, PropertyInfo>::Element *E = member_info.front(); E; E = E->next()) {
 		p_list->push_back(E->value());
 	}
 }
@@ -1406,7 +1445,8 @@ CSharpScript::~CSharpScript() {
 #ifndef NO_THREADS
 	CSharpLanguage::get_singleton()->lock->unlock();
 #endif
-#endif
+
+#endif // DEBUG_ENABLED
 }
 
 /*************** RESOURCE ***************/

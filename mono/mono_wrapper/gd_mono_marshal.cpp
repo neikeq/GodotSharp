@@ -89,13 +89,8 @@ MonoObject *variant_to_mono_object(const Variant *p_var) {
 MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_type) {
 	switch (p_type.type_encoding) {
 		case MONO_TYPE_BOOLEAN: {
-			bool val = p_var->operator bool();
+			MonoBoolean val = p_var->operator bool();
 			return BOX_BOOLEAN(val);
-		}
-
-		case MONO_TYPE_CHAR: {
-			CharType val = p_var->operator CharType();
-			return BOX_CHAR(val);
 		}
 
 		case MONO_TYPE_I1: {
@@ -177,9 +172,6 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 
 			if (tclass == CACHED_CLASS(Plane))
 				RETURN_BOXED_STRUCT(Plane, p_var);
-
-			if (tclass == CACHED_CLASS(InputEvent))
-				RETURN_BOXED_STRUCT(InputEvent, p_var);
 		} break;
 
 		case MONO_TYPE_ARRAY: {
@@ -240,10 +232,6 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 				return GDMonoUtils::create_managed_from(p_var->operator NodePath());
 			}
 
-			if (CACHED_CLASS(Image) == type_class) {
-				return GDMonoUtils::create_managed_from(p_var->operator Image());
-			}
-
 			if (CACHED_CLASS(RID) == type_class) {
 				return GDMonoUtils::create_managed_from(p_var->operator RID());
 			}
@@ -252,7 +240,7 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 			// Variant
 			switch (p_var->get_type()) {
 				case Variant::BOOL: {
-					bool val = p_var->operator bool();
+					MonoBoolean val = p_var->operator bool();
 					return BOX_BOOLEAN(val);
 				}
 				case Variant::INT: {
@@ -290,8 +278,6 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 					RETURN_BOXED_STRUCT(Transform, p_var);
 				case Variant::COLOR:
 					RETURN_BOXED_STRUCT(Color, p_var);
-				case Variant::IMAGE:
-					return GDMonoUtils::create_managed_from(p_var->operator Image());
 				case Variant::NODE_PATH:
 					return GDMonoUtils::create_managed_from(p_var->operator NodePath());
 				case Variant::_RID:
@@ -315,8 +301,6 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 
 					return managed;
 				}
-				case Variant::INPUT_EVENT:
-					RETURN_BOXED_STRUCT(InputEvent, p_var);
 				case Variant::DICTIONARY:
 					return Dictionary_to_mono_object(p_var->operator Dictionary());
 				case Variant::ARRAY:
@@ -370,10 +354,7 @@ Variant mono_object_to_variant(MonoObject *p_obj) {
 Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 	switch (p_type.type_encoding) {
 		case MONO_TYPE_BOOLEAN:
-			return UNBOX_BOOLEAN(p_obj) != 0;
-
-		case MONO_TYPE_CHAR:
-			return UNBOX_CHAR(p_obj);
+			return (bool)UNBOX_BOOLEAN(p_obj);
 
 		case MONO_TYPE_I1:
 			return UNBOX_INT8(p_obj);
@@ -435,12 +416,6 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 
 			if (tclass == CACHED_CLASS(Plane))
 				RETURN_UNBOXED_STRUCT(Plane, p_obj);
-
-			if (tclass == CACHED_CLASS(InputEvent)) {
-				char *raw = UNBOX_CHAR_PTR(p_obj);
-				MARSHALLED_IN(InputEvent, raw, ret);
-				return ret;
-			}
 		} break;
 
 		case MONO_TYPE_ARRAY: {
@@ -498,10 +473,6 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 
 			if (CACHED_CLASS(NodePath) == type_class) {
 				return UNBOX_PTR(CACHED_FIELD(NodePath, ptr)->get_value(p_obj));
-			}
-
-			if (CACHED_CLASS(Image) == type_class) {
-				return UNBOX_PTR(CACHED_FIELD(Image, ptr)->get_value(p_obj));
 			}
 
 			if (CACHED_CLASS(RID) == type_class) {

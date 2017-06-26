@@ -51,11 +51,20 @@ Cache cache;
 
 void Cache::clear_members() {
 	class_MonoObject = NULL;
+	class_bool = NULL;
+	class_int8_t = NULL;
+	class_int16_t = NULL;
 	class_int32_t = NULL;
+	class_int64_t = NULL;
 	class_uint8_t = NULL;
+	class_uint16_t = NULL;
+	class_uint32_t = NULL;
+	class_uint64_t = NULL;
 	class_float = NULL;
 	class_double = NULL;
 	class_String = NULL;
+	class_IntPtr = NULL;
+
 	class_Vector2 = NULL;
 	class_Rect2 = NULL;
 	class_Transform2D = NULL;
@@ -66,16 +75,13 @@ void Cache::clear_members() {
 	class_Rect3 = NULL;
 	class_Color = NULL;
 	class_Plane = NULL;
-	class_InputEvent = NULL;
 	class_NodePath = NULL;
-	class_Image = NULL;
 	class_RID = NULL;
 	class_GodotObject = NULL;
 	class_Node = NULL;
 	class_Control = NULL;
 	class_Spatial = NULL;
 	class_WeakRef = NULL;
-	rawclass_Dictionary = NULL;
 	class_MarshalUtils = NULL;
 
 	class_PropertyInfo = NULL;
@@ -97,17 +103,27 @@ void Cache::clear_members() {
 	methodthunk_MarshalUtils_DictionaryToArrays = NULL;
 	methodthunk_MarshalUtils_ArraysToDictionary = NULL;
 	methodthunk_Guid_NewGuid = NULL;
+
+	rawclass_Dictionary = NULL;
 }
 
 #define GODOT_API_CLASS(m_class) GDMono::get_singleton()->get_api_assembly()->get_class(BINDINGS_NAMESPACE, #m_class);
 
 void update_cache() {
 	CACHE_CLASS_AND_CHECK(MonoObject, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_object_class()));
+	CACHE_CLASS_AND_CHECK(bool, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_boolean_class()));
+	CACHE_CLASS_AND_CHECK(int8_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_sbyte_class()));
+	CACHE_CLASS_AND_CHECK(int16_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_int16_class()));
 	CACHE_CLASS_AND_CHECK(int32_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_int32_class()));
+	CACHE_CLASS_AND_CHECK(int64_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_int64_class()));
 	CACHE_CLASS_AND_CHECK(uint8_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_byte_class()));
+	CACHE_CLASS_AND_CHECK(uint16_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_uint16_class()));
+	CACHE_CLASS_AND_CHECK(uint32_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_uint32_class()));
+	CACHE_CLASS_AND_CHECK(uint64_t, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_uint64_class()));
 	CACHE_CLASS_AND_CHECK(float, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_single_class()));
 	CACHE_CLASS_AND_CHECK(double, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_double_class()));
 	CACHE_CLASS_AND_CHECK(String, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_string_class()));
+	CACHE_CLASS_AND_CHECK(IntPtr, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_intptr_class()));
 	CACHE_CLASS_AND_CHECK(Vector2, GODOT_API_CLASS(Vector2));
 	CACHE_CLASS_AND_CHECK(Rect2, GODOT_API_CLASS(Rect2));
 	CACHE_CLASS_AND_CHECK(Transform2D, GODOT_API_CLASS(Transform2D));
@@ -118,9 +134,7 @@ void update_cache() {
 	CACHE_CLASS_AND_CHECK(Rect3, GODOT_API_CLASS(Rect3));
 	CACHE_CLASS_AND_CHECK(Color, GODOT_API_CLASS(Color));
 	CACHE_CLASS_AND_CHECK(Plane, GODOT_API_CLASS(Plane));
-	CACHE_CLASS_AND_CHECK(InputEvent, GODOT_API_CLASS(InputEvent));
 	CACHE_CLASS_AND_CHECK(NodePath, GODOT_API_CLASS(NodePath));
-	CACHE_CLASS_AND_CHECK(Image, GODOT_API_CLASS(NodePath));
 	CACHE_CLASS_AND_CHECK(RID, GODOT_API_CLASS(NodePath));
 	CACHE_CLASS_AND_CHECK(GodotObject, GODOT_API_CLASS(Object));
 	CACHE_CLASS_AND_CHECK(Node, GODOT_API_CLASS(Node));
@@ -143,7 +157,6 @@ void update_cache() {
 
 	CACHE_FIELD_AND_CHECK(GodotObject, ptr, CACHED_CLASS(GodotObject)->get_field(BINDINGS_PTR_FIELD));
 	CACHE_FIELD_AND_CHECK(NodePath, ptr, CACHED_CLASS(NodePath)->get_field(BINDINGS_PTR_FIELD));
-	CACHE_FIELD_AND_CHECK(Image, ptr, CACHED_CLASS(Image)->get_field(BINDINGS_PTR_FIELD));
 	CACHE_FIELD_AND_CHECK(RID, ptr, CACHED_CLASS(RID)->get_field(BINDINGS_PTR_FIELD));
 
 	CACHE_METHOD_THUNK_AND_CHECK(MarshalUtils, DictionaryToArrays, (MarshalUtils_DictToArrays)CACHED_CLASS(MarshalUtils)->get_method("DictionaryToArrays", 3)->get_thunk());
@@ -326,19 +339,6 @@ MonoObject *create_managed_from(const NodePath &p_from) {
 
 	CACHED_FIELD(NodePath, ptr)
 			->set_value_raw(mono_object, memnew(NodePath(p_from)));
-
-	return mono_object;
-}
-
-MonoObject *create_managed_from(const Image &p_from) {
-	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(Image));
-	ERR_FAIL_COND_V(!mono_object, NULL);
-
-	// Construct
-	mono_runtime_object_init(mono_object);
-
-	CACHED_FIELD(Image, ptr)
-			->set_value_raw(mono_object, memnew(Image(p_from)));
 
 	return mono_object;
 }

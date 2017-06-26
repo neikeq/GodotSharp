@@ -142,10 +142,6 @@ void BindingsGenerator::generate_header_icalls() {
 	custom_icalls.push_back(InternalCall(method_bind_provider, "IntPtr", "string type, string method"));
 	custom_icalls.push_back(InternalCall(dtor_icall, "void", "IntPtr ptr"));
 
-	custom_icalls.push_back(InternalCall(icall_prefix "Image_Ctor", "IntPtr"));
-	custom_icalls.push_back(InternalCall(icall_prefix "Image_Ctor_2", "IntPtr", "int width, int height, bool mipmaps, int format"));
-	custom_icalls.push_back(InternalCall(icall_prefix "Image_Dtor", "void", "IntPtr ptr"));
-
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Ctor", "IntPtr", "string path"));
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Dtor", "void", "IntPtr ptr"));
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_operator_String", "string", "IntPtr ptr"));
@@ -223,7 +219,6 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 		project.add_file(output_file);                                     \
 	}
 
-	GENERATE_BUILTIN_TYPE(Image);
 	GENERATE_BUILTIN_TYPE(NodePath);
 	GENERATE_BUILTIN_TYPE(RID);
 
@@ -1118,10 +1113,8 @@ void BindingsGenerator::default_argument_from_variant(const Variant &p_val, Argu
 				r_iarg.default_argument = "null";
 				break;
 			}
-		case Variant::INPUT_EVENT:
 		case Variant::DICTIONARY:
 		case Variant::_RID:
-		case Variant::IMAGE:
 			r_iarg.default_argument = "new %s()";
 			r_iarg.def_param_mode = ArgumentInterface::NULLABLE_REF;
 			break;
@@ -1178,7 +1171,6 @@ void BindingsGenerator::generate_builtin_types() {
 	INSERT_STRUCT_TYPE(Rect3, "real_t*")
 	INSERT_STRUCT_TYPE(Color, "real_t*")
 	INSERT_STRUCT_TYPE(Plane, "real_t*")
-	INSERT_STRUCT_TYPE(InputEvent, "char*")
 
 #undef INSERT_STRUCT_TYPE
 
@@ -1249,26 +1241,6 @@ void BindingsGenerator::generate_builtin_types() {
 														  MEMBER_BEGIN "public static implicit operator NodePath(string from)\n" OPEN_BLOCK2 "return new NodePath(from);\n" CLOSE_BLOCK2
 																  MEMBER_BEGIN "public static implicit operator string(NodePath from)\n" OPEN_BLOCK2
 												  "return NativeCalls." icall_prefix "NodePath_operator_String(NodePath." static_ptr_getter "(from));\n" CLOSE_BLOCK2);
-	builtin_types.insert(itype.name, itype);
-
-	// Image
-	itype = TypeInterface();
-	itype.name = "Image";
-	itype.proxy_name = "Image";
-	itype.out = "\treturn memnew(Image(%1));\n";
-	itype.type = itype.name;
-	itype.type_in = itype.type + "*";
-	itype.type_out = itype.type + "*";
-	itype.cs_type = itype.proxy_name;
-	itype.cs_in = "Image." static_ptr_getter "(%0)";
-	itype.cs_out = "return new Image(%0);";
-	itype.im_type_in = "IntPtr";
-	itype.im_type_out = "IntPtr";
-	populate_builtin_type(itype, Variant::IMAGE);
-	extra_members.insert(itype.name, MEMBER_BEGIN "public Image()\n" OPEN_BLOCK2
-												  "this." BINDINGS_PTR_FIELD " = NativeCalls." icall_prefix "Image_Ctor();\n" CLOSE_BLOCK2
-														  MEMBER_BEGIN "public Image(int width, int height, bool mipmaps, int format)" OPEN_BLOCK2
-												  "this." BINDINGS_PTR_FIELD " = NativeCalls." icall_prefix "Image_Ctor_2(width, height, mipmaps, format);\n" CLOSE_BLOCK2);
 	builtin_types.insert(itype.name, itype);
 
 	// RID

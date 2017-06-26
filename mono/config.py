@@ -43,5 +43,17 @@ def configure(env):
         else:
             env.Append(LIBS = mono_lib )
     else:
-        env.ParseConfig('pkg-config mono-2 --cflags --libs')
+        if os.getenv('MONO_PREFIX'):
+            mono_path = os.getenv('MONO_PREFIX')
+
+            env.Append(LIBPATH = os.path.join(mono_path, 'lib'))
+            env.Append(CPPPATH = os.path.join(mono_path, 'include', 'mono-2.0'))
+
+            mono_lib = 'monosgen-2.0'
+
+            env.Append(CPPFLAGS = ['-D_REENTRANT'])
+            env.Append(LIBS = [ mono_lib, 'm', 'rt', 'dl', 'pthread' ] )
+        else:
+            env.ParseConfig('pkg-config mono-2 --cflags --libs')
+
         env.Append(LINKFLAGS = '-rdynamic')

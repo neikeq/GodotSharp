@@ -61,10 +61,6 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 			SET_FROM_PRIMITIVE(bool);
 		} break;
 
-		case MONO_TYPE_CHAR: {
-			SET_FROM_PRIMITIVE(CharType);
-		} break;
-
 		case MONO_TYPE_I1: {
 			SET_FROM_PRIMITIVE(signed char);
 		} break;
@@ -137,9 +133,6 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 			if (tclass == CACHED_CLASS(Plane))
 				SET_FROM_STRUCT_AND_BREAK(Plane);
 
-			if (tclass == CACHED_CLASS(InputEvent))
-				SET_FROM_STRUCT_AND_BREAK(InputEvent);
-
 			ERR_EXPLAIN(String() + "Attempted to set the value of a field of unmarshallable type: " + tclass->get_name());
 			ERR_FAIL();
 		} break;
@@ -204,12 +197,6 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 				break;
 			}
 
-			if (CACHED_CLASS(Image) == type_class) {
-				MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Image());
-				mono_field_set_value(p_object, mono_field, &managed);
-				break;
-			}
-
 			if (CACHED_CLASS(RID) == type_class) {
 				MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator RID());
 				mono_field_set_value(p_object, mono_field, &managed);
@@ -252,10 +239,6 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 				case Variant::BASIS: SET_FROM_STRUCT_AND_BREAK(Basis);
 				case Variant::TRANSFORM: SET_FROM_STRUCT_AND_BREAK(Transform);
 				case Variant::COLOR: SET_FROM_STRUCT_AND_BREAK(Color);
-				case Variant::IMAGE: {
-					MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator Image());
-					mono_field_set_value(p_object, mono_field, &managed);
-				} break;
 				case Variant::NODE_PATH: {
 					MonoObject *managed = GDMonoUtils::create_managed_from(p_value.operator NodePath());
 					mono_field_set_value(p_object, mono_field, &managed);
@@ -282,7 +265,6 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 					mono_field_set_value(p_object, mono_field, managed);
 					break;
 				}
-				case Variant::INPUT_EVENT: SET_FROM_STRUCT_AND_BREAK(InputEvent);
 				case Variant::DICTIONARY: {
 					MonoObject *managed = GDMonoMarshal::Dictionary_to_mono_object(p_value.operator Dictionary());
 					mono_field_set_value(p_object, mono_field, &managed);

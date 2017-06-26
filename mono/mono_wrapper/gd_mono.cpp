@@ -80,7 +80,7 @@ void GDMono::initialize() {
 }
 
 bool GDMono::_load_script_assemblies() {
-	OS::get_singleton()->print("Mono: Loading scripts domain assemblies...");
+	OS::get_singleton()->print("Mono: Loading assemblies on scripts domain...\n");
 
 	if (!corlib_assembly) {
 		corlib_assembly = memnew(GDMonoAssembly("corlib"));
@@ -144,7 +144,7 @@ bool GDMono::_load_script_assemblies() {
 }
 
 void GDMono::_unload_script_assemblies() {
-	OS::get_singleton()->print("Mono: Unloading scripts domain assemblies...");
+	OS::get_singleton()->print("Mono: Unloading assemblies on scripts domain...\n");
 
 	GDMonoUtils::clear_cache();
 
@@ -185,7 +185,7 @@ GDMonoClass *GDMono::get_class(MonoClass *p_class) {
 Error GDMono::_load_scripts_domain() {
 	ERR_FAIL_COND_V(scripts_domain != NULL, ERR_BUG);
 
-	OS::get_singleton()->print("Mono: Loading scripts domain...");
+	OS::get_singleton()->print("Mono: Loading scripts domain...\n");
 
 	String domain_name = "GodotEngineScriptDomain";
 	scripts_domain = mono_domain_create_appdomain((char *)domain_name.utf8().get_data(), NULL);
@@ -205,7 +205,7 @@ Error GDMono::_load_scripts_domain() {
 Error GDMono::_unload_scripts_domain() {
 	ERR_FAIL_COND_V(!scripts_domain, ERR_BUG);
 
-	OS::get_singleton()->print("Mono: Unloading scripts domain...");
+	OS::get_singleton()->print("Mono: Unloading scripts domain...\n");
 
 	_unload_script_assemblies();
 
@@ -237,19 +237,19 @@ Error GDMono::reload_scripts_domain_if_needed() {
 
 		Error err = _unload_scripts_domain();
 		if (err != OK) {
-			OS::get_singleton()->printerr("Mono: Failed to unload scripts domain");
+			ERR_PRINT("Mono: Failed to unload scripts domain");
 			return err;
 		}
 	}
 
 	Error err = _load_scripts_domain();
 	if (err != OK) {
-		OS::get_singleton()->printerr("Mono: Failed to load scripts domain");
+		ERR_PRINT("Mono: Failed to load scripts domain");
 		return err;
 	}
 
 	if (!_load_script_assemblies()) {
-		OS::get_singleton()->printerr("Mono: Failed to load assemblies");
+		ERR_PRINT("Mono: Failed to load assemblies");
 		return ERR_CANT_OPEN;
 	}
 
@@ -282,7 +282,7 @@ GDMono::~GDMono() {
 			_unload_scripts_domain();
 		}
 
-		OS::get_singleton()->print("Mono: Runtime cleanup...");
+		OS::get_singleton()->print("Mono: Runtime cleanup...\n");
 
 		runtime_initialized = false;
 		mono_jit_cleanup(root_domain);

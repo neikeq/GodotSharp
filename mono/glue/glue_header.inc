@@ -42,18 +42,6 @@ MethodBind *godot_icall_TypeDB_get_method(MonoString *type, MonoString *method) 
 	return ClassDB::get_method(ctype, cmethod);
 }
 
-Image *godot_icall_Image_Ctor() {
-	return memnew(Image);
-}
-
-Image *godot_icall_Image_Ctor_2(int width, int height, bool mipmaps, int format) {
-	return memnew(Image(width, height, mipmaps, Image::Format(format)));
-}
-
-void godot_icall_Image_Dtor(Image *ptr) {
-	memdelete(ptr);
-}
-
 NodePath *godot_icall_NodePath_Ctor(MonoString *path) {
 	return memnew(NodePath(GDMonoMarshal::mono_string_to_godot(path)));
 }
