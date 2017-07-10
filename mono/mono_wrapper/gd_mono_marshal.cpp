@@ -44,6 +44,128 @@ namespace GDMonoMarshal {
 		return ret;                             \
 	}
 
+Variant::Type managed_to_variant_type(const ManagedType &p_type) {
+	switch (p_type.type_encoding) {
+		case MONO_TYPE_BOOLEAN:
+			return Variant::BOOL;
+
+		case MONO_TYPE_I1:
+			return Variant::INT;
+		case MONO_TYPE_I2:
+			return Variant::INT;
+		case MONO_TYPE_I4:
+			return Variant::INT;
+		case MONO_TYPE_I8:
+			return Variant::INT;
+
+		case MONO_TYPE_U1:
+			return Variant::INT;
+		case MONO_TYPE_U2:
+			return Variant::INT;
+		case MONO_TYPE_U4:
+			return Variant::INT;
+		case MONO_TYPE_U8:
+			return Variant::INT;
+
+		case MONO_TYPE_R4:
+			return Variant::REAL;
+		case MONO_TYPE_R8:
+			return Variant::REAL;
+
+		case MONO_TYPE_STRING: {
+			return Variant::STRING;
+		} break;
+
+		case MONO_TYPE_VALUETYPE: {
+			GDMonoClass *tclass = p_type.type_class;
+
+			if (tclass == CACHED_CLASS(Vector2))
+				return Variant::VECTOR2;
+
+			if (tclass == CACHED_CLASS(Rect2))
+				return Variant::RECT2;
+
+			if (tclass == CACHED_CLASS(Transform2D))
+				return Variant::TRANSFORM2D;
+
+			if (tclass == CACHED_CLASS(Vector3))
+				return Variant::VECTOR3;
+
+			if (tclass == CACHED_CLASS(Basis))
+				return Variant::BASIS;
+
+			if (tclass == CACHED_CLASS(Quat))
+				return Variant::QUAT;
+
+			if (tclass == CACHED_CLASS(Transform))
+				return Variant::TRANSFORM;
+
+			if (tclass == CACHED_CLASS(Rect3))
+				return Variant::RECT3;
+
+			if (tclass == CACHED_CLASS(Color))
+				return Variant::COLOR;
+
+			if (tclass == CACHED_CLASS(Plane))
+				return Variant::PLANE;
+		} break;
+
+		case MONO_TYPE_ARRAY: {
+			MonoArrayType *array_type = mono_type_get_array_type(GDMonoClass::get_raw_type(p_type.type_class));
+
+			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
+				return Variant::ARRAY;
+
+			if (array_type->eklass == CACHED_CLASS_RAW(uint8_t))
+				return Variant::POOL_BYTE_ARRAY;
+
+			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
+				return Variant::POOL_INT_ARRAY;
+
+			if (array_type->eklass == REAL_T_MONOCLASS)
+				return Variant::POOL_REAL_ARRAY;
+
+			if (array_type->eklass == CACHED_CLASS_RAW(String))
+				return Variant::POOL_STRING_ARRAY;
+
+			if (array_type->eklass == CACHED_CLASS_RAW(Vector2))
+				return Variant::POOL_VECTOR2_ARRAY;
+
+			if (array_type->eklass == CACHED_CLASS_RAW(Vector3))
+				return Variant::POOL_VECTOR3_ARRAY;
+
+			if (array_type->eklass == CACHED_CLASS_RAW(Color))
+				return Variant::POOL_COLOR_ARRAY;
+		} break;
+
+		case MONO_TYPE_CLASS: {
+			GDMonoClass *type_class = p_type.type_class;
+
+			// GodotObject
+			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
+				return Variant::OBJECT;
+			}
+
+			if (CACHED_CLASS(NodePath) == type_class) {
+				return Variant::NODE_PATH;
+			}
+
+			if (CACHED_CLASS(RID) == type_class) {
+				return Variant::_RID;
+			}
+		} break;
+
+		case MONO_TYPE_GENERICINST: {
+			if (CACHED_RAW_MONO_CLASS(Dictionary) == p_type.type_class->get_raw()) {
+				return Variant::DICTIONARY;
+			}
+		} break;
+	}
+
+	// No error, the caller will decide what to do in this case
+	return Variant::NIL;
+}
+
 String mono_to_utf8_string(MonoString *p_mono_string) {
 	MonoError error;
 	char *utf8 = mono_string_to_utf8_checked(p_mono_string, &error);
@@ -180,26 +302,26 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
 				return (MonoObject *)Array_to_mono_array(p_var->operator Array());
 
-			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
-				return (MonoObject *)PoolIntArray_to_mono_array(p_var->operator PoolIntArray());
-
 			if (array_type->eklass == CACHED_CLASS_RAW(uint8_t))
 				return (MonoObject *)PoolByteArray_to_mono_array(p_var->operator PoolByteArray());
 
-			if (array_type->eklass == real_t_MonoClass)
+			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
+				return (MonoObject *)PoolIntArray_to_mono_array(p_var->operator PoolIntArray());
+
+			if (array_type->eklass == REAL_T_MONOCLASS)
 				return (MonoObject *)PoolRealArray_to_mono_array(p_var->operator PoolRealArray());
 
 			if (array_type->eklass == CACHED_CLASS_RAW(String))
 				return (MonoObject *)PoolStringArray_to_mono_array(p_var->operator PoolStringArray());
-
-			if (array_type->eklass == CACHED_CLASS_RAW(Color))
-				return (MonoObject *)PoolColorArray_to_mono_array(p_var->operator PoolColorArray());
 
 			if (array_type->eklass == CACHED_CLASS_RAW(Vector2))
 				return (MonoObject *)PoolVector2Array_to_mono_array(p_var->operator PoolVector2Array());
 
 			if (array_type->eklass == CACHED_CLASS_RAW(Vector3))
 				return (MonoObject *)PoolVector3Array_to_mono_array(p_var->operator PoolVector3Array());
+
+			if (array_type->eklass == CACHED_CLASS_RAW(Color))
+				return (MonoObject *)PoolColorArray_to_mono_array(p_var->operator PoolColorArray());
 
 			ERR_EXPLAIN(String() + "Attempted to convert Variant to a managed array of unmarshallable element type.");
 			ERR_FAIL_V(NULL);
@@ -424,26 +546,26 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
 				return mono_array_to_Array((MonoArray *)p_obj);
 
-			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
-				return mono_array_to_PoolIntArray((MonoArray *)p_obj);
-
 			if (array_type->eklass == CACHED_CLASS_RAW(uint8_t))
 				return mono_array_to_PoolByteArray((MonoArray *)p_obj);
 
-			if (array_type->eklass == real_t_MonoClass)
+			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
+				return mono_array_to_PoolIntArray((MonoArray *)p_obj);
+
+			if (array_type->eklass == REAL_T_MONOCLASS)
 				return mono_array_to_PoolRealArray((MonoArray *)p_obj);
 
 			if (array_type->eklass == CACHED_CLASS_RAW(String))
 				return mono_array_to_PoolStringArray((MonoArray *)p_obj);
-
-			if (array_type->eklass == CACHED_CLASS_RAW(Color))
-				return mono_array_to_PoolColorArray((MonoArray *)p_obj);
 
 			if (array_type->eklass == CACHED_CLASS_RAW(Vector2))
 				return mono_array_to_PoolVector2Array((MonoArray *)p_obj);
 
 			if (array_type->eklass == CACHED_CLASS_RAW(Vector3))
 				return mono_array_to_PoolVector3Array((MonoArray *)p_obj);
+
+			if (array_type->eklass == CACHED_CLASS_RAW(Color))
+				return mono_array_to_PoolColorArray((MonoArray *)p_obj);
 
 			ERR_EXPLAIN(String() + "Attempted to convert a managed array of unmarshallable element type to Variant.");
 			ERR_FAIL_V(Variant());
@@ -454,7 +576,7 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 
 			// GodotObject
 			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
-				GDMonoField *ptr_field = GDMonoUtils::cache.field_GodotObject_ptr;
+				GDMonoField *ptr_field = CACHED_FIELD(GodotObject, ptr);
 
 				ERR_FAIL_COND_V(!ptr_field, Variant());
 
@@ -562,7 +684,7 @@ PoolByteArray mono_array_to_PoolByteArray(MonoArray *p_array) {
 }
 
 MonoArray *PoolRealArray_to_mono_array(const PoolRealArray &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, real_t_MonoClass, p_array.size());
+	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, REAL_T_MONOCLASS, p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 		mono_array_set(ret, real_t, i, p_array[i]);

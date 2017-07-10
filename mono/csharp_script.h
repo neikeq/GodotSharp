@@ -32,19 +32,27 @@
 #include "script_language.h"
 #include "self_list.h"
 
-#include "csharp_gc_handle.h"
+#include "mono_gc_handle.h"
 #include "mono_wrapper/gd_mono.h"
 #include "mono_wrapper/gd_mono_header.h"
-
-#ifdef NO_SAFE_CAST
-#define castCSharpInstance(m_inst) ((m_inst->get_language() == CSharpLanguage::get_singleton()) ? static_cast<CSharpInstance *>(m_inst) : NULL)
-#else
-#define castCSharpInstance(m_inst) dynamic_cast<CSharpInstance *>(m_inst)
-#endif
 
 class CSharpScript;
 class CSharpInstance;
 class CSharpLanguage;
+
+#ifdef NO_SAFE_CAST
+template <typename TScriptInstance, typename TScriptLanguage>
+TScriptInstance *cast_script_instance(ScriptInstance *p_inst) {
+	return p_inst->get_language() == TScriptLanguage::get_singleton() ? static_cast<TScriptInstance *>(p_inst) : NULL;
+}
+#else
+template <typename TScriptInstance, typename TScriptLanguage>
+TScriptInstance *cast_script_instance(ScriptInstance *p_inst) {
+	return dynamic_cast<TScriptInstance *>(p_inst);
+}
+#endif
+
+#define CAST_CSHARP_INSTANCE(m_inst) cast_script_instance<CSharpInstance, CSharpLanguage>(m_inst)
 
 class CSharpScript : public Script {
 	GDCLASS(CSharpScript, Script)
@@ -137,7 +145,7 @@ class CSharpInstance : public ScriptInstance {
 	friend class CSharpLanguage;
 	Object *owner;
 	Ref<CSharpScript> script;
-	Ref<CSharpGCHandle> gchandle;
+	Ref<MonoGCHandle> gchandle;
 	bool base_ref;
 
 	bool holding_ref;
@@ -179,7 +187,6 @@ public:
 class CSharpLanguage : public ScriptLanguage {
 	friend class CSharpScript;
 	friend class CSharpInstance;
-	friend class CSharpGCHandle;
 
 	static CSharpLanguage *singleton;
 

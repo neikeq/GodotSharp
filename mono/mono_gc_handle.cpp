@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* csharp_gc_handle.h                                                             */
+/* mono_gc_handle.cpp                                                           */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -24,30 +24,51 @@
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
 
-#ifndef CSHARP_GC_HANDLE_H
-#define CSHARP_GC_HANDLE_H
+#include "mono_gc_handle.h"
 
-#include <mono/jit/jit.h>
+#include "mono_wrapper/gd_mono.h"
 
-class CSharpGCHandle;
+uint32_t MonoGCHandle::make_strong_handle(MonoObject *p_object) {
 
-#include "csharp_script.h"
+	return mono_gchandle_new(
+			p_object,
+			false /* do not pin the object */
+			);
+}
 
-class CSharpGCHandle : public Reference {
-	GDCLASS(CSharpGCHandle, Reference);
+uint32_t MonoGCHandle::make_weak_handle(MonoObject *p_object) {
 
-	bool released;
-	uint32_t handle;
+	return mono_gchandle_new_weakref(
+			p_object,
+			true /* track_resurrection: allows us to invoke _notification(NOTIFICATION_PREDELETE) while disposing */
+			);
+}
 
-public:
-	_FORCE_INLINE_ MonoObject *get_target() const {
-		return released ? NULL : mono_gchandle_get_target(handle);
+Ref<MonoGCHandle> MonoGCHandle::create_strong(MonoObject *p_object) {
+
+	return memnew(MonoGCHandle(make_strong_handle(p_object)));
+}
+
+Ref<MonoGCHandle> MonoGCHandle::create_weak(MonoObject *p_object) {
+
+	return memnew(MonoGCHandle(make_weak_handle(p_object)));
+}
+
+void MonoGCHandle::release() {
+
+	if (!released && !GDMono::get_singleton()->is_runtime_initialized()) {
+		mono_gchandle_free(handle);
+		released = true;
 	}
+}
 
-	void release();
+MonoGCHandle::MonoGCHandle(uint32_t p_handle) {
 
-	CSharpGCHandle(MonoObject *p_object, bool weak = false);
-	~CSharpGCHandle();
-};
+	released = false;
+	handle = p_handle;
+}
 
-#endif // CSHARP_GC_HANDLE_H
+MonoGCHandle::~MonoGCHandle() {
+
+	release();
+}

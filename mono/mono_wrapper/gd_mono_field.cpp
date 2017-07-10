@@ -143,26 +143,26 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
 				SET_FROM_ARRAY_AND_BREAK(Array);
 
-			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
-				SET_FROM_ARRAY_AND_BREAK(PoolIntArray);
-
 			if (array_type->eklass == CACHED_CLASS_RAW(uint8_t))
 				SET_FROM_ARRAY_AND_BREAK(PoolByteArray);
 
-			if (array_type->eklass == real_t_MonoClass)
+			if (array_type->eklass == CACHED_CLASS_RAW(int32_t))
+				SET_FROM_ARRAY_AND_BREAK(PoolIntArray);
+
+			if (array_type->eklass == REAL_T_MONOCLASS)
 				SET_FROM_ARRAY_AND_BREAK(PoolRealArray);
 
 			if (array_type->eklass == CACHED_CLASS_RAW(String))
 				SET_FROM_ARRAY_AND_BREAK(PoolStringArray);
-
-			if (array_type->eklass == CACHED_CLASS_RAW(Color))
-				SET_FROM_ARRAY_AND_BREAK(PoolColorArray);
 
 			if (array_type->eklass == CACHED_CLASS_RAW(Vector2))
 				SET_FROM_ARRAY_AND_BREAK(PoolVector2Array);
 
 			if (array_type->eklass == CACHED_CLASS_RAW(Vector3))
 				SET_FROM_ARRAY_AND_BREAK(PoolVector3Array);
+
+			if (array_type->eklass == CACHED_CLASS_RAW(Color))
+				SET_FROM_ARRAY_AND_BREAK(PoolColorArray);
 
 			ERR_EXPLAIN(String() + "Attempted to convert Variant to a managed array of unmarshallable element type.");
 			ERR_FAIL();

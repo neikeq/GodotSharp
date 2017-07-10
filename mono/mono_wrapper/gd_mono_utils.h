@@ -83,11 +83,10 @@ struct Cache {
 	GDMonoClass *class_WeakRef;
 	GDMonoClass *class_MarshalUtils;
 
-	GDMonoClass *class_PropertyInfo;
-	GDMonoField *field_PropertyInfo_type;
-	GDMonoField *field_PropertyInfo_hint;
-	GDMonoField *field_PropertyInfo_hint_string;
-	GDMonoField *field_PropertyInfo_usage;
+	GDMonoClass *class_Export;
+	GDMonoField *field_Export_hint;
+	GDMonoField *field_Export_hint_string;
+	GDMonoField *field_Export_usage;
 	GDMonoClass *class_Tool;
 	GDMonoClass *class_Remote;
 	GDMonoClass *class_Sync;
@@ -142,7 +141,8 @@ MonoObject *create_managed_from(const NodePath &p_from);
 MonoObject *create_managed_from(const RID &p_from);
 
 void expand_wildcard(const String &p_wildcard, List<String> *r_result);
-}
+
+} // GDMonoUtils
 
 #define NATIVE_GDMONOCLASS_NAME(m_class) (GDMonoMarshal::mono_string_to_godot((MonoString *)m_class->get_field("nativeName")->get_value(NULL)))
 
@@ -154,9 +154,9 @@ void expand_wildcard(const String &p_wildcard, List<String> *r_result);
 #define CACHED_METHOD_THUNK(m_class, m_method) (GDMonoUtils::cache.methodthunk_##m_class##_##m_method)
 
 #ifdef REAL_T_IS_DOUBLE
-#define real_t_MonoClass CACHED_CLASS_RAW(double)
+#define REAL_T_MONOCLASS CACHED_CLASS_RAW(double)
 #else
-#define real_t_MonoClass CACHED_CLASS_RAW(float)
+#define REAL_T_MONOCLASS CACHED_CLASS_RAW(float)
 #endif
 
 #endif // GD_MONOUTILS_H

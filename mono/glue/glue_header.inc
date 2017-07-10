@@ -24,7 +24,7 @@ void godot_icall_Object_Dtor(Object *ptr) {
 	ERR_FAIL_NULL(ptr);
 
 	if (ptr->get_script_instance()) {
-		CSharpInstance *cs_instance = castCSharpInstance(ptr->get_script_instance());
+		CSharpInstance *cs_instance = CAST_CSHARP_INSTANCE(ptr->get_script_instance());
 		if (cs_instance) {
 			cs_instance->mono_object_disposed();
 			return;

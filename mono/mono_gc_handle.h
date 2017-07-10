@@ -1,5 +1,5 @@
 /**********************************************************************************/
-/* csharp_gc_handle.cpp                                                           */
+/* mono_gc_handle.h                                                             */
 /**********************************************************************************/
 /* The MIT License (MIT)                                                          */
 /*                                                                                */
@@ -24,31 +24,34 @@
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
 
-#include "csharp_gc_handle.h"
+#ifndef CSHARP_GC_HANDLE_H
+#define CSHARP_GC_HANDLE_H
 
-void CSharpGCHandle::release() {
-	if (!released && !GDMono::get_singleton()->is_runtime_initialized()) {
-		mono_gchandle_free(handle);
-		released = true;
-	}
-}
+#include <mono/jit/jit.h>
 
-CSharpGCHandle::CSharpGCHandle(MonoObject *p_object, bool weak) {
-	released = false;
+#include "reference.h"
 
-	if (weak) {
-		handle = mono_gchandle_new_weakref(
-				p_object,
-				true /* track_resurrection: allows us to invoke _notification(NOTIFICATION_PREDELETE) while disposing */
-				);
-	} else {
-		handle = mono_gchandle_new(
-				p_object,
-				false /* do not pin the object */
-				);
-	}
-}
+class MonoGCHandle : public Reference {
 
-CSharpGCHandle::~CSharpGCHandle() {
-	release();
-}
+	GDCLASS(MonoGCHandle, Reference)
+
+	bool released;
+	uint32_t handle;
+
+public:
+	static uint32_t make_strong_handle(MonoObject *p_object);
+	static uint32_t make_weak_handle(MonoObject *p_object);
+
+	static Ref<MonoGCHandle> create_strong(MonoObject *p_object);
+	static Ref<MonoGCHandle> create_weak(MonoObject *p_object);
+
+	_FORCE_INLINE_ MonoObject *get_target() const { return released ? NULL : mono_gchandle_get_target(handle); }
+
+	_FORCE_INLINE_ void set_handle(uint32_t p_handle) { handle = p_handle; }
+	void release();
+
+	MonoGCHandle(uint32_t p_handle);
+	~MonoGCHandle();
+};
+
+#endif // CSHARP_GC_HANDLE_H

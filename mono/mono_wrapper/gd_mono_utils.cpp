@@ -84,11 +84,10 @@ void Cache::clear_members() {
 	class_WeakRef = NULL;
 	class_MarshalUtils = NULL;
 
-	class_PropertyInfo = NULL;
-	field_PropertyInfo_type = NULL;
-	field_PropertyInfo_hint = NULL;
-	field_PropertyInfo_hint_string = NULL;
-	field_PropertyInfo_usage = NULL;
+	class_Export = NULL;
+	field_Export_hint = NULL;
+	field_Export_hint_string = NULL;
+	field_Export_usage = NULL;
 	class_Tool = NULL;
 	class_Remote = NULL;
 	class_Sync = NULL;
@@ -144,11 +143,10 @@ void update_cache() {
 	CACHE_CLASS_AND_CHECK(MarshalUtils, GODOT_API_CLASS(MarshalUtils));
 
 	// Attributes
-	CACHE_CLASS_AND_CHECK(PropertyInfo, GODOT_API_CLASS(PropertyInfo));
-	CACHE_FIELD_AND_CHECK(PropertyInfo, type, CACHED_CLASS(PropertyInfo)->get_field("type"));
-	CACHE_FIELD_AND_CHECK(PropertyInfo, hint, CACHED_CLASS(PropertyInfo)->get_field("hint"));
-	CACHE_FIELD_AND_CHECK(PropertyInfo, hint_string, CACHED_CLASS(PropertyInfo)->get_field("hint_string"));
-	CACHE_FIELD_AND_CHECK(PropertyInfo, usage, CACHED_CLASS(PropertyInfo)->get_field("usage"));
+	CACHE_CLASS_AND_CHECK(Export, GODOT_API_CLASS(Export));
+	CACHE_FIELD_AND_CHECK(Export, hint, CACHED_CLASS(Export)->get_field("hint"));
+	CACHE_FIELD_AND_CHECK(Export, hint_string, CACHED_CLASS(Export)->get_field("hint_string"));
+	CACHE_FIELD_AND_CHECK(Export, usage, CACHED_CLASS(Export)->get_field("usage"));
 	CACHE_CLASS_AND_CHECK(Tool, GODOT_API_CLASS(Tool));
 	CACHE_CLASS_AND_CHECK(Remote, GODOT_API_CLASS(Remote));
 	CACHE_CLASS_AND_CHECK(Sync, GODOT_API_CLASS(Sync));
@@ -164,6 +162,11 @@ void update_cache() {
 	CACHE_METHOD_THUNK_AND_CHECK(Guid, NewGuid, (Guid_NewGuid)GDMono::get_singleton()->get_corlib_assembly()->get_class("System", "Guid")->get_method("NewGuid", 0)->get_thunk());
 
 	{
+		/*
+		 * TODO Right now we only support Dictionary<object, object>.
+		 * It would be great if we could support other key/value types
+		 * without forcing the user to copy the entries.
+		 */
 		GDMonoMethod *method_get_dict_type = CACHED_CLASS(MarshalUtils)->get_method("GetDictionaryType", 0);
 		ERR_FAIL_NULL(method_get_dict_type);
 		MonoReflectionType *dict_refl_type = (MonoReflectionType *)method_get_dict_type->invoke(NULL);
@@ -206,7 +209,7 @@ MonoObject *unmanaged_get_managed(Object *unmanaged) {
 		ScriptInstance *script_instance = unmanaged->get_script_instance();
 
 		if (script_instance) {
-			CSharpInstance *cs_instance = castCSharpInstance(script_instance);
+			CSharpInstance *cs_instance = CAST_CSHARP_INSTANCE(script_instance);
 
 			if (cs_instance) {
 				return cs_instance->get_mono_object();
@@ -214,7 +217,7 @@ MonoObject *unmanaged_get_managed(Object *unmanaged) {
 		}
 
 		if (unmanaged->has_meta("__mono_gchandle__")) {
-			Ref<CSharpGCHandle> gchandle = unmanaged->get_meta("__mono_gchandle__");
+			Ref<MonoGCHandle> gchandle = unmanaged->get_meta("__mono_gchandle__");
 
 			if (gchandle.is_valid()) {
 				return gchandle->get_target();
@@ -235,7 +238,7 @@ MonoObject *unmanaged_get_managed(Object *unmanaged) {
 
 void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged) {
 	if (unmanaged) {
-		Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(managed)));
+		Ref<MonoGCHandle> gchandle = MonoGCHandle::create_strong(managed);
 		unmanaged->set_meta("__mono_gchandle__", gchandle);
 
 		if (unmanaged->get_script().is_null()) {
@@ -307,7 +310,7 @@ MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const String &
 	MonoObject *mono_object = mono_object_new(SCRIPT_DOMAIN, p_class->get_raw());
 	ERR_FAIL_COND_V(!mono_object, NULL);
 
-	cache.field_GodotObject_ptr->set_value_raw(mono_object, p_object);
+	CACHED_FIELD(GodotObject, ptr)->set_value_raw(mono_object, p_object);
 
 	// Construct
 	mono_runtime_object_init(mono_object);
@@ -317,14 +320,15 @@ MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const String &
 	Reference *ref = p_object->cast_to<Reference>();
 
 	if (ref) {
-		if (!ref->get_script_instance() || !castCSharpInstance(ref->get_script_instance())) {
+		if (!ref->get_script_instance() || !CAST_CSHARP_INSTANCE(ref->get_script_instance())) {
 			strong_handle = false;
 			// The managed side will unreference it when disposed
 			ref->reference();
 		} // else the script instance will take care of its lifetime
 	}
 
-	Ref<CSharpGCHandle> gchandle(memnew(CSharpGCHandle(mono_object, !strong_handle)));
+	Ref<MonoGCHandle> gchandle = strong_handle ? MonoGCHandle::create_strong(mono_object) :
+												 MonoGCHandle::create_weak(mono_object);
 	p_object->set_meta("__mono_gchandle__", gchandle);
 
 	return mono_object;

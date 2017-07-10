@@ -66,6 +66,8 @@ namespace GDMonoMarshal {
 #define BOX_BOOLEAN(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(bool), &x)
 #define BOX_PTR(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(IntPtr), x)
 
+Variant::Type managed_to_variant_type(const ManagedType &p_type);
+
 // String
 
 String mono_to_utf8_string(MonoString *p_mono_string);
@@ -222,6 +224,7 @@ Dictionary mono_object_to_Dictionary(MonoObject *p_dict);
 #define MARSHALLED_IN_Plane(m_in, m_out) Plane m_out(m_in[0], m_in[1], m_in[2], m_in[3]);
 
 #endif
-}
+
+} // GDMonoMarshal
 
 #endif // GDMONOMARSHAL_H
