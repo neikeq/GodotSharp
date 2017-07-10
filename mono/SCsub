@@ -49,7 +49,7 @@ env.add_source_files(env.modules_sources, 'utils/*.cpp')
 if env['tools']:
     env.add_source_files(env.modules_sources, 'editor/*.cpp')
     env.add_source_files(env.modules_sources, 'editor/thirdparty/tinyxml2/tinyxml2.cpp')
-    make_cs_files_header('glue/cs_files', 'glue/cs_compressed.h')
+    make_cs_files_header('glue/cs_files', 'glue/cs_compressed.gen.h')
 
 vars = Variables()
 vars.Add(BoolVariable('mono_glue', 'Build with the mono glue code', True))

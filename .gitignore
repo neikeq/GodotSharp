@@ -1,6 +1,6 @@
 # Module generated files
 
-mono/bindings/cs_compressed.h
+*.gen.*
 
 # Python
 

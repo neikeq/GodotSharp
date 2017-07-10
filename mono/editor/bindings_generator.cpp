@@ -35,7 +35,7 @@
 #include "os/file_access.h"
 #include "os/os.h"
 
-#include "../glue/cs_compressed.h"
+#include "../glue/cs_compressed.gen.h"
 #include "../godotsharp_defs.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
 #include "../utils/path_utils.h"
@@ -173,6 +173,9 @@ void BindingsGenerator::generate_header_icalls() {
 	custom_icalls.push_back(InternalCall(icall_prefix "Godot_var2str", "string", "object var"));
 	custom_icalls.push_back(InternalCall(icall_prefix "Godot_weakref", "WeakRef", "IntPtr obj"));
 }
+
+// TODO: there are constants that hide inherited members. use override instead.
+// e.g.: warning CS0108: 'SpriteBase3D.FLAG_MAX' hides inherited member 'GeometryInstance.FLAG_MAX'. Use the new keyword if hiding was intended.
 
 Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
