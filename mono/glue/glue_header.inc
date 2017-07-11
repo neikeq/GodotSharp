@@ -22,18 +22,7 @@
 
 void godot_icall_Object_Dtor(Object *ptr) {
 	ERR_FAIL_NULL(ptr);
-
-	if (ptr->get_script_instance()) {
-		CSharpInstance *cs_instance = CAST_CSHARP_INSTANCE(ptr->get_script_instance());
-		if (cs_instance) {
-			cs_instance->mono_object_disposed();
-			return;
-		}
-	}
-
-	if (ptr->cast_to<Reference>()->unreference()) {
-		memdelete(ptr);
-	}
+	_GodotSharp::get_singleton()->queue_dispose(ptr);
 }
 
 MethodBind *godot_icall_TypeDB_get_method(MonoString *type, MonoString *method) {
@@ -47,7 +36,8 @@ NodePath *godot_icall_NodePath_Ctor(MonoString *path) {
 }
 
 void godot_icall_NodePath_Dtor(NodePath *ptr) {
-	memdelete(ptr);
+	ERR_FAIL_NULL(ptr);
+	_GodotSharp::get_singleton()->queue_dispose(ptr);
 }
 
 RID *godot_icall_RID_Ctor(Object *from) {
@@ -60,7 +50,8 @@ RID *godot_icall_RID_Ctor(Object *from) {
 }
 
 void godot_icall_RID_Dtor(RID *ptr) {
-	memdelete(ptr);
+	ERR_FAIL_NULL(ptr);
+	_GodotSharp::get_singleton()->queue_dispose(ptr);
 }
 
 MonoString *godot_icall_NodePath_operator_String(NodePath *p_np) {

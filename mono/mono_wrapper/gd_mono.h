@@ -100,6 +100,19 @@ public:
 class _GodotSharp : public Object {
 	GDCLASS(_GodotSharp, Object)
 
+	void _dispose_object(Object *p_object);
+	void _dispose_callback();
+
+	List<Object *> obj_delete_queue;
+	List<NodePath *> np_delete_queue;
+	List<RID *> rid_delete_queue;
+
+	bool queue_empty;
+
+#ifndef NO_THREADS
+	Mutex *queue_mutex;
+#endif
+
 protected:
 	static _GodotSharp *singleton;
 	static void _bind_methods();
@@ -112,6 +125,10 @@ public:
 
 	bool is_unloading_domain();
 	bool is_domain_loaded();
+
+	void queue_dispose(Object *p_object);
+	void queue_dispose(NodePath *p_node_path);
+	void queue_dispose(RID *p_rid);
 
 	_GodotSharp();
 	~_GodotSharp();

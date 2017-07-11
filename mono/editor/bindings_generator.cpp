@@ -27,8 +27,6 @@
 
 #ifdef DEBUG_METHODS_ENABLED
 
-#include "editor/doc/doc_data.h"
-#include "editor/editor_help.h"
 #include "global_config.h"
 #include "io/compression.h"
 #include "os/dir_access.h"
@@ -174,9 +172,6 @@ void BindingsGenerator::generate_header_icalls() {
 	custom_icalls.push_back(InternalCall(icall_prefix "Godot_weakref", "WeakRef", "IntPtr obj"));
 }
 
-// TODO: there are constants that hide inherited members. use override instead.
-// e.g.: warning CS0108: 'SpriteBase3D.FLAG_MAX' hides inherited member 'GeometryInstance.FLAG_MAX'. Use the new keyword if hiding was intended.
-
 Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
@@ -200,7 +195,6 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 	if (!project.has_reference("System"))
 		project.add_reference("System");
 
-	EditorHelp::generate_doc();
 	generate_header_icalls();
 
 	for (Map<String, TypeInterface>::Element *E = obj_types.front(); E; E = E->next()) {
@@ -289,12 +283,9 @@ Error BindingsGenerator::generate_cs_project(String p_output_dir) {
 	return OK;
 }
 
-// TODO Finalizers can be called from any thread. In such cases, queue the internal call
-// TODO throw ObjectDisposedException from a ptr getter
-// TODO use SafeHandle + IntPtr fields
+// TODO: there are constants that hide inherited members. must explicitly use `new` to avoid warnings
+// e.g.: warning CS0108: 'SpriteBase3D.FLAG_MAX' hides inherited member 'GeometryInstance.FLAG_MAX'. Use the new keyword if hiding was intended.
 Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const String &p_output_file) {
-	DocData *doc_data = EditorHelp::get_doc_data();
-
 	int method_bind_count = 0;
 
 	bool is_derived_type = itype.base_name.length();
@@ -315,12 +306,12 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 
 	cs_file.push_back("\nnamespace " BINDINGS_NAMESPACE "\n" OPEN_BLOCK);
 
-	DocData::ClassDoc class_doc = doc_data->class_list[itype.proxy_name];
+	const DocData::ClassDoc *class_doc = itype.class_doc;
 
-	if (class_doc.description.size()) {
+	if (class_doc && class_doc->description.size()) {
 		cs_file.push_back(INDENT1 "/// <summary>\n");
 
-		Vector<String> description_lines = class_doc.description.split("\n");
+		Vector<String> description_lines = class_doc->description.split("\n");
 
 		for (int i = 0; i < description_lines.size(); i++) {
 			if (description_lines[i].size()) {
@@ -353,34 +344,83 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 	cs_file.push_back(INDENT1 "{");
 
 	// Add constants
-	for (int i = 0; i < class_doc.constants.size(); i++) {
-		DocData::ConstantDoc const_doc = class_doc.constants[i];
 
-		if (const_doc.description.size()) {
-			cs_file.push_back(MEMBER_BEGIN "/// <summary>\n");
+	if (class_doc) {
+		for (int i = 0; i < class_doc->constants.size(); i++) {
+			const DocData::ConstantDoc &const_doc = class_doc->constants[i];
 
-			Vector<String> description_lines = const_doc.description.split("\n");
+			if (const_doc.description.size()) {
+				cs_file.push_back(MEMBER_BEGIN "/// <summary>\n");
 
-			for (int i = 0; i < description_lines.size(); i++) {
-				if (description_lines[i].size()) {
-					cs_file.push_back(INDENT2 "/// ");
-					cs_file.push_back(description_lines[i].strip_edges());
-					cs_file.push_back("\n");
+				Vector<String> description_lines = const_doc.description.split("\n");
+
+				for (int i = 0; i < description_lines.size(); i++) {
+					if (description_lines[i].size()) {
+						cs_file.push_back(INDENT2 "/// ");
+						cs_file.push_back(description_lines[i].strip_edges());
+						cs_file.push_back("\n");
+					}
 				}
+
+				cs_file.push_back(INDENT2 "/// </summary>");
 			}
 
-			cs_file.push_back(INDENT2 "/// </summary>");
+			cs_file.push_back(MEMBER_BEGIN "public const int ");
+			cs_file.push_back(const_doc.name);
+			cs_file.push_back(" = ");
+			cs_file.push_back(const_doc.value);
+			cs_file.push_back(";");
 		}
 
-		cs_file.push_back(MEMBER_BEGIN "public const int ");
-		cs_file.push_back(const_doc.name);
-		cs_file.push_back(" = ");
-		cs_file.push_back(const_doc.value);
-		cs_file.push_back(";");
-	}
+		if (class_doc->constants.size())
+			cs_file.push_back("\n");
 
-	if (class_doc.constants.size())
-		cs_file.push_back("\n");
+#if 0
+		/*
+		 * TODO fix
+		 * 1. There are properties with incorrect identifier names. e.g.: editor/display_folder
+		 * 2. The compiler generates methods with the following names: get_<propname> set_<propname>
+		 *    calling any of these explicitly results in an error.
+		 *    We have three options: go properties only, go methods only, or go PascalCasel and support both
+		 */
+		for (int i = 0; i < class_doc->properties.size(); i++) {
+			const DocData::PropertyDoc &prop_doc = class_doc->properties[i];
+
+			if (prop_doc.description.size()) {
+				cs_file.push_back(MEMBER_BEGIN "/// <summary>\n");
+
+				Vector<String> description_lines = prop_doc.description.split("\n");
+
+				for (int i = 0; i < description_lines.size(); i++) {
+					if (description_lines[i].size()) {
+						cs_file.push_back(INDENT2 "/// ");
+						cs_file.push_back(description_lines[i].strip_edges());
+						cs_file.push_back("\n");
+					}
+				}
+
+				cs_file.push_back(INDENT2 "/// </summary>");
+			}
+
+			cs_file.push_back(MEMBER_BEGIN "public ");
+			cs_file.push_back(prop_doc.type); // TODO
+			cs_file.push_back(" ");
+			cs_file.push_back(prop_doc.name);
+			cs_file.push_back("\n" OPEN_BLOCK2);
+			cs_file.push_back("get\n" OPEN_BLOCK3);
+			cs_file.push_back("return ");
+			cs_file.push_back(escape_csharp_keyword(prop_doc.getter));
+			cs_file.push_back("();\n" CLOSE_BLOCK3);
+			cs_file.push_back(INDENT3 "set\n" OPEN_BLOCK3);
+			cs_file.push_back(escape_csharp_keyword(prop_doc.setter));
+			cs_file.push_back("(value);\n" CLOSE_BLOCK3);
+			cs_file.push_back("\n" INDENT2 "}");
+		}
+		
+		if (class_doc->properties.size())
+			cs_file.push_back("\n");
+#endif
+	}
 
 	if (!itype.is_object_type) {
 		cs_file.push_back(MEMBER_BEGIN "private const string " BINDINGS_NATIVE_NAME_FIELD " = \"" + itype.name + "\";\n");
@@ -402,9 +442,10 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 		// Add the virtual Dispose
 		cs_file.push_back(MEMBER_BEGIN "public virtual void Dispose(bool disposing)\n" OPEN_BLOCK2
 									   "if (disposed) return;\n" INDENT3
-											   INDENT3 "if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n" OPEN_BLOCK3 "NativeCalls.godot_icall_");
+									   "if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n" OPEN_BLOCK3 "NativeCalls.godot_icall_");
 		cs_file.push_back(itype.proxy_name);
-		cs_file.push_back("_Dtor(" BINDINGS_PTR_FIELD ");\n" INDENT5 BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK3 "\n" INDENT4 "GC.SuppressFinalize(this);\n" INDENT4 "disposed = true;\n" CLOSE_BLOCK2);
+		cs_file.push_back("_Dtor(" BINDINGS_PTR_FIELD ");\n" INDENT5 BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK3 INDENT3
+						  "GC.SuppressFinalize(this);\n" INDENT3 "disposed = true;\n" CLOSE_BLOCK2);
 
 		cs_file.push_back(MEMBER_BEGIN "internal ");
 		cs_file.push_back(itype.proxy_name);
@@ -500,9 +541,9 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 		cs_file.push_back(extra_member->get());
 
 	for (const List<MethodInterface>::Element *E = itype.methods.front(); E; E = E->next()) {
-		MethodInterface imethod = E->get();
+		const MethodInterface &imethod = E->get();
 
-		TypeInterface return_type = get_type_by_name(imethod.return_type);
+		const TypeInterface &return_type = get_type_by_name(imethod.return_type);
 
 		String method_bind_field = "method_bind_" + itos(method_bind_count);
 
@@ -516,9 +557,9 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 
 		// Retrieve information from the arguments
 		int i = 0;
-		for (List<ArgumentInterface>::Element *F = imethod.arguments.front(); F; F = F->next()) {
-			ArgumentInterface iarg = F->get();
-			TypeInterface arg_type = get_type_by_name(iarg.type);
+		for (const List<ArgumentInterface>::Element *F = imethod.arguments.front(); F; F = F->next()) {
+			const ArgumentInterface &iarg = F->get();
+			const TypeInterface &arg_type = get_type_by_name(iarg.type);
 
 			// Add the current arguments to the signature
 			// If the argument has a default value which is not a constant, we will make it Nullable
@@ -613,19 +654,10 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 			cs_file.push_back(imethod.name);
 			cs_file.push_back("\");\n");
 
-			DocData::MethodDoc const_doc;
-
-			for (int i = 0; i < class_doc.methods.size(); i++) {
-				if (class_doc.methods[i].name == imethod.name) {
-					const_doc = class_doc.methods[i];
-					break;
-				}
-			}
-
-			if (const_doc.description.size()) {
+			if (imethod.method_doc && imethod.method_doc->description.size()) {
 				cs_file.push_back(MEMBER_BEGIN "/// <summary>\n");
 
-				Vector<String> description_lines = const_doc.description.split("\n");
+				Vector<String> description_lines = imethod.method_doc->description.split("\n");
 
 				for (int i = 0; i < description_lines.size(); i++) {
 					if (description_lines[i].size()) {
@@ -696,7 +728,7 @@ Error BindingsGenerator::generate_glue(String p_output_dir) {
 					   "\n");
 
 	for (Map<String, TypeInterface>::Element *E = obj_types.front(); E; E = E->next()) {
-		TypeInterface itype = E->get();
+		const TypeInterface &itype = E->get();
 
 		if (itype.base_name.length() && obj_types[itype.base_name].is_singleton && is_singleton_black_listed(itype.name))
 			continue;
@@ -705,12 +737,12 @@ Error BindingsGenerator::generate_glue(String p_output_dir) {
 
 		String ctor_method(icall_prefix + itype.proxy_name + "_Ctor");
 
-		for (List<MethodInterface>::Element *E = itype.methods.front(); E; E = E->next()) {
-			MethodInterface imethod = E->get();
+		for (const List<MethodInterface>::Element *E = itype.methods.front(); E; E = E->next()) {
+			const MethodInterface &imethod = E->get();
 
 			bool ret_void = imethod.return_type == "void";
 
-			TypeInterface return_type = get_type_by_name(imethod.return_type);
+			const TypeInterface &return_type = get_type_by_name(imethod.return_type);
 
 			String argc_str = itos(imethod.arguments.size());
 
@@ -723,9 +755,9 @@ Error BindingsGenerator::generate_glue(String p_output_dir) {
 
 			// Get arguments information
 			int i = 0;
-			for (List<ArgumentInterface>::Element *F = imethod.arguments.front(); F; F = F->next()) {
-				ArgumentInterface iarg = F->get();
-				TypeInterface arg_type = get_type_by_name(iarg.type);
+			for (const List<ArgumentInterface>::Element *F = imethod.arguments.front(); F; F = F->next()) {
+				const ArgumentInterface &iarg = F->get();
+				const TypeInterface &arg_type = get_type_by_name(iarg.type);
 
 				String c_param_name = "arg" + itos(i + 1);
 
@@ -945,7 +977,17 @@ BindingsGenerator::TypeInterface BindingsGenerator::get_type_by_name(const Strin
 
 	ERR_PRINTS(String() + "Type not found. Creating placeholder: " + name);
 
-	return TypeInterface::create_placeholder_type(name);
+	match = placeholder_types.find(name);
+
+	if (match)
+		return match->get();
+
+	TypeInterface placeholder;
+	TypeInterface::create_placeholder_type(placeholder, name);
+
+	placeholder_types.insert(placeholder.name, placeholder);
+
+	return placeholder;
 }
 
 void BindingsGenerator::generate_obj_types() {
@@ -1057,6 +1099,16 @@ void BindingsGenerator::generate_obj_types() {
 			}
 
 			imethod.proxy_name = escape_csharp_keyword(imethod.name);
+
+			if (itype.class_doc) {
+				for (int i = 0; i < itype.class_doc->methods.size(); i++) {
+					if (itype.class_doc->methods[i].name == imethod.name) {
+						imethod.method_doc = &itype.class_doc->methods[i];
+						break;
+					}
+				}
+			}
+
 			itype.add_method(imethod);
 		}
 
@@ -1415,12 +1467,23 @@ void BindingsGenerator::populate_builtin_type(TypeInterface &r_itype, Variant::T
 		if (!r_itype.requires_collections && imethod.return_type == "Dictionary")
 			r_itype.requires_collections = true;
 
+		if (r_itype.class_doc) {
+			for (int i = 0; i < r_itype.class_doc->methods.size(); i++) {
+				if (r_itype.class_doc->methods[i].name == imethod.name) {
+					imethod.method_doc = &r_itype.class_doc->methods[i];
+					break;
+				}
+			}
+		}
+
 		r_itype.add_method(imethod);
 	}
 }
 
 BindingsGenerator::BindingsGenerator(bool p_editor_api) {
 	editor_api = p_editor_api;
+
+	EditorHelp::generate_doc();
 
 	generate_obj_types();
 	generate_builtin_types();

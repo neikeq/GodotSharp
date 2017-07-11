@@ -27,6 +27,8 @@
 #define BINDINGS_GENERATOR_H
 
 #include "class_db.h"
+#include "editor/doc/doc_data.h"
+#include "editor/editor_help.h"
 
 #ifdef DEBUG_METHODS_ENABLED
 
@@ -58,6 +60,8 @@ class BindingsGenerator {
 
 		List<ArgumentInterface> arguments;
 
+		const DocData::MethodDoc *method_doc;
+
 		void add_argument(const ArgumentInterface &argument) {
 			arguments.push_back(argument);
 		}
@@ -65,6 +69,7 @@ class BindingsGenerator {
 		MethodInterface() {
 			return_type = "void";
 			has_vararg = false;
+			method_doc = NULL;
 		}
 	};
 
@@ -126,6 +131,8 @@ class BindingsGenerator {
 		/// Internal call return type
 		String im_type_out;
 
+		const DocData::ClassDoc *class_doc;
+
 		List<MethodInterface> methods;
 
 		void add_method(const MethodInterface &method) {
@@ -144,6 +151,7 @@ class BindingsGenerator {
 			itype.cs_type = itype.proxy_name;
 			itype.im_type_in = "ref " + itype.proxy_name;
 			itype.im_type_out = itype.proxy_name;
+			itype.class_doc = &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
 
 			return itype;
 		}
@@ -154,24 +162,21 @@ class BindingsGenerator {
 			itype.name = p_name;
 			itype.proxy_name = p_name.begins_with("_") ? p_name.substr(1, p_name.length()) : p_name;
 			itype.is_object_type = true;
+			itype.class_doc = &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
 
 			return itype;
 		}
 
-		static TypeInterface create_placeholder_type(const String &p_name) {
-			TypeInterface itype;
+		static void create_placeholder_type(TypeInterface &r_itype, const String &p_name) {
+			r_itype.name = p_name;
+			r_itype.proxy_name = p_name;
 
-			itype.name = p_name;
-			itype.proxy_name = p_name;
-
-			itype.type = itype.name;
-			itype.type_in = "MonoObject*";
-			itype.type_out = "MonoObject*";
-			itype.cs_type = itype.proxy_name;
-			itype.im_type_in = itype.proxy_name;
-			itype.im_type_out = itype.proxy_name;
-
-			return itype;
+			r_itype.type = r_itype.name;
+			r_itype.type_in = "MonoObject*";
+			r_itype.type_out = "MonoObject*";
+			r_itype.cs_type = r_itype.proxy_name;
+			r_itype.im_type_in = r_itype.proxy_name;
+			r_itype.im_type_out = r_itype.proxy_name;
 		}
 
 		TypeInterface() {
@@ -185,6 +190,8 @@ class BindingsGenerator {
 			requires_collections = false;
 
 			call_arg_in = "%s";
+
+			class_doc = NULL;
 		}
 	};
 
@@ -210,6 +217,7 @@ class BindingsGenerator {
 
 	bool editor_api;
 
+	Map<String, TypeInterface> placeholder_types;
 	Map<String, TypeInterface> builtin_types;
 	Map<String, TypeInterface> obj_types;
 

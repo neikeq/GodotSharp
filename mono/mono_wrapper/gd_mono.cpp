@@ -32,6 +32,7 @@
 #include "global_config.h"
 #include "os/file_access.h"
 #include "os/os.h"
+#include "os/thread.h"
 
 #include "../build_config.h"
 #include "../csharp_script.h"
@@ -290,7 +291,51 @@ GDMono::~GDMono() {
 
 	unloading_script_domain = false;
 }
+
 _GodotSharp *_GodotSharp::singleton = NULL;
+
+void _GodotSharp::_dispose_object(Object *p_object) {
+
+	if (p_object->get_script_instance()) {
+		CSharpInstance *cs_instance = CAST_CSHARP_INSTANCE(p_object->get_script_instance());
+		if (cs_instance) {
+			cs_instance->mono_object_disposed();
+			return;
+		}
+	}
+
+	if (p_object->cast_to<Reference>()->unreference()) {
+		memdelete(p_object);
+	}
+}
+
+void _GodotSharp::_dispose_callback() {
+
+#ifndef NO_THREADS
+	queue_mutex->lock();
+#endif
+
+	for (List<Object *>::Element *E = obj_delete_queue.front(); E; E = E->next()) {
+		_dispose_object(E->get());
+	}
+
+	for (List<NodePath *>::Element *E = np_delete_queue.front(); E; E = E->next()) {
+		memdelete(E->get());
+	}
+
+	for (List<RID *>::Element *E = rid_delete_queue.front(); E; E = E->next()) {
+		memdelete(E->get());
+	}
+
+	obj_delete_queue.clear();
+	np_delete_queue.clear();
+	rid_delete_queue.clear();
+	queue_empty = true;
+
+#ifndef NO_THREADS
+	queue_mutex->unlock();
+#endif
+}
 
 void _GodotSharp::_bind_methods() {
 
@@ -299,6 +344,8 @@ void _GodotSharp::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("is_unloading_domain"), &_GodotSharp::is_unloading_domain);
 	ClassDB::bind_method(D_METHOD("is_domain_loaded"), &_GodotSharp::is_domain_loaded);
+
+	ClassDB::bind_method(D_METHOD("_dispose_callback"), &_GodotSharp::_dispose_callback);
 
 	ADD_SIGNAL(MethodInfo("about_to_unload_domain"));
 	ADD_SIGNAL(MethodInfo("domain_loaded"));
@@ -324,12 +371,78 @@ bool _GodotSharp::is_domain_loaded() {
 	return GDMono::get_singleton()->get_scripts_domain() != NULL;
 }
 
+#define ENQUEUE_FOR_DISPOSAL(m_queue, m_inst) \
+	m_queue.push_back(m_inst);                \
+	if (queue_empty) {                        \
+		queue_empty = false;                  \
+		call_deferred("_dispose_callback");   \
+	}
+
+void _GodotSharp::queue_dispose(Object *p_object) {
+
+	if (Thread::get_main_ID() == Thread::get_caller_ID()) {
+		_dispose_object(p_object);
+	} else {
+#ifndef NO_THREADS
+		queue_mutex->lock();
+#endif
+
+		ENQUEUE_FOR_DISPOSAL(obj_delete_queue, p_object);
+
+#ifndef NO_THREADS
+		queue_mutex->unlock();
+#endif
+	}
+}
+
+void _GodotSharp::queue_dispose(NodePath *p_node_path) {
+
+	if (Thread::get_main_ID() == Thread::get_caller_ID()) {
+		memdelete(p_node_path);
+	} else {
+#ifndef NO_THREADS
+		queue_mutex->lock();
+#endif
+
+		ENQUEUE_FOR_DISPOSAL(np_delete_queue, p_node_path);
+
+#ifndef NO_THREADS
+		queue_mutex->unlock();
+#endif
+	}
+}
+
+void _GodotSharp::queue_dispose(RID *p_rid) {
+
+	if (Thread::get_main_ID() == Thread::get_caller_ID()) {
+		memdelete(p_rid);
+	} else {
+#ifndef NO_THREADS
+		queue_mutex->lock();
+#endif
+
+		ENQUEUE_FOR_DISPOSAL(rid_delete_queue, p_rid);
+
+#ifndef NO_THREADS
+		queue_mutex->unlock();
+#endif
+	}
+}
+
 _GodotSharp::_GodotSharp() {
 
 	singleton = this;
+	queue_empty = true;
+#ifndef NO_THREADS
+	queue_mutex = Mutex::create();
+#endif
 }
 
 _GodotSharp::~_GodotSharp() {
 
 	singleton = NULL;
+
+	if (queue_mutex) {
+		memdelete(queue_mutex);
+	}
 }
