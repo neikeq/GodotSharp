@@ -27,11 +27,7 @@
 #include "register_types.h"
 
 #include "csharp_script.h"
-
-#ifdef TOOLS_ENABLED
-#include "editor/build_process.h"
-#include "editor/editor_node.h"
-#endif
+#include "project_settings.h"
 
 CSharpLanguage *script_language_cs = NULL;
 ResourceFormatLoaderCSharpScript *resource_loader_cs = NULL;
@@ -44,28 +40,19 @@ void register_mono_types() {
 
 	_godotsharp = memnew(_GodotSharp);
 
-	GlobalConfig::get_singleton()->add_singleton(GlobalConfig::Singleton("GodotSharp", _GodotSharp::get_singleton()));
+	ProjectSettings::get_singleton()->add_singleton(ProjectSettings::Singleton("GodotSharp", _GodotSharp::get_singleton()));
 
 	script_language_cs = memnew(CSharpLanguage);
+	script_language_cs->set_language_index(ScriptServer::get_language_count());
 	ScriptServer::register_language(script_language_cs);
 
 	resource_loader_cs = memnew(ResourceFormatLoaderCSharpScript);
 	ResourceLoader::add_resource_format_loader(resource_loader_cs);
 	resource_saver_cs = memnew(ResourceFormatSaverCSharpScript);
 	ResourceSaver::add_resource_format_saver(resource_saver_cs);
-
-#ifdef TOOLS_ENABLED
-//EditorNode::add_build_callback(mono_build_callback);
-#endif
 }
 
 void unregister_mono_types() {
-	if (_godotsharp)
-		memdelete(_godotsharp);
-
-	if (script_language_cs)
-		script_language_cs->finish();
-
 	ScriptServer::unregister_language(script_language_cs);
 
 	if (script_language_cs)
@@ -74,4 +61,7 @@ void unregister_mono_types() {
 		memdelete(resource_loader_cs);
 	if (resource_saver_cs)
 		memdelete(resource_saver_cs);
+
+	if (_godotsharp)
+		memdelete(_godotsharp);
 }

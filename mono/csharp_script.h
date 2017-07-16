@@ -36,6 +36,10 @@
 #include "mono_wrapper/gd_mono.h"
 #include "mono_wrapper/gd_mono_header.h"
 
+#ifdef TOOLS_ENABLED
+#include "editor/monodevelop_instance.h"
+#endif
+
 class CSharpScript;
 class CSharpInstance;
 class CSharpLanguage;
@@ -55,6 +59,7 @@ TScriptInstance *cast_script_instance(ScriptInstance *p_inst) {
 #define CAST_CSHARP_INSTANCE(m_inst) cast_script_instance<CSharpInstance, CSharpLanguage>(m_inst)
 
 class CSharpScript : public Script {
+
 	GDCLASS(CSharpScript, Script)
 
 	friend class CSharpInstance;
@@ -75,7 +80,7 @@ class CSharpScript : public Script {
 	Set<Object *> instances;
 
 	String source;
-	String name;
+	StringName name;
 
 	SelfList<CSharpScript> script_list;
 
@@ -108,6 +113,7 @@ protected:
 	virtual void _resource_path_changed();
 
 public:
+	// Only for objects created from the managed world!!
 	static Ref<CSharpScript> create_for_managed_type(GDMonoClass *p_class);
 
 	virtual bool can_instance() const;
@@ -134,13 +140,14 @@ public:
 
 	Error load_source_code(const String &p_path);
 
-	String get_script_name() const;
+	StringName get_script_name() const;
 
 	CSharpScript();
 	~CSharpScript();
 };
 
 class CSharpInstance : public ScriptInstance {
+
 	friend class CSharpScript;
 	friend class CSharpLanguage;
 	Object *owner;
@@ -153,6 +160,9 @@ class CSharpInstance : public ScriptInstance {
 	void _ml_call_reversed(GDMonoClass *klass, const StringName &p_method, const Variant **p_args, int p_argcount);
 
 public:
+	// Only for objects created from the managed world!!
+	static CSharpInstance *create_for_managed_type(Object *p_owner, const Ref<CSharpScript> &p_script, const Ref<MonoGCHandle> &p_gchandle);
+
 	MonoObject *get_mono_object() const;
 
 	void mono_object_disposed();
@@ -185,17 +195,40 @@ public:
 };
 
 class CSharpLanguage : public ScriptLanguage {
+
 	friend class CSharpScript;
 	friend class CSharpInstance;
 
 	static CSharpLanguage *singleton;
 
-	GDMono *mono;
+	GDMono *gdmono;
 	SelfList<CSharpScript>::List script_list;
 
 	Mutex *lock;
+	Mutex *script_bind_lock;
 
 	Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > > to_reload;
+
+	Map<Object *, Ref<MonoGCHandle> > gchandle_bindings;
+
+#ifdef TOOLS_ENABLED
+	MonoDevelopInstance *monodevel_instance;
+#endif
+
+	struct StringNameCache {
+
+		StringName _awaited_signal_callback;
+		StringName _set;
+		StringName _get;
+		StringName _notification;
+		StringName dotctor; // .ctor
+
+		StringNameCache();
+	};
+
+	StringNameCache string_names;
+
+	int lang_idx;
 
 public:
 #ifdef TOOLS_ENABLED
@@ -206,6 +239,9 @@ public:
 		EDITOR_CODE,
 	};
 #endif
+
+	_FORCE_INLINE_ int get_language_index() { return lang_idx; }
+	void set_language_index(int p_idx);
 
 	_FORCE_INLINE_ static CSharpLanguage *get_singleton() { return singleton; }
 
@@ -254,22 +290,27 @@ public:
 	/* TODO */ virtual int profiling_get_accumulated_data(ProfilingInfo *p_info_arr, int p_info_max) { return 0; }
 	/* TODO */ virtual int profiling_get_frame_data(ProfilingInfo *p_info_arr, int p_info_max) { return 0; }
 
-	/* TODO? */ // virtual void frame();
+	virtual void frame();
 
 	/* TODO? */ virtual void get_public_functions(List<MethodInfo> *p_functions) const {}
 	/* TODO? */ virtual void get_public_constants(List<Pair<String, Variant> > *p_constants) const {}
 
-	void reload_all_scripts();
-	void reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload);
+	virtual void reload_all_scripts();
+	virtual void reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload);
 
 	/* LOADER FUNCTIONS */
 	virtual void get_recognized_extensions(List<String> *p_extensions) const;
 
+#ifdef TOOLS_ENABLED
 	virtual Error open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col);
+#endif
 
 	/* THREAD ATTACHING */
-	void thread_enter();
-	void thread_exit();
+	virtual void thread_enter();
+	virtual void thread_exit();
+
+	virtual void *alloc_instance_binding_data(Object *p_object);
+	virtual void free_instance_binding_data(void *p_data);
 
 	CSharpLanguage();
 	~CSharpLanguage();

@@ -30,26 +30,30 @@
 #include "gd_mono_header.h"
 
 class GDMonoMethod {
-	bool sig_updated;
 
-	bool instance;
+	StringName name;
+
+	bool is_instance;
 	int params_count;
 	ManagedType return_type;
 	Vector<ManagedType> param_types;
 
-	bool attrs_updated;
-	MonoCustomAttrInfo *attrs;
+	bool attrs_fetched;
+	MonoCustomAttrInfo *attributes;
 
-	void update_signature();
+	void _update_signature();
+	void _update_signature(MonoMethodSignature *p_method_sig);
 
 	friend class GDMonoClass;
 
 	MonoMethod *mono_method;
 
 public:
-	bool is_static();
-	int get_parameters_count();
-	ManagedType get_return_type();
+	_FORCE_INLINE_ StringName get_name() { return name; }
+
+	_FORCE_INLINE_ bool is_static() { return !is_instance; }
+	_FORCE_INLINE_ int get_parameters_count() { return params_count; }
+	_FORCE_INLINE_ ManagedType get_return_type() { return return_type; }
 
 	void *get_thunk();
 
@@ -59,9 +63,11 @@ public:
 
 	bool has_attribute(GDMonoClass *p_attr_class);
 	MonoObject *get_attribute(GDMonoClass *p_attr_class);
-	void update_attrs();
+	void fetch_attributes();
 
-	GDMonoMethod(MonoMethod *p_method);
+	String get_full_name(bool p_signature = false) const;
+
+	GDMonoMethod(StringName p_name, MonoMethod *p_method);
 	~GDMonoMethod();
 };
 

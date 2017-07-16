@@ -48,7 +48,6 @@ env.add_source_files(env.modules_sources, 'utils/*.cpp')
 
 if env['tools']:
     env.add_source_files(env.modules_sources, 'editor/*.cpp')
-    env.add_source_files(env.modules_sources, 'editor/thirdparty/tinyxml2/tinyxml2.cpp')
     make_cs_files_header('glue/cs_files', 'glue/cs_compressed.gen.h')
 
 vars = Variables()
@@ -63,3 +62,46 @@ else:
 
 if ARGUMENTS.get('yolo_copy', False):
     env.Append(CPPDEFINES = [ 'YOLO_COPY' ])
+
+# Build GodotSharpTools solution
+
+import os
+import subprocess
+import mono_reg_utils as monoreg
+
+
+def mono_build_solution(source, target, env):
+    if os.name == 'nt':
+        msbuild_tools_path = monoreg.find_msbuild_tools_path_reg()
+        if not msbuild_tools_path:
+            raise RuntimeError('Cannot find MSBuild Tools Path in the registry')
+        msbuild_path = os.path.join(msbuild_tools_path, 'MSBuild.exe')
+    else:
+        msbuild_path = 'msbuild'
+        
+    output_path = os.path.abspath(os.path.join(str(target[0]), os.pardir))
+    
+    msbuild_args = [
+        msbuild_path,
+        os.path.abspath(str(source[0])),
+        '/p:Configuration=Release',
+        '/p:DebugSymbols=false',
+        '/p:DebugType=none',
+        '/p:OutputPath=' + output_path
+    ]
+    
+    msbuild_env = os.environ.copy()
+    
+    # Needed when running from Developer Command Prompt for VS
+    del msbuild_env['PLATFORM']
+    
+    if subprocess.call(msbuild_args, env = msbuild_env) is not 0:
+        raise RuntimeError('GodotSharpTools build failed')
+
+
+mono_sln_builder = Builder(action = mono_build_solution)
+env.Append(BUILDERS = { 'MonoBuildSolution' : mono_sln_builder })
+env.MonoBuildSolution(
+    os.path.join(Dir('#bin').abspath, 'GodotSharpTools.dll'),
+    'editor/GodotSharpTools/GodotSharpTools.sln'
+)

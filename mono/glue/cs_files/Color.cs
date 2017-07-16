@@ -1,6 +1,6 @@
 using System;
 
-namespace GodotEngine
+namespace Godot
 {
     public struct Color : IEquatable<Color>
     {

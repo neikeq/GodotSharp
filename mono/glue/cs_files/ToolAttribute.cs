@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace GodotEngine
+namespace Godot
 {
 	[AttributeUsage(AttributeTargets.Class)]
-	public class Tool : Attribute {}
+	public class ToolAttribute : Attribute {}
 }

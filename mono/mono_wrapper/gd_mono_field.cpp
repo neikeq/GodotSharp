@@ -137,7 +137,8 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 			ERR_FAIL();
 		} break;
 
-		case MONO_TYPE_ARRAY: {
+		case MONO_TYPE_ARRAY:
+		case MONO_TYPE_SZARRAY: {
 			MonoArrayType *array_type = mono_type_get_array_type(GDMonoClass::get_raw_type(type.type_class));
 
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
@@ -173,20 +174,7 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 
 			// GodotObject
 			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
-				Object *unmanaged = p_value.operator Object *();
-				MonoObject *managed = GDMonoUtils::unmanaged_get_managed(unmanaged);
-
-				if (!managed) {
-					GDMonoClass *native = NULL;
-					if (type_class->get_assembly() == GDMono::get_singleton()->get_api_assembly())
-						native = type_class;
-					else
-						native = GDMonoUtils::get_class_native_base(type_class);
-
-					if (native)
-						managed = GDMonoUtils::create_managed_for_godot_object(type_class, NATIVE_GDMONOCLASS_NAME(native), unmanaged);
-				}
-
+				MonoObject *managed = GDMonoUtils::unmanaged_get_managed(p_value.operator Object *());
 				mono_field_set_value(p_object, mono_field, &managed);
 				break;
 			}
@@ -248,20 +236,7 @@ void GDMonoField::set_value(MonoObject *p_object, const Variant &p_value) {
 					mono_field_set_value(p_object, mono_field, &managed);
 				} break;
 				case Variant::OBJECT: {
-					Object *unmanaged = p_value.operator Object *();
-					MonoObject *managed = GDMonoUtils::unmanaged_get_managed(unmanaged);
-
-					if (!managed) {
-						GDMonoClass *native = NULL;
-						if (type_class->get_assembly() == GDMono::get_singleton()->get_api_assembly())
-							native = type_class;
-						else
-							native = GDMonoUtils::get_class_native_base(type_class);
-
-						if (native)
-							managed = GDMonoUtils::create_managed_for_godot_object(type_class, NATIVE_GDMONOCLASS_NAME(native), unmanaged);
-					}
-
+					MonoObject *managed = GDMonoUtils::unmanaged_get_managed(p_value.operator Object *());
 					mono_field_set_value(p_object, mono_field, managed);
 					break;
 				}
@@ -308,37 +283,38 @@ int GDMonoField::get_int_value(MonoObject *p_object) {
 }
 
 String GDMonoField::get_string_value(MonoObject *p_object) {
-	return GDMonoMarshal::mono_string_to_godot((MonoString *)get_value(p_object));
+	MonoObject *val = get_value(p_object);
+	return val ? GDMonoMarshal::mono_string_to_godot((MonoString *)val) : String();
 }
 
 bool GDMonoField::has_attribute(GDMonoClass *p_attr_class) {
-	ERR_FAIL_COND_V(!p_attr_class, false);
+	ERR_FAIL_NULL_V(p_attr_class, false);
 
-	if (!attrs_updated)
-		update_attrs();
+	if (!attrs_fetched)
+		fetch_attributes();
 
-	if (!attrs)
+	if (!attributes)
 		return false;
 
-	return mono_custom_attrs_has_attr(attrs, p_attr_class->get_raw());
+	return mono_custom_attrs_has_attr(attributes, p_attr_class->get_raw());
 }
 
 MonoObject *GDMonoField::get_attribute(GDMonoClass *p_attr_class) {
-	ERR_FAIL_COND_V(!p_attr_class, NULL);
+	ERR_FAIL_NULL_V(p_attr_class, NULL);
 
-	if (!attrs_updated)
-		update_attrs();
+	if (!attrs_fetched)
+		fetch_attributes();
 
-	if (!attrs)
+	if (!attributes)
 		return NULL;
 
-	return mono_custom_attrs_get_attr(attrs, p_attr_class->get_raw());
+	return mono_custom_attrs_get_attr(attributes, p_attr_class->get_raw());
 }
 
-void GDMonoField::update_attrs() {
-	ERR_FAIL_COND(attrs != NULL);
-	attrs = mono_custom_attrs_from_field(owner->get_raw(), get_raw());
-	attrs_updated = true;
+void GDMonoField::fetch_attributes() {
+	ERR_FAIL_COND(attributes != NULL);
+	attributes = mono_custom_attrs_from_field(owner->get_raw(), get_raw());
+	attrs_fetched = true;
 }
 
 bool GDMonoField::is_static() {
@@ -371,12 +347,12 @@ GDMonoField::GDMonoField(MonoClassField *p_raw_field, GDMonoClass *p_owner) {
 	MonoClass *field_type_class = mono_class_from_mono_type(field_type);
 	type.type_class = GDMono::get_singleton()->get_class(field_type_class);
 
-	attrs_updated = false;
-	attrs = NULL;
+	attrs_fetched = false;
+	attributes = NULL;
 }
 
 GDMonoField::~GDMonoField() {
-	if (attrs) {
-		mono_custom_attrs_free(attrs);
+	if (attributes) {
+		mono_custom_attrs_free(attributes);
 	}
 }

@@ -1,16 +1,16 @@
 using System;
 
-namespace GodotEngine
+namespace Godot
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
-    public class Remote : Attribute {}
+    public class RemoteAttribute : Attribute {}
 
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
-    public class Sync : Attribute {}
+    public class SyncAttribute : Attribute {}
 
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
-    public class Master : Attribute {}
+    public class MasterAttribute : Attribute {}
 
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
-    public class Slave : Attribute {}
+    public class SlaveAttribute : Attribute {}
 }

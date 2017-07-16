@@ -28,7 +28,9 @@
 
 #include <mono/metadata/threads.h>
 
+#include "../mono_gc_handle.h"
 #include "gd_mono_header.h"
+
 #include "object.h"
 #include "reference.h"
 
@@ -36,18 +38,21 @@ namespace GDMonoUtils {
 
 typedef MonoObject *(*MarshalUtils_DictToArrays)(MonoObject *, MonoArray **, MonoArray **, MonoObject **);
 typedef MonoObject *(*MarshalUtils_ArraysToDict)(MonoArray *, MonoArray *, MonoObject **);
-typedef MonoObject *(*Guid_NewGuid)(MonoObject **);
+typedef MonoObject *(*GodotObject__AwaitedSignalCallback)(MonoObject *, MonoArray **, MonoObject *, MonoObject **);
+typedef MonoObject *(*SignalAwaiter_FailureCallback)(MonoObject *, MonoObject **);
+typedef MonoObject *(*GodotTaskScheduler_Activate)(MonoObject *, MonoObject **);
 
-struct Cache {
-	// Format for cached classes in the GodotEngine namespace: class_<Class>
+struct MonoCache {
+	// Format for cached classes in the Godot namespace: class_<Class>
 	// Macro: CACHED_CLASS(<Class>)
 
 	// Format for cached classes in a different namespace: class_<Namespace>_<Class>
 	// Macro: CACHED_NS_CLASS(<Namespace>, <Class>)
 
 	// -----------------------------------------------
+	// corlib classes
+
 	// Let's use the no-namespace format for these too
-	// -----------------------------------------------
 	GDMonoClass *class_MonoObject;
 	GDMonoClass *class_bool;
 	GDMonoClass *class_int8_t;
@@ -62,6 +67,8 @@ struct Cache {
 	GDMonoClass *class_double;
 	GDMonoClass *class_String;
 	GDMonoClass *class_IntPtr;
+
+	MonoClass *rawclass_Dictionary;
 	// -----------------------------------------------
 
 	GDMonoClass *class_Vector2;
@@ -83,15 +90,17 @@ struct Cache {
 	GDMonoClass *class_WeakRef;
 	GDMonoClass *class_MarshalUtils;
 
-	GDMonoClass *class_Export;
-	GDMonoField *field_Export_hint;
-	GDMonoField *field_Export_hint_string;
-	GDMonoField *field_Export_usage;
-	GDMonoClass *class_Tool;
-	GDMonoClass *class_Remote;
-	GDMonoClass *class_Sync;
-	GDMonoClass *class_Master;
-	GDMonoClass *class_Slave; // omg! did he just use the S word?! ヽ(゜Q。)ノ
+	GDMonoClass *class_ExportAttribute;
+	GDMonoField *field_ExportAttribute_hint;
+	GDMonoField *field_ExportAttribute_hint_string;
+	GDMonoField *field_ExportAttribute_usage;
+	GDMonoClass *class_ToolAttribute;
+	GDMonoClass *class_RemoteAttribute;
+	GDMonoClass *class_SyncAttribute;
+	GDMonoClass *class_MasterAttribute;
+	GDMonoClass *class_SlaveAttribute; // omg! did he just use the S word?! ヽ(゜Q。)ノ
+	GDMonoClass *class_GodotMethodAttribute;
+	GDMonoField *field_GodotMethodAttribute_methodName;
 
 	GDMonoField *field_GodotObject_ptr;
 	GDMonoField *field_NodePath_ptr;
@@ -100,30 +109,39 @@ struct Cache {
 
 	MarshalUtils_DictToArrays methodthunk_MarshalUtils_DictionaryToArrays;
 	MarshalUtils_ArraysToDict methodthunk_MarshalUtils_ArraysToDictionary;
-	Guid_NewGuid methodthunk_Guid_NewGuid;
+	GodotObject__AwaitedSignalCallback methodthunk_GodotObject__AwaitedSignalCallback;
+	SignalAwaiter_FailureCallback methodthunk_SignalAwaiter_FailureCallback;
+	GodotTaskScheduler_Activate methodthunk_GodotTaskScheduler_Activate;
 
-	MonoClass *rawclass_Dictionary;
+	Ref<MonoGCHandle> sync_context_handle;
 
 	void clear_members();
 	void cleanup() {}
 
-	Cache() {
+	MonoCache() {
 		clear_members();
 	}
 };
 
-extern Cache cache;
+extern MonoCache mono_cache;
 
-void update_cache();
+void update_corlib_cache();
+void update_godot_api_cache();
 void clear_cache();
 
-template <typename T>
-void hash_combine(uint32_t &p_hash, const T &p_key) {
-	p_hash ^= HashMapHasherDefault::hash(p_key) + 0x9e3779b9 + (p_hash << 6) + (p_hash >> 2);
+_FORCE_INLINE_ void hash_combine(uint32_t &p_hash, const uint32_t &p_with_hash) {
+	p_hash ^= p_with_hash + 0x9e3779b9 + (p_hash << 6) + (p_hash >> 2);
 }
 
-MonoObject *reference_get_managed_unsafe(Reference *p_ref);
+/**
+ * If the object has a csharp script, returns the target of the gchandle stored in the script instance
+ * Otherwise returns a newly constructed MonoObject* which is attached to the object
+ * Returns NULL on error
+ */
 MonoObject *unmanaged_get_managed(Object *unmanaged);
+
+// TODO: find a proper name? :/
+// Only for objects created from the managed world!!
 void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged);
 
 void set_main_thread(MonoThread *p_thread);
@@ -132,26 +150,24 @@ void detach_current_thread();
 MonoThread *get_current_thread();
 
 GDMonoClass *get_object_class(MonoObject *p_object);
-GDMonoClass *type_get_proxy_class(const String &p_type);
+GDMonoClass *type_get_proxy_class(const StringName &p_type);
 GDMonoClass *get_class_native_base(GDMonoClass *p_class);
 
-MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const String &p_native, Object *p_object);
+MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const StringName &p_native, Object *p_object);
 
 MonoObject *create_managed_from(const NodePath &p_from);
 MonoObject *create_managed_from(const RID &p_from);
-
-void expand_wildcard(const String &p_wildcard, List<String> *r_result);
 
 } // GDMonoUtils
 
 #define NATIVE_GDMONOCLASS_NAME(m_class) (GDMonoMarshal::mono_string_to_godot((MonoString *)m_class->get_field("nativeName")->get_value(NULL)))
 
-#define CACHED_CLASS(m_class) (GDMonoUtils::cache.class_##m_class)
-#define CACHED_CLASS_RAW(m_class) (GDMonoUtils::cache.class_##m_class->get_raw())
-#define CACHED_NS_CLASS(m_ns, m_class) (GDMonoUtils::cache.class_##m_ns##_##m_class)
-#define CACHED_RAW_MONO_CLASS(m_class) (GDMonoUtils::cache.rawclass_##m_class)
-#define CACHED_FIELD(m_class, m_field) (GDMonoUtils::cache.field_##m_class##_##m_field)
-#define CACHED_METHOD_THUNK(m_class, m_method) (GDMonoUtils::cache.methodthunk_##m_class##_##m_method)
+#define CACHED_CLASS(m_class) (GDMonoUtils::mono_cache.class_##m_class)
+#define CACHED_CLASS_RAW(m_class) (GDMonoUtils::mono_cache.class_##m_class->get_raw())
+#define CACHED_NS_CLASS(m_ns, m_class) (GDMonoUtils::mono_cache.class_##m_ns##_##m_class)
+#define CACHED_RAW_MONO_CLASS(m_class) (GDMonoUtils::mono_cache.rawclass_##m_class)
+#define CACHED_FIELD(m_class, m_field) (GDMonoUtils::mono_cache.field_##m_class##_##m_field)
+#define CACHED_METHOD_THUNK(m_class, m_method) (GDMonoUtils::mono_cache.methodthunk_##m_class##_##m_method)
 
 #ifdef REAL_T_IS_DOUBLE
 #define REAL_T_MONOCLASS CACHED_CLASS_RAW(double)

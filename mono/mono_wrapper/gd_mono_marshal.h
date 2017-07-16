@@ -30,11 +30,6 @@
 #include "gd_mono_utils.h"
 #include "variant.h"
 
-template <unsigned num, unsigned num2>
-struct const_sum {
-	enum { value = num + num2 };
-};
-
 namespace GDMonoMarshal {
 
 #define UNBOX_CHAR_PTR(x) (char *)mono_object_unbox(x)
@@ -53,18 +48,18 @@ namespace GDMonoMarshal {
 #define UNBOX_BOOLEAN(x) *(MonoBoolean *)mono_object_unbox(x)
 #define UNBOX_PTR(x) mono_object_unbox(x)
 
-#define BOX_DOUBLE(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(double), &x)
-#define BOX_FLOAT(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(float), &x)
-#define BOX_INT64(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(int64_t), &x)
-#define BOX_INT32(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(int32_t), &x)
-#define BOX_INT16(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(int16_t), &x)
-#define BOX_INT8(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(int8_t), &x)
-#define BOX_UINT64(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(uint64_t), &x)
-#define BOX_UINT32(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(uint32_t), &x)
-#define BOX_UINT16(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(uint16_t), &x)
-#define BOX_UINT8(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(uint8_t), &x)
-#define BOX_BOOLEAN(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(bool), &x)
-#define BOX_PTR(x) mono_value_box(SCRIPT_DOMAIN, CACHED_CLASS_RAW(IntPtr), x)
+#define BOX_DOUBLE(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(double), &x)
+#define BOX_FLOAT(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(float), &x)
+#define BOX_INT64(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(int64_t), &x)
+#define BOX_INT32(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(int32_t), &x)
+#define BOX_INT16(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(int16_t), &x)
+#define BOX_INT8(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(int8_t), &x)
+#define BOX_UINT64(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(uint64_t), &x)
+#define BOX_UINT32(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(uint32_t), &x)
+#define BOX_UINT16(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(uint16_t), &x)
+#define BOX_UINT8(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(uint8_t), &x)
+#define BOX_BOOLEAN(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(bool), &x)
+#define BOX_PTR(x) mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(IntPtr), x)
 
 Variant::Type managed_to_variant_type(const ManagedType &p_type);
 

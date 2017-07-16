@@ -40,12 +40,6 @@ _FORCE_INLINE_ String path_join(const String &e1, const String &e2, const String
 	return e1.plus_file(e2).plus_file(e3).plus_file(e4);
 }
 
-_FORCE_INLINE_ String make_local_godot_path(const String &p_path) {
-	return "res://" + p_path.replace("\\", "/");
-}
-
-String make_relative_win_path(const String &p_location, const String &p_path);
-
 Vector<String> path_which(const String &p_name);
 
 void fix_path(const String &p_path, String &r_out);

@@ -23,18 +23,16 @@
 /* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
 /* SOFTWARE.                                                                      */
 /**********************************************************************************/
-#ifndef DOTNET_SOLUTION_H
-#define DOTNET_SOLUTION_H
+#ifndef NET_SOLUTION_H
+#define NET_SOLUTION_H
 
 #include "map.h"
 #include "ustring.h"
 
-class CSharpProject;
-
 struct NETSolution {
 	String name;
 
-	CSharpProject &add_new_project(const String &p_name);
+	void add_new_project(const String &p_name, const String &p_guid, const Vector<String> &p_extra_configs = Vector<String>());
 
 	Error save();
 
@@ -43,8 +41,13 @@ struct NETSolution {
 	NETSolution(const String &p_name);
 
 private:
+	struct ProjectInfo {
+		String guid;
+		Vector<String> configs;
+	};
+
 	String path;
-	Map<String, CSharpProject> projects;
+	Map<String, ProjectInfo> projects;
 };
 
-#endif // DOTNET_SOLUTION_H
+#endif // NET_SOLUTION_H

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace GodotEngine
+namespace Godot
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct Transform2D : IEquatable<Transform2D>

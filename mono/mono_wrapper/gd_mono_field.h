@@ -36,8 +36,8 @@ class GDMonoField {
 	String name;
 	ManagedType type;
 
-	bool attrs_updated;
-	MonoCustomAttrInfo *attrs;
+	bool attrs_fetched;
+	MonoCustomAttrInfo *attributes;
 
 public:
 	_FORCE_INLINE_ String get_name() const { return name; }
@@ -49,7 +49,7 @@ public:
 	void set_value(MonoObject *p_object, const Variant &p_value);
 
 	_FORCE_INLINE_ MonoObject *get_value(MonoObject *p_object) {
-		return mono_field_get_value_object(SCRIPT_DOMAIN, mono_field, p_object);
+		return mono_field_get_value_object(mono_domain_get(), mono_field, p_object);
 	}
 
 	bool get_bool_value(MonoObject *p_object);
@@ -58,7 +58,7 @@ public:
 
 	bool has_attribute(GDMonoClass *p_attr_class);
 	MonoObject *get_attribute(GDMonoClass *p_attr_class);
-	void update_attrs();
+	void fetch_attributes();
 
 	bool is_static();
 	GDMono::MemberVisibility get_visibility();
