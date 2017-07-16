@@ -1,6 +1,7 @@
 #include "../csharp_script.h"
 #include "../mono_wrapper/gd_mono_class.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
+#include "../signal_awaiter_utils.h"
 
 #include "bind/core_bind.h"
 #include "class_db.h"
@@ -29,6 +30,11 @@ MethodBind *godot_icall_TypeDB_get_method(MonoString *type, MonoString *method) 
 	StringName ctype(GDMonoMarshal::mono_string_to_godot(type));
 	StringName cmethod(GDMonoMarshal::mono_string_to_godot(method));
 	return ClassDB::get_method(ctype, cmethod);
+}
+
+Error godot_icall_Object_connect_signal_awaiter(Object *source, MonoString *signal, Object *target, MonoObject *awaiter) {
+	String signal_in = GDMonoMarshal::mono_string_to_godot(signal);
+	return SignalAwaiterUtils::connect_signal_awaiter(source, signal_in, target, awaiter);
 }
 
 NodePath *godot_icall_NodePath_Ctor(MonoString *path) {

@@ -197,6 +197,15 @@ class CSharpLanguage : public ScriptLanguage {
 
 	Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > > to_reload;
 
+	struct StringNameCache {
+
+		StringName _awaited_signal_callback;
+
+		StringNameCache();
+	};
+
+	StringNameCache string_names;
+
 public:
 #ifdef TOOLS_ENABLED
 	enum ExternalEditor{
@@ -254,7 +263,7 @@ public:
 	/* TODO */ virtual int profiling_get_accumulated_data(ProfilingInfo *p_info_arr, int p_info_max) { return 0; }
 	/* TODO */ virtual int profiling_get_frame_data(ProfilingInfo *p_info_arr, int p_info_max) { return 0; }
 
-	/* TODO? */ // virtual void frame();
+	virtual void frame();
 
 	/* TODO? */ virtual void get_public_functions(List<MethodInfo> *p_functions) const {}
 	/* TODO? */ virtual void get_public_constants(List<Pair<String, Variant> > *p_constants) const {}

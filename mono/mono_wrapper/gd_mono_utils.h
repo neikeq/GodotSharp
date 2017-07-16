@@ -28,7 +28,9 @@
 
 #include <mono/metadata/threads.h>
 
+#include "../mono_gc_handle.h"
 #include "gd_mono_header.h"
+
 #include "object.h"
 #include "reference.h"
 
@@ -37,8 +39,11 @@ namespace GDMonoUtils {
 typedef MonoObject *(*MarshalUtils_DictToArrays)(MonoObject *, MonoArray **, MonoArray **, MonoObject **);
 typedef MonoObject *(*MarshalUtils_ArraysToDict)(MonoArray *, MonoArray *, MonoObject **);
 typedef MonoObject *(*Guid_NewGuid)(MonoObject **);
+typedef MonoObject *(*GodotObject__AwaitedSignalCallback)(MonoObject *, MonoArray **, MonoObject *, MonoObject **);
+typedef MonoObject *(*SignalAwaiter_FailureCallback)(MonoObject *, MonoObject **);
+typedef MonoObject *(*GodotTaskScheduler_Activate)(MonoObject *, MonoObject **);
 
-struct Cache {
+struct MonoCache {
 	// Format for cached classes in the GodotEngine namespace: class_<Class>
 	// Macro: CACHED_CLASS(<Class>)
 
@@ -101,18 +106,23 @@ struct Cache {
 	MarshalUtils_DictToArrays methodthunk_MarshalUtils_DictionaryToArrays;
 	MarshalUtils_ArraysToDict methodthunk_MarshalUtils_ArraysToDictionary;
 	Guid_NewGuid methodthunk_Guid_NewGuid;
+	GodotObject__AwaitedSignalCallback methodthunk_GodotObject__AwaitedSignalCallback;
+	SignalAwaiter_FailureCallback methodthunk_SignalAwaiter_FailureCallback;
+	GodotTaskScheduler_Activate methodthunk_GodotTaskScheduler_Activate;
 
 	MonoClass *rawclass_Dictionary;
+
+	Ref<MonoGCHandle> sync_context_handle;
 
 	void clear_members();
 	void cleanup() {}
 
-	Cache() {
+	MonoCache() {
 		clear_members();
 	}
 };
 
-extern Cache cache;
+extern MonoCache mono_cache;
 
 void update_cache();
 void clear_cache();
@@ -146,12 +156,12 @@ void expand_wildcard(const String &p_wildcard, List<String> *r_result);
 
 #define NATIVE_GDMONOCLASS_NAME(m_class) (GDMonoMarshal::mono_string_to_godot((MonoString *)m_class->get_field("nativeName")->get_value(NULL)))
 
-#define CACHED_CLASS(m_class) (GDMonoUtils::cache.class_##m_class)
-#define CACHED_CLASS_RAW(m_class) (GDMonoUtils::cache.class_##m_class->get_raw())
-#define CACHED_NS_CLASS(m_ns, m_class) (GDMonoUtils::cache.class_##m_ns##_##m_class)
-#define CACHED_RAW_MONO_CLASS(m_class) (GDMonoUtils::cache.rawclass_##m_class)
-#define CACHED_FIELD(m_class, m_field) (GDMonoUtils::cache.field_##m_class##_##m_field)
-#define CACHED_METHOD_THUNK(m_class, m_method) (GDMonoUtils::cache.methodthunk_##m_class##_##m_method)
+#define CACHED_CLASS(m_class) (GDMonoUtils::mono_cache.class_##m_class)
+#define CACHED_CLASS_RAW(m_class) (GDMonoUtils::mono_cache.class_##m_class->get_raw())
+#define CACHED_NS_CLASS(m_ns, m_class) (GDMonoUtils::mono_cache.class_##m_ns##_##m_class)
+#define CACHED_RAW_MONO_CLASS(m_class) (GDMonoUtils::mono_cache.rawclass_##m_class)
+#define CACHED_FIELD(m_class, m_field) (GDMonoUtils::mono_cache.field_##m_class##_##m_field)
+#define CACHED_METHOD_THUNK(m_class, m_method) (GDMonoUtils::mono_cache.methodthunk_##m_class##_##m_method)
 
 #ifdef REAL_T_IS_DOUBLE
 #define REAL_T_MONOCLASS CACHED_CLASS_RAW(double)

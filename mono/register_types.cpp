@@ -60,9 +60,6 @@ void register_mono_types() {
 }
 
 void unregister_mono_types() {
-	if (_godotsharp)
-		memdelete(_godotsharp);
-
 	if (script_language_cs)
 		script_language_cs->finish();
 
@@ -74,4 +71,7 @@ void unregister_mono_types() {
 		memdelete(resource_loader_cs);
 	if (resource_saver_cs)
 		memdelete(resource_saver_cs);
+
+	if (_godotsharp)
+		memdelete(_godotsharp);
 }

@@ -76,7 +76,9 @@
 #define icall_prefix "godot_icall_"
 #define singleton_icall_suffix "_get_singleton"
 #define method_bind_provider icall_prefix "TypeDB_get_method"
+#define connect_signal_awaiter_icall icall_prefix "Object_connect_signal_awaiter"
 #define dtor_icall icall_prefix "Object_Dtor"
+#define signal_awaiter_class "SignalAwaiter"
 #define ptrcall_args_var "call_args"
 #define ret_var "ret"
 #define object_ctor_macro "GODOTSHARP_INSTANCE_OBJECT"
@@ -139,6 +141,9 @@ void BindingsGenerator::generate_header_icalls() {
 
 	custom_icalls.push_back(InternalCall(method_bind_provider, "IntPtr", "string type, string method"));
 	custom_icalls.push_back(InternalCall(dtor_icall, "void", "IntPtr ptr"));
+
+	custom_icalls.push_back(InternalCall(connect_signal_awaiter_icall, "Error",
+			"IntPtr source, string signal, IntPtr target, " signal_awaiter_class " awaiter"));
 
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Ctor", "IntPtr", "string path"));
 	custom_icalls.push_back(InternalCall(icall_prefix "NodePath_Dtor", "void", "IntPtr ptr"));
@@ -378,7 +383,7 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 #if 0
 		/*
 		 * TODO fix
-		 * 1. There are properties with incorrect identifier names. e.g.: editor/display_folder
+		 * 1. There are properties with incorrect identifier names. e.g.: editor/display_folded
 		 * 2. The compiler generates methods with the following names: get_<propname> set_<propname>
 		 *    calling any of these explicitly results in an error.
 		 *    We have three options: go properties only, go methods only, or go PascalCasel and support both
@@ -533,6 +538,29 @@ Error BindingsGenerator::generate_cs_type(const TypeInterface &itype, const Stri
 										   "if (" BINDINGS_PTR_FIELD " != IntPtr.Zero)\n" OPEN_BLOCK3
 										   "if (" memory_own_field ")\n" OPEN_BLOCK4 memory_own_field " = false;\n" INDENT5 internal_methods_class "." dtor_icall "(" BINDINGS_PTR_FIELD ");\n" INDENT5 BINDINGS_PTR_FIELD " = IntPtr.Zero;\n" CLOSE_BLOCK4 CLOSE_BLOCK3
 												   INDENT3 "GC.SuppressFinalize(this);\n" INDENT3 "disposed = true;\n" CLOSE_BLOCK2);
+
+			Map<String, TypeInterface>::Element *array_itype = builtin_types.find("Array");
+
+			if (!array_itype) {
+				ERR_PRINT("BUG: Array type interface not found!");
+				return ERR_BUG;
+			}
+
+			cs_file.push_back(MEMBER_BEGIN "private void _AwaitedSignalCallback(");
+			cs_file.push_back(array_itype->get().cs_type);
+			cs_file.push_back(" args, SignalAwaiter awaiter)\n" OPEN_BLOCK2 "awaiter.SignalCallback(args);\n" CLOSE_BLOCK2);
+
+			Map<String, TypeInterface>::Element *object_itype = obj_types.find("Object");
+
+			if (!object_itype) {
+				ERR_PRINT("BUG: Array type interface not found!");
+				return ERR_BUG;
+			}
+
+			cs_file.push_back(MEMBER_BEGIN "public " signal_awaiter_class " to_signal(");
+			cs_file.push_back(object_itype->get().cs_type);
+			cs_file.push_back(" source, string signal)\n" OPEN_BLOCK2
+							  "return new " signal_awaiter_class "(source, signal, this);\n" CLOSE_BLOCK2);
 		}
 	}
 

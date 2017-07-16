@@ -30,11 +30,6 @@
 #include "gd_mono_utils.h"
 #include "variant.h"
 
-template <unsigned num, unsigned num2>
-struct const_sum {
-	enum { value = num + num2 };
-};
-
 namespace GDMonoMarshal {
 
 #define UNBOX_CHAR_PTR(x) (char *)mono_object_unbox(x)

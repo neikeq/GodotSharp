@@ -188,7 +188,7 @@ void ILOpCodeParser::_parse_block(const unsigned char *p_il_code, uint32_t p_cod
 								for (List<MonoObject *>::Element *E = eval_stack.front(); E; E = E->next()) {
 									if (E != eval_stack.front())
 										values_str += " ";
-									MonoObject *exc;
+									MonoObject *exc = NULL;
 									MonoString *monostr = mono_object_to_string(E->get(), &exc);
 									ERR_CONTINUE(exc);
 									values_str += GDMonoMarshal::mono_string_to_godot(monostr);

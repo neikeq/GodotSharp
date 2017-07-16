@@ -40,6 +40,9 @@
 
 #include "mono_wrapper/gd_mono_class.h"
 #include "mono_wrapper/gd_mono_marshal.h"
+#include "signal_awaiter_utils.h"
+
+#define CACHED_STRING_NAME(m_var) (CSharpLanguage::get_singleton()->string_names.m_var)
 
 CSharpLanguage *CSharpLanguage::singleton = NULL;
 
@@ -302,6 +305,27 @@ String CSharpLanguage::make_function(const String &p_class, const String &p_name
 	s += ")\n{\n    // Replace with function body\n}*/\n";
 
 	return s;
+}
+
+void CSharpLanguage::frame() {
+	const Ref<MonoGCHandle> &sync_context_handle = GDMonoUtils::mono_cache.sync_context_handle;
+
+	if (!sync_context_handle.is_null()) {
+		MonoObject *sync_context = sync_context_handle->get_target();
+
+		if (sync_context) {
+			GDMonoUtils::GodotTaskScheduler_Activate thunk = CACHED_METHOD_THUNK(GodotTaskScheduler, Activate);
+
+			ERR_FAIL_COND(!thunk);
+
+			MonoObject *exc = NULL;
+			thunk(sync_context, &exc);
+
+			if (exc) {
+				mono_print_unhandled_exception(exc);
+			}
+		}
+	}
 }
 
 struct CSharpScriptDepSort {
@@ -785,6 +809,45 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 			} else {
 				return Variant();
 			}
+		} else if (p_method == CACHED_STRING_NAME(_awaited_signal_callback)) {
+			// shitty hack..
+			// TODO move to its own function, thx
+
+			if (p_argcount < 1) {
+				r_error.error = Variant::CallError::CALL_ERROR_TOO_FEW_ARGUMENTS;
+				r_error.argument = 1;
+				return Variant();
+			}
+
+			Ref<SignalAwaiterHandle> awaiter = *p_args[p_argcount - 1];
+
+			if (awaiter.is_null()) {
+				r_error.error = Variant::CallError::CALL_ERROR_INVALID_ARGUMENT;
+				r_error.argument = p_argcount - 1;
+				r_error.expected = Variant::OBJECT;
+				return Variant();
+			}
+
+			awaiter->set_completed(true);
+
+			int extra_argc = p_argcount - 1;
+			MonoArray *extra_args = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(MonoObject), extra_argc);
+
+			for (int i = 0; i < extra_argc; i++) {
+				MonoObject *boxed = GDMonoMarshal::variant_to_mono_object(*p_args[i]);
+				mono_array_set(extra_args, MonoObject *, i, boxed);
+			}
+
+			GDMonoUtils::GodotObject__AwaitedSignalCallback thunk = CACHED_METHOD_THUNK(GodotObject, _AwaitedSignalCallback);
+
+			MonoObject *exc = NULL;
+			thunk(mono_object, &extra_args, awaiter->get_target(), &exc);
+
+			if (exc) {
+				mono_print_unhandled_exception(exc);
+			}
+
+			return Variant();
 		}
 
 		top = top->get_parent_class();
@@ -1594,4 +1657,9 @@ void ResourceFormatSaverCSharpScript::get_recognized_extensions(const RES &p_res
 bool ResourceFormatSaverCSharpScript::recognize(const RES &p_resource) const {
 
 	return p_resource->cast_to<CSharpScript>() != NULL;
+}
+
+CSharpLanguage::StringNameCache::StringNameCache() {
+
+	_awaited_signal_callback = StaticCString::create("_AwaitedSignalCallback");
 }

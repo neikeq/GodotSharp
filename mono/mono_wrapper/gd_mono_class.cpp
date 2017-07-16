@@ -94,7 +94,7 @@ GDMonoMethod *GDMonoClass::get_method(MonoMethod *p_raw_method) {
 }
 
 GDMonoMethod *GDMonoClass::get_method(const String &p_name) {
-	// TODO
+	// TODO implement this. needed for get_rpc_mode
 	return NULL;
 }
 

@@ -35,7 +35,7 @@
 
 namespace GDMonoUtils {
 
-Cache cache;
+MonoCache mono_cache;
 
 #define CACHE_AND_CHECK(m_var, m_val)                                                        \
 	{                                                                                        \
@@ -43,13 +43,13 @@ Cache cache;
 		if (!m_var) ERR_PRINT("Mono Cache: Member " #m_var " is null. This is really bad!"); \
 	}
 
-#define CACHE_CLASS_AND_CHECK(m_class, m_val) CACHE_AND_CHECK(GDMonoUtils::cache.class_##m_class, m_val)
-#define CACHE_NS_CLASS_AND_CHECK(m_ns, m_class, m_val) CACHE_AND_CHECK(GDMonoUtils::cache.class_##m_ns##_##m_class, m_val)
-#define CACHE_RAW_MONO_CLASS_AND_CHECK(m_class, m_val) CACHE_AND_CHECK(GDMonoUtils::cache.rawclass_##m_class, m_val)
-#define CACHE_FIELD_AND_CHECK(m_class, m_field, m_val) CACHE_AND_CHECK(GDMonoUtils::cache.field_##m_class##_##m_field, m_val)
-#define CACHE_METHOD_THUNK_AND_CHECK(m_class, m_method, m_val) CACHE_AND_CHECK(GDMonoUtils::cache.methodthunk_##m_class##_##m_method, m_val)
+#define CACHE_CLASS_AND_CHECK(m_class, m_val) CACHE_AND_CHECK(GDMonoUtils::mono_cache.class_##m_class, m_val)
+#define CACHE_NS_CLASS_AND_CHECK(m_ns, m_class, m_val) CACHE_AND_CHECK(GDMonoUtils::mono_cache.class_##m_ns##_##m_class, m_val)
+#define CACHE_RAW_MONO_CLASS_AND_CHECK(m_class, m_val) CACHE_AND_CHECK(GDMonoUtils::mono_cache.rawclass_##m_class, m_val)
+#define CACHE_FIELD_AND_CHECK(m_class, m_field, m_val) CACHE_AND_CHECK(GDMonoUtils::mono_cache.field_##m_class##_##m_field, m_val)
+#define CACHE_METHOD_THUNK_AND_CHECK(m_class, m_method, m_val) CACHE_AND_CHECK(GDMonoUtils::mono_cache.methodthunk_##m_class##_##m_method, m_val)
 
-void Cache::clear_members() {
+void MonoCache::clear_members() {
 	class_MonoObject = NULL;
 	class_bool = NULL;
 	class_int8_t = NULL;
@@ -102,11 +102,16 @@ void Cache::clear_members() {
 	methodthunk_MarshalUtils_DictionaryToArrays = NULL;
 	methodthunk_MarshalUtils_ArraysToDictionary = NULL;
 	methodthunk_Guid_NewGuid = NULL;
+	methodthunk_GodotObject__AwaitedSignalCallback = NULL;
+	methodthunk_SignalAwaiter_FailureCallback = NULL;
+	methodthunk_GodotTaskScheduler_Activate = NULL;
 
 	rawclass_Dictionary = NULL;
+
+	sync_context_handle = Ref<MonoGCHandle>();
 }
 
-#define GODOT_API_CLASS(m_class) GDMono::get_singleton()->get_api_assembly()->get_class(BINDINGS_NAMESPACE, #m_class);
+#define GODOT_API_CLASS(m_class) (GDMono::get_singleton()->get_api_assembly()->get_class(BINDINGS_NAMESPACE, #m_class))
 
 void update_cache() {
 	CACHE_CLASS_AND_CHECK(MonoObject, GDMono::get_singleton()->get_corlib_assembly()->get_class(mono_get_object_class()));
@@ -160,6 +165,9 @@ void update_cache() {
 	CACHE_METHOD_THUNK_AND_CHECK(MarshalUtils, DictionaryToArrays, (MarshalUtils_DictToArrays)CACHED_CLASS(MarshalUtils)->get_method("DictionaryToArrays", 3)->get_thunk());
 	CACHE_METHOD_THUNK_AND_CHECK(MarshalUtils, ArraysToDictionary, (MarshalUtils_ArraysToDict)CACHED_CLASS(MarshalUtils)->get_method("ArraysToDictionary", 2)->get_thunk());
 	CACHE_METHOD_THUNK_AND_CHECK(Guid, NewGuid, (Guid_NewGuid)GDMono::get_singleton()->get_corlib_assembly()->get_class("System", "Guid")->get_method("NewGuid", 0)->get_thunk());
+	CACHE_METHOD_THUNK_AND_CHECK(GodotObject, _AwaitedSignalCallback, (GodotObject__AwaitedSignalCallback)CACHED_CLASS(GodotObject)->get_method("_AwaitedSignalCallback", 2)->get_thunk());
+	CACHE_METHOD_THUNK_AND_CHECK(SignalAwaiter, FailureCallback, (SignalAwaiter_FailureCallback)GODOT_API_CLASS(SignalAwaiter)->get_method("FailureCallback", 0)->get_thunk());
+	CACHE_METHOD_THUNK_AND_CHECK(GodotTaskScheduler, Activate, (GodotTaskScheduler_Activate)GODOT_API_CLASS(GodotTaskScheduler)->get_method("Activate", 0)->get_thunk());
 
 	{
 		/*
@@ -176,11 +184,15 @@ void update_cache() {
 
 		CACHE_RAW_MONO_CLASS_AND_CHECK(Dictionary, mono_class_from_mono_type(dict_type));
 	}
+
+	MonoObject *sync_context = mono_object_new(SCRIPT_DOMAIN, GODOT_API_CLASS(GodotTaskScheduler)->get_raw());
+	mono_runtime_object_init(sync_context);
+	mono_cache.sync_context_handle = MonoGCHandle::create_strong(sync_context);
 }
 
 void clear_cache() {
-	cache.cleanup();
-	cache.clear_members();
+	mono_cache.cleanup();
+	mono_cache.clear_members();
 }
 
 MonoObject *reference_get_managed_unsafe(Reference *p_ref) {
