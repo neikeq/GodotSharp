@@ -134,9 +134,9 @@ namespace GodotEngine
             }
         }
 
-        public static float lerp(float from, float to, float weigth)
+        public static float lerp(float from, float to, float weight)
         {
-            return from + (to - from) * clamp(weigth, 0f, 1f);
+            return from + (to - from) * clamp(weight, 0f, 1f);
         }
 
         public static float log(float s)
