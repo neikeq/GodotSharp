@@ -25,7 +25,7 @@
 /**********************************************************************************/
 #include "gd_mono_utils.h"
 
-#include "global_config.h"
+#include "project_settings.h"
 #include "os/dir_access.h"
 #include "reference.h"
 
@@ -423,7 +423,7 @@ void expand_wildcard(const String &p_wildcard, List<String> *r_result) {
 		da->change_dir("/");
 		wildcard = wildcard.substr(1, wildcard.length());
 	} else {
-		da->change_dir(GlobalConfig::get_singleton()->globalize_path("res://"));
+		da->change_dir(ProjectSettings::get_singleton()->globalize_path("res://"));
 	}
 
 	_find_wildcard_files(wildcard, da, r_result);

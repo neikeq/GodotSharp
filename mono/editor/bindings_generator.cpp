@@ -27,7 +27,7 @@
 
 #ifdef DEBUG_METHODS_ENABLED
 
-#include "global_config.h"
+#include "project_settings.h"
 #include "io/compression.h"
 #include "os/dir_access.h"
 #include "os/file_access.h"
@@ -934,7 +934,7 @@ Error BindingsGenerator::generate_glue(String p_output_dir) {
 
 			cpp_file.push_back("Object* ");
 			cpp_file.push_back(singleton_icall);
-			cpp_file.push_back("() " OPEN_BLOCK "\treturn GlobalConfig::get_singleton()->get_singleton_object(\"");
+			cpp_file.push_back("() " OPEN_BLOCK "\treturn ProjectSettings::get_singleton()->get_singleton_object(\"");
 			cpp_file.push_back(itype.proxy_name);
 			cpp_file.push_back("\");\n" CLOSE_BLOCK "\n");
 		}
@@ -1040,7 +1040,7 @@ void BindingsGenerator::generate_obj_types() {
 		TypeInterface itype = TypeInterface::create_object_type(type_cname);
 
 		itype.base_name = ClassDB::get_parent_class(type_cname);
-		itype.is_singleton = GlobalConfig::get_singleton()->has_singleton(itype.proxy_name);
+		itype.is_singleton = ProjectSettings::get_singleton()->has_singleton(itype.proxy_name);
 		itype.is_instantiable = ClassDB::can_instance(type_cname) && !itype.is_singleton;
 		itype.is_creatable = itype.is_instantiable && is_creatable_type(itype.name);
 		itype.is_reference = ClassDB::is_parent_class(type_cname, refclass_name);

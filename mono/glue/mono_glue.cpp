@@ -901,7 +901,7 @@ MonoObject* godot_icall_0_91(MethodBind* method, Object* ptr) {
 }
 
 Object* godot_icall_AudioServer_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("AudioServer");
+	return ProjectSettings::get_singleton()->get_singleton_object("AudioServer");
 }
 
 void godot_icall_1_92(MethodBind* method, Object* ptr, MonoArray* arg1) {
@@ -2317,7 +2317,7 @@ MonoObject* godot_icall_1_212(MethodBind* method, Object* ptr, MonoString* arg1)
 }
 
 Object* godot_icall_GlobalConfig_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("GlobalConfig");
+	return ProjectSettings::get_singleton()->get_singleton_object("GlobalConfig");
 }
 
 void godot_icall_2_213(MethodBind* method, Object* ptr, real_t arg1, real_t* arg2) {
@@ -2642,7 +2642,7 @@ int godot_icall_2_240(MethodBind* method, Object* ptr, MonoString* arg1, int arg
 }
 
 Object* godot_icall_IP_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("IP");
+	return ProjectSettings::get_singleton()->get_singleton_object("IP");
 }
 
 void godot_icall_4_241(MethodBind* method, Object* ptr, int arg1, int arg2, bool arg3, int arg4) {
@@ -2771,7 +2771,7 @@ void godot_icall_2_255(MethodBind* method, Object* ptr, Object* arg1, real_t* ar
 }
 
 Object* godot_icall_Input_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("Input");
+	return ProjectSettings::get_singleton()->get_singleton_object("Input");
 }
 
 bool godot_icall_1_256(MethodBind* method, Object* ptr, Object* arg1) {
@@ -2868,7 +2868,7 @@ bool godot_icall_2_260(MethodBind* method, Object* ptr, Object* arg1, MonoString
 }
 
 Object* godot_icall_InputMap_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("InputMap");
+	return ProjectSettings::get_singleton()->get_singleton_object("InputMap");
 }
 
 MonoObject* godot_icall_1_261(MethodBind* method, Object* ptr, bool arg1) {
@@ -3848,7 +3848,7 @@ Object* godot_icall_PathFollow2D_Ctor(MonoObject* obj) {
 }
 
 Object* godot_icall_Performance_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("Performance");
+	return ProjectSettings::get_singleton()->get_singleton_object("Performance");
 }
 
 RID* godot_icall_1_337(MethodBind* method, Object* ptr, int arg1) {
@@ -4141,7 +4141,7 @@ RID* godot_icall_4_373(MethodBind* method, Object* ptr, real_t* arg1, real_t* ar
 }
 
 Object* godot_icall_Physics2DServer_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("Physics2DServer");
+	return ProjectSettings::get_singleton()->get_singleton_object("Physics2DServer");
 }
 
 void godot_icall_1_374(MethodBind* method, Object* ptr, MonoArray* arg1) {
@@ -4334,7 +4334,7 @@ bool godot_icall_3_395(MethodBind* method, Object* ptr, RID* arg1, int arg2, int
 }
 
 Object* godot_icall_PhysicsServer_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("PhysicsServer");
+	return ProjectSettings::get_singleton()->get_singleton_object("PhysicsServer");
 }
 
 Object* godot_icall_PhysicsShapeQueryParameters_Ctor(MonoObject* obj) {
@@ -5444,7 +5444,7 @@ Object* godot_icall_Translation_Ctor(MonoObject* obj) {
 }
 
 Object* godot_icall_TranslationServer_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("TranslationServer");
+	return ProjectSettings::get_singleton()->get_singleton_object("TranslationServer");
 }
 
 MonoObject* godot_icall_1_470(MethodBind* method, Object* ptr, Object* arg1) {
@@ -6118,7 +6118,7 @@ RID* godot_icall_2_505(MethodBind* method, Object* ptr, Object* arg1, int arg2) 
 }
 
 Object* godot_icall_VisualServer_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("VisualServer");
+	return ProjectSettings::get_singleton()->get_singleton_object("VisualServer");
 }
 
 Object* godot_icall_WeakRef_Ctor(MonoObject* obj) {
@@ -6228,7 +6228,7 @@ MonoArray* godot_icall_2_512(MethodBind* method, Object* ptr, MonoString* arg1, 
 }
 
 Object* godot_icall__ClassDB_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("ClassDB");
+	return ProjectSettings::get_singleton()->get_singleton_object("ClassDB");
 }
 
 int godot_icall_2_513(MethodBind* method, Object* ptr, bool arg1, bool arg2) {
@@ -6263,7 +6263,7 @@ MonoObject* godot_icall_0_515(MethodBind* method, Object* ptr) {
 }
 
 Object* godot_icall__Engine_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("Engine");
+	return ProjectSettings::get_singleton()->get_singleton_object("Engine");
 }
 
 int godot_icall_3_516(MethodBind* method, Object* ptr, MonoString* arg1, int arg2, MonoArray* arg3) {
@@ -6477,11 +6477,11 @@ MonoObject* godot_icall_1_535(MethodBind* method, Object* ptr, MonoArray* arg1) 
 }
 
 Object* godot_icall__Geometry_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("Geometry");
+	return ProjectSettings::get_singleton()->get_singleton_object("Geometry");
 }
 
 Object* godot_icall__GodotSharp_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("GodotSharp");
+	return ProjectSettings::get_singleton()->get_singleton_object("GodotSharp");
 }
 
 MonoString* godot_icall_1_536(MethodBind* method, Object* ptr, MonoArray* arg1) {
@@ -6503,7 +6503,7 @@ MonoArray* godot_icall_1_537(MethodBind* method, Object* ptr, MonoString* arg1) 
 }
 
 Object* godot_icall__Marshalls_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("Marshalls");
+	return ProjectSettings::get_singleton()->get_singleton_object("Marshalls");
 }
 
 Object* godot_icall_Mutex_Ctor(MonoObject* obj) {
@@ -6544,7 +6544,7 @@ int godot_icall_4_540(MethodBind* method, Object* ptr, MonoString* arg1, real_t 
 }
 
 Object* godot_icall__OS_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("OS");
+	return ProjectSettings::get_singleton()->get_singleton_object("OS");
 }
 
 MonoObject* godot_icall_2_541(MethodBind* method, Object* ptr, MonoString* arg1, MonoString* arg2) {
@@ -6568,7 +6568,7 @@ MonoObject* godot_icall_3_542(MethodBind* method, Object* ptr, MonoString* arg1,
 }
 
 Object* godot_icall__ResourceLoader_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("ResourceLoader");
+	return ProjectSettings::get_singleton()->get_singleton_object("ResourceLoader");
 }
 
 int godot_icall_3_543(MethodBind* method, Object* ptr, MonoString* arg1, Object* arg2, int arg3) {
@@ -6589,7 +6589,7 @@ MonoArray* godot_icall_1_544(MethodBind* method, Object* ptr, Object* arg1) {
 }
 
 Object* godot_icall__ResourceSaver_get_singleton() {
-	return GlobalConfig::get_singleton()->get_singleton_object("ResourceSaver");
+	return ProjectSettings::get_singleton()->get_singleton_object("ResourceSaver");
 }
 
 Object* godot_icall_Semaphore_Ctor(MonoObject* obj) {
