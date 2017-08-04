@@ -28,7 +28,7 @@
 
 #include <mono/metadata/threads.h>
 
-#include "global_config.h"
+#include "project_settings.h"
 #include "os/file_access.h"
 #include "os/os.h"
 #include "os/thread.h"
@@ -516,9 +516,9 @@ Error CSharpLanguage::open_in_external_editor(const Ref<Script> &p_script, int p
 	switch (editor) {
 		case EDITOR_CODE: {
 			List<String> args;
-			args.push_back(GlobalConfig::get_singleton()->get_resource_path());
+			args.push_back(ProjectSettings::get_singleton()->get_resource_path());
 
-			String script_path = GlobalConfig::get_singleton()->globalize_path(p_script->get_path());
+			String script_path = ProjectSettings::get_singleton()->globalize_path(p_script->get_path());
 
 			if (p_line >= 0) {
 				args.push_back("-g");

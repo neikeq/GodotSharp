@@ -44,7 +44,7 @@ void register_mono_types() {
 
 	_godotsharp = memnew(_GodotSharp);
 
-	GlobalConfig::get_singleton()->add_singleton(GlobalConfig::Singleton("GodotSharp", _GodotSharp::get_singleton()));
+	ProjectSettings::get_singleton()->add_singleton(ProjectSettings::Singleton("GodotSharp", _GodotSharp::get_singleton()));
 
 	script_language_cs = memnew(CSharpLanguage);
 	ScriptServer::register_language(script_language_cs);

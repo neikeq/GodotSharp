@@ -29,7 +29,7 @@
 #include <mono/metadata/mono-debug.h>
 #include <mono/utils/mono-logger.h>
 
-#include "global_config.h"
+#include "project_settings.h"
 #include "os/file_access.h"
 #include "os/os.h"
 #include "os/thread.h"
@@ -97,7 +97,7 @@ bool GDMono::_load_script_assemblies() {
 
 	String assemblies_path = get_assemblies_path();
 
-	String project_assembly_name = GlobalConfig::get_singleton()->get("application/name");
+	String project_assembly_name = ProjectSettings::get_singleton()->get("application/name");
 	String project_assembly_path = path_join(assemblies_path, project_assembly_name + ".dll");
 
 	if (FileAccess::exists(project_assembly_path)) {

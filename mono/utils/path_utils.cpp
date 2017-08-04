@@ -25,7 +25,7 @@
 /**********************************************************************************/
 #include "path_utils.h"
 
-#include "global_config.h"
+#include "project_settings.h"
 #include "os/dir_access.h"
 #include "os/file_access.h"
 #include "os/os.h"

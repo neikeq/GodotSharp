@@ -25,7 +25,7 @@
 /**********************************************************************************/
 #include "csharp_project.h"
 
-#include "global_config.h"
+#include "project_settings.h"
 #include "os/dir_access.h"
 #include "os/file_access.h"
 
@@ -215,7 +215,7 @@ void CSharpProject::set_target_framework(TargetFramework p_target_framework) {
 
 bool CSharpProject::has_file(const String &p_path) {
 	String path = p_path.substr(6, p_path.length()); // remove res://
-	String abs_path = GlobalConfig::get_singleton()->globalize_path(p_path);
+	String abs_path = ProjectSettings::get_singleton()->globalize_path(p_path);
 
 	XMLElement *proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND_V(!proj, false);
@@ -278,7 +278,7 @@ void CSharpProject::add_file(const String &p_path) {
 
 void CSharpProject::remove_file(const String &p_path) {
 	String path = p_path.substr(6, p_path.length()); // remove res://
-	String abs_path = GlobalConfig::get_singleton()->globalize_path(p_path);
+	String abs_path = ProjectSettings::get_singleton()->globalize_path(p_path);
 
 	XMLElement *proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND(!proj);
@@ -310,7 +310,7 @@ void CSharpProject::remove_file(const String &p_path) {
 }
 
 void CSharpProject::get_files(const String &p_include_pattern, List<String> *r_paths) {
-	String abs_incl_patter = GlobalConfig::get_singleton()->globalize_path(p_include_pattern);
+	String abs_incl_patter = ProjectSettings::get_singleton()->globalize_path(p_include_pattern);
 
 	XMLElement *proj = data->doc->FirstChildElement("Project");
 	ERR_FAIL_COND(!proj);
