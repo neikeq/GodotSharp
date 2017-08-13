@@ -436,7 +436,7 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 
 					obj->get_script_instance()->get_property_state(state);
 					CAST_CSHARP_INSTANCE(obj->get_script_instance())->gchandle->release();
-					map[obj->get_instance_ID()] = state;
+					map[obj->get_instance_id()] = state;
 					obj->set_script(RefPtr());
 				}
 			}
@@ -450,7 +450,7 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 				List<Pair<StringName, Variant> > state;
 				if (obj->get_script_instance()) {
 					obj->get_script_instance()->get_property_state(state);
-					map[obj->get_instance_ID()] = state;
+					map[obj->get_instance_id()] = state;
 					obj->set_script(RefPtr());
 				}
 			}
@@ -486,8 +486,8 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 			obj->set_script(scr.get_ref_ptr());
 			if (!obj->get_script_instance()) {
 				//failed, save reload state for next time if not saved
-				if (!scr->pending_reload_state.has(obj->get_instance_ID())) {
-					scr->pending_reload_state[obj->get_instance_ID()] = F->get();
+				if (!scr->pending_reload_state.has(obj->get_instance_id())) {
+					scr->pending_reload_state[obj->get_instance_id()] = F->get();
 				}
 				continue;
 			}
@@ -496,7 +496,7 @@ void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft
 				obj->get_script_instance()->set(G->get().first, G->get().second);
 			}
 
-			scr->pending_reload_state.erase(obj->get_instance_ID()); //as it reloaded, remove pending state
+			scr->pending_reload_state.erase(obj->get_instance_id()); //as it reloaded, remove pending state
 		}
 
 		//if instance states were saved, set them!
@@ -575,7 +575,7 @@ void CSharpLanguage::thread_exit() {
 bool CSharpLanguage::debug_break_parse(const String &p_file, int p_line, const String &p_error) {
 
 	// Break because of parse error
-	if (ScriptDebugger::get_singleton() && Thread::get_caller_ID() == Thread::get_main_ID()) {
+	if (ScriptDebugger::get_singleton() && Thread::get_caller_id() == Thread::get_main_id()) {
 		// TODO
 		//_debug_parse_err_line = p_line;
 		//_debug_parse_err_file = p_file;
@@ -589,7 +589,7 @@ bool CSharpLanguage::debug_break_parse(const String &p_file, int p_line, const S
 
 bool CSharpLanguage::debug_break(const String &p_error, bool p_allow_continue) {
 
-	if (ScriptDebugger::get_singleton() && Thread::get_caller_ID() == Thread::get_main_ID()) {
+	if (ScriptDebugger::get_singleton() && Thread::get_caller_id() == Thread::get_main_id()) {
 		// TODO
 		//_debug_parse_err_line = -1;
 		//_debug_parse_err_file = "";
