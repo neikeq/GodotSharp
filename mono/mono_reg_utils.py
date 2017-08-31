@@ -3,7 +3,7 @@ import os
 if os.name == 'nt':
     import _winreg as winreg
 
-    
+
 def _reg_open_key(key, subkey):
     try:
         return winreg.OpenKey(key, subkey)
@@ -14,7 +14,7 @@ def _reg_open_key(key, subkey):
         else:
             bitness_sam = winreg.KEY_WOW64_32KEY
         return winreg.OpenKey(key, subkey, 0, winreg.KEY_READ | bitness_sam)
-        
+
 
 def _find_mono_in_reg(subkey):
     try:

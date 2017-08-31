@@ -14,7 +14,7 @@ def find_file_in_dir(dir, files, prefix, extension):
     for file in files:
         if os.path.isfile(os.path.join(dir, prefix + file + extension)):
             return file
-    
+
     return None
 
 
@@ -56,24 +56,24 @@ def configure(env):
             env.Append(LINKFLAGS = mono_lib_name + Environment()['LIBSUFFIX'])
         else:
             env.Append(LIBS = mono_lib_name )
-        
+
         mono_bin_path = os.path.join(mono_root, 'bin')
-        
+
         mono_dll_names = [ 'mono-2.0-sgen', 'monosgen-2.0' ]
         mono_dll_name = find_file_in_dir(
             mono_bin_path, mono_dll_names,
             '', '.dll'
         )
-        
+
         mono_dll_src = os.path.join(mono_bin_path, mono_dll_name + '.dll')
         mono_dll_dst = os.path.join('bin', mono_dll_name + '.dll')
         copy_mono_dll = True
-        
+
         if not os.path.isdir('bin'):
             os.mkdir('bin')
         elif os.path.exists(mono_dll_dst):
             copy_mono_dll = False
-        
+
         if copy_mono_dll:
             copyfile(mono_dll_src, mono_dll_dst)
     else:

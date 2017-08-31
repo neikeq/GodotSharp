@@ -78,9 +78,9 @@ def mono_build_solution(source, target, env):
         msbuild_path = os.path.join(msbuild_tools_path, 'MSBuild.exe')
     else:
         msbuild_path = 'msbuild'
-        
+
     output_path = os.path.abspath(os.path.join(str(target[0]), os.pardir))
-    
+
     msbuild_args = [
         msbuild_path,
         os.path.abspath(str(source[0])),
@@ -89,12 +89,13 @@ def mono_build_solution(source, target, env):
         '/p:DebugType=none',
         '/p:OutputPath=' + output_path
     ]
-    
+
     msbuild_env = os.environ.copy()
-    
+
     # Needed when running from Developer Command Prompt for VS
-    del msbuild_env['PLATFORM']
-    
+    if 'PLATFORM' in msbuild_env:
+        del msbuild_env['PLATFORM']
+
     if subprocess.call(msbuild_args, env = msbuild_env) is not 0:
         raise RuntimeError('GodotSharpTools build failed')
 
