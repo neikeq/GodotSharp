@@ -122,6 +122,18 @@ void MonoBottomPanel::_errors_toggled(bool p_pressed) {
 	build_tab->_update_issues_list();
 }
 
+void MonoBottomPanel::_notification(int p_what) {
+
+	switch (p_what) {
+
+		case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {
+			tabs->add_style_override("panel", editor->get_gui_base()->get_stylebox("DebuggerPanel", "EditorStyles"));
+			tabs->add_style_override("tab_fg", editor->get_gui_base()->get_stylebox("DebuggerTabFG", "EditorStyles"));
+			tabs->add_style_override("tab_bg", editor->get_gui_base()->get_stylebox("DebuggerTabBG", "EditorStyles"));
+		} break;
+	}
+}
+
 void MonoBottomPanel::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("_warnings_toggled", "pressed"), &MonoBottomPanel::_warnings_toggled);
@@ -144,6 +156,7 @@ MonoBottomPanel::MonoBottomPanel(EditorNode *p_editor) {
 	tabs->add_style_override("panel", editor->get_gui_base()->get_stylebox("DebuggerPanel", "EditorStyles"));
 	tabs->add_style_override("tab_fg", editor->get_gui_base()->get_stylebox("DebuggerTabFG", "EditorStyles"));
 	tabs->add_style_override("tab_bg", editor->get_gui_base()->get_stylebox("DebuggerTabBG", "EditorStyles"));
+	tabs->set_custom_minimum_size(Size2(0, 228) * EDSCALE);
 	tabs->set_v_size_flags(SIZE_EXPAND_FILL);
 	add_child(tabs);
 
