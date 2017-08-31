@@ -32,6 +32,8 @@
 #include "class_db.h"
 #include "io/marshalls.h"
 #include "object.h"
+#include "os/os.h"
+#include "project_settings.h"
 #include "reference.h"
 #include "variant_parser.h"
 
