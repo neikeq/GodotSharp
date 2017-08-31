@@ -54,9 +54,41 @@ class BindingsGenerator {
 
 	struct MethodInterface {
 		String name;
+
+		/**
+		 * Name of the C# method
+		 */
 		String proxy_name;
+
+		/**
+		 * [TypeInterface::name] of the return type
+		 */
 		String return_type;
-		bool has_vararg;
+
+		/**
+		 * Determines if the method has a variable number of arguments (VarArg)
+		 */
+		bool is_vararg;
+
+		/**
+		 * Virtual methods ("virtual" as defined by the Godot API) are methods that by default do nothing,
+		 * but can be overridden by the user to add custom functionality.
+		 * e.g.: _ready, _process, etc.
+		 */
+		bool is_virtual;
+
+		/**
+		 * Determines if the call should fallback to Godot's object.Call(string, params) in C#.
+		 */
+		bool requires_object_call;
+
+		/**
+		 * Determines if the method visibility is `internal` (visible only to files in the same assembly).
+		 * Currently, we only use this for methods that are not meant to be exposed,
+		 * but are required by properties as getters or setters.
+		 * Methods that are not meant to be exposed are those that begin with underscore and are not virtual.
+		 */
+		bool is_internal;
 
 		List<ArgumentInterface> arguments;
 
@@ -68,86 +100,176 @@ class BindingsGenerator {
 
 		MethodInterface() {
 			return_type = "void";
-			has_vararg = false;
+			is_vararg = false;
+			is_virtual = false;
+			requires_object_call = false;
+			is_internal = false;
 			method_doc = NULL;
 		}
 	};
 
 	struct TypeInterface {
+		/**
+		 * Identifier name for this type.
+		 * Also used to format [c_out].
+		 */
 		String name;
-		String proxy_name;
+
+		/**
+		 * Identifier name of the base class.
+		 */
 		String base_name;
 
-		bool is_object_type;
+		/**
+		 * Name of the C# class
+		 */
+		String proxy_name;
 
+		ClassDB::APIType api_type;
+
+		bool is_object_type;
 		bool is_singleton;
-		bool is_instantiable;
-		bool is_creatable;
 		bool is_reference;
+
+		/**
+		 * Used only by Object-derived types.
+		 * Determines if this type is not virtual (incomplete).
+		 * e.g.: CanvasItem cannot be instantiated.
+		 */
+		bool is_instantiable;
+
+		/**
+		 * Used only by Object-derived types.
+		 * Determines if the C# class owns the native handle and must free it somehow when disposed.
+		 * e.g.: Reference types must notify when the C# instance is disposed, for proper refcounting.
+		 */
 		bool memory_own;
 
+		/**
+		 * Determines if the file must have a using directive for System.Collections.Generic
+		 * e.g.: When the generated class makes use of Dictionary
+		 */
 		bool requires_collections;
 
-		// C++
+		// !! The comments of the following fields make reference to other fields via square brackets, e.g.: [field_name]
+		// !! When renaming those fields, make sure to rename their references in the comments
 
-		/// Must be any number of statements
-		/// Use it to matipulate the incoming parameter before passing it to the ptrcall
-		/// If it results in a new variable, make sure to specify it with ptrcall_arg_pass
-		/// Formatted to include the incoming parameter type as %0 and name as %1
-		String in;
-		/// Must be an expression
-		/// Describes how to add the incoming parameter to the array of params that will be passed to ptrcall
-		/// Formatted to include the incoming parameter name with %s or %0
-		String call_arg_in;
-		/// Must be any number of statements, including the return statement
-		/// Describes how the resulting value will be returned from the internal call function
-		/// Formatted to include the return variable type as %0 and name as %1
-		String out;
+		// --- C INTERFACE ---
 
-		/// Actual expected type as in Variant copy constructors
-		/// Object types: <name>*
-		/// Non-Object types: <name>
-		String type;
-		/// Incoming parameter type
-		String type_in;
-		/// Return type parameter
-		String type_out;
+		static const char *DEFAULT_VARARG_C_IN;
 
-		// C#
+		/**
+		 * One or more statements that manipulate the parameter before being passed as argument of a ptrcall.
+		 * If the statement adds a local that must be passed as the argument instead of the parameter,
+		 * the name of that local must be specified with [c_arg_in].
+		 * For variadic methods, this field is required and, if empty, [DEFAULT_VARARG_C_IN] is used instead.
+		 * Formatting elements:
+		 * %0: [c_type] of the parameter
+		 * %1: name of the parameter
+		 */
+		String c_in;
 
-		/// Must be an expression
-		/// Describes how to pass the incoming parameter to the internal call
-		/// Formatted to include the incoming parameter name with %s or %0
+		/**
+		 * Determines the name of the variable that will be passed as argument to a ptrcall.
+		 * By default the value equals the name of the parameter,
+		 * this varies for types that require special manipulation via [c_in].
+		 * Formatting elements:
+		 * %0 or %s: name of the parameter
+		 */
+		String c_arg_in;
+
+		/**
+		 * One or more statements that determine how a variable of this type is returned from a function.
+		 * It must contain the return statement(s).
+		 * Formatting elements:
+		 * %0: [c_type_out] of the return type
+		 * %1: name of the variable to be returned
+		 */
+		String c_out;
+
+		/**
+		 * The actual expected type, as seen (in most cases) in Variant copy constructors
+		 * Used for the type of the return variable and to format [c_in].
+		 * The value must be the following depending of the type:
+		 * Object-derived types: Object*
+		 * Other types: [name]
+		 * -- Exceptions --
+		 * VarArg (fictitious type to represent variable arguments): Array
+		 * float/double (depending of REAL_T_IS_DOUBLE): real_t
+		 * Reference types override this for the type of the return variable: Ref<Reference>
+		 */
+		String c_type;
+
+		/**
+		 * Determines the type used for parameters in function signatures.
+		 */
+		String c_type_in;
+
+		/**
+		 * Determines the return type used for function signatures.
+		 * Also used to construct a default value to return in case of errors.
+		 */
+		String c_type_out;
+
+		// --- C# INTERFACE ---
+
+		/**
+		 * An expression that overrides the way the parameter is passed to the internal call.
+		 * If empty, the parameter is passed as is.
+		 * Formatting elements:
+		 * %0 or %s: name of the parameter
+		 */
 		String cs_in;
-		/// Must be any number of statements, including the return statement
-		/// Describes how the resulting value will be returned from the method
-		/// Formatted to include the return variable name with %s or %0
+
+		/**
+		 * One or more statements that determine how a variable of this type is returned from a method.
+		 * It must contain the return statement(s).
+		 * Formatting elements:
+		 * %0 or %s: name of the variable to be returned
+		 */
 		String cs_out;
 
-		/// Method parameter and return type
+		/**
+		 * Type used for method signatures, both for parameters and the return type.
+		 * Same as [proxy_name] except for variable arguments (VarArg).
+		 */
 		String cs_type;
-		/// Internal call parameter type
+
+		/**
+		 * Type used for parameters of internal call methods.
+		 */
 		String im_type_in;
-		/// Internal call return type
+
+		/**
+		 * Type used for the return type of internal call methods.
+		 * If [cs_out] is not empty and the method return type is not void,
+		 * it is also used for the type of the return variable.
+		 */
 		String im_type_out;
 
 		const DocData::ClassDoc *class_doc;
 
 		List<MethodInterface> methods;
 
-		void add_method(const MethodInterface &method) {
-			methods.push_back(method);
+		const MethodInterface *find_method_by_name(const String &p_name) const {
+
+			for (const List<MethodInterface>::Element *E = methods.front(); E; E = E->next()) {
+				if (E->get().name == p_name)
+					return &E->get();
+			}
+
+			return NULL;
 		}
 
-		static TypeInterface create_atomic_type(const String &p_name) {
+		static TypeInterface create_value_type(const String &p_name) {
 			TypeInterface itype;
 
 			itype.name = p_name;
 			itype.proxy_name = p_name;
 
-			itype.type = itype.name;
-			itype.type_in = "void*";
-			itype.type_out = "MonoObject*";
+			itype.c_type = itype.name;
+			itype.c_type_in = "void*";
+			itype.c_type_out = "MonoObject*";
 			itype.cs_type = itype.proxy_name;
 			itype.im_type_in = "ref " + itype.proxy_name;
 			itype.im_type_out = itype.proxy_name;
@@ -156,11 +278,12 @@ class BindingsGenerator {
 			return itype;
 		}
 
-		static TypeInterface create_object_type(const String &p_name) {
+		static TypeInterface create_object_type(const String &p_name, ClassDB::APIType p_api_type) {
 			TypeInterface itype;
 
 			itype.name = p_name;
 			itype.proxy_name = p_name.begins_with("_") ? p_name.substr(1, p_name.length()) : p_name;
+			itype.api_type = p_api_type;
 			itype.is_object_type = true;
 			itype.class_doc = &EditorHelp::get_doc_data()->class_list[itype.proxy_name];
 
@@ -171,25 +294,27 @@ class BindingsGenerator {
 			r_itype.name = p_name;
 			r_itype.proxy_name = p_name;
 
-			r_itype.type = r_itype.name;
-			r_itype.type_in = "MonoObject*";
-			r_itype.type_out = "MonoObject*";
+			r_itype.c_type = r_itype.name;
+			r_itype.c_type_in = "MonoObject*";
+			r_itype.c_type_out = "MonoObject*";
 			r_itype.cs_type = r_itype.proxy_name;
 			r_itype.im_type_in = r_itype.proxy_name;
 			r_itype.im_type_out = r_itype.proxy_name;
 		}
 
 		TypeInterface() {
-			is_object_type = false;
 
+			api_type = ClassDB::API_NONE;
+
+			is_object_type = false;
 			is_singleton = false;
-			is_instantiable = false;
-			is_creatable = false;
 			is_reference = false;
+			is_instantiable = false;
+
 			memory_own = false;
 			requires_collections = false;
 
-			call_arg_in = "%s";
+			c_arg_in = "%s";
 
 			class_doc = NULL;
 		}
@@ -197,17 +322,27 @@ class BindingsGenerator {
 
 	struct InternalCall {
 		String name;
-		String im_sig; // Signature for the method declaration
-		String return_type; // Return type for the method declaration and used together with unique_siq
-		String unique_sig; // Unique signature to avoid duplicates
+		String im_type_out; // Return type for the C# method declaration. Also used as companion of [unique_siq]
+		String im_sig; // Signature for the C# method declaration
+		String unique_sig; // Unique signature to avoid duplicates in containers
+		bool editor_only;
 
 		InternalCall() {}
 
-		InternalCall(const String &p_name, const String &p_ret_type, const String &p_im_sig = String(), const String &p_unique_sig = String()) {
+		InternalCall(const String &p_name, const String &p_im_type_out, const String &p_im_sig = String(), const String &p_unique_sig = String()) {
 			name = p_name;
+			im_type_out = p_im_type_out;
 			im_sig = p_im_sig;
-			return_type = p_ret_type;
 			unique_sig = p_unique_sig;
+			editor_only = false;
+		}
+
+		InternalCall(ClassDB::APIType api_type, const String &p_name, const String &p_im_type_out, const String &p_im_sig = String(), const String &p_unique_sig = String()) {
+			name = p_name;
+			im_type_out = p_im_type_out;
+			im_sig = p_im_sig;
+			unique_sig = p_unique_sig;
+			editor_only = api_type == ClassDB::API_EDITOR;
 		}
 
 		inline bool operator==(const InternalCall &p_a) const {
@@ -215,7 +350,7 @@ class BindingsGenerator {
 		}
 	};
 
-	bool editor_api;
+	bool stdout_verbose;
 
 	Map<String, TypeInterface> placeholder_types;
 	Map<String, TypeInterface> builtin_types;
@@ -224,7 +359,20 @@ class BindingsGenerator {
 	Map<String, String> extra_members;
 
 	List<InternalCall> method_icalls;
-	List<InternalCall> custom_icalls;
+	Map<const MethodInterface *, const InternalCall *> method_icalls_map;
+
+	List<InternalCall> core_custom_icalls;
+	List<InternalCall> editor_custom_icalls;
+
+	const List<InternalCall>::Element *find_icall_by_name(const String &p_name, const List<InternalCall> &p_list) {
+
+		const List<InternalCall>::Element *it = p_list.front();
+		while (it) {
+			if (it->get().name == p_name) return it;
+			it = it->next();
+		}
+		return NULL;
+	}
 
 	inline String get_unique_sig(const TypeInterface &p_type) {
 		if (p_type.is_reference)
@@ -235,25 +383,38 @@ class BindingsGenerator {
 		return p_type.name;
 	}
 
-	void generate_header_icalls();
+	void _generate_header_icalls();
+	void _generate_method_icalls(const TypeInterface &p_itype);
 
-	TypeInterface get_type_by_name(const String &name);
+	const TypeInterface *_get_type_by_name_or_null(const String &p_name);
+	const TypeInterface *_get_type_by_name_or_placeholder(const String &p_name);
 
-	void default_argument_from_variant(const Variant &p_var, ArgumentInterface &r_iarg);
-	void populate_builtin_type(TypeInterface &r_type, Variant::Type vtype);
+	void _default_argument_from_variant(const Variant &p_var, ArgumentInterface &r_iarg);
+	void _populate_builtin_type(TypeInterface &r_type, Variant::Type vtype);
 
-	void generate_obj_types();
-	void generate_builtin_types();
+	void _populate_object_type_interfaces();
+	void _populate_builtin_type_interfaces();
 
-	Error generate_cs_type(const TypeInterface &itype, const String &p_output_file);
+	Error _generate_cs_type(const TypeInterface &itype, const String &p_output_file);
 
-	Error save_file(const String &path, const List<String> &content);
+	Error _save_file(const String &path, const List<String> &content);
+
+	BindingsGenerator();
+
+	BindingsGenerator(const BindingsGenerator &);
+	BindingsGenerator &operator=(const BindingsGenerator &);
 
 public:
-	Error generate_cs_project(String p_output_dir);
-	Error generate_glue(String p_output_dir);
+	Error generate_cs_core_project(const String &p_output_dir, bool p_stdout_verbose = true);
+	Error generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path);
+	Error generate_glue(const String &p_output_dir);
 
-	BindingsGenerator(bool p_editor_api = true);
+	static BindingsGenerator &get_singleton() {
+		static BindingsGenerator singleton;
+		return singleton;
+	}
+
+	static void handle_cmdline_args(const List<String> &p_cmdline_args);
 };
 
 #endif

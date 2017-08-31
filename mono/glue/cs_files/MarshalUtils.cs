@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GodotEngine
+namespace Godot
 {
     internal static class MarshalUtils
     {
-        internal static Dictionary<object, object> ArraysToDictionary(object[] keys, object[] values)
+        private static Dictionary<object, object> ArraysToDictionary(object[] keys, object[] values)
         {
             Dictionary<object, object> ret = new Dictionary<object, object>();
 
@@ -17,7 +17,7 @@ namespace GodotEngine
             return ret;
         }
 
-        internal static void DictionaryToArrays(Dictionary<object, object> from, out object[] keysTo, out object[] valuesTo)
+        private static void DictionaryToArrays(Dictionary<object, object> from, out object[] keysTo, out object[] valuesTo)
         {
             Dictionary<object, object>.KeyCollection keys = from.Keys;
             keysTo = new object[keys.Count];
@@ -28,7 +28,7 @@ namespace GodotEngine
             values.CopyTo(valuesTo, 0);
         }
 
-        internal static Type GetDictionaryType()
+        private static Type GetDictionaryType()
         {
             return typeof(Dictionary<object, object>);
         }

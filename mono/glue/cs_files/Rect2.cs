@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace GodotEngine
+namespace Godot
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct Rect2 : IEquatable<Rect2>

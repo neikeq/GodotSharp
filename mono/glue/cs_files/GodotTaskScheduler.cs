@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GodotEngine
+namespace Godot
 {
 	public class GodotTaskScheduler : TaskScheduler
 	{
-		public GodotSynchronizationContext Context { get; }
+		private GodotSynchronizationContext Context { get; set; }
 		private readonly LinkedList<Task> _tasks = new LinkedList<Task>();
 
 		public GodotTaskScheduler()

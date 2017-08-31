@@ -1,4 +1,4 @@
-namespace GodotEngine
+namespace Godot
 {
     public interface IAwaitable
     {

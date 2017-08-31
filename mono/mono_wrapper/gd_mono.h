@@ -28,12 +28,14 @@
 
 #include "../godotsharp_defs.h"
 #include "gd_mono_assembly.h"
+#include "gd_mono_log.h"
 
-#define SCRIPT_DOMAIN GDMono::get_singleton()->get_scripts_domain()
-
-#ifdef TOOLS_ENABLED
-#define EDITOR_TOOLS_DOMAIN GDMono::get_singleton()->get_editor_tools_domain()
+#ifdef WINDOWS_ENABLED
+#include "../utils/mono_reg_utils.h"
 #endif
+
+#define SCRIPTS_DOMAIN GDMono::get_singleton()->get_scripts_domain()
+#define TOOLS_DOMAIN GDMono::get_singleton()->get_tools_domain()
 
 class GDMono {
 
@@ -42,28 +44,63 @@ class GDMono {
 
 	MonoDomain *root_domain;
 	MonoDomain *scripts_domain;
-
-#ifdef TOOLS_ENABLED
-	MonoDomain *editor_tools_domain;
-#endif
+	MonoDomain *tools_domain;
 
 	GDMonoAssembly *corlib_assembly;
 	GDMonoAssembly *api_assembly;
 	GDMonoAssembly *project_assembly;
+#ifdef TOOLS_ENABLED
+	GDMonoAssembly *editor_api_assembly;
+	GDMonoAssembly *editor_tools_assembly;
+#endif
 
 	HashMap<String, GDMonoAssembly *> assemblies;
 
-	bool _load_script_assemblies();
-	void _unload_script_assemblies();
+	bool _load_corlib_assembly();
+	bool _load_core_api_assembly();
+#ifdef TOOLS_ENABLED
+	bool _load_editor_api_assembly();
+	bool _load_editor_tools_assembly();
+#endif
+	bool _load_project_assembly();
+	void _unload_project_assembly();
+
+	bool _load_all_script_assemblies();
+
 	void _register_internal_calls();
 
-	Error _unload_scripts_domain();
 	Error _load_scripts_domain();
+	Error _unload_scripts_domain();
+
+	Error _load_tools_domain();
+
+#ifdef DEBUG_METHODS_ENABLED
+	uint64_t api_core_hash;
+#ifdef TOOLS_ENABLED
+	uint64_t api_editor_hash;
+#endif
+	void _initialize_and_check_api_hashes();
+#endif
+
+	bool _load_assembly(const String &p_name, GDMonoAssembly **r_assembly);
+
+	GDMonoLog *gdmono_log;
+
+#if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
+	MonoRegInfo mono_reg_info;
+#endif
 
 protected:
 	static GDMono *singleton;
 
 public:
+#ifdef DEBUG_METHODS_ENABLED
+	uint64_t get_api_core_hash() { return api_core_hash; }
+#ifdef TOOLS_ENABLED
+	uint64_t get_api_editor_hash() { return api_editor_hash; }
+#endif
+#endif
+
 	enum MemberVisibility {
 		PRIVATE,
 		PROTECTED_AND_INTERNAL, // FAM_AND_ASSEM
@@ -74,18 +111,25 @@ public:
 
 	static GDMono *get_singleton() { return singleton; }
 
+	void add_assembly(const String &p_name, GDMonoAssembly *p_assembly);
+
 	_FORCE_INLINE_ bool is_runtime_initialized() const { return runtime_initialized; }
 	_FORCE_INLINE_ bool is_unloading_script_domain() const { return unloading_script_domain; }
 
 	_FORCE_INLINE_ MonoDomain *get_scripts_domain() { return scripts_domain; }
-
-#ifdef TOOLS_ENABLED
-	_FORCE_INLINE_ MonoDomain *get_editor_tools_domain() { return editor_tools_domain; }
-#endif
+	_FORCE_INLINE_ MonoDomain *get_tools_domain() { return tools_domain; }
 
 	_FORCE_INLINE_ GDMonoAssembly *get_corlib_assembly() const { return corlib_assembly; }
 	_FORCE_INLINE_ GDMonoAssembly *get_api_assembly() const { return api_assembly; }
 	_FORCE_INLINE_ GDMonoAssembly *get_project_assembly() const { return project_assembly; }
+#ifdef TOOLS_ENABLED
+	_FORCE_INLINE_ GDMonoAssembly *get_editor_api_assembly() const { return editor_api_assembly; }
+	_FORCE_INLINE_ GDMonoAssembly *get_editor_tools_assembly() const { return editor_tools_assembly; }
+#endif
+
+#if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
+	const MonoRegInfo &get_mono_loc_info() { return mono_reg_info; }
+#endif
 
 	GDMonoClass *get_class(MonoClass *p_class);
 
@@ -100,7 +144,10 @@ public:
 class _GodotSharp : public Object {
 	GDCLASS(_GodotSharp, Object)
 
+	friend class GDMono;
+
 	void _dispose_object(Object *p_object);
+
 	void _dispose_callback();
 
 	List<Object *> obj_delete_queue;

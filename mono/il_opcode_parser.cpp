@@ -1,3 +1,29 @@
+/**********************************************************************************/
+/* il_opcode_parser.cpp                                                           */
+/**********************************************************************************/
+/* The MIT License (MIT)                                                          */
+/*                                                                                */
+/* Copyright (c) 2016 Ignacio Etcheverry                                          */
+/*                                                                                */
+/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
+/* of this software and associated documentation files (the "Software"), to deal  */
+/* in the Software without restriction, including without limitation the rights   */
+/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
+/* copies of the Software, and to permit persons to whom the Software is          */
+/* furnished to do so, subject to the following conditions:                       */
+/*                                                                                */
+/* The above copyright notice and this permission notice shall be included in all */
+/* copies or substantial portions of the Software.                                */
+/*                                                                                */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
+/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
+/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
+/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
+/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
+/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
+/* SOFTWARE.                                                                      */
+/**********************************************************************************/
+#if 0
 #include "il_opcode_parser.h"
 
 #include <mono/metadata/opcodes.h>
@@ -228,7 +254,6 @@ void ILOpCodeParser::_parse_block(const unsigned char *p_il_code, uint32_t p_cod
 					MonoMethodSignature *sig = mono_method_signature(method);
 					char *desc = mono_signature_get_desc(sig, false);
 					WARN_PRINTS(String() + "newobj Method signature: " + desc);
-					mono_metadata_free_method_signature(sig);
 
 				} else if (i == MONO_CEE_CALL) {
 
@@ -360,3 +385,5 @@ void ILOpCodeParser::parse() {
 ILOpCodeParser::ILOpCodeParser(GDMonoClass *p_target_class) {
 	target_class = p_target_class;
 }
+
+#endif

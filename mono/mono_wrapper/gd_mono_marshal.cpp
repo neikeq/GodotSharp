@@ -110,7 +110,8 @@ Variant::Type managed_to_variant_type(const ManagedType &p_type) {
 				return Variant::PLANE;
 		} break;
 
-		case MONO_TYPE_ARRAY: {
+		case MONO_TYPE_ARRAY:
+		case MONO_TYPE_SZARRAY: {
 			MonoArrayType *array_type = mono_type_get_array_type(GDMonoClass::get_raw_type(p_type.type_class));
 
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
@@ -296,7 +297,8 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 				RETURN_BOXED_STRUCT(Plane, p_var);
 		} break;
 
-		case MONO_TYPE_ARRAY: {
+		case MONO_TYPE_ARRAY:
+		case MONO_TYPE_SZARRAY: {
 			MonoArrayType *array_type = mono_type_get_array_type(GDMonoClass::get_raw_type(p_type.type_class));
 
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
@@ -332,22 +334,7 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 
 			// GodotObject
 			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
-				Object *unmanaged = p_var->operator Object *();
-				MonoObject *managed = GDMonoUtils::unmanaged_get_managed(unmanaged);
-
-				if (!managed) {
-					GDMonoClass *native = NULL;
-
-					if (type_class->get_assembly() == GDMono::get_singleton()->get_api_assembly())
-						native = type_class;
-					else
-						native = GDMonoUtils::get_class_native_base(type_class);
-
-					if (native)
-						managed = GDMonoUtils::create_managed_for_godot_object(type_class, NATIVE_GDMONOCLASS_NAME(native), unmanaged);
-				}
-
-				return managed;
+				return GDMonoUtils::unmanaged_get_managed(p_var->operator Object *());
 			}
 
 			if (CACHED_CLASS(NodePath) == type_class) {
@@ -405,23 +392,7 @@ MonoObject *variant_to_mono_object(const Variant *p_var, const ManagedType &p_ty
 				case Variant::_RID:
 					return GDMonoUtils::create_managed_from(p_var->operator RID());
 				case Variant::OBJECT: {
-					Object *unmanaged = p_var->operator Object *();
-					MonoObject *managed = GDMonoUtils::unmanaged_get_managed(unmanaged);
-
-					if (!managed) {
-						GDMonoClass *native = NULL;
-						GDMonoClass *tclass = GDMonoUtils::type_get_proxy_class(unmanaged->get_class());
-
-						if (tclass->get_assembly() == GDMono::get_singleton()->get_api_assembly())
-							native = tclass;
-						else
-							native = GDMonoUtils::get_class_native_base(tclass);
-
-						if (native)
-							managed = GDMonoUtils::create_managed_for_godot_object(tclass, NATIVE_GDMONOCLASS_NAME(native), unmanaged);
-					}
-
-					return managed;
+					return GDMonoUtils::unmanaged_get_managed(p_var->operator Object *());
 				}
 				case Variant::DICTIONARY:
 					return Dictionary_to_mono_object(p_var->operator Dictionary());
@@ -463,6 +434,8 @@ Variant mono_object_to_variant(MonoObject *p_obj) {
 		return Variant();
 
 	GDMonoClass *tclass = GDMono::get_singleton()->get_class(mono_object_get_class(p_obj));
+	ERR_FAIL_COND_V(!tclass, Variant());
+
 	MonoType *raw_type = tclass->get_raw_type(tclass);
 
 	ManagedType type;
@@ -540,7 +513,8 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 				RETURN_UNBOXED_STRUCT(Plane, p_obj);
 		} break;
 
-		case MONO_TYPE_ARRAY: {
+		case MONO_TYPE_ARRAY:
+		case MONO_TYPE_SZARRAY: {
 			MonoArrayType *array_type = mono_type_get_array_type(GDMonoClass::get_raw_type(p_type.type_class));
 
 			if (array_type->eklass == CACHED_CLASS_RAW(MonoObject))
@@ -578,7 +552,7 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 			if (CACHED_CLASS(GodotObject)->is_assignable_from(type_class)) {
 				GDMonoField *ptr_field = CACHED_FIELD(GodotObject, ptr);
 
-				ERR_FAIL_COND_V(!ptr_field, Variant());
+				ERR_FAIL_NULL_V(ptr_field, Variant());
 
 				void *ptr_to_unmanaged = UNBOX_PTR(ptr_field->get_value(p_obj));
 
@@ -615,7 +589,7 @@ Variant mono_object_to_variant(MonoObject *p_obj, const ManagedType &p_type) {
 }
 
 MonoArray *Array_to_mono_array(const Array &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(MonoObject), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(MonoObject), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 		MonoObject *boxed = variant_to_mono_object(p_array[i]);
@@ -640,7 +614,7 @@ Array mono_array_to_Array(MonoArray *p_array) {
 // TODO Optimize reading/writing from/to PoolArrays
 
 MonoArray *PoolIntArray_to_mono_array(const PoolIntArray &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(int32_t), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(int32_t), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 		mono_array_set(ret, int32_t, i, p_array[i]);
@@ -662,7 +636,7 @@ PoolIntArray mono_array_to_PoolIntArray(MonoArray *p_array) {
 }
 
 MonoArray *PoolByteArray_to_mono_array(const PoolByteArray &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(uint8_t), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(uint8_t), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 		mono_array_set(ret, uint8_t, i, p_array[i]);
@@ -684,7 +658,7 @@ PoolByteArray mono_array_to_PoolByteArray(MonoArray *p_array) {
 }
 
 MonoArray *PoolRealArray_to_mono_array(const PoolRealArray &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, REAL_T_MONOCLASS, p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), REAL_T_MONOCLASS, p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 		mono_array_set(ret, real_t, i, p_array[i]);
@@ -706,7 +680,7 @@ PoolRealArray mono_array_to_PoolRealArray(MonoArray *p_array) {
 }
 
 MonoArray *PoolStringArray_to_mono_array(const PoolStringArray &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(String), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(String), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 		MonoString *boxed = mono_string_from_godot(p_array[i]);
@@ -729,7 +703,7 @@ PoolStringArray mono_array_to_PoolStringArray(MonoArray *p_array) {
 }
 
 MonoArray *PoolColorArray_to_mono_array(const PoolColorArray &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(Color), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(Color), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 #ifdef YOLOCOPY
@@ -761,7 +735,7 @@ PoolColorArray mono_array_to_PoolColorArray(MonoArray *p_array) {
 }
 
 MonoArray *PoolVector2Array_to_mono_array(const PoolVector2Array &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(Vector2), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(Vector2), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 #ifdef YOLOCOPY
@@ -791,7 +765,7 @@ PoolVector2Array mono_array_to_PoolVector2Array(MonoArray *p_array) {
 }
 
 MonoArray *PoolVector3Array_to_mono_array(const PoolVector3Array &p_array) {
-	MonoArray *ret = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(Vector3), p_array.size());
+	MonoArray *ret = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(Vector3), p_array.size());
 
 	for (int i = 0; i < p_array.size(); i++) {
 #ifdef YOLOCOPY
@@ -822,8 +796,8 @@ PoolVector3Array mono_array_to_PoolVector3Array(MonoArray *p_array) {
 }
 
 MonoObject *Dictionary_to_mono_object(const Dictionary &p_dict) {
-	MonoArray *keys = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(MonoObject), p_dict.size());
-	MonoArray *values = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(MonoObject), p_dict.size());
+	MonoArray *keys = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(MonoObject), p_dict.size());
+	MonoArray *values = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(MonoObject), p_dict.size());
 
 	int i = 0;
 	const Variant *dkey = NULL;

@@ -38,36 +38,36 @@
 	"%0\n"                                                            \
 	"Global\n"                                                        \
 	"\tGlobalSection(SolutionConfigurationPlatforms) = preSolution\n" \
-	"\t\tDebug|Any CPU = Debug|Any CPU\n"                             \
-	"\t\tRelease|Any CPU = Release|Any CPU\n"                         \
+	"%1\n"                                                            \
 	"\tEndGlobalSection\n"                                            \
 	"\tGlobalSection(ProjectConfigurationPlatforms) = postSolution\n" \
-	"%1\n"                                                            \
+	"%2\n"                                                            \
 	"\tEndGlobalSection\n"                                            \
 	"EndGlobal\n"
 
 #define PROJECT_DECLARATION "Project(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"%0\", \"%1\", \"{%2}\"\nEndProject"
 
-#define PROJECT_PLATFORMS_CONFIG                             \
-	"\t\t{%s}.Debug|Any CPU.ActiveCfg = Debug|Any CPU\n"     \
-	"\t\t{%s}.Debug|Any CPU.Build.0 = Debug|Any CPU\n"       \
-	"\t\t{%s}.Release|Any CPU.ActiveCfg = Release|Any CPU\n" \
-	"\t\t{%s}.Release|Any CPU.Build.0 = Release|Any CPU"
+#define SOLUTION_PLATFORMS_CONFIG "\t\%0|Any CPU = %0|Any CPU"
 
-CSharpProject &NETSolution::add_new_project(const String &p_name) {
+#define PROJECT_PLATFORMS_CONFIG                   \
+	"\t\t{%0}.%1|Any CPU.ActiveCfg = %1|Any CPU\n" \
+	"\t\t{%0}.%1|Any CPU.Build.0 = %1|Any CPU"
+
+void NETSolution::add_new_project(const String &p_name, const String &p_guid, const Vector<String> &p_extra_configs) {
 	if (projects.has(p_name))
 		WARN_PRINT("Overriding existing project.");
 
-	projects[p_name] = CSharpProject::create_new(p_name);
+	ProjectInfo procinfo;
+	procinfo.guid = p_guid;
 
-	CSharpProject &project = projects[p_name];
+	procinfo.configs.push_back("Debug");
+	procinfo.configs.push_back("Release");
 
-	if (projects.size() > 1)
-		project.set_path(path_join(path, p_name));
-	else
-		project.set_path(path);
+	for (int i = 0; i < p_extra_configs.size(); i++) {
+		procinfo.configs.push_back(p_extra_configs[i]);
+	}
 
-	return project;
+	projects[p_name] = procinfo;
 }
 
 Error NETSolution::save() {
@@ -76,18 +76,29 @@ Error NETSolution::save() {
 	ERR_FAIL_COND_V(!dir_exists, ERR_FILE_BAD_PATH);
 
 	String projs_decl;
-	String projs_plt;
+	String sln_platform_cfg;
+	String proj_platform_cfg;
 
-	for (Map<String, CSharpProject>::Element *E = projects.front(); E; E = E->next()) {
-		CSharpProject project = E->value();
-		projs_decl += sformat(PROJECT_DECLARATION, project.get_name(), project.get_name() + ".csproj", project.get_guid());
-		projs_plt += String(PROJECT_PLATFORMS_CONFIG).replace("%s", project.get_guid());
+	for (Map<String, ProjectInfo>::Element *E = projects.front(); E; E = E->next()) {
+		const String &name = E->key();
+		const ProjectInfo &procinfo = E->value();
 
-		project.save_assembly_info();
-		project.save_csproj();
+		projs_decl += sformat(PROJECT_DECLARATION, name, name + ".csproj", procinfo.guid);
+
+		for (int i = 0; i < procinfo.configs.size(); i++) {
+			const String &config = procinfo.configs[i];
+
+			if (i != 0) {
+				sln_platform_cfg += "\n";
+				proj_platform_cfg += "\n";
+			}
+
+			sln_platform_cfg += sformat(SOLUTION_PLATFORMS_CONFIG, config);
+			proj_platform_cfg += sformat(PROJECT_PLATFORMS_CONFIG, procinfo.guid, config);
+		}
 	}
 
-	String content = sformat(SOLUTION_TEMPLATE, projs_decl, projs_plt);
+	String content = sformat(SOLUTION_TEMPLATE, projs_decl, sln_platform_cfg, proj_platform_cfg);
 
 	FileAccessRef file = FileAccess::open(path_join(path, name + ".sln"), FileAccess::WRITE);
 	ERR_FAIL_COND_V(!file, ERR_FILE_CANT_WRITE);

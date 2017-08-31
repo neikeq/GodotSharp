@@ -1,6 +1,6 @@
 using System;
 
-namespace GodotEngine
+namespace Godot
 {
     public class SignalAwaiter : IAwaiter<object[]>, IAwaitable<object[]>
     {
@@ -8,11 +8,11 @@ namespace GodotEngine
         private object[] result = null;
         private Action action = null;
 
-        public SignalAwaiter(GodotEngine.Object source, string signal, GodotEngine.Object target)
+        public SignalAwaiter(Godot.Object source, string signal, Godot.Object target)
         {
             NativeCalls.godot_icall_Object_connect_signal_awaiter(
-                GodotEngine.Object.GetPtr(source),
-                signal, GodotEngine.Object.GetPtr(target), this
+                Godot.Object.GetPtr(source),
+                signal, Godot.Object.GetPtr(target), this
                 );
         }
 

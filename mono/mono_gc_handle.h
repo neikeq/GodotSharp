@@ -47,7 +47,10 @@ public:
 
 	_FORCE_INLINE_ MonoObject *get_target() const { return released ? NULL : mono_gchandle_get_target(handle); }
 
-	_FORCE_INLINE_ void set_handle(uint32_t p_handle) { handle = p_handle; }
+	_FORCE_INLINE_ void set_handle(uint32_t p_handle) {
+		handle = p_handle;
+		released = false;
+	}
 	void release();
 
 	MonoGCHandle(uint32_t p_handle);

@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace GodotEngine
+namespace Godot
 {
 	public interface IAwaiter : INotifyCompletion
 	{

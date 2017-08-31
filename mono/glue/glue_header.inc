@@ -1,3 +1,28 @@
+/**********************************************************************************/
+/* glue_header.inc                                                                */
+/**********************************************************************************/
+/* The MIT License (MIT)                                                          */
+/*                                                                                */
+/* Copyright (c) 2016 Ignacio Etcheverry                                          */
+/*                                                                                */
+/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
+/* of this software and associated documentation files (the "Software"), to deal  */
+/* in the Software without restriction, including without limitation the rights   */
+/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
+/* copies of the Software, and to permit persons to whom the Software is          */
+/* furnished to do so, subject to the following conditions:                       */
+/*                                                                                */
+/* The above copyright notice and this permission notice shall be included in all */
+/* copies or substantial portions of the Software.                                */
+/*                                                                                */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
+/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
+/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
+/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
+/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
+/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
+/* SOFTWARE.                                                                      */
+/**********************************************************************************/
 #include "../csharp_script.h"
 #include "../mono_wrapper/gd_mono_class.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
@@ -26,38 +51,30 @@ void godot_icall_Object_Dtor(Object *ptr) {
 	_GodotSharp::get_singleton()->queue_dispose(ptr);
 }
 
-MethodBind *godot_icall_TypeDB_get_method(MonoString *type, MonoString *method) {
-	StringName ctype(GDMonoMarshal::mono_string_to_godot(type));
-	StringName cmethod(GDMonoMarshal::mono_string_to_godot(method));
-	return ClassDB::get_method(ctype, cmethod);
+// -- ClassDB --
+
+MethodBind *godot_icall_ClassDB_get_method(MonoString *p_type, MonoString *p_method) {
+	StringName type(GDMonoMarshal::mono_string_to_godot(p_type));
+	StringName method(GDMonoMarshal::mono_string_to_godot(p_method));
+	return ClassDB::get_method(type, method);
 }
 
-Error godot_icall_Object_connect_signal_awaiter(Object *source, MonoString *signal, Object *target, MonoObject *awaiter) {
-	String signal_in = GDMonoMarshal::mono_string_to_godot(signal);
-	return SignalAwaiterUtils::connect_signal_awaiter(source, signal_in, target, awaiter);
+// -- SignalAwaiter --
+
+Error godot_icall_Object_connect_signal_awaiter(Object *p_source, MonoString *p_signal, Object *p_target, MonoObject *p_awaiter) {
+	String signal = GDMonoMarshal::mono_string_to_godot(p_signal);
+	return SignalAwaiterUtils::connect_signal_awaiter(p_source, signal, p_target, p_awaiter);
 }
 
-NodePath *godot_icall_NodePath_Ctor(MonoString *path) {
-	return memnew(NodePath(GDMonoMarshal::mono_string_to_godot(path)));
+// -- NodePath --
+
+NodePath *godot_icall_NodePath_Ctor(MonoString *p_path) {
+	return memnew(NodePath(GDMonoMarshal::mono_string_to_godot(p_path)));
 }
 
-void godot_icall_NodePath_Dtor(NodePath *ptr) {
-	ERR_FAIL_NULL(ptr);
-	_GodotSharp::get_singleton()->queue_dispose(ptr);
-}
-
-RID *godot_icall_RID_Ctor(Object *from) {
-	Resource *res_from = from->cast_to<Resource>();
-
-	if (res_from)
-		return memnew(RID(res_from->get_rid()));
-
-	return memnew(RID);
-}
-
-void godot_icall_RID_Dtor(RID *ptr) {
-	ERR_FAIL_NULL(ptr);
-	_GodotSharp::get_singleton()->queue_dispose(ptr);
+void godot_icall_NodePath_Dtor(NodePath *p_ptr) {
+	ERR_FAIL_NULL(p_ptr);
+	_GodotSharp::get_singleton()->queue_dispose(p_ptr);
 }
 
 MonoString *godot_icall_NodePath_operator_String(NodePath *p_np) {
@@ -69,6 +86,24 @@ MonoArray *godot_icall_String_md5_buffer(MonoString *p_str) {
 	// TODO Check possible Array/Vector<uint8_t> problem?
 	return GDMonoMarshal::Array_to_mono_array(Variant(ret));
 }
+
+// -- RID --
+
+RID *godot_icall_RID_Ctor(Object *p_from) {
+	Resource *res_from = Object::cast_to<Resource>(p_from);
+
+	if (res_from)
+		return memnew(RID(res_from->get_rid()));
+
+	return memnew(RID);
+}
+
+void godot_icall_RID_Dtor(RID *p_ptr) {
+	ERR_FAIL_NULL(p_ptr);
+	_GodotSharp::get_singleton()->queue_dispose(p_ptr);
+}
+
+// -- String --
 
 MonoString *godot_icall_String_md5_text(MonoString *p_str) {
 	String ret = GDMonoMarshal::mono_string_to_godot(p_str).md5_text();
@@ -94,6 +129,8 @@ MonoString *godot_icall_String_sha256_text(MonoString *p_str) {
 	String ret = GDMonoMarshal::mono_string_to_godot(p_str).sha256_text();
 	return GDMonoMarshal::mono_string_from_godot(ret);
 }
+
+// -- Global Scope --
 
 MonoObject *godot_icall_Godot_bytes2var(MonoArray *p_bytes) {
 	Variant ret;
@@ -240,7 +277,7 @@ MonoObject *godot_icall_Godot_weakref(Object *p_obj) {
 		return NULL;
 
 	Ref<WeakRef> wref;
-	Reference *ref = p_obj->cast_to<Reference>();
+	Reference *ref = Object::cast_to<Reference>(p_obj);
 
 	if (ref) {
 		REF r = ref;
@@ -254,5 +291,5 @@ MonoObject *godot_icall_Godot_weakref(Object *p_obj) {
 		wref->set_obj(p_obj);
 	}
 
-	return GDMonoUtils::create_managed_for_godot_object(CACHED_CLASS(WeakRef), Reference::get_class_static(), wref.ptr()->cast_to<Object>());
+	return GDMonoUtils::create_managed_for_godot_object(CACHED_CLASS(WeakRef), Reference::get_class_static(), Object::cast_to<Object>(wref.ptr()));
 }

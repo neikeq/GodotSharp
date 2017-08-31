@@ -26,9 +26,12 @@
 #ifndef GODOTSHARP_DEFS_H
 #define GODOTSHARP_DEFS_H
 
-#define BINDINGS_NAMESPACE "GodotEngine"
+#define BINDINGS_NAMESPACE "Godot"
+#define BINDINGS_GLOBAL_SCOPE_CLASS "GD"
 #define BINDINGS_PTR_FIELD "ptr"
 #define BINDINGS_NATIVE_NAME_FIELD "nativeName"
 #define API_ASSEMBLY_NAME "GodotSharp"
+#define EDITOR_API_ASSEMBLY_NAME "GodotSharpEditor"
+#define EDITOR_TOOLS_ASSEMBLY_NAME "GodotSharpTools"
 
 #endif // GODOTSHARP_DEFS_H

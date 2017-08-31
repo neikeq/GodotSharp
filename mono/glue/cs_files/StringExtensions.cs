@@ -6,7 +6,7 @@ using System.Security;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace GodotEngine
+namespace Godot
 {
     public static class StringExtensions
     {

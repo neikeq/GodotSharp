@@ -28,13 +28,19 @@
 #include "gd_mono_class.h"
 #include "gd_mono_marshal.h"
 
-void GDMonoMethod::update_signature() {
-	MonoMethodSignature *sig = mono_method_signature(mono_method);
+void GDMonoMethod::_update_signature() {
+	// Apparently MonoMethodSignature needs not to be freed.
+	// mono_method_signature caches the result, we don't need to cache it ourselves.
 
-	instance = mono_signature_is_instance(sig);
-	params_count = mono_signature_get_param_count(sig);
+	MonoMethodSignature *method_sig = mono_method_signature(mono_method);
+	_update_signature(method_sig);
+}
 
-	MonoType *ret_type = mono_signature_get_return_type(sig);
+void GDMonoMethod::_update_signature(MonoMethodSignature *p_method_sig) {
+	is_instance = mono_signature_is_instance(p_method_sig);
+	params_count = mono_signature_get_param_count(p_method_sig);
+
+	MonoType *ret_type = mono_signature_get_return_type(p_method_sig);
 	if (ret_type) {
 		return_type.type_encoding = mono_type_get_type(ret_type);
 
@@ -46,7 +52,7 @@ void GDMonoMethod::update_signature() {
 
 	void *iter = NULL;
 	MonoType *param_raw_type;
-	while ((param_raw_type = mono_signature_get_params(sig, &iter)) != NULL) {
+	while ((param_raw_type = mono_signature_get_params(p_method_sig, &iter)) != NULL) {
 		ManagedType param_type;
 
 		param_type.type_encoding = mono_type_get_type(param_raw_type);
@@ -58,31 +64,6 @@ void GDMonoMethod::update_signature() {
 
 		param_types.push_back(param_type);
 	}
-
-	mono_metadata_free_method_signature(sig);
-
-	sig_updated = true;
-}
-
-bool GDMonoMethod::is_static() {
-	if (!sig_updated)
-		update_signature();
-
-	return !instance;
-}
-
-int GDMonoMethod::get_parameters_count() {
-	if (!sig_updated)
-		update_signature();
-
-	return params_count;
-}
-
-ManagedType GDMonoMethod::get_return_type() {
-	if (!sig_updated)
-		update_signature();
-
-	return return_type;
 }
 
 void *GDMonoMethod::get_thunk() {
@@ -91,7 +72,7 @@ void *GDMonoMethod::get_thunk() {
 
 MonoObject *GDMonoMethod::invoke(MonoObject *p_object, const Variant **p_params, MonoObject **r_exc) {
 	if (get_return_type().type_encoding != MONO_TYPE_VOID || get_parameters_count() > 0) {
-		MonoArray *params = mono_array_new(SCRIPT_DOMAIN, CACHED_CLASS_RAW(MonoObject), get_parameters_count());
+		MonoArray *params = mono_array_new(mono_domain_get(), CACHED_CLASS_RAW(MonoObject), get_parameters_count());
 
 		for (int i = 0; i < params_count; i++) {
 			MonoObject *boxed_param = GDMonoMarshal::variant_to_mono_object(p_params[i], param_types[i]);
@@ -148,45 +129,56 @@ MonoObject *GDMonoMethod::invoke_raw(MonoObject *p_object, void **p_params, Mono
 }
 
 bool GDMonoMethod::has_attribute(GDMonoClass *p_attr_class) {
-	ERR_FAIL_COND_V(!p_attr_class, false);
+	ERR_FAIL_NULL_V(p_attr_class, false);
 
-	if (!attrs_updated)
-		update_attrs();
+	if (!attrs_fetched)
+		fetch_attributes();
 
-	if (!attrs)
+	if (!attributes)
 		return false;
 
-	return mono_custom_attrs_has_attr(attrs, p_attr_class->get_raw());
+	return mono_custom_attrs_has_attr(attributes, p_attr_class->get_raw());
 }
 
 MonoObject *GDMonoMethod::get_attribute(GDMonoClass *p_attr_class) {
-	ERR_FAIL_COND_V(!p_attr_class, NULL);
+	ERR_FAIL_NULL_V(p_attr_class, NULL);
 
-	if (!attrs_updated)
-		update_attrs();
+	if (!attrs_fetched)
+		fetch_attributes();
 
-	if (!attrs)
+	if (!attributes)
 		return NULL;
 
-	return mono_custom_attrs_get_attr(attrs, p_attr_class->get_raw());
+	return mono_custom_attrs_get_attr(attributes, p_attr_class->get_raw());
 }
 
-void GDMonoMethod::update_attrs() {
-	ERR_FAIL_COND(attrs != NULL);
-	attrs = mono_custom_attrs_from_method(mono_method);
-	attrs_updated = true;
+void GDMonoMethod::fetch_attributes() {
+	ERR_FAIL_COND(attributes != NULL);
+	attributes = mono_custom_attrs_from_method(mono_method);
+	attrs_fetched = true;
 }
 
-GDMonoMethod::GDMonoMethod(MonoMethod *p_method) {
+String GDMonoMethod::get_full_name(bool p_signature) const {
+
+	char *res = mono_method_full_name(mono_method, p_signature);
+	String full_name(res);
+	mono_free(res);
+	return full_name;
+}
+
+GDMonoMethod::GDMonoMethod(StringName p_name, MonoMethod *p_method) {
+	name = p_name;
+
 	mono_method = p_method;
-	sig_updated = false;
 
-	attrs_updated = false;
-	attrs = NULL;
+	attrs_fetched = false;
+	attributes = NULL;
+
+	_update_signature();
 }
 
 GDMonoMethod::~GDMonoMethod() {
-	if (attrs) {
-		mono_custom_attrs_free(attrs);
+	if (attributes) {
+		mono_custom_attrs_free(attributes);
 	}
 }

@@ -1,15 +1,15 @@
 ﻿using System;
 
-namespace GodotEngine
+namespace Godot
 {
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-	public class Export : Attribute
+	public class ExportAttribute : Attribute
 	{
 		private int hint;
 		private string hint_string;
 		private int usage;
 
-		public Export(int hint = Godot.PROPERTY_HINT_NONE, string hint_string = "", int usage = Godot.PROPERTY_USAGE_DEFAULT)
+		public ExportAttribute(int hint = GD.PROPERTY_HINT_NONE, string hint_string = "", int usage = GD.PROPERTY_USAGE_DEFAULT)
 		{
 			this.hint = hint;
 			this.hint_string = hint_string;
