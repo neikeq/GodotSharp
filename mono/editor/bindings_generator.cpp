@@ -1362,7 +1362,7 @@ Error BindingsGenerator::generate_glue(const String &p_output_dir) {
 
 	cpp_file.push_back(CLOSE_BLOCK "}\n");
 
-	return _save_file(path_join(p_output_dir, "mono_glue.cpp"), cpp_file);
+	return _save_file(path_join(p_output_dir, "mono_glue.gen.cpp"), cpp_file);
 }
 
 Error BindingsGenerator::_save_file(const String &p_path, const List<String> &p_content) {

@@ -56,7 +56,7 @@ vars.Update(env)
 
 # Glue sources
 if env['mono_glue']:
-    env.add_source_files(env.modules_sources, 'glue/mono_glue.cpp')
+    env.add_source_files(env.modules_sources, 'glue/mono_glue.gen.cpp')
 else:
     env.Append(CPPDEFINES = [ 'MONO_GLUE_DISABLED' ])
 
