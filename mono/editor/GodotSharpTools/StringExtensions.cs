@@ -9,7 +9,9 @@ namespace GodotSharpTools
         {
             // Make sure the directory ends with a path separator
             dir = Path.Combine(dir, " ").TrimEnd();
-            dir = dir.Replace("/", "\\") + "\\";
+
+            if (Path.DirectorySeparatorChar == '\\')
+                dir = dir.Replace("/", "\\") + "\\";
 
             Uri fullPath = new Uri(Path.GetFullPath(path), UriKind.Absolute);
             Uri relRoot = new Uri(Path.GetFullPath(dir), UriKind.Absolute);

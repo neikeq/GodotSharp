@@ -377,6 +377,7 @@ void MonoBuildTab::_issue_activated(int p_idx) {
 	if (issue.project_file.empty() || issue.file.empty())
 		return;
 
+	// TODO FIX ON WINDOWS
 	String file = issue.project_file.get_base_dir().plus_file(issue.file);
 	file = ProjectSettings::get_singleton()->localize_path(file);
 
