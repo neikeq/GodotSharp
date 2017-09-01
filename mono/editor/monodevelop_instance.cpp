@@ -36,7 +36,7 @@ void MonoDevelopInstance::execute(const Vector<String> &p_files) {
 	MonoObject *exc = NULL;
 
 	Variant files = p_files;
-	const Variant *args[1]{ &files };
+	const Variant *args[1] = { &files };
 	execute_method->invoke(gc_handle->get_target(), args, &exc);
 
 	if (exc) {
