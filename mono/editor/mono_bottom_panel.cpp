@@ -377,8 +377,7 @@ void MonoBuildTab::_issue_activated(int p_idx) {
 	if (issue.project_file.empty() || issue.file.empty())
 		return;
 
-	// TODO FIX ON WINDOWS
-	String file = issue.project_file.get_base_dir().plus_file(issue.file);
+	String file = issue.project_file.get_base_dir().simplify_path().plus_file(issue.file.simplify_path());
 	file = ProjectSettings::get_singleton()->localize_path(file);
 
 	if (file.begins_with("res://")) {
