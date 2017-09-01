@@ -1350,17 +1350,19 @@ Error BindingsGenerator::generate_glue(const String &p_output_dir) {
 	bool tools_sequence = false;
 	for (const List<InternalCall>::Element *E = core_custom_icalls.front(); E; E = E->next()) {
 
-		if (E->get().editor_only && !tools_sequence) {
-			cpp_file.push_back("#ifdef TOOLS_ENABLED\n");
-			tools_sequence = true;
+		if (tools_sequence) {
+			if (!E->get().editor_only) {
+				tools_sequence = false;
+				cpp_file.push_back("#endif\n");
+			}
+		} else {
+			if (E->get().editor_only) {
+				cpp_file.push_back("#ifdef TOOLS_ENABLED\n");
+				tools_sequence = true;
+			}
 		}
 
 		ADD_INTERNAL_CALL_REGISTRATION(E->get());
-
-		if (!E->get().editor_only && tools_sequence) {
-			tools_sequence = false;
-			cpp_file.push_back("#endif\n");
-		}
 	}
 
 	if (tools_sequence) {
@@ -1375,17 +1377,19 @@ Error BindingsGenerator::generate_glue(const String &p_output_dir) {
 
 	for (const List<InternalCall>::Element *E = method_icalls.front(); E; E = E->next()) {
 
-		if (E->get().editor_only && !tools_sequence) {
-			cpp_file.push_back("#ifdef TOOLS_ENABLED\n");
-			tools_sequence = true;
+		if (tools_sequence) {
+			if (!E->get().editor_only) {
+				tools_sequence = false;
+				cpp_file.push_back("#endif\n");
+			}
+		} else {
+			if (E->get().editor_only) {
+				cpp_file.push_back("#ifdef TOOLS_ENABLED\n");
+				tools_sequence = true;
+			}
 		}
 
 		ADD_INTERNAL_CALL_REGISTRATION(E->get());
-
-		if (!E->get().editor_only && tools_sequence) {
-			tools_sequence = false;
-			cpp_file.push_back("#endif\n");
-		}
 	}
 
 	if (tools_sequence) {
