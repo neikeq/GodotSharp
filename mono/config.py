@@ -77,9 +77,16 @@ def configure(env):
         if copy_mono_dll:
             copyfile(mono_dll_src, mono_dll_dst)
     else:
-        if os.getenv('MONO_PREFIX'):
-            mono_root = os.getenv('MONO_PREFIX')
+        mono_root = None
 
+        if env['bits'] == '32':
+            if os.getenv('MONO32_PREFIX'):
+                mono_root = os.getenv('MONO32_PREFIX')
+        else:
+            if os.getenv('MONO64_PREFIX'):
+                mono_root = os.getenv('MONO64_PREFIX')
+
+        if mono_root:
             mono_lib_path = os.path.join(mono_root, 'lib')
 
             env.Append(LIBPATH = mono_lib_path)
