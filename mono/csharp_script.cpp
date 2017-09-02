@@ -1140,7 +1140,7 @@ CSharpInstance::~CSharpInstance() {
 		script->instances.erase(owner);
 
 #ifndef NO_THREADS
-		CSharpLanguage::singleton->lock->lock();
+		CSharpLanguage::singleton->lock->unlock();
 #endif
 	}
 }
