@@ -250,7 +250,7 @@ void CSharpLanguage::get_indent_delimiters(List<String> *p_delimiters) const {
 Ref<Script> CSharpLanguage::get_template(const String &p_class_name, const String &p_base_class_name) const {
 
 	String script_template = "using " BINDINGS_NAMESPACE ";\n"
-							"using System;\n"
+							 "using System;\n"
 							 "\n"
 							 "public class %CLASS_NAME% : %BASE_CLASS_NAME%\n"
 							 "{\n"
@@ -374,6 +374,11 @@ void CSharpLanguage::reload_all_scripts() {
 }
 
 void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {
+
+	reload_assemblies_if_needed(p_soft_reload);
+}
+
+void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 
 	if (gdmono->is_runtime_initialized()) {
 

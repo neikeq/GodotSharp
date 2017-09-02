@@ -27,7 +27,9 @@
 
 #include "main/main.h"
 #include "scene/gui/control.h"
+#include "scene/main/node.h"
 
+#include "../csharp_script.h"
 #include "../godotsharp_dirs.h"
 #include "../mono_wrapper/gd_mono_class.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
@@ -38,6 +40,21 @@
 #ifdef WINDOWS_ENABLED
 #include "../utils/mono_reg_utils.h"
 #endif
+
+class MonoReloadNode : public Node {
+	GDCLASS(MonoReloadNode, Node)
+
+protected:
+	void _notification(int p_what) {
+		switch (p_what) {
+			case MainLoop::NOTIFICATION_WM_FOCUS_IN: {
+				CSharpLanguage::get_singleton()->reload_assemblies_if_needed(true);
+			} break;
+			default: {
+			} break;
+		};
+	}
+};
 
 void godot_icall_BuildInstance_ExitCallback(MonoString *, MonoString *, int);
 
@@ -155,6 +172,8 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 	editor->add_build_callback(&godotsharp_build_callback);
 
 	godotsharp_builds = memnew(GodotSharpBuilds);
+
+	editor->add_child(memnew(MonoReloadNode));
 }
 
 GodotSharpEditor::~GodotSharpEditor() {

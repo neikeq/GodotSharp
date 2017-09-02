@@ -27,8 +27,8 @@
 #define GODOTSHARP_EDITOR_H
 
 #include "../mono_wrapper/gd_mono.h"
-#include "mono_build_info.h"
 #include "mono_bottom_panel.h"
+#include "mono_build_info.h"
 
 typedef void (*GodotSharpBuild_ExitCallback)(int);
 // TODO move to own file
