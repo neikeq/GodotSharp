@@ -472,7 +472,9 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 	for (Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > >::Element *E = to_reload.front(); E; E = E->next()) {
 
 		Ref<CSharpScript> scr = E->key();
+		scr->assembly_changed_cache = true;
 		scr->reload(p_soft_reload);
+		scr->update_exports();
 
 		//restore state if saved
 		for (Map<ObjectID, List<Pair<StringName, Variant> > >::Element *F = E->get().front(); F; F = F->next()) {
@@ -1177,8 +1179,8 @@ bool CSharpScript::_update_exports() {
 
 	bool changed = true;
 
-	if (source_changed_cache) {
-		source_changed_cache = false;
+	if (assembly_changed_cache) {
+		assembly_changed_cache = false;
 
 		member_info.clear();
 		exported_members_cache.clear();
@@ -1685,6 +1687,7 @@ CSharpScript::CSharpScript()
 
 #ifdef TOOLS_ENABLED
 	source_changed_cache = false;
+	assembly_changed_cache = true;
 #endif
 
 	_resource_path_changed();

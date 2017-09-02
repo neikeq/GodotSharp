@@ -89,6 +89,7 @@ class CSharpScript : public Script {
 	Map<StringName, Variant> exported_members_defval_cache; // member_default_values_cache
 	Set<PlaceHolderScriptInstance *> placeholders;
 	bool source_changed_cache;
+	bool assembly_changed_cache;
 
 	void _update_exports_values(Map<StringName, Variant> &values, List<PropertyInfo> &propnames);
 	virtual void _placeholder_erased(PlaceHolderScriptInstance *p_placeholder);
