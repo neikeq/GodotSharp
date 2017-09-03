@@ -41,6 +41,10 @@ class GodotSharpEditor : public Node {
 
 	GodotSharpBuilds *godotsharp_builds;
 
+	void _create_project_solution();
+
+	void _remove_create_sln_menu_option();
+
 	void _menu_option_pressed(int p_id);
 
 	static GodotSharpEditor *singleton;

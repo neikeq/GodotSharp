@@ -258,7 +258,7 @@ Ref<Script> CSharpLanguage::get_template(const String &p_class_name, const Strin
 							 "    // private int a = 2;\n"
 							 "    // private string b = \"textvar\";\n"
 							 "\n"
-							 "    public override void _ready()\n"
+							 "    public override void _Ready()\n"
 							 "    {\n"
 							 "        // Called every time the node is added to the scene.\n"
 							 "        // Initialization here\n"
@@ -1782,7 +1782,7 @@ Error ResourceFormatSaverCSharpScript::save(const String &p_path, const RES &p_r
 			// A solution does not yet exist, create a new one
 
 			if (GodotSharpEditor::get_singleton())
-				GodotSharpEditor::get_singleton()->call("_menu_option_pressed", GodotSharpEditor::MENU_CREATE_SLN);
+				GodotSharpEditor::get_singleton()->call("_create_project_solution");
 		}
 
 		// Add the file to the C# project

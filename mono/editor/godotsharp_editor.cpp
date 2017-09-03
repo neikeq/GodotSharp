@@ -55,48 +55,58 @@ protected:
 
 GodotSharpEditor *GodotSharpEditor::singleton = NULL;
 
+void GodotSharpEditor::_create_project_solution() {
+
+	editor->progress_add_task("create_csharp_solution", "Generating solution...", 2);
+
+	editor->progress_task_step("create_csharp_solution", "Generating C# project...", 1);
+
+	String path = OS::get_singleton()->get_resource_dir();
+	String name = ProjectSettings::get_singleton()->get("application/config/name");
+	String guid = CSharpProject::generate_game_project(path, name);
+
+	if (guid.length()) {
+
+		NETSolution solution(name);
+
+		if (!solution.set_path(path)) {
+			show_error("Failed to create solution.");
+		}
+
+		Vector<String> extra_configs;
+		extra_configs.push_back("Tools");
+
+		solution.add_new_project(name, guid, extra_configs);
+
+		Error sln_error = solution.save();
+
+		if (sln_error != OK) {
+			show_error("Failed to save solution.");
+		}
+
+		call_deferred("_remove_create_sln_menu_option");
+
+	} else {
+		show_error("Failed to create C# project.");
+	}
+
+	editor->progress_end_task("create_csharp_solution");
+}
+
+void GodotSharpEditor::_remove_create_sln_menu_option() {
+
+	menu_popup->remove_item(menu_popup->get_item_index(MENU_CREATE_SLN));
+
+	if (menu_popup->get_item_count() == 0)
+		menu_button->hide();
+}
+
 void GodotSharpEditor::_menu_option_pressed(int p_id) {
 
 	switch (p_id) {
 		case MENU_CREATE_SLN: {
 
-			editor->progress_add_task("create_csharp_solution", "Generating solution...", 2);
-
-			editor->progress_task_step("create_csharp_solution", "Generating C# project...", 1);
-
-			String path = OS::get_singleton()->get_resource_dir();
-			String name = ProjectSettings::get_singleton()->get("application/config/name");
-			String guid = CSharpProject::generate_game_project(path, name);
-
-			if (guid.length()) {
-
-				NETSolution solution(name);
-
-				if (!solution.set_path(path)) {
-					show_error("Failed to create solution.");
-				}
-
-				Vector<String> extra_configs;
-				extra_configs.push_back("Tools");
-
-				solution.add_new_project(name, guid, extra_configs);
-
-				Error sln_error = solution.save();
-
-				if (sln_error != OK) {
-					show_error("Failed to save solution.");
-				}
-
-				menu_popup->remove_item(menu_popup->get_item_index(MENU_CREATE_SLN));
-
-				if (menu_popup->get_item_count() == 0)
-					menu_button->hide();
-
-			} else {
-				show_error("Failed to create C# project.");
-			}
-
-			editor->progress_end_task("create_csharp_solution");
+			_create_project_solution();
 		} break;
 		default:
 			ERR_FAIL();
@@ -105,7 +115,9 @@ void GodotSharpEditor::_menu_option_pressed(int p_id) {
 
 void GodotSharpEditor::_bind_methods() {
 
-	ClassDB::bind_method(D_METHOD("_menu_option_pressed"), &GodotSharpEditor::_menu_option_pressed);
+	ClassDB::bind_method(D_METHOD("_create_project_solution"), &GodotSharpEditor::_create_project_solution);
+	ClassDB::bind_method(D_METHOD("_remove_create_sln_menu_option"), &GodotSharpEditor::_remove_create_sln_menu_option);
+	ClassDB::bind_method(D_METHOD("_menu_option_pressed", "id"), &GodotSharpEditor::_menu_option_pressed);
 }
 
 void GodotSharpEditor::show_error(const String &p_message, const String &p_title) {
