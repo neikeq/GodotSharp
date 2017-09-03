@@ -27,47 +27,7 @@
 #define GODOTSHARP_EDITOR_H
 
 #include "../mono_wrapper/gd_mono.h"
-#include "mono_bottom_panel.h"
-#include "mono_build_info.h"
-
-typedef void (*GodotSharpBuild_ExitCallback)(int);
-// TODO move to own file
-class GodotSharpBuilds {
-
-private:
-	struct BuildProcess {
-		Ref<MonoGCHandle> build_instance;
-		MonoBuildInfo build_info;
-		MonoBuildTab *build_tab;
-		GodotSharpBuild_ExitCallback exit_callback;
-		bool exited;
-		int exit_code;
-
-		void on_exit(int p_exit_code);
-		void start(bool p_blocking = false);
-
-		BuildProcess() {}
-		BuildProcess(const MonoBuildInfo &p_build_info, GodotSharpBuild_ExitCallback p_callback = NULL);
-	};
-
-	HashMap<MonoBuildInfo, BuildProcess, MonoBuildInfo::Hasher> builds;
-
-	static GodotSharpBuilds *singleton;
-
-public:
-	_FORCE_INLINE_ static GodotSharpBuilds *get_singleton() { return singleton; }
-
-	void build_exit_callback(const String &p_solution, const String &p_config, int p_exit_code);
-
-	void restart_build(MonoBuildTab *p_build_tab);
-	void stop_build(MonoBuildTab *p_build_tab);
-
-	bool build(const MonoBuildInfo &p_build_info);
-	bool build_async(const MonoBuildInfo &p_build_info, GodotSharpBuild_ExitCallback p_callback = NULL);
-
-	GodotSharpBuilds();
-	~GodotSharpBuilds();
-};
+#include "godotsharp_builds.h"
 
 class GodotSharpEditor : public Node {
 	GDCLASS(GodotSharpEditor, Object)
@@ -84,9 +44,6 @@ class GodotSharpEditor : public Node {
 	void _menu_option_pressed(int p_id);
 
 	static GodotSharpEditor *singleton;
-
-	friend class GDMono;
-	void _register_internal_calls();
 
 protected:
 	static void _bind_methods();

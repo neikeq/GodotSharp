@@ -224,7 +224,7 @@ void GDMono::_register_internal_calls() {
 #endif
 
 #ifdef TOOLS_ENABLED
-	GodotSharpEditor::get_singleton()->_register_internal_calls();
+	GodotSharpBuilds::_register_internal_calls();
 #endif
 }
 
