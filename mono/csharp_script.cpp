@@ -79,8 +79,8 @@ void gdsharp_editor_init_callback() {
 	EditorSettings *ed_settings = EditorSettings::get_singleton();
 	if (!ed_settings->has("godot_sharp/editor/external_editor")) {
 		ed_settings->set("godot_sharp/editor/external_editor", CSharpLanguage::EDITOR_NONE);
-		ed_settings->add_property_hint(PropertyInfo(Variant::INT, "godot_sharp/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
 	}
+	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "godot_sharp/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
 
 	editor->add_child(memnew(GodotSharpEditor(editor)));
 }
