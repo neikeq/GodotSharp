@@ -66,7 +66,7 @@ void gdmono_MonoLogCallback(const char *log_domain, const char *log_level, const
 	}
 
 	if (fatal) {
-		ERR_PRINT("Mono: FALTAL ERROR, ABORTING!");
+		ERR_PRINTS("Mono: FALTAL ERROR, ABORTING! Logfile: " + GDMonoLog::get_singleton()->get_log_file_path() + "\n");
 		abort();
 	}
 }
@@ -137,14 +137,16 @@ void GDMonoLog::initialize() {
 	if (_try_create_logs_dir(logs_dir)) {
 		_delete_old_log_files(logs_dir);
 
-		String log_file_name = String::num_int64(OS::get_singleton()->get_unix_time()) + ".txt";
-		_open_log_file(logs_dir.plus_file(log_file_name));
+		log_file_path = logs_dir.plus_file(String::num_int64(OS::get_singleton()->get_unix_time()) + ".txt");
+		_open_log_file(log_file_path);
 	}
 
 	mono_trace_set_level_string(log_level);
 	log_level_id = log_level_get_id(log_level);
 
 	if (log_file) {
+		if (OS::get_singleton()->is_stdout_verbose())
+			OS::get_singleton()->print(String("Mono: Logfile is " + log_file_path + "\n").utf8());
 		mono_trace_set_log_handler(gdmono_MonoLogCallback, this);
 	} else {
 		OS::get_singleton()->printerr("Mono: No log file, using default log handler\n");

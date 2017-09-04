@@ -33,6 +33,7 @@ class GDMonoLog {
 	int log_level_id;
 
 	FileAccess *log_file;
+	String log_file_path;
 
 	bool _try_create_logs_dir(const String &p_logs_dir);
 	void _open_log_file(const String &p_file_path);
@@ -46,6 +47,7 @@ public:
 	void initialize();
 
 	_FORCE_INLINE_ FileAccess *get_log_file() { return log_file; }
+	_FORCE_INLINE_ String get_log_file_path() { return log_file_path; }
 	_FORCE_INLINE_ int get_log_level_id() { return log_level_id; }
 
 	GDMonoLog();
