@@ -401,7 +401,7 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 	while (elem) {
 		if (elem->self()->get_path().is_resource_file()) {
 
-			scripts.push_back(Ref<CSharpScript>(elem->self())); //cast to gdscript to avoid being erased by accident
+			scripts.push_back(Ref<CSharpScript>(elem->self())); //cast to CSharpScript to avoid being erased by accident
 		}
 		elem = elem->next();
 	}
@@ -1098,9 +1098,6 @@ ScriptInstance::RPCMode CSharpInstance::get_rset_mode(const StringName &p_variab
 
 void CSharpInstance::notification(int p_notification) {
 
-	if (GDMono::get_singleton()->is_unloading_script_domain())
-		return;
-
 	Variant value = p_notification;
 	const Variant *args[1] = { &value };
 
@@ -1185,7 +1182,7 @@ bool CSharpScript::_update_exports() {
 
 		// We are creating a temporary new instance of the class here to get the default value
 		// TODO This is a workaround because alpha is happening soon, to focus on other stuff
-		// I should be done with ILOpcodeParser before stable
+		// It should be done with ILOpcodeParser before stable
 
 		MonoObject *tmp_object = mono_object_new(SCRIPTS_DOMAIN, script_class->get_raw());
 

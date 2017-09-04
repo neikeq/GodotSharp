@@ -235,7 +235,7 @@ void GDMono::_initialize_and_check_api_hashes() {
 
 #ifndef MONO_GLUE_DISABLED
 	if (api_core_hash != GodotSharpBindings::get_core_api_hash()) {
-		ERR_PRINT("GDMono: Core API hash mismatch!");
+		ERR_PRINT("Mono: Core API hash mismatch!");
 	}
 #endif
 
@@ -244,7 +244,7 @@ void GDMono::_initialize_and_check_api_hashes() {
 
 #ifndef MONO_GLUE_DISABLED
 	if (api_editor_hash != GodotSharpBindings::get_editor_api_hash()) {
-		ERR_PRINT("GDMono: Editor API hash mismatch!");
+		ERR_PRINT("Mono: Editor API hash mismatch!");
 	}
 #endif
 
@@ -559,14 +559,14 @@ GDMono::GDMono() {
 
 GDMono::~GDMono() {
 
-	unloading_script_domain = true;
-
 	if (runtime_initialized) {
 
 		_GodotSharp::get_singleton()->_dispose_callback();
 
 		if (scripts_domain) {
+			unloading_script_domain = true;
 			_unload_scripts_domain();
+			unloading_script_domain = false;
 		}
 
 		// Free assemblies, last loaded first
@@ -586,8 +586,6 @@ GDMono::~GDMono() {
 		runtime_initialized = false;
 		mono_jit_cleanup(root_domain);
 	}
-
-	unloading_script_domain = false;
 
 	if (gdmono_log)
 		memdelete(gdmono_log);
@@ -667,7 +665,7 @@ bool _GodotSharp::is_domain_loaded() {
 
 void _GodotSharp::queue_dispose(Object *p_object) {
 
-	if (Thread::get_main_id() == Thread::get_caller_id()) {
+	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_unloading_script_domain()) {
 		_dispose_object(p_object);
 	} else {
 #ifndef NO_THREADS
@@ -684,7 +682,7 @@ void _GodotSharp::queue_dispose(Object *p_object) {
 
 void _GodotSharp::queue_dispose(NodePath *p_node_path) {
 
-	if (Thread::get_main_id() == Thread::get_caller_id()) {
+	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_unloading_script_domain()) {
 		memdelete(p_node_path);
 	} else {
 #ifndef NO_THREADS
@@ -701,7 +699,7 @@ void _GodotSharp::queue_dispose(NodePath *p_node_path) {
 
 void _GodotSharp::queue_dispose(RID *p_rid) {
 
-	if (Thread::get_main_id() == Thread::get_caller_id()) {
+	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_unloading_script_domain()) {
 		memdelete(p_rid);
 	} else {
 #ifndef NO_THREADS
