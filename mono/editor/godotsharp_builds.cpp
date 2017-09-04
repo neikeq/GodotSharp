@@ -3,6 +3,7 @@
 #include "../godotsharp_dirs.h"
 #include "../mono_wrapper/gd_mono_class.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
+#include "../utils/path_utils.h"
 #include "bindings_generator.h"
 #include "godotsharp_editor.h"
 #include "main/main.h"
@@ -25,7 +26,7 @@ MonoString *godot_icall_BuildInstance_get_MSBuildPath() {
 
 	return GDMonoMarshal::mono_string_from_godot(msbuild_tools_path);
 #else
-	return GDMonoMarshal::mono_string_from_godot("msbuild");
+	return GDMonoMarshal::mono_string_from_godot(path_which("mssbuild").length() ? "msbuild" : "xbuild");
 #endif
 }
 
@@ -44,7 +45,7 @@ bool GodotSharpBuilds::build_core_api_sln(const String &p_api_sln_dir, const Str
 	if (!FileAccess::exists(api_assembly_file)) {
 		MonoBuildInfo api_build_info(api_sln_file, p_config);
 		api_build_info.name = "Core API";
-		api_build_info.custom_props = "NoWarn=1591"; // Ignore missing documentation warnings
+		api_build_info.custom_props.push_back("NoWarn=1591"); // Ignore missing documentation warnings
 
 		if (!GodotSharpBuilds::get_singleton()->build(api_build_info)) {
 			GodotSharpEditor::get_singleton()->show_error("Failed to build API solution.", "Build error");

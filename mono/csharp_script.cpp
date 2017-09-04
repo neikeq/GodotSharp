@@ -38,6 +38,7 @@
 #include "editor/csharp_project.h"
 #include "editor/editor_node.h"
 #include "editor/godotsharp_editor.h"
+#include "utils/path_utils.h"
 #endif
 
 #include "godotsharp_dirs.h"
@@ -532,20 +533,9 @@ Error CSharpLanguage::open_in_external_editor(const Ref<Script> &p_script, int p
 				args.push_back(script_path);
 			}
 
-			String program = "code";
+			static String program = path_which("code");
 
-			Vector<String> env_path = OS::get_singleton()->get_environment("PATH").split(":", false);
-
-			for (int i = 0; i < env_path.size(); i++) {
-				String p = env_path[i].plus_file(program);
-
-				if (FileAccess::exists(p)) {
-					program = p;
-					break;
-				}
-			}
-
-			Error err = OS::get_singleton()->execute(program, args, false);
+			Error err = OS::get_singleton()->execute(program.length() ? program : "code", args, false);
 
 			if (err != OK) {
 				ERR_PRINT("GodotSharp: Could not execute external editor");

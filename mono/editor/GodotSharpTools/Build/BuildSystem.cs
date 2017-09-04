@@ -46,7 +46,7 @@ namespace GodotSharpTools.Build
             this.config = config;
         }
 
-        public bool Build(string loggerAssemblyPath, string loggerOutputDir, string customProperties = "")
+        public bool Build(string loggerAssemblyPath, string loggerOutputDir, string[] customProperties = null)
         {
             if (process != null)
                 throw new InvalidOperationException("Already in use");
@@ -77,7 +77,7 @@ namespace GodotSharpTools.Build
             return true;
         }
 
-        public bool BuildAsync(string loggerAssemblyPath, string loggerOutputDir, string customProperties = "")
+        public bool BuildAsync(string loggerAssemblyPath, string loggerOutputDir, string[] customProperties = null)
         {
             if (process != null)
                 throw new InvalidOperationException("Already in use");
@@ -110,15 +110,25 @@ namespace GodotSharpTools.Build
             return true;
         }
 
-        private string BuildArguments(string loggerAssemblyPath, string loggerOutputDir, string customProperties)
+        private string BuildArguments(string loggerAssemblyPath, string loggerOutputDir, string[] customProperties)
         {
-            return string.Format("{0} /v:normal /t:Build /p:{1} /l:{2},{3};{4}",
+            string arguments = string.Format("{0} /v:normal /t:Build /p:{1} /l:{2},{3};{4}",
                 solution,
-                "Configuration=" + config + (customProperties.Length > 0 ? "," + customProperties : string.Empty),
+                "Configuration=" + config,
                 typeof(GodotBuildLogger).FullName,
                 loggerAssemblyPath,
                 loggerOutputDir
             );
+
+            if (customProperties != null)
+            {
+                foreach (string customProperty in customProperties)
+                {
+                    arguments += " /p:" + customProperty;
+                }
+            }
+
+            return arguments;
         }
 
         private void RemovePlatformVariable(StringDictionary environmentVariables)
@@ -237,14 +247,14 @@ namespace GodotSharpTools.Build
         {
             string line = String.Format("{0}({1},{2}): warning {3}: {4}", e.File, e.LineNumber, e.ColumnNumber, e.Code, e.Message, e.ProjectFile);
 
-            if (e.ProjectFile.Length > 0)
+            if (e.ProjectFile != null && e.ProjectFile.Length > 0)
                 line += string.Format(" [{0}]", e.ProjectFile);
 
             WriteLine(line);
 
             string warningLine = String.Format(@"warning,{0},{1},{2},{3},{4},{5}",
                                     e.File.CsvEscape(), e.LineNumber, e.ColumnNumber,
-                                    e.Code.CsvEscape(), e.Message.CsvEscape(), e.ProjectFile.CsvEscape());
+                                    e.Code.CsvEscape(), e.Message.CsvEscape(), e.ProjectFile != null ? e.ProjectFile.CsvEscape() : string.Empty);
             issuesStreamWriter.WriteLine(warningLine);
         }
 

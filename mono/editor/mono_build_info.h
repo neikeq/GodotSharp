@@ -44,7 +44,7 @@ struct MonoBuildInfo {
 	String name;
 	String solution;
 	String configuration;
-	String custom_props;
+	Vector<String> custom_props;
 
 	MonoBuildInfo() {}
 

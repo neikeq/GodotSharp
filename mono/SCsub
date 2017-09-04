@@ -85,8 +85,6 @@ def mono_build_solution(source, target, env):
         msbuild_path,
         os.path.abspath(str(source[0])),
         '/p:Configuration=Release',
-        '/p:DebugSymbols=false',
-        '/p:DebugType=none',
         '/p:OutputPath=' + output_path
     ]
 
@@ -96,12 +94,22 @@ def mono_build_solution(source, target, env):
     if 'PLATFORM' in msbuild_env:
         del msbuild_env['PLATFORM']
 
-    try:
-        subprocess.check_call(msbuild_args, env = msbuild_env)
-    except subprocess.CalledProcessError:
-        raise RuntimeError('GodotSharpTools build failed')
-    except OSError:
-        raise RuntimeError('Could not find msbuild')
+    msbuild_alt_paths = [ 'xbuild' ]
+
+    while True:
+        try:
+            subprocess.check_call(msbuild_args, env = msbuild_env)
+            break
+        except subprocess.CalledProcessError:
+            raise RuntimeError('GodotSharpTools build failed')
+        except OSError:
+            if os.name is not 'nt':
+                if not msbuild_alt_paths:
+                    raise RuntimeError('Could not find commands msbuild or xbuild')
+                # Try xbuild
+                msbuild_args[0] = msbuild_alt_paths.pop(0)
+            else:
+                raise RuntimeError('Could not find command MSBuild.exe')
 
 
 mono_sln_builder = Builder(action = mono_build_solution)

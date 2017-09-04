@@ -374,10 +374,16 @@ void MonoBuildTab::_issue_activated(int p_idx) {
 
 	const BuildIssue &issue = issues[p_idx];
 
-	if (issue.project_file.empty() || issue.file.empty())
+	if (issue.project_file.empty() && issue.file.empty())
 		return;
 
-	String file = issue.project_file.get_base_dir().simplify_path().plus_file(issue.file.simplify_path());
+	String project_dir = issue.project_file.length() ? issue.project_file.get_base_dir() : build_info.solution.get_base_dir();
+
+	String file = project_dir.simplify_path().plus_file(issue.file.simplify_path());
+
+	if (!FileAccess::exists(file))
+		return;
+
 	file = ProjectSettings::get_singleton()->localize_path(file);
 
 	if (file.begins_with("res://")) {
