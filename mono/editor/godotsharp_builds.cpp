@@ -26,7 +26,7 @@ MonoString *godot_icall_BuildInstance_get_MSBuildPath() {
 
 	return GDMonoMarshal::mono_string_from_godot(msbuild_tools_path);
 #else
-	return GDMonoMarshal::mono_string_from_godot(path_which("mssbuild").length() ? "msbuild" : "xbuild");
+	return GDMonoMarshal::mono_string_from_godot(path_which("msbuild").length() ? "msbuild" : "xbuild");
 #endif
 }
 
