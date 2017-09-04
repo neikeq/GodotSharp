@@ -556,6 +556,11 @@ Error CSharpLanguage::open_in_external_editor(const Ref<Script> &p_script, int p
 
 	return OK;
 }
+
+bool CSharpLanguage::overrides_external_editor() {
+
+	return ((ExternalEditor)EditorSettings::get_singleton()->get("godot_sharp/editor/external_editor").operator int()) != EDITOR_NONE;
+}
 #endif
 
 void CSharpLanguage::thread_enter() {

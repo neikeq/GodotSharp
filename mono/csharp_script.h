@@ -306,7 +306,7 @@ public:
 
 #ifdef TOOLS_ENABLED
 	virtual Error open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col);
-	virtual bool overrides_external_editor() { return true; }
+	virtual bool overrides_external_editor();
 #endif
 
 	/* THREAD ATTACHING */
