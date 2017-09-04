@@ -51,6 +51,8 @@ bool GodotSharpBuilds::build_core_api_sln(const String &p_api_sln_dir, const Str
 			return false;
 		}
 	}
+
+	return true;
 }
 
 bool GodotSharpBuilds::copy_api_assembly(const String &p_src_dir, const String &p_dst_dir, const String &p_assembly_name) {
@@ -79,6 +81,8 @@ bool GodotSharpBuilds::copy_api_assembly(const String &p_src_dir, const String &
 			return false;
 		}
 	}
+
+	return true;
 }
 
 bool godotsharp_build_callback() {
