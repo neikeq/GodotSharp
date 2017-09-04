@@ -96,8 +96,12 @@ def mono_build_solution(source, target, env):
     if 'PLATFORM' in msbuild_env:
         del msbuild_env['PLATFORM']
 
-    if subprocess.call(msbuild_args, env = msbuild_env) is not 0:
+    try:
+        subprocess.check_call(msbuild_args, env = msbuild_env)
+    except subprocess.CalledProcessError:
         raise RuntimeError('GodotSharpTools build failed')
+    except OSError:
+        raise RuntimeError('Could not find msbuild')
 
 
 mono_sln_builder = Builder(action = mono_build_solution)
