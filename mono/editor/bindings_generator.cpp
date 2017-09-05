@@ -687,10 +687,28 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 				getter = current_type->find_method_by_name(prop_doc.getter);
 			}
 
-			ERR_CONTINUE(!setter);
-			ERR_CONTINUE(!getter);
+			ERR_FAIL_COND_V(!setter && !getter, ERR_BUG);
 
-			String proptype_name = getter->return_type; // Don't trust PropertyDoc::type
+			bool is_valid = false;
+			int prop_index = ClassDB::get_property_index(itype.name, prop_doc.name, &is_valid);
+			ERR_FAIL_COND_V(!is_valid, ERR_BUG);
+
+			if (setter) {
+				int setter_argc = prop_index != -1 ? 2 : 1;
+				ERR_FAIL_COND_V(setter->arguments.size() != setter_argc, ERR_BUG);
+			}
+
+			if (getter) {
+				int getter_argc = prop_index != -1 ? 1 : 0;
+				ERR_FAIL_COND_V(getter->arguments.size() != getter_argc, ERR_BUG);
+			}
+
+			if (getter && setter) {
+				ERR_FAIL_COND_V(getter->return_type != setter->arguments.back()->get().type, ERR_BUG);
+			}
+
+			// Let's not trust PropertyDoc::type
+			String proptype_name = getter ? getter->return_type : setter->arguments.back()->get().type;
 
 			const TypeInterface *prop_itype = _get_type_by_name_or_null(proptype_name);
 			if (!prop_itype) {
@@ -705,10 +723,6 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			// Prevent naming the property and its enclosing type from sharing the same name
 			if (prop_proxy_name == itype.proxy_name)
 				prop_proxy_name += "_";
-
-			bool is_valid = false;
-			int prop_index = ClassDB::get_property_index(itype.name, prop_doc.name, &is_valid);
-			ERR_FAIL_COND_V(!is_valid, ERR_BUG);
 
 			if (prop_doc.description.size()) {
 				cs_file.push_back(MEMBER_BEGIN "/// <summary>\n");
@@ -734,20 +748,24 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			cs_file.push_back(prop_itype->cs_type);
 			cs_file.push_back(" ");
 			cs_file.push_back(prop_proxy_name.replace("/", "__"));
-			cs_file.push_back("\n" OPEN_BLOCK_L2);
+			cs_file.push_back("\n" INDENT2 OPEN_BLOCK);
 
-			cs_file.push_back("get\n" OPEN_BLOCK_L3);
-			cs_file.push_back("return ");
-			cs_file.push_back(getter->proxy_name + "(");
-			if (prop_index != -1)
-				cs_file.push_back(itos(prop_index));
-			cs_file.push_back(");\n" CLOSE_BLOCK_L3);
+			if (getter) {
+				cs_file.push_back(INDENT3 "get\n" OPEN_BLOCK_L3);
+				cs_file.push_back("return ");
+				cs_file.push_back(getter->proxy_name + "(");
+				if (prop_index != -1)
+					cs_file.push_back(itos(prop_index));
+				cs_file.push_back(");\n" CLOSE_BLOCK_L3);
+			}
 
-			cs_file.push_back(INDENT3 "set\n" OPEN_BLOCK_L3);
-			cs_file.push_back(setter->proxy_name + "(");
-			if (prop_index != -1)
-				cs_file.push_back(itos(prop_index) + ", ");
-			cs_file.push_back("value);\n" CLOSE_BLOCK_L3);
+			if (setter) {
+				cs_file.push_back(INDENT3 "set\n" OPEN_BLOCK_L3);
+				cs_file.push_back(setter->proxy_name + "(");
+				if (prop_index != -1)
+					cs_file.push_back(itos(prop_index) + ", ");
+				cs_file.push_back("value);\n" CLOSE_BLOCK_L3);
+			}
 
 			cs_file.push_back(CLOSE_BLOCK_L2);
 		}
