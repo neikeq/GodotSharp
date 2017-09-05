@@ -175,7 +175,7 @@ Dictionary mono_object_to_Dictionary(MonoObject *p_dict);
 // Vector3
 
 #define MARSHALLED_OUT_Vector3(m_in, m_out) real_t m_out[3] = { m_in.x, m_in.y, m_in.z };
-#define MARSHALLED_IN_Vector3(m_in, m_out) Vector3 m_out(m_in[0], m_in[1], m_in[3]);
+#define MARSHALLED_IN_Vector3(m_in, m_out) Vector3 m_out(m_in[0], m_in[1], m_in[2]);
 
 // Basis
 
