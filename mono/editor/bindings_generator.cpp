@@ -1303,7 +1303,7 @@ Error BindingsGenerator::generate_glue(const String &p_output_dir) {
 					if (return_type->c_out.empty())
 						cpp_file.push_back("\treturn " LOCAL_RET ";\n");
 					else
-						cpp_file.push_back(sformat(return_type->c_out, return_type->name, LOCAL_RET));
+						cpp_file.push_back(sformat(return_type->c_out, return_type->c_type_out, LOCAL_RET, return_type->name));
 				}
 
 				cpp_file.push_back(CLOSE_BLOCK "\n");
@@ -1752,7 +1752,7 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 		itype = TypeInterface::create_value_type(#m_type);                                            \
 		itype.c_in = "\tMARSHALLED_IN(" #m_type ", %1, %1_in);\n";                                    \
 		itype.c_out = "\tMARSHALLED_OUT(" #m_type ", %1, ret_out)\n"                                  \
-					  "\treturn mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(%0), ret_out);\n"; \
+					  "\treturn mono_value_box(mono_domain_get(), CACHED_CLASS_RAW(%2), ret_out);\n"; \
 		itype.c_arg_in = "&%s_in";                                                                    \
 		itype.c_type_in = m_type_in;                                                                  \
 		itype.cs_in = "ref %s";                                                                       \
@@ -1786,7 +1786,21 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	}
 
 	INSERT_PRIMITIVE_TYPE(bool)
-	INSERT_PRIMITIVE_TYPE(int)
+	//INSERT_PRIMITIVE_TYPE(int)
+
+	// int
+	itype = TypeInterface::create_value_type("int");
+	itype.c_arg_in = "&%s_in";
+	//* ptrcall only supports int64_t and uint64_t
+	itype.c_in = "\t%0 %1_in = (%0)%1;\n";
+	itype.c_out = "\treturn (%0)%1;\n";
+	itype.c_type = "int64_t";
+	//*/
+	itype.c_type_in = itype.name;
+	itype.c_type_out = itype.name;
+	itype.im_type_in = itype.name;
+	itype.im_type_out = itype.name;
+	builtin_types.insert(itype.name, itype);
 
 #undef INSERT_PRIMITIVE_TYPE
 
@@ -1798,8 +1812,12 @@ void BindingsGenerator::_populate_builtin_type_interfaces() {
 	itype.name = "float";
 #endif
 	itype.proxy_name = itype.name;
-	itype.c_arg_in = "&%s";
-	itype.c_type = "real_t";
+	itype.c_arg_in = "&%s_in";
+	//* ptrcall only supports double
+	itype.c_in = "\t%0 %1_in = (%0)%1;\n";
+	itype.c_out = "\treturn (%0)%1;\n";
+	itype.c_type = "double";
+	//*/
 	itype.c_type_in = "real_t";
 	itype.c_type_out = "real_t";
 	itype.cs_type = itype.proxy_name;

@@ -184,6 +184,7 @@ class BindingsGenerator {
 		 * Formatting elements:
 		 * %0: [c_type_out] of the return type
 		 * %1: name of the variable to be returned
+		 * %2: [name] of the return type
 		 */
 		String c_out;
 
@@ -195,7 +196,8 @@ class BindingsGenerator {
 		 * Other types: [name]
 		 * -- Exceptions --
 		 * VarArg (fictitious type to represent variable arguments): Array
-		 * float/double (depending of REAL_T_IS_DOUBLE): real_t
+		 * float: double (because ptrcall only supports double)
+		 * int: int64_t (because ptrcall only supports int64_t and uint64_t)
 		 * Reference types override this for the type of the return variable: Ref<Reference>
 		 */
 		String c_type;
@@ -207,7 +209,8 @@ class BindingsGenerator {
 
 		/**
 		 * Determines the return type used for function signatures.
-		 * Also used to construct a default value to return in case of errors.
+		 * Also used to construct a default value to return in case of errors,
+		 * and to format [c_out].
 		 */
 		String c_type_out;
 
