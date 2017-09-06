@@ -93,8 +93,6 @@ Error GDMonoAssembly::wrapper_for_image(MonoImage *p_image) {
 
 	image = p_image;
 
-	mono_image_addref(image);
-
 	loaded = true;
 
 	return OK;
@@ -116,8 +114,6 @@ void GDMonoAssembly::unload() {
 
 	cached_classes.clear();
 	cached_raw.clear();
-
-	mono_image_close(image);
 
 	assembly = NULL;
 	image = NULL;

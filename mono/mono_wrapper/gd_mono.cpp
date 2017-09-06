@@ -65,7 +65,7 @@ MonoAssembly *gdmono_MonoAssemblyPreLoad(MonoAssemblyName *aname, char **assembl
 		search_dirs.push_back(String(rootdir).plus_file("mono").plus_file("4.5"));
 	}
 
-	while (assemblies_path) {
+	while (*assemblies_path) {
 		search_dirs.push_back(*assemblies_path);
 		++assemblies_path;
 	}
@@ -96,11 +96,13 @@ found:
 	if (has_extension)
 		name = name.get_basename();
 
+	MonoDomain *domain = mono_domain_get();
+
 	GDMonoAssembly *assembly = memnew(GDMonoAssembly(name, path));
-	Error err = assembly->load(mono_domain_get());
+	Error err = assembly->load(domain);
 	ERR_FAIL_COND_V(err != OK, NULL);
 
-	GDMono::get_singleton()->add_assembly(name, assembly);
+	GDMono::get_singleton()->add_assembly(mono_domain_get_id(domain), assembly);
 
 	return assembly->get_assembly();
 }
@@ -178,15 +180,14 @@ void GDMono::initialize() {
 
 	runtime_initialized = true;
 
+	// mscorlib assembly MUST be present at initialization
+	ERR_EXPLAIN("Mono: Failed to load mscorlib assembly");
+	ERR_FAIL_COND(!_load_corlib_assembly());
+
 	ERR_EXPLAIN("Mono: Failed to load scripts domain");
 	ERR_FAIL_COND(_load_scripts_domain() != OK);
 
 	_register_internal_calls();
-
-	// The following assemblies MUST be present at initialization
-
-	ERR_EXPLAIN("Mono: Failed to load mscorlib assembly");
-	ERR_FAIL_COND(!_load_corlib_assembly());
 
 	// The following assemblies are not required at initialization
 	_load_all_script_assemblies();
@@ -252,9 +253,9 @@ void GDMono::_initialize_and_check_api_hashes() {
 }
 #endif // DEBUG_METHODS_ENABLED
 
-void GDMono::add_assembly(const String &p_name, GDMonoAssembly *p_assembly) {
+void GDMono::add_assembly(uint32_t p_domain_id, GDMonoAssembly *p_assembly) {
 
-	assemblies.set(p_name, p_assembly);
+	assemblies[p_domain_id][p_assembly->get_name()] = p_assembly;
 }
 
 bool GDMono::_load_assembly(const String &p_name, GDMonoAssembly **r_assembly) {
@@ -272,7 +273,9 @@ bool GDMono::_load_assembly(const String &p_name, GDMonoAssembly **r_assembly) {
 	if (!assembly)
 		return false;
 
-	GDMonoAssembly **stored_assembly = assemblies.getptr(p_name);
+	uint32_t domain_id = mono_domain_get_id(mono_domain_get());
+
+	GDMonoAssembly **stored_assembly = assemblies[domain_id].getptr(p_name);
 
 	if (stored_assembly) {
 		// Loaded by our preload hook (status is not initialized when returning from a preload hook)
@@ -361,20 +364,6 @@ bool GDMono::_load_project_assembly() {
 	return success;
 }
 
-void GDMono::_unload_project_assembly() {
-
-	// Will also close the image, which should unload all assemblies it loaded or at least that's what I think...
-	// (does not unload api assemblies, because we loaded these separately)
-	if (project_assembly) {
-		if (OS::get_singleton()->is_stdout_verbose())
-			OS::get_singleton()->print("Mono: Unloading project assembly...\n");
-
-		assemblies.erase(project_assembly->get_name());
-		memdelete(project_assembly);
-		project_assembly = NULL;
-	}
-}
-
 bool GDMono::_load_all_script_assemblies() {
 
 #ifndef MONO_GLUE_DISABLED
@@ -425,10 +414,6 @@ Error GDMono::_load_scripts_domain() {
 
 	mono_domain_set(scripts_domain, true);
 
-#ifdef DEBUG_ENABLED
-	mono_debug_domain_create(scripts_domain);
-#endif
-
 	return OK;
 }
 
@@ -443,7 +428,9 @@ Error GDMono::_unload_scripts_domain() {
 	if (mono_domain_get() != root_domain)
 		mono_domain_set(root_domain, true);
 
+	finalizing_scripts_domain = true;
 	mono_domain_finalize(scripts_domain, 2000);
+	finalizing_scripts_domain = false;
 
 	MonoObject *exc = NULL;
 	mono_domain_try_unload(scripts_domain, &exc);
@@ -486,13 +473,21 @@ Error GDMono::reload_scripts_domain_if_needed() {
 
 		_GodotSharp::get_singleton()->_dispose_callback();
 
+		uint32_t scripts_domain_id = mono_domain_get_id(scripts_domain);
+
 		Error err = _unload_scripts_domain();
 		if (err != OK) {
 			ERR_PRINT("Mono: Failed to unload scripts domain");
 			return err;
 		}
 
-		_unload_project_assembly();
+		_domain_assemblies_cleanup(scripts_domain_id);
+
+		api_assembly = NULL;
+		project_assembly = NULL;
+#ifdef TOOLS_ENABLED
+		editor_api_assembly = NULL;
+#endif
 
 		_GodotSharp::get_singleton()->_dispose_callback();
 	}
@@ -516,15 +511,31 @@ GDMonoClass *GDMono::get_class(MonoClass *p_class) {
 
 	GDMonoClass *mono_class = NULL;
 
+	uint32_t domain_id = mono_domain_get_id(mono_domain_get());
+	HashMap<String, GDMonoAssembly *> &domain_assemblies = assemblies[domain_id];
+
 	const String *k = NULL;
-	while ((k = assemblies.next(k))) {
-		mono_class = assemblies.get(*k)->get_class(p_class);
+	while ((k = domain_assemblies.next(k))) {
+		mono_class = domain_assemblies.get(*k)->get_class(p_class);
 
 		if (mono_class)
 			return mono_class;
 	}
 
-	return NULL;
+	// last, try with corlib, which is in the root domain
+	return corlib_assembly->get_class(p_class);
+}
+
+void GDMono::_domain_assemblies_cleanup(uint32_t p_domain_id) {
+
+	HashMap<String, GDMonoAssembly *> &domain_assemblies = assemblies[p_domain_id];
+
+	const String *k = NULL;
+	while ((k = domain_assemblies.next(k))) {
+		memdelete(domain_assemblies.get(*k));
+	}
+
+	assemblies.erase(p_domain_id);
 }
 
 GDMono::GDMono() {
@@ -534,7 +545,7 @@ GDMono::GDMono() {
 	gdmono_log = memnew(GDMonoLog);
 
 	runtime_initialized = false;
-	unloading_script_domain = false;
+	finalizing_scripts_domain = false;
 
 	root_domain = NULL;
 	scripts_domain = NULL;
@@ -564,20 +575,35 @@ GDMono::~GDMono() {
 		_GodotSharp::get_singleton()->_dispose_callback();
 
 		if (scripts_domain) {
-			unloading_script_domain = true;
-			_unload_scripts_domain();
-			unloading_script_domain = false;
-		}
 
-		// Free assemblies, last loaded first
-		List<String> keys;
-		assemblies.get_key_list(&keys);
-		for (List<String>::Element *E = keys.back(); E; E = E->prev()) {
-			memdelete(assemblies.get(E->get()));
+			uint32_t scripts_domain_id = mono_domain_get_id(scripts_domain);
+
+			Error err = _unload_scripts_domain();
+			if (err != OK) {
+				WARN_PRINT("Mono: Failed to unload scripts domain");
+			}
+
+			_domain_assemblies_cleanup(scripts_domain_id);
+
+			api_assembly = NULL;
+			project_assembly = NULL;
+#ifdef TOOLS_ENABLED
+			editor_api_assembly = NULL;
+#endif
 		}
-		assemblies.clear();
 
 		_GodotSharp::get_singleton()->_dispose_callback();
+
+		const uint32_t *k = NULL;
+		while ((k = assemblies.next(k))) {
+			HashMap<String, GDMonoAssembly *> &domain_assemblies = assemblies.get(*k);
+
+			const String *k = NULL;
+			while ((k = domain_assemblies.next(k))) {
+				memdelete(domain_assemblies.get(*k));
+			}
+		}
+		assemblies.clear();
 
 		GDMonoUtils::clear_cache();
 
@@ -646,9 +672,9 @@ void _GodotSharp::detach_thread() {
 	GDMonoUtils::detach_current_thread();
 }
 
-bool _GodotSharp::is_unloading_domain() {
+bool _GodotSharp::is_finalizing_domain() {
 
-	return GDMono::get_singleton()->is_unloading_script_domain();
+	return GDMono::get_singleton()->is_finalizing_scripts_domain();
 }
 
 bool _GodotSharp::is_domain_loaded() {
@@ -665,7 +691,7 @@ bool _GodotSharp::is_domain_loaded() {
 
 void _GodotSharp::queue_dispose(Object *p_object) {
 
-	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_unloading_script_domain()) {
+	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_finalizing_scripts_domain()) {
 		_dispose_object(p_object);
 	} else {
 #ifndef NO_THREADS
@@ -682,7 +708,7 @@ void _GodotSharp::queue_dispose(Object *p_object) {
 
 void _GodotSharp::queue_dispose(NodePath *p_node_path) {
 
-	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_unloading_script_domain()) {
+	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_finalizing_scripts_domain()) {
 		memdelete(p_node_path);
 	} else {
 #ifndef NO_THREADS
@@ -699,7 +725,7 @@ void _GodotSharp::queue_dispose(NodePath *p_node_path) {
 
 void _GodotSharp::queue_dispose(RID *p_rid) {
 
-	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_unloading_script_domain()) {
+	if (Thread::get_main_id() == Thread::get_caller_id() && !GDMono::get_singleton()->is_finalizing_scripts_domain()) {
 		memdelete(p_rid);
 	} else {
 #ifndef NO_THREADS
@@ -719,13 +745,10 @@ void _GodotSharp::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("attach_thread"), &_GodotSharp::attach_thread);
 	ClassDB::bind_method(D_METHOD("detach_thread"), &_GodotSharp::detach_thread);
 
-	ClassDB::bind_method(D_METHOD("is_unloading_domain"), &_GodotSharp::is_unloading_domain);
+	ClassDB::bind_method(D_METHOD("is_finalizing_domain"), &_GodotSharp::is_finalizing_domain);
 	ClassDB::bind_method(D_METHOD("is_domain_loaded"), &_GodotSharp::is_domain_loaded);
 
 	ClassDB::bind_method(D_METHOD("_dispose_callback"), &_GodotSharp::_dispose_callback);
-
-	ADD_SIGNAL(MethodInfo("about_to_unload_domain"));
-	ADD_SIGNAL(MethodInfo("domain_loaded"));
 }
 
 _GodotSharp::_GodotSharp() {

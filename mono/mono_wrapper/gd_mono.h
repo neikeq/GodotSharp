@@ -40,7 +40,7 @@
 class GDMono {
 
 	bool runtime_initialized;
-	bool unloading_script_domain;
+	bool finalizing_scripts_domain;
 
 	MonoDomain *root_domain;
 	MonoDomain *scripts_domain;
@@ -54,7 +54,9 @@ class GDMono {
 	GDMonoAssembly *editor_tools_assembly;
 #endif
 
-	HashMap<String, GDMonoAssembly *> assemblies;
+	HashMap<uint32_t, HashMap<String, GDMonoAssembly *> > assemblies;
+
+	void _domain_assemblies_cleanup(uint32_t p_domain_id);
 
 	bool _load_corlib_assembly();
 	bool _load_core_api_assembly();
@@ -63,7 +65,6 @@ class GDMono {
 	bool _load_editor_tools_assembly();
 #endif
 	bool _load_project_assembly();
-	void _unload_project_assembly();
 
 	bool _load_all_script_assemblies();
 
@@ -111,10 +112,10 @@ public:
 
 	static GDMono *get_singleton() { return singleton; }
 
-	void add_assembly(const String &p_name, GDMonoAssembly *p_assembly);
+	void add_assembly(uint32_t p_domain_id, GDMonoAssembly *p_assembly);
 
 	_FORCE_INLINE_ bool is_runtime_initialized() const { return runtime_initialized; }
-	_FORCE_INLINE_ bool is_unloading_script_domain() const { return unloading_script_domain; }
+	_FORCE_INLINE_ bool is_finalizing_scripts_domain() const { return finalizing_scripts_domain; }
 
 	_FORCE_INLINE_ MonoDomain *get_scripts_domain() { return scripts_domain; }
 	_FORCE_INLINE_ MonoDomain *get_tools_domain() { return tools_domain; }
@@ -170,7 +171,7 @@ public:
 	void attach_thread();
 	void detach_thread();
 
-	bool is_unloading_domain();
+	bool is_finalizing_domain();
 	bool is_domain_loaded();
 
 	void queue_dispose(Object *p_object);
