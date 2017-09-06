@@ -65,8 +65,9 @@ MonoAssembly *gdmono_MonoAssemblyPreLoad(MonoAssemblyName *aname, char **assembl
 		search_dirs.push_back(String(rootdir).plus_file("mono").plus_file("4.5"));
 	}
 
-	while (*assemblies_path) {
-		search_dirs.push_back(*assemblies_path);
+	while (assemblies_path) {
+		if (*assemblies_path)
+			search_dirs.push_back(*assemblies_path);
 		++assemblies_path;
 	}
 
