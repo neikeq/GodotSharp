@@ -311,12 +311,7 @@ void CSharpLanguage::frame() {
 
 			ERR_FAIL_NULL(thunk);
 
-			MonoObject *exc = NULL;
-			thunk(sync_context, &exc);
-
-			if (exc) {
-				mono_print_unhandled_exception(exc);
-			}
+			thunk(sync_context, NULL);
 		}
 	}
 }
@@ -956,6 +951,7 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 
 			if (exc) {
 				mono_print_unhandled_exception(exc);
+				ERR_FAIL_V(Variant());
 			}
 
 			return Variant();
@@ -1197,7 +1193,7 @@ bool CSharpScript::_update_exports() {
 				ERR_PRINT("Exception thrown from constructor of temporary MonoObject:");
 				mono_print_unhandled_exception(exc);
 				tmp_object = NULL;
-				return false;
+				ERR_FAIL_V(false);
 			}
 		} else {
 			ERR_PRINT("Failed to create temporary MonoObject");
@@ -1387,26 +1383,7 @@ CSharpInstance *CSharpScript::_create_instance(const Variant **p_args, int p_arg
 
 	// Construct
 	GDMonoMethod *ctor = script_class->get_method(CACHED_STRING_NAME(dotctor), p_argcount);
-	MonoObject *exc = NULL;
-	ctor->invoke(mono_object, p_args, &exc);
-
-	if (exc) {
-		instance->script = Ref<CSharpScript>();
-		instance->owner->set_script_instance(NULL);
-
-#ifndef NO_THREADS
-		CSharpLanguage::singleton->lock->lock();
-#endif
-		instances.erase(instance->owner);
-
-#ifndef NO_THREADS
-		CSharpLanguage::singleton->lock->unlock();
-#endif
-
-		r_error.error = Variant::CallError::CALL_ERROR_INSTANCE_IS_NULL;
-		ERR_EXPLAIN("Exception was thrown while constructing the object");
-		ERR_FAIL_V(NULL);
-	}
+	ctor->invoke(mono_object, p_args, NULL);
 
 	// Tie managed to unmanaged
 	instance->gchandle = MonoGCHandle::create_strong(mono_object);

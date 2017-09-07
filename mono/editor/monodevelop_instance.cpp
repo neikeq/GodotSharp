@@ -41,6 +41,7 @@ void MonoDevelopInstance::execute(const Vector<String> &p_files) {
 
 	if (exc) {
 		mono_print_unhandled_exception(exc);
+		ERR_FAIL();
 	}
 }
 
@@ -66,7 +67,7 @@ MonoDevelopInstance::MonoDevelopInstance(const String &p_solution) {
 
 	if (exc) {
 		mono_print_unhandled_exception(exc);
-		return;
+		ERR_FAIL();
 	}
 
 	gc_handle = MonoGCHandle::create_strong(obj);

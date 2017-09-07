@@ -277,7 +277,7 @@ void GodotSharpBuilds::BuildProcess::start(bool p_blocking) {
 		mono_print_unhandled_exception(exc);
 		exited = true;
 		build_tab->on_build_exec_failed(ctor->get_full_name() + " threw an exception");
-		return;
+		ERR_FAIL();
 	}
 
 	// Call Build
@@ -296,7 +296,7 @@ void GodotSharpBuilds::BuildProcess::start(bool p_blocking) {
 		mono_print_unhandled_exception(exc);
 		exited = true;
 		build_tab->on_build_exec_failed(build_method->get_full_name() + " threw an exception");
-		return;
+		ERR_FAIL();
 	}
 
 	// Build returned

@@ -121,6 +121,28 @@ void gdmono_MonoPrintCallback(const char *string, mono_bool is_stdout) {
 
 GDMono *GDMono::singleton = NULL;
 
+static bool _wait_for_debugger_msecs(uint32_t p_msecs) {
+
+	do {
+		if (mono_is_debugger_attached())
+			return true;
+
+		int last_tick = OS::get_singleton()->get_ticks_msec();
+
+		OS::get_singleton()->delay_usec((p_msecs < 25 ? p_msecs : 25) * 1000);
+
+		int tdiff = OS::get_singleton()->get_ticks_msec() - last_tick;
+
+		if (tdiff > p_msecs) {
+			p_msecs = 0;
+		} else {
+			p_msecs -= tdiff;
+		}
+	} while (p_msecs > 0);
+
+	return mono_is_debugger_attached();
+}
+
 void GDMono::initialize() {
 
 	ERR_FAIL_NULL(Engine::get_singleton());
@@ -128,6 +150,13 @@ void GDMono::initialize() {
 	OS::get_singleton()->print("Initializing mono...\n");
 
 	_initialize_and_check_api_hashes();
+
+	GDMonoLog::get_singleton()->initialize();
+
+#ifdef MONO_PRINT_HANDLER_ENABLED
+	mono_trace_set_print_handler(gdmono_MonoPrintCallback);
+	mono_trace_set_printerr_handler(gdmono_MonoPrintCallback);
+#endif
 
 #if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
 	mono_reg_info = MonoRegUtils::find_mono();
@@ -154,18 +183,14 @@ void GDMono::initialize() {
 #ifdef DEBUG_ENABLED
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 
+	// TODO Add setting for suspend=y
+
+	// --debugger-agent=help
 	const char *options[] = {
 		"--soft-breakpoints",
 		"--debugger-agent=transport=dt_socket,address=127.0.0.1:17615,embedding=1,server=y,suspend=n"
 	};
 	mono_jit_parse_options(2, (char **)options);
-#endif
-
-	GDMonoLog::get_singleton()->initialize();
-
-#ifdef MONO_PRINT_HANDLER_ENABLED
-	mono_trace_set_print_handler(gdmono_MonoPrintCallback);
-	mono_trace_set_printerr_handler(gdmono_MonoPrintCallback);
 #endif
 
 	mono_config_parse(NULL);
@@ -175,11 +200,17 @@ void GDMono::initialize() {
 	ERR_EXPLAIN("Mono: Failed to initialize runtime");
 	ERR_FAIL_NULL(root_domain);
 
-	OS::get_singleton()->print("Mono: Runtime initialized\n");
-
 	GDMonoUtils::set_main_thread(GDMonoUtils::get_current_thread());
 
 	runtime_initialized = true;
+
+	OS::get_singleton()->print("Mono: Runtime initialized\n");
+
+#ifdef TOOLS_ENABLED
+	bool debugger_attached = _wait_for_debugger_msecs(500);
+	if (!debugger_attached && OS::get_singleton()->is_stdout_verbose())
+		OS::get_singleton()->printerr("Mono: Debugger wait timeout");
+#endif
 
 	// mscorlib assembly MUST be present at initialization
 	ERR_EXPLAIN("Mono: Failed to load mscorlib assembly");

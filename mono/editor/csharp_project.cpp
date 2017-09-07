@@ -45,7 +45,7 @@ String generate_core_api_project(const String &p_dir, const Vector<String> &p_fi
 
 	if (exc) {
 		mono_print_unhandled_exception(exc);
-		return "";
+		ERR_FAIL_V(String());
 	}
 
 	return ret ? GDMonoMarshal::mono_string_to_godot((MonoString *)ret) : "";
@@ -64,7 +64,7 @@ String generate_editor_api_project(const String &p_dir, const String &p_core_dll
 
 	if (exc) {
 		mono_print_unhandled_exception(exc);
-		return "";
+		ERR_FAIL_V(String());
 	}
 
 	return ret ? GDMonoMarshal::mono_string_to_godot((MonoString *)ret) : "";
@@ -83,7 +83,7 @@ String generate_game_project(const String &p_dir, const String &p_name, const Ve
 
 	if (exc) {
 		mono_print_unhandled_exception(exc);
-		return "";
+		ERR_FAIL_V(String());
 	}
 
 	return ret ? GDMonoMarshal::mono_string_to_godot((MonoString *)ret) : "";
@@ -102,6 +102,7 @@ void add_item(const String &p_project_path, const String &p_item_type, const Str
 
 	if (exc) {
 		mono_print_unhandled_exception(exc);
+		ERR_FAIL();
 	}
 }
 } // CSharpProject
