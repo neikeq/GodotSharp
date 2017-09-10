@@ -4,7 +4,7 @@ import os
 import subprocess
 import sys
 
-from SCons.Script import Environment
+from SCons.Script import BoolVariable, Environment, Variables
 from shutil import copyfile
 
 monoreg = imp.load_source('mono_reg_utils', 'modules/mono/mono_reg_utils.py')
@@ -25,7 +25,16 @@ def can_build(platform):
 def configure(env):
     env.use_ptrcall = True
 
+    vars = Variables()
+    vars.Add(BoolVariable('mono_static', 'Statically link mono', False))
+    vars.Update(env)
+
+    mono_static = env['mono_static']
+
     if env['platform'] == 'windows':
+        if mono_static:
+            raise RuntimeError('mono-static: Not supported on Windows')
+
         if env['bits'] == '32':
             if os.getenv('MONO32_PREFIX'):
                 mono_root = os.getenv('MONO32_PREFIX')
@@ -45,7 +54,7 @@ def configure(env):
         mono_lib_names = [ 'mono-2.0-sgen', 'monosgen-2.0' ]
         mono_lib_name = find_file_in_dir(
             mono_lib_path, mono_lib_names,
-            env['LIBPREFIX'], '.lib'
+            'lib', '.lib'
         )
 
         if not mono_lib_name:
@@ -59,9 +68,8 @@ def configure(env):
 
         mono_bin_path = os.path.join(mono_root, 'bin')
 
-        mono_dll_names = [ 'mono-2.0-sgen', 'monosgen-2.0' ]
         mono_dll_name = find_file_in_dir(
-            mono_bin_path, mono_dll_names,
+            mono_bin_path, [ 'mono-2.0-sgen', 'monosgen-2.0' ],
             '', '.dll'
         )
 
@@ -92,15 +100,31 @@ def configure(env):
             env.Append(LIBPATH = mono_lib_path)
             env.Append(CPPPATH = os.path.join(mono_root, 'include', 'mono-2.0'))
 
-            mono_lib = find_mono_lib(mono_lib_path, env['LIBPREFIX'], '.a')
+            mono_lib = find_file_in_dir(mono_lib_path, [ 'mono-2.0-sgen', 'monosgen-2.0' ], 'lib', '.a')
 
             if not mono_lib:
                 print('Could not find mono library in: ' + mono_lib_path)
                 sys.exit(1)
 
-            env.Append(CPPFLAGS = ['-D_REENTRANT'])
-            env.Append(LIBS = [ mono_lib, 'm', 'rt', 'dl', 'pthread' ] )
+            env.Append(CPPFLAGS = [ '-D_REENTRANT' ])
+
+            if mono_static:
+                mono_lib_file = os.path.join(mono_lib_path, 'lib' + mono_lib + '.a')
+
+                if sys.platform == "darwin":
+                    env.Append(LINKFLAGS = [ '-Wl,-force_load,' + mono_lib_file ])
+                elif sys.platform == "linux" or sys.platform == "linux2":
+                    env.Append(LINKFLAGS = [ '-Wl,-whole-archive', mono_lib_file, '-Wl,-no-whole-archive' ])
+                else:
+                    raise RuntimeError('mono-static: Not supported on this platform')
+            else:
+                env.Append(LIBS = [ mono_lib ] )
+
+            env.Append(LIBS = [ 'm', 'rt', 'dl', 'pthread' ] )
         else:
+            if mono_static:
+                raise RuntimeError('mono-static: Not supported with pkg-config. Specify a mono prefix manually')
+
             env.ParseConfig('pkg-config mono-2 --cflags --libs')
 
         env.Append(LINKFLAGS = '-rdynamic')

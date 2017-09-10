@@ -149,7 +149,9 @@ void GDMono::initialize() {
 
 	OS::get_singleton()->print("Initializing mono...\n");
 
+#ifdef DEBUG_METHODS_ENABLED
 	_initialize_and_check_api_hashes();
+#endif
 
 	GDMonoLog::get_singleton()->initialize();
 
