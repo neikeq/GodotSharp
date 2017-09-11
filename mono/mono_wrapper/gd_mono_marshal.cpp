@@ -809,11 +809,11 @@ MonoObject *Dictionary_to_mono_object(const Dictionary &p_dict) {
 
 	GDMonoUtils::MarshalUtils_ArraysToDict arrays_to_dict = CACHED_METHOD_THUNK(MarshalUtils, ArraysToDictionary);
 
-	MonoObject *exc = NULL;
-	MonoObject *ret = arrays_to_dict(keys, values, &exc);
+	MonoObject *ex = NULL;
+	MonoObject *ret = arrays_to_dict(keys, values, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL_V(NULL);
 	}
 
@@ -827,11 +827,11 @@ Dictionary mono_object_to_Dictionary(MonoObject *p_dict) {
 
 	MonoArray *keys = NULL;
 	MonoArray *values = NULL;
-	MonoObject *exc = NULL;
-	dict_to_arrays(p_dict, &keys, &values, &exc);
+	MonoObject *ex = NULL;
+	dict_to_arrays(p_dict, &keys, &values, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL_V(Dictionary());
 	}
 

@@ -301,17 +301,24 @@ String CSharpLanguage::make_function(const String &p_class, const String &p_name
 }
 
 void CSharpLanguage::frame() {
-	const Ref<MonoGCHandle> &sync_context_handle = GDMonoUtils::mono_cache.sync_context_handle;
 
-	if (!sync_context_handle.is_null()) {
-		MonoObject *sync_context = sync_context_handle->get_target();
+	const Ref<MonoGCHandle> &task_scheduler_handle = GDMonoUtils::mono_cache.task_scheduler_handle;
 
-		if (sync_context) {
+	if (task_scheduler_handle.is_valid()) {
+		MonoObject *task_scheduler = task_scheduler_handle->get_target();
+
+		if (task_scheduler) {
 			GDMonoUtils::GodotTaskScheduler_Activate thunk = CACHED_METHOD_THUNK(GodotTaskScheduler, Activate);
 
 			ERR_FAIL_NULL(thunk);
 
-			thunk(sync_context, NULL);
+			MonoObject *ex;
+			thunk(task_scheduler, &ex);
+
+			if (ex) {
+				mono_print_unhandled_exception(ex);
+				ERR_FAIL();
+			}
 		}
 	}
 }
@@ -946,11 +953,11 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 
 			GDMonoUtils::GodotObject__AwaitedSignalCallback thunk = CACHED_METHOD_THUNK(GodotObject, _AwaitedSignalCallback);
 
-			MonoObject *exc = NULL;
-			thunk(mono_object, &extra_args, awaiter->get_target(), &exc);
+			MonoObject *ex = NULL;
+			thunk(mono_object, &extra_args, awaiter->get_target(), &ex);
 
-			if (exc) {
-				mono_print_unhandled_exception(exc);
+			if (ex) {
+				mono_print_unhandled_exception(ex);
 				ERR_FAIL_V(Variant());
 			}
 
@@ -1186,12 +1193,12 @@ bool CSharpScript::_update_exports() {
 			CACHED_FIELD(GodotObject, ptr)->set_value_raw(tmp_object, tmp_object); // FIXME WTF is this workaround
 
 			GDMonoMethod *ctor = script_class->get_method(CACHED_STRING_NAME(dotctor), 0);
-			MonoObject *exc = NULL;
-			ctor->invoke(tmp_object, NULL, &exc);
+			MonoObject *ex = NULL;
+			ctor->invoke(tmp_object, NULL, &ex);
 
-			if (exc) {
+			if (ex) {
 				ERR_PRINT("Exception thrown from constructor of temporary MonoObject:");
-				mono_print_unhandled_exception(exc);
+				mono_print_unhandled_exception(ex);
 				tmp_object = NULL;
 				ERR_FAIL_V(false);
 			}

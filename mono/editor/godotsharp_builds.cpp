@@ -269,12 +269,12 @@ void GodotSharpBuilds::BuildProcess::start(bool p_blocking) {
 
 	const Variant *ctor_args[2] = { &solution, &config };
 
-	MonoObject *exc = NULL;
+	MonoObject *ex = NULL;
 	GDMonoMethod *ctor = klass->get_method(".ctor", 2);
-	ctor->invoke(mono_object, ctor_args, &exc);
+	ctor->invoke(mono_object, ctor_args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		exited = true;
 		build_tab->on_build_exec_failed(ctor->get_full_name() + " threw an exception");
 		ERR_FAIL();
@@ -288,12 +288,12 @@ void GodotSharpBuilds::BuildProcess::start(bool p_blocking) {
 
 	const Variant *args[3] = { &logger_assembly, &logger_output_dir, &custom_props };
 
-	exc = NULL;
+	ex = NULL;
 	GDMonoMethod *build_method = klass->get_method(p_blocking ? "Build" : "BuildAsync", 3);
-	build_method->invoke(mono_object, args, &exc);
+	build_method->invoke(mono_object, args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		exited = true;
 		build_tab->on_build_exec_failed(build_method->get_full_name() + " threw an exception");
 		ERR_FAIL();

@@ -110,7 +110,7 @@ void MonoCache::clear_members() {
 	methodthunk_SignalAwaiter_FailureCallback = NULL;
 	methodthunk_GodotTaskScheduler_Activate = NULL;
 
-	sync_context_handle = Ref<MonoGCHandle>();
+	task_scheduler_handle = Ref<MonoGCHandle>();
 }
 
 #define GODOT_API_CLASS(m_class) (GDMono::get_singleton()->get_api_assembly()->get_class(BINDINGS_NAMESPACE, #m_class))
@@ -193,9 +193,9 @@ void update_godot_api_cache() {
 		CACHE_RAW_MONO_CLASS_AND_CHECK(Dictionary, mono_class_from_mono_type(dict_type));
 	}
 
-	MonoObject *sync_context = mono_object_new(SCRIPTS_DOMAIN, GODOT_API_CLASS(GodotTaskScheduler)->get_raw());
-	mono_runtime_object_init(sync_context);
-	mono_cache.sync_context_handle = MonoGCHandle::create_strong(sync_context);
+	MonoObject *task_scheduler = mono_object_new(SCRIPTS_DOMAIN, GODOT_API_CLASS(GodotTaskScheduler)->get_raw());
+	mono_runtime_object_init(task_scheduler);
+	mono_cache.task_scheduler_handle = MonoGCHandle::create_strong(task_scheduler);
 }
 
 void clear_cache() {

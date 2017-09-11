@@ -61,7 +61,13 @@ SignalAwaiterHandle::~SignalAwaiterHandle() {
 		MonoObject *awaiter = get_target();
 
 		if (awaiter) {
-			thunk(awaiter, NULL);
+			MonoObject *ex = NULL;
+			thunk(awaiter, &ex);
+
+			if (ex) {
+				mono_print_unhandled_exception(ex);
+				ERR_FAIL_V();
+			}
 		}
 	}
 }

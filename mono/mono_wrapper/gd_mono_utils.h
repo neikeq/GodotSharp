@@ -113,7 +113,7 @@ struct MonoCache {
 	SignalAwaiter_FailureCallback methodthunk_SignalAwaiter_FailureCallback;
 	GodotTaskScheduler_Activate methodthunk_GodotTaskScheduler_Activate;
 
-	Ref<MonoGCHandle> sync_context_handle;
+	Ref<MonoGCHandle> task_scheduler_handle;
 
 	void clear_members();
 	void cleanup() {}

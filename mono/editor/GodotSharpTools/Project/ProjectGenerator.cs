@@ -47,7 +47,9 @@ namespace GodotSharpTools.Project
                 root.AddItem("Compile", item.RelativeToPath(dir).Replace("/", "\\"));
             }
 
-            root.AddItem("Reference", CoreApiProject).AddMetadata("HintPath", coreApiHintPath);
+            var coreApiRef = root.AddItem("Reference", CoreApiProject);
+            coreApiRef.AddMetadata("HintPath", coreApiHintPath);
+            coreApiRef.AddMetadata("Private", "False");
 
             root.Save(path);
 
@@ -75,11 +77,14 @@ namespace GodotSharpTools.Project
             toolsGroup.AddProperty("WarningLevel", "4");
             toolsGroup.AddProperty("ConsolePause", "false");
 
-            root.AddItem("Reference", CoreApiProject).AddMetadata("HintPath", Path.Combine("$(ProjectDir)", ".mono", "assemblies", CoreApiProject + ".dll"));
+            var coreApiRef = root.AddItem("Reference", CoreApiProject);
+            coreApiRef.AddMetadata("HintPath", Path.Combine("$(ProjectDir)", ".mono", "assemblies", CoreApiProject + ".dll"));
+            coreApiRef.AddMetadata("Private", "False");
 
-            var editorApiReference = root.AddItem("Reference", EditorApiProject);
-            editorApiReference.Condition = " '$(Configuration)' == 'Tools' ";
-            editorApiReference.AddMetadata("HintPath", Path.Combine("$(ProjectDir)", ".mono", "assemblies", EditorApiProject + ".dll"));
+            var editorApiRef = root.AddItem("Reference", EditorApiProject);
+            editorApiRef.Condition = " '$(Configuration)' == 'Tools' ";
+            editorApiRef.AddMetadata("HintPath", Path.Combine("$(ProjectDir)", ".mono", "assemblies", EditorApiProject + ".dll"));
+            editorApiRef.AddMetadata("Private", "False");
 
             GenAssemblyInfoFile(root, dir, name);
 

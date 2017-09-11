@@ -33,14 +33,14 @@ void MonoDevelopInstance::execute(const Vector<String> &p_files) {
 	ERR_FAIL_NULL(execute_method);
 	ERR_FAIL_COND(gc_handle.is_null());
 
-	MonoObject *exc = NULL;
+	MonoObject *ex = NULL;
 
 	Variant files = p_files;
 	const Variant *args[1] = { &files };
-	execute_method->invoke(gc_handle->get_target(), args, &exc);
+	execute_method->invoke(gc_handle->get_target(), args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL();
 	}
 }
@@ -59,14 +59,14 @@ MonoDevelopInstance::MonoDevelopInstance(const String &p_solution) {
 	MonoObject *obj = mono_object_new(TOOLS_DOMAIN, klass->get_raw());
 
 	GDMonoMethod *ctor = klass->get_method(".ctor", 1);
-	MonoObject *exc = NULL;
+	MonoObject *ex = NULL;
 
 	Variant solution = p_solution;
 	const Variant *args[1] = { &solution };
-	ctor->invoke(obj, args, &exc);
+	ctor->invoke(obj, args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL();
 	}
 

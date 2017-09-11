@@ -40,11 +40,11 @@ String generate_core_api_project(const String &p_dir, const Vector<String> &p_fi
 	Variant dir = p_dir;
 	Variant compile_items = p_files;
 	const Variant *args[2] = { &dir, &compile_items };
-	MonoObject *exc = NULL;
-	MonoObject *ret = klass->get_method("GenCoreApiProject", 2)->invoke(NULL, args, &exc);
+	MonoObject *ex = NULL;
+	MonoObject *ret = klass->get_method("GenCoreApiProject", 2)->invoke(NULL, args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL_V(String());
 	}
 
@@ -59,11 +59,11 @@ String generate_editor_api_project(const String &p_dir, const String &p_core_dll
 	Variant core_dll_path = p_core_dll_path;
 	Variant compile_items = p_files;
 	const Variant *args[3] = { &dir, &core_dll_path, &compile_items };
-	MonoObject *exc = NULL;
-	MonoObject *ret = klass->get_method("GenEditorApiProject", 3)->invoke(NULL, args, &exc);
+	MonoObject *ex = NULL;
+	MonoObject *ret = klass->get_method("GenEditorApiProject", 3)->invoke(NULL, args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL_V(String());
 	}
 
@@ -78,11 +78,11 @@ String generate_game_project(const String &p_dir, const String &p_name, const Ve
 	Variant name = p_name;
 	Variant compile_items = p_files;
 	const Variant *args[3] = { &dir, &name, &compile_items };
-	MonoObject *exc = NULL;
-	MonoObject *ret = klass->get_method("GenGameProject", 3)->invoke(NULL, args, &exc);
+	MonoObject *ex = NULL;
+	MonoObject *ret = klass->get_method("GenGameProject", 3)->invoke(NULL, args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL_V(String());
 	}
 
@@ -97,11 +97,11 @@ void add_item(const String &p_project_path, const String &p_item_type, const Str
 	Variant item_type = p_item_type;
 	Variant include = p_include;
 	const Variant *args[3] = { &project_path, &item_type, &include };
-	MonoObject *exc = NULL;
-	klass->get_method("AddItemToProjectChecked", 3)->invoke(NULL, args, &exc);
+	MonoObject *ex = NULL;
+	klass->get_method("AddItemToProjectChecked", 3)->invoke(NULL, args, &ex);
 
-	if (exc) {
-		mono_print_unhandled_exception(exc);
+	if (ex) {
+		mono_print_unhandled_exception(ex);
 		ERR_FAIL();
 	}
 }

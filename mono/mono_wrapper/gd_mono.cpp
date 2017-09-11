@@ -466,13 +466,13 @@ Error GDMono::_unload_scripts_domain() {
 	mono_domain_finalize(scripts_domain, 2000);
 	finalizing_scripts_domain = false;
 
-	MonoObject *exc = NULL;
-	mono_domain_try_unload(scripts_domain, &exc);
+	MonoObject *ex = NULL;
+	mono_domain_try_unload(scripts_domain, &ex);
 	scripts_domain = NULL;
 
-	if (exc) {
+	if (ex) {
 		ERR_PRINT("Exception thrown when unloading scripts domain:");
-		mono_print_unhandled_exception(exc);
+		mono_print_unhandled_exception(ex);
 		return FAILED;
 	}
 
