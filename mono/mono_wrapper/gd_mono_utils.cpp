@@ -262,7 +262,7 @@ void set_main_thread(MonoThread *p_thread) {
 
 void attach_current_thread() {
 	ERR_FAIL_COND(!GDMono::get_singleton()->is_runtime_initialized());
-	MonoThread *mono_thread = mono_thread_attach(mono_domain_get());
+	MonoThread *mono_thread = mono_thread_attach(SCRIPTS_DOMAIN);
 	ERR_FAIL_NULL(mono_thread);
 }
 
