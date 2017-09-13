@@ -35,6 +35,8 @@ namespace CSharpProject {
 
 String generate_core_api_project(const String &p_dir, const Vector<String> &p_files) {
 
+	_GDMONO_SCOPE_DOMAIN_(TOOLS_DOMAIN)
+
 	GDMonoClass *klass = GDMono::get_singleton()->get_editor_tools_assembly()->get_class("GodotSharpTools.Project", "ProjectGenerator");
 
 	Variant dir = p_dir;
@@ -52,6 +54,8 @@ String generate_core_api_project(const String &p_dir, const Vector<String> &p_fi
 }
 
 String generate_editor_api_project(const String &p_dir, const String &p_core_dll_path, const Vector<String> &p_files) {
+
+	_GDMONO_SCOPE_DOMAIN_(TOOLS_DOMAIN)
 
 	GDMonoClass *klass = GDMono::get_singleton()->get_editor_tools_assembly()->get_class("GodotSharpTools.Project", "ProjectGenerator");
 
@@ -72,6 +76,8 @@ String generate_editor_api_project(const String &p_dir, const String &p_core_dll
 
 String generate_game_project(const String &p_dir, const String &p_name, const Vector<String> &p_files) {
 
+	_GDMONO_SCOPE_DOMAIN_(TOOLS_DOMAIN)
+
 	GDMonoClass *klass = GDMono::get_singleton()->get_editor_tools_assembly()->get_class("GodotSharpTools.Project", "ProjectGenerator");
 
 	Variant dir = p_dir;
@@ -90,6 +96,8 @@ String generate_game_project(const String &p_dir, const String &p_name, const Ve
 }
 
 void add_item(const String &p_project_path, const String &p_item_type, const String &p_include) {
+
+	_GDMONO_SCOPE_DOMAIN_(TOOLS_DOMAIN)
 
 	GDMonoClass *klass = GDMono::get_singleton()->get_editor_tools_assembly()->get_class("GodotSharpTools.Project", "ProjectUtils");
 

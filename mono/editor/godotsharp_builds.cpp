@@ -219,6 +219,8 @@ void GodotSharpBuilds::BuildProcess::on_exit(int p_exit_code) {
 
 void GodotSharpBuilds::BuildProcess::start(bool p_blocking) {
 
+	_GDMONO_SCOPE_DOMAIN_(TOOLS_DOMAIN)
+
 	exit_code = -1;
 
 	String logs_dir = GodotSharpDirs::get_build_logs_dir().plus_file(build_info.solution.md5_text() + "_" + build_info.configuration);

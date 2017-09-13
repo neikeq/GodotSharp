@@ -142,6 +142,31 @@ public:
 	~GDMono();
 };
 
+class GDMonoScopeDomain {
+
+	MonoDomain *prev_domain;
+
+public:
+	GDMonoScopeDomain(MonoDomain *p_domain) {
+		MonoDomain *prev_domain = mono_domain_get();
+		if (prev_domain != p_domain) {
+			this->prev_domain = prev_domain;
+			mono_domain_set(p_domain, false);
+		} else {
+			this->prev_domain = NULL;
+		}
+	}
+
+	~GDMonoScopeDomain() {
+		if (prev_domain)
+			mono_domain_set(prev_domain, false);
+	}
+};
+
+#define _GDMONO_SCOPE_DOMAIN_(m_mono_domain)                    \
+	GDMonoScopeDomain __gdmono__scope__domain__(m_mono_domain); \
+	(void)__gdmono__scope__domain__;
+
 class _GodotSharp : public Object {
 	GDCLASS(_GodotSharp, Object)
 
