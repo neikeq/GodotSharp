@@ -348,7 +348,8 @@ GDMonoClass::~GDMonoClass() {
 		// Therefore, we must avoid deleting the same pointer twice.
 
 		int offset = 0;
-		GDMonoMethod *deleted_methods[methods.size()] = { NULL };
+		Vector<GDMonoMethod *> deleted_methods;
+		deleted_methods.resize(methods.size());
 
 		const MethodKey *k = NULL;
 		while ((k = methods.next(k))) {
