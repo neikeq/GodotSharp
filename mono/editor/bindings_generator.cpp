@@ -720,9 +720,13 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 
 			String prop_proxy_name = escape_csharp_keyword(snake_to_pascal_case(prop_doc.name));
 
-			// Prevent naming the property and its enclosing type from sharing the same name
-			if (prop_proxy_name == itype.proxy_name)
+			// Prevent property and enclosing type from sharing the same name
+			if (prop_proxy_name == itype.proxy_name) {
+
+				WARN_PRINTS("Name of property `" + prop_proxy_name + "` is ambiguous with the name of its class `" +
+							itype.proxy_name + "`. Renaming property to `" + prop_proxy_name + "_`");
 				prop_proxy_name += "_";
+			}
 
 			if (prop_doc.description.size()) {
 				cs_file.push_back(MEMBER_BEGIN "/// <summary>\n");
@@ -1625,8 +1629,11 @@ void BindingsGenerator::_populate_object_type_interfaces() {
 			imethod.proxy_name = escape_csharp_keyword(snake_to_pascal_case(imethod.name));
 
 			// Prevent naming the property and its enclosing type from sharing the same name
-			if (imethod.proxy_name == itype.proxy_name)
+			if (imethod.proxy_name == itype.proxy_name) {
+				WARN_PRINTS("Name of method `" + imethod.proxy_name + "` is ambiguous with the name of its class `" +
+							itype.proxy_name + "`. Renaming method to `" + imethod.proxy_name + "_`");
 				imethod.proxy_name += "_";
+			}
 
 			if (itype.class_doc) {
 				for (int i = 0; i < itype.class_doc->methods.size(); i++) {

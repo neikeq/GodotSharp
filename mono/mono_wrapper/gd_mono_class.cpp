@@ -95,7 +95,9 @@ void GDMonoClass::fetch_attributes() {
 	attrs_fetched = true;
 }
 
-void GDMonoClass::fetch_methods_with_godot_api_checks() {
+void GDMonoClass::fetch_methods_with_godot_api_checks(GDMonoClass *p_native_base) {
+
+	CRASH_COND(!CACHED_CLASS(GodotObject)->is_assignable_from(this));
 
 	if (methods_fetched)
 		return;
@@ -108,17 +110,50 @@ void GDMonoClass::fetch_methods_with_godot_api_checks() {
 		GDMonoMethod *method = get_method(raw_method, name);
 		ERR_CONTINUE(!method);
 
+		if (method->get_name() != name) {
+
+#ifdef DEBUG_ENABLED
+			String fullname = method->get_ret_type_full_name() + " " + name + "(" + method->get_signature_desc(true) + ")";
+			WARN_PRINTS("Method `" + fullname + "` is hidden by Godot API method. Should be `" +
+						method->get_full_name_no_class() + "`. In class `" + namespace_name + "." + class_name + "`.");
+#endif
+			continue;
+		}
+
+#ifdef DEBUG_ENABLED
+		// For debug builds, we also fetched from native base classes as well before if this is not a native base class.
+		// This allows us to warn the user here if he is using snake_case by mistake.
+
+		if (p_native_base != this) {
+
+			GDMonoClass *native_top = p_native_base;
+			while (native_top) {
+				GDMonoMethod *m = native_top->get_method(name, method->get_parameters_count());
+
+				if (m && m->get_name() != name) {
+					// found
+					String fullname = m->get_ret_type_full_name() + " " + name + "(" + m->get_signature_desc(true) + ")";
+					WARN_PRINTS("Method `" + fullname + "` should be `" + m->get_full_name_no_class() +
+								"`. In class `" + namespace_name + "." + class_name + "`.");
+					break;
+				}
+
+				if (native_top == CACHED_CLASS(GodotObject))
+					break;
+
+				native_top = native_top->get_parent_class();
+			}
+		}
+#endif
+
 		uint32_t flags = mono_method_get_flags(method->mono_method, NULL);
 
 		if (!(flags & MONO_METHOD_ATTR_VIRTUAL))
 			continue;
 
-		if (!CACHED_CLASS(GodotObject)->is_assignable_from(this))
-			continue;
-
 		// Virtual method of Godot Object derived type, let's try to find GodotMethod attribute
 
-		GDMonoClass *top = GDMonoUtils::get_class_native_base(this);
+		GDMonoClass *top = p_native_base;
 
 		while (top) {
 			GDMonoMethod *base_method = top->get_method(name, method->get_parameters_count());
@@ -135,6 +170,9 @@ void GDMonoClass::fetch_methods_with_godot_api_checks() {
 				CRASH_COND(godot_method_name == StringName());
 #endif
 				MethodKey key = MethodKey(godot_method_name, method->get_parameters_count());
+				GDMonoMethod **existing_method = methods.getptr(key);
+				if (existing_method)
+					memdelete(*existing_method); // Must delete old one
 				methods.set(key, method);
 
 				break;
@@ -310,8 +348,7 @@ GDMonoClass::~GDMonoClass() {
 		// Therefore, we must avoid deleting the same pointer twice.
 
 		int offset = 0;
-		Vector<GDMonoMethod *> deleted_methods;
-		deleted_methods.resize(methods.size());
+		GDMonoMethod *deleted_methods[methods.size()] = { NULL };
 
 		const MethodKey *k = NULL;
 		while ((k = methods.next(k))) {
@@ -325,7 +362,7 @@ GDMonoClass::~GDMonoClass() {
 					}
 				}
 
-				deleted_methods.set(offset, method);
+				deleted_methods[offset] = method;
 				++offset;
 
 				memdelete(method);
@@ -333,7 +370,7 @@ GDMonoClass::~GDMonoClass() {
 
 		already_deleted:;
 		}
-	}
 
-	methods.clear();
+		methods.clear();
+	}
 }

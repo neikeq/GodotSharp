@@ -66,6 +66,9 @@ public:
 	void fetch_attributes();
 
 	String get_full_name(bool p_signature = false) const;
+	String get_full_name_no_class() const;
+	String get_ret_type_full_name() const;
+	String get_signature_desc(bool p_namespaces = false) const;
 
 	GDMonoMethod(StringName p_name, MonoMethod *p_method);
 	~GDMonoMethod();

@@ -765,7 +765,7 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value) {
 
 	GDMonoClass *top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		GDMonoField *field = script->script_class->get_field(p_name);
 
 		if (field) {
@@ -780,9 +780,6 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value) {
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	// Call _set
@@ -793,7 +790,7 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value) {
 	MonoObject *mono_object = get_mono_object();
 	top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		GDMonoMethod *method = top->get_method(CACHED_STRING_NAME(_set), 2);
 
 		if (method) {
@@ -804,9 +801,6 @@ bool CSharpInstance::set(const StringName &p_name, const Variant &p_value) {
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	return false;
@@ -818,7 +812,7 @@ bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const {
 
 	GDMonoClass *top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		GDMonoField *field = top->get_field(p_name);
 
 		if (field) {
@@ -849,9 +843,6 @@ bool CSharpInstance::get(const StringName &p_name, Variant &r_ret) const {
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	return false;
@@ -885,15 +876,12 @@ bool CSharpInstance::has_method(const StringName &p_method) const {
 
 	GDMonoClass *top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		if (top->has_method(p_method)) {
 			return true;
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	return false;
@@ -911,7 +899,7 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 
 	GDMonoClass *top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		GDMonoMethod *method = top->get_method(p_method, p_argcount);
 
 		if (method) {
@@ -965,9 +953,6 @@ Variant CSharpInstance::call(const StringName &p_method, const Variant **p_args,
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	r_error.error = Variant::CallError::CALL_ERROR_INVALID_METHOD;
@@ -982,16 +967,13 @@ void CSharpInstance::call_multilevel(const StringName &p_method, const Variant *
 
 		GDMonoClass *top = script->script_class;
 
-		while (top) {
+		while (top && top != script->native) {
 			GDMonoMethod *method = top->get_method(p_method, p_argcount);
 
 			if (method)
 				method->invoke(mono_object, p_args);
 
 			top = top->get_parent_class();
-
-			if (top != script->native)
-				break;
 		}
 	}
 }
@@ -1047,7 +1029,7 @@ ScriptInstance::RPCMode CSharpInstance::get_rpc_mode(const StringName &p_method)
 
 	GDMonoClass *top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		GDMonoMethod *method = top->get_method(p_method);
 
 		if (method) { // TODO should we reject static methods?
@@ -1063,9 +1045,6 @@ ScriptInstance::RPCMode CSharpInstance::get_rpc_mode(const StringName &p_method)
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	return RPC_MODE_DISABLED;
@@ -1075,7 +1054,7 @@ ScriptInstance::RPCMode CSharpInstance::get_rset_mode(const StringName &p_variab
 
 	GDMonoClass *top = script->script_class;
 
-	while (top) {
+	while (top && top != script->native) {
 		GDMonoField *field = top->get_field(p_variable);
 
 		if (field) { // TODO should we reject static fields?
@@ -1091,9 +1070,6 @@ ScriptInstance::RPCMode CSharpInstance::get_rset_mode(const StringName &p_variab
 		}
 
 		top = top->get_parent_class();
-
-		if (top != script->native)
-			break;
 	}
 
 	return RPC_MODE_DISABLED;
@@ -1272,7 +1248,7 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 
 	GDMonoClass *top = script_class;
 
-	while (top) {
+	while (top && top != native) {
 		GDMonoMethod *method = top->get_method(p_method, p_argcount);
 
 		if (method && method->is_static()) {
@@ -1286,9 +1262,6 @@ Variant CSharpScript::call(const StringName &p_method, const Variant **p_args, i
 		}
 
 		top = top->get_parent_class();
-
-		if (top != native)
-			break;
 	}
 
 	// No static method found. Try regular instance calls
@@ -1327,15 +1300,31 @@ Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class) {
 	if (base != script->native)
 		script->base = base;
 
-	script->script_class->fetch_methods_with_godot_api_checks();
+#ifdef DEBUG_ENABLED
+	// For debug builds, we must fetch from all native base methods as well.
+	// Native base methods must be fetched before the current class.
+	// Not needed if the script class itself is a native class.
+
+	if (script->script_class != script->native) {
+		GDMonoClass *native_top = script->native;
+		while (native_top) {
+			native_top->fetch_methods_with_godot_api_checks(script->native);
+
+			if (native_top == CACHED_CLASS(GodotObject))
+				break;
+
+			native_top = native_top->get_parent_class();
+		}
+	}
+#endif
+
+	script->script_class->fetch_methods_with_godot_api_checks(script->native);
 
 	// Need to fetch method from base classes as well
 	GDMonoClass *top = script->script_class;
-	while (top) {
-		top->fetch_methods_with_godot_api_checks();
+	while (top && top != script->native) {
+		top->fetch_methods_with_godot_api_checks(script->native);
 		top = top->get_parent_class();
-		if (top != script->native)
-			break;
 	}
 
 	return script;
@@ -1537,15 +1526,31 @@ Error CSharpScript::reload(bool p_keep_state) {
 			if (base_class != native)
 				base = base_class;
 
-			script_class->fetch_methods_with_godot_api_checks();
+#ifdef DEBUG_ENABLED
+			// For debug builds, we must fetch from all native base methods as well.
+			// Native base methods must be fetched before the current class.
+			// Not needed if the script class itself is a native class.
+
+			if (script_class != native) {
+				GDMonoClass *native_top = native;
+				while (native_top) {
+					native_top->fetch_methods_with_godot_api_checks(native);
+
+					if (native_top == CACHED_CLASS(GodotObject))
+						break;
+
+					native_top = native_top->get_parent_class();
+				}
+			}
+#endif
+
+			script_class->fetch_methods_with_godot_api_checks(native);
 
 			// Need to fetch method from base classes as well
 			GDMonoClass *top = script_class;
-			while (top) {
-				top->fetch_methods_with_godot_api_checks();
+			while (top && top != native) {
+				top->fetch_methods_with_godot_api_checks(native);
 				top = top->get_parent_class();
-				if (top != native)
-					break;
 			}
 		}
 

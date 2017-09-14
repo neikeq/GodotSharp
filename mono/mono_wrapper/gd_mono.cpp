@@ -45,7 +45,7 @@
 
 MonoAssembly *gdmono_MonoAssemblyPreLoad(MonoAssemblyName *aname, char **assemblies_path, void *user_data) {
 
-	(void)(user_data); // UNUSED
+	(void)user_data; // UNUSED
 
 	MonoAssembly *assembly_loaded = mono_assembly_loaded(aname);
 	if (assembly_loaded) {
@@ -632,9 +632,9 @@ GDMono::~GDMono() {
 		while ((k = assemblies.next(k))) {
 			HashMap<String, GDMonoAssembly *> &domain_assemblies = assemblies.get(*k);
 
-			const String *k = NULL;
-			while ((k = domain_assemblies.next(k))) {
-				memdelete(domain_assemblies.get(*k));
+			const String *kk = NULL;
+			while ((kk = domain_assemblies.next(kk))) {
+				memdelete(domain_assemblies.get(*kk));
 			}
 		}
 		assemblies.clear();

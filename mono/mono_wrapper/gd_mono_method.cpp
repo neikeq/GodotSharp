@@ -126,11 +126,48 @@ void GDMonoMethod::fetch_attributes() {
 }
 
 String GDMonoMethod::get_full_name(bool p_signature) const {
-
 	char *res = mono_method_full_name(mono_method, p_signature);
 	String full_name(res);
 	mono_free(res);
 	return full_name;
+}
+
+String GDMonoMethod::get_full_name_no_class() const {
+	String res;
+
+	MonoMethodSignature *method_sig = mono_method_signature(mono_method);
+
+	char *ret_str = mono_type_full_name(mono_signature_get_return_type(method_sig));
+	res += ret_str;
+	mono_free(ret_str);
+
+	res += " ";
+	res += name;
+	res += "(";
+
+	char *sig_desc = mono_signature_get_desc(method_sig, true);
+	res += sig_desc;
+	mono_free(sig_desc);
+
+	res += ")";
+
+	return res;
+}
+
+String GDMonoMethod::get_ret_type_full_name() const {
+	MonoMethodSignature *method_sig = mono_method_signature(mono_method);
+	char *ret_str = mono_type_full_name(mono_signature_get_return_type(method_sig));
+	String res = ret_str;
+	mono_free(ret_str);
+	return res;
+}
+
+String GDMonoMethod::get_signature_desc(bool p_namespaces) const {
+	MonoMethodSignature *method_sig = mono_method_signature(mono_method);
+	char *sig_desc = mono_signature_get_desc(method_sig, p_namespaces);
+	String res = sig_desc;
+	mono_free(sig_desc);
+	return res;
 }
 
 GDMonoMethod::GDMonoMethod(StringName p_name, MonoMethod *p_method) {

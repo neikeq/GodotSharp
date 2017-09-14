@@ -102,7 +102,7 @@ public:
 	MonoObject *get_attribute(GDMonoClass *p_attr_class);
 
 	void fetch_attributes();
-	void fetch_methods_with_godot_api_checks();
+	void fetch_methods_with_godot_api_checks(GDMonoClass *p_native_base);
 
 	GDMonoMethod *get_method(const StringName &p_name);
 	GDMonoMethod *get_method(const StringName &p_name, int p_params_count);

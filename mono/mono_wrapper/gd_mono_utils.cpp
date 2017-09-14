@@ -301,7 +301,7 @@ GDMonoClass *type_get_proxy_class(const StringName &p_type) {
 GDMonoClass *get_class_native_base(GDMonoClass *p_class) {
 	GDMonoClass *klass = p_class;
 
-	while ((klass = klass->get_parent_class()) != NULL) {
+	do {
 		const GDMonoAssembly *assembly = klass->get_assembly();
 		if (assembly == GDMono::get_singleton()->get_api_assembly())
 			return klass;
@@ -309,7 +309,7 @@ GDMonoClass *get_class_native_base(GDMonoClass *p_class) {
 		if (assembly == GDMono::get_singleton()->get_editor_api_assembly())
 			return klass;
 #endif
-	}
+	} while ((klass = klass->get_parent_class()) != NULL);
 
 	return NULL;
 }
