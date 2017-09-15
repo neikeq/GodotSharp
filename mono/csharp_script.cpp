@@ -1718,8 +1718,10 @@ RES ResourceFormatLoaderCSharpScript::load(const String &p_path, const String &p
 
 	Ref<CSharpScript> scriptres(script);
 
+#if defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED)
 	Error err = script->load_source_code(p_path);
 	ERR_FAIL_COND_V(err != OK, RES());
+#endif
 
 	script->set_path(p_original_path);
 	script->reload();

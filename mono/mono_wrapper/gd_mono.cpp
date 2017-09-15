@@ -211,7 +211,7 @@ void GDMono::initialize() {
 #ifdef TOOLS_ENABLED
 	bool debugger_attached = _wait_for_debugger_msecs(500);
 	if (!debugger_attached && OS::get_singleton()->is_stdout_verbose())
-		OS::get_singleton()->printerr("Mono: Debugger wait timeout");
+		OS::get_singleton()->printerr("Mono: Debugger wait timeout\n");
 #endif
 
 	// mscorlib assembly MUST be present at initialization
@@ -541,23 +541,28 @@ Error GDMono::reload_scripts_domain_if_needed() {
 	return OK;
 }
 
-GDMonoClass *GDMono::get_class(MonoClass *p_class) {
+GDMonoClass *GDMono::get_class(MonoClass *p_raw_class) {
 
-	GDMonoClass *mono_class = NULL;
+	MonoImage *image = mono_class_get_image(p_raw_class);
+
+	if (image == corlib_assembly->get_image())
+		return corlib_assembly->get_class(p_raw_class);
 
 	uint32_t domain_id = mono_domain_get_id(mono_domain_get());
 	HashMap<String, GDMonoAssembly *> &domain_assemblies = assemblies[domain_id];
 
 	const String *k = NULL;
 	while ((k = domain_assemblies.next(k))) {
-		mono_class = domain_assemblies.get(*k)->get_class(p_class);
+		GDMonoAssembly *assembly = domain_assemblies.get(*k);
+		if (assembly->get_image() == image) {
+			GDMonoClass *klass = assembly->get_class(p_raw_class);
 
-		if (mono_class)
-			return mono_class;
+			if (klass)
+				return klass;
+		}
 	}
 
-	// last, try with corlib, which is in the root domain
-	return corlib_assembly->get_class(p_class);
+	return NULL;
 }
 
 void GDMono::_domain_assemblies_cleanup(uint32_t p_domain_id) {

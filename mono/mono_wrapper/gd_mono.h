@@ -132,7 +132,7 @@ public:
 	const MonoRegInfo &get_mono_loc_info() { return mono_reg_info; }
 #endif
 
-	GDMonoClass *get_class(MonoClass *p_class);
+	GDMonoClass *get_class(MonoClass *p_raw_class);
 
 	Error reload_scripts_domain_if_needed();
 
