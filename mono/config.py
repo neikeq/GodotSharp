@@ -46,6 +46,9 @@ def configure(env):
             else:
                 mono_root = monoreg.find_mono_root_dir()
 
+        if mono_root is None:
+            raise RuntimeError('Mono installation directory not found')
+
         mono_lib_path = os.path.join(mono_root, 'lib')
 
         env.Append(LIBPATH = mono_lib_path)
