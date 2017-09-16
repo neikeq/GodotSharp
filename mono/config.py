@@ -55,9 +55,14 @@ def configure(env):
         env.Append(CPPPATH = os.path.join(mono_root, 'include', 'mono-2.0'))
 
         mono_lib_names = [ 'mono-2.0-sgen', 'monosgen-2.0' ]
+
+        if sys.platform == 'win32':
+            prefix = ''
+        else:
+            prefix = 'lib'
         mono_lib_name = find_file_in_dir(
             mono_lib_path, mono_lib_names,
-            'lib', '.lib'
+            prefix, '.lib'
         )
 
         if not mono_lib_name:
