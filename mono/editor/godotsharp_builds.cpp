@@ -36,19 +36,18 @@ void GodotSharpBuilds::_register_internal_calls() {
 	mono_add_internal_call("GodotSharpTools.Build.BuildInstance::godot_icall_BuildInstance_get_MSBuildPath", (void *)godot_icall_BuildInstance_get_MSBuildPath);
 }
 
-bool GodotSharpBuilds::build_core_api_sln(const String &p_api_sln_dir, const String &p_config) {
+bool GodotSharpBuilds::build_api_sln(const String &p_name, const String &p_api_sln_dir, const String &p_config) {
 
-	String api_sln_file = p_api_sln_dir.plus_file(API_ASSEMBLY_NAME ".sln");
+	String api_sln_file = p_api_sln_dir.plus_file(p_name + ".sln");
 	String api_assembly_dir = p_api_sln_dir.plus_file("bin").plus_file(p_config);
-	String api_assembly_file = api_assembly_dir.plus_file(API_ASSEMBLY_NAME ".dll");
+	String api_assembly_file = api_assembly_dir.plus_file(p_name + ".dll");
 
 	if (!FileAccess::exists(api_assembly_file)) {
 		MonoBuildInfo api_build_info(api_sln_file, p_config);
-		api_build_info.name = "Core API";
 		api_build_info.custom_props.push_back("NoWarn=1591"); // Ignore missing documentation warnings
 
 		if (!GodotSharpBuilds::get_singleton()->build(api_build_info)) {
-			GodotSharpEditor::get_singleton()->show_error("Failed to build API solution.", "Build error");
+			GodotSharpEditor::get_singleton()->show_error("Failed to build " + p_name + " solution.", "Build error");
 			return false;
 		}
 	}
@@ -86,33 +85,52 @@ bool GodotSharpBuilds::copy_api_assembly(const String &p_src_dir, const String &
 	return true;
 }
 
-bool godotsharp_build_callback() {
+bool GodotSharpBuilds::make_api_sln(GodotSharpBuilds::APIType p_api_type) {
 
-	EditorProgress pr("mono_project_debug_build", "Building solution...", 4);
+	String api_name = p_api_type == API_CORE ? API_ASSEMBLY_NAME : EDITOR_API_ASSEMBLY_NAME;
+	String api_build_config = "Release";
 
-	pr.step("Generating API solution");
+	EditorProgress pr("mono_build_release_" + api_name, "Building " + api_name + " solution...", 3);
 
-	String api_sln_dir = GodotSharpDirs::get_mono_solutions_dir()
-								 .plus_file(API_ASSEMBLY_NAME "_" + itos(GDMono::get_singleton()->get_api_core_hash()));
-	String api_sln_file = api_sln_dir.plus_file(API_ASSEMBLY_NAME ".sln");
+	pr.step("Generating " + api_name + " solution");
+
+	uint64_t core_hash = GDMono::get_singleton()->get_api_core_hash();
+	uint64_t editor_hash = GDMono::get_singleton()->get_api_editor_hash();
+
+	String core_api_sln_dir = GodotSharpDirs::get_mono_solutions_dir().plus_file(API_ASSEMBLY_NAME "_" + itos(core_hash));
+	String editor_api_sln_dir = GodotSharpDirs::get_mono_solutions_dir().plus_file(EDITOR_API_ASSEMBLY_NAME "_" + itos(editor_hash));
+
+	String api_sln_dir = p_api_type == API_CORE ? core_api_sln_dir : editor_api_sln_dir;
+	String api_sln_file = api_sln_dir.plus_file(api_name + ".sln");
 
 	if (!DirAccess::exists(api_sln_dir) || !FileAccess::exists(api_sln_file)) {
-		Error err = BindingsGenerator::get_singleton().generate_cs_core_project(api_sln_dir, OS::get_singleton()->is_stdout_verbose());
+		String core_api_assembly;
+
+		if (p_api_type == API_EDITOR) {
+			core_api_assembly = core_api_sln_dir.plus_file("bin")
+										.plus_file(api_build_config)
+										.plus_file(API_ASSEMBLY_NAME ".dll");
+		}
+
+		BindingsGenerator &gen = BindingsGenerator::get_singleton();
+		bool gen_verbose = OS::get_singleton()->is_stdout_verbose();
+
+		Error err = p_api_type == API_CORE ?
+							gen.generate_cs_core_project(api_sln_dir, gen_verbose) :
+							gen.generate_cs_editor_project(api_sln_dir, core_api_assembly, gen_verbose);
 
 		if (err != OK) {
-			GodotSharpEditor::get_singleton()->show_error("Failed to generate API solution. Error: " + itos(err), "Build error");
+			GodotSharpEditor::get_singleton()->show_error("Failed to generate " + api_name + " solution. Error: " + itos(err), "Build error");
 			return false;
 		}
 	}
 
-	pr.step("Building API solution");
+	pr.step("Building " + api_name + " solution");
 
-	String api_build_config = "Release";
-
-	if (!GodotSharpBuilds::build_core_api_sln(api_sln_dir, api_build_config))
+	if (!GodotSharpBuilds::build_api_sln(api_name, api_sln_dir, api_build_config))
 		return false;
 
-	pr.step("Copying API assembly");
+	pr.step("Copying " + api_name + " assembly");
 
 	String res_assemblies_dir = GodotSharpDirs::get_res_assemblies_dir();
 
@@ -130,15 +148,24 @@ bool godotsharp_build_callback() {
 
 	// Copy the built assembly to the assemblies directory
 	String api_assembly_dir = api_sln_dir.plus_file("bin").plus_file(api_build_config);
-	if (!GodotSharpBuilds::copy_api_assembly(api_assembly_dir, res_assemblies_dir, API_ASSEMBLY_NAME))
+	if (!GodotSharpBuilds::copy_api_assembly(api_assembly_dir, res_assemblies_dir, api_name))
 		return false;
+
+	return true;
+}
+
+bool godotsharp_build_callback() {
+
+	if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_CORE))
+		return false;
+
+	EditorProgress pr("mono_project_debug_build", "Building project solution...", 1);
 
 	pr.step("Building project solution");
 
 	MonoBuildInfo build_info(GodotSharpDirs::get_project_sln_path(), "Debug");
-	build_info.name = "Project";
 	if (!GodotSharpBuilds::get_singleton()->build(build_info)) {
-		GodotSharpEditor::get_singleton()->show_error("Failed to build project solution [Debug]", "Build error");
+		GodotSharpEditor::get_singleton()->show_error("Failed to build project solution", "Build error");
 		return false;
 	}
 

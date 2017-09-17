@@ -43,7 +43,7 @@ void MonoBottomPanel::_update_build_tabs_list() {
 		MonoBuildTab *tab = Object::cast_to<MonoBuildTab>(build_tabs->get_child(i));
 
 		if (tab) {
-			String item_name = tab->build_info.name.length() ? tab->build_info.name : tab->build_info.solution;
+			String item_name = tab->build_info.solution.get_file().get_basename();
 			item_name += " [" + tab->build_info.configuration + "]";
 
 			build_tabs_list->add_item(item_name, tab->get_icon_texture());

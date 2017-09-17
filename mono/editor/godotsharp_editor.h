@@ -41,7 +41,7 @@ class GodotSharpEditor : public Node {
 
 	GodotSharpBuilds *godotsharp_builds;
 
-	void _create_project_solution();
+	bool _create_project_solution();
 
 	void _remove_create_sln_menu_option();
 

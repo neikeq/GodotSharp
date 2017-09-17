@@ -290,6 +290,8 @@ void BindingsGenerator::_generate_method_icalls(const TypeInterface &p_itype) {
 
 Error BindingsGenerator::generate_cs_core_project(const String &p_output_dir, bool p_stdout_verbose) {
 
+	stdout_verbose = p_stdout_verbose;
+
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
 
@@ -471,7 +473,9 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_output_dir, bo
 	return OK;
 }
 
-Error BindingsGenerator::generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path) {
+Error BindingsGenerator::generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path, bool p_stdout_verbose) {
+
+	stdout_verbose = p_stdout_verbose;
 
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
@@ -1137,6 +1141,8 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 }
 
 Error BindingsGenerator::generate_glue(const String &p_output_dir) {
+
+	stdout_verbose = true;
 
 	bool dir_exists = DirAccess::exists(p_output_dir);
 	ERR_EXPLAIN("The output directory does not exist.");

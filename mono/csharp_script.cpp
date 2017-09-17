@@ -78,10 +78,10 @@ void gdsharp_editor_init_callback() {
 
 	// External editor settings
 	EditorSettings *ed_settings = EditorSettings::get_singleton();
-	if (!ed_settings->has("godot_sharp/editor/external_editor")) {
-		ed_settings->set("godot_sharp/editor/external_editor", CSharpLanguage::EDITOR_NONE);
+	if (!ed_settings->has("mono/editor/external_editor")) {
+		ed_settings->set("mono/editor/external_editor", CSharpLanguage::EDITOR_NONE);
 	}
-	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "godot_sharp/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
+	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "mono/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
 
 	editor->add_child(memnew(GodotSharpEditor(editor)));
 }
@@ -1764,8 +1764,8 @@ Error ResourceFormatSaverCSharpScript::save(const String &p_path, const RES &p_r
 		if (!FileAccess::exists(sln_path) || !FileAccess::exists(csproj_path)) {
 			// A solution does not yet exist, create a new one
 
-			if (GodotSharpEditor::get_singleton())
-				GodotSharpEditor::get_singleton()->call("_create_project_solution");
+			CRASH_COND(GodotSharpEditor::get_singleton() == NULL);
+			GodotSharpEditor::get_singleton()->call("_create_project_solution");
 		}
 
 		// Add the file to the C# project

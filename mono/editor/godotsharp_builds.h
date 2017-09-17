@@ -32,6 +32,11 @@ private:
 	static void _register_internal_calls();
 
 public:
+	enum APIType {
+		API_CORE,
+		API_EDITOR
+	};
+
 	_FORCE_INLINE_ static GodotSharpBuilds *get_singleton() { return singleton; }
 
 	void build_exit_callback(const MonoBuildInfo &p_build_info, int p_exit_code);
@@ -42,8 +47,10 @@ public:
 	bool build(const MonoBuildInfo &p_build_info);
 	bool build_async(const MonoBuildInfo &p_build_info, GodotSharpBuild_ExitCallback p_callback = NULL);
 
-	static bool build_core_api_sln(const String &p_api_sln_dir, const String &p_config);
+	static bool build_api_sln(const String &p_name, const String &p_api_sln_dir, const String &p_config);
 	static bool copy_api_assembly(const String &p_src_dir, const String &p_dst_dir, const String &p_assembly_name);
+
+	static bool make_api_sln(APIType p_api_type);
 
 	GodotSharpBuilds();
 	~GodotSharpBuilds();

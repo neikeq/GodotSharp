@@ -55,11 +55,11 @@ protected:
 
 GodotSharpEditor *GodotSharpEditor::singleton = NULL;
 
-void GodotSharpEditor::_create_project_solution() {
+bool GodotSharpEditor::_create_project_solution() {
 
-	editor->progress_add_task("create_csharp_solution", "Generating solution...", 2);
+	EditorProgress pr("create_csharp_solution", "Generating solution...", 1);
 
-	editor->progress_task_step("create_csharp_solution", "Generating C# project...", 1);
+	pr.step("Generating C# project...");
 
 	String path = OS::get_singleton()->get_resource_dir();
 	String name = ProjectSettings::get_singleton()->get("application/config/name");
@@ -71,6 +71,7 @@ void GodotSharpEditor::_create_project_solution() {
 
 		if (!solution.set_path(path)) {
 			show_error("Failed to create solution.");
+			return false;
 		}
 
 		Vector<String> extra_configs;
@@ -82,7 +83,14 @@ void GodotSharpEditor::_create_project_solution() {
 
 		if (sln_error != OK) {
 			show_error("Failed to save solution.");
+			return false;
 		}
+
+		if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_CORE))
+			return false;
+
+		if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_EDITOR))
+			return false;
 
 		call_deferred("_remove_create_sln_menu_option");
 
@@ -90,7 +98,7 @@ void GodotSharpEditor::_create_project_solution() {
 		show_error("Failed to create C# project.");
 	}
 
-	editor->progress_end_task("create_csharp_solution");
+	return true;
 }
 
 void GodotSharpEditor::_remove_create_sln_menu_option() {

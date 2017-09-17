@@ -409,7 +409,7 @@ class BindingsGenerator {
 
 public:
 	Error generate_cs_core_project(const String &p_output_dir, bool p_stdout_verbose = true);
-	Error generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path);
+	Error generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path, bool p_stdout_verbose = true);
 	Error generate_glue(const String &p_output_dir);
 
 	static BindingsGenerator &get_singleton() {

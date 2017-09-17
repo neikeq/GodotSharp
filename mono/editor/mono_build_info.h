@@ -41,7 +41,6 @@ struct MonoBuildInfo {
 		}
 	};
 
-	String name;
 	String solution;
 	String configuration;
 	Vector<String> custom_props;
