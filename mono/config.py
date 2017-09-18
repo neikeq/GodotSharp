@@ -136,3 +136,12 @@ def configure(env):
             env.ParseConfig('pkg-config mono-2 --cflags --libs')
 
         env.Append(LINKFLAGS = '-rdynamic')
+
+
+def get_doc_classes():
+    return [ "@C#", "CSharpScript", "GodotSharp" ]
+
+
+def get_doc_path():
+    return "doc_classes"
+
