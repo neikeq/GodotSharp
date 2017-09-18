@@ -10,7 +10,9 @@ from shutil import copyfile
 monoreg = imp.load_source('mono_reg_utils', 'modules/mono/mono_reg_utils.py')
 
 
-def find_file_in_dir(dir, files, prefix, extension):
+def find_file_in_dir(dir, files, prefix = '', extension = ''):
+    if not extension.startswith('.'):
+        extension = '.' + extension
     for file in files:
         if os.path.isfile(os.path.join(dir, prefix + file + extension)):
             return file
@@ -30,6 +32,8 @@ def configure(env):
     vars.Update(env)
 
     mono_static = env['mono_static']
+
+    mono_lib_names = [ 'mono-2.0-sgen', 'monosgen-2.0' ]
 
     if env['platform'] == 'windows':
         if mono_static:
@@ -54,20 +58,10 @@ def configure(env):
         env.Append(LIBPATH = mono_lib_path)
         env.Append(CPPPATH = os.path.join(mono_root, 'include', 'mono-2.0'))
 
-        mono_lib_names = [ 'mono-2.0-sgen', 'monosgen-2.0' ]
-
-        if sys.platform == 'win32':
-            prefix = ''
-        else:
-            prefix = 'lib'
-        mono_lib_name = find_file_in_dir(
-            mono_lib_path, mono_lib_names,
-            prefix, '.lib'
-        )
+        mono_lib_name = find_file_in_dir(mono_lib_path, mono_lib_names, extension = '.lib')
 
         if not mono_lib_name:
-            printerr('Could not find mono library in: ' + mono_lib_path)
-            sys.exit(1)
+            raise RuntimeError('Could not find mono library in: ' + mono_lib_path)
 
         if os.getenv('VCINSTALLDIR'):
             env.Append(LINKFLAGS = mono_lib_name + Environment()['LIBSUFFIX'])
@@ -76,10 +70,7 @@ def configure(env):
 
         mono_bin_path = os.path.join(mono_root, 'bin')
 
-        mono_dll_name = find_file_in_dir(
-            mono_bin_path, [ 'mono-2.0-sgen', 'monosgen-2.0' ],
-            '', '.dll'
-        )
+        mono_dll_name = find_file_in_dir(mono_bin_path, mono_lib_names, extension = '.dll')
 
         mono_dll_src = os.path.join(mono_bin_path, mono_dll_name + '.dll')
         mono_dll_dst = os.path.join('bin', mono_dll_name + '.dll')
@@ -108,11 +99,10 @@ def configure(env):
             env.Append(LIBPATH = mono_lib_path)
             env.Append(CPPPATH = os.path.join(mono_root, 'include', 'mono-2.0'))
 
-            mono_lib = find_file_in_dir(mono_lib_path, [ 'mono-2.0-sgen', 'monosgen-2.0' ], 'lib', '.a')
+            mono_lib = find_file_in_dir(mono_lib_path, mono_lib_names, prefix = 'lib', extension = '.a')
 
             if not mono_lib:
-                print('Could not find mono library in: ' + mono_lib_path)
-                sys.exit(1)
+                raise RuntimeError('Could not find mono library in: ' + mono_lib_path)
 
             env.Append(CPPFLAGS = [ '-D_REENTRANT' ])
 
