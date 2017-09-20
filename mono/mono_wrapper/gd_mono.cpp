@@ -459,6 +459,8 @@ Error GDMono::_unload_scripts_domain() {
 		OS::get_singleton()->print("Mono: Unloading scripts domain...\n");
 	}
 
+	_GodotSharp::get_singleton()->_dispose_callback();
+
 	if (mono_domain_get() != root_domain)
 		mono_domain_set(root_domain, true);
 
@@ -466,9 +468,21 @@ Error GDMono::_unload_scripts_domain() {
 	mono_domain_finalize(scripts_domain, 2000);
 	finalizing_scripts_domain = false;
 
-	MonoObject *ex = NULL;
-	mono_domain_try_unload(scripts_domain, &ex);
+	_domain_assemblies_cleanup(mono_domain_get_id(scripts_domain));
+
+	api_assembly = NULL;
+	project_assembly = NULL;
+#ifdef TOOLS_ENABLED
+	editor_api_assembly = NULL;
+#endif
+
+	MonoDomain *domain = scripts_domain;
 	scripts_domain = NULL;
+
+	_GodotSharp::get_singleton()->_dispose_callback();
+
+	MonoObject *ex = NULL;
+	mono_domain_try_unload(domain, &ex);
 
 	if (ex) {
 		ERR_PRINT("Exception thrown when unloading scripts domain:");
@@ -505,25 +519,11 @@ Error GDMono::reload_scripts_domain_if_needed() {
 			return ERR_SKIP; // No need to reload
 		}
 
-		_GodotSharp::get_singleton()->_dispose_callback();
-
-		uint32_t scripts_domain_id = mono_domain_get_id(scripts_domain);
-
 		Error err = _unload_scripts_domain();
 		if (err != OK) {
 			ERR_PRINT("Mono: Failed to unload scripts domain");
 			return err;
 		}
-
-		_domain_assemblies_cleanup(scripts_domain_id);
-
-		api_assembly = NULL;
-		project_assembly = NULL;
-#ifdef TOOLS_ENABLED
-		editor_api_assembly = NULL;
-#endif
-
-		_GodotSharp::get_singleton()->_dispose_callback();
 	}
 
 	Error err = _load_scripts_domain();
@@ -611,27 +611,13 @@ GDMono::~GDMono() {
 
 	if (runtime_initialized) {
 
-		_GodotSharp::get_singleton()->_dispose_callback();
-
 		if (scripts_domain) {
-
-			uint32_t scripts_domain_id = mono_domain_get_id(scripts_domain);
 
 			Error err = _unload_scripts_domain();
 			if (err != OK) {
 				WARN_PRINT("Mono: Failed to unload scripts domain");
 			}
-
-			_domain_assemblies_cleanup(scripts_domain_id);
-
-			api_assembly = NULL;
-			project_assembly = NULL;
-#ifdef TOOLS_ENABLED
-			editor_api_assembly = NULL;
-#endif
 		}
-
-		_GodotSharp::get_singleton()->_dispose_callback();
 
 		const uint32_t *k = NULL;
 		while ((k = assemblies.next(k))) {
