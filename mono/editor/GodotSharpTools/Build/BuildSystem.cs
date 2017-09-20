@@ -48,9 +48,6 @@ namespace GodotSharpTools.Build
 
         public bool Build(string loggerAssemblyPath, string loggerOutputDir, string[] customProperties = null)
         {
-            if (process != null)
-                throw new InvalidOperationException("Already in use");
-
             string compilerArgs = BuildArguments(loggerAssemblyPath, loggerOutputDir, customProperties);
 
             ProcessStartInfo startInfo = new ProcessStartInfo(MSBuildPath, compilerArgs);
@@ -63,16 +60,19 @@ namespace GodotSharpTools.Build
             // Needed when running from Developer Command Prompt for VS
             RemovePlatformVariable(startInfo.EnvironmentVariables);
 
-            process = Process.Start(startInfo);
+            using (Process process = new Process())
+            {
+                process.StartInfo = startInfo;
 
-            if (process == null)
-                return false;
+                process.Start();
 
-            process.WaitForExit();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
 
-            exitCode = process.ExitCode;
+                process.WaitForExit();
 
-            Dispose();
+                exitCode = process.ExitCode;
+            }
 
             return true;
         }
@@ -99,13 +99,7 @@ namespace GodotSharpTools.Build
             process.EnableRaisingEvents = true;
             process.Exited += new EventHandler(BuildProcess_Exited);
 
-            bool started = process.Start();
-
-            if (!started)
-            {
-                Dispose();
-                return false;
-            }
+            process.Start();
 
             return true;
         }

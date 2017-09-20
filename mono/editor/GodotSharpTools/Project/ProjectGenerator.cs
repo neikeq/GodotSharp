@@ -127,7 +127,7 @@ namespace GodotSharpTools.Project
 
             File.WriteAllText(assemblyInfoFile, content);
 
-            root.AddItem("Compile", assemblyInfoFile.RelativeToPath(dir));
+            root.AddItem("Compile", assemblyInfoFile.RelativeToPath(dir).Replace("/", "\\"));
         }
 
         public static ProjectRootElement CreateLibraryProject(string name, out ProjectPropertyGroupElement mainGroup)
