@@ -112,7 +112,7 @@ public:
 	GDMonoMethod *get_method_with_desc(const String &p_description, bool p_includes_namespace);
 
 	GDMonoField *get_field(const StringName &p_name);
-	Vector<GDMonoField *> get_all_fields();
+	const Vector<GDMonoField *> &get_all_fields();
 
 	~GDMonoClass();
 };

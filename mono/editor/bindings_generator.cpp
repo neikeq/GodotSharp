@@ -288,9 +288,9 @@ void BindingsGenerator::_generate_method_icalls(const TypeInterface &p_itype) {
 	}
 }
 
-Error BindingsGenerator::generate_cs_core_project(const String &p_output_dir, bool p_stdout_verbose) {
+Error BindingsGenerator::generate_cs_core_project(const String &p_output_dir, bool p_verbose_output) {
 
-	stdout_verbose = p_stdout_verbose;
+	verbose_output = p_verbose_output;
 
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
@@ -473,9 +473,9 @@ Error BindingsGenerator::generate_cs_core_project(const String &p_output_dir, bo
 	return OK;
 }
 
-Error BindingsGenerator::generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path, bool p_stdout_verbose) {
+Error BindingsGenerator::generate_cs_editor_project(const String &p_output_dir, const String &p_core_dll_path, bool p_verbose_output) {
 
-	stdout_verbose = p_stdout_verbose;
+	verbose_output = p_verbose_output;
 
 	DirAccessRef da = DirAccess::create(DirAccess::ACCESS_FILESYSTEM);
 	ERR_FAIL_COND_V(!da, ERR_CANT_CREATE);
@@ -578,7 +578,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 
 	List<InternalCall> &custom_icalls = itype.api_type == ClassDB::API_EDITOR ? editor_custom_icalls : core_custom_icalls;
 
-	if (stdout_verbose)
+	if (verbose_output)
 		OS::get_singleton()->print(String("Generating " + itype.proxy_name + ".cs...\n").utf8());
 
 	String ctor_method(ICALL_PREFIX + itype.proxy_name + "_Ctor");
@@ -727,8 +727,11 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 			// Prevent property and enclosing type from sharing the same name
 			if (prop_proxy_name == itype.proxy_name) {
 
-				WARN_PRINTS("Name of property `" + prop_proxy_name + "` is ambiguous with the name of its class `" +
-							itype.proxy_name + "`. Renaming property to `" + prop_proxy_name + "_`");
+				if (verbose_output) {
+					WARN_PRINTS("Name of property `" + prop_proxy_name + "` is ambiguous with the name of its class `" +
+								itype.proxy_name + "`. Renaming property to `" + prop_proxy_name + "_`");
+				}
+
 				prop_proxy_name += "_";
 			}
 
@@ -1142,7 +1145,7 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 
 Error BindingsGenerator::generate_glue(const String &p_output_dir) {
 
-	stdout_verbose = true;
+	verbose_output = true;
 
 	bool dir_exists = DirAccess::exists(p_output_dir);
 	ERR_EXPLAIN("The output directory does not exist.");
@@ -1636,8 +1639,11 @@ void BindingsGenerator::_populate_object_type_interfaces() {
 
 			// Prevent naming the property and its enclosing type from sharing the same name
 			if (imethod.proxy_name == itype.proxy_name) {
-				WARN_PRINTS("Name of method `" + imethod.proxy_name + "` is ambiguous with the name of its class `" +
-							itype.proxy_name + "`. Renaming method to `" + imethod.proxy_name + "_`");
+				if (verbose_output) {
+					WARN_PRINTS("Name of method `" + imethod.proxy_name + "` is ambiguous with the name of its class `" +
+								itype.proxy_name + "`. Renaming method to `" + imethod.proxy_name + "_`");
+				}
+
 				imethod.proxy_name += "_";
 			}
 
@@ -2059,7 +2065,7 @@ void BindingsGenerator::_populate_builtin_type(TypeInterface &r_itype, Variant::
 
 BindingsGenerator::BindingsGenerator() {
 
-	stdout_verbose = false;
+	verbose_output = false;
 
 	EditorHelp::generate_doc();
 

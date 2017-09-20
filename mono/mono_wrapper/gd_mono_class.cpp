@@ -291,7 +291,7 @@ GDMonoField *GDMonoClass::get_field(const StringName &p_name) {
 	return NULL;
 }
 
-Vector<GDMonoField *> GDMonoClass::get_all_fields() {
+const Vector<GDMonoField *> &GDMonoClass::get_all_fields() {
 
 	if (fields_fetched)
 		return fields_list;

@@ -475,7 +475,7 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 	for (Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > >::Element *E = to_reload.front(); E; E = E->next()) {
 
 		Ref<CSharpScript> scr = E->key();
-		scr->assembly_changed_cache = true;
+		scr->exports_invalidated = true;
 		scr->reload(p_soft_reload);
 		scr->update_exports();
 
@@ -1148,16 +1148,18 @@ bool CSharpScript::_update_exports() {
 	if (!valid)
 		return false;
 
-	bool changed = true;
+	bool changed = false;
 
-	if (assembly_changed_cache) {
-		assembly_changed_cache = false;
+	if (exports_invalidated) {
+		exports_invalidated = false;
+
+		changed = true;
 
 		member_info.clear();
 		exported_members_cache.clear();
 		exported_members_defval_cache.clear();
 
-		Vector<GDMonoField *> fields = script_class->get_all_fields();
+		const Vector<GDMonoField *> &fields = script_class->get_all_fields();
 
 		// We are creating a temporary new instance of the class here to get the default value
 		// TODO This is a workaround because alpha is happening soon, to focus on other stuff
@@ -1214,8 +1216,6 @@ bool CSharpScript::_update_exports() {
 				member_info[cname] = PropertyInfo(type, name, PROPERTY_HINT_NONE, "", PROPERTY_USAGE_SCRIPT_VARIABLE);
 			}
 		}
-
-		changed = true;
 	}
 
 	if (placeholders.size()) {
@@ -1668,7 +1668,7 @@ CSharpScript::CSharpScript()
 
 #ifdef TOOLS_ENABLED
 	source_changed_cache = false;
-	assembly_changed_cache = true;
+	exports_invalidated = true;
 #endif
 
 	_resource_path_changed();
