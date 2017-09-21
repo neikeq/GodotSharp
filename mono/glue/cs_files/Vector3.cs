@@ -1,6 +1,12 @@
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+// file: core/math/vector3.h
+// commit: bd282ff43f23fe845f29a3e25c8efc01bd65ffb0
+// file: core/math/vector3.cpp
+// commit: 7ad14e7a3e6f87ddc450f7e34621eb5200808451
+// file: core/variant_call.cpp
+// commit: 5ad9be4c24e9d7dc5672fdc42cea896622fe5685
 
 namespace Godot
 {
@@ -53,7 +59,6 @@ namespace Godot
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void normalize()
         {
             float length = this.length();
@@ -75,6 +80,16 @@ namespace Godot
             return new Vector3(Mathf.abs(x), Mathf.abs(y), Mathf.abs(z));
         }
 
+        public float angle_to(Vector3 to)
+        {
+            return Mathf.atan2(cross(to).length(), dot(to));
+        }
+
+        public Vector3 bounce(Vector3 n)
+        {
+            return -reflect(n);
+        }
+
         public Vector3 ceil()
         {
             return new Vector3(Mathf.ceil(x), Mathf.ceil(y), Mathf.ceil(z));
@@ -92,13 +107,18 @@ namespace Godot
 
         public Vector3 cubic_interpolate(Vector3 b, Vector3 preA, Vector3 postB, float t)
         {
+            Vector3 p0 = preA;
+            Vector3 p1 = this;
+            Vector3 p2 = b;
+            Vector3 p3 = postB;
+
             float t2 = t * t;
             float t3 = t2 * t;
 
             return 0.5f * (
-                        (this * 2.0f) + (-preA + b) * t +
-                        (2.0f * preA - 5.0f * this + 4f * b - postB) * t2 +
-                        (-preA + 3.0f * this - 3.0f * b + postB) * t3
+                        (p1 * 2.0f) + (-p0 + p2) * t +
+                        (2.0f * p0 - 5.0f * p1 + 4f * p2 - p3) * t2 +
+                        (-p0 + 3.0f * p1 - 3.0f * p2 + p3) * t3
                     );
         }
 
@@ -125,6 +145,11 @@ namespace Godot
         public Vector3 inverse()
         {
             return new Vector3(1.0f / x, 1.0f / y, 1.0f / z);
+        }
+
+        public bool is_normalized()
+        {
+            return Mathf.abs(length_squared() - 1.0f) < Mathf.Epsilon;
         }
 
         public float length()
@@ -172,9 +197,22 @@ namespace Godot
             return v;
         }
 
-        public Vector3 reflect(Vector3 by)
+        public Basis outer(Vector3 b)
         {
-            return by - this * this.dot(by) * 2.0f;
+            return new Basis(
+                new Vector3(x * b.x, x * b.y, x * b.z),
+                new Vector3(y * b.x, y * b.y, y * b.z),
+                new Vector3(z * b.x, z * b.y, z * b.z)
+            );
+        }
+
+        public Vector3 reflect(Vector3 n)
+        {
+#if DEBUG
+            if (!n.is_normalized())
+                throw new ArgumentException(String.Format("{0} is not normalized", n), nameof(n));
+#endif
+            return 2.0f * n * dot(n) - this;
         }
 
         public Vector3 rotated(Vector3 axis, float phi)
@@ -182,18 +220,27 @@ namespace Godot
             return new Basis(axis, phi).xform(this);
         }
 
-        public Vector3 slide(Vector3 by)
+        public Vector3 slide(Vector3 n)
         {
-            return by - this * this.dot(by) * 2.0f;
+            return this - n * dot(n);
         }
 
-        public Vector3 snapped(float by)
+        public Vector3 snapped(Vector3 by)
         {
             return new Vector3
             (
-                Mathf.stepify(x, by),
-                Mathf.stepify(y, by),
-                Mathf.stepify(z, by)
+                Mathf.stepify(x, by.x),
+                Mathf.stepify(y, by.y),
+                Mathf.stepify(z, by.z)
+            );
+        }
+
+        public Basis to_diagonal_matrix()
+        {
+            return new Basis(
+                x, 0f, 0f,
+                0f, y, 0f,
+                0f, 0f, z
             );
         }
 

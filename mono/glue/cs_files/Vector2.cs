@@ -1,6 +1,12 @@
 using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+// file: core/math/math_2d.h
+// commit: 7ad14e7a3e6f87ddc450f7e34621eb5200808451
+// file: core/math/math_2d.cpp
+// commit: 7ad14e7a3e6f87ddc450f7e34621eb5200808451
+// file: core/variant_call.cpp
+// commit: 5ad9be4c24e9d7dc5672fdc42cea896622fe5685
 
 namespace Godot
 {
@@ -9,30 +15,6 @@ namespace Godot
     {
         public float x;
         public float y;
-
-        public float width
-        {
-            get
-            {
-                return x;
-            }
-            set
-            {
-                x = value;
-            }
-        }
-
-        public float height
-        {
-            get
-            {
-                return y;
-            }
-            set
-            {
-                y = value;
-            }
-        }
 
         public float this[int index]
         {
@@ -64,7 +46,6 @@ namespace Godot
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void normalize()
         {
             float length = x * x + y * y;
@@ -77,6 +58,11 @@ namespace Godot
             }
         }
 
+        private float cross(Vector2 b)
+        {
+            return x * b.y - y * b.x;
+        }
+
         public Vector2 abs()
         {
             return new Vector2(Mathf.abs(x), Mathf.abs(y));
@@ -84,12 +70,12 @@ namespace Godot
 
         public float angle()
         {
-            return Mathf.atan2(x, y);
+            return Mathf.atan2(y, x);
         }
 
         public float angle_to(Vector2 to)
         {
-            return Mathf.atan2(tangent().dot(to), dot(to));
+            return Mathf.atan2(cross(to), dot(to));
         }
 
         public float angle_to_point(Vector2 to)
@@ -97,16 +83,44 @@ namespace Godot
             return Mathf.atan2(x - to.x, y - to.y);
         }
 
+        public float aspect()
+        {
+            return x / y;
+        }
+
+        public Vector2 bounce(Vector2 n)
+        {
+            return -reflect(n);
+        }
+
+        public Vector2 clamped(float length)
+        {
+            Vector2 v = this;
+            float l = this.length();
+
+            if (l > 0 && length < l)
+            {
+                v /= l;
+                v *= length;
+            }
+
+            return v;
+        }
+
         public Vector2 cubic_interpolate(Vector2 b, Vector2 preA, Vector2 postB, float t)
         {
+            Vector2 p0 = preA;
+            Vector2 p1 = this;
+            Vector2 p2 = b;
+            Vector2 p3 = postB;
+
             float t2 = t * t;
             float t3 = t2 * t;
 
-            return 0.5f * (
-                        (this * 2.0f) + (-preA + b) * t +
-                        (2.0f * preA - 5.0f * this + 4f * b - postB) * t2 +
-                        (-preA + 3.0f * this - 3.0f * b + postB) * t3
-                    );
+            return 0.5f * ((p1 * 2.0f) +
+                                (-p0 + p2) * t +
+                                (2.0f * p0 - 5.0f * p1 + 4 * p2 - p3) * t2 +
+                                (-p0 + 3.0f * p1 - 3.0f * p2 + p3) * t3);
         }
 
         public float distance_squared_to(Vector2 to)
@@ -129,9 +143,9 @@ namespace Godot
             return new Vector2(Mathf.floor(x), Mathf.floor(y));
         }
 
-        public float get_aspect()
+        public bool is_normalized()
         {
-            return x / y;
+            return Mathf.abs(length_squared() - 1.0f) < Mathf.Epsilon;
         }
 
         public float length()
@@ -146,7 +160,12 @@ namespace Godot
 
         public Vector2 linear_interpolate(Vector2 b, float t)
         {
-            return this + new Vector2(t * (b.x - x), t * (b.y - y));
+            Vector2 res = this;
+
+            res.x += (t * (b.x - x));
+            res.y += (t * (b.y - y));
+
+            return res;
         }
 
         public Vector2 normalized()
@@ -156,20 +175,20 @@ namespace Godot
             return result;
         }
 
-        public Vector2 reflect(Vector2 vec)
+        public Vector2 reflect(Vector2 n)
         {
-            return vec - this * dot(vec) * 2.0f;
+            return 2.0f * n * dot(n) - this;
         }
 
         public Vector2 rotated(float phi)
         {
             float rads = angle() + phi;
-            return new Vector2(Mathf.sin(rads), Mathf.cos(rads)) * length();
+            return new Vector2(Mathf.cos(rads), Mathf.sin(rads)) * length();
         }
 
-        public Vector2 slide(Vector2 vec)
+        public Vector2 slide(Vector2 n)
         {
-            return vec - this * dot(vec);
+            return this - n * dot(n);
         }
 
         public Vector2 snapped(Vector2 by)
