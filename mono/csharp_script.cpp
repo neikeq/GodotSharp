@@ -382,20 +382,39 @@ void CSharpLanguage::reload_all_scripts() {
 
 void CSharpLanguage::reload_tool_script(const Ref<Script> &p_script, bool p_soft_reload) {
 
+	(void)p_script; // UNUSED
+
+#ifdef TOOLS_ENABLED
 	reload_assemblies_if_needed(p_soft_reload);
+#endif
 }
 
+#ifdef TOOLS_ENABLED
 void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 
 	if (gdmono->is_runtime_initialized()) {
 
 		GDMonoAssembly *proj_assembly = gdmono->get_project_assembly();
-		if (proj_assembly && FileAccess::get_modified_time(proj_assembly->get_path()) <= proj_assembly->get_modified_time()) {
-			return;
+
+		if (proj_assembly) {
+			String proj_asm_path = proj_assembly->get_path();
+
+			if (!FileAccess::exists(proj_assembly->get_path())) {
+				// Maybe it wasn't loaded from the default path, so check this as well
+				String proj_asm_name = ProjectSettings::get_singleton()->get("application/config/name");
+				proj_asm_path = GodotSharpDirs::get_res_temp_assemblies_dir().plus_file(proj_asm_name);
+				if (!FileAccess::exists(proj_asm_path))
+					return; // No assembly to load
+			}
+
+			if (FileAccess::get_modified_time(proj_asm_path) <= proj_assembly->get_modified_time())
+				return; // Already up to date
+		} else {
+			String proj_asm_name = ProjectSettings::get_singleton()->get("application/config/name");
+			if (!FileAccess::exists(GodotSharpDirs::get_res_temp_assemblies_dir().plus_file(proj_asm_name)))
+				return; // No assembly to load
 		}
 	}
-
-#ifdef DEBUG_ENABLED
 
 #ifndef NO_THREADS
 	lock->lock();
@@ -450,8 +469,7 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 				}
 			}
 
-//same thing for placeholders
-#ifdef TOOLS_ENABLED
+			//same thing for placeholders
 			while (E->get()->placeholders.size()) {
 
 				Object *obj = E->get()->placeholders.front()->get()->get_owner();
@@ -463,7 +481,6 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 					obj->set_script(RefPtr());
 				}
 			}
-#endif
 
 			for (Map<ObjectID, List<Pair<StringName, Variant> > >::Element *F = E->get()->pending_reload_state.front(); F; F = F->next()) {
 				map[F->key()] = F->get(); //pending to reload, use this one instead
@@ -473,7 +490,7 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 		}
 	}
 
-	if (gdmono->reload_scripts_domain_if_needed() != OK)
+	if (gdmono->reload_scripts_domain() != OK)
 		return;
 
 	for (Map<Ref<CSharpScript>, Map<ObjectID, List<Pair<StringName, Variant> > > >::Element *E = to_reload.front(); E; E = E->next()) {
@@ -512,8 +529,8 @@ void CSharpLanguage::reload_assemblies_if_needed(bool p_soft_reload) {
 
 		//if instance states were saved, set them!
 	}
-#endif
 }
+#endif
 
 void CSharpLanguage::get_recognized_extensions(List<String> *p_extensions) const {
 
@@ -1524,6 +1541,8 @@ Error CSharpScript::reload(bool p_keep_state) {
 			tool = script_class->has_attribute(CACHED_CLASS(ToolAttribute));
 
 			native = GDMonoUtils::get_class_native_base(script_class);
+
+			ERR_FAIL_NULL_V(native, ERR_BUG);
 
 			GDMonoClass *base_class = script_class->get_parent_class();
 

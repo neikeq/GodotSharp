@@ -30,10 +30,85 @@
 
 #include "list.h"
 #include "os/file_access.h"
+#include "os/os.h"
 
+#include "../godotsharp_dirs.h"
 #include "gd_mono_class.h"
 
+MonoAssembly *gdmono_load_assembly_from(const String &p_name, const String &p_path) {
+
+	MonoDomain *domain = mono_domain_get();
+
+	GDMonoAssembly *assembly = memnew(GDMonoAssembly(p_name, p_path));
+	Error err = assembly->load(domain);
+	ERR_FAIL_COND_V(err != OK, NULL);
+
+	GDMono::get_singleton()->add_assembly(mono_domain_get_id(domain), assembly);
+
+	return assembly->get_assembly();
+}
+
+MonoAssembly *gdmono_MonoAssemblyPreLoad(MonoAssemblyName *aname, char **assemblies_path, void *user_data) {
+
+	(void)user_data; // UNUSED
+
+	MonoAssembly *assembly_loaded = mono_assembly_loaded(aname);
+	if (assembly_loaded) // Already loaded
+		return assembly_loaded;
+
+	static Vector<String> search_dirs;
+
+	if (search_dirs.empty()) {
+		search_dirs.push_back(GodotSharpDirs::get_res_temp_assemblies_dir());
+		search_dirs.push_back(GodotSharpDirs::get_res_assemblies_dir());
+		search_dirs.push_back(OS::get_singleton()->get_resource_dir());
+		search_dirs.push_back(OS::get_singleton()->get_executable_path().get_base_dir());
+
+		const char *rootdir = mono_assembly_getrootdir();
+		if (rootdir) {
+			search_dirs.push_back(String(rootdir).plus_file("mono").plus_file("4.5"));
+		}
+
+		while (assemblies_path) {
+			if (*assemblies_path)
+				search_dirs.push_back(*assemblies_path);
+			++assemblies_path;
+		}
+	}
+
+	String name = mono_assembly_name_get_name(aname);
+	bool has_extension = name.ends_with(".dll") || name.ends_with(".exe");
+
+	String path;
+
+	for (int i = 0; i < search_dirs.size(); i++) {
+		const String &search_dir = search_dirs[i];
+
+		if (has_extension) {
+			path = search_dir.plus_file(name);
+			if (FileAccess::exists(path))
+				return gdmono_load_assembly_from(name.get_basename(), path);
+		} else {
+			path = search_dir.plus_file(name + ".dll");
+			if (FileAccess::exists(path))
+				return gdmono_load_assembly_from(name, path);
+
+			path = search_dir.plus_file(name + ".exe");
+			if (FileAccess::exists(path))
+				return gdmono_load_assembly_from(name, path);
+		}
+	}
+
+	return NULL;
+}
+
+void GDMonoAssembly::initialize() {
+
+	mono_install_assembly_preload_hook(&gdmono_MonoAssemblyPreLoad, NULL);
+}
+
 Error GDMonoAssembly::load(MonoDomain *p_domain) {
+
 	ERR_FAIL_COND_V(loaded, ERR_FILE_ALREADY_IN_USE);
 
 	uint64_t last_modified_time = FileAccess::get_modified_time(path);
@@ -86,6 +161,7 @@ no_pdb:
 }
 
 Error GDMonoAssembly::wrapper_for_image(MonoImage *p_image) {
+
 	ERR_FAIL_COND_V(loaded, ERR_FILE_ALREADY_IN_USE);
 
 	assembly = mono_image_get_assembly(p_image);
@@ -101,6 +177,7 @@ Error GDMonoAssembly::wrapper_for_image(MonoImage *p_image) {
 }
 
 void GDMonoAssembly::unload() {
+
 	ERR_FAIL_COND(!loaded);
 
 #ifdef DEBUG_ENABLED
@@ -125,6 +202,7 @@ void GDMonoAssembly::unload() {
 }
 
 GDMonoClass *GDMonoAssembly::get_class(const StringName &p_namespace, const StringName &p_name) {
+
 	ERR_FAIL_COND_V(!loaded, NULL);
 
 	ClassKey key(p_namespace, p_name);
@@ -148,6 +226,7 @@ GDMonoClass *GDMonoAssembly::get_class(const StringName &p_namespace, const Stri
 }
 
 GDMonoClass *GDMonoAssembly::get_class(MonoClass *p_mono_class) {
+
 	ERR_FAIL_COND_V(!loaded, NULL);
 
 	Map<MonoClass *, GDMonoClass *>::Element *match = cached_raw.find(p_mono_class);
@@ -167,6 +246,7 @@ GDMonoClass *GDMonoAssembly::get_class(MonoClass *p_mono_class) {
 }
 
 GDMonoClass *GDMonoAssembly::get_object_derived_class(const StringName &p_class) {
+
 	GDMonoClass *match = NULL;
 
 	if (gdobject_class_cache_updated) {
@@ -226,6 +306,7 @@ GDMonoClass *GDMonoAssembly::get_object_derived_class(const StringName &p_class)
 }
 
 GDMonoAssembly::GDMonoAssembly(const String &p_name, const String &p_path) {
+
 	loaded = false;
 	gdobject_class_cache_updated = false;
 	name = p_name;
@@ -236,6 +317,7 @@ GDMonoAssembly::GDMonoAssembly(const String &p_name, const String &p_path) {
 }
 
 GDMonoAssembly::~GDMonoAssembly() {
+
 	if (loaded)
 		unload();
 }

@@ -249,7 +249,9 @@ public:
 	bool debug_break(const String &p_error, bool p_allow_continue = true);
 	bool debug_break_parse(const String &p_file, int p_line, const String &p_error);
 
+#ifdef TOOLS_ENABLED
 	void reload_assemblies_if_needed(bool p_soft_reload);
+#endif
 
 	virtual String get_name() const;
 

@@ -35,7 +35,9 @@
 #endif
 
 #define SCRIPTS_DOMAIN GDMono::get_singleton()->get_scripts_domain()
+#ifdef TOOLS_ENABLED
 #define TOOLS_DOMAIN GDMono::get_singleton()->get_tools_domain()
+#endif
 
 class GDMono {
 
@@ -44,7 +46,9 @@ class GDMono {
 
 	MonoDomain *root_domain;
 	MonoDomain *scripts_domain;
+#ifdef TOOLS_ENABLED
 	MonoDomain *tools_domain;
+#endif
 
 	GDMonoAssembly *corlib_assembly;
 	GDMonoAssembly *api_assembly;
@@ -73,7 +77,9 @@ class GDMono {
 	Error _load_scripts_domain();
 	Error _unload_scripts_domain();
 
+#ifdef TOOLS_ENABLED
 	Error _load_tools_domain();
+#endif
 
 #ifdef DEBUG_METHODS_ENABLED
 	uint64_t api_core_hash;
@@ -87,7 +93,7 @@ class GDMono {
 
 	GDMonoLog *gdmono_log;
 
-#if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
+#ifdef WINDOWS_ENABLED
 	MonoRegInfo mono_reg_info;
 #endif
 
@@ -118,7 +124,9 @@ public:
 	_FORCE_INLINE_ bool is_finalizing_scripts_domain() const { return finalizing_scripts_domain; }
 
 	_FORCE_INLINE_ MonoDomain *get_scripts_domain() { return scripts_domain; }
+#ifdef TOOLS_ENABLED
 	_FORCE_INLINE_ MonoDomain *get_tools_domain() { return tools_domain; }
+#endif
 
 	_FORCE_INLINE_ GDMonoAssembly *get_corlib_assembly() const { return corlib_assembly; }
 	_FORCE_INLINE_ GDMonoAssembly *get_api_assembly() const { return api_assembly; }
@@ -128,13 +136,15 @@ public:
 	_FORCE_INLINE_ GDMonoAssembly *get_editor_tools_assembly() const { return editor_tools_assembly; }
 #endif
 
-#if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
-	const MonoRegInfo &get_mono_loc_info() { return mono_reg_info; }
+#ifdef WINDOWS_ENABLED
+	const MonoRegInfo &get_mono_reg_info() { return mono_reg_info; }
 #endif
 
 	GDMonoClass *get_class(MonoClass *p_raw_class);
 
-	Error reload_scripts_domain_if_needed();
+#ifdef TOOLS_ENABLED
+	Error reload_scripts_domain();
+#endif
 
 	void initialize();
 

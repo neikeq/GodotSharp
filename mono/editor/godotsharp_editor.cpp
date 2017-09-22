@@ -57,7 +57,7 @@ GodotSharpEditor *GodotSharpEditor::singleton = NULL;
 
 bool GodotSharpEditor::_create_project_solution() {
 
-	EditorProgress pr("create_csharp_solution", "Generating solution...", 1);
+	EditorProgress pr("create_csharp_solution", "Generating solution...", 2);
 
 	pr.step("Generating C# project...");
 
@@ -97,6 +97,8 @@ bool GodotSharpEditor::_create_project_solution() {
 	} else {
 		show_error("Failed to create C# project.");
 	}
+
+	pr.step("Done");
 
 	return true;
 }

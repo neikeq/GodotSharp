@@ -35,78 +35,12 @@
 #include "project_settings.h"
 
 #include "../csharp_script.h"
-#include "../godotsharp_dirs.h"
 #include "../utils/path_utils.h"
 #include "gd_mono_utils.h"
 
 #ifdef TOOLS_ENABLED
 #include "../editor/godotsharp_editor.h"
 #endif
-
-MonoAssembly *gdmono_MonoAssemblyPreLoad(MonoAssemblyName *aname, char **assemblies_path, void *user_data) {
-
-	(void)user_data; // UNUSED
-
-	MonoAssembly *assembly_loaded = mono_assembly_loaded(aname);
-	if (assembly_loaded) {
-		// Already loaded
-		return assembly_loaded;
-	}
-
-	List<String> search_dirs;
-
-	search_dirs.push_back(GodotSharpDirs::get_res_temp_assemblies_dir());
-	search_dirs.push_back(GodotSharpDirs::get_res_assemblies_dir());
-	search_dirs.push_back(OS::get_singleton()->get_resource_dir());
-	search_dirs.push_back(OS::get_singleton()->get_executable_path().get_base_dir());
-
-	const char *rootdir = mono_assembly_getrootdir();
-	if (rootdir) {
-		search_dirs.push_back(String(rootdir).plus_file("mono").plus_file("4.5"));
-	}
-
-	while (assemblies_path) {
-		if (*assemblies_path)
-			search_dirs.push_back(*assemblies_path);
-		++assemblies_path;
-	}
-
-	String name = mono_assembly_name_get_name(aname);
-	bool has_extension = name.ends_with(".dll") || name.ends_with(".exe");
-
-	String path;
-
-	for (List<String>::Element *E = search_dirs.front(); E; E = E->next()) {
-		if (has_extension) {
-			path = E->get().plus_file(name);
-			if (FileAccess::exists(path))
-				goto found;
-		} else {
-			path = E->get().plus_file(name + ".dll");
-			if (FileAccess::exists(path))
-				goto found;
-			path = E->get().plus_file(name + ".exe");
-			if (FileAccess::exists(path))
-				goto found;
-		}
-	}
-
-	return NULL;
-
-found:
-	if (has_extension)
-		name = name.get_basename();
-
-	MonoDomain *domain = mono_domain_get();
-
-	GDMonoAssembly *assembly = memnew(GDMonoAssembly(name, path));
-	Error err = assembly->load(domain);
-	ERR_FAIL_COND_V(err != OK, NULL);
-
-	GDMono::get_singleton()->add_assembly(mono_domain_get_id(domain), assembly);
-
-	return assembly->get_assembly();
-}
 
 #ifdef MONO_PRINT_HANDLER_ENABLED
 void gdmono_MonoPrintCallback(const char *string, mono_bool is_stdout) {
@@ -160,7 +94,7 @@ void GDMono::initialize() {
 	mono_trace_set_printerr_handler(gdmono_MonoPrintCallback);
 #endif
 
-#if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
+#ifdef WINDOWS_ENABLED
 	mono_reg_info = MonoRegUtils::find_mono();
 
 	CharString assembly_dir;
@@ -180,7 +114,7 @@ void GDMono::initialize() {
 	mono_set_dirs(NULL, NULL);
 #endif
 
-	mono_install_assembly_preload_hook(&gdmono_MonoAssemblyPreLoad, NULL);
+	GDMonoAssembly::initialize();
 
 #ifdef DEBUG_ENABLED
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
@@ -493,6 +427,7 @@ Error GDMono::_unload_scripts_domain() {
 	return OK;
 }
 
+#ifdef TOOLS_ENABLED
 Error GDMono::_load_tools_domain() {
 
 	ERR_FAIL_COND_V(tools_domain != NULL, ERR_BUG);
@@ -509,16 +444,14 @@ Error GDMono::_load_tools_domain() {
 
 	return OK;
 }
+#endif
 
-Error GDMono::reload_scripts_domain_if_needed() {
+#ifdef TOOLS_ENABLED
+Error GDMono::reload_scripts_domain() {
 
 	ERR_FAIL_COND_V(!runtime_initialized, ERR_BUG);
 
 	if (scripts_domain) {
-		if (project_assembly && FileAccess::get_modified_time(project_assembly->get_path()) <= project_assembly->get_modified_time()) {
-			return ERR_SKIP; // No need to reload
-		}
-
 		Error err = _unload_scripts_domain();
 		if (err != OK) {
 			ERR_PRINT("Mono: Failed to unload scripts domain");
@@ -540,6 +473,7 @@ Error GDMono::reload_scripts_domain_if_needed() {
 
 	return OK;
 }
+#endif
 
 GDMonoClass *GDMono::get_class(MonoClass *p_raw_class) {
 
@@ -588,16 +522,17 @@ GDMono::GDMono() {
 
 	root_domain = NULL;
 	scripts_domain = NULL;
-	tools_domain = NULL;
-
 #ifdef TOOLS_ENABLED
-	editor_api_assembly = NULL;
-	editor_tools_assembly = NULL;
+	tools_domain = NULL;
 #endif
 
 	corlib_assembly = NULL;
 	api_assembly = NULL;
 	project_assembly = NULL;
+#ifdef TOOLS_ENABLED
+	editor_api_assembly = NULL;
+	editor_tools_assembly = NULL;
+#endif
 
 #ifdef DEBUG_METHODS_ENABLED
 	api_core_hash = 0;

@@ -82,6 +82,9 @@ class GDMonoAssembly {
 	Vector<uint8_t> pdb_data;
 #endif
 
+	friend class GDMono;
+	static void initialize();
+
 public:
 	Error load(MonoDomain *p_domain);
 	Error wrapper_for_image(MonoImage *p_image);

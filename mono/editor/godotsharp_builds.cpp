@@ -16,7 +16,7 @@ void godot_icall_BuildInstance_ExitCallback(MonoString *p_solution, MonoString *
 }
 
 MonoString *godot_icall_BuildInstance_get_MSBuildPath() {
-#if defined(WINDOWS_ENABLED) && (defined(DEBUG_ENABLED) || defined(TOOLS_ENABLED))
+#ifdef WINDOWS_ENABLED
 	String msbuild_tools_path = MonoRegUtils::find_msbuild_tools_path();
 
 	if (msbuild_tools_path.ends_with("\\"))
@@ -90,7 +90,7 @@ bool GodotSharpBuilds::make_api_sln(GodotSharpBuilds::APIType p_api_type) {
 	String api_name = p_api_type == API_CORE ? API_ASSEMBLY_NAME : EDITOR_API_ASSEMBLY_NAME;
 	String api_build_config = "Release";
 
-	EditorProgress pr("mono_build_release_" + api_name, "Building " + api_name + " solution...", 3);
+	EditorProgress pr("mono_build_release_" + api_name, "Building " + api_name + " solution...", 4);
 
 	pr.step("Generating " + api_name + " solution");
 
@@ -111,6 +111,10 @@ bool GodotSharpBuilds::make_api_sln(GodotSharpBuilds::APIType p_api_type) {
 										.plus_file(api_build_config)
 										.plus_file(API_ASSEMBLY_NAME ".dll");
 		}
+
+#ifndef DEBUG_METHODS_ENABLED
+#error "How am I supposed to generate the bindings?"
+#endif
 
 		BindingsGenerator &gen = BindingsGenerator::get_singleton();
 		bool gen_verbose = OS::get_singleton()->is_stdout_verbose();
@@ -151,6 +155,8 @@ bool GodotSharpBuilds::make_api_sln(GodotSharpBuilds::APIType p_api_type) {
 	if (!GodotSharpBuilds::copy_api_assembly(api_assembly_dir, res_assemblies_dir, api_name))
 		return false;
 
+	pr.step("Done");
+
 	return true;
 }
 
@@ -159,15 +165,20 @@ bool godotsharp_build_callback() {
 	if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_CORE))
 		return false;
 
-	EditorProgress pr("mono_project_debug_build", "Building project solution...", 1);
+	if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_EDITOR))
+		return false;
+
+	EditorProgress pr("mono_project_debug_build", "Building project solution...", 2);
 
 	pr.step("Building project solution");
 
-	MonoBuildInfo build_info(GodotSharpDirs::get_project_sln_path(), "Debug");
+	MonoBuildInfo build_info(GodotSharpDirs::get_project_sln_path(), "Tools");
 	if (!GodotSharpBuilds::get_singleton()->build(build_info)) {
 		GodotSharpEditor::get_singleton()->show_error("Failed to build project solution", "Build error");
 		return false;
 	}
+
+	pr.step("Done");
 
 	return true;
 }

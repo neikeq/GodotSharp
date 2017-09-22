@@ -37,13 +37,15 @@ namespace GodotSharpDirs {
 
 String _get_expected_build_config() {
 #ifdef TOOLS_ENABLED
-	if (Engine::get_singleton()->is_editor_hint())
-		return "Tools";
-#endif
+	return "Tools";
+#else
+
 #ifdef DEBUG_ENABLED
 	return "Debug";
 #else
 	return "Release";
+#endif
+
 #endif
 }
 
@@ -95,9 +97,12 @@ private:
 		res_metadata_dir = res_data_dir.plus_file("metadata");
 		res_assemblies_dir = res_data_dir.plus_file("assemblies");
 		res_config_dir = res_data_dir.plus_file("etc").plus_file("mono");
+
+		// TODO use paths in from csproj
 		res_temp_dir = res_data_dir.plus_file("temp");
 		res_temp_assemblies_base_dir = res_temp_dir.plus_file("bin");
 		res_temp_assemblies_dir = res_temp_assemblies_base_dir.plus_file(_get_expected_build_config());
+
 		mono_user_dir = _get_mono_user_dir();
 		mono_logs_dir = mono_user_dir.plus_file("mono_logs");
 
