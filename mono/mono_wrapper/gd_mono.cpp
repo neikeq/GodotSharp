@@ -190,7 +190,7 @@ void GDMono::initialize() {
 	// --debugger-agent=help
 	const char *options[] = {
 		"--soft-breakpoints",
-		"--debugger-agent=transport=dt_socket,address=127.0.0.1:17615,embedding=1,server=y,suspend=n"
+		"--debugger-agent=transport=dt_socket,address=127.0.0.1:23685,embedding=1,server=y,suspend=n"
 	};
 	mono_jit_parse_options(2, (char **)options);
 #endif
@@ -208,18 +208,18 @@ void GDMono::initialize() {
 
 	OS::get_singleton()->print("Mono: Runtime initialized\n");
 
-#ifdef TOOLS_ENABLED
-	bool debugger_attached = _wait_for_debugger_msecs(500);
-	if (!debugger_attached && OS::get_singleton()->is_stdout_verbose())
-		OS::get_singleton()->printerr("Mono: Debugger wait timeout\n");
-#endif
-
 	// mscorlib assembly MUST be present at initialization
 	ERR_EXPLAIN("Mono: Failed to load mscorlib assembly");
 	ERR_FAIL_COND(!_load_corlib_assembly());
 
 	ERR_EXPLAIN("Mono: Failed to load scripts domain");
 	ERR_FAIL_COND(_load_scripts_domain() != OK);
+
+#ifdef DEBUG_ENABLED
+	bool debugger_attached = _wait_for_debugger_msecs(500);
+	if (!debugger_attached && OS::get_singleton()->is_stdout_verbose())
+		OS::get_singleton()->printerr("Mono: Debugger wait timeout\n");
+#endif
 
 	_register_internal_calls();
 
@@ -425,8 +425,7 @@ bool GDMono::_load_all_script_assemblies() {
 
 	return true;
 #else
-	if (OS::get_singleton()->is_stdout_verbose())
-		OS::get_singleton()->print("Mono: Glue disbled, ignoring script assemblies\n");
+	WARN_PRINT("Mono: Glue disabled, ignoring script assemblies");
 
 	return true;
 #endif
