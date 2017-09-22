@@ -92,6 +92,10 @@ void CSharpLanguage::init() {
 	gdmono = memnew(GDMono);
 	gdmono->initialize();
 
+#ifdef MONO_GLUE_DISABLED
+	WARN_PRINT("This binary is built with `mono_glue=no` and cannot be used for scripting");
+#endif
+
 #if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
 	if (gdmono->get_editor_tools_assembly() != NULL) {
 		List<String> cmdline_args = OS::get_singleton()->get_cmdline_args();

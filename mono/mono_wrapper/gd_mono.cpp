@@ -425,7 +425,8 @@ bool GDMono::_load_all_script_assemblies() {
 
 	return true;
 #else
-	WARN_PRINT("Mono: Glue disabled, ignoring script assemblies");
+	if (OS::get_singleton()->is_stdout_verbose())
+		OS::get_singleton()->print("Mono: Glue disbled, ignoring script assemblies\n");
 
 	return true;
 #endif
