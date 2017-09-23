@@ -55,6 +55,7 @@ void gdmono_MonoPrintCallback(const char *string, mono_bool is_stdout) {
 
 GDMono *GDMono::singleton = NULL;
 
+#ifdef DEBUG_ENABLED
 static bool _wait_for_debugger_msecs(uint32_t p_msecs) {
 
 	do {
@@ -76,6 +77,51 @@ static bool _wait_for_debugger_msecs(uint32_t p_msecs) {
 
 	return mono_is_debugger_attached();
 }
+#endif
+
+#ifdef TOOLS_ENABLED
+// temporary workaround. should be provided from Main::setup/setup2 instead
+bool _is_project_manager_requested() {
+
+	List<String> cmdline_args = OS::get_singleton()->get_cmdline_args();
+	for (List<String>::Element *E = cmdline_args.front(); E; E = E->next()) {
+		const String &arg = E->get();
+		if (arg == "-p" || arg == "--project-manager")
+			return true;
+	}
+
+	return false;
+}
+#endif
+
+#ifdef DEBUG_ENABLED
+void gdmono_debug_init() {
+
+	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
+
+	int da_port = GLOBAL_DEF("mono/debugger_agent/port", 23685);
+	bool da_suspend = GLOBAL_DEF("mono/debugger_agent/wait_for_debugger", false);
+	int da_timeout = GLOBAL_DEF("mono/debugger_agent/wait_timeout", 3000);
+
+#ifdef TOOLS_ENABLED
+	if (Engine::get_singleton()->is_editor_hint() ||
+			ProjectSettings::get_singleton()->get_resource_path().empty() ||
+			_is_project_manager_requested()) {
+		return;
+	}
+#endif
+
+	CharString da_args = String("--debugger-agent=transport=dt_socket,address=127.0.0.1:" + itos(da_port) +
+								",embedding=1,server=y,suspend=" + (da_suspend ? "y,timeout=" + itos(da_timeout) : "n"))
+								 .utf8();
+	// --debugger-agent=help
+	const char *options[] = {
+		"--soft-breakpoints",
+		da_args.get_data()
+	};
+	mono_jit_parse_options(2, (char **)options);
+}
+#endif
 
 void GDMono::initialize() {
 
@@ -117,16 +163,7 @@ void GDMono::initialize() {
 	GDMonoAssembly::initialize();
 
 #ifdef DEBUG_ENABLED
-	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
-
-	// TODO Add setting for suspend=y
-
-	// --debugger-agent=help
-	const char *options[] = {
-		"--soft-breakpoints",
-		"--debugger-agent=transport=dt_socket,address=127.0.0.1:23685,embedding=1,server=y,suspend=n"
-	};
-	mono_jit_parse_options(2, (char **)options);
+	gdmono_debug_init();
 #endif
 
 	mono_config_parse(NULL);
@@ -341,12 +378,10 @@ bool GDMono::_load_all_script_assemblies() {
 		return false;
 	} else {
 #ifdef TOOLS_ENABLED
-		if (Engine::get_singleton()->is_editor_hint()) {
-			if (!_load_editor_api_assembly()) {
-				if (OS::get_singleton()->is_stdout_verbose())
-					OS::get_singleton()->printerr("Mono: Failed to load Editor API assembly\n");
-				return false;
-			}
+		if (!_load_editor_api_assembly()) {
+			if (OS::get_singleton()->is_stdout_verbose())
+				OS::get_singleton()->printerr("Mono: Failed to load Editor API assembly\n");
+			return false;
 		}
 #endif
 	}
