@@ -11,8 +11,8 @@ namespace Godot
 {
     public struct Rect3 : IEquatable<Rect3>
     {
-        public Vector3 position;
-        public Vector3 size;
+        private Vector3 position;
+        private Vector3 size;
 
         public Vector3 Position
         {

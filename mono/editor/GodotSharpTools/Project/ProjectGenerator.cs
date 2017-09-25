@@ -167,7 +167,7 @@ namespace GodotSharpTools.Project
             var referenceGroup = root.AddItemGroup();
             referenceGroup.AddItem("Reference", "System");
 
-            root.AddImport(Path.Combine("$(MSBuildBinPath)", "Microsoft.CSharp.targets"));
+            root.AddImport(Path.Combine("$(MSBuildBinPath)", "Microsoft.CSharp.targets").Replace("/", "\\"));
 
             return root;
         }
