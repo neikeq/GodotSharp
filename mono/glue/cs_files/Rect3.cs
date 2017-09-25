@@ -1,39 +1,62 @@
 using System;
 
+// file: core/math/rect3.h
+// commit: 7ad14e7a3e6f87ddc450f7e34621eb5200808451
+// file: core/math/rect3.cpp
+// commit: bd282ff43f23fe845f29a3e25c8efc01bd65ffb0
+// file: core/variant_call.cpp
+// commit: 5ad9be4c24e9d7dc5672fdc42cea896622fe5685
+
 namespace Godot
 {
     public struct Rect3 : IEquatable<Rect3>
     {
-        public Vector3 pos;
+        public Vector3 position;
         public Vector3 size;
+
+        public Vector3 Position
+        {
+            get
+            {
+                return position;
+            }
+        }
+
+        public Vector3 Size
+        {
+            get
+            {
+                return size;
+            }
+        }
 
         public Vector3 End
         {
             get
             {
-                return pos + size;
+                return position + size;
             }
         }
 
         public bool encloses(Rect3 with)
         {
-            Vector3 src_min = pos;
-            Vector3 src_max = pos + size;
-            Vector3 dst_min = with.pos;
-            Vector3 dst_max = with.pos + with.size;
+            Vector3 src_min = position;
+            Vector3 src_max = position + size;
+            Vector3 dst_min = with.position;
+            Vector3 dst_max = with.position + with.size;
 
-            return (src_min.x <= dst_min.x) &&
-            (src_max.x > dst_max.x) &&
-            (src_min.y <= dst_min.y) &&
-            (src_max.y > dst_max.y) &&
-            (src_min.z <= dst_min.z) &&
-            (src_max.z > dst_max.z);
+            return ((src_min.x <= dst_min.x) &&
+                    (src_max.x > dst_max.x) &&
+                    (src_min.y <= dst_min.y) &&
+                    (src_max.y > dst_max.y) &&
+                    (src_min.z <= dst_min.z) &&
+                    (src_max.z > dst_max.z));
         }
 
         public Rect3 expand(Vector3 to_point)
         {
-            Vector3 begin = pos;
-            Vector3 end = pos + size;
+            Vector3 begin = position;
+            Vector3 end = position + size;
 
             if (to_point.x < begin.x)
                 begin.x = to_point.x;
@@ -57,30 +80,29 @@ namespace Godot
             return size.x * size.y * size.z;
         }
 
-        public Vector3 get_end_point(int idx)
+        public Vector3 get_endpoint(int idx)
         {
             switch (idx)
             {
                 case 0:
-                    return new Vector3(pos.x, pos.y, pos.z);
+                    return new Vector3(position.x, position.y, position.z);
                 case 1:
-                    return new Vector3(pos.x, pos.y, pos.z + size.z);
+                    return new Vector3(position.x, position.y, position.z + size.z);
                 case 2:
-                    return new Vector3(pos.x, pos.y + size.y, pos.z);
+                    return new Vector3(position.x, position.y + size.y, position.z);
                 case 3:
-                    return new Vector3(pos.x, pos.y + size.y, pos.z + size.z);
+                    return new Vector3(position.x, position.y + size.y, position.z + size.z);
                 case 4:
-                    return new Vector3(pos.x + size.x, pos.y, pos.z);
+                    return new Vector3(position.x + size.x, position.y, position.z);
                 case 5:
-                    return new Vector3(pos.x + size.x, pos.y, pos.z + size.z);
+                    return new Vector3(position.x + size.x, position.y, position.z + size.z);
                 case 6:
-                    return new Vector3(pos.x + size.x, pos.y + size.y, pos.z);
+                    return new Vector3(position.x + size.x, position.y + size.y, position.z);
                 case 7:
-                    return new Vector3(pos.x + size.x, pos.y + size.y, pos.z + size.z);
+                    return new Vector3(position.x + size.x, position.y + size.y, position.z + size.z);
                 default:
-                    throw new ArgumentOutOfRangeException("Index is " + idx + ", but a value from 0 to 7 is expected.");
+                    throw new ArgumentOutOfRangeException(nameof(idx), String.Format("Index is {0}, but a value from 0 to 7 is expected.", idx));
             }
-            ;
         }
 
         public Vector3 get_longest_axis()
@@ -103,20 +125,20 @@ namespace Godot
             return axis;
         }
 
-        public int get_longest_axis_index()
+        public Vector3.Axis get_longest_axis_index()
         {
-            int axis = 0;
+            Vector3.Axis axis = Vector3.Axis.X;
             float max_size = size.x;
 
             if (size.y > max_size)
             {
-                axis = 1;
+                axis = Vector3.Axis.Y;
                 max_size = size.y;
             }
 
             if (size.z > max_size)
             {
-                axis = 2;
+                axis = Vector3.Axis.Z;
                 max_size = size.z;
             }
 
@@ -156,20 +178,20 @@ namespace Godot
             return axis;
         }
 
-        public int get_shortest_axis_index()
+        public Vector3.Axis get_shortest_axis_index()
         {
-            int axis = 0;
+            Vector3.Axis axis = Vector3.Axis.X;
             float max_size = size.x;
 
             if (size.y < max_size)
             {
-                axis = 1;
+                axis = Vector3.Axis.Y;
                 max_size = size.y;
             }
 
             if (size.z < max_size)
             {
-                axis = 2;
+                axis = Vector3.Axis.Z;
                 max_size = size.z;
             }
 
@@ -192,7 +214,7 @@ namespace Godot
         public Vector3 get_support(Vector3 dir)
         {
             Vector3 half_extents = size * 0.5f;
-            Vector3 ofs = pos + half_extents;
+            Vector3 ofs = position + half_extents;
 
             return ofs + new Vector3(
                 (dir.x > 0f) ? -half_extents.x : half_extents.x,
@@ -204,9 +226,9 @@ namespace Godot
         {
             Rect3 res = this;
 
-            res.pos.x -= by;
-            res.pos.y -= by;
-            res.pos.z -= by;
+            res.position.x -= by;
+            res.position.y -= by;
+            res.position.z -= by;
             res.size.x += 2.0f * by;
             res.size.y += 2.0f * by;
             res.size.z += 2.0f * by;
@@ -216,27 +238,27 @@ namespace Godot
 
         public bool has_no_area()
         {
-            return size.x <= Mathf.Epsilon || size.y <= Mathf.Epsilon || size.z <= Mathf.Epsilon;
+            return size.x <= 0f || size.y <= 0f || size.z <= 0f;
         }
 
         public bool has_no_surface()
         {
-            return size.x <= Mathf.Epsilon && size.y <= Mathf.Epsilon && size.z <= Mathf.Epsilon;
+            return size.x <= 0f && size.y <= 0f && size.z <= 0f;
         }
 
         public bool has_point(Vector3 point)
         {
-            if (point.x < pos.x)
+            if (point.x < position.x)
                 return false;
-            if (point.y < pos.y)
+            if (point.y < position.y)
                 return false;
-            if (point.z < pos.z)
+            if (point.z < position.z)
                 return false;
-            if (point.x > pos.x + size.x)
+            if (point.x > position.x + size.x)
                 return false;
-            if (point.y > pos.y + size.y)
+            if (point.y > position.y + size.y)
                 return false;
-            if (point.z > pos.z + size.z)
+            if (point.z > position.z + size.z)
                 return false;
 
             return true;
@@ -244,10 +266,10 @@ namespace Godot
 
         public Rect3 intersection(Rect3 with)
         {
-            Vector3 src_min = pos;
-            Vector3 src_max = pos + size;
-            Vector3 dst_min = with.pos;
-            Vector3 dst_max = with.pos + with.size;
+            Vector3 src_min = position;
+            Vector3 src_max = position + size;
+            Vector3 dst_min = with.position;
+            Vector3 dst_max = with.position + with.size;
 
             Vector3 min, max;
 
@@ -286,17 +308,17 @@ namespace Godot
 
         public bool intersects(Rect3 with)
         {
-            if (pos.x >= (with.pos.x + with.size.x))
+            if (position.x >= (with.position.x + with.size.x))
                 return false;
-            if ((pos.x + size.x) <= with.pos.x)
+            if ((position.x + size.x) <= with.position.x)
                 return false;
-            if (pos.y >= (with.pos.y + with.size.y))
+            if (position.y >= (with.position.y + with.size.y))
                 return false;
-            if ((pos.y + size.y) <= with.pos.y)
+            if ((position.y + size.y) <= with.position.y)
                 return false;
-            if (pos.z >= (with.pos.z + with.size.z))
+            if (position.z >= (with.position.z + with.size.z))
                 return false;
-            if ((pos.z + size.z) <= with.pos.z)
+            if ((position.z + size.z) <= with.position.z)
                 return false;
 
             return true;
@@ -306,14 +328,14 @@ namespace Godot
         {
             Vector3[] points =
             {
-                new Vector3(pos.x, pos.y, pos.z),
-                new Vector3(pos.x, pos.y, pos.z + size.z),
-                new Vector3(pos.x, pos.y + size.y, pos.z),
-                new Vector3(pos.x, pos.y + size.y, pos.z + size.z),
-                new Vector3(pos.x + size.x, pos.y, pos.z),
-                new Vector3(pos.x + size.x, pos.y, pos.z + size.z),
-                new Vector3(pos.x + size.x, pos.y + size.y, pos.z),
-                new Vector3(pos.x + size.x, pos.y + size.y, pos.z + size.z),
+                new Vector3(position.x, position.y, position.z),
+                new Vector3(position.x, position.y, position.z + size.z),
+                new Vector3(position.x, position.y + size.y, position.z),
+                new Vector3(position.x, position.y + size.y, position.z + size.z),
+                new Vector3(position.x + size.x, position.y, position.z),
+                new Vector3(position.x + size.x, position.y, position.z + size.z),
+                new Vector3(position.x + size.x, position.y + size.y, position.z),
+                new Vector3(position.x + size.x, position.y + size.y, position.z + size.z),
             };
 
             bool over = false;
@@ -339,7 +361,7 @@ namespace Godot
             {
                 float seg_from = from[i];
                 float seg_to = to[i];
-                float box_begin = pos[i];
+                float box_begin = position[i];
                 float box_end = box_begin + size[i];
                 float cmin, cmax;
 
@@ -378,8 +400,8 @@ namespace Godot
 
         public Rect3 merge(Rect3 with)
         {
-            Vector3 beg_1 = pos;
-            Vector3 beg_2 = with.pos;
+            Vector3 beg_1 = position;
+            Vector3 beg_2 = with.position;
             Vector3 end_1 = new Vector3(size.x, size.y, size.z) + beg_1;
             Vector3 end_2 = new Vector3(with.size.x, with.size.y, with.size.z) + beg_2;
 
@@ -398,9 +420,9 @@ namespace Godot
             return new Rect3(min, max - min);
         }
 
-        public Rect3(Vector3 pos, Vector3 size)
+        public Rect3(Vector3 position, Vector3 size)
         {
-            this.pos = pos;
+            this.position = position;
             this.size = size;
         }
 
@@ -426,19 +448,19 @@ namespace Godot
 
         public bool Equals(Rect3 other)
         {
-            return pos == other.pos && size == other.size;
+            return position == other.position && size == other.size;
         }
 
         public override int GetHashCode()
         {
-            return pos.GetHashCode() ^ size.GetHashCode();
+            return position.GetHashCode() ^ size.GetHashCode();
         }
 
         public override string ToString()
         {
             return String.Format("{0} - {1}", new object[]
                 {
-                    this.pos.ToString(),
+                    this.position.ToString(),
                     this.size.ToString()
                 });
         }
@@ -447,7 +469,7 @@ namespace Godot
         {
             return String.Format("{0} - {1}", new object[]
                 {
-                    this.pos.ToString(format),
+                    this.position.ToString(format),
                     this.size.ToString(format)
                 });
         }
