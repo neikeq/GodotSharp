@@ -151,7 +151,7 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 		menu_popup->add_item("Create C# solution", MENU_CREATE_SLN);
 	}
 
-	menu_popup->connect("id_pressed", this, "_menu_option_pressed");
+	menu_popup->connect("id_pressed", this, "_menu_option_pressed", varray(), CONNECT_DEFERRED);
 
 	if (menu_popup->get_item_count() == 0)
 		menu_button->hide();
