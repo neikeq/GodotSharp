@@ -687,6 +687,12 @@ CSharpLanguage::~CSharpLanguage() {
 
 void *CSharpLanguage::alloc_instance_binding_data(Object *p_object) {
 
+#ifdef DEBUG_ENABLED
+	// I don't trust you
+	if (p_object->get_script_instance())
+		CRASH_COND(NULL != CAST_CSHARP_INSTANCE(p_object->get_script_instance()));
+#endif
+
 	StringName type_name = p_object->get_class_name();
 
 	GDMonoClass *type_class = GDMonoUtils::type_get_proxy_class(type_name);
@@ -703,7 +709,11 @@ void *CSharpLanguage::alloc_instance_binding_data(Object *p_object) {
 
 	if (ref) {
 		strong_handle = false;
-		// Unsafe refcount increment here! The managed side is in charge of decrementing it when disposed
+
+		// Unsafe refcount increment. The managed instance also counts as a reference.
+		// This way if the unmanaged world has no references to our owner
+		// but the managed instance is alive, the refcount will be 1 instead of 0.
+		// See: _GodotSharp::_dispose_object(Object *p_object)
 		ref->reference();
 	}
 
@@ -752,11 +762,20 @@ void CSharpInstance::_ml_call_reversed(GDMonoClass *klass, const StringName &p_m
 CSharpInstance *CSharpInstance::create_for_managed_type(Object *p_owner, CSharpScript *p_script, const Ref<MonoGCHandle> &p_gchandle) {
 
 	CSharpInstance *instance = memnew(CSharpInstance);
-	instance->base_ref = Object::cast_to<Reference>(p_owner);
+
+	Reference *ref = Object::cast_to<Reference>(p_owner);
+
+	instance->base_ref = ref != NULL;
 	instance->script = Ref<CSharpScript>(p_script);
 	instance->owner = p_owner;
 	instance->gchandle = p_gchandle;
+
+	// Not needed here. This can only be called for newly created Reference, so the refcount is already 1
+	if (instance->base_ref)
+		instance->_reference_owner_unsafe();
+
 	p_script->instances.insert(p_owner);
+
 	return instance;
 }
 
@@ -765,19 +784,6 @@ MonoObject *CSharpInstance::get_mono_object() const {
 	CRASH_COND(gchandle.is_null());
 #endif
 	return gchandle->get_target();
-}
-
-void CSharpInstance::mono_object_disposed() {
-
-	if (!base_ref)
-		return;
-
-	Reference *ref_owner = Object::cast_to<Reference>(owner);
-
-	if (holding_ref) {
-		memdelete(ref_owner);
-		owner = NULL;
-	}
 }
 
 bool CSharpInstance::set(const StringName &p_name, const Variant &p_value) {
@@ -1006,44 +1012,90 @@ void CSharpInstance::call_multilevel_reversed(const StringName &p_method, const 
 	}
 }
 
+void CSharpInstance::_reference_owner_unsafe() {
+
+#ifdef DEBUG_ENABLED
+	CRASH_COND(!base_ref);
+#endif
+
+	// Unsafe refcount increment. The managed instance also counts as a reference.
+	// This way if the unmanaged world has no references to our owner
+	// but the managed instance is alive, the refcount will be 1 instead of 0.
+	// See: _unreference_owner_unsafe()
+
+	Reference *ref = Object::cast_to<Reference>(owner);
+
+	if (ref->is_referenced()) {
+		ref->reference();
+	} else {
+		ref->init_ref();
+	}
+}
+
+void CSharpInstance::_unreference_owner_unsafe() {
+
+#ifdef DEBUG_ENABLED
+	CRASH_COND(!base_ref);
+#endif
+
+	// Called from CSharpInstance::mono_object_disposed() or ~CSharpInstance()
+
+	// Unsafe refcount decrement. The managed instance also counts as a reference.
+	// See: _reference_owner_unsafe()
+
+	if (Object::cast_to<Reference>(owner)->unreference()) {
+		memdelete(owner);
+		owner = NULL;
+	}
+}
+
+void CSharpInstance::mono_object_disposed() {
+
+	if (base_ref)
+		_unreference_owner_unsafe();
+}
+
 void CSharpInstance::refcount_incremented() {
 
-	if (!base_ref)
-		return;
+	CRASH_COND(!base_ref);
 
-	if (holding_ref) {
-		// The reference count was increased after the managed side was holding the reference,
-		// so the reference must hold the managed side again to avoid it being GCed.
+	Reference *ref_owner = Object::cast_to<Reference>(owner);
 
-		// Release the current weak handle and replace it with a strong one.
+	if (ref_owner->reference_get_count() > 1) { // Remember the managed side holds a reference, hence 1 instead of 0 here
+		// The reference count was increased after the managed side was the only one referencing our owner.
+		// This means the owner is being referenced again by the unmanaged side,
+		// so the owner must hold the managed side alive again to avoid it from being GCed.
+
+		// Release the current weak handle and replace it with a strong handle.
 		uint32_t strong_gchandle = MonoGCHandle::make_strong_handle(gchandle->get_target());
 		gchandle->release();
 		gchandle->set_handle(strong_gchandle);
-		holding_ref = false;
 	}
 }
 
 bool CSharpInstance::refcount_decremented() {
 
-	if (!base_ref)
-		return false;
+	CRASH_COND(!base_ref);
 
 	Reference *ref_owner = Object::cast_to<Reference>(owner);
 
-	if (ref_owner->reference_get_count() == 0) {
-		// If the unmanaged side is no longer referenced in the unmanaged world,
-		// the managed side takes responsibility of deleting it when GCed.
+	int refcount = ref_owner->reference_get_count();
 
-		// TODO unsafely increase it back to 1, the managed side is holding the ref now
+	if (refcount == 1) { // Remember the managed side holds a reference, hence 1 instead of 0 here
+		// If owner owner is no longer referenced by the unmanaged side,
+		// the managed instance takes responsibility of deleting the owner when GCed.
 
 		// Release the current strong handle and replace it with a weak handle.
 		uint32_t weak_gchandle = MonoGCHandle::make_weak_handle(gchandle->get_target());
 		gchandle->release();
 		gchandle->set_handle(weak_gchandle);
-		holding_ref = true;
+
+		return false;
 	}
 
-	return false;
+	ref_dying = (refcount == 0);
+
+	return ref_dying;
 }
 
 ScriptInstance::RPCMode CSharpInstance::get_rpc_mode(const StringName &p_method) const {
@@ -1118,20 +1170,35 @@ CSharpInstance::CSharpInstance() {
 
 	owner = NULL;
 	base_ref = false;
-	holding_ref = false;
+	ref_dying = false;
 }
 
 CSharpInstance::~CSharpInstance() {
 
-	if (gchandle.is_valid())
+	if (gchandle.is_valid()) {
 		gchandle->release(); // Make sure it's released
+	}
+
+	if (base_ref && !ref_dying) { // it may be called from the owner's destructor
+#ifdef DEBUG_ENABLED
+		CRASH_COND(!owner); // dunno, just in case
+#endif
+		_unreference_owner_unsafe();
+	}
 
 	if (script.is_valid() && owner) {
 #ifndef NO_THREADS
 		CSharpLanguage::singleton->lock->lock();
 #endif
 
+#ifdef DEBUG_ENABLED
+		// CSharpInstance must not be created unless it's going to be added to the list for sure
+		Set<Object *>::Element *match = script->instances.find(owner);
+		CRASH_COND(!match);
+		script->instances.erase(match);
+#else
 		script->instances.erase(owner);
+#endif
 
 #ifndef NO_THREADS
 		CSharpLanguage::singleton->lock->unlock();
@@ -1374,6 +1441,9 @@ CSharpInstance *CSharpScript::_create_instance(const Variant **p_args, int p_arg
 	instance->script = Ref<CSharpScript>(this);
 	instance->owner = p_owner;
 	instance->owner->set_script_instance(instance);
+
+	if (instance->base_ref)
+		instance->_reference_owner_unsafe();
 
 	/* STEP 2, INITIALIZE AND CONSTRUCT */
 

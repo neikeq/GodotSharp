@@ -32,14 +32,6 @@ void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged) {
 
 	unmanaged->set_script_and_instance(script.get_ref_ptr(), si);
 
-	if (ref) {
-		// Unsafe refcount decrement here! We assume this method was called
-		// on a newly created Reference with refcount 1
-		ref->unreference();
-
-		CRASH_COND(ref->reference_get_count() != 0);
-	}
-
 	return;
 }
 }

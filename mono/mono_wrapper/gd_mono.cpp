@@ -622,6 +622,8 @@ void _GodotSharp::_dispose_object(Object *p_object) {
 		}
 	}
 
+	// Unsafe refcount decrement. The managed instance also counts as a reference.
+	// See: CSharpLanguage::alloc_instance_binding_data(Object *p_object)
 	if (Object::cast_to<Reference>(p_object)->unreference()) {
 		memdelete(p_object);
 	}

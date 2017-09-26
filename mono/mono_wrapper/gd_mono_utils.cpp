@@ -213,6 +213,7 @@ MonoObject *unmanaged_get_managed(Object *unmanaged) {
 			}
 		}
 
+		// Only called if the owner does not have a CSharpInstance
 		void *data = unmanaged->get_script_instance_binding(CSharpLanguage::get_singleton()->get_language_index());
 
 		if (data) {

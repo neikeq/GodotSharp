@@ -57,7 +57,7 @@ TScriptInstance *cast_script_instance(ScriptInstance *p_inst) {
 }
 #endif
 
-#define CAST_CSHARP_INSTANCE(m_inst) cast_script_instance<CSharpInstance, CSharpLanguage>(m_inst)
+#define CAST_CSHARP_INSTANCE(m_inst) (cast_script_instance<CSharpInstance, CSharpLanguage>(m_inst))
 
 class CSharpScript : public Script {
 
@@ -157,10 +157,12 @@ class CSharpInstance : public ScriptInstance {
 	Ref<CSharpScript> script;
 	Ref<MonoGCHandle> gchandle;
 	bool base_ref;
-
-	bool holding_ref;
+	bool ref_dying;
 
 	void _ml_call_reversed(GDMonoClass *klass, const StringName &p_method, const Variant **p_args, int p_argcount);
+
+	void _reference_owner_unsafe();
+	void _unreference_owner_unsafe();
 
 	// Do not use unless you know what you are doing
 	friend void GDMonoInternals::tie_managed_to_unmanaged(MonoObject *, Object *);
@@ -168,8 +170,6 @@ class CSharpInstance : public ScriptInstance {
 
 public:
 	MonoObject *get_mono_object() const;
-
-	void mono_object_disposed();
 
 	virtual bool set(const StringName &p_name, const Variant &p_value);
 	virtual bool get(const StringName &p_name, Variant &r_ret) const;
@@ -181,6 +181,8 @@ public:
 	virtual Variant call(const StringName &p_method, const Variant **p_args, int p_argcount, Variant::CallError &r_error);
 	virtual void call_multilevel(const StringName &p_method, const Variant **p_args, int p_argcount);
 	virtual void call_multilevel_reversed(const StringName &p_method, const Variant **p_args, int p_argcount);
+
+	void mono_object_disposed();
 
 	void refcount_incremented();
 	bool refcount_decremented();
@@ -318,6 +320,7 @@ public:
 	virtual void thread_enter();
 	virtual void thread_exit();
 
+	// Don't use these. I'm watching you
 	virtual void *alloc_instance_binding_data(Object *p_object);
 	virtual void free_instance_binding_data(void *p_data);
 
