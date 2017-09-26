@@ -154,6 +154,8 @@ MonoObject *create_managed_for_godot_object(GDMonoClass *p_class, const StringNa
 MonoObject *create_managed_from(const NodePath &p_from);
 MonoObject *create_managed_from(const RID &p_from);
 
+MonoDomain *create_domain(const String &p_friendly_name);
+
 } // GDMonoUtils
 
 #define NATIVE_GDMONOCLASS_NAME(m_class) (GDMonoMarshal::mono_string_to_godot((MonoString *)m_class->get_field("nativeName")->get_value(NULL)))

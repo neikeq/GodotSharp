@@ -326,4 +326,17 @@ MonoObject *create_managed_from(const RID &p_from) {
 
 	return mono_object;
 }
+
+MonoDomain *create_domain(const String &p_friendly_name) {
+	MonoDomain *domain = mono_domain_create_appdomain((char *)p_friendly_name.utf8().get_data(), NULL);
+
+	if (domain) {
+		// Workaround to avoid this exception:
+		// System.Configuration.ConfigurationErrorsException: Error Initializing the configuration system.
+		// ---> System.ArgumentException: The 'ExeConfigFilename' argument cannot be null.
+		mono_domain_set_config(domain, ".", "");
+	}
+
+	return domain;
+}
 }

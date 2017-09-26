@@ -203,12 +203,8 @@ void GDMono::initialize() {
 	ERR_EXPLAIN("Mono: Failed to load tools domain");
 	ERR_FAIL_COND(_load_tools_domain() != OK);
 
-	mono_domain_set(tools_domain, true);
-
 	ERR_EXPLAIN("Mono: Failed to load Editor Tools assembly");
 	ERR_FAIL_COND(!_load_editor_tools_assembly());
-
-	mono_domain_set(scripts_domain, true);
 #endif
 
 	OS::get_singleton()->print("Mono: EVERYTHING OK\n");
@@ -413,8 +409,7 @@ Error GDMono::_load_scripts_domain() {
 		OS::get_singleton()->print("Mono: Loading scripts domain...\n");
 	}
 
-	String domain_name = "GodotEngine.ScriptsDomain";
-	scripts_domain = mono_domain_create_appdomain((char *)domain_name.utf8().get_data(), NULL);
+	scripts_domain = GDMonoUtils::create_domain("GodotEngine.ScriptsDomain");
 
 	ERR_EXPLAIN("Mono: Could not create scripts app domain");
 	ERR_FAIL_NULL_V(scripts_domain, ERR_CANT_CREATE);
@@ -475,8 +470,7 @@ Error GDMono::_load_tools_domain() {
 		OS::get_singleton()->print("Mono: Loading tools domain...\n");
 	}
 
-	String domain_name = "GodotEngine.ToolsDomain";
-	tools_domain = mono_domain_create_appdomain((char *)domain_name.utf8().get_data(), NULL);
+	tools_domain = GDMonoUtils::create_domain("GodotEngine.ToolsDomain");
 
 	ERR_EXPLAIN("Mono: Could not create tools app domain");
 	ERR_FAIL_NULL_V(tools_domain, ERR_CANT_CREATE);
