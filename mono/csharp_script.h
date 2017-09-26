@@ -123,22 +123,29 @@ public:
 	virtual StringName get_instance_base_type() const;
 	virtual ScriptInstance *instance_create(Object *p_this);
 	virtual bool instance_has(const Object *p_this) const;
+
 	virtual bool has_source_code() const;
 	virtual String get_source_code() const;
 	virtual void set_source_code(const String &p_code);
-	bool has_method(const StringName &p_method) const;
-	/* TODO */ MethodInfo get_method_info(const StringName &p_method) const { return MethodInfo(); }
+
 	virtual Error reload(bool p_keep_state = false);
-	virtual bool is_tool() const { return tool; }
-	virtual String get_node_type() const;
-	virtual ScriptLanguage *get_language() const;
+
 	/* TODO */ virtual bool has_script_signal(const StringName &p_signal) const { return false; }
 	/* TODO */ virtual void get_script_signal_list(List<MethodInfo> *r_signals) const {}
+
 	/* TODO */ virtual bool get_property_default_value(const StringName &p_property, Variant &r_value) const;
-	virtual void update_exports();
-	virtual Ref<Script> get_base_script() const;
-	/* TODO */ virtual void get_script_method_list(List<MethodInfo> *p_list) const {}
 	virtual void get_script_property_list(List<PropertyInfo> *p_list) const;
+	virtual void update_exports();
+
+	virtual bool is_tool() const { return tool; }
+	virtual Ref<Script> get_base_script() const;
+	virtual String get_node_type() const;
+	virtual ScriptLanguage *get_language() const;
+
+	/* TODO */ virtual void get_script_method_list(List<MethodInfo> *p_list) const {}
+	bool has_method(const StringName &p_method) const;
+	/* TODO */ MethodInfo get_method_info(const StringName &p_method) const { return MethodInfo(); }
+
 	virtual int get_member_line(const StringName &p_member) const;
 
 	Error load_source_code(const String &p_path);

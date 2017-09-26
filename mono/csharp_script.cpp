@@ -714,6 +714,7 @@ void *CSharpLanguage::alloc_instance_binding_data(Object *p_object) {
 		// This way if the unmanaged world has no references to our owner
 		// but the managed instance is alive, the refcount will be 1 instead of 0.
 		// See: _GodotSharp::_dispose_object(Object *p_object)
+
 		ref->reference();
 	}
 
