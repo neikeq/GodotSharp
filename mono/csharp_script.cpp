@@ -749,14 +749,14 @@ void CSharpInstance::_ml_call_reversed(GDMonoClass *klass, const StringName &p_m
 	}
 }
 
-CSharpInstance *CSharpInstance::create_for_managed_type(Object *p_owner, const Ref<CSharpScript> &p_script, const Ref<MonoGCHandle> &p_gchandle) {
+CSharpInstance *CSharpInstance::create_for_managed_type(Object *p_owner, CSharpScript *p_script, const Ref<MonoGCHandle> &p_gchandle) {
 
-	// Only for objects created from the managed world!!
 	CSharpInstance *instance = memnew(CSharpInstance);
 	instance->base_ref = Object::cast_to<Reference>(p_owner);
-	instance->script = p_script;
+	instance->script = Ref<CSharpScript>(p_script);
 	instance->owner = p_owner;
 	instance->gchandle = p_gchandle;
+	p_script->instances.insert(p_owner);
 	return instance;
 }
 
@@ -1305,10 +1305,9 @@ void CSharpScript::_bind_methods() {
 
 Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class) {
 
-	// Only for objects created from the managed world!!
+	// This method should not fail
 
-	if (!p_class)
-		return NULL;
+	CRASH_COND(!p_class);
 
 	Ref<CSharpScript> script = memnew(CSharpScript);
 

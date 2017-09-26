@@ -86,7 +86,8 @@
 #define C_MACRO_OBJECT_CONSTRUCT "GODOTSHARP_INSTANCE_OBJECT"
 
 #define C_NS_MONOUTILS "GDMonoUtils"
-#define C_METHOD_TIE_MANAGED_TO_UNMANAGED C_NS_MONOUTILS "::tie_managed_to_unmanaged"
+#define C_NS_MONOINTERNALS "GDMonoInternals"
+#define C_METHOD_TIE_MANAGED_TO_UNMANAGED C_NS_MONOINTERNALS "::tie_managed_to_unmanaged"
 #define C_METHOD_UNMANAGED_GET_MANAGED C_NS_MONOUTILS "::unmanaged_get_managed"
 
 #define C_NS_MONOMARSHAL "GDMonoMarshal"

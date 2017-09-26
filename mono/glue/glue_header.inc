@@ -25,6 +25,7 @@
 /**********************************************************************************/
 #include "../csharp_script.h"
 #include "../mono_wrapper/gd_mono_class.h"
+#include "../mono_wrapper/gd_mono_internals.h"
 #include "../mono_wrapper/gd_mono_marshal.h"
 #include "../signal_awaiter_utils.h"
 

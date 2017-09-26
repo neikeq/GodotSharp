@@ -223,39 +223,6 @@ MonoObject *unmanaged_get_managed(Object *unmanaged) {
 	return NULL;
 }
 
-void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged) {
-
-	// Only for objects created from the managed world!!
-
-	if (unmanaged) {
-		// All mono objects created from the managed world (e.g.: `new Player()`)
-		// need to have a CSharpScript in order for their methods to be callable from the unmanaged side
-
-		Reference *ref = Object::cast_to<Reference>(unmanaged);
-
-		GDMonoClass *klass = get_object_class(managed);
-
-		if (klass) {
-			Ref<MonoGCHandle> gchandle = ref ? MonoGCHandle::create_weak(managed) :
-											   MonoGCHandle::create_strong(managed);
-
-			Ref<CSharpScript> script = CSharpScript::create_for_managed_type(klass);
-			ScriptInstance *si = CSharpInstance::create_for_managed_type(unmanaged, script, gchandle);
-
-			unmanaged->set_script_and_instance(script.get_ref_ptr(), si);
-		} else {
-			ERR_EXPLAIN("Could not find the managed object's class.");
-			CRASH_NOW();
-		}
-
-		if (ref) {
-			// Unsafe refcount decrement here! We assume this method was called
-			// on a newly created Reference with refcount 1
-			ref->unreference();
-		}
-	}
-}
-
 void set_main_thread(MonoThread *p_thread) {
 	mono_thread_set_main(p_thread);
 }

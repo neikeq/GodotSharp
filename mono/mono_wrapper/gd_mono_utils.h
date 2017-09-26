@@ -140,10 +140,6 @@ _FORCE_INLINE_ void hash_combine(uint32_t &p_hash, const uint32_t &p_with_hash) 
  */
 MonoObject *unmanaged_get_managed(Object *unmanaged);
 
-// TODO: find a proper name? :/
-// Only for objects created from the managed world!!
-void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged);
-
 void set_main_thread(MonoThread *p_thread);
 void attach_current_thread();
 void detach_current_thread();

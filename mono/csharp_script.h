@@ -35,6 +35,7 @@
 #include "mono_gc_handle.h"
 #include "mono_wrapper/gd_mono.h"
 #include "mono_wrapper/gd_mono_header.h"
+#include "mono_wrapper/gd_mono_internals.h"
 
 #ifdef TOOLS_ENABLED
 #include "editor/monodevelop_instance.h"
@@ -107,6 +108,10 @@ class CSharpScript : public Script {
 	CSharpInstance *_create_instance(const Variant **p_args, int p_argcount, Object *p_owner, bool p_isref, Variant::CallError &r_error);
 	Variant _new(const Variant **p_args, int p_argcount, Variant::CallError &r_error);
 
+	// Do not use unless you know what you are doing
+	friend void GDMonoInternals::tie_managed_to_unmanaged(MonoObject *, Object *);
+	static Ref<CSharpScript> create_for_managed_type(GDMonoClass *p_class);
+
 protected:
 	static void _bind_methods();
 
@@ -114,9 +119,6 @@ protected:
 	virtual void _resource_path_changed();
 
 public:
-	// Only for objects created from the managed world!!
-	static Ref<CSharpScript> create_for_managed_type(GDMonoClass *p_class);
-
 	virtual bool can_instance() const;
 	virtual StringName get_instance_base_type() const;
 	virtual ScriptInstance *instance_create(Object *p_this);
@@ -160,10 +162,11 @@ class CSharpInstance : public ScriptInstance {
 
 	void _ml_call_reversed(GDMonoClass *klass, const StringName &p_method, const Variant **p_args, int p_argcount);
 
-public:
-	// Only for objects created from the managed world!!
-	static CSharpInstance *create_for_managed_type(Object *p_owner, const Ref<CSharpScript> &p_script, const Ref<MonoGCHandle> &p_gchandle);
+	// Do not use unless you know what you are doing
+	friend void GDMonoInternals::tie_managed_to_unmanaged(MonoObject *, Object *);
+	static CSharpInstance *create_for_managed_type(Object *p_owner, CSharpScript *p_script, const Ref<MonoGCHandle> &p_gchandle);
 
+public:
 	MonoObject *get_mono_object() const;
 
 	void mono_object_disposed();
