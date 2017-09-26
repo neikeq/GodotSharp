@@ -46,7 +46,7 @@ env.add_source_files(env.modules_sources, '*.cpp')
 env.add_source_files(env.modules_sources, 'mono_wrapper/*.cpp')
 env.add_source_files(env.modules_sources, 'utils/*.cpp')
 
-if env['tools'] == 'yes':
+if env['tools']:
     env.add_source_files(env.modules_sources, 'editor/*.cpp')
     make_cs_files_header('glue/cs_files', 'glue/cs_compressed.gen.h')
 

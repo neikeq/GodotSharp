@@ -26,7 +26,6 @@
 #ifndef GODOTSHARP_EDITOR_H
 #define GODOTSHARP_EDITOR_H
 
-#include "../mono_wrapper/gd_mono.h"
 #include "godotsharp_builds.h"
 
 class GodotSharpEditor : public Node {

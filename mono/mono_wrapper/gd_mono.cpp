@@ -344,11 +344,15 @@ bool GDMono::_load_editor_api_assembly() {
 
 	return _load_assembly(EDITOR_API_ASSEMBLY_NAME, &editor_api_assembly);
 }
+#endif
 
+#ifdef TOOLS_ENABLED
 bool GDMono::_load_editor_tools_assembly() {
 
 	if (editor_tools_assembly)
 		return true;
+
+	_GDMONO_SCOPE_DOMAIN_(tools_domain)
 
 	return _load_assembly(EDITOR_TOOLS_ASSEMBLY_NAME, &editor_tools_assembly);
 }

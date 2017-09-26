@@ -149,7 +149,7 @@ MonoBottomPanel::MonoBottomPanel(EditorNode *p_editor) {
 	editor = p_editor;
 
 	set_v_size_flags(SIZE_EXPAND_FILL);
-	set_area_as_parent_rect();
+	set_anchors_and_margins_preset(Control::PRESET_WIDE);
 
 	tabs = memnew(TabContainer);
 	tabs->set_tab_align(TabContainer::ALIGN_LEFT);

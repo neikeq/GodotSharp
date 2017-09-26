@@ -353,7 +353,7 @@ class BindingsGenerator {
 		}
 	};
 
-	bool verbose_output;
+	static bool verbose_output;
 
 	Map<String, TypeInterface> placeholder_types;
 	Map<String, TypeInterface> builtin_types;

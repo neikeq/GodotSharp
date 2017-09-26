@@ -33,7 +33,7 @@
 #include "os/thread.h"
 #include "project_settings.h"
 
-#if defined(TOOLS_ENABLED) && defined(DEBUG_METHODS_ENABLED)
+#ifdef TOOLS_ENABLED
 #include "editor/bindings_generator.h"
 #include "editor/csharp_project.h"
 #include "editor/editor_node.h"
@@ -1316,6 +1316,8 @@ Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class) {
 	script->script_class = p_class;
 	script->native = GDMonoUtils::get_class_native_base(script->script_class);
 
+	CRASH_COND(script->native == NULL);
+
 	GDMonoClass *base = script->script_class->get_parent_class();
 
 	if (base != script->native)
@@ -1542,7 +1544,7 @@ Error CSharpScript::reload(bool p_keep_state) {
 
 			native = GDMonoUtils::get_class_native_base(script_class);
 
-			ERR_FAIL_NULL_V(native, ERR_BUG);
+			CRASH_COND(native == NULL);
 
 			GDMonoClass *base_class = script_class->get_parent_class();
 

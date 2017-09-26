@@ -30,6 +30,7 @@
 
 #include "../csharp_script.h"
 #include "../godotsharp_dirs.h"
+#include "../mono_wrapper/gd_mono.h"
 #include "bindings_generator.h"
 #include "csharp_project.h"
 #include "net_solution.h"

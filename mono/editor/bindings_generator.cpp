@@ -101,6 +101,8 @@
 
 const char *BindingsGenerator::TypeInterface::DEFAULT_VARARG_C_IN = "\t%0 %1_in = %1;\n";
 
+bool BindingsGenerator::verbose_output = false;
+
 static bool is_csharp_keyword(const String &p_name) {
 
 	// Reserved keywords
@@ -726,7 +728,6 @@ Error BindingsGenerator::_generate_cs_type(const TypeInterface &itype, const Str
 
 			// Prevent property and enclosing type from sharing the same name
 			if (prop_proxy_name == itype.proxy_name) {
-
 				if (verbose_output) {
 					WARN_PRINTS("Name of property `" + prop_proxy_name + "` is ambiguous with the name of its class `" +
 								itype.proxy_name + "`. Renaming property to `" + prop_proxy_name + "_`");
@@ -2065,8 +2066,6 @@ void BindingsGenerator::_populate_builtin_type(TypeInterface &r_itype, Variant::
 
 BindingsGenerator::BindingsGenerator() {
 
-	verbose_output = false;
-
 	EditorHelp::generate_doc();
 
 	_populate_object_type_interfaces();
@@ -2087,6 +2086,8 @@ void BindingsGenerator::handle_cmdline_args(const List<String> &p_cmdline_args) 
 	String mono_glue_option = "--generate-mono-glue";
 	String cs_core_api_option = "--generate-cs-core-api";
 	String cs_editor_api_option = "--generate-cs-editor-api";
+
+	verbose_output = true;
 
 	const List<String>::Element *elem = p_cmdline_args.front();
 
@@ -2138,6 +2139,8 @@ void BindingsGenerator::handle_cmdline_args(const List<String> &p_cmdline_args) 
 
 		elem = elem->next();
 	}
+
+	verbose_output = false;
 }
 
 #endif
