@@ -32,6 +32,7 @@
 #include "../csharp_script.h"
 #include "gd_mono.h"
 #include "gd_mono_class.h"
+#include "gd_mono_marshal.h"
 
 namespace GDMonoUtils {
 
@@ -339,5 +340,24 @@ MonoDomain *create_domain(const String &p_friendly_name) {
 	}
 
 	return domain;
+}
+
+String get_exception_name_and_message(MonoObject *p_ex) {
+	String res;
+
+	MonoClass *klass = mono_object_get_class(p_ex);
+	MonoType *type = mono_class_get_type(klass);
+
+	char *full_name = mono_type_full_name(type);
+	res += full_name;
+	mono_free(full_name);
+
+	res += ": ";
+
+	MonoProperty *prop = mono_class_get_property_from_name(klass, "Message");
+	MonoString *msg = (MonoString *)mono_property_get_value(prop, p_ex, NULL, NULL);
+	res += GDMonoMarshal::mono_string_to_godot(msg);
+
+	return res;
 }
 }

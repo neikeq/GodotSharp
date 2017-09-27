@@ -156,6 +156,8 @@ MonoObject *create_managed_from(const RID &p_from);
 
 MonoDomain *create_domain(const String &p_friendly_name);
 
+String get_exception_name_and_message(MonoObject *p_ex);
+
 } // GDMonoUtils
 
 #define NATIVE_GDMONOCLASS_NAME(m_class) (GDMonoMarshal::mono_string_to_godot((MonoString *)m_class->get_field("nativeName")->get_value(NULL)))

@@ -21,13 +21,7 @@ namespace GodotSharpTools.Build
 
         private static string MSBuildPath
         {
-            get
-            {
-                if (_msbuildPath == null)
-                    _msbuildPath = godot_icall_BuildInstance_get_MSBuildPath();
-
-                return _msbuildPath;
-            }
+            get { return godot_icall_BuildInstance_get_MSBuildPath(); }
         }
 
         private string solution;

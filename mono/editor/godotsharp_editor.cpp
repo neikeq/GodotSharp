@@ -74,7 +74,7 @@ bool GodotSharpEditor::_create_project_solution() {
 		NETSolution solution(name);
 
 		if (!solution.set_path(path)) {
-			show_error("Failed to create solution.");
+			show_error_dialog("Failed to create solution.");
 			return false;
 		}
 
@@ -86,7 +86,7 @@ bool GodotSharpEditor::_create_project_solution() {
 		Error sln_error = solution.save();
 
 		if (sln_error != OK) {
-			show_error("Failed to save solution.");
+			show_error_dialog("Failed to save solution.");
 			return false;
 		}
 
@@ -102,7 +102,7 @@ bool GodotSharpEditor::_create_project_solution() {
 		call_deferred("_remove_create_sln_menu_option");
 
 	} else {
-		show_error("Failed to create C# project.");
+		show_error_dialog("Failed to create C# project.");
 	}
 
 	return true;
@@ -137,7 +137,7 @@ void GodotSharpEditor::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("_menu_option_pressed", "id"), &GodotSharpEditor::_menu_option_pressed);
 }
 
-void GodotSharpEditor::show_error(const String &p_message, const String &p_title) {
+void GodotSharpEditor::show_error_dialog(const String &p_message, const String &p_title) {
 
 	error_dialog->set_title(p_title);
 	error_dialog->set_text(p_message);

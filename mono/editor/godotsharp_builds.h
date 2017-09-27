@@ -45,6 +45,8 @@ public:
 
 	_FORCE_INLINE_ static GodotSharpBuilds *get_singleton() { return singleton; }
 
+	static void show_build_error_dialog(const String &p_message);
+
 	void build_exit_callback(const MonoBuildInfo &p_build_info, int p_exit_code);
 
 	void restart_build(MonoBuildTab *p_build_tab);

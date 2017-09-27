@@ -87,6 +87,19 @@ void MonoBottomPanel::raise_build_tab(MonoBuildTab *p_build_tab) {
 	_update_build_tabs_list();
 }
 
+void MonoBottomPanel::show_build_tab() {
+
+	for (int i = 0; i < panel_tabs->get_tab_count(); i++) {
+		if (panel_tabs->get_tab_control(i) == panel_builds_tab) {
+			panel_tabs->set_current_tab(i);
+			editor->make_bottom_panel_item_visible(this);
+			return;
+		}
+	}
+
+	ERR_PRINT("Builds tab not found");
+}
+
 void MonoBottomPanel::_build_tab_item_selected(int p_idx) {
 
 	ERR_FAIL_INDEX(p_idx, build_tabs->get_tab_count());
@@ -127,9 +140,9 @@ void MonoBottomPanel::_notification(int p_what) {
 	switch (p_what) {
 
 		case EditorSettings::NOTIFICATION_EDITOR_SETTINGS_CHANGED: {
-			tabs->add_style_override("panel", editor->get_gui_base()->get_stylebox("DebuggerPanel", "EditorStyles"));
-			tabs->add_style_override("tab_fg", editor->get_gui_base()->get_stylebox("DebuggerTabFG", "EditorStyles"));
-			tabs->add_style_override("tab_bg", editor->get_gui_base()->get_stylebox("DebuggerTabBG", "EditorStyles"));
+			panel_tabs->add_style_override("panel", editor->get_gui_base()->get_stylebox("DebuggerPanel", "EditorStyles"));
+			panel_tabs->add_style_override("tab_fg", editor->get_gui_base()->get_stylebox("DebuggerTabFG", "EditorStyles"));
+			panel_tabs->add_style_override("tab_bg", editor->get_gui_base()->get_stylebox("DebuggerTabBG", "EditorStyles"));
 		} break;
 	}
 }
@@ -151,24 +164,24 @@ MonoBottomPanel::MonoBottomPanel(EditorNode *p_editor) {
 	set_v_size_flags(SIZE_EXPAND_FILL);
 	set_anchors_and_margins_preset(Control::PRESET_WIDE);
 
-	tabs = memnew(TabContainer);
-	tabs->set_tab_align(TabContainer::ALIGN_LEFT);
-	tabs->add_style_override("panel", editor->get_gui_base()->get_stylebox("DebuggerPanel", "EditorStyles"));
-	tabs->add_style_override("tab_fg", editor->get_gui_base()->get_stylebox("DebuggerTabFG", "EditorStyles"));
-	tabs->add_style_override("tab_bg", editor->get_gui_base()->get_stylebox("DebuggerTabBG", "EditorStyles"));
-	tabs->set_custom_minimum_size(Size2(0, 228) * EDSCALE);
-	tabs->set_v_size_flags(SIZE_EXPAND_FILL);
-	add_child(tabs);
+	panel_tabs = memnew(TabContainer);
+	panel_tabs->set_tab_align(TabContainer::ALIGN_LEFT);
+	panel_tabs->add_style_override("panel", editor->get_gui_base()->get_stylebox("DebuggerPanel", "EditorStyles"));
+	panel_tabs->add_style_override("tab_fg", editor->get_gui_base()->get_stylebox("DebuggerTabFG", "EditorStyles"));
+	panel_tabs->add_style_override("tab_bg", editor->get_gui_base()->get_stylebox("DebuggerTabBG", "EditorStyles"));
+	panel_tabs->set_custom_minimum_size(Size2(0, 228) * EDSCALE);
+	panel_tabs->set_v_size_flags(SIZE_EXPAND_FILL);
+	add_child(panel_tabs);
 
 	{ // Builds
-		VBoxContainer *vbc = memnew(VBoxContainer);
-		vbc->set_name(TTR("Builds"));
-		vbc->set_h_size_flags(SIZE_EXPAND_FILL);
-		tabs->add_child(vbc);
+		panel_builds_tab = memnew(VBoxContainer);
+		panel_builds_tab->set_name(TTR("Builds"));
+		panel_builds_tab->set_h_size_flags(SIZE_EXPAND_FILL);
+		panel_tabs->add_child(panel_builds_tab);
 
 		HBoxContainer *toolbar_hbc = memnew(HBoxContainer);
 		toolbar_hbc->set_h_size_flags(SIZE_EXPAND_FILL);
-		vbc->add_child(toolbar_hbc);
+		panel_builds_tab->add_child(toolbar_hbc);
 
 		toolbar_hbc->add_spacer();
 
@@ -193,7 +206,7 @@ MonoBottomPanel::MonoBottomPanel(EditorNode *p_editor) {
 		HSplitContainer *hsc = memnew(HSplitContainer);
 		hsc->set_h_size_flags(SIZE_EXPAND_FILL);
 		hsc->set_v_size_flags(SIZE_EXPAND_FILL);
-		vbc->add_child(hsc);
+		panel_builds_tab->add_child(hsc);
 
 		build_tabs_list = memnew(ItemList);
 		build_tabs_list->set_h_size_flags(SIZE_EXPAND_FILL);
@@ -287,7 +300,9 @@ void MonoBuildTab::_update_issues_list() {
 
 		text += issue.message;
 
-		issues_list->add_item(text, issue.warning ? warning_icon : error_icon);
+		int line_break_idx = text.find("\n");
+		issues_list->add_item(line_break_idx == -1 ? text : text.substr(0, line_break_idx),
+				issue.warning ? warning_icon : error_icon);
 		int index = issues_list->get_item_count() - 1;
 		issues_list->set_item_tooltip(index, tooltip);
 		issues_list->set_item_metadata(index, i);
@@ -296,7 +311,7 @@ void MonoBuildTab::_update_issues_list() {
 
 Ref<Texture> MonoBuildTab::get_icon_texture() const {
 
-	// FIXME shouldn't be using these icons... couldn't find anything better
+	// FIXME these icons were removed... find something better
 
 	if (build_exited) {
 		if (build_result == RESULT_ERROR) {
@@ -349,7 +364,9 @@ void MonoBuildTab::on_build_exec_failed(const String &p_cause, const String &p_d
 	tooltip += "Message: " + (p_detailed.length() ? p_detailed : p_cause);
 	tooltip += "\nType: error";
 
-	issues_list->add_item(p_cause, get_icon("Error", "EditorIcons"));
+	int line_break_idx = p_cause.find("\n");
+	issues_list->add_item(line_break_idx == -1 ? p_cause : p_cause.substr(0, line_break_idx),
+			get_icon("Error", "EditorIcons"));
 	int index = issues_list->get_item_count() - 1;
 	issues_list->set_item_tooltip(index, tooltip);
 

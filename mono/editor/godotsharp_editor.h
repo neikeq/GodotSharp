@@ -71,7 +71,7 @@ public:
 
 	_FORCE_INLINE_ static GodotSharpEditor *get_singleton() { return singleton; }
 
-	void show_error(const String &p_message, const String &p_title = "Error");
+	void show_error_dialog(const String &p_message, const String &p_title = "Error");
 
 	Error open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col);
 	bool overrides_external_editor();

@@ -39,7 +39,9 @@ class MonoBottomPanel : public VBoxContainer {
 
 	EditorNode *editor;
 
-	TabContainer *tabs;
+	TabContainer *panel_tabs;
+
+	VBoxContainer *panel_builds_tab;
 
 	ItemList *build_tabs_list;
 	TabContainer *build_tabs;
@@ -67,6 +69,8 @@ public:
 
 	void add_build_tab(MonoBuildTab *p_build_tab);
 	void raise_build_tab(MonoBuildTab *p_build_tab);
+
+	void show_build_tab();
 
 	MonoBottomPanel(EditorNode *p_editor = NULL);
 	~MonoBottomPanel();
