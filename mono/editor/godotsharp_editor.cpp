@@ -149,7 +149,10 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 	menu_button->set_text("Mono");
 	menu_popup = menu_button->get_popup();
 
-	if (!FileAccess::exists(GodotSharpDirs::get_project_sln_path())) {
+	String sln_path = GodotSharpDirs::get_project_sln_path();
+	String csproj_path = GodotSharpDirs::get_project_csproj_path();
+
+	if (!FileAccess::exists(sln_path) || !FileAccess::exists(csproj_path)) {
 		menu_popup->add_item("Create C# solution", MENU_CREATE_SLN);
 	}
 
