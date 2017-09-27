@@ -162,6 +162,9 @@ bool GodotSharpBuilds::make_api_sln(GodotSharpBuilds::APIType p_api_type) {
 
 bool godotsharp_build_callback() {
 
+	if (!FileAccess::exists(GodotSharpDirs::get_project_sln_path()))
+		return true; // No solution to build
+
 	if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_CORE))
 		return false;
 

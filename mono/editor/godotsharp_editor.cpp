@@ -111,6 +111,8 @@ void GodotSharpEditor::_remove_create_sln_menu_option() {
 
 	if (menu_popup->get_item_count() == 0)
 		menu_button->hide();
+
+	bottom_panel_btn->show();
 }
 
 void GodotSharpEditor::_menu_option_pressed(int p_id) {
@@ -145,6 +147,15 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 
 	editor = p_editor;
 
+	error_dialog = memnew(AcceptDialog);
+	editor->get_gui_base()->add_child(error_dialog);
+
+	bottom_panel_btn = editor->add_bottom_panel_item("Mono", memnew(MonoBottomPanel(editor)));
+
+	godotsharp_builds = memnew(GodotSharpBuilds);
+
+	editor->add_child(memnew(MonoReloadNode));
+
 	menu_button = memnew(MenuButton);
 	menu_button->set_text("Mono");
 	menu_popup = menu_button->get_popup();
@@ -153,6 +164,7 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 	String csproj_path = GodotSharpDirs::get_project_csproj_path();
 
 	if (!FileAccess::exists(sln_path) || !FileAccess::exists(csproj_path)) {
+		bottom_panel_btn->hide();
 		menu_popup->add_item("Create C# solution", MENU_CREATE_SLN);
 	}
 
@@ -162,15 +174,6 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 		menu_button->hide();
 
 	editor->get_menu_hb()->add_child(menu_button);
-
-	error_dialog = memnew(AcceptDialog);
-	editor->get_gui_base()->add_child(error_dialog);
-
-	editor->add_bottom_panel_item("Mono", memnew(MonoBottomPanel(editor)));
-
-	godotsharp_builds = memnew(GodotSharpBuilds);
-
-	editor->add_child(memnew(MonoReloadNode));
 }
 
 GodotSharpEditor::~GodotSharpEditor() {
