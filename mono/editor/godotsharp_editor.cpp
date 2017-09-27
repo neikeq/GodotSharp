@@ -25,12 +25,15 @@
 /**********************************************************************************/
 #include "godotsharp_editor.h"
 
+#include "core/os/os.h"
+#include "core/project_settings.h"
 #include "scene/gui/control.h"
 #include "scene/main/node.h"
 
 #include "../csharp_script.h"
 #include "../godotsharp_dirs.h"
 #include "../mono_wrapper/gd_mono.h"
+#include "../utils/path_utils.h"
 #include "bindings_generator.h"
 #include "csharp_project.h"
 #include "net_solution.h"
@@ -141,9 +144,58 @@ void GodotSharpEditor::show_error(const String &p_message, const String &p_title
 	error_dialog->popup_centered_minsize();
 }
 
+Error GodotSharpEditor::open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col) {
+
+	ExternalEditor editor = ExternalEditor(int(EditorSettings::get_singleton()->get("mono/editor/external_editor")));
+
+	switch (editor) {
+		case EDITOR_CODE: {
+			List<String> args;
+			args.push_back(ProjectSettings::get_singleton()->get_resource_path());
+
+			String script_path = ProjectSettings::get_singleton()->globalize_path(p_script->get_path());
+
+			if (p_line >= 0) {
+				args.push_back("-g");
+				args.push_back(script_path + ":" + itos(p_line) + ":" + itos(p_col));
+			} else {
+				args.push_back(script_path);
+			}
+
+			static String program = path_which("code");
+
+			Error err = OS::get_singleton()->execute(program.length() ? program : "code", args, false);
+
+			if (err != OK) {
+				ERR_PRINT("GodotSharp: Could not execute external editor");
+				return err;
+			}
+		} break;
+		case EDITOR_MONODEVELOP: {
+			if (!monodevel_instance)
+				monodevel_instance = memnew(MonoDevelopInstance(GodotSharpDirs::get_project_sln_path()));
+
+			String script_path = ProjectSettings::get_singleton()->globalize_path(p_script->get_path());
+			monodevel_instance->execute(script_path);
+		} break;
+		case EDITOR_VISUAL_STUDIO: // TODO
+		default:
+			return ERR_UNAVAILABLE;
+	}
+
+	return OK;
+}
+
+bool GodotSharpEditor::overrides_external_editor() {
+
+	return ExternalEditor(int(EditorSettings::get_singleton()->get("mono/editor/external_editor"))) != EDITOR_NONE;
+}
+
 GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 
 	singleton = this;
+
+	monodevel_instance = NULL;
 
 	editor = p_editor;
 
@@ -174,6 +226,13 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 		menu_button->hide();
 
 	editor->get_menu_hb()->add_child(menu_button);
+
+	// External editor settings
+	EditorSettings *ed_settings = EditorSettings::get_singleton();
+	if (!ed_settings->has("mono/editor/external_editor")) {
+		ed_settings->set("mono/editor/external_editor", EDITOR_NONE);
+	}
+	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "mono/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
 }
 
 GodotSharpEditor::~GodotSharpEditor() {
@@ -181,4 +240,9 @@ GodotSharpEditor::~GodotSharpEditor() {
 	singleton = NULL;
 
 	memdelete(godotsharp_builds);
+
+	if (monodevel_instance) {
+		memdelete(monodevel_instance);
+		monodevel_instance = NULL;
+	}
 }

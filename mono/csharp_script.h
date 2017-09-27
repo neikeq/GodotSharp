@@ -37,10 +37,6 @@
 #include "mono_wrapper/gd_mono_header.h"
 #include "mono_wrapper/gd_mono_internals.h"
 
-#ifdef TOOLS_ENABLED
-#include "editor/monodevelop_instance.h"
-#endif
-
 class CSharpScript;
 class CSharpInstance;
 class CSharpLanguage;
@@ -224,10 +220,6 @@ class CSharpLanguage : public ScriptLanguage {
 
 	Map<Object *, Ref<MonoGCHandle> > gchandle_bindings;
 
-#ifdef TOOLS_ENABLED
-	MonoDevelopInstance *monodevel_instance;
-#endif
-
 	struct StringNameCache {
 
 		StringName _awaited_signal_callback;
@@ -244,15 +236,6 @@ class CSharpLanguage : public ScriptLanguage {
 	int lang_idx;
 
 public:
-#ifdef TOOLS_ENABLED
-	enum ExternalEditor{
-		EDITOR_NONE,
-		EDITOR_MONODEVELOP,
-		EDITOR_VISUAL_STUDIO,
-		EDITOR_CODE,
-	};
-#endif
-
 	_FORCE_INLINE_ int get_language_index() { return lang_idx; }
 	void set_language_index(int p_idx);
 
@@ -278,7 +261,6 @@ public:
 	virtual void get_reserved_words(List<String> *p_words) const;
 	virtual void get_comment_delimiters(List<String> *p_delimiters) const;
 	virtual void get_string_delimiters(List<String> *p_delimiters) const;
-	virtual void get_indent_delimiters(List<String> *p_delimiters) const;
 	virtual Ref<Script> get_template(const String &p_class_name, const String &p_base_class_name) const;
 	/* TODO */ virtual bool validate(const String &p_script, int &r_line_error, int &r_col_error, String &r_test_error, const String &p_path, List<String> *r_functions) const { return true; }
 	virtual Script *create_script() const;

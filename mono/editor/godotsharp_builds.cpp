@@ -16,17 +16,50 @@ void godot_icall_BuildInstance_ExitCallback(MonoString *p_solution, MonoString *
 }
 
 MonoString *godot_icall_BuildInstance_get_MSBuildPath() {
+
+	GodotSharpBuilds::BuildTool build_tool = GodotSharpBuilds::BuildTool(int(EditorSettings::get_singleton()->get("mono/builds/build_tool")));
 #ifdef WINDOWS_ENABLED
-	String msbuild_tools_path = MonoRegUtils::find_msbuild_tools_path();
+	switch (build_tool) {
+	case GodotSharpBuilds::MSBUILD_MONO: {
+		String msbuild_path = GDMono::get_singleton()->get_mono_reg_info().bin_dir.plus_file("msbuild.bat");
 
-	if (msbuild_tools_path.ends_with("\\"))
-		msbuild_tools_path += "MSBuild.exe";
-	else
-		msbuild_tools_path += "\\MSBuild.exe";
+		if (!FileAccess::exists(msbuild_path)) {
+			WARN_PRINTS("Cannot find msbuild ('mono/builds/build_tool'). Tried with path: " + msbuild_path);
+		}
 
-	return GDMonoMarshal::mono_string_from_godot(msbuild_tools_path);
+		return GDMonoMarshal::mono_string_from_godot(msbuild_path);
+	}
+	case GodotSharpBuilds::MSBUILD: {
+		String msbuild_tools_path = MonoRegUtils::find_msbuild_tools_path();
+
+		if (msbuild_tools_path.ends_with("\\"))
+			msbuild_tools_path += "MSBuild.exe";
+		else
+			msbuild_tools_path += "\\MSBuild.exe";
+
+		return GDMonoMarshal::mono_string_from_godot(msbuild_tools_path);
+	}
+	case GodotSharpBuilds::XBUILD: {
+		String xbuild_path = GDMono::get_singleton()->get_mono_reg_info().bin_dir.plus_file("xbuild.bat");
+
+		if (!FileAccess::exists(xbuild_path)) {
+			WARN_PRINTS("Cannot find xbuild ('mono/builds/build_tool'). Tried with path: " + xbuild_path);
+		}
+
+		return GDMonoMarshal::mono_string_from_godot(xbuild_path);
+	}
+	default:
+		ERR_EXPLAIN("You don't deserve to live");
+		CRASH_NOW();
+	}
 #else
-	return GDMonoMarshal::mono_string_from_godot(path_which("msbuild").length() ? "msbuild" : "xbuild");
+	bool msbuild_found = path_which("msbuild").length();
+
+	if (build_tool != GodotSharpBuilds::XBUILD && !msbuild_found) {
+		WARN_PRINT("Cannot find msbuild ('mono/builds/build_tool').");
+	}
+
+	return GDMonoMarshal::mono_string_from_godot(build_tool != GodotSharpBuilds::XBUILD ? "msbuild" : "xbuild");
 #endif
 }
 
@@ -240,6 +273,13 @@ GodotSharpBuilds::GodotSharpBuilds() {
 	singleton = this;
 
 	EditorNode::get_singleton()->add_build_callback(&godotsharp_build_callback);
+
+	// Build tool settings
+	EditorSettings *ed_settings = EditorSettings::get_singleton();
+	if (!ed_settings->has("mono/builds/build_tool")) {
+		ed_settings->set("mono/builds/build_tool", MSBUILD_MONO);
+	}
+	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "mono/builds/build_tool", PROPERTY_HINT_ENUM, "MSBuild (Mono),MSBuild,xbuild"));
 }
 
 GodotSharpBuilds::~GodotSharpBuilds() {

@@ -37,6 +37,12 @@ public:
 		API_EDITOR
 	};
 
+	enum BuildTool {
+		MSBUILD_MONO,
+		MSBUILD,
+		XBUILD
+	};
+
 	_FORCE_INLINE_ static GodotSharpBuilds *get_singleton() { return singleton; }
 
 	void build_exit_callback(const MonoBuildInfo &p_build_info, int p_exit_code);

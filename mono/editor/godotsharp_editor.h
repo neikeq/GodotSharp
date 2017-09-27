@@ -28,6 +28,8 @@
 
 #include "godotsharp_builds.h"
 
+#include "monodevelop_instance.h"
+
 class GodotSharpEditor : public Node {
 	GDCLASS(GodotSharpEditor, Object)
 
@@ -38,9 +40,11 @@ class GodotSharpEditor : public Node {
 
 	AcceptDialog *error_dialog;
 
+	ToolButton *bottom_panel_btn;
+
 	GodotSharpBuilds *godotsharp_builds;
 
-	ToolButton *bottom_panel_btn;
+	MonoDevelopInstance *monodevel_instance;
 
 	bool _create_project_solution();
 
@@ -55,13 +59,22 @@ protected:
 
 public:
 	enum MenuOptions {
-
 		MENU_CREATE_SLN
+	};
+
+	enum ExternalEditor {
+		EDITOR_NONE,
+		EDITOR_MONODEVELOP,
+		EDITOR_VISUAL_STUDIO,
+		EDITOR_CODE,
 	};
 
 	_FORCE_INLINE_ static GodotSharpEditor *get_singleton() { return singleton; }
 
 	void show_error(const String &p_message, const String &p_title = "Error");
+
+	Error open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col);
+	bool overrides_external_editor();
 
 	GodotSharpEditor(EditorNode *p_editor);
 	~GodotSharpEditor();

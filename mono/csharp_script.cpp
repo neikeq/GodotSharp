@@ -38,7 +38,6 @@
 #include "editor/csharp_project.h"
 #include "editor/editor_node.h"
 #include "editor/godotsharp_editor.h"
-#include "utils/path_utils.h"
 #endif
 
 #include "godotsharp_dirs.h"
@@ -75,14 +74,6 @@ Error CSharpLanguage::execute_file(const String &p_path) {
 void gdsharp_editor_init_callback() {
 
 	EditorNode *editor = EditorNode::get_singleton();
-
-	// External editor settings
-	EditorSettings *ed_settings = EditorSettings::get_singleton();
-	if (!ed_settings->has("mono/editor/external_editor")) {
-		ed_settings->set("mono/editor/external_editor", CSharpLanguage::EDITOR_NONE);
-	}
-	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "mono/editor/external_editor", PROPERTY_HINT_ENUM, "None,MonoDevelop,Visual Studio,Visual Studio Code"));
-
 	editor->add_child(memnew(GodotSharpEditor(editor)));
 }
 #endif
@@ -237,19 +228,15 @@ void CSharpLanguage::get_reserved_words(List<String> *p_words) const {
 
 void CSharpLanguage::get_comment_delimiters(List<String> *p_delimiters) const {
 
-	p_delimiters->push_back("//");
-	p_delimiters->push_back("/* */");
+	p_delimiters->push_back("//"); // single-line comment
+	p_delimiters->push_back("/* */"); // delimited comment
 }
 
 void CSharpLanguage::get_string_delimiters(List<String> *p_delimiters) const {
 
-	p_delimiters->push_back("\" \"");
-	p_delimiters->push_back("' '");
-}
-
-void CSharpLanguage::get_indent_delimiters(List<String> *p_delimiters) const {
-
-	p_delimiters->push_back("{ }");
+	p_delimiters->push_back("' '"); // character literal
+	p_delimiters->push_back("\" \""); // regular string literal
+	p_delimiters->push_back("@\" \""); // verbatim string literal
 }
 
 Ref<Script> CSharpLanguage::get_template(const String &p_class_name, const String &p_base_class_name) const {
@@ -292,14 +279,16 @@ bool CSharpLanguage::has_named_classes() const {
 
 String CSharpLanguage::make_function(const String &p_class, const String &p_name, const PoolStringArray &p_args) const {
 
-	// TODO For now this will just append the function at the bottom of the file and commented
-	String s = "/*private void " + p_name + "(";
+	// FIXME
+	// Due to Godot's API limitation this just appends the function to the end of the file
+	// Another limitation is that the parameter types are not specified, so we must use System.Object
+	String s = "private void " + p_name + "(";
 	for (int i = 0; i < p_args.size(); i++) {
 		if (i > 0)
 			s += ", ";
 		s += "object " + p_args[i];
 	}
-	s += ")\n{\n    // Replace with function body\n}*/\n";
+	s += ")\n{\n    // Replace with function body\n}\n";
 
 	return s;
 }
@@ -540,49 +529,12 @@ void CSharpLanguage::get_recognized_extensions(List<String> *p_extensions) const
 #ifdef TOOLS_ENABLED
 Error CSharpLanguage::open_in_external_editor(const Ref<Script> &p_script, int p_line, int p_col) {
 
-	ExternalEditor editor = (ExternalEditor)EditorSettings::get_singleton()->get("godot_sharp/editor/external_editor").operator int();
-
-	switch (editor) {
-		case EDITOR_CODE: {
-			List<String> args;
-			args.push_back(ProjectSettings::get_singleton()->get_resource_path());
-
-			String script_path = ProjectSettings::get_singleton()->globalize_path(p_script->get_path());
-
-			if (p_line >= 0) {
-				args.push_back("-g");
-				args.push_back(script_path + ":" + itos(p_line) + ":" + itos(p_col));
-			} else {
-				args.push_back(script_path);
-			}
-
-			static String program = path_which("code");
-
-			Error err = OS::get_singleton()->execute(program.length() ? program : "code", args, false);
-
-			if (err != OK) {
-				ERR_PRINT("GodotSharp: Could not execute external editor");
-				return err;
-			}
-		} break;
-		case EDITOR_MONODEVELOP: {
-			if (!monodevel_instance)
-				monodevel_instance = memnew(MonoDevelopInstance(GodotSharpDirs::get_project_sln_path()));
-
-			String script_path = ProjectSettings::get_singleton()->globalize_path(p_script->get_path());
-			monodevel_instance->execute(script_path);
-		} break;
-		case EDITOR_VISUAL_STUDIO: // TODO
-		default:
-			return ERR_UNAVAILABLE;
-	}
-
-	return OK;
+	return GodotSharpEditor::get_singleton()->open_in_external_editor(p_script, p_line, p_col);
 }
 
 bool CSharpLanguage::overrides_external_editor() {
 
-	return ((ExternalEditor)EditorSettings::get_singleton()->get("godot_sharp/editor/external_editor").operator int()) != EDITOR_NONE;
+	return GodotSharpEditor::get_singleton()->overrides_external_editor();
 }
 #endif
 
@@ -654,10 +606,6 @@ CSharpLanguage::CSharpLanguage() {
 	script_bind_lock = Mutex::create();
 #endif
 
-#ifdef TOOLS_ENABLED
-	monodevel_instance = NULL;
-#endif
-
 	lang_idx = -1;
 }
 
@@ -676,13 +624,6 @@ CSharpLanguage::~CSharpLanguage() {
 	}
 
 	singleton = NULL;
-
-#ifdef TOOLS_ENABLED
-	if (monodevel_instance) {
-		memdelete(monodevel_instance);
-		monodevel_instance = NULL;
-	}
-#endif
 }
 
 void *CSharpLanguage::alloc_instance_binding_data(Object *p_object) {
@@ -771,7 +712,6 @@ CSharpInstance *CSharpInstance::create_for_managed_type(Object *p_owner, CSharpS
 	instance->owner = p_owner;
 	instance->gchandle = p_gchandle;
 
-	// Not needed here. This can only be called for newly created Reference, so the refcount is already 1
 	if (instance->base_ref)
 		instance->_reference_owner_unsafe();
 
@@ -1024,13 +964,8 @@ void CSharpInstance::_reference_owner_unsafe() {
 	// but the managed instance is alive, the refcount will be 1 instead of 0.
 	// See: _unreference_owner_unsafe()
 
-	Reference *ref = Object::cast_to<Reference>(owner);
-
-	if (ref->is_referenced()) {
-		ref->reference();
-	} else {
-		ref->init_ref();
-	}
+	// May not me referenced yet, so we must use init_ref() instead of reference()
+	Object::cast_to<Reference>(owner)->init_ref();
 }
 
 void CSharpInstance::_unreference_owner_unsafe() {
