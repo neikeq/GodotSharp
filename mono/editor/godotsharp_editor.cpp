@@ -93,13 +93,14 @@ bool GodotSharpEditor::_create_project_solution() {
 		if (!GodotSharpBuilds::make_api_sln(GodotSharpBuilds::API_EDITOR))
 			return false;
 
+		pr.step("Done");
+
+		// Here, after all calls to progress_task_step
 		call_deferred("_remove_create_sln_menu_option");
 
 	} else {
 		show_error("Failed to create C# project.");
 	}
-
-	pr.step("Done");
 
 	return true;
 }
@@ -152,7 +153,7 @@ GodotSharpEditor::GodotSharpEditor(EditorNode *p_editor) {
 		menu_popup->add_item("Create C# solution", MENU_CREATE_SLN);
 	}
 
-	menu_popup->connect("id_pressed", this, "_menu_option_pressed", varray(), CONNECT_DEFERRED);
+	menu_popup->connect("id_pressed", this, "_menu_option_pressed");
 
 	if (menu_popup->get_item_count() == 0)
 		menu_button->hide();
