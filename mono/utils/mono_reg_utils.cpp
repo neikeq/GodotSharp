@@ -162,8 +162,36 @@ String find_msbuild_tools_path() {
 
 	String msbuild_tools_path;
 
+	// Try to find 15.0 with vswhere
+
+	String vswhere_path = OS::get_singleton()->get_environment(sizeof(size_t) == 4 ? "ProgramFiles(x86)" : "ProgramFiles");
+	vswhere_path += "\\Microsoft Visual Studio\\Installer";
+
+	List<String> vswhere_args;
+	vswhere_args.push_back("-latest");
+	vswhere_args.push_back("-requires");
+	vswhere_args.push_back("Microsoft.Component.MSBuild");
+
+	String output;
+	int exit_code;
+	OS::get_singleton()->execute(vswhere_path, vswhere_args, true, NULL, &output, &exit_code);
+
+	if (exit_code == 0) {
+		Vector<String> lines = output.split("\n");
+
+		for (int i = 0; i < lines.size(); i++) {
+			Vector<String> pair = lines[i].split(":");
+
+			if (pair.size() > 1 && pair[0].strip_edges().nocasecmp_to("installationPath")) {
+				return pair[1].strip_edges() + "\\MSBuild\\15.0\\Bin\\MSBuild.exe";
+			}
+		}
+	}
+
+	// Try to find 14.0 in the Registry
+
 	HKEY hKey;
-	LONG res = _RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\4.0", &hKey);
+	LONG res = _RegOpenKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\14.0", &hKey);
 
 	if (res != ERROR_SUCCESS)
 		goto cleanup;
@@ -175,8 +203,9 @@ String find_msbuild_tools_path() {
 
 cleanup:
 	RegCloseKey(hKey);
+
 	return msbuild_tools_path;
 }
-} // MonoRegUtils
+} // namespace MonoRegUtils
 
 #endif WINDOWS_ENABLED

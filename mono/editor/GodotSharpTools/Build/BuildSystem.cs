@@ -17,8 +17,6 @@ namespace GodotSharpTools.Build
         [MethodImpl(MethodImplOptions.InternalCall)]
         internal extern static string godot_icall_BuildInstance_get_MSBuildPath();
 
-        private static string _msbuildPath = null;
-
         private static string MSBuildPath
         {
             get { return godot_icall_BuildInstance_get_MSBuildPath(); }

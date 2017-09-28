@@ -38,8 +38,8 @@ public:
 	};
 
 	enum BuildTool {
-		MSBUILD_MONO,
 		MSBUILD,
+		MSBUILD_MONO,
 		XBUILD
 	};
 
