@@ -379,21 +379,21 @@ namespace Godot
             this.x = new Vector3
             (
                 axis_sq.x + cosine * (1.0f - axis_sq.x),
-                axis.x * axis.y * (1.0f - cosine) + axis.z * sine,
-                axis.z * axis.x * (1.0f - cosine) - axis.y * sine
+                axis.x * axis.y * (1.0f - cosine) - axis.z * sine,
+                axis.z * axis.x * (1.0f - cosine) + axis.y * sine
             );
 
             this.y = new Vector3
             (
-                axis.x * axis.y * (1.0f - cosine) - axis.z * sine,
+                axis.x * axis.y * (1.0f - cosine) + axis.z * sine,
                 axis_sq.y + cosine * (1.0f - axis_sq.y),
-                axis.y * axis.z * (1.0f - cosine) + axis.x * sine
+                axis.y * axis.z * (1.0f - cosine) - axis.x * sine
             );
 
             this.z = new Vector3
             (
-                axis.z * axis.x * (1.0f - cosine) + axis.y * sine,
-                axis.y * axis.z * (1.0f - cosine) - axis.x * sine,
+                axis.z * axis.x * (1.0f - cosine) - axis.y * sine,
+                axis.y * axis.z * (1.0f - cosine) + axis.x * sine,
                 axis_sq.z + cosine * (1.0f - axis_sq.z)
             );
         }
