@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  signal_awaiter_utils.cpp                                             */
+/*  godotsharp_internals.h                                               */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,51 +27,16 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#include "signal_awaiter_utils.h"
+#ifndef GD_MONO_INTERNALS_H
+#define GD_MONO_INTERNALS_H
 
-#include "mono_gd/gd_mono_utils.h"
+#include <mono/jit/jit.h>
 
-namespace SignalAwaiterUtils {
+#include "core/object.h"
 
-Error connect_signal_awaiter(Object *p_source, const String &p_signal, Object *p_target, MonoObject *p_awaiter) {
+namespace GDMonoInternals {
 
-	ERR_FAIL_NULL_V(p_source, ERR_INVALID_DATA);
-	ERR_FAIL_NULL_V(p_target, ERR_INVALID_DATA);
-
-	uint32_t awaiter_handle = MonoGCHandle::make_strong_handle(p_awaiter);
-	Ref<SignalAwaiterHandle> sa_con = memnew(SignalAwaiterHandle(awaiter_handle));
-	Vector<Variant> binds;
-	binds.push_back(sa_con);
-	Error err = p_source->connect(p_signal, p_target, "_AwaitedSignalCallback", binds, Object::CONNECT_ONESHOT);
-
-	if (err != OK) {
-		// set it as completed to prevent it from calling the failure callback when deleted
-		// the awaiter will be aware of the failure by checking the returned error
-		sa_con->set_completed(true);
-	}
-
-	return err;
-}
+void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged);
 }
 
-SignalAwaiterHandle::SignalAwaiterHandle(uint32_t p_handle)
-	: MonoGCHandle(p_handle) {
-}
-
-SignalAwaiterHandle::~SignalAwaiterHandle() {
-	if (!completed) {
-		GDMonoUtils::SignalAwaiter_FailureCallback thunk = CACHED_METHOD_THUNK(SignalAwaiter, FailureCallback);
-
-		MonoObject *awaiter = get_target();
-
-		if (awaiter) {
-			MonoObject *ex = NULL;
-			thunk(awaiter, &ex);
-
-			if (ex) {
-				mono_print_unhandled_exception(ex);
-				ERR_FAIL_V();
-			}
-		}
-	}
-}
+#endif // GD_MONO_INTERNALS_H

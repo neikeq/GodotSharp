@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  signal_awaiter_utils.cpp                                             */
+/*  godotsharp_internals.cpp                                             */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,51 +27,40 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#include "signal_awaiter_utils.h"
+#include "gd_mono_internals.h"
 
-#include "mono_gd/gd_mono_utils.h"
+#include "../csharp_script.h"
+#include "../mono_gc_handle.h"
+#include "gd_mono_utils.h"
 
-namespace SignalAwaiterUtils {
+namespace GDMonoInternals {
 
-Error connect_signal_awaiter(Object *p_source, const String &p_signal, Object *p_target, MonoObject *p_awaiter) {
+void tie_managed_to_unmanaged(MonoObject *managed, Object *unmanaged) {
 
-	ERR_FAIL_NULL_V(p_source, ERR_INVALID_DATA);
-	ERR_FAIL_NULL_V(p_target, ERR_INVALID_DATA);
+	// This method should not fail
 
-	uint32_t awaiter_handle = MonoGCHandle::make_strong_handle(p_awaiter);
-	Ref<SignalAwaiterHandle> sa_con = memnew(SignalAwaiterHandle(awaiter_handle));
-	Vector<Variant> binds;
-	binds.push_back(sa_con);
-	Error err = p_source->connect(p_signal, p_target, "_AwaitedSignalCallback", binds, Object::CONNECT_ONESHOT);
+	CRASH_COND(!unmanaged);
 
-	if (err != OK) {
-		// set it as completed to prevent it from calling the failure callback when deleted
-		// the awaiter will be aware of the failure by checking the returned error
-		sa_con->set_completed(true);
-	}
+	// All mono objects created from the managed world (e.g.: `new Player()`)
+	// need to have a CSharpScript in order for their methods to be callable from the unmanaged side
 
-	return err;
+	Reference *ref = Object::cast_to<Reference>(unmanaged);
+
+	GDMonoClass *klass = GDMonoUtils::get_object_class(managed);
+
+	CRASH_COND(!klass);
+
+	Ref<MonoGCHandle> gchandle = ref ? MonoGCHandle::create_weak(managed) :
+									   MonoGCHandle::create_strong(managed);
+
+	Ref<CSharpScript> script = CSharpScript::create_for_managed_type(klass);
+
+	CRASH_COND(script.is_null());
+
+	ScriptInstance *si = CSharpInstance::create_for_managed_type(unmanaged, script.ptr(), gchandle);
+
+	unmanaged->set_script_and_instance(script.get_ref_ptr(), si);
+
+	return;
 }
-}
-
-SignalAwaiterHandle::SignalAwaiterHandle(uint32_t p_handle)
-	: MonoGCHandle(p_handle) {
-}
-
-SignalAwaiterHandle::~SignalAwaiterHandle() {
-	if (!completed) {
-		GDMonoUtils::SignalAwaiter_FailureCallback thunk = CACHED_METHOD_THUNK(SignalAwaiter, FailureCallback);
-
-		MonoObject *awaiter = get_target();
-
-		if (awaiter) {
-			MonoObject *ex = NULL;
-			thunk(awaiter, &ex);
-
-			if (ex) {
-				mono_print_unhandled_exception(ex);
-				ERR_FAIL_V();
-			}
-		}
-	}
 }

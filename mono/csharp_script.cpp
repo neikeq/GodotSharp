@@ -1,29 +1,32 @@
-/**********************************************************************************/
-/* csharp_script.cpp                                                              */
-/**********************************************************************************/
-/* The MIT License (MIT)                                                          */
-/*                                                                                */
-/* Copyright (c) 2016 Ignacio Etcheverry                                          */
-/*                                                                                */
-/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
-/* of this software and associated documentation files (the "Software"), to deal  */
-/* in the Software without restriction, including without limitation the rights   */
-/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
-/* copies of the Software, and to permit persons to whom the Software is          */
-/* furnished to do so, subject to the following conditions:                       */
-/*                                                                                */
-/* The above copyright notice and this permission notice shall be included in all */
-/* copies or substantial portions of the Software.                                */
-/*                                                                                */
-/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
-/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
-/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
-/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
-/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
-/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
-/* SOFTWARE.                                                                      */
-/**********************************************************************************/
-
+/*************************************************************************/
+/*  csharp_script.cpp                                                    */
+/*************************************************************************/
+/*                       This file is part of:                           */
+/*                           GODOT ENGINE                                */
+/*                      https://godotengine.org                          */
+/*************************************************************************/
+/* Copyright (c) 2007-2017 Juan Linietsky, Ariel Manzur.                 */
+/* Copyright (c) 2014-2017 Godot Engine contributors (cf. AUTHORS.md)    */
+/*                                                                       */
+/* Permission is hereby granted, free of charge, to any person obtaining */
+/* a copy of this software and associated documentation files (the       */
+/* "Software"), to deal in the Software without restriction, including   */
+/* without limitation the rights to use, copy, modify, merge, publish,   */
+/* distribute, sublicense, and/or sell copies of the Software, and to    */
+/* permit persons to whom the Software is furnished to do so, subject to */
+/* the following conditions:                                             */
+/*                                                                       */
+/* The above copyright notice and this permission notice shall be        */
+/* included in all copies or substantial portions of the Software.       */
+/*                                                                       */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       */
+/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */
+/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
+/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */
+/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */
+/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
+/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
+/*************************************************************************/
 #include "csharp_script.h"
 
 #include <mono/metadata/threads.h>
@@ -41,8 +44,8 @@
 #endif
 
 #include "godotsharp_dirs.h"
-#include "mono_wrapper/gd_mono_class.h"
-#include "mono_wrapper/gd_mono_marshal.h"
+#include "mono_gd/gd_mono_class.h"
+#include "mono_gd/gd_mono_marshal.h"
 #include "signal_awaiter_utils.h"
 
 #define CACHED_STRING_NAME(m_var) (CSharpLanguage::get_singleton()->string_names.m_var)
@@ -1186,8 +1189,7 @@ bool CSharpScript::_update_exports() {
 		const Vector<GDMonoField *> &fields = script_class->get_all_fields();
 
 		// We are creating a temporary new instance of the class here to get the default value
-		// TODO This is a workaround because alpha is happening soon, to focus on other stuff
-		// It should be done with ILOpcodeParser before stable
+		// TODO Workaround. Should be replaced with IL opcodes analysis
 
 		MonoObject *tmp_object = mono_object_new(SCRIPTS_DOMAIN, script_class->get_raw());
 
@@ -1357,6 +1359,7 @@ Ref<CSharpScript> CSharpScript::create_for_managed_type(GDMonoClass *p_class) {
 
 bool CSharpScript::can_instance() const {
 
+	// TODO does the second condition even make sense?
 	return valid || (!tool && !ScriptServer::is_scripting_enabled());
 }
 
@@ -1637,7 +1640,7 @@ void CSharpScript::update_exports() {
 
 Ref<Script> CSharpScript::get_base_script() const {
 
-	// TODO search in the list of { path: namespaces, ... }, not important any way?
+	// TODO search in metadata file once we have it, not important any way?
 	return Ref<Script>();
 }
 
@@ -1659,7 +1662,7 @@ Error CSharpScript::load_source_code(const String &p_path) {
 	PoolVector<uint8_t> sourcef;
 	Error err;
 	FileAccess *f = FileAccess::open(p_path, FileAccess::READ, &err);
-	ERR_FAIL_COND_V(err, err);
+	ERR_FAIL_COND_V(err != OK, err);
 
 	int len = f->get_len();
 	sourcef.resize(len + 1);

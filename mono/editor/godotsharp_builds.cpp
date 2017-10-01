@@ -1,8 +1,37 @@
+/*************************************************************************/
+/*  godotsharp_builds.cpp                                                */
+/*************************************************************************/
+/*                       This file is part of:                           */
+/*                           GODOT ENGINE                                */
+/*                      https://godotengine.org                          */
+/*************************************************************************/
+/* Copyright (c) 2007-2017 Juan Linietsky, Ariel Manzur.                 */
+/* Copyright (c) 2014-2017 Godot Engine contributors (cf. AUTHORS.md)    */
+/*                                                                       */
+/* Permission is hereby granted, free of charge, to any person obtaining */
+/* a copy of this software and associated documentation files (the       */
+/* "Software"), to deal in the Software without restriction, including   */
+/* without limitation the rights to use, copy, modify, merge, publish,   */
+/* distribute, sublicense, and/or sell copies of the Software, and to    */
+/* permit persons to whom the Software is furnished to do so, subject to */
+/* the following conditions:                                             */
+/*                                                                       */
+/* The above copyright notice and this permission notice shall be        */
+/* included in all copies or substantial portions of the Software.       */
+/*                                                                       */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       */
+/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */
+/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
+/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */
+/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */
+/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
+/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
+/*************************************************************************/
 #include "godotsharp_builds.h"
 
 #include "../godotsharp_dirs.h"
-#include "../mono_wrapper/gd_mono_class.h"
-#include "../mono_wrapper/gd_mono_marshal.h"
+#include "../mono_gd/gd_mono_class.h"
+#include "../mono_gd/gd_mono_marshal.h"
 #include "../utils/path_utils.h"
 #include "bindings_generator.h"
 #include "godotsharp_editor.h"
@@ -24,16 +53,16 @@ MonoString *godot_icall_BuildInstance_get_MSBuildPath() {
 		case GodotSharpBuilds::MSBUILD: {
 			static String msbuild_tools_path = MonoRegUtils::find_msbuild_tools_path();
 
-			if (msbuild_tools_path.length()) {
-				if (msbuild_tools_path.ends_with("\\"))
-					msbuild_tools_path += "MSBuild.exe";
-				else
-					msbuild_tools_path += "\\MSBuild.exe";
+			OS::get_singleton()->print(String(msbuild_tools_path + "\n").utf8());
 
-				return GDMonoMarshal::mono_string_from_godot(msbuild_tools_path);
+			if (msbuild_tools_path.length()) {
+				if (!msbuild_tools_path.ends_with("\\"))
+					msbuild_tools_path += "\\";
+
+				return GDMonoMarshal::mono_string_from_godot(msbuild_tools_path + "MSBuild.exe");
 			}
 
-			WARN_PRINT("Cannot find .NET Framework's MSBuild. Trying with Mono's...");
+			OS::get_singleton()->print("Cannot find System's MSBuild. Trying with Mono's...\n");
 		}
 		case GodotSharpBuilds::MSBUILD_MONO: {
 			String msbuild_path = GDMono::get_singleton()->get_mono_reg_info().bin_dir.plus_file("msbuild.bat");
@@ -290,7 +319,7 @@ GodotSharpBuilds::GodotSharpBuilds() {
 	if (!ed_settings->has("mono/builds/build_tool")) {
 		ed_settings->set("mono/builds/build_tool", MSBUILD);
 	}
-	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "mono/builds/build_tool", PROPERTY_HINT_ENUM, "MSBuild (.NET Framework),MSBuild (Mono),xbuild"));
+	ed_settings->add_property_hint(PropertyInfo(Variant::INT, "mono/builds/build_tool", PROPERTY_HINT_ENUM, "MSBuild (System),MSBuild (Mono),xbuild"));
 }
 
 GodotSharpBuilds::~GodotSharpBuilds() {
