@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  signal_awaiter_utils.cpp                                             */
+/*  gd_mono_log.h                                                        */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,51 +27,35 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#include "signal_awaiter_utils.h"
+#ifndef GD_MONO_LOG_H
+#define GD_MONO_LOG_H
 
-#include "mono_gd/gd_mono_utils.h"
+#include "os/file_access.h"
 
-namespace SignalAwaiterUtils {
+class GDMonoLog {
 
-Error connect_signal_awaiter(Object *p_source, const String &p_signal, Object *p_target, MonoObject *p_awaiter) {
+	int log_level_id;
 
-	ERR_FAIL_NULL_V(p_source, ERR_INVALID_DATA);
-	ERR_FAIL_NULL_V(p_target, ERR_INVALID_DATA);
+	FileAccess *log_file;
+	String log_file_path;
 
-	uint32_t awaiter_handle = MonoGCHandle::make_strong_handle(p_awaiter);
-	Ref<SignalAwaiterHandle> sa_con = memnew(SignalAwaiterHandle(awaiter_handle));
-	Vector<Variant> binds;
-	binds.push_back(sa_con);
-	Error err = p_source->connect(p_signal, p_target, "_AwaitedSignalCallback", binds, Object::CONNECT_ONESHOT);
+	bool _try_create_logs_dir(const String &p_logs_dir);
+	void _open_log_file(const String &p_file_path);
+	void _delete_old_log_files(const String &p_logs_dir);
 
-	if (err != OK) {
-		// set it as completed to prevent it from calling the failure callback when deleted
-		// the awaiter will be aware of the failure by checking the returned error
-		sa_con->set_completed(true);
-	}
+	static GDMonoLog *singleton;
 
-	return err;
-}
-}
+public:
+	_FORCE_INLINE_ static GDMonoLog *get_singleton() { return singleton; }
 
-SignalAwaiterHandle::SignalAwaiterHandle(uint32_t p_handle)
-	: MonoGCHandle(p_handle) {
-}
+	void initialize();
 
-SignalAwaiterHandle::~SignalAwaiterHandle() {
-	if (!completed) {
-		GDMonoUtils::SignalAwaiter_FailureCallback thunk = CACHED_METHOD_THUNK(SignalAwaiter, FailureCallback);
+	_FORCE_INLINE_ FileAccess *get_log_file() { return log_file; }
+	_FORCE_INLINE_ String get_log_file_path() { return log_file_path; }
+	_FORCE_INLINE_ int get_log_level_id() { return log_level_id; }
 
-		MonoObject *awaiter = get_target();
+	GDMonoLog();
+	~GDMonoLog();
+};
 
-		if (awaiter) {
-			MonoObject *ex = NULL;
-			thunk(awaiter, &ex);
-
-			if (ex) {
-				mono_print_unhandled_exception(ex);
-				ERR_FAIL_V();
-			}
-		}
-	}
-}
+#endif // GD_MONO_LOG_H

@@ -43,7 +43,7 @@ def make_cs_files_header(src, dst):
 
 
 env.add_source_files(env.modules_sources, '*.cpp')
-env.add_source_files(env.modules_sources, 'mono_wrapper/*.cpp')
+env.add_source_files(env.modules_sources, 'mono_gd/*.cpp')
 env.add_source_files(env.modules_sources, 'utils/*.cpp')
 
 if env['tools']:

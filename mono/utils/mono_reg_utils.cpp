@@ -1,28 +1,32 @@
-/**********************************************************************************/
-/* mono_reg_utils.cpp                                                             */
-/**********************************************************************************/
-/* The MIT License (MIT)                                                          */
-/*                                                                                */
-/* Copyright (c) 2016 Ignacio Etcheverry                                          */
-/*                                                                                */
-/* Permission is hereby granted, free of charge, to any person obtaining a copy   */
-/* of this software and associated documentation files (the "Software"), to deal  */
-/* in the Software without restriction, including without limitation the rights   */
-/* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell      */
-/* copies of the Software, and to permit persons to whom the Software is          */
-/* furnished to do so, subject to the following conditions:                       */
-/*                                                                                */
-/* The above copyright notice and this permission notice shall be included in all */
-/* copies or substantial portions of the Software.                                */
-/*                                                                                */
-/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR     */
-/* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,       */
-/* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE    */
-/* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER         */
-/* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,  */
-/* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  */
-/* SOFTWARE.                                                                      */
-/**********************************************************************************/
+/*************************************************************************/
+/*  mono_reg_utils.cpp                                                   */
+/*************************************************************************/
+/*                       This file is part of:                           */
+/*                           GODOT ENGINE                                */
+/*                      https://godotengine.org                          */
+/*************************************************************************/
+/* Copyright (c) 2007-2017 Juan Linietsky, Ariel Manzur.                 */
+/* Copyright (c) 2014-2017 Godot Engine contributors (cf. AUTHORS.md)    */
+/*                                                                       */
+/* Permission is hereby granted, free of charge, to any person obtaining */
+/* a copy of this software and associated documentation files (the       */
+/* "Software"), to deal in the Software without restriction, including   */
+/* without limitation the rights to use, copy, modify, merge, publish,   */
+/* distribute, sublicense, and/or sell copies of the Software, and to    */
+/* permit persons to whom the Software is furnished to do so, subject to */
+/* the following conditions:                                             */
+/*                                                                       */
+/* The above copyright notice and this permission notice shall be        */
+/* included in all copies or substantial portions of the Software.       */
+/*                                                                       */
+/* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       */
+/* EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    */
+/* MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*/
+/* IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY  */
+/* CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,  */
+/* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
+/* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
+/*************************************************************************/
 #include "mono_reg_utils.h"
 
 #ifdef WINDOWS_ENABLED
@@ -164,8 +168,8 @@ String find_msbuild_tools_path() {
 
 	// Try to find 15.0 with vswhere
 
-	String vswhere_path = OS::get_singleton()->get_environment(sizeof(size_t) == 4 ? "ProgramFiles(x86)" : "ProgramFiles");
-	vswhere_path += "\\Microsoft Visual Studio\\Installer";
+	String vswhere_path = OS::get_singleton()->get_environment(sizeof(size_t) == 8 ? "ProgramFiles(x86)" : "ProgramFiles");
+	vswhere_path += "\\Microsoft Visual Studio\\Installer\\vswhere.exe";
 
 	List<String> vswhere_args;
 	vswhere_args.push_back("-latest");
@@ -180,10 +184,23 @@ String find_msbuild_tools_path() {
 		Vector<String> lines = output.split("\n");
 
 		for (int i = 0; i < lines.size(); i++) {
-			Vector<String> pair = lines[i].split(":");
+			const String &line = lines[i];
+			int sep_idx = line.find(":");
 
-			if (pair.size() > 1 && pair[0].strip_edges().nocasecmp_to("installationPath")) {
-				return pair[1].strip_edges() + "\\MSBuild\\15.0\\Bin\\MSBuild.exe";
+			if (sep_idx > 0) {
+				String key = line.substr(0, sep_idx); // No need to trim
+
+				if (key == "installationPath") {
+					String val = line.substr(sep_idx + 1, line.length()).strip_edges();
+
+					ERR_BREAK(val.empty());
+
+					if (!val.ends_with("\\")) {
+						val += "\\";
+					}
+
+					return val + "MSBuild\\15.0\\Bin";
+				}
 			}
 		}
 	}

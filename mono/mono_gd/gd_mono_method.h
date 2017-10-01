@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  signal_awaiter_utils.cpp                                             */
+/*  gd_mono_method.h                                                     */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,51 +27,55 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#include "signal_awaiter_utils.h"
+#ifndef GD_MONO_METHOD_H
+#define GD_MONO_METHOD_H
 
-#include "mono_gd/gd_mono_utils.h"
+#include "gd_mono.h"
+#include "gd_mono_header.h"
 
-namespace SignalAwaiterUtils {
+class GDMonoMethod {
 
-Error connect_signal_awaiter(Object *p_source, const String &p_signal, Object *p_target, MonoObject *p_awaiter) {
+	StringName name;
 
-	ERR_FAIL_NULL_V(p_source, ERR_INVALID_DATA);
-	ERR_FAIL_NULL_V(p_target, ERR_INVALID_DATA);
+	bool is_instance;
+	int params_count;
+	ManagedType return_type;
+	Vector<ManagedType> param_types;
 
-	uint32_t awaiter_handle = MonoGCHandle::make_strong_handle(p_awaiter);
-	Ref<SignalAwaiterHandle> sa_con = memnew(SignalAwaiterHandle(awaiter_handle));
-	Vector<Variant> binds;
-	binds.push_back(sa_con);
-	Error err = p_source->connect(p_signal, p_target, "_AwaitedSignalCallback", binds, Object::CONNECT_ONESHOT);
+	bool attrs_fetched;
+	MonoCustomAttrInfo *attributes;
 
-	if (err != OK) {
-		// set it as completed to prevent it from calling the failure callback when deleted
-		// the awaiter will be aware of the failure by checking the returned error
-		sa_con->set_completed(true);
-	}
+	void _update_signature();
+	void _update_signature(MonoMethodSignature *p_method_sig);
 
-	return err;
-}
-}
+	friend class GDMonoClass;
 
-SignalAwaiterHandle::SignalAwaiterHandle(uint32_t p_handle)
-	: MonoGCHandle(p_handle) {
-}
+	MonoMethod *mono_method;
 
-SignalAwaiterHandle::~SignalAwaiterHandle() {
-	if (!completed) {
-		GDMonoUtils::SignalAwaiter_FailureCallback thunk = CACHED_METHOD_THUNK(SignalAwaiter, FailureCallback);
+public:
+	_FORCE_INLINE_ StringName get_name() { return name; }
 
-		MonoObject *awaiter = get_target();
+	_FORCE_INLINE_ bool is_static() { return !is_instance; }
+	_FORCE_INLINE_ int get_parameters_count() { return params_count; }
+	_FORCE_INLINE_ ManagedType get_return_type() { return return_type; }
 
-		if (awaiter) {
-			MonoObject *ex = NULL;
-			thunk(awaiter, &ex);
+	void *get_thunk();
 
-			if (ex) {
-				mono_print_unhandled_exception(ex);
-				ERR_FAIL_V();
-			}
-		}
-	}
-}
+	MonoObject *invoke(MonoObject *p_object, const Variant **p_params, MonoObject **r_exc = NULL);
+	MonoObject *invoke(MonoObject *p_object, MonoObject **r_exc = NULL);
+	MonoObject *invoke_raw(MonoObject *p_object, void **p_params, MonoObject **r_exc = NULL);
+
+	bool has_attribute(GDMonoClass *p_attr_class);
+	MonoObject *get_attribute(GDMonoClass *p_attr_class);
+	void fetch_attributes();
+
+	String get_full_name(bool p_signature = false) const;
+	String get_full_name_no_class() const;
+	String get_ret_type_full_name() const;
+	String get_signature_desc(bool p_namespaces = false) const;
+
+	GDMonoMethod(StringName p_name, MonoMethod *p_method);
+	~GDMonoMethod();
+};
+
+#endif // GD_MONO_METHOD_H

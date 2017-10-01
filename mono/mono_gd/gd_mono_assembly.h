@@ -1,5 +1,5 @@
 /*************************************************************************/
-/*  il_opcode_parser.h                                                   */
+/*  gd_mono_assembly.h                                                   */
 /*************************************************************************/
 /*                       This file is part of:                           */
 /*                           GODOT ENGINE                                */
@@ -27,42 +27,87 @@
 /* TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE     */
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                */
 /*************************************************************************/
-#ifndef IL_OPCODE_PARSER_H
-#define IL_OPCODE_PARSER_H
+#ifndef GD_MONO_ASSEMBLY_H
+#define GD_MONO_ASSEMBLY_H
 
+#include <mono/jit/jit.h>
+#include <mono/metadata/assembly.h>
+
+#include "gd_mono_utils.h"
 #include "hash_map.h"
+#include "map.h"
 #include "ustring.h"
 
-#include "mono_gd/gd_mono.h"
+class GDMonoAssembly {
 
-class ILOpCodeParser {
+	struct ClassKey {
+		struct Hasher {
+			static _FORCE_INLINE_ uint32_t hash(const ClassKey &p_key) {
+				uint32_t hash = 0;
 
-	struct Locals {
-		MonoType **types;
-		uint32_t count;
-		mono_bool init_to_zero;
+				GDMonoUtils::hash_combine(hash, p_key.namespace_name.hash());
+				GDMonoUtils::hash_combine(hash, p_key.class_name.hash());
 
-		Locals() {
-			types = NULL;
-			count = 0;
-			init_to_zero = false;
+				return hash;
+			}
+		};
+
+		_FORCE_INLINE_ bool operator==(const ClassKey &p_a) const {
+			return p_a.class_name == class_name && p_a.namespace_name == namespace_name;
 		}
+
+		ClassKey() {}
+
+		ClassKey(const StringName &p_namespace_name, const StringName &p_class_name) {
+			namespace_name = p_namespace_name;
+			class_name = p_class_name;
+		}
+
+		StringName namespace_name;
+		StringName class_name;
 	};
 
-	// if a variable is missing, init to default. e.g:
-	// int varint1 = 0; Object varObj1 = null;
-	// int varint2; Object varObj2;
-	// the compiler generates il in the .ctor for the first two fields
-	// the last two have the same initial value, but the compiler won't generate the il
-	HashMap<String, Variant> fields;
-	GDMonoClass *target_class;
+	MonoAssembly *assembly;
+	MonoImage *image;
 
-	void _parse_block(const unsigned char *p_il_code, uint32_t p_code_size, const Locals &p_locals);
+	bool loaded;
+
+	String name;
+	String path;
+	uint64_t modified_time;
+
+	HashMap<ClassKey, GDMonoClass *, ClassKey::Hasher> cached_classes;
+	Map<MonoClass *, GDMonoClass *> cached_raw;
+
+	bool gdobject_class_cache_updated;
+	Map<StringName, GDMonoClass *> gdobject_class_cache;
+
+#ifdef DEBUG_ENABLED
+	Vector<uint8_t> pdb_data;
+#endif
+
+	friend class GDMono;
+	static void initialize();
 
 public:
-	void parse();
+	Error load(MonoDomain *p_domain);
+	Error wrapper_for_image(MonoImage *p_image);
+	void unload();
 
-	ILOpCodeParser(GDMonoClass *p_class);
+	_FORCE_INLINE_ bool is_loaded() const { return loaded; }
+	_FORCE_INLINE_ MonoImage *get_image() const { return image; }
+	_FORCE_INLINE_ MonoAssembly *get_assembly() const { return assembly; }
+	_FORCE_INLINE_ String get_name() const { return name; }
+	_FORCE_INLINE_ String get_path() const { return path; }
+	_FORCE_INLINE_ uint64_t get_modified_time() const { return modified_time; }
+
+	GDMonoClass *get_class(const StringName &p_namespace, const StringName &p_class);
+	GDMonoClass *get_class(MonoClass *p_mono_class);
+
+	GDMonoClass *get_object_derived_class(const StringName &p_class);
+
+	GDMonoAssembly(const String &p_name, const String &p_path = String());
+	~GDMonoAssembly();
 };
 
-#endif // IL_OPCODE_PARSER_H
+#endif // GD_MONO_ASSEMBLY_H
